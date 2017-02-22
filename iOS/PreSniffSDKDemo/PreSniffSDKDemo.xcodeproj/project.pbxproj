@@ -13,7 +13,8 @@
 		B683A5F81E5C1827007F0459 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B683A5F61E5C1827007F0459 /* Main.storyboard */; };
 		B683A5FA1E5C1827007F0459 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B683A5F91E5C1827007F0459 /* Assets.xcassets */; };
 		B683A5FD1E5C1827007F0459 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B683A5FB1E5C1827007F0459 /* LaunchScreen.storyboard */; };
-		B683A61F1E5C1863007F0459 /* PreSniffSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B683A61E1E5C185A007F0459 /* PreSniffSDK.framework */; };
+		B6998D321E5D8F5400538140 /* PreSniffSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B683A61E1E5C185A007F0459 /* PreSniffSDK.framework */; };
+		B6998D331E5D8F5400538140 /* PreSniffSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B683A61E1E5C185A007F0459 /* PreSniffSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -24,7 +25,42 @@
 			remoteGlobalIDString = B683A60E1E5C1845007F0459;
 			remoteInfo = PreSniffSDK;
 		};
+		B6998D2D1E5D8F4300538140 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B6998D281E5D8F4300538140 /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C4DCD1FE7D722C200C3B6B3599077FAF;
+			remoteInfo = HappyDNS;
+		};
+		B6998D2F1E5D8F4300538140 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B6998D281E5D8F4300538140 /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = B32695FF6F4BCC639958956BFEAC8AD9;
+			remoteInfo = "Pods-PreSniffSDK";
+		};
+		B6998D341E5D8F5400538140 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B683A6191E5C185A007F0459 /* PreSniffSDK.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = B683A60D1E5C1845007F0459;
+			remoteInfo = PreSniffSDK;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		B6998D361E5D8F5400538140 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				B6998D331E5D8F5400538140 /* PreSniffSDK.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		B683A5EA1E5C1827007F0459 /* PreSniffSDKDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PreSniffSDKDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -38,6 +74,7 @@
 		B683A5FC1E5C1827007F0459 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B683A5FE1E5C1827007F0459 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B683A6191E5C185A007F0459 /* PreSniffSDK.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PreSniffSDK.xcodeproj; path = ../PreSniffSDK/PreSniffSDK.xcodeproj; sourceTree = "<group>"; };
+		B6998D281E5D8F4300538140 /* Pods.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Pods.xcodeproj; path = ../PreSniffSDK/Pods/Pods.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,7 +82,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B683A61F1E5C1863007F0459 /* PreSniffSDK.framework in Frameworks */,
+				B6998D321E5D8F5400538140 /* PreSniffSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -55,6 +92,7 @@
 		B683A5E11E5C1827007F0459 = {
 			isa = PBXGroup;
 			children = (
+				B6998D281E5D8F4300538140 /* Pods.xcodeproj */,
 				B683A6191E5C185A007F0459 /* PreSniffSDK.xcodeproj */,
 				B683A5EC1E5C1827007F0459 /* PreSniffSDKDemo */,
 				B683A5EB1E5C1827007F0459 /* Products */,
@@ -101,6 +139,15 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		B6998D291E5D8F4300538140 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B6998D2E1E5D8F4300538140 /* libHappyDNS.a */,
+				B6998D301E5D8F4300538140 /* libPods-PreSniffSDK.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -111,10 +158,12 @@
 				B683A5E61E5C1827007F0459 /* Sources */,
 				B683A5E71E5C1827007F0459 /* Frameworks */,
 				B683A5E81E5C1827007F0459 /* Resources */,
+				B6998D361E5D8F5400538140 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				B6998D351E5D8F5400538140 /* PBXTargetDependency */,
 			);
 			name = PreSniffSDKDemo;
 			productName = PreSniffSDKDemo;
@@ -150,6 +199,10 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
+					ProductGroup = B6998D291E5D8F4300538140 /* Products */;
+					ProjectRef = B6998D281E5D8F4300538140 /* Pods.xcodeproj */;
+				},
+				{
 					ProductGroup = B683A61A1E5C185A007F0459 /* Products */;
 					ProjectRef = B683A6191E5C185A007F0459 /* PreSniffSDK.xcodeproj */;
 				},
@@ -167,6 +220,20 @@
 			fileType = wrapper.framework;
 			path = PreSniffSDK.framework;
 			remoteRef = B683A61D1E5C185A007F0459 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		B6998D2E1E5D8F4300538140 /* libHappyDNS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libHappyDNS.a;
+			remoteRef = B6998D2D1E5D8F4300538140 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		B6998D301E5D8F4300538140 /* libPods-PreSniffSDK.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libPods-PreSniffSDK.a";
+			remoteRef = B6998D2F1E5D8F4300538140 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -196,6 +263,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		B6998D351E5D8F5400538140 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = PreSniffSDK;
+			targetProxy = B6998D341E5D8F5400538140 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		B683A5F61E5C1827007F0459 /* Main.storyboard */ = {
@@ -312,6 +387,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = GDFHW66V92;
+				HEADER_SEARCH_PATHS = ../PreSniffSDK;
 				INFOPLIST_FILE = PreSniffSDKDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "pre-engineering.PreSniffSDKDemo";
@@ -324,6 +400,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = GDFHW66V92;
+				HEADER_SEARCH_PATHS = ../PreSniffSDK;
 				INFOPLIST_FILE = PreSniffSDKDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "pre-engineering.PreSniffSDKDemo";

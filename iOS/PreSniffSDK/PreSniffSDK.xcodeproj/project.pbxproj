@@ -8,12 +8,20 @@
 
 /* Begin PBXBuildFile section */
 		B683A6131E5C1845007F0459 /* PreSniffSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = B683A6111E5C1845007F0459 /* PreSniffSDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B6AE3A011E5C296400737C2A /* PRESURLProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = B6AE39FF1E5C296400737C2A /* PRESURLProtocol.h */; };
+		B6AE3A021E5C296400737C2A /* PRESURLProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = B6AE3A001E5C296400737C2A /* PRESURLProtocol.m */; };
+		CD49D40B63FD844BBFE1CD3A /* libPods-PreSniffSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CBF576FEA65E94CCDD00A36 /* libPods-PreSniffSDK.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1F9D8CAF70BE6832D500F74B /* Pods-PreSniffSDK.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PreSniffSDK.release.xcconfig"; path = "Pods/Target Support Files/Pods-PreSniffSDK/Pods-PreSniffSDK.release.xcconfig"; sourceTree = "<group>"; };
+		3E3A750A819E32FB0E70D691 /* Pods-PreSniffSDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PreSniffSDK.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PreSniffSDK/Pods-PreSniffSDK.debug.xcconfig"; sourceTree = "<group>"; };
+		7CBF576FEA65E94CCDD00A36 /* libPods-PreSniffSDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PreSniffSDK.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B683A60E1E5C1845007F0459 /* PreSniffSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PreSniffSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B683A6111E5C1845007F0459 /* PreSniffSDK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PreSniffSDK.h; sourceTree = "<group>"; };
 		B683A6121E5C1845007F0459 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B6AE39FF1E5C296400737C2A /* PRESURLProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRESURLProtocol.h; sourceTree = "<group>"; };
+		B6AE3A001E5C296400737C2A /* PRESURLProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRESURLProtocol.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -21,17 +29,28 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CD49D40B63FD844BBFE1CD3A /* libPods-PreSniffSDK.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		76D146B639A1F5B6A7D2177B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7CBF576FEA65E94CCDD00A36 /* libPods-PreSniffSDK.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		B683A6041E5C1845007F0459 = {
 			isa = PBXGroup;
 			children = (
 				B683A6101E5C1845007F0459 /* PreSniffSDK */,
 				B683A60F1E5C1845007F0459 /* Products */,
+				BEAFA35AA8D8AAA1FB4BD08F /* Pods */,
+				76D146B639A1F5B6A7D2177B /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -46,10 +65,29 @@
 		B683A6101E5C1845007F0459 /* PreSniffSDK */ = {
 			isa = PBXGroup;
 			children = (
+				B6AE39FE1E5C291500737C2A /* URLHook */,
 				B683A6111E5C1845007F0459 /* PreSniffSDK.h */,
 				B683A6121E5C1845007F0459 /* Info.plist */,
 			);
 			path = PreSniffSDK;
+			sourceTree = "<group>";
+		};
+		B6AE39FE1E5C291500737C2A /* URLHook */ = {
+			isa = PBXGroup;
+			children = (
+				B6AE39FF1E5C296400737C2A /* PRESURLProtocol.h */,
+				B6AE3A001E5C296400737C2A /* PRESURLProtocol.m */,
+			);
+			name = URLHook;
+			sourceTree = "<group>";
+		};
+		BEAFA35AA8D8AAA1FB4BD08F /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				3E3A750A819E32FB0E70D691 /* Pods-PreSniffSDK.debug.xcconfig */,
+				1F9D8CAF70BE6832D500F74B /* Pods-PreSniffSDK.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -59,6 +97,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B6AE3A011E5C296400737C2A /* PRESURLProtocol.h in Headers */,
 				B683A6131E5C1845007F0459 /* PreSniffSDK.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -70,10 +109,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B683A6161E5C1845007F0459 /* Build configuration list for PBXNativeTarget "PreSniffSDK" */;
 			buildPhases = (
+				F3A88D04F18F9F9DD3B1B254 /* [CP] Check Pods Manifest.lock */,
 				B683A6091E5C1845007F0459 /* Sources */,
 				B683A60A1E5C1845007F0459 /* Frameworks */,
 				B683A60B1E5C1845007F0459 /* Headers */,
 				B683A60C1E5C1845007F0459 /* Resources */,
+				91ED97D9028742E2E3B34D97 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -127,11 +168,45 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		91ED97D9028742E2E3B34D97 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PreSniffSDK/Pods-PreSniffSDK-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F3A88D04F18F9F9DD3B1B254 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		B683A6091E5C1845007F0459 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B6AE3A021E5C296400737C2A /* PRESURLProtocol.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -236,6 +311,7 @@
 		};
 		B683A6171E5C1845007F0459 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3E3A750A819E32FB0E70D691 /* Pods-PreSniffSDK.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				DEFINES_MODULE = YES;
@@ -254,6 +330,7 @@
 		};
 		B683A6181E5C1845007F0459 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1F9D8CAF70BE6832D500F74B /* Pods-PreSniffSDK.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				DEFINES_MODULE = YES;
@@ -289,6 +366,7 @@
 				B683A6181E5C1845007F0459 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
