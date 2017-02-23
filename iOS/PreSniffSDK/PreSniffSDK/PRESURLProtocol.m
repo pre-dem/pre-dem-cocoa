@@ -9,6 +9,8 @@
 #import "PRESURLProtocol.h"
 #import <HappyDNS/HappyDNS.h>
 
+#define DNSPodsHost @"119.29.29.29"
+
 @interface PRESURLProtocol ()
 <
 NSURLSessionDataDelegate
@@ -51,7 +53,7 @@ NSURLSessionDataDelegate
                          inRequest:mutableRequest];
         NSMutableArray *resolvers = [[NSMutableArray alloc] init];
         [resolvers addObject:[QNResolver systemResolver]];
-        [resolvers addObject:[[QNResolver alloc] initWithAddress:@"119.29.29.29"]];
+        [resolvers addObject:[[QNResolver alloc] initWithAddress:DNSPodsHost]];
         QNDnsManager *dns = [[QNDnsManager alloc] init:resolvers networkInfo:[QNNetworkInfo normal]];
         NSURL *replacedURL = [dns queryAndReplaceWithIP:mutableRequest.URL];
         mutableRequest.URL = replacedURL;
