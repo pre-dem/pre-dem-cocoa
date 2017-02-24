@@ -48,6 +48,7 @@
 		052960C91E5E93C80096CB3F /* PreSniffManagerDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 052960C61E5E93C80096CB3F /* PreSniffManagerDelegate.h */; };
 		052960CB1E5E95610096CB3F /* CrashReporter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 052960CA1E5E95610096CB3F /* CrashReporter.framework */; };
 		052960CE1E5E97E20096CB3F /* HockeySDKBase.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 052960CD1E5E97E20096CB3F /* HockeySDKBase.xcconfig */; };
+		B61225511E6042030008B4D0 /* libPods-PreSniffSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B61225501E6042030008B4D0 /* libPods-PreSniffSDK.a */; };
 		B683A6131E5C1845007F0459 /* PreSniffSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = B683A6111E5C1845007F0459 /* PreSniffSDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B6AE3A011E5C296400737C2A /* PRESURLProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = B6AE39FF1E5C296400737C2A /* PRESURLProtocol.h */; };
 		B6AE3A021E5C296400737C2A /* PRESURLProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = B6AE3A001E5C296400737C2A /* PRESURLProtocol.m */; };
@@ -97,6 +98,7 @@
 		052960CD1E5E97E20096CB3F /* HockeySDKBase.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = HockeySDKBase.xcconfig; path = Support/HockeySDKBase.xcconfig; sourceTree = "<group>"; };
 		1F9D8CAF70BE6832D500F74B /* Pods-PreSniffSDK.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PreSniffSDK.release.xcconfig"; path = "Pods/Target Support Files/Pods-PreSniffSDK/Pods-PreSniffSDK.release.xcconfig"; sourceTree = "<group>"; };
 		3E3A750A819E32FB0E70D691 /* Pods-PreSniffSDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PreSniffSDK.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PreSniffSDK/Pods-PreSniffSDK.debug.xcconfig"; sourceTree = "<group>"; };
+		B61225501E6042030008B4D0 /* libPods-PreSniffSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-PreSniffSDK.a"; path = "Pods/../build/Debug-iphoneos/libPods-PreSniffSDK.a"; sourceTree = "<group>"; };
 		B683A60E1E5C1845007F0459 /* PreSniffSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PreSniffSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B683A6111E5C1845007F0459 /* PreSniffSDK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PreSniffSDK.h; sourceTree = "<group>"; };
 		B683A6121E5C1845007F0459 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -109,6 +111,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B61225511E6042030008B4D0 /* libPods-PreSniffSDK.a in Frameworks */,
 				052960CB1E5E95610096CB3F /* CrashReporter.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -190,6 +193,7 @@
 		76D146B639A1F5B6A7D2177B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B61225501E6042030008B4D0 /* libPods-PreSniffSDK.a */,
 				052960CA1E5E95610096CB3F /* CrashReporter.framework */,
 			);
 			name = Frameworks;
@@ -526,6 +530,10 @@
 				INFOPLIST_FILE = PreSniffSDK/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "pre-engineering.PreSniffSDK";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -549,6 +557,10 @@
 				INFOPLIST_FILE = PreSniffSDK/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "pre-engineering.PreSniffSDK";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
