@@ -21,6 +21,14 @@
     UIWebView *webView = [[UIWebView alloc] initWithFrame:[UIScreen mainScreen].bounds];
     [self.view addSubview:webView];
     [webView loadRequest:request];
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(10 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self forceCrashing];
+    });
+}
+
+- (void)forceCrashing {
+    @throw [NSException exceptionWithName:@"Manually Exception" reason:@"嗯，我是故意的" userInfo:nil];
 }
 
 

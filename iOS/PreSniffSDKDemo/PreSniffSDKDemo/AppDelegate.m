@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import <PreSniffSDK/PreSniffSDK.h>
 
 @interface AppDelegate ()
 
@@ -17,6 +18,12 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    [[PreSniffManager sharedPreSniffManager] configureWithIdentifier:@"c9f916114a8f4750a02ce74300af909c"];
+    // Do some additional configuration if needed here
+    [[PreSniffManager sharedPreSniffManager] startManager];
+//    [[PreSniffManager sharedPreSniffManager].authenticator authenticateInstallation];
+    
     return YES;
 }
 
