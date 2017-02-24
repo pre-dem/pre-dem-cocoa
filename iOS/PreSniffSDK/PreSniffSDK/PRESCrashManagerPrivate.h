@@ -27,7 +27,7 @@
  */
 
 
-#import "HockeySDK.h"
+#import "PreSniffSDK.h"
 
 #if HOCKEYSDK_FEATURE_CRASH_REPORTER
 

@@ -31,7 +31,7 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#import "HockeySDK.h"
+#import "PreSniffSDK.h"
 #import "PreSniffSDKPrivate.h"
 
 #if HOCKEYSDK_FEATURE_CRASH_REPORTER
