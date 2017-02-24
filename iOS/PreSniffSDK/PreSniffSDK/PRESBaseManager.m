@@ -26,7 +26,7 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#import "HockeySDK.h"
+#import "PreSniffSDK.h"
 #import "PreSniffSDKPrivate.h"
 
 #import "PRESHelper.h"

@@ -27,7 +27,7 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#import "HockeySDK.h"
+#import "PreSniffSDK.h"
 #import "PreSniffSDKPrivate.h"
 #include <CommonCrypto/CommonDigest.h>
 

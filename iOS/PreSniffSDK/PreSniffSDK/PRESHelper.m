@@ -29,7 +29,7 @@
 
 #import "PRESHelper.h"
 #import "PRESKeychainUtils.h"
-#import "HockeySDK.h"
+#import "PreSniffSDK.h"
 #import "PreSniffSDKPrivate.h"
 #if !defined (HOCKEYSDK_CONFIGURATION_ReleaseCrashOnly) && !defined (HOCKEYSDK_CONFIGURATION_ReleaseCrashOnlyExtensions)
 #import <QuartzCore/QuartzCore.h>

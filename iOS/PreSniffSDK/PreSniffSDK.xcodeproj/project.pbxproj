@@ -48,7 +48,6 @@
 		052960C91E5E93C80096CB3F /* PreSniffManagerDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 052960C61E5E93C80096CB3F /* PreSniffManagerDelegate.h */; };
 		052960CB1E5E95610096CB3F /* CrashReporter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 052960CA1E5E95610096CB3F /* CrashReporter.framework */; };
 		052960CE1E5E97E20096CB3F /* HockeySDKBase.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 052960CD1E5E97E20096CB3F /* HockeySDKBase.xcconfig */; };
-		052960ED1E5ED2150096CB3F /* HockeySDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 052960EC1E5ED2150096CB3F /* HockeySDKResources.bundle */; };
 		B683A6131E5C1845007F0459 /* PreSniffSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = B683A6111E5C1845007F0459 /* PreSniffSDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B6AE3A011E5C296400737C2A /* PRESURLProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = B6AE39FF1E5C296400737C2A /* PRESURLProtocol.h */; };
 		B6AE3A021E5C296400737C2A /* PRESURLProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = B6AE3A001E5C296400737C2A /* PRESURLProtocol.m */; };
@@ -96,7 +95,6 @@
 		052960C61E5E93C80096CB3F /* PreSniffManagerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreSniffManagerDelegate.h; sourceTree = "<group>"; };
 		052960CA1E5E95610096CB3F /* CrashReporter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CrashReporter.framework; path = Vendor/CrashReporter.framework; sourceTree = "<group>"; };
 		052960CD1E5E97E20096CB3F /* HockeySDKBase.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = HockeySDKBase.xcconfig; path = Support/HockeySDKBase.xcconfig; sourceTree = "<group>"; };
-		052960EC1E5ED2150096CB3F /* HockeySDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = HockeySDKResources.bundle; path = Resources/HockeySDKResources.bundle; sourceTree = "<group>"; };
 		1F9D8CAF70BE6832D500F74B /* Pods-PreSniffSDK.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PreSniffSDK.release.xcconfig"; path = "Pods/Target Support Files/Pods-PreSniffSDK/Pods-PreSniffSDK.release.xcconfig"; sourceTree = "<group>"; };
 		3E3A750A819E32FB0E70D691 /* Pods-PreSniffSDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PreSniffSDK.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PreSniffSDK/Pods-PreSniffSDK.debug.xcconfig"; sourceTree = "<group>"; };
 		B683A60E1E5C1845007F0459 /* PreSniffSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PreSniffSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -185,7 +183,6 @@
 		052960EB1E5ED1F30096CB3F /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				052960EC1E5ED2150096CB3F /* HockeySDKResources.bundle */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -352,7 +349,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				052960CE1E5E97E20096CB3F /* HockeySDKBase.xcconfig in Resources */,
-				052960ED1E5ED2150096CB3F /* HockeySDKResources.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

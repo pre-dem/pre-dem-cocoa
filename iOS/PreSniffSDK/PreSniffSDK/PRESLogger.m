@@ -1,5 +1,5 @@
 #import "PRESLogger.h"
-#import "HockeySDK.h"
+#import "PreSniffSDK.h"
 
 @implementation PRESLogger
 
