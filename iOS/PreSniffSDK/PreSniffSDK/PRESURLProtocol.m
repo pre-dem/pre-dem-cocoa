@@ -37,7 +37,7 @@ NSURLSessionDataDelegate
     }
     
     // SDK主动发送的数据
-    if ([NSURLProtocol propertyForKey:@"PERSURLProtocol" inRequest:request] ) {
+    if ([NSURLProtocol propertyForKey:@"PRESURLProtocol" inRequest:request] ) {
         return NO;
     }
     
@@ -46,19 +46,21 @@ NSURLSessionDataDelegate
 
 + (NSURLRequest *)canonicalRequestForRequest:(NSURLRequest *)request {
     NSMutableURLRequest *mutableRequest = [request mutableCopy];
+    [mutableRequest setValue:mutableRequest.URL.host forHTTPHeaderField:@"Host"];
+    [NSURLProtocol setProperty:@YES
+                        forKey:@"PRESURLProtocol"
+                     inRequest:mutableRequest];
+    NSMutableArray *resolvers = [[NSMutableArray alloc] init];
+    [resolvers addObject:[QNResolver systemResolver]];
+    [resolvers addObject:[[QNResolver alloc] initWithAddress:DNSPodsHost]];
+    QNDnsManager *dns = [[QNDnsManager alloc] init:resolvers networkInfo:[QNNetworkInfo normal]];
+    NSURL *replacedURL = [dns queryAndReplaceWithIP:mutableRequest.URL];
     if ([request.URL.scheme isEqualToString:@"http"]) {
-        [mutableRequest setValue:mutableRequest.URL.host forHTTPHeaderField:@"Host"];
-        [NSURLProtocol setProperty:@YES
-                            forKey:@"PERSURLProtocol"
-                         inRequest:mutableRequest];
-        NSMutableArray *resolvers = [[NSMutableArray alloc] init];
-        [resolvers addObject:[QNResolver systemResolver]];
-        [resolvers addObject:[[QNResolver alloc] initWithAddress:DNSPodsHost]];
-        QNDnsManager *dns = [[QNDnsManager alloc] init:resolvers networkInfo:[QNNetworkInfo normal]];
-        NSURL *replacedURL = [dns queryAndReplaceWithIP:mutableRequest.URL];
         mutableRequest.URL = replacedURL;
+        return mutableRequest;
+    } else {
+        return request;
     }
-    return mutableRequest;
 }
 
 - (void)startLoading {
@@ -77,10 +79,9 @@ NSURLSessionDataDelegate
     completionHandler(request);
 }
 
-//- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask willCacheResponse:(NSCachedURLResponse *)proposedResponse completionHandler:(void (^)(NSCachedURLResponse * _Nullable))completionHandler {
-////    [self.client URLProtocol:self cachedResponseIsValid:proposedResponse];
-//    completionHandler(nil);
-//}
+- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask willCacheResponse:(NSCachedURLResponse *)proposedResponse completionHandler:(void (^)(NSCachedURLResponse * _Nullable))completionHandler {
+    completionHandler(nil);
+}
 
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveResponse:(NSURLResponse *)response completionHandler:(void (^)(NSURLSessionResponseDisposition))completionHandler {
     [self.client URLProtocol:self didReceiveResponse:response cacheStoragePolicy:NSURLCacheStorageAllowed];
