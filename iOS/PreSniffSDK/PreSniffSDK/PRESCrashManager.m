@@ -97,7 +97,7 @@ static PRESCrashManagerCallbacks bitCrashCallbacks = {
 };
 
 #if HOCKEYSDK_FEATURE_METRICS
-static void bit_save_events_callback(siginfo_t *info, ucontext_t *uap, void *context) {
+static void pres_save_events_callback(siginfo_t *info, ucontext_t *uap, void *context) {
   
   // Do not flush metrics queue if queue is empty (metrics module disabled) to not freeze the app
   if (!BITSafeJsonEventsString) {
@@ -122,7 +122,7 @@ static void bit_save_events_callback(siginfo_t *info, ucontext_t *uap, void *con
 // Proxy implementation for PLCrashReporter to keep our interface stable while this can change
 static void plcr_post_crash_callback (siginfo_t *info, ucontext_t *uap, void *context) {
 #if HOCKEYSDK_FEATURE_METRICS
-  bit_save_events_callback(info, uap, context);
+  pres_save_events_callback(info, uap, context);
 #endif
   if (bitCrashCallbacks.handleSignal != NULL) {
     bitCrashCallbacks.handleSignal(context);
@@ -242,12 +242,12 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
       [[NSUserDefaults standardUserDefaults] setInteger:_crashManagerStatus forKey:kPRESCrashManagerStatus];
     }
     
-    _crashesDir = bit_settingsDir();
+    _crashesDir = pres_settingsDir();
     _settingsFile = [_crashesDir stringByAppendingPathComponent:BITHOCKEY_CRASH_SETTINGS];
     _analyzerInProgressFile = [_crashesDir stringByAppendingPathComponent:BITHOCKEY_CRASH_ANALYZER];
 
     
-    if (!BITHockeyBundle() && !bit_isRunningInAppExtension()) {
+    if (!BITHockeyBundle() && !pres_isRunningInAppExtension()) {
       BITHockeyLogWarning(@"[HockeySDK] WARNING: %@ is missing, will send reports automatically!", BITHOCKEYSDK_BUNDLE);
     }
   }
@@ -521,7 +521,7 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
                                                                                              if (!_didLogLowMemoryWarning) {
                                                                                                [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kBITAppDidReceiveLowMemoryNotification];
                                                                                                _didLogLowMemoryWarning = YES;
-                                                                                               if(bit_isPreiOS8Environment()) {
+                                                                                               if(pres_isPreiOS8Environment()) {
                                                                                                  // calling synchronize in pre-iOS 8 takes longer to sync than in iOS 8+, calling synchronize explicitly.
                                                                                                  [[NSUserDefaults standardUserDefaults] synchronize];
                                                                                                }
@@ -550,7 +550,7 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
 - (void)leavingAppSafely {
   if (self.isAppNotTerminatingCleanlyDetectionEnabled) {
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kBITAppWentIntoBackgroundSafely];
-    if(bit_isPreiOS8Environment()) {
+    if(pres_isPreiOS8Environment()) {
       // calling synchronize in pre-iOS 8 takes longer to sync than in iOS 8+, calling synchronize explicitly.
       [[NSUserDefaults standardUserDefaults] synchronize];
     }
@@ -584,7 +584,7 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
                              ];
 
       [[NSUserDefaults standardUserDefaults] setObject:uuidString forKey:kBITAppUUIDs];
-      if(bit_isPreiOS8Environment()) {
+      if(pres_isPreiOS8Environment()) {
         // calling synchronize in pre-iOS 8 takes longer to sync than in iOS 8+, calling synchronize explicitly.
         [[NSUserDefaults standardUserDefaults] synchronize];
       }
@@ -606,7 +606,7 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
   if (sysctlbyname("hw.cpusubtype", &subtype, &size, NULL, 0))
     return archName;
 
-  archName = [PRESCrashReportTextFormatter bit_archNameFromCPUType:type subType:subtype] ?: @"???";
+  archName = [PRESCrashReportTextFormatter pres_archNameFromCPUType:type subType:subtype] ?: @"???";
   
   return archName;
 }
@@ -741,7 +741,7 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
 
 
 - (BOOL)isDebuggerAttached {
-  return bit_isDebuggerAttached();
+  return pres_isDebuggerAttached();
 }
 
 
@@ -901,7 +901,7 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
           incidentIdentifier = (NSString *) CFBridgingRelease(CFUUIDCreateString(NULL, report.uuidRef));
         }
         
-        NSString *reporterKey = bit_appAnonID(NO) ?: @"";
+        NSString *reporterKey = pres_appAnonID(NO) ?: @"";
 
         _lastSessionCrashDetails = [[PRESCrashDetails alloc] initWithIncidentIdentifier:incidentIdentifier
                                                                            reporterKey:reporterKey
@@ -1025,7 +1025,7 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
  */
 - (void)invokeDelayedProcessing {
 #if !defined (HOCKEYSDK_CONFIGURATION_ReleaseCrashOnlyExtensions)
-  if (!bit_isRunningInAppExtension() &&
+  if (!pres_isRunningInAppExtension() &&
       [[UIApplication sharedApplication] applicationState] != UIApplicationStateActive) {
     return;
   }
@@ -1055,7 +1055,7 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
       _lastCrashFilename = [notApprovedReportFilename lastPathComponent];
     }
 
-    if (!BITHockeyBundle() || bit_isRunningInAppExtension()) {
+    if (!BITHockeyBundle() || pres_isRunningInAppExtension()) {
       [self approveLatestCrashReport];
       [self sendNextCrashReport];
       
@@ -1067,7 +1067,7 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
         [self.delegate crashManagerWillShowSubmitCrashReportAlert:self];
       }
       
-      NSString *appName = bit_appName(BITHockeyLocalizedString(@"HockeyAppNamePlaceholder"));
+      NSString *appName = pres_appName(BITHockeyLocalizedString(@"HockeyAppNamePlaceholder"));
       NSString *alertDescription = [NSString stringWithFormat:BITHockeyLocalizedString(@"CrashDataFoundAnonymousDescription"), appName];
       
       // the crash report is not anonymous any more if username or useremail are not nil
@@ -1285,7 +1285,7 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
   
   [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kBITAppDidReceiveLowMemoryNotification];
   
-  if(bit_isPreiOS8Environment()) {
+  if(pres_isPreiOS8Environment()) {
     // calling synchronize in pre-iOS 8 takes longer to sync than in iOS 8+, calling synchronize explicitly.
     [[NSUserDefaults standardUserDefaults] synchronize];
   }
@@ -1298,8 +1298,8 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
  *  Creates a fake crash report because the app was killed while being in foreground
  */
 - (void)createCrashReportForAppKill {
-  NSString *fakeReportUUID = bit_UUID();
-  NSString *fakeReporterKey = bit_appAnonID(NO) ?: @"???";
+  NSString *fakeReportUUID = pres_UUID();
+  NSString *fakeReporterKey = pres_appAnonID(NO) ?: @"???";
   
   NSString *fakeReportAppMarketingVersion = [[NSUserDefaults standardUserDefaults] objectForKey:kBITAppMarketingVersion];
 
@@ -1471,7 +1471,7 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
       return;
     }
     
-    installString = bit_appAnonID(NO) ?: @"";
+    installString = pres_appAnonID(NO) ?: @"";
     
     if (report) {
       if (report.uuidRef != NULL) {

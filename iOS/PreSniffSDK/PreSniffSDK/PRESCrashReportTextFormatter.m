@@ -71,7 +71,7 @@
 /**
  * Sort PLCrashReportBinaryImageInfo instances by their starting address.
  */
-static NSInteger bit_binaryImageSort(id binary1, id binary2, void *__unused context) {
+static NSInteger pres_binaryImageSort(id binary1, id binary2, void *__unused context) {
   uint64_t addr1 = [binary1 imageBaseAddress];
   uint64_t addr2 = [binary2 imageBaseAddress];
   
@@ -202,7 +202,7 @@ NSString *const BITXamarinStackTraceDelimiter = @"Xamarin Exception Stack:";
  * the formatted result as a string.
  *
  * @param report The report to format.
- * @param textFormat The text format to use.
+ * @param crashReporterKey The text format to use.
  *
  * @return Returns the formatted result on success, or nil if an error occurs.
  */
@@ -497,7 +497,7 @@ NSString *const BITXamarinStackTraceDelimiter = @"Xamarin Exception Stack:";
      * post-processed report, Apple writes this out as full frame entries. We use the latter format. */
     for (NSUInteger frame_idx = 0; frame_idx < [exception.stackFrames count]; frame_idx++) {
       BITPLCrashReportStackFrameInfo *frameInfo = exception.stackFrames[frame_idx];
-      [text appendString: [[self class] bit_formatStackFrame: frameInfo frameIndex: frame_idx report: report lp64: lp64]];
+      [text appendString: [[self class] pres_formatStackFrame: frameInfo frameIndex: frame_idx report: report lp64: lp64]];
     }
     [text appendString: @"\n"];
   }
@@ -512,7 +512,7 @@ NSString *const BITXamarinStackTraceDelimiter = @"Xamarin Exception Stack:";
     }
     for (NSUInteger frame_idx = 0; frame_idx < [thread.stackFrames count]; frame_idx++) {
       BITPLCrashReportStackFrameInfo *frameInfo = thread.stackFrames[frame_idx];
-      [text appendString:[[self class] bit_formatStackFrame:frameInfo frameIndex:frame_idx report:report lp64:lp64]];
+      [text appendString:[[self class] pres_formatStackFrame:frameInfo frameIndex:frame_idx report:report lp64:lp64]];
     }
     [text appendString: @"\n"];
     
@@ -563,7 +563,7 @@ NSString *const BITXamarinStackTraceDelimiter = @"Xamarin Exception Stack:";
   /* Images. The iPhone crash report format sorts these in ascending order, by the base address */
   [text appendString: @"Binary Images:\n"];
   NSMutableArray *addedImagesBaseAddresses = @[].mutableCopy;
-  for (BITPLCrashReportBinaryImageInfo *imageInfo in [report.images sortedArrayUsingFunction: bit_binaryImageSort context: nil]) {
+  for (BITPLCrashReportBinaryImageInfo *imageInfo in [report.images sortedArrayUsingFunction: pres_binaryImageSort context: nil]) {
     // Make sure we don't add duplicates
     if ([addedImagesBaseAddresses containsObject:@(imageInfo.imageBaseAddress)]) {
       continue;
@@ -579,11 +579,11 @@ NSString *const BITXamarinStackTraceDelimiter = @"Xamarin Exception Stack:";
       uuid = @"???";
     
     /* Determine the architecture string */
-    NSString *archName = [[self class] bit_archNameFromImageInfo:imageInfo];
+    NSString *archName = [[self class] pres_archNameFromImageInfo:imageInfo];
     
     /* Determine if this is the main executable or an app specific framework*/
     NSString *binaryDesignator = @" ";
-    BITBinaryImageType imageType = [[self class] bit_imageTypeForImagePath:imageInfo.imageName
+    BITBinaryImageType imageType = [[self class] pres_imageTypeForImagePath:imageInfo.imageName
                                                                processPath:report.processInfo.processPath];
     if (imageType != BITBinaryImageTypeOther) {
         binaryDesignator = @"+";
@@ -628,7 +628,7 @@ NSString *const BITXamarinStackTraceDelimiter = @"Xamarin Exception Stack:";
  *
  *  @param regName The name of the register to use for getting the address
  *  @param thread  The crashed thread
- *  @param images  NSArray of binary images
+ *  @param report  NSArray of binary images
  *
  *  @return The selector as a C string or NULL if no selector was found
  */
@@ -672,16 +672,16 @@ NSString *const BITXamarinStackTraceDelimiter = @"Xamarin Exception Stack:";
 	NSMutableArray* appUUIDs = [NSMutableArray array];
   
   /* Images. The iPhone crash report format sorts these in ascending order, by the base address */
-  for (BITPLCrashReportBinaryImageInfo *imageInfo in [report.images sortedArrayUsingFunction: bit_binaryImageSort context: nil]) {
+  for (BITPLCrashReportBinaryImageInfo *imageInfo in [report.images sortedArrayUsingFunction: pres_binaryImageSort context: nil]) {
     NSString *uuid;
     /* Fetch the UUID if it exists */
     uuid = imageInfo.hasImageUUID ? imageInfo.imageUUID : @"???";
     
     /* Determine the architecture string */
-    NSString *archName = [[self class] bit_archNameFromImageInfo:imageInfo];
+    NSString *archName = [[self class] pres_archNameFromImageInfo:imageInfo];
 
     /* Determine if this is the app executable or app specific framework */
-    BITBinaryImageType imageType = [[self class] bit_imageTypeForImagePath:imageInfo.imageName
+    BITBinaryImageType imageType = [[self class] pres_imageTypeForImagePath:imageInfo.imageName
                                                                processPath:report.processInfo.processPath];
     if (imageType != BITBinaryImageTypeOther) {
       NSString *imageTypeString;
@@ -703,7 +703,7 @@ NSString *const BITXamarinStackTraceDelimiter = @"Xamarin Exception Stack:";
 }
 
 /* Determine if in binary image is the app executable or app specific framework */
-+ (BITBinaryImageType)bit_imageTypeForImagePath:(NSString *)imagePath processPath:(NSString *)processPath {
++ (BITBinaryImageType)pres_imageTypeForImagePath:(NSString *)imagePath processPath:(NSString *)processPath {
   if (!imagePath || !processPath) {
     return BITBinaryImageTypeOther;
   }
@@ -736,17 +736,17 @@ NSString *const BITXamarinStackTraceDelimiter = @"Xamarin Exception Stack:";
   return imageType;
 }
 
-+ (NSString *)bit_archNameFromImageInfo:(BITPLCrashReportBinaryImageInfo *)imageInfo
++ (NSString *)pres_archNameFromImageInfo:(BITPLCrashReportBinaryImageInfo *)imageInfo
 {
   NSString *archName = @"???";
   if (imageInfo.codeType != nil && imageInfo.codeType.typeEncoding == PLCrashReportProcessorTypeEncodingMach) {
-    archName = [PRESCrashReportTextFormatter bit_archNameFromCPUType:imageInfo.codeType.type subType:imageInfo.codeType.subtype];
+    archName = [PRESCrashReportTextFormatter pres_archNameFromCPUType:imageInfo.codeType.type subType:imageInfo.codeType.subtype];
   }
   
   return archName;
 }
 
-+ (NSString *)bit_archNameFromCPUType:(uint64_t)cpuType subType:(uint64_t)subType {
++ (NSString *)pres_archNameFromCPUType:(uint64_t)cpuType subType:(uint64_t)subType {
   NSString *archName = @"???";
   switch (cpuType) {
     case CPU_TYPE_ARM:
@@ -818,7 +818,7 @@ NSString *const BITXamarinStackTraceDelimiter = @"Xamarin Exception Stack:";
  *
  * @return Returns a formatted frame line.
  */
-+ (NSString *)bit_formatStackFrame: (BITPLCrashReportStackFrameInfo *) frameInfo
++ (NSString *)pres_formatStackFrame: (BITPLCrashReportStackFrameInfo *) frameInfo
                         frameIndex: (NSUInteger) frameIndex
                             report: (BITPLCrashReport *) report
                               lp64: (boolean_t) lp64
@@ -858,7 +858,7 @@ NSString *const BITXamarinStackTraceDelimiter = @"Xamarin Exception Stack:";
   
   /* If symbol info is available, the format used in Apple's reports is Sym + OffsetFromSym. Otherwise,
    * the format used is imageBaseAddress + offsetToIP */
-  BITBinaryImageType imageType = [[self class] bit_imageTypeForImagePath:imageInfo.imageName
+  BITBinaryImageType imageType = [[self class] pres_imageTypeForImagePath:imageInfo.imageName
                                                              processPath:report.processInfo.processPath];
   if (frameInfo.symbolInfo != nil && imageType == BITBinaryImageTypeOther) {
     NSString *symbolName = frameInfo.symbolInfo.symbolName;
@@ -901,7 +901,7 @@ NSString *const BITXamarinStackTraceDelimiter = @"Xamarin Exception Stack:";
  *  This is only necessary when sending crashes from the simulator as the path
  *  then contains the username of the Mac the simulator is running on.
  *
- *  @param processPath A string containing the username
+ *  @param path A string containing the username
  *
  *  @return An anonymized string where the real username is replaced by "USER"
  */

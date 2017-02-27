@@ -44,12 +44,12 @@ NSString *const kBITExcludeApplicationSupportFromBackup = @"kBITExcludeApplicati
 
 + (BOOL)isURLSessionSupported {
   id nsurlsessionClass = NSClassFromString(@"NSURLSessionUploadTask");
-  BOOL isUrlSessionSupported = (nsurlsessionClass && !bit_isRunningInAppExtension());
+  BOOL isUrlSessionSupported = (nsurlsessionClass && !pres_isRunningInAppExtension());
   return isUrlSessionSupported;
 }
 
 + (BOOL)isPhotoAccessPossible {
-  if(bit_isPreiOS10Environment()) {
+  if(pres_isPreiOS10Environment()) {
     return YES;
   }
   else {
@@ -70,20 +70,20 @@ NSString *const kBITExcludeApplicationSupportFromBackup = @"kBITExcludeApplicati
 
 typedef struct {
   uint8_t       info_version;
-  const char    bit_version[16];
-  const char    bit_build[16];
-} bit_info_t;
+  const char    pres_version[16];
+  const char    pres_build[16];
+} pres_info_t;
 
-bit_info_t hockeyapp_library_info __attribute__((section("__TEXT,__bit_ios,regular,no_dead_strip"))) = {
+pres_info_t hockeyapp_library_info __attribute__((section("__TEXT,__pres_ios,regular,no_dead_strip"))) = {
   .info_version = 1,
-  .bit_version = BITHOCKEY_C_VERSION,
-  .bit_build = BITHOCKEY_C_BUILD
+  .pres_version = BITHOCKEY_C_VERSION,
+  .pres_build = BITHOCKEY_C_BUILD
 };
 
 
 #pragma mark - Helpers
 
-NSString *bit_settingsDir(void) {
+NSString *pres_settingsDir(void) {
   static NSString *settingsDir = nil;
   static dispatch_once_t predSettingsDir;
   
@@ -105,7 +105,7 @@ NSString *bit_settingsDir(void) {
   return settingsDir;
 }
 
-BOOL bit_validateEmail(NSString *email) {
+BOOL pres_validateEmail(NSString *email) {
   NSString *emailRegex =
   @"(?:[a-z0-9!#$%\\&'*+/=?\\^_`{|}~-]+(?:\\.[a-z0-9!#$%\\&'*+/=?\\^_`{|}"
   @"~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\"
@@ -119,18 +119,18 @@ BOOL bit_validateEmail(NSString *email) {
   return [emailTest evaluateWithObject:email];
 }
 
-NSString *bit_keychainHockeySDKServiceName(void) {
+NSString *pres_keychainHockeySDKServiceName(void) {
   static NSString *serviceName = nil;
   static dispatch_once_t predServiceName;
   
   dispatch_once(&predServiceName, ^{
-    serviceName = [NSString stringWithFormat:@"%@.HockeySDK", bit_mainBundleIdentifier()];
+    serviceName = [NSString stringWithFormat:@"%@.HockeySDK", pres_mainBundleIdentifier()];
   });
   
   return serviceName;
 }
 
-NSComparisonResult bit_versionCompare(NSString *stringA, NSString *stringB) {
+NSComparisonResult pres_versionCompare(NSString *stringA, NSString *stringB) {
   // Extract plain version number from self
   NSString *plainSelf = stringA;
   NSRange letterRange = [plainSelf rangeOfCharacterFromSet: [NSCharacterSet letterCharacterSet]];
@@ -156,7 +156,7 @@ NSComparisonResult bit_versionCompare(NSString *stringA, NSString *stringB) {
 
 #pragma mark Exclude from backup fix
 
-void bit_fixBackupAttributeForURL(NSURL *directoryURL) {
+void pres_fixBackupAttributeForURL(NSURL *directoryURL) {
   
   BOOL shouldExcludeAppSupportDirFromBackup = [[NSUserDefaults standardUserDefaults] boolForKey:kBITExcludeApplicationSupportFromBackup];
   if (shouldExcludeAppSupportDirFromBackup) {
@@ -176,15 +176,15 @@ void bit_fixBackupAttributeForURL(NSURL *directoryURL) {
 
 #pragma mark Identifiers
 
-NSString *bit_mainBundleIdentifier(void) {
+NSString *pres_mainBundleIdentifier(void) {
   return [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleIdentifier"];
 }
 
-NSString *bit_encodeAppIdentifier(NSString *inputString) {
-  return (inputString ? bit_URLEncodedString(inputString) : bit_URLEncodedString(bit_mainBundleIdentifier()));
+NSString *pres_encodeAppIdentifier(NSString *inputString) {
+  return (inputString ? pres_URLEncodedString(inputString) : pres_URLEncodedString(pres_mainBundleIdentifier()));
 }
 
-NSString *bit_appIdentifierToGuid(NSString *appIdentifier) {
+NSString *pres_appIdentifierToGuid(NSString *appIdentifier) {
   NSMutableString *guid;
   NSString *cleanAppId = [appIdentifier stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
   if(cleanAppId && cleanAppId.length == 32) {
@@ -198,7 +198,7 @@ NSString *bit_appIdentifierToGuid(NSString *appIdentifier) {
   return [guid copy];
 }
 
-NSString *bit_appName(NSString *placeHolderString) {
+NSString *pres_appName(NSString *placeHolderString) {
   NSString *appName = [[[NSBundle mainBundle] localizedInfoDictionary] objectForKey:@"CFBundleDisplayName"];
   if (!appName)
     appName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"];
@@ -210,7 +210,7 @@ NSString *bit_appName(NSString *placeHolderString) {
   return appName;
 }
 
-NSString *bit_UUIDPreiOS6(void) {
+NSString *pres_UUIDPreiOS6(void) {
   // Create a new UUID
   CFUUIDRef uuidObj = CFUUIDCreate(nil);
   
@@ -221,26 +221,26 @@ NSString *bit_UUIDPreiOS6(void) {
   return resultUUID;
 }
 
-NSString *bit_UUID(void) {
+NSString *pres_UUID(void) {
   NSString *resultUUID = nil;
   
   if ([NSUUID class]) {
     resultUUID = [[NSUUID UUID] UUIDString];
   } else {
-    resultUUID = bit_UUIDPreiOS6();
+    resultUUID = pres_UUIDPreiOS6();
   }
   
   return resultUUID;
 }
 
-NSString *bit_appAnonID(BOOL forceNewAnonID) {
+NSString *pres_appAnonID(BOOL forceNewAnonID) {
   static NSString *appAnonID = nil;
   static dispatch_once_t predAppAnonID;
   __block NSError *error = nil;
   NSString *appAnonIDKey = @"appAnonID";
   
   if (forceNewAnonID) {
-    appAnonID = bit_UUID();
+    appAnonID = pres_UUID();
     // store this UUID in the keychain (on this device only) so we can be sure to always have the same ID upon app startups
     if (appAnonID) {
       // add to keychain in a background thread, since we got reports that storing to the keychain may take several seconds sometimes and cause the app to be killed
@@ -248,7 +248,7 @@ NSString *bit_appAnonID(BOOL forceNewAnonID) {
       dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
         [PRESKeychainUtils storeUsername:appAnonIDKey
                             andPassword:appAnonID
-                         forServiceName:bit_keychainHockeySDKServiceName()
+                         forServiceName:pres_keychainHockeySDKServiceName()
                          updateExisting:YES
                           accessibility:kSecAttrAccessibleAlwaysThisDeviceOnly
                                   error:&error];
@@ -257,10 +257,10 @@ NSString *bit_appAnonID(BOOL forceNewAnonID) {
   } else {
     dispatch_once(&predAppAnonID, ^{
       // first check if we already have an install string in the keychain
-      appAnonID = [PRESKeychainUtils getPasswordForUsername:appAnonIDKey andServiceName:bit_keychainHockeySDKServiceName() error:&error];
+      appAnonID = [PRESKeychainUtils getPasswordForUsername:appAnonIDKey andServiceName:pres_keychainHockeySDKServiceName() error:&error];
       
       if (!appAnonID) {
-        appAnonID = bit_UUID();
+        appAnonID = pres_UUID();
         // store this UUID in the keychain (on this device only) so we can be sure to always have the same ID upon app startups
         if (appAnonID) {
           // add to keychain in a background thread, since we got reports that storing to the keychain may take several seconds sometimes and cause the app to be killed
@@ -268,7 +268,7 @@ NSString *bit_appAnonID(BOOL forceNewAnonID) {
           dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
             [PRESKeychainUtils storeUsername:appAnonIDKey
                                 andPassword:appAnonID
-                             forServiceName:bit_keychainHockeySDKServiceName()
+                             forServiceName:pres_keychainHockeySDKServiceName()
                              updateExisting:YES
                               accessibility:kSecAttrAccessibleAlwaysThisDeviceOnly
                                       error:&error];
@@ -283,7 +283,7 @@ NSString *bit_appAnonID(BOOL forceNewAnonID) {
 
 #pragma mark Environment detection
 
-BOOL bit_isPreiOS7Environment(void) {
+BOOL pres_isPreiOS7Environment(void) {
   static BOOL isPreiOS7Environment = YES;
   static dispatch_once_t checkOS;
   
@@ -303,7 +303,7 @@ BOOL bit_isPreiOS7Environment(void) {
   return isPreiOS7Environment;
 }
 
-BOOL bit_isPreiOS8Environment(void) {
+BOOL pres_isPreiOS8Environment(void) {
   static BOOL isPreiOS8Environment = YES;
   static dispatch_once_t checkOS8;
   
@@ -323,7 +323,7 @@ BOOL bit_isPreiOS8Environment(void) {
   return isPreiOS8Environment;
 }
 
-BOOL bit_isPreiOS10Environment(void) {
+BOOL pres_isPreiOS10Environment(void) {
   static BOOL isPreOS10Environment = YES;
   static dispatch_once_t checkOS10;
   
@@ -344,7 +344,7 @@ BOOL bit_isPreiOS10Environment(void) {
 }
 
 
-BOOL bit_isAppStoreReceiptSandbox(void) {
+BOOL pres_isAppStoreReceiptSandbox(void) {
 #if TARGET_OS_SIMULATOR
   return NO;
 #else
@@ -359,18 +359,18 @@ BOOL bit_isAppStoreReceiptSandbox(void) {
 #endif
 }
 
-BOOL bit_hasEmbeddedMobileProvision(void) {
+BOOL pres_hasEmbeddedMobileProvision(void) {
   BOOL hasEmbeddedMobileProvision = !![[NSBundle mainBundle] pathForResource:@"embedded" ofType:@"mobileprovision"];
   return hasEmbeddedMobileProvision;
 }
 
-BITEnvironment bit_currentAppEnvironment(void) {
+BITEnvironment pres_currentAppEnvironment(void) {
 #if TARGET_OS_SIMULATOR
   return BITEnvironmentOther;
 #else
   
   // MobilePovision profiles are a clear indicator for Ad-Hoc distribution
-  if (bit_hasEmbeddedMobileProvision()) {
+  if (pres_hasEmbeddedMobileProvision()) {
     return BITEnvironmentOther;
   }
   
@@ -379,7 +379,7 @@ BITEnvironment bit_currentAppEnvironment(void) {
     return BITEnvironmentAppStore;
   }
   
-  if (bit_isAppStoreReceiptSandbox()) {
+  if (pres_isAppStoreReceiptSandbox()) {
     return BITEnvironmentTestFlight;
   }
   
@@ -387,7 +387,7 @@ BITEnvironment bit_currentAppEnvironment(void) {
 #endif
 }
 
-BOOL bit_isRunningInAppExtension(void) {
+BOOL pres_isRunningInAppExtension(void) {
   static BOOL isRunningInAppExtension = NO;
   static dispatch_once_t checkAppExtension;
   
@@ -398,7 +398,7 @@ BOOL bit_isRunningInAppExtension(void) {
   return isRunningInAppExtension;
 }
 
-BOOL bit_isDebuggerAttached(void) {
+BOOL pres_isDebuggerAttached(void) {
   static BOOL debuggerIsAttached = NO;
   
   static dispatch_once_t debuggerPredicate;
@@ -426,7 +426,7 @@ BOOL bit_isDebuggerAttached(void) {
 
 #pragma mark NSString helpers
 
-NSString *bit_URLEncodedString(NSString *inputString) {
+NSString *pres_URLEncodedString(NSString *inputString) {
   
   // Requires iOS 7
   if ([inputString respondsToSelector:@selector(stringByAddingPercentEncodingWithAllowedCharacters:)]) {
@@ -445,7 +445,7 @@ NSString *bit_URLEncodedString(NSString *inputString) {
   }
 }
 
-NSString *bit_base64String(NSData * data, unsigned long length) {
+NSString *pres_base64String(NSData * data, unsigned long length) {
   SEL base64EncodingSelector = NSSelectorFromString(@"base64EncodedStringWithOptions:");
   if ([data respondsToSelector:base64EncodingSelector]) {
     return [data base64EncodedStringWithOptions:0];
@@ -460,11 +460,11 @@ NSString *bit_base64String(NSData * data, unsigned long length) {
 #pragma mark Context helpers
 
 // Return ISO 8601 string representation of the date
-NSString *bit_utcDateString(NSDate *date){
+NSString *pres_utcDateString(NSDate *date){
   static NSDateFormatter *dateFormatter;
   
   // NSDateFormatter is not thread-safe prior to iOS 7
-  if (bit_isPreiOS7Environment()) {
+  if (pres_isPreiOS7Environment()) {
     NSMutableDictionary *threadDictionary = [NSThread currentThread].threadDictionary;
     dateFormatter = threadDictionary[kBITUtcDateFormatter];
     
@@ -496,7 +496,7 @@ NSString *bit_utcDateString(NSDate *date){
   return dateString;
 }
 
-NSString *bit_devicePlatform(void) {
+NSString *pres_devicePlatform(void) {
   
   size_t size;
   sysctlbyname("hw.machine", NULL, &size, NULL, 0);
@@ -509,7 +509,7 @@ NSString *bit_devicePlatform(void) {
   return platform;
 }
 
-NSString *bit_deviceType(void){
+NSString *pres_deviceType(void){
   
   UIUserInterfaceIdiom idiom = [UIDevice currentDevice].userInterfaceIdiom;
   
@@ -523,7 +523,7 @@ NSString *bit_deviceType(void){
   }
 }
 
-NSString *bit_osVersionBuild(void) {
+NSString *pres_osVersionBuild(void) {
   void *result = NULL;
   size_t result_len = 0;
   int ret;
@@ -566,30 +566,30 @@ NSString *bit_osVersionBuild(void) {
   return [NSString stringWithFormat:@"%@ (%@)", osVersion, osBuild];
 }
 
-NSString *bit_osName(void){
+NSString *pres_osName(void){
   return [[UIDevice currentDevice] systemName];
 }
 
-NSString *bit_deviceLocale(void) {
+NSString *pres_deviceLocale(void) {
   NSLocale *locale = [NSLocale currentLocale];
   return [locale objectForKey:NSLocaleIdentifier];
 }
 
-NSString *bit_deviceLanguage(void) {
+NSString *pres_deviceLanguage(void) {
   return [[NSBundle mainBundle] preferredLocalizations][0];
 }
 
-NSString *bit_screenSize(void){
+NSString *pres_screenSize(void){
   CGFloat scale = [UIScreen mainScreen].scale;
   CGSize screenSize = [UIScreen mainScreen].bounds.size;
   return [NSString stringWithFormat:@"%dx%d",(int)(screenSize.height * scale), (int)(screenSize.width * scale)];
 }
 
-NSString *bit_sdkVersion(void){
-  return [NSString stringWithFormat:@"ios:%@", [NSString stringWithUTF8String:hockeyapp_library_info.bit_version]];
+NSString *pres_sdkVersion(void){
+  return [NSString stringWithFormat:@"ios:%@", [NSString stringWithUTF8String:hockeyapp_library_info.pres_version]];
 }
 
-NSString *bit_appVersion(void){
+NSString *pres_appVersion(void){
   NSString *build = [[NSBundle mainBundle] infoDictionary][@"CFBundleVersion"];
   NSString *version = [[NSBundle mainBundle] infoDictionary][@"CFBundleShortVersionString"];
   
@@ -611,7 +611,7 @@ NSString *bit_appVersion(void){
  
  @return NSString with the valid app icon or nil if none found
  */
-NSString *bit_validAppIconStringFromIcons(NSBundle *resourceBundle, NSArray *icons) {
+NSString *pres_validAppIconStringFromIcons(NSBundle *resourceBundle, NSArray *icons) {
   if (!icons) return nil;
   if (![icons isKindOfClass:[NSArray class]]) return nil;
   
@@ -624,7 +624,7 @@ NSString *bit_validAppIconStringFromIcons(NSBundle *resourceBundle, NSArray *ico
   float currentBestMatchHeight = 0;
   float bestMatchHeight = 0;
   
-  if (bit_isPreiOS7Environment()) {
+  if (pres_isPreiOS7Environment()) {
     bestMatchHeight = useiPadIcon ? (useHighResIcon ? 144 : 72) : (useHighResIcon ? 114 : 57);
   } else {
     bestMatchHeight = useiPadIcon ? (useHighResIcon ? 152 : 76) : 120;
@@ -673,19 +673,19 @@ NSString *bit_validAppIconStringFromIcons(NSBundle *resourceBundle, NSArray *ico
   return currentBestMatch;
 }
 
-NSString *bit_validAppIconFilename(NSBundle *bundle, NSBundle *resourceBundle) {
+NSString *pres_validAppIconFilename(NSBundle *bundle, NSBundle *resourceBundle) {
   NSString *iconFilename = nil;
   NSArray *icons = nil;
   
   icons = [bundle objectForInfoDictionaryKey:@"CFBundleIconFiles"];
-  iconFilename = bit_validAppIconStringFromIcons(resourceBundle, icons);
+  iconFilename = pres_validAppIconStringFromIcons(resourceBundle, icons);
   
   if (!iconFilename) {
     icons = [bundle objectForInfoDictionaryKey:@"CFBundleIcons"];
     if (icons && [icons isKindOfClass:[NSDictionary class]]) {
       icons = [icons valueForKeyPath:@"CFBundlePrimaryIcon.CFBundleIconFiles"];
     }
-    iconFilename = bit_validAppIconStringFromIcons(resourceBundle, icons);
+    iconFilename = pres_validAppIconStringFromIcons(resourceBundle, icons);
   }
   
   // we test iPad structure anyway and use it if we find a result and don't have another one yet
@@ -694,19 +694,19 @@ NSString *bit_validAppIconFilename(NSBundle *bundle, NSBundle *resourceBundle) {
     if (icons && [icons isKindOfClass:[NSDictionary class]]) {
       icons = [icons valueForKeyPath:@"CFBundlePrimaryIcon.CFBundleIconFiles"];
     }
-    NSString *iPadIconFilename = bit_validAppIconStringFromIcons(resourceBundle, icons);
+    NSString *iPadIconFilename = pres_validAppIconStringFromIcons(resourceBundle, icons);
     iconFilename = iPadIconFilename;
   }
   
   if (!iconFilename) {
     NSString *tempFilename = [bundle objectForInfoDictionaryKey:@"CFBundleIconFile"];
     if (tempFilename) {
-      iconFilename = bit_validAppIconStringFromIcons(resourceBundle, @[tempFilename]);
+      iconFilename = pres_validAppIconStringFromIcons(resourceBundle, @[tempFilename]);
     }
   }
   
   if (!iconFilename) {
-    iconFilename = bit_validAppIconStringFromIcons(resourceBundle, @[@"Icon.png"]);
+    iconFilename = pres_validAppIconStringFromIcons(resourceBundle, @[@"Icon.png"]);
   }
   
   return iconFilename;
@@ -714,16 +714,16 @@ NSString *bit_validAppIconFilename(NSBundle *bundle, NSBundle *resourceBundle) {
 
 #pragma mark UIImage private helpers
 
-static void bit_addRoundedRectToPath(CGRect rect, CGContextRef context, CGFloat ovalWidth, CGFloat ovalHeight);
-static CGContextRef bit_MyOpenBitmapContext(int pixelsWide, int pixelsHigh);
-static CGImageRef bit_CreateGradientImage(int pixelsWide, int pixelsHigh, float fromAlpha, float toAlpha);
-static BOOL bit_hasAlpha(UIImage *inputImage);
-UIImage *bit_imageWithAlpha(UIImage *inputImage);
-UIImage *bit_addGlossToImage(UIImage *inputImage);
+static void pres_addRoundedRectToPath(CGRect rect, CGContextRef context, CGFloat ovalWidth, CGFloat ovalHeight);
+static CGContextRef pres_MyOpenBitmapContext(int pixelsWide, int pixelsHigh);
+static CGImageRef pres_CreateGradientImage(int pixelsWide, int pixelsHigh, float fromAlpha, float toAlpha);
+static BOOL pres_hasAlpha(UIImage *inputImage);
+UIImage *pres_imageWithAlpha(UIImage *inputImage);
+UIImage *pres_addGlossToImage(UIImage *inputImage);
 
 // Adds a rectangular path to the given context and rounds its corners by the given extents
 // Original author: Björn Sållarp. Used with permission. See: http://blog.sallarp.com/iphone-uiimage-round-corners/
-void bit_addRoundedRectToPath(CGRect rect, CGContextRef context, CGFloat ovalWidth, CGFloat ovalHeight) {
+void pres_addRoundedRectToPath(CGRect rect, CGContextRef context, CGFloat ovalWidth, CGFloat ovalHeight) {
   if (ovalWidth == 0 || ovalHeight == 0) {
     CGContextAddRect(context, rect);
     return;
@@ -742,7 +742,7 @@ void bit_addRoundedRectToPath(CGRect rect, CGContextRef context, CGFloat ovalWid
   CGContextRestoreGState(context);
 }
 
-CGImageRef bit_CreateGradientImage(int pixelsWide, int pixelsHigh, float fromAlpha, float toAlpha) {
+CGImageRef pres_CreateGradientImage(int pixelsWide, int pixelsHigh, float fromAlpha, float toAlpha) {
   CGImageRef theCGImage = NULL;
   
   // gradient is always black-white and the mask must be in the gray colorspace
@@ -777,7 +777,7 @@ CGImageRef bit_CreateGradientImage(int pixelsWide, int pixelsHigh, float fromAlp
   return theCGImage;
 }
 
-CGContextRef bit_MyOpenBitmapContext(int pixelsWide, int pixelsHigh) {
+CGContextRef pres_MyOpenBitmapContext(int pixelsWide, int pixelsHigh) {
   CGSize size = CGSizeMake(pixelsWide, pixelsHigh);
   UIGraphicsBeginImageContextWithOptions(size, NO, 0.0);
   
@@ -786,7 +786,7 @@ CGContextRef bit_MyOpenBitmapContext(int pixelsWide, int pixelsHigh) {
 
 
 // Returns true if the image has an alpha layer
-BOOL bit_hasAlpha(UIImage *inputImage) {
+BOOL pres_hasAlpha(UIImage *inputImage) {
   CGImageAlphaInfo alpha = CGImageGetAlphaInfo(inputImage.CGImage);
   return (alpha == kCGImageAlphaFirst ||
           alpha == kCGImageAlphaLast ||
@@ -795,8 +795,8 @@ BOOL bit_hasAlpha(UIImage *inputImage) {
 }
 
 // Returns a copy of the given image, adding an alpha channel if it doesn't already have one
-UIImage *bit_imageWithAlpha(UIImage *inputImage) {
-  if (bit_hasAlpha(inputImage)) {
+UIImage *pres_imageWithAlpha(UIImage *inputImage) {
+  if (pres_hasAlpha(inputImage)) {
     return inputImage;
   }
   
@@ -825,11 +825,11 @@ UIImage *bit_imageWithAlpha(UIImage *inputImage) {
   return imageWithAlpha;
 }
 
-UIImage *bit_addGlossToImage(UIImage *inputImage) {
+UIImage *pres_addGlossToImage(UIImage *inputImage) {
   UIGraphicsBeginImageContextWithOptions(inputImage.size, NO, 0.0);
   
   [inputImage drawAtPoint:CGPointZero];
-  UIImage *iconGradient = bit_imageNamed(@"IconGradient.png", BITHOCKEYSDK_BUNDLE);
+  UIImage *iconGradient = pres_imageNamed(@"IconGradient.png", BITHOCKEYSDK_BUNDLE);
   [iconGradient drawInRect:CGRectMake(0, 0, inputImage.size.width, inputImage.size.height) blendMode:kCGBlendModeNormal alpha:0.5];
   
   UIImage *result = UIGraphicsGetImageFromCurrentImageContext();
@@ -840,7 +840,7 @@ UIImage *bit_addGlossToImage(UIImage *inputImage) {
 
 #pragma mark UIImage helpers
 
-UIImage *bit_imageToFitSize(UIImage *inputImage, CGSize fitSize, BOOL honorScaleFactor) {
+UIImage *pres_imageToFitSize(UIImage *inputImage, CGSize fitSize, BOOL honorScaleFactor) {
   
   if (!inputImage){
     return nil;
@@ -913,17 +913,17 @@ UIImage *bit_imageToFitSize(UIImage *inputImage, CGSize fitSize, BOOL honorScale
 }
 
 
-UIImage *bit_reflectedImageWithHeight(UIImage *inputImage, NSUInteger height, float fromAlpha, float toAlpha) {
+UIImage *pres_reflectedImageWithHeight(UIImage *inputImage, NSUInteger height, float fromAlpha, float toAlpha) {
   if(height == 0)
     return nil;
   
   // create a bitmap graphics context the size of the image
-  CGContextRef mainViewContentContext = bit_MyOpenBitmapContext(inputImage.size.width, (int)height);
+  CGContextRef mainViewContentContext = pres_MyOpenBitmapContext(inputImage.size.width, (int)height);
   
   // create a 2 bit CGImage containing a gradient that will be used for masking the
   // main view content to create the 'fade' of the reflection.  The CGImageCreateWithMask
   // function will stretch the bitmap image as required, so we can create a 1 pixel wide gradient
-  CGImageRef gradientMaskImage = bit_CreateGradientImage(1, (int)height, fromAlpha, toAlpha);
+  CGImageRef gradientMaskImage = pres_CreateGradientImage(1, (int)height, fromAlpha, toAlpha);
   
   // create an image by masking the bitmap of the mainView content with the gradient view
   // then release the  pre-masked content bitmap and the gradient bitmap
@@ -941,7 +941,7 @@ UIImage *bit_reflectedImageWithHeight(UIImage *inputImage, NSUInteger height, fl
 }
 
 
-UIImage *bit_newWithContentsOfResolutionIndependentFile(NSString * path) {
+UIImage *pres_newWithContentsOfResolutionIndependentFile(NSString * path) {
   if ([UIScreen instancesRespondToSelector:@selector(scale)] && (int)[[UIScreen mainScreen] scale] == 2.0) {
     NSString *path2x = [[path stringByDeletingLastPathComponent]
                         stringByAppendingPathComponent:[NSString stringWithFormat:@"%@@2x.%@",
@@ -957,16 +957,16 @@ UIImage *bit_newWithContentsOfResolutionIndependentFile(NSString * path) {
 }
 
 
-UIImage *bit_imageWithContentsOfResolutionIndependentFile(NSString *path) {
-  return bit_newWithContentsOfResolutionIndependentFile(path);
+UIImage *pres_imageWithContentsOfResolutionIndependentFile(NSString *path) {
+  return pres_newWithContentsOfResolutionIndependentFile(path);
 }
 
 
-UIImage *bit_imageNamed(NSString *imageName, NSString *bundleName) {
+UIImage *pres_imageNamed(NSString *imageName, NSString *bundleName) {
   NSString *resourcePath = [[NSBundle bundleForClass:[PreSniffManager class]] resourcePath];
   NSString *bundlePath = [resourcePath stringByAppendingPathComponent:bundleName];
   NSString *imagePath = [bundlePath stringByAppendingPathComponent:imageName];
-  return bit_imageWithContentsOfResolutionIndependentFile(imagePath);
+  return pres_imageWithContentsOfResolutionIndependentFile(imagePath);
 }
 
 
@@ -974,7 +974,7 @@ UIImage *bit_imageNamed(NSString *imageName, NSString *bundleName) {
 // Creates a copy of this image with rounded corners
 // If borderSize is non-zero, a transparent border of the given size will also be added
 // Original author: Björn Sållarp. Used with permission. See: http://blog.sallarp.com/iphone-uiimage-round-corners/
-UIImage *bit_roundedCornerImage(UIImage *inputImage, NSInteger cornerSize, NSInteger borderSize) {
+UIImage *pres_roundedCornerImage(UIImage *inputImage, NSInteger cornerSize, NSInteger borderSize) {
   // If the image does not have an alpha layer, add one
   
   UIImage *roundedImage = nil;
@@ -984,7 +984,7 @@ UIImage *bit_roundedCornerImage(UIImage *inputImage, NSInteger cornerSize, NSInt
   // Create a clipping path with rounded corners
   CGContextRef context = UIGraphicsGetCurrentContext();
   CGContextBeginPath(context);
-  bit_addRoundedRectToPath(CGRectMake(borderSize, borderSize, inputImage.size.width - borderSize * 2, inputImage.size.height - borderSize * 2), context, cornerSize, cornerSize);
+  pres_addRoundedRectToPath(CGRectMake(borderSize, borderSize, inputImage.size.width - borderSize * 2, inputImage.size.height - borderSize * 2), context, cornerSize, cornerSize);
   CGContextClosePath(context);
   CGContextClip(context);
   
@@ -996,7 +996,7 @@ UIImage *bit_roundedCornerImage(UIImage *inputImage, NSInteger cornerSize, NSInt
   
   if (!roundedImage) {
     // Try older method.
-    UIImage *image = bit_imageWithAlpha(inputImage);
+    UIImage *image = pres_imageWithAlpha(inputImage);
     
     // Build a context that's the same dimensions as the new size
     context = CGBitmapContextCreate(NULL,
@@ -1009,7 +1009,7 @@ UIImage *bit_roundedCornerImage(UIImage *inputImage, NSInteger cornerSize, NSInt
     
     // Create a clipping path with rounded corners
     CGContextBeginPath(context);
-    bit_addRoundedRectToPath(CGRectMake(borderSize, borderSize, image.size.width - borderSize * 2, image.size.height - borderSize * 2), context, cornerSize, cornerSize);
+    pres_addRoundedRectToPath(CGRectMake(borderSize, borderSize, image.size.width - borderSize * 2, image.size.height - borderSize * 2), context, cornerSize, cornerSize);
     CGContextClosePath(context);
     CGContextClip(context);
     
@@ -1028,7 +1028,7 @@ UIImage *bit_roundedCornerImage(UIImage *inputImage, NSInteger cornerSize, NSInt
   return roundedImage;
 }
 
-UIImage *bit_appIcon() {
+UIImage *pres_appIcon() {
   NSString *iconString = [NSString string];
   NSArray *icons = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleIconFiles"];
   if (!icons) {
@@ -1071,13 +1071,13 @@ UIImage *bit_appIcon() {
   }
   
   if (addGloss) {
-    return bit_addGlossToImage([UIImage imageNamed:iconString]);
+    return pres_addGlossToImage([UIImage imageNamed:iconString]);
   } else {
     return [UIImage imageNamed:iconString];
   }
 }
 
-UIImage *bit_screenshot(void) {
+UIImage *pres_screenshot(void) {
   // Create a graphics context with the target size
   CGSize imageSize = [[UIScreen mainScreen] bounds].size;
   BOOL isLandscapeLeft = [UIApplication sharedApplication].statusBarOrientation == UIInterfaceOrientationLandscapeLeft;

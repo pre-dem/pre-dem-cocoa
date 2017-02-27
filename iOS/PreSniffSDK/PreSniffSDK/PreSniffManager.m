@@ -163,12 +163,12 @@ bitstadium_info_t bitstadium_library_info __attribute__((section("__TEXT,__bit_h
     _enableStoreUpdateManager = NO;
 #endif
     
-    _appEnvironment = bit_currentAppEnvironment();
+    _appEnvironment = pres_currentAppEnvironment();
     _startManagerIsInvoked = NO;
     _startUpdateManagerIsInvoked = NO;
     
     _liveIdentifier = nil;
-    _installString = bit_appAnonID(NO);
+    _installString = pres_appAnonID(NO);
     _disableInstallTracking = NO;
     
     [self performSelector:@selector(validateStartManagerIsInvoked) withObject:nil afterDelay:0.0f];
@@ -231,12 +231,12 @@ bitstadium_info_t bitstadium_library_info __attribute__((section("__TEXT,__bit_h
   // Fix bug where Application Support directory was encluded from backup
   NSFileManager *fileManager = [NSFileManager defaultManager];
   NSURL *appSupportURL = [[fileManager URLsForDirectory:NSApplicationSupportDirectory inDomains:NSUserDomainMask] lastObject];
-  bit_fixBackupAttributeForURL(appSupportURL);
+  pres_fixBackupAttributeForURL(appSupportURL);
   
   if (![self isSetUpOnMainThread]) return;
   
   if ((self.appEnvironment == BITEnvironmentAppStore) && [self isInstallTrackingDisabled]) {
-    _installString = bit_appAnonID(YES);
+    _installString = pres_appAnonID(YES);
   }
 
   BITHockeyLogDebug(@"INFO: Starting HockeyManager");
@@ -260,7 +260,7 @@ bitstadium_info_t bitstadium_library_info __attribute__((section("__TEXT,__bit_h
 #endif /* HOCKEYSDK_FEATURE_CRASH_REPORTER */
   
   // App Extensions can only use PRESCrashManager, so ignore all others automatically
-  if (bit_isRunningInAppExtension()) {
+  if (pres_isRunningInAppExtension()) {
     return;
   }
   
@@ -451,17 +451,17 @@ bitstadium_info_t bitstadium_library_info __attribute__((section("__TEXT,__bit_h
   if (value) {
     success = [PRESKeychainUtils storeUsername:key
                                   andPassword:value
-                               forServiceName:bit_keychainHockeySDKServiceName()
+                               forServiceName:pres_keychainHockeySDKServiceName()
                                updateExisting:YES
                                 accessibility:kSecAttrAccessibleAlwaysThisDeviceOnly
                                         error:&error];
   } else {
     updateType = @"delete";
     if ([PRESKeychainUtils getPasswordForUsername:key
-                                  andServiceName:bit_keychainHockeySDKServiceName()
+                                  andServiceName:pres_keychainHockeySDKServiceName()
                                            error:&error]) {
       success = [PRESKeychainUtils deleteItemForUsername:key
-                                         andServiceName:bit_keychainHockeySDKServiceName()
+                                         andServiceName:pres_keychainHockeySDKServiceName()
                                                   error:&error];
     }
   }
@@ -572,7 +572,7 @@ bitstadium_info_t bitstadium_library_info __attribute__((section("__TEXT,__bit_h
     return;
   }
   
-  NSString *integrationPath = [NSString stringWithFormat:@"api/3/apps/%@/integration", bit_encodeAppIdentifier(appIdentifier)];
+  NSString *integrationPath = [NSString stringWithFormat:@"api/3/apps/%@/integration", pres_encodeAppIdentifier(appIdentifier)];
   
   BITHockeyLogDebug(@"INFO: Sending integration workflow ping to %@", integrationPath);
   
@@ -723,7 +723,7 @@ bitstadium_info_t bitstadium_library_info __attribute__((section("__TEXT,__bit_h
     
 #if HOCKEYSDK_FEATURE_METRICS
     BITHockeyLogDebug(@"INFO: Setup MetricsManager");
-    NSString *iKey = bit_appIdentifierToGuid(_appIdentifier);
+    NSString *iKey = pres_appIdentifierToGuid(_appIdentifier);
     _metricsManager = [[BITMetricsManager alloc] initWithAppIdentifier:iKey appEnvironment:_appEnvironment];
 #endif /* HOCKEYSDK_FEATURE_METRICS */
 
