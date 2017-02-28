@@ -47,9 +47,9 @@
 #import "PRESCrashCXXExceptionHandler.h"
 
 #if HOCKEYSDK_FEATURE_METRICS
-#import "BITMetricsManagerPrivate.h"
-#import "BITChannel.h"
-#import "BITPersistencePrivate.h"
+#import "PRESMetricsManagerPrivate.h"
+#import "PRESChannel.h"
+#import "PRESPersistencePrivate.h"
 #endif
 
 #include <sys/sysctl.h>
@@ -100,7 +100,7 @@ static PRESCrashManagerCallbacks bitCrashCallbacks = {
 static void pres_save_events_callback(siginfo_t *info, ucontext_t *uap, void *context) {
   
   // Do not flush metrics queue if queue is empty (metrics module disabled) to not freeze the app
-  if (!BITSafeJsonEventsString) {
+  if (!PRESSafeJsonEventsString) {
     return;
   }
   
@@ -110,10 +110,10 @@ static void pres_save_events_callback(siginfo_t *info, ucontext_t *uap, void *co
     return;
   }
   
-  size_t len = strlen(BITSafeJsonEventsString);
+  size_t len = strlen(PRESSafeJsonEventsString);
   if (len > 0) {
     // Simply write the whole string to disk
-    write(fd, BITSafeJsonEventsString, len);
+    write(fd, PRESSafeJsonEventsString, len);
   }
   close(fd);
 }
@@ -727,9 +727,9 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
 
 #if HOCKEYSDK_FEATURE_METRICS
 - (void)configDefaultCrashCallback {
-  BITMetricsManager *metricsManager = [PreSniffManager sharedPreSniffManager].metricsManager;
-  BITPersistence *persistence = metricsManager.persistence;
-  BITSaveEventsFilePath = strdup([persistence fileURLForType:BITPersistenceTypeTelemetry].UTF8String);
+  PRESMetricsManager *metricsManager = [PreSniffManager sharedPreSniffManager].metricsManager;
+  PRESPersistence *persistence = metricsManager.persistence;
+  BITSaveEventsFilePath = strdup([persistence fileURLForType:PRESPersistenceTypeTelemetry].UTF8String);
 }
 #endif
 

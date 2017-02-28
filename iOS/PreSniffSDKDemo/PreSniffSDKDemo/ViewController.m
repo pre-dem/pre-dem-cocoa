@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import <PreSniffSDK/PreSniffSDK.h>
 
 @interface ViewController ()
 
@@ -22,9 +23,16 @@
     [self.view addSubview:webView];
     [webView loadRequest:request];
     
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(10 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self forceCrashing];
-    });
+    [self testEventTracking];
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(10 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//        [self forceCrashing];
+//    });
+}
+
+- (void)testEventTracking {
+    PRESMetricsManager *metricsManager = [PreSniffManager sharedPreSniffManager].metricsManager;
+    
+    [metricsManager trackEventWithName:@"viewDidLoadEvent" properties:@{@"helloKey": @"worldValue"} measurements:@{@"helloKey": @7}];
 }
 
 - (void)forceCrashing {

@@ -74,8 +74,8 @@ bitstadium_info_t bitstadium_library_info __attribute__((section("__TEXT,__bit_h
 #endif /* HOCKEYSDK_FEATURE_AUTHENTICATOR */
 
 #if HOCKEYSDK_FEATURE_METRICS
-#import "BITMetricsManagerPrivate.h"
-#import "BITCategoryContainer.h"
+#import "PRESMetricsManagerPrivate.h"
+#import "PRESCategoryContainer.h"
 #endif /* HOCKEYSDK_FEATURE_METRICS */
 
 @interface PreSniffManager ()
@@ -319,7 +319,7 @@ bitstadium_info_t bitstadium_library_info __attribute__((section("__TEXT,__bit_h
   if (!self.isMetricsManagerDisabled) {
     BITHockeyLogDebug(@"INFO: Start MetricsManager");
     [_metricsManager startManager];
-    [BITCategoryContainer activateCategory];
+    [PRESCategoryContainer activateCategory];
   }
 #endif /* HOCKEYSDK_FEATURE_METRICS */
 }
@@ -724,7 +724,7 @@ bitstadium_info_t bitstadium_library_info __attribute__((section("__TEXT,__bit_h
 #if HOCKEYSDK_FEATURE_METRICS
     BITHockeyLogDebug(@"INFO: Setup MetricsManager");
     NSString *iKey = pres_appIdentifierToGuid(_appIdentifier);
-    _metricsManager = [[BITMetricsManager alloc] initWithAppIdentifier:iKey appEnvironment:_appEnvironment];
+    _metricsManager = [[PRESMetricsManager alloc] initWithAppIdentifier:iKey appEnvironment:_appEnvironment];
 #endif /* HOCKEYSDK_FEATURE_METRICS */
 
     if (self.appEnvironment != BITEnvironmentAppStore) {

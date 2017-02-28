@@ -52,7 +52,7 @@
 @class BITAuthenticator;
 #endif
 #if HOCKEYSDK_FEATURE_METRICS
-@class BITMetricsManager;
+@class PRESMetricsManager;
 #endif
 
 /** 
@@ -385,7 +385,7 @@ NS_ASSUME_NONNULL_BEGIN
  
  Returns the BITMetricsManager instance initialized by PreSniffManager
  */
-@property (nonatomic, strong, readonly) BITMetricsManager *metricsManager;
+@property (nonatomic, strong, readonly) PRESMetricsManager *metricsManager;
 
 /**
  Flag the determines whether the BITMetricsManager should be disabled
