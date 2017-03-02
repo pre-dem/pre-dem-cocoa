@@ -22,6 +22,7 @@
     [[PreSniffManager sharedPreSniffManager] configureWithIdentifier:@"c9f916114a8f4750a02ce74300af909c"];
     // Do some additional configuration if needed here
     [[PreSniffManager sharedPreSniffManager] startManager];
+    [PreSniffManager sharedPreSniffManager].disableMetricsManager = NO;
 //    [[PreSniffManager sharedPreSniffManager].authenticator authenticateInstallation];
     
     return YES;

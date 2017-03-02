@@ -91,11 +91,11 @@
 }
 
 - (NSString *)encodedAppIdentifier {
-  return bit_encodeAppIdentifier(_appIdentifier);
+  return pres_encodeAppIdentifier(_appIdentifier);
 }
 
 - (BOOL)isPreiOS7Environment {
-  return bit_isPreiOS7Environment();
+  return pres_isPreiOS7Environment();
 }
 
 - (NSString *)getDevicePlatform {
@@ -300,7 +300,7 @@
   NSError *error = nil;
   return [PRESKeychainUtils storeUsername:key
                              andPassword:stringValue
-                          forServiceName:bit_keychainHockeySDKServiceName()
+                          forServiceName:pres_keychainHockeySDKServiceName()
                           updateExisting:YES
                                    error:&error];
 }
@@ -312,7 +312,7 @@
   NSError *error = nil;
   return [PRESKeychainUtils storeUsername:key
                              andPassword:stringValue
-                          forServiceName:bit_keychainHockeySDKServiceName()
+                          forServiceName:pres_keychainHockeySDKServiceName()
                           updateExisting:YES
                            accessibility:kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly
                                    error:&error];
@@ -324,14 +324,14 @@
   
   NSError *error = nil;
   return [PRESKeychainUtils getPasswordForUsername:key
-                                   andServiceName:bit_keychainHockeySDKServiceName()
+                                   andServiceName:pres_keychainHockeySDKServiceName()
                                             error:&error];
 }
 
 - (BOOL)removeKeyFromKeychain:(NSString *)key {
   NSError *error = nil;
   return [PRESKeychainUtils deleteItemForUsername:key
-                                  andServiceName:bit_keychainHockeySDKServiceName()
+                                  andServiceName:pres_keychainHockeySDKServiceName()
                                            error:&error];
 }
 

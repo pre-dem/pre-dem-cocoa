@@ -69,7 +69,7 @@ typedef NS_ENUM (NSInteger, BITBinaryImageType) {
 
 + (NSString *)stringValueForCrashReport:(PLCrashReport *)report crashReporterKey:(NSString *)crashReporterKey;
 + (NSArray *)arrayOfAppUUIDsForCrashReport:(PLCrashReport *)report;
-+ (NSString *)bit_archNameFromCPUType:(uint64_t)cpuType subType:(uint64_t)subType;
-+ (BITBinaryImageType)bit_imageTypeForImagePath:(NSString *)imagePath processPath:(NSString *)processPath;
++ (NSString *)pres_archNameFromCPUType:(uint64_t)cpuType subType:(uint64_t)subType;
++ (BITBinaryImageType)pres_imageTypeForImagePath:(NSString *)imagePath processPath:(NSString *)processPath;
 
 @end

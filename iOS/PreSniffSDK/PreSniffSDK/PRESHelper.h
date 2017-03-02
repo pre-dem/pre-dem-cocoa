@@ -44,29 +44,29 @@ FOUNDATION_EXPORT NSString *const kBITExcludeApplicationSupportFromBackup;
 
 @end
 
-NSString *bit_settingsDir(void);
+NSString *pres_settingsDir(void);
 
-BOOL bit_validateEmail(NSString *email);
-NSString *bit_keychainHockeySDKServiceName(void);
+BOOL pres_validateEmail(NSString *email);
+NSString *pres_keychainHockeySDKServiceName(void);
 
 /* Fix bug where Application Support was excluded from backup. */
-void bit_fixBackupAttributeForURL(NSURL *directoryURL);
+void pres_fixBackupAttributeForURL(NSURL *directoryURL);
 
-NSComparisonResult bit_versionCompare(NSString *stringA, NSString *stringB);
-NSString *bit_mainBundleIdentifier(void);
-NSString *bit_encodeAppIdentifier(NSString *inputString);
-NSString *bit_appIdentifierToGuid(NSString *appIdentifier);
-NSString *bit_appName(NSString *placeHolderString);
-NSString *bit_UUIDPreiOS6(void);
-NSString *bit_UUID(void);
-NSString *bit_appAnonID(BOOL forceNewAnonID);
-BOOL bit_isPreiOS7Environment(void);
-BOOL bit_isPreiOS8Environment(void);
-BOOL bit_isPreiOS10Environment(void);
-BOOL bit_isAppStoreReceiptSandbox(void);
-BOOL bit_hasEmbeddedMobileProvision(void);
-BITEnvironment bit_currentAppEnvironment(void);
-BOOL bit_isRunningInAppExtension(void);
+NSComparisonResult pres_versionCompare(NSString *stringA, NSString *stringB);
+NSString *pres_mainBundleIdentifier(void);
+NSString *pres_encodeAppIdentifier(NSString *inputString);
+NSString *pres_appIdentifierToGuid(NSString *appIdentifier);
+NSString *pres_appName(NSString *placeHolderString);
+NSString *pres_UUIDPreiOS6(void);
+NSString *pres_UUID(void);
+NSString *pres_appAnonID(BOOL forceNewAnonID);
+BOOL pres_isPreiOS7Environment(void);
+BOOL pres_isPreiOS8Environment(void);
+BOOL pres_isPreiOS10Environment(void);
+BOOL pres_isAppStoreReceiptSandbox(void);
+BOOL pres_hasEmbeddedMobileProvision(void);
+BITEnvironment pres_currentAppEnvironment(void);
+BOOL pres_isRunningInAppExtension(void);
 
 /**
  * Check if the debugger is attached
@@ -75,39 +75,39 @@ BOOL bit_isRunningInAppExtension(void);
  *
  * @return `YES` if the debugger is attached to the current process, `NO` otherwise
  */
-BOOL bit_isDebuggerAttached(void);
+BOOL pres_isDebuggerAttached(void);
 
 /* NSString helpers */
-NSString *bit_URLEncodedString(NSString *inputString);
-NSString *bit_base64String(NSData * data, unsigned long length);
+NSString *pres_URLEncodedString(NSString *inputString);
+NSString *pres_base64String(NSData * data, unsigned long length);
 
 /* Context helpers */
-NSString *bit_utcDateString(NSDate *date);
-NSString *bit_devicePlatform(void);
-NSString *bit_devicePlatform(void);
-NSString *bit_deviceType(void);
-NSString *bit_osVersionBuild(void);
-NSString *bit_osName(void);
-NSString *bit_deviceLocale(void);
-NSString *bit_deviceLanguage(void);
-NSString *bit_screenSize(void);
-NSString *bit_sdkVersion(void);
-NSString *bit_appVersion(void);
+NSString *pres_utcDateString(NSDate *date);
+NSString *pres_devicePlatform(void);
+NSString *pres_devicePlatform(void);
+NSString *pres_deviceType(void);
+NSString *pres_osVersionBuild(void);
+NSString *pres_osName(void);
+NSString *pres_deviceLocale(void);
+NSString *pres_deviceLanguage(void);
+NSString *pres_screenSize(void);
+NSString *pres_sdkVersion(void);
+NSString *pres_appVersion(void);
 
 #if !defined (HOCKEYSDK_CONFIGURATION_ReleaseCrashOnly) && !defined (HOCKEYSDK_CONFIGURATION_ReleaseCrashOnlyExtensions)
 /* AppIcon helper */
-NSString *bit_validAppIconStringFromIcons(NSBundle *resourceBundle, NSArray *icons);
-NSString *bit_validAppIconFilename(NSBundle *bundle, NSBundle *resourceBundle);
+NSString *pres_validAppIconStringFromIcons(NSBundle *resourceBundle, NSArray *icons);
+NSString *pres_validAppIconFilename(NSBundle *bundle, NSBundle *resourceBundle);
 
 /* UIImage helpers */
-UIImage *bit_roundedCornerImage(UIImage *inputImage, NSInteger cornerSize, NSInteger borderSize);
-UIImage *bit_imageToFitSize(UIImage *inputImage, CGSize fitSize, BOOL honorScaleFactor);
-UIImage *bit_reflectedImageWithHeight(UIImage *inputImage, NSUInteger height, float fromAlpha, float toAlpha);
+UIImage *pres_roundedCornerImage(UIImage *inputImage, NSInteger cornerSize, NSInteger borderSize);
+UIImage *pres_imageToFitSize(UIImage *inputImage, CGSize fitSize, BOOL honorScaleFactor);
+UIImage *pres_reflectedImageWithHeight(UIImage *inputImage, NSUInteger height, float fromAlpha, float toAlpha);
 
-UIImage *bit_newWithContentsOfResolutionIndependentFile(NSString * path);
-UIImage *bit_imageWithContentsOfResolutionIndependentFile(NSString * path);
-UIImage *bit_imageNamed(NSString *imageName, NSString *bundleName);
-UIImage *bit_screenshot(void);
-UIImage *bit_appIcon(void);
+UIImage *pres_newWithContentsOfResolutionIndependentFile(NSString * path);
+UIImage *pres_imageWithContentsOfResolutionIndependentFile(NSString * path);
+UIImage *pres_imageNamed(NSString *imageName, NSString *bundleName);
+UIImage *pres_screenshot(void);
+UIImage *pres_appIcon(void);
 
 #endif
