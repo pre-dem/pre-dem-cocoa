@@ -24,7 +24,10 @@ NSURLSessionDataDelegate
 @implementation PRESURLProtocol
 
 + (void)enableHTTPSniff {
+    // 可拦截 [NSURLSession defaultSession] 以及 UIWebView 相关的请求
     [NSURLProtocol registerClass:self];
+    
+    // 拦截自定义生成的 NSURLSession 的请求
     if (![[PRESURLSessionSwizzler defaultSwizzler] isSwizzle]) {
         [[PRESURLSessionSwizzler defaultSwizzler] load];
     }
