@@ -8,6 +8,7 @@
 
 #import "PRESURLProtocol.h"
 #import <HappyDNS/HappyDNS.h>
+#import "PRESURLSessionSwizzler.h"
 
 #define DNSPodsHost @"119.29.29.29"
 
@@ -24,10 +25,16 @@ NSURLSessionDataDelegate
 
 + (void)enableHTTPSniff {
     [NSURLProtocol registerClass:self];
+    if (![[PRESURLSessionSwizzler defaultSwizzler] isSwizzle]) {
+        [[PRESURLSessionSwizzler defaultSwizzler] load];
+    }
 }
 
 + (void)disableHTTPSniff {
     [NSURLProtocol unregisterClass:self];
+    if ([[PRESURLSessionSwizzler defaultSwizzler] isSwizzle]) {
+        [[PRESURLSessionSwizzler defaultSwizzler] unload];
+    }
 }
 
 + (BOOL)canInitWithRequest:(NSURLRequest *)request {

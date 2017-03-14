@@ -95,6 +95,8 @@
 		B683A6131E5C1845007F0459 /* PreSniffSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = B683A6111E5C1845007F0459 /* PreSniffSDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B6AE3A011E5C296400737C2A /* PRESURLProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = B6AE39FF1E5C296400737C2A /* PRESURLProtocol.h */; };
 		B6AE3A021E5C296400737C2A /* PRESURLProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = B6AE3A001E5C296400737C2A /* PRESURLProtocol.m */; };
+		B6E0C1711E77CC0300A020A6 /* PRESURLSessionSwizzler.h in Headers */ = {isa = PBXBuildFile; fileRef = B6E0C16F1E77CC0300A020A6 /* PRESURLSessionSwizzler.h */; };
+		B6E0C1721E77CC0300A020A6 /* PRESURLSessionSwizzler.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E0C1701E77CC0300A020A6 /* PRESURLSessionSwizzler.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -190,6 +192,8 @@
 		B683A6121E5C1845007F0459 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B6AE39FF1E5C296400737C2A /* PRESURLProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRESURLProtocol.h; sourceTree = "<group>"; };
 		B6AE3A001E5C296400737C2A /* PRESURLProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRESURLProtocol.m; sourceTree = "<group>"; };
+		B6E0C16F1E77CC0300A020A6 /* PRESURLSessionSwizzler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRESURLSessionSwizzler.h; sourceTree = "<group>"; };
+		B6E0C1701E77CC0300A020A6 /* PRESURLSessionSwizzler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRESURLSessionSwizzler.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -378,6 +382,8 @@
 			children = (
 				B6AE39FF1E5C296400737C2A /* PRESURLProtocol.h */,
 				B6AE3A001E5C296400737C2A /* PRESURLProtocol.m */,
+				B6E0C16F1E77CC0300A020A6 /* PRESURLSessionSwizzler.h */,
+				B6E0C1701E77CC0300A020A6 /* PRESURLSessionSwizzler.m */,
 			);
 			name = URLHook;
 			sourceTree = "<group>";
@@ -435,6 +441,7 @@
 				058AF99E1E657D0300F6BD38 /* PRESEventData.h in Headers */,
 				058AF9931E657D0300F6BD38 /* PRESChannel.h in Headers */,
 				058AF9AB1E657D0300F6BD38 /* PRESSession.h in Headers */,
+				B6E0C1711E77CC0300A020A6 /* PRESURLSessionSwizzler.h in Headers */,
 				058AF9AE1E657D0300F6BD38 /* PRESSessionStateData.h in Headers */,
 				0529609C1E5E92E10096CB3F /* PRESNetworkClient.h in Headers */,
 				058AF9AD1E657D0300F6BD38 /* PRESSessionState.h in Headers */,
@@ -587,6 +594,7 @@
 				0529609B1E5E92E10096CB3F /* PRESHTTPOperation.m in Sources */,
 				052960C81E5E93C80096CB3F /* PreSniffManager.m in Sources */,
 				058AF9B11E657D0300F6BD38 /* PRESTelemetryContext.m in Sources */,
+				B6E0C1721E77CC0300A020A6 /* PRESURLSessionSwizzler.m in Sources */,
 				058AF9971E657D0300F6BD38 /* PRESData.m in Sources */,
 				058AF98E1E657D0300F6BD38 /* PRESApplication.m in Sources */,
 				052960B61E5E93180096CB3F /* PRESHelper.m in Sources */,
