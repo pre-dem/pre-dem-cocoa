@@ -92,6 +92,8 @@
 		058AF9B61E657D0300F6BD38 /* PRESUser.h in Headers */ = {isa = PBXBuildFile; fileRef = 058AF98B1E657D0300F6BD38 /* PRESUser.h */; };
 		058AF9B71E657D0300F6BD38 /* PRESUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 058AF98C1E657D0300F6BD38 /* PRESUser.m */; };
 		B61225511E6042030008B4D0 /* libPods-PreSniffSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B61225501E6042030008B4D0 /* libPods-PreSniffSDK.a */; };
+		B62D398E1E78DE0000B2666D /* PRESurlModel.h in Headers */ = {isa = PBXBuildFile; fileRef = B62D398C1E78DE0000B2666D /* PRESurlModel.h */; };
+		B62D398F1E78DE0000B2666D /* PRESurlModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B62D398D1E78DE0000B2666D /* PRESurlModel.m */; };
 		B683A6131E5C1845007F0459 /* PreSniffSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = B683A6111E5C1845007F0459 /* PreSniffSDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B6AE3A011E5C296400737C2A /* PRESURLProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = B6AE39FF1E5C296400737C2A /* PRESURLProtocol.h */; };
 		B6AE3A021E5C296400737C2A /* PRESURLProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = B6AE3A001E5C296400737C2A /* PRESURLProtocol.m */; };
@@ -187,6 +189,8 @@
 		1F9D8CAF70BE6832D500F74B /* Pods-PreSniffSDK.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PreSniffSDK.release.xcconfig"; path = "Pods/Target Support Files/Pods-PreSniffSDK/Pods-PreSniffSDK.release.xcconfig"; sourceTree = "<group>"; };
 		3E3A750A819E32FB0E70D691 /* Pods-PreSniffSDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PreSniffSDK.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PreSniffSDK/Pods-PreSniffSDK.debug.xcconfig"; sourceTree = "<group>"; };
 		B61225501E6042030008B4D0 /* libPods-PreSniffSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-PreSniffSDK.a"; path = "Pods/../build/Debug-iphoneos/libPods-PreSniffSDK.a"; sourceTree = "<group>"; };
+		B62D398C1E78DE0000B2666D /* PRESurlModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRESurlModel.h; sourceTree = "<group>"; };
+		B62D398D1E78DE0000B2666D /* PRESurlModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRESurlModel.m; sourceTree = "<group>"; };
 		B683A60E1E5C1845007F0459 /* PreSniffSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PreSniffSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B683A6111E5C1845007F0459 /* PreSniffSDK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PreSniffSDK.h; sourceTree = "<group>"; };
 		B683A6121E5C1845007F0459 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -384,6 +388,8 @@
 				B6AE3A001E5C296400737C2A /* PRESURLProtocol.m */,
 				B6E0C16F1E77CC0300A020A6 /* PRESURLSessionSwizzler.h */,
 				B6E0C1701E77CC0300A020A6 /* PRESURLSessionSwizzler.m */,
+				B62D398C1E78DE0000B2666D /* PRESurlModel.h */,
+				B62D398D1E78DE0000B2666D /* PRESurlModel.m */,
 			);
 			name = URLHook;
 			sourceTree = "<group>";
@@ -421,6 +427,7 @@
 				058AF99A1E657D0300F6BD38 /* PRESDomain.h in Headers */,
 				058AF98F1E657D0300F6BD38 /* PRESBase.h in Headers */,
 				052960B91E5E93180096CB3F /* PRESLoggerPrivate.h in Headers */,
+				B62D398E1E78DE0000B2666D /* PRESurlModel.h in Headers */,
 				052960BA1E5E93180096CB3F /* PRESKeychainUtils.h in Headers */,
 				052960941E5E92CE0096CB3F /* PRESCrashReportTextFormatterPrivate.h in Headers */,
 				052960B41E5E93180096CB3F /* PRESBaseManagerPrivate.h in Headers */,
@@ -571,6 +578,7 @@
 				058AF9A71E657D0300F6BD38 /* PRESPersistence.m in Sources */,
 				058AF9991E657D0300F6BD38 /* PRESDevice.m in Sources */,
 				058AF9B51E657D0300F6BD38 /* PRESTelemetryObject.m in Sources */,
+				B62D398F1E78DE0000B2666D /* PRESurlModel.m in Sources */,
 				052960881E5E92CE0096CB3F /* PRESCrashCXXExceptionHandler.mm in Sources */,
 				058AF99F1E657D0300F6BD38 /* PRESEventData.m in Sources */,
 				058AF9941E657D0300F6BD38 /* PRESChannel.m in Sources */,

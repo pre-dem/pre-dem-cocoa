@@ -9,6 +9,7 @@
 #import "PRESURLProtocol.h"
 #import <HappyDNS/HappyDNS.h>
 #import "PRESURLSessionSwizzler.h"
+#import "PRESurlModel.h"
 
 #define DNSPodsHost @"119.29.29.29"
 
@@ -18,10 +19,14 @@ NSURLSessionDataDelegate
 >
 
 @property (nonatomic, strong) NSURLSessionDataTask *task;
+@property (nonatomic, strong) NSURLResponse *response;
+@property (nonatomic, strong) PRESurlModel *urlModel;
 
 @end
 
 @implementation PRESURLProtocol
+
+@synthesize urlModel;
 
 + (void)enableHTTPSniff {
     // 可拦截 [NSURLSession defaultSession] 以及 UIWebView 相关的请求
@@ -78,14 +83,30 @@ NSURLSessionDataDelegate
     NSURLSession *session = [NSURLSession sessionWithConfiguration:sessionConfig delegate:self delegateQueue:[NSOperationQueue new]];
     self.task = [session dataTaskWithRequest:self.request];
     [self.task resume];
+    
+    urlModel = [[PRESurlModel alloc] init];
+    urlModel.request = self.request;
+    urlModel.startTimestampViaMin = ((int)[[NSDate date] timeIntervalSince1970]) / 60 * 60;
+    urlModel.startTimestamp = [[NSDate date] timeIntervalSince1970] * 1000;
+    
+    urlModel.responseTimeStamp = 0;
+    urlModel.responseDataLength = 0;
+    
+    NSTimeInterval myID = [[NSDate date] timeIntervalSince1970];
+    double randomNum = ((double)(arc4random() % 100))/10000;
+    urlModel.myID = myID + randomNum;
 }
 
 - (void)stopLoading {
     [self.task cancel];
+    urlModel.response = (NSHTTPURLResponse *)self.response;
 }
 
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task willPerformHTTPRedirection:(NSHTTPURLResponse *)response newRequest:(NSURLRequest *)request completionHandler:(void (^)(NSURLRequest * _Nullable))completionHandler {
     [self.client URLProtocol:self wasRedirectedToRequest:request redirectResponse:response];
+    if (response != nil) {
+        self.response = response;
+    }
     completionHandler(request);
 }
 
