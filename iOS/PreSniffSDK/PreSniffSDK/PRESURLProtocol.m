@@ -62,33 +62,31 @@ NSURLSessionDataDelegate
 
 + (NSURLRequest *)canonicalRequestForRequest:(NSURLRequest *)request {
     NSMutableURLRequest *mutableRequest = [request mutableCopy];
-    [mutableRequest setValue:mutableRequest.URL.host forHTTPHeaderField:@"Host"];
-    [NSURLProtocol setProperty:mutableRequest.URL.absoluteString
-                        forKey:@"PRESOriginalURL"
-                     inRequest:mutableRequest];
     [NSURLProtocol setProperty:@YES
                         forKey:@"PRESInternalRequest"
                      inRequest:mutableRequest];
-    NSMutableArray *resolvers = [[NSMutableArray alloc] init];
-    [resolvers addObject:[QNResolver systemResolver]];
-    [resolvers addObject:[[QNResolver alloc] initWithAddress:DNSPodsHost]];
-    QNDnsManager *dns = [[QNDnsManager alloc] init:resolvers networkInfo:[QNNetworkInfo normal]];
-    NSTimeInterval dnsStartTime = [[NSDate date] timeIntervalSince1970];
-    NSURL *replacedURL = [dns queryAndReplaceWithIP:mutableRequest.URL];
-    NSTimeInterval dnsEndTime = [[NSDate date] timeIntervalSince1970];
-    [NSURLProtocol setProperty:[NSString stringWithFormat:@"%u",
-                                (NSUInteger)((dnsEndTime - dnsStartTime)*1000)]
-                        forKey:@"PRESDNSTime"
-                     inRequest:mutableRequest];
-    [NSURLProtocol setProperty:replacedURL.host
-                        forKey:@"PRESHostIP"
-                     inRequest:mutableRequest];
     if ([request.URL.scheme isEqualToString:@"http"]) {
+        NSMutableArray *resolvers = [[NSMutableArray alloc] init];
+        [resolvers addObject:[QNResolver systemResolver]];
+        [resolvers addObject:[[QNResolver alloc] initWithAddress:DNSPodsHost]];
+        QNDnsManager *dns = [[QNDnsManager alloc] init:resolvers networkInfo:[QNNetworkInfo normal]];
+        NSTimeInterval dnsStartTime = [[NSDate date] timeIntervalSince1970];
+        NSURL *replacedURL = [dns queryAndReplaceWithIP:mutableRequest.URL];
+        NSTimeInterval dnsEndTime = [[NSDate date] timeIntervalSince1970];
+        [NSURLProtocol setProperty:[NSString stringWithFormat:@"%u",
+                                    (NSUInteger)((dnsEndTime - dnsStartTime)*1000)]
+                            forKey:@"PRESDNSTime"
+                         inRequest:mutableRequest];
+        [NSURLProtocol setProperty:replacedURL.host
+                            forKey:@"PRESHostIP"
+                         inRequest:mutableRequest];
+        [mutableRequest setValue:mutableRequest.URL.host forHTTPHeaderField:@"Host"];
+        [NSURLProtocol setProperty:mutableRequest.URL.absoluteString
+                            forKey:@"PRESOriginalURL"
+                         inRequest:mutableRequest];
         mutableRequest.URL = replacedURL;
-        return mutableRequest;
-    } else {
-        return request;
     }
+    return mutableRequest;
 }
 
 - (void)startLoading {

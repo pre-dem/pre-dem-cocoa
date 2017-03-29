@@ -746,7 +746,7 @@
 		};
 		B683A6181E5C1845007F0459 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1F9D8CAF70BE6832D500F74B /* Pods-PreSniffSDK.release.xcconfig */;
+			baseConfigurationReference = 052960CD1E5E97E20096CB3F /* HockeySDKBase.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				DEFINES_MODULE = YES;
