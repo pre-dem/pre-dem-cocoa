@@ -1,3 +1,4 @@
 target 'PreSniffSDK' do
   pod 'HappyDNS'
+  pod 'MJExtension'
 end
