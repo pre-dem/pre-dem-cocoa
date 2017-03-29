@@ -65,6 +65,9 @@ NSURLSessionDataDelegate
     [NSURLProtocol setProperty:@YES
                         forKey:@"PRESInternalRequest"
                      inRequest:mutableRequest];
+    [NSURLProtocol setProperty:mutableRequest.URL.absoluteString
+                        forKey:@"PRESOriginalURL"
+                     inRequest:mutableRequest];
     if ([request.URL.scheme isEqualToString:@"http"]) {
         NSMutableArray *resolvers = [[NSMutableArray alloc] init];
         [resolvers addObject:[QNResolver systemResolver]];
@@ -81,9 +84,6 @@ NSURLSessionDataDelegate
                             forKey:@"PRESHostIP"
                          inRequest:mutableRequest];
         [mutableRequest setValue:mutableRequest.URL.host forHTTPHeaderField:@"Host"];
-        [NSURLProtocol setProperty:mutableRequest.URL.absoluteString
-                            forKey:@"PRESOriginalURL"
-                         inRequest:mutableRequest];
         mutableRequest.URL = replacedURL;
     }
     return mutableRequest;
@@ -110,7 +110,6 @@ NSURLSessionDataDelegate
 
 - (void)stopLoading {
     [self.task cancel];
-    [HTTPMonitorModel updateModelWithResponse:(NSHTTPURLResponse *)self.response];
 }
 
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task willPerformHTTPRedirection:(NSHTTPURLResponse *)response newRequest:(NSURLRequest *)request completionHandler:(void (^)(NSURLRequest * _Nullable))completionHandler {
@@ -142,11 +141,10 @@ NSURLSessionDataDelegate
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error {
     if (error) {
         [self.client URLProtocol:self didFailWithError:error];
-        HTTPMonitorModel.responseStatusCode = (int)error.code;
-        HTTPMonitorModel.errMsg = error.localizedDescription;
+        HTTPMonitorModel.errorCode = error.code;
+        HTTPMonitorModel.errorMsg = error.localizedDescription;
     } else {
         [self.client URLProtocolDidFinishLoading:self];
-        HTTPMonitorModel.responseStatusCode = (int)[(NSHTTPURLResponse*)self.response statusCode];
     }
     [[PRESHTTPMonitorSender sharedSender] addModel:HTTPMonitorModel];
 }

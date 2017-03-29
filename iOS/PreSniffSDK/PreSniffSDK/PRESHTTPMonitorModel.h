@@ -14,7 +14,8 @@
 @property (nonatomic, assign) UInt64 startTimestamp;
 @property (nonatomic, assign) UInt64 startTimestampViaMin;
 @property (nonatomic, assign) UInt64 endTimestamp;
-@property (nonatomic, strong) NSString *errMsg;
+@property (nonatomic, strong) NSString *errorMsg;
+@property (nonatomic, assign) NSInteger errorCode;
 
 //request
 @property (nonatomic, assign) NSUInteger requestDNSTime;
