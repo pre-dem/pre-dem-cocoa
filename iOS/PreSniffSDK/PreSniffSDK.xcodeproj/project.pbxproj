@@ -47,7 +47,6 @@
 		052960C81E5E93C80096CB3F /* PreSniffManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 052960C51E5E93C80096CB3F /* PreSniffManager.m */; };
 		052960C91E5E93C80096CB3F /* PreSniffManagerDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 052960C61E5E93C80096CB3F /* PreSniffManagerDelegate.h */; };
 		052960CB1E5E95610096CB3F /* CrashReporter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 052960CA1E5E95610096CB3F /* CrashReporter.framework */; };
-		052960CE1E5E97E20096CB3F /* HockeySDKBase.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 052960CD1E5E97E20096CB3F /* HockeySDKBase.xcconfig */; };
 		058AF98D1E657D0300F6BD38 /* PRESApplication.h in Headers */ = {isa = PBXBuildFile; fileRef = 058AF9621E657D0300F6BD38 /* PRESApplication.h */; };
 		058AF98E1E657D0300F6BD38 /* PRESApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = 058AF9631E657D0300F6BD38 /* PRESApplication.m */; };
 		058AF98F1E657D0300F6BD38 /* PRESBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 058AF9641E657D0300F6BD38 /* PRESBase.h */; };
@@ -374,7 +373,7 @@
 				052960951E5E92D30096CB3F /* Network */,
 				052960781E5E882E0096CB3F /* Helper */,
 				052960771E5E88230096CB3F /* CrashReport */,
-				B6AE39FE1E5C291500737C2A /* URLHook */,
+				B6AE39FE1E5C291500737C2A /* HTTPMonitor */,
 				B683A6111E5C1845007F0459 /* PreSniffSDK.h */,
 				052960AC1E5E93180096CB3F /* PreSniffSDKFeatureConfig.h */,
 				052960C41E5E93C80096CB3F /* PreSniffManager.h */,
@@ -385,7 +384,7 @@
 			path = PreSniffSDK;
 			sourceTree = "<group>";
 		};
-		B6AE39FE1E5C291500737C2A /* URLHook */ = {
+		B6AE39FE1E5C291500737C2A /* HTTPMonitor */ = {
 			isa = PBXGroup;
 			children = (
 				B64766511E8AADC100B804C0 /* PRESHTTPMonitorModel.h */,
@@ -397,7 +396,7 @@
 				B64766551E8AAE2A00B804C0 /* PRESHTTPMonitorSender.h */,
 				B64766561E8AAE2A00B804C0 /* PRESHTTPMonitorSender.m */,
 			);
-			name = URLHook;
+			name = HTTPMonitor;
 			sourceTree = "<group>";
 		};
 		BEAFA35AA8D8AAA1FB4BD08F /* Pods */ = {
@@ -502,7 +501,7 @@
 		B683A6051E5C1845007F0459 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0820;
+				LastUpgradeCheck = 0830;
 				ORGANIZATIONNAME = "pre-engineering";
 				TargetAttributes = {
 					B683A60D1E5C1845007F0459 = {
@@ -534,7 +533,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				052960CE1E5E97E20096CB3F /* HockeySDKBase.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -10,7 +10,7 @@
 #import <MJExtension/MJExtension.h>
 
 #define PRESHTTPMonitorDomain   @"http://localhost:8080"
-#define PRESHTTPMonitorPath     @"/http_monitor"
+#define PRESHTTPMonitorPath     @"/httpmonitor"
 
 @implementation PRESHTTPMonitorSender
 
