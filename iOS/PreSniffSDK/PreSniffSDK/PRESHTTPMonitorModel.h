@@ -10,7 +10,11 @@
 
 @interface PRESHTTPMonitorModel : NSObject
 
-@property (nonatomic, assign) double myID;
+@property (nonatomic, assign) double myId;
+@property (nonatomic, strong) NSString *appName;
+@property (nonatomic, strong) NSString *appBundleId;
+@property (nonatomic, strong) NSString *osVersion;
+@property (nonatomic, strong) NSString *deviceModel;
 @property (nonatomic, assign) UInt64 startTimestamp;
 @property (nonatomic, assign) UInt64 startTimestampViaMin;
 @property (nonatomic, assign) UInt64 endTimestamp;

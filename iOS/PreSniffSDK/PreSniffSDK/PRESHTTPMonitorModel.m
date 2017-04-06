@@ -7,9 +7,20 @@
 //
 
 #import "PRESHTTPMonitorModel.h"
+#import "PRESUtilities.h"
 #import <objc/runtime.h>
 
 @implementation PRESHTTPMonitorModel
+
+- (instancetype)init {
+    if (self = [super init]) {
+        self.appName = [PRESUtilities getAppName];
+        self.appBundleId = [PRESUtilities getAppBundleId];
+        self.osVersion = [PRESUtilities getOsVersion];
+        self.deviceModel = [PRESUtilities getDeviceModel];
+    }
+    return self;
+}
 
 - (void)updateModelWithRequest:(NSURLRequest *)request {
     self.requestURLString = [NSURLProtocol propertyForKey:@"PRESOriginalURL" inRequest:request];

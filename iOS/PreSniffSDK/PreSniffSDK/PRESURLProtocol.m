@@ -103,9 +103,9 @@ NSURLSessionDataDelegate
     HTTPMonitorModel.responseTimeStamp = 0;
     HTTPMonitorModel.responseDataLength = 0;
     
-    NSTimeInterval myID = [[NSDate date] timeIntervalSince1970];
+    NSTimeInterval myId = [[NSDate date] timeIntervalSince1970];
     double randomNum = ((double)(arc4random() % 100))/10000;
-    HTTPMonitorModel.myID = myID + randomNum;
+    HTTPMonitorModel.myId = myId + randomNum;
 }
 
 - (void)stopLoading {
