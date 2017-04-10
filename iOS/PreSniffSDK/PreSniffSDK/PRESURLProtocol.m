@@ -68,6 +68,7 @@ NSURLSessionDataDelegate
     [NSURLProtocol setProperty:mutableRequest.URL.absoluteString
                         forKey:@"PRESOriginalURL"
                      inRequest:mutableRequest];
+    [mutableRequest setValue:mutableRequest.URL.host forHTTPHeaderField:@"Host"];
     if ([request.URL.scheme isEqualToString:@"http"]) {
         NSMutableArray *resolvers = [[NSMutableArray alloc] init];
         [resolvers addObject:[QNResolver systemResolver]];
@@ -83,7 +84,6 @@ NSURLSessionDataDelegate
         [NSURLProtocol setProperty:replacedURL.host
                             forKey:@"PRESHostIP"
                          inRequest:mutableRequest];
-        [mutableRequest setValue:mutableRequest.URL.host forHTTPHeaderField:@"Host"];
         mutableRequest.URL = replacedURL;
     }
     return mutableRequest;
