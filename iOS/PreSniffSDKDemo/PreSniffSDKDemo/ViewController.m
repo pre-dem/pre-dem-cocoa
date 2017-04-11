@@ -18,12 +18,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+    NSArray *urls = @[@"http://www.qq.com", @"http://www.baidu.com", @"http://www.163.com"];
     for (int i = 0; i < 30; i ++) {
-        NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://www.qq.com"]];
+        NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urls[i%3]]];
         NSURLSession *session = [NSURLSession sessionWithConfiguration:NSURLSessionConfiguration.defaultSessionConfiguration];
         //    session = [NSURLSession sharedSession];
         NSURLSessionDataTask *task = [session dataTaskWithRequest:request];
         [task resume];
+        sleep(1);
     }
     
     [self testEventTracking];
