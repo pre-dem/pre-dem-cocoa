@@ -18,15 +18,17 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-    NSArray *urls = @[@"http://www.qq.com", @"http://www.baidu.com", @"http://www.163.com"];
-    for (int i = 0; i < 30; i ++) {
-        NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urls[i%3]]];
-        NSURLSession *session = [NSURLSession sessionWithConfiguration:NSURLSessionConfiguration.defaultSessionConfiguration];
-        //    session = [NSURLSession sharedSession];
-        NSURLSessionDataTask *task = [session dataTaskWithRequest:request];
-        [task resume];
-        sleep(1);
-    }
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+        NSArray *urls = @[@"http://www.qq.com", @"http://www.baidu.com", @"http://www.163.com"];
+        for (int i = 0; i < 30; i ++) {
+            NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urls[i%3]]];
+            NSURLSession *session = [NSURLSession sessionWithConfiguration:NSURLSessionConfiguration.defaultSessionConfiguration];
+            //    session = [NSURLSession sharedSession];
+            NSURLSessionDataTask *task = [session dataTaskWithRequest:request];
+            [task resume];
+            sleep(1);
+        }
+    });
     
     [self testEventTracking];
 //    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(10 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
