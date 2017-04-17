@@ -97,7 +97,6 @@ NSURLSessionDataDelegate
     
     HTTPMonitorModel = [[PRESHTTPMonitorModel alloc] init];
     [HTTPMonitorModel updateModelWithRequest:self.request];
-    HTTPMonitorModel.startTimestampViaMin = ((int)[[NSDate date] timeIntervalSince1970]) / 60 * 60;
     HTTPMonitorModel.startTimestamp = [[NSDate date] timeIntervalSince1970] * 1000;
     
     HTTPMonitorModel.responseTimeStamp = 0;

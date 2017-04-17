@@ -15,7 +15,6 @@
 @property (nonatomic, strong) NSString *osVersion;
 @property (nonatomic, strong) NSString *deviceModel;
 @property (nonatomic, assign) UInt64 startTimestamp;
-@property (nonatomic, assign) UInt64 startTimestampViaMin;
 @property (nonatomic, assign) UInt64 endTimestamp;
 @property (nonatomic, strong) NSString *errorMsg;
 @property (nonatomic, assign) NSInteger errorCode;
