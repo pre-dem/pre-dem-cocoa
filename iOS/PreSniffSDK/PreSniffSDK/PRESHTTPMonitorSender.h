@@ -11,6 +11,8 @@
 
 @interface PRESHTTPMonitorSender : NSObject
 
+@property (nonatomic, assign, getter=isEnabled) BOOL enable;
+
 + (instancetype)sharedSender;
 
 - (void)addModel:(PRESHTTPMonitorModel *)model;

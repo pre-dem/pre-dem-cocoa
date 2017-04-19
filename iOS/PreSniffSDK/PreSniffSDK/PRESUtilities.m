@@ -8,6 +8,7 @@
 
 #import "PRESUtilities.h"
 #import <UIKit/UIKit.h>
+#import <sys/sysctl.h>
 
 @implementation PRESUtilities
 

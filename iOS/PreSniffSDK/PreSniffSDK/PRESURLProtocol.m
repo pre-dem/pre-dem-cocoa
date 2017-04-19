@@ -76,8 +76,8 @@ NSURLSessionDataDelegate
         NSTimeInterval dnsStartTime = [[NSDate date] timeIntervalSince1970];
         NSURL *replacedURL = [dns queryAndReplaceWithIP:mutableRequest.URL];
         NSTimeInterval dnsEndTime = [[NSDate date] timeIntervalSince1970];
-        [NSURLProtocol setProperty:[NSString stringWithFormat:@"%u",
-                                    (NSUInteger)((dnsEndTime - dnsStartTime)*1000)]
+        [NSURLProtocol setProperty:[NSString stringWithFormat:@"%lu",
+                                    (unsigned long)(dnsEndTime - dnsStartTime)*1000]
                             forKey:@"PRESDNSTime"
                          inRequest:mutableRequest];
         [NSURLProtocol setProperty:replacedURL.host

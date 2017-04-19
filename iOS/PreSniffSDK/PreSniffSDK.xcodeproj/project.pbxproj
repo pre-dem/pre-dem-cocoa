@@ -90,9 +90,9 @@
 		058AF9B51E657D0300F6BD38 /* PRESTelemetryObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 058AF98A1E657D0300F6BD38 /* PRESTelemetryObject.m */; };
 		058AF9B61E657D0300F6BD38 /* PRESUser.h in Headers */ = {isa = PBXBuildFile; fileRef = 058AF98B1E657D0300F6BD38 /* PRESUser.h */; };
 		058AF9B71E657D0300F6BD38 /* PRESUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 058AF98C1E657D0300F6BD38 /* PRESUser.m */; };
-		4E087054CE09E4254A15EFA8 /* libPods-PreSniffSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E1CC73BE95188F45F2AE5CAA /* libPods-PreSniffSDK.a */; };
-		B607FAFB1EA7092500BDEA56 /* PLDataCompressor.h in Headers */ = {isa = PBXBuildFile; fileRef = B607FAF91EA7092500BDEA56 /* PLDataCompressor.h */; };
-		B607FAFC1EA7092500BDEA56 /* PLDataCompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = B607FAFA1EA7092500BDEA56 /* PLDataCompressor.m */; };
+		B607FAFE1EA744FD00BDEA56 /* libPods-PreSniffSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B607FAFD1EA744FD00BDEA56 /* libPods-PreSniffSDK.a */; };
+		B607FB021EA746DE00BDEA56 /* PRESDataCompressor.h in Headers */ = {isa = PBXBuildFile; fileRef = B607FB001EA746DE00BDEA56 /* PRESDataCompressor.h */; };
+		B607FB031EA746DE00BDEA56 /* PRESDataCompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = B607FB011EA746DE00BDEA56 /* PRESDataCompressor.m */; };
 		B64766531E8AADC100B804C0 /* PRESHTTPMonitorModel.h in Headers */ = {isa = PBXBuildFile; fileRef = B64766511E8AADC100B804C0 /* PRESHTTPMonitorModel.h */; };
 		B64766541E8AADC100B804C0 /* PRESHTTPMonitorModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B64766521E8AADC100B804C0 /* PRESHTTPMonitorModel.m */; };
 		B64766571E8AAE2A00B804C0 /* PRESHTTPMonitorSender.h in Headers */ = {isa = PBXBuildFile; fileRef = B64766551E8AAE2A00B804C0 /* PRESHTTPMonitorSender.h */; };
@@ -193,8 +193,9 @@
 		058AF98C1E657D0300F6BD38 /* PRESUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRESUser.m; sourceTree = "<group>"; };
 		1F9D8CAF70BE6832D500F74B /* Pods-PreSniffSDK.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PreSniffSDK.release.xcconfig"; path = "Pods/Target Support Files/Pods-PreSniffSDK/Pods-PreSniffSDK.release.xcconfig"; sourceTree = "<group>"; };
 		3E3A750A819E32FB0E70D691 /* Pods-PreSniffSDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PreSniffSDK.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PreSniffSDK/Pods-PreSniffSDK.debug.xcconfig"; sourceTree = "<group>"; };
-		B607FAF91EA7092500BDEA56 /* PLDataCompressor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLDataCompressor.h; sourceTree = "<group>"; };
-		B607FAFA1EA7092500BDEA56 /* PLDataCompressor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLDataCompressor.m; sourceTree = "<group>"; };
+		B607FAFD1EA744FD00BDEA56 /* libPods-PreSniffSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-PreSniffSDK.a"; path = "../../../../../../Library/Developer/Xcode/DerivedData/PreSniffSDKDemo-geujwbtyfmkhseguodttzzfqauyo/Build/Products/Debug-iphonesimulator/libPods-PreSniffSDK.a"; sourceTree = "<group>"; };
+		B607FB001EA746DE00BDEA56 /* PRESDataCompressor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRESDataCompressor.h; sourceTree = "<group>"; };
+		B607FB011EA746DE00BDEA56 /* PRESDataCompressor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRESDataCompressor.m; sourceTree = "<group>"; };
 		B64766511E8AADC100B804C0 /* PRESHTTPMonitorModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRESHTTPMonitorModel.h; sourceTree = "<group>"; };
 		B64766521E8AADC100B804C0 /* PRESHTTPMonitorModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRESHTTPMonitorModel.m; sourceTree = "<group>"; };
 		B64766551E8AAE2A00B804C0 /* PRESHTTPMonitorSender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRESHTTPMonitorSender.h; sourceTree = "<group>"; };
@@ -216,8 +217,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B607FAFE1EA744FD00BDEA56 /* libPods-PreSniffSDK.a in Frameworks */,
 				052960CB1E5E95610096CB3F /* CrashReporter.framework in Frameworks */,
-				4E087054CE09E4254A15EFA8 /* libPods-PreSniffSDK.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -248,8 +249,8 @@
 		052960781E5E882E0096CB3F /* Helper */ = {
 			isa = PBXGroup;
 			children = (
-				B607FAF91EA7092500BDEA56 /* PLDataCompressor.h */,
-				B607FAFA1EA7092500BDEA56 /* PLDataCompressor.m */,
+				B607FB001EA746DE00BDEA56 /* PRESDataCompressor.h */,
+				B607FB011EA746DE00BDEA56 /* PRESDataCompressor.m */,
 				0529609E1E5E93180096CB3F /* PRESAttachment.h */,
 				0529609F1E5E93180096CB3F /* PRESAttachment.m */,
 				052960A01E5E93180096CB3F /* PRESBaseManager.h */,
@@ -352,6 +353,7 @@
 		76D146B639A1F5B6A7D2177B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B607FAFD1EA744FD00BDEA56 /* libPods-PreSniffSDK.a */,
 				052960CA1E5E95610096CB3F /* CrashReporter.framework */,
 				E1CC73BE95188F45F2AE5CAA /* libPods-PreSniffSDK.a */,
 			);
@@ -438,6 +440,7 @@
 				052960901E5E92CE0096CB3F /* PRESCrashMetaData.h in Headers */,
 				052960891E5E92CE0096CB3F /* PRESCrashDetails.h in Headers */,
 				052960B01E5E93180096CB3F /* PRESAttachment.h in Headers */,
+				B607FB021EA746DE00BDEA56 /* PRESDataCompressor.h in Headers */,
 				058AF9B01E657D0300F6BD38 /* PRESTelemetryContext.h in Headers */,
 				058AF9A51E657D0300F6BD38 /* PRESMetricsManagerPrivate.h in Headers */,
 				058AF9A31E657D0300F6BD38 /* PRESMetricsManager.h in Headers */,
@@ -446,7 +449,6 @@
 				058AF99A1E657D0300F6BD38 /* PRESDomain.h in Headers */,
 				058AF98F1E657D0300F6BD38 /* PRESBase.h in Headers */,
 				052960B91E5E93180096CB3F /* PRESLoggerPrivate.h in Headers */,
-				B607FAFB1EA7092500BDEA56 /* PLDataCompressor.h in Headers */,
 				052960BA1E5E93180096CB3F /* PRESKeychainUtils.h in Headers */,
 				052960941E5E92CE0096CB3F /* PRESCrashReportTextFormatterPrivate.h in Headers */,
 				052960B41E5E93180096CB3F /* PRESBaseManagerPrivate.h in Headers */,
@@ -493,12 +495,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B683A6161E5C1845007F0459 /* Build configuration list for PBXNativeTarget "PreSniffSDK" */;
 			buildPhases = (
-				F3A88D04F18F9F9DD3B1B254 /* [CP] Check Pods Manifest.lock */,
 				B683A6091E5C1845007F0459 /* Sources */,
 				B683A60A1E5C1845007F0459 /* Frameworks */,
 				B683A60B1E5C1845007F0459 /* Headers */,
 				B683A60C1E5C1845007F0459 /* Resources */,
-				91ED97D9028742E2E3B34D97 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -552,39 +552,6 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		91ED97D9028742E2E3B34D97 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PreSniffSDK/Pods-PreSniffSDK-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		F3A88D04F18F9F9DD3B1B254 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
 		B683A6091E5C1845007F0459 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -603,7 +570,6 @@
 				058AF9941E657D0300F6BD38 /* PRESChannel.m in Sources */,
 				058AF9AC1E657D0300F6BD38 /* PRESSession.m in Sources */,
 				0529609D1E5E92E10096CB3F /* PRESNetworkClient.m in Sources */,
-				B607FAFC1EA7092500BDEA56 /* PLDataCompressor.m in Sources */,
 				B64766541E8AADC100B804C0 /* PRESHTTPMonitorModel.m in Sources */,
 				058AF9A21E657D0300F6BD38 /* PRESInternal.m in Sources */,
 				052960911E5E92CE0096CB3F /* PRESCrashMetaData.m in Sources */,
@@ -624,6 +590,7 @@
 				0529609B1E5E92E10096CB3F /* PRESHTTPOperation.m in Sources */,
 				052960C81E5E93C80096CB3F /* PreSniffManager.m in Sources */,
 				058AF9B11E657D0300F6BD38 /* PRESTelemetryContext.m in Sources */,
+				B607FB031EA746DE00BDEA56 /* PRESDataCompressor.m in Sources */,
 				B6E0C1721E77CC0300A020A6 /* PRESURLSessionSwizzler.m in Sources */,
 				058AF9971E657D0300F6BD38 /* PRESData.m in Sources */,
 				058AF98E1E657D0300F6BD38 /* PRESApplication.m in Sources */,

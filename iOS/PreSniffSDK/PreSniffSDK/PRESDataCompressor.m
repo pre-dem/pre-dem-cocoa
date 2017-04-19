@@ -6,20 +6,20 @@
 //  Copyright 2010 All-Seeing Interactive. All rights reserved.
 //
 
-#import "PLDataCompressor.h"
+#import "PRESDataCompressor.h"
 
 #define DATA_CHUNK_SIZE 262144 // Deal with gzipped data in 256KB chunks
 #define COMPRESSION_AMOUNT Z_DEFAULT_COMPRESSION
 
-@interface PLDataCompressor ()
+@interface PRESDataCompressor ()
 + (NSError *)deflateErrorWithCode:(int)code;
 @end
 
-@implementation PLDataCompressor
+@implementation PRESDataCompressor
 
 + (id)compressor
 {
-	PLDataCompressor *compressor = [[[self alloc] init] autorelease];
+	PRESDataCompressor *compressor = [[[self alloc] init] autorelease];
 	[compressor setupStream];
 	return compressor;
 }
@@ -107,10 +107,10 @@
 }
 
 
-+ (NSData *)compressData:(NSData*)uncompressedData error:(NSError **)err
++ (NSData *)compressData:(NSData *)uncompressedData error:(NSError **)err
 {
 	NSError *theError = nil;
-	NSData *outputData = [[PLDataCompressor compressor] compressBytes:(Bytef *)[uncompressedData bytes] length:[uncompressedData length] error:&theError shouldFinish:YES];
+	NSData *outputData = [[PRESDataCompressor compressor] compressBytes:(Bytef *)[uncompressedData bytes] length:[uncompressedData length] error:&theError shouldFinish:YES];
 	if (theError) {
 		if (err) {
 			*err = theError;
@@ -147,7 +147,7 @@
 	NSInteger readLength;
 	NSError *theError = nil;
 	
-	PLDataCompressor *compressor = [PLDataCompressor compressor];
+	PRESDataCompressor *compressor = [PRESDataCompressor compressor];
 	
 	NSInputStream *inputStream = [NSInputStream inputStreamWithFileAtPath:sourcePath];
 	[inputStream open];

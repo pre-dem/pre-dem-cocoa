@@ -13,7 +13,7 @@
 #import <Foundation/Foundation.h>
 #import <zlib.h>
 
-@interface PLDataCompressor : NSObject {
+@interface PRESDataCompressor : NSObject {
 	BOOL streamReady;
 	z_stream zStream;
 }
