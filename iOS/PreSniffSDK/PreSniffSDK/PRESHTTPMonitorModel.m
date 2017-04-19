@@ -18,6 +18,7 @@
         self.appBundleId = [PRESUtilities getAppBundleId];
         self.osVersion = [PRESUtilities getOsVersion];
         self.deviceModel = [PRESUtilities getDeviceModel];
+        self.deviceUUID = [PRESUtilities getDeviceUUID];
     }
     return self;
 }

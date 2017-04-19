@@ -35,4 +35,12 @@
     return platform;
 }
 
++ (NSString *)getDeviceUUID {
+    NSString * uuid = [[UIDevice currentDevice] identifierForVendor].UUIDString;
+    if(uuid == nil){
+        return @"simulator";
+    }
+    return uuid;
+}
+
 @end

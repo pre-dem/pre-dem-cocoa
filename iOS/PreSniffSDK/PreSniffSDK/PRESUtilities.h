@@ -14,5 +14,6 @@
 + (NSString *)getAppBundleId;
 + (NSString *)getOsVersion;
 + (NSString *)getDeviceModel;
++ (NSString *)getDeviceUUID;
 
 @end

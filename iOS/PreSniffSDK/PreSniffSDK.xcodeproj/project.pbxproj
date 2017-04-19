@@ -91,6 +91,8 @@
 		058AF9B61E657D0300F6BD38 /* PRESUser.h in Headers */ = {isa = PBXBuildFile; fileRef = 058AF98B1E657D0300F6BD38 /* PRESUser.h */; };
 		058AF9B71E657D0300F6BD38 /* PRESUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 058AF98C1E657D0300F6BD38 /* PRESUser.m */; };
 		4E087054CE09E4254A15EFA8 /* libPods-PreSniffSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E1CC73BE95188F45F2AE5CAA /* libPods-PreSniffSDK.a */; };
+		B607FAFB1EA7092500BDEA56 /* PLDataCompressor.h in Headers */ = {isa = PBXBuildFile; fileRef = B607FAF91EA7092500BDEA56 /* PLDataCompressor.h */; };
+		B607FAFC1EA7092500BDEA56 /* PLDataCompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = B607FAFA1EA7092500BDEA56 /* PLDataCompressor.m */; };
 		B64766531E8AADC100B804C0 /* PRESHTTPMonitorModel.h in Headers */ = {isa = PBXBuildFile; fileRef = B64766511E8AADC100B804C0 /* PRESHTTPMonitorModel.h */; };
 		B64766541E8AADC100B804C0 /* PRESHTTPMonitorModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B64766521E8AADC100B804C0 /* PRESHTTPMonitorModel.m */; };
 		B64766571E8AAE2A00B804C0 /* PRESHTTPMonitorSender.h in Headers */ = {isa = PBXBuildFile; fileRef = B64766551E8AAE2A00B804C0 /* PRESHTTPMonitorSender.h */; };
@@ -191,6 +193,8 @@
 		058AF98C1E657D0300F6BD38 /* PRESUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRESUser.m; sourceTree = "<group>"; };
 		1F9D8CAF70BE6832D500F74B /* Pods-PreSniffSDK.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PreSniffSDK.release.xcconfig"; path = "Pods/Target Support Files/Pods-PreSniffSDK/Pods-PreSniffSDK.release.xcconfig"; sourceTree = "<group>"; };
 		3E3A750A819E32FB0E70D691 /* Pods-PreSniffSDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PreSniffSDK.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PreSniffSDK/Pods-PreSniffSDK.debug.xcconfig"; sourceTree = "<group>"; };
+		B607FAF91EA7092500BDEA56 /* PLDataCompressor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLDataCompressor.h; sourceTree = "<group>"; };
+		B607FAFA1EA7092500BDEA56 /* PLDataCompressor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLDataCompressor.m; sourceTree = "<group>"; };
 		B64766511E8AADC100B804C0 /* PRESHTTPMonitorModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRESHTTPMonitorModel.h; sourceTree = "<group>"; };
 		B64766521E8AADC100B804C0 /* PRESHTTPMonitorModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRESHTTPMonitorModel.m; sourceTree = "<group>"; };
 		B64766551E8AAE2A00B804C0 /* PRESHTTPMonitorSender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRESHTTPMonitorSender.h; sourceTree = "<group>"; };
@@ -244,6 +248,8 @@
 		052960781E5E882E0096CB3F /* Helper */ = {
 			isa = PBXGroup;
 			children = (
+				B607FAF91EA7092500BDEA56 /* PLDataCompressor.h */,
+				B607FAFA1EA7092500BDEA56 /* PLDataCompressor.m */,
 				0529609E1E5E93180096CB3F /* PRESAttachment.h */,
 				0529609F1E5E93180096CB3F /* PRESAttachment.m */,
 				052960A01E5E93180096CB3F /* PRESBaseManager.h */,
@@ -440,6 +446,7 @@
 				058AF99A1E657D0300F6BD38 /* PRESDomain.h in Headers */,
 				058AF98F1E657D0300F6BD38 /* PRESBase.h in Headers */,
 				052960B91E5E93180096CB3F /* PRESLoggerPrivate.h in Headers */,
+				B607FAFB1EA7092500BDEA56 /* PLDataCompressor.h in Headers */,
 				052960BA1E5E93180096CB3F /* PRESKeychainUtils.h in Headers */,
 				052960941E5E92CE0096CB3F /* PRESCrashReportTextFormatterPrivate.h in Headers */,
 				052960B41E5E93180096CB3F /* PRESBaseManagerPrivate.h in Headers */,
@@ -596,6 +603,7 @@
 				058AF9941E657D0300F6BD38 /* PRESChannel.m in Sources */,
 				058AF9AC1E657D0300F6BD38 /* PRESSession.m in Sources */,
 				0529609D1E5E92E10096CB3F /* PRESNetworkClient.m in Sources */,
+				B607FAFC1EA7092500BDEA56 /* PLDataCompressor.m in Sources */,
 				B64766541E8AADC100B804C0 /* PRESHTTPMonitorModel.m in Sources */,
 				058AF9A21E657D0300F6BD38 /* PRESInternal.m in Sources */,
 				052960911E5E92CE0096CB3F /* PRESCrashMetaData.m in Sources */,
