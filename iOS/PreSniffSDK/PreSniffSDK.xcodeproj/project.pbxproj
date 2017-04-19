@@ -92,7 +92,7 @@
 		058AF9B71E657D0300F6BD38 /* PRESUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 058AF98C1E657D0300F6BD38 /* PRESUser.m */; };
 		B607FAFE1EA744FD00BDEA56 /* libPods-PreSniffSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B607FAFD1EA744FD00BDEA56 /* libPods-PreSniffSDK.a */; };
 		B607FB021EA746DE00BDEA56 /* PRESDataCompressor.h in Headers */ = {isa = PBXBuildFile; fileRef = B607FB001EA746DE00BDEA56 /* PRESDataCompressor.h */; };
-		B607FB031EA746DE00BDEA56 /* PRESDataCompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = B607FB011EA746DE00BDEA56 /* PRESDataCompressor.m */; };
+		B607FB031EA746DE00BDEA56 /* PRESDataCompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = B607FB011EA746DE00BDEA56 /* PRESDataCompressor.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		B64766531E8AADC100B804C0 /* PRESHTTPMonitorModel.h in Headers */ = {isa = PBXBuildFile; fileRef = B64766511E8AADC100B804C0 /* PRESHTTPMonitorModel.h */; };
 		B64766541E8AADC100B804C0 /* PRESHTTPMonitorModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B64766521E8AADC100B804C0 /* PRESHTTPMonitorModel.m */; };
 		B64766571E8AAE2A00B804C0 /* PRESHTTPMonitorSender.h in Headers */ = {isa = PBXBuildFile; fileRef = B64766551E8AAE2A00B804C0 /* PRESHTTPMonitorSender.h */; };
