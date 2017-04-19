@@ -37,6 +37,8 @@ NSURLSessionDataDelegate
     if (![[PRESURLSessionSwizzler defaultSwizzler] isSwizzle]) {
         [[PRESURLSessionSwizzler defaultSwizzler] load];
     }
+    
+    [PRESHTTPMonitorSender sharedSender].enable = YES;
 }
 
 + (void)disableHTTPSniff {
@@ -44,6 +46,7 @@ NSURLSessionDataDelegate
     if ([[PRESURLSessionSwizzler defaultSwizzler] isSwizzle]) {
         [[PRESURLSessionSwizzler defaultSwizzler] unload];
     }
+    [PRESHTTPMonitorSender sharedSender].enable = NO;
 }
 
 + (BOOL)canInitWithRequest:(NSURLRequest *)request {
