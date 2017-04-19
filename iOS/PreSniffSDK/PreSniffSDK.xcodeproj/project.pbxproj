@@ -147,7 +147,7 @@
 		052960C51E5E93C80096CB3F /* PreSniffManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreSniffManager.m; sourceTree = "<group>"; };
 		052960C61E5E93C80096CB3F /* PreSniffManagerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreSniffManagerDelegate.h; sourceTree = "<group>"; };
 		052960CA1E5E95610096CB3F /* CrashReporter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CrashReporter.framework; path = Vendor/CrashReporter.framework; sourceTree = "<group>"; };
-		052960CD1E5E97E20096CB3F /* HockeySDKBase.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = HockeySDKBase.xcconfig; path = Support/HockeySDKBase.xcconfig; sourceTree = "<group>"; };
+		052960CD1E5E97E20096CB3F /* HockeySDKBase.debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = HockeySDKBase.debug.xcconfig; path = Support/HockeySDKBase.debug.xcconfig; sourceTree = "<group>"; };
 		058AF9621E657D0300F6BD38 /* PRESApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRESApplication.h; sourceTree = "<group>"; };
 		058AF9631E657D0300F6BD38 /* PRESApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRESApplication.m; sourceTree = "<group>"; };
 		058AF9641E657D0300F6BD38 /* PRESBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRESBase.h; sourceTree = "<group>"; };
@@ -209,6 +209,7 @@
 		B6AE3A001E5C296400737C2A /* PRESURLProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRESURLProtocol.m; sourceTree = "<group>"; };
 		B6E0C16F1E77CC0300A020A6 /* PRESURLSessionSwizzler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRESURLSessionSwizzler.h; sourceTree = "<group>"; };
 		B6E0C1701E77CC0300A020A6 /* PRESURLSessionSwizzler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRESURLSessionSwizzler.m; sourceTree = "<group>"; };
+		B6FB15AF1EA74BAA00030F3F /* HockeySDKBase.release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = HockeySDKBase.release.xcconfig; sourceTree = "<group>"; };
 		E1CC73BE95188F45F2AE5CAA /* libPods-PreSniffSDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PreSniffSDK.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -288,7 +289,8 @@
 		052960CC1E5E97C80096CB3F /* Support */ = {
 			isa = PBXGroup;
 			children = (
-				052960CD1E5E97E20096CB3F /* HockeySDKBase.xcconfig */,
+				052960CD1E5E97E20096CB3F /* HockeySDKBase.debug.xcconfig */,
+				B6FB15AF1EA74BAA00030F3F /* HockeySDKBase.release.xcconfig */,
 			);
 			name = Support;
 			sourceTree = "<group>";
@@ -700,7 +702,7 @@
 		};
 		B683A6171E5C1845007F0459 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 052960CD1E5E97E20096CB3F /* HockeySDKBase.xcconfig */;
+			baseConfigurationReference = 052960CD1E5E97E20096CB3F /* HockeySDKBase.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				DEFINES_MODULE = YES;
@@ -727,7 +729,7 @@
 		};
 		B683A6181E5C1845007F0459 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 052960CD1E5E97E20096CB3F /* HockeySDKBase.xcconfig */;
+			baseConfigurationReference = B6FB15AF1EA74BAA00030F3F /* HockeySDKBase.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				DEFINES_MODULE = YES;
