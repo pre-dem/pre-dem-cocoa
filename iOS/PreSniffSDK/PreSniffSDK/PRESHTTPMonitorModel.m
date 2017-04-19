@@ -22,17 +22,4 @@
     return self;
 }
 
-- (void)updateModelWithRequest:(NSURLRequest *)request {
-    self.requestURLString = [NSURLProtocol propertyForKey:@"PRESOriginalURL" inRequest:request];
-    self.requestDomain = [request valueForHTTPHeaderField:@"Host"];
-    self.requestTimeoutInterval = request.timeoutInterval;
-    self.requestHTTPMethod = request.HTTPMethod;
-    self.requestDNSTime = [[NSURLProtocol propertyForKey:@"PRESDNSTime" inRequest:request] integerValue];
-    self.requestHostIP = [NSURLProtocol propertyForKey:@"PRESHostIP" inRequest:request];
-}
-
-- (void)updateModelWithResponse:(NSHTTPURLResponse *)response {
-    self.responseStatusCode = response.statusCode;
-}
-
 @end

@@ -65,10 +65,9 @@ NSURLSessionDataDelegate
     [NSURLProtocol setProperty:@YES
                         forKey:@"PRESInternalRequest"
                      inRequest:mutableRequest];
-    [NSURLProtocol setProperty:mutableRequest.URL.absoluteString
+    [NSURLProtocol setProperty:mutableRequest.URL
                         forKey:@"PRESOriginalURL"
                      inRequest:mutableRequest];
-    [mutableRequest setValue:mutableRequest.URL.host forHTTPHeaderField:@"Host"];
     if ([request.URL.scheme isEqualToString:@"http"]) {
         NSMutableArray *resolvers = [[NSMutableArray alloc] init];
         [resolvers addObject:[QNResolver systemResolver]];
@@ -96,11 +95,13 @@ NSURLSessionDataDelegate
     [self.task resume];
     
     HTTPMonitorModel = [[PRESHTTPMonitorModel alloc] init];
-    [HTTPMonitorModel updateModelWithRequest:self.request];
+    NSURL *originURL = [NSURLProtocol propertyForKey:@"PRESOriginalURL" inRequest:self.request];
+    HTTPMonitorModel.domain = originURL.host;
+    HTTPMonitorModel.path = originURL.path;
+    HTTPMonitorModel.method = self.request.HTTPMethod;
+    HTTPMonitorModel.hostIP = [NSURLProtocol propertyForKey:@"PRESHostIP" inRequest:self.request];
     HTTPMonitorModel.startTimestamp = [[NSDate date] timeIntervalSince1970] * 1000;
-    
-    HTTPMonitorModel.responseTimeStamp = 0;
-    HTTPMonitorModel.responseDataLength = 0;
+    HTTPMonitorModel.DNSTime = (NSUInteger)[NSURLProtocol propertyForKey:@"PRESDNSTime" inRequest:self.request];
 }
 
 - (void)stopLoading {
@@ -123,21 +124,21 @@ NSURLSessionDataDelegate
     [self.client URLProtocol:self didReceiveResponse:response cacheStoragePolicy:NSURLCacheStorageAllowed];
     completionHandler(NSURLSessionResponseAllow);
     HTTPMonitorModel.responseTimeStamp = [[NSDate date] timeIntervalSince1970] * 1000;
-    [HTTPMonitorModel updateModelWithResponse:(NSHTTPURLResponse *)response];
+    HTTPMonitorModel.statusCode = ((NSHTTPURLResponse *)response).statusCode;
 }
 
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask
     didReceiveData:(NSData *)data {
     [self.client URLProtocol:self didLoadData:data];
     HTTPMonitorModel.endTimestamp = [[NSDate date] timeIntervalSince1970] * 1000;
-    HTTPMonitorModel.responseDataLength += data.length;
+    HTTPMonitorModel.dataLength += data.length;
 }
 
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error {
     if (error) {
         [self.client URLProtocol:self didFailWithError:error];
-        HTTPMonitorModel.errorCode = error.code;
-        HTTPMonitorModel.errorMsg = error.localizedDescription;
+        HTTPMonitorModel.networkErrorCode = error.code;
+        HTTPMonitorModel.networkErrorMsg = error.localizedDescription;
     } else {
         [self.client URLProtocolDidFinishLoading:self];
     }
