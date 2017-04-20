@@ -14,6 +14,7 @@
 
 - (instancetype)init {
     if (self = [super init]) {
+        self.platform = 1;
         self.appName = [PRESUtilities getAppName];
         self.appBundleId = [PRESUtilities getAppBundleId];
         self.osVersion = [PRESUtilities getOsVersion];
