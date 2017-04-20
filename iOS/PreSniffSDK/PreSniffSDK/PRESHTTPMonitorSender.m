@@ -9,14 +9,14 @@
 #import "PRESHTTPMonitorSender.h"
 #import "PRESDataCompressor.h"
 
-#define PRESSendLogDefaultInterval  120
+#define PRESSendLogDefaultInterval  10
 #define PRESMaxLogLenth            (1024 * 64)
 #define PRESMaxLogIndex             100
 #define PRESSendTimeOut             10
 
 #define PRESErrorDomain             @"error.sdk.presniff"
 #define PRESHTTPMonitorDomain       @"http://localhost:8080"
-#define PRESHTTPMonitorReportPath   @"httpmonitor"
+#define PRESHTTPMonitorReportPath   @"/httpmonitor"
 #define PRESReadFileIndexKey        @"read_file_index"
 #define PRESReadFilePositionKey     @"read_file_position"
 #define PRESWriteFileIndexKey       @"write_file_index"
@@ -102,6 +102,7 @@ NSURLSessionDelegate
  */
 - (void)addModel:(PRESHTTPMonitorModel *)model {
     NSArray *modelArray = @[
+                            @(model.platform),
                             wrapString(model.appName),
                             wrapString(model.appBundleId),
                             wrapString(model.osVersion),
@@ -260,6 +261,7 @@ NSURLSessionDelegate
         NSLog(@"%@", err);
         return err;
     }
+    [logFileHandle seekToFileOffset:_mWriteFilePosition];
     // 如果更新 index 发生错误就丢弃这条日志，下次再重试
     _mWriteFilePosition += dataToWrite.length;
     err = [self updateIndexFile];
@@ -267,7 +269,6 @@ NSURLSessionDelegate
         _mWriteFilePosition -= dataToWrite.length;
         return err;
     }
-    [logFileHandle seekToFileOffset:_mWriteFilePosition];
     [_logFileIOLock lock];
     [logFileHandle writeData:dataToWrite];
     [_logFileIOLock unlock];
@@ -342,11 +343,11 @@ NSURLSessionDelegate
             return;
         }
         
-        NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@", PRESHTTPMonitorDomain, PRESHTTPMonitorReportPath]]];
+        NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", PRESHTTPMonitorDomain, PRESHTTPMonitorReportPath]]];
         request.HTTPMethod = @"POST";
         request.timeoutInterval = PRESSendTimeOut;
         request.HTTPBody = dataToSend;
-        [request addValue:@"text/plain" forHTTPHeaderField:@"Content-Type"];
+        [request addValue:@"application/x-gzip" forHTTPHeaderField:@"Content-Type"];
         [request addValue:@"gzip" forHTTPHeaderField:@"Content-Encoding"];
         [[_urlSession dataTaskWithRequest:request] resume];
     });
@@ -355,7 +356,7 @@ NSURLSessionDelegate
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error {
     NSHTTPURLResponse *response = (NSHTTPURLResponse *)task.response;
     NSError *err;
-    if (response.statusCode != 200 || error) {
+    if (response.statusCode == 200 && !error) {
         if (_logPathToBeRemoved) {
             [[NSFileManager defaultManager] removeItemAtPath:_logPathToBeRemoved error:&err];
             if (err) {
