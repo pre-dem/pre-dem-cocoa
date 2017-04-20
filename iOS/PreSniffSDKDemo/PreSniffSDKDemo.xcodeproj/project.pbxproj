@@ -46,13 +46,6 @@
 			remoteGlobalIDString = B683A60D1E5C1845007F0459;
 			remoteInfo = PreSniffSDK;
 		};
-		B6DCD6191E8ABE080016D14B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B6998D281E5D8F4300538140 /* Pods.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 763435BFBB48852A3A682FB3B08653E7;
-			remoteInfo = MJExtension;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -150,7 +143,6 @@
 			isa = PBXGroup;
 			children = (
 				B6998D2E1E5D8F4300538140 /* libHappyDNS.a */,
-				B6DCD61A1E8ABE080016D14B /* libMJExtension.a */,
 				B6998D301E5D8F4300538140 /* libPods-PreSniffSDK.a */,
 			);
 			name = Products;
@@ -242,13 +234,6 @@
 			fileType = archive.ar;
 			path = "libPods-PreSniffSDK.a";
 			remoteRef = B6998D2F1E5D8F4300538140 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		B6DCD61A1E8ABE080016D14B /* libMJExtension.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libMJExtension.a;
-			remoteRef = B6DCD6191E8ABE080016D14B /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
