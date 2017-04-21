@@ -104,6 +104,7 @@ NSURLSessionDataDelegate
     HTTPMonitorModel.method = self.request.HTTPMethod;
     HTTPMonitorModel.hostIP = [NSURLProtocol propertyForKey:@"PRESHostIP" inRequest:self.request];
     HTTPMonitorModel.startTimestamp = [[NSDate date] timeIntervalSince1970] * 1000;
+    HTTPMonitorModel.endTimestamp = [[NSDate date] timeIntervalSince1970] * 1000;
     HTTPMonitorModel.DNSTime = (NSUInteger)[NSURLProtocol propertyForKey:@"PRESDNSTime" inRequest:self.request];
 }
 
