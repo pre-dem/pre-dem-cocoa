@@ -34,10 +34,10 @@ NSURLSessionDelegate
 
 @property (nonatomic, strong) NSString          *logDirPath;
 @property (nonatomic, strong) NSString          *indexFilePath;
-@property (nonatomic, assign) NSUInteger        mReadFileIndex;
-@property (nonatomic, assign) NSUInteger        mReadFilePosition;
-@property (nonatomic, assign) NSUInteger        mWriteFileIndex;
-@property (nonatomic, assign) NSUInteger        mWriteFilePosition;
+@property (nonatomic, assign) unsigned int      mReadFileIndex;
+@property (nonatomic, assign) unsigned int      mReadFilePosition;
+@property (nonatomic, assign) unsigned int      mWriteFileIndex;
+@property (nonatomic, assign) unsigned int      mWriteFilePosition;
 @property (nonatomic, strong) NSTimer           *sendTimer;
 @property (nonatomic, strong) NSRecursiveLock   *indexFileIOLock;
 @property (nonatomic, strong) NSRecursiveLock   *logFileIOLock;
@@ -243,7 +243,7 @@ NSURLSessionDelegate
         _mWriteFilePosition = 0;
     }
     
-    NSString *logName = [NSString stringWithFormat:@"log.%lu", _mWriteFileIndex];
+    NSString *logName = [NSString stringWithFormat:@"log.%u", _mWriteFileIndex];
     NSString *logPath = [NSString stringWithFormat:@"%@/%@", _logDirPath, logName];
     exist = [[NSFileManager defaultManager] fileExistsAtPath:logPath isDirectory:&isDir];
     if (!(exist && !isDir)) {
@@ -291,7 +291,7 @@ NSURLSessionDelegate
             _isSendingData = NO;
             return;
         }
-        NSString *logFilePath = [NSString stringWithFormat:@"%@/log.%lu", _logDirPath, _mReadFileIndex];
+        NSString *logFilePath = [NSString stringWithFormat:@"%@/log.%u", _logDirPath, _mReadFileIndex];
         exist = [[NSFileManager defaultManager] fileExistsAtPath:logFilePath isDirectory:&isDir];
         if (!exist || isDir) {
             NSLog(@"log file path not exist");

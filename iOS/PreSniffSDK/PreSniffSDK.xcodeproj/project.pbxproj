@@ -210,7 +210,6 @@
 		B6E0C16F1E77CC0300A020A6 /* PRESURLSessionSwizzler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRESURLSessionSwizzler.h; sourceTree = "<group>"; };
 		B6E0C1701E77CC0300A020A6 /* PRESURLSessionSwizzler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRESURLSessionSwizzler.m; sourceTree = "<group>"; };
 		B6FB15AF1EA74BAA00030F3F /* HockeySDKBase.release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = HockeySDKBase.release.xcconfig; sourceTree = "<group>"; };
-		E1CC73BE95188F45F2AE5CAA /* libPods-PreSniffSDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PreSniffSDK.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -357,7 +356,6 @@
 			children = (
 				B607FAFD1EA744FD00BDEA56 /* libPods-PreSniffSDK.a */,
 				052960CA1E5E95610096CB3F /* CrashReporter.framework */,
-				E1CC73BE95188F45F2AE5CAA /* libPods-PreSniffSDK.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
