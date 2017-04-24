@@ -61,7 +61,7 @@ NSURLSessionDelegate
 
 - (instancetype)init {
     if (self = [super init]) {
-        _logDirPath = [NSString stringWithFormat:@"%@Pili_QOS_Log", [[[[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] objectAtIndex:0] absoluteString] substringFromIndex:7]];
+        _logDirPath = [NSString stringWithFormat:@"%@Presniff_SDK_Log", [[[[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] objectAtIndex:0] absoluteString] substringFromIndex:7]];
         _indexFilePath = [NSString stringWithFormat:@"%@/index.json", _logDirPath];
         _mReadFileIndex = 1;
         _mReadFilePosition = 0;
