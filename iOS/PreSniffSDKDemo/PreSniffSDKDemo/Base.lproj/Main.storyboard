@@ -23,7 +23,7 @@
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UuS-Fo-nh4">
                                 <rect key="frame" x="111" y="168.5" width="153" height="30"/>
-                                <state key="normal" title="点我发送一条网络请求"/>
+                                <state key="normal" title="点我发送一些网络请求"/>
                                 <connections>
                                     <action selector="sendHTTPRequest:" destination="BYZ-38-t0r" eventType="touchUpInside" id="t2m-mv-Qlp"/>
                                 </connections>

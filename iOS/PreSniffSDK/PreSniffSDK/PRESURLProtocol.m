@@ -79,13 +79,13 @@ NSURLSessionDataDelegate
         NSTimeInterval dnsStartTime = [[NSDate date] timeIntervalSince1970];
         NSURL *replacedURL = [dns queryAndReplaceWithIP:mutableRequest.URL];
         NSTimeInterval dnsEndTime = [[NSDate date] timeIntervalSince1970];
-        [NSURLProtocol setProperty:[NSString stringWithFormat:@"%lu",
-                                    (unsigned long)(dnsEndTime - dnsStartTime)*1000]
+        [NSURLProtocol setProperty:@((dnsEndTime - dnsStartTime)*1000)
                             forKey:@"PRESDNSTime"
                          inRequest:mutableRequest];
         [NSURLProtocol setProperty:replacedURL.host
                             forKey:@"PRESHostIP"
                          inRequest:mutableRequest];
+        [mutableRequest setValue:request.URL.host forHTTPHeaderField:@"Host"];
         mutableRequest.URL = replacedURL;
     }
     return mutableRequest;
@@ -105,7 +105,7 @@ NSURLSessionDataDelegate
     HTTPMonitorModel.hostIP = [NSURLProtocol propertyForKey:@"PRESHostIP" inRequest:self.request];
     HTTPMonitorModel.startTimestamp = [[NSDate date] timeIntervalSince1970] * 1000;
     HTTPMonitorModel.endTimestamp = [[NSDate date] timeIntervalSince1970] * 1000;
-    HTTPMonitorModel.DNSTime = (NSUInteger)[NSURLProtocol propertyForKey:@"PRESDNSTime" inRequest:self.request];
+    HTTPMonitorModel.DNSTime = [[NSURLProtocol propertyForKey:@"PRESDNSTime" inRequest:self.request] unsignedIntegerValue];
 }
 
 - (void)stopLoading {
