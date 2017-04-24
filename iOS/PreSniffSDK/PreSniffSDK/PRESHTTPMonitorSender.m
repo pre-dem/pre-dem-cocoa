@@ -63,7 +63,6 @@ NSURLSessionDelegate
     if (self = [super init]) {
         _logDirPath = [NSString stringWithFormat:@"%@Pili_QOS_Log", [[[[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] objectAtIndex:0] absoluteString] substringFromIndex:7]];
         _indexFilePath = [NSString stringWithFormat:@"%@/index.json", _logDirPath];
-        NSLog(@"index path: %@", _indexFilePath);
         _mReadFileIndex = 1;
         _mReadFilePosition = 0;
         _mWriteFileIndex = 1;
