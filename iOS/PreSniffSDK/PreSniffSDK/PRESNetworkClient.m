@@ -55,6 +55,9 @@ NSString * const kPRESNetworkClientBoundary = @"----FOO";
   NSURL *endpoint = [self.baseURL URLByAppendingPathComponent:path];
   NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:endpoint];
   request.HTTPMethod = method;
+  [NSURLProtocol setProperty:@YES
+                        forKey:@"PRESInternalRequest"
+                     inRequest:request];
   
   if (params) {
     if ([method isEqualToString:@"GET"]) {

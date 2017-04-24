@@ -171,6 +171,10 @@ static NSUInteger const PRESDefaultRequestLimit = 10;
       @"Content-Type" : @"application/x-json-stream",
       @"Accept-Encoding" : @"gzip"};
   [request setAllHTTPHeaderFields:headers];
+    
+  [NSURLProtocol setProperty:@YES
+                        forKey:@"PRESInternalRequest"
+                     inRequest:request];
 
   return request;
 }

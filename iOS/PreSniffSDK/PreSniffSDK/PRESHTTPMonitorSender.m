@@ -348,6 +348,9 @@ NSURLSessionDelegate
         request.HTTPBody = dataToSend;
         [request addValue:@"application/x-gzip" forHTTPHeaderField:@"Content-Type"];
         [request addValue:@"gzip" forHTTPHeaderField:@"Content-Encoding"];
+        [NSURLProtocol setProperty:@YES
+                            forKey:@"PRESInternalRequest"
+                         inRequest:request];
         [[_urlSession dataTaskWithRequest:request] resume];
     });
 }
