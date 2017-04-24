@@ -331,6 +331,12 @@ NSURLSessionDelegate
             _logPathToBeRemoved = logFilePath;
         }
         
+        if (!dataUncompressed || !dataUncompressed.length) {
+            NSLog(@"uncompressed data is empty");
+            _isSendingData = NO;
+            return;
+        }
+        
         NSData *dataToSend = [PRESDataCompressor compressData:dataUncompressed error:&err];
         if (err) {
             _isSendingData = NO;
