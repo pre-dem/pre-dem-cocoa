@@ -332,7 +332,6 @@ NSURLSessionDelegate
         }
         
         if (!dataUncompressed || !dataUncompressed.length) {
-            NSLog(@"uncompressed data is empty");
             _isSendingData = NO;
             return;
         }
