@@ -92,7 +92,7 @@ NSURLSessionDataDelegate
 }
 
 - (void)startLoading {
-    NSURLSessionConfiguration *sessionConfig = NSURLSessionConfiguration.defaultSessionConfiguration;
+    NSURLSessionConfiguration *sessionConfig = NSURLSessionConfiguration.ephemeralSessionConfiguration;
     NSURLSession *session = [NSURLSession sessionWithConfiguration:sessionConfig delegate:self delegateQueue:[NSOperationQueue new]];
     self.task = [session dataTaskWithRequest:self.request];
     [self.task resume];
@@ -112,20 +112,12 @@ NSURLSessionDataDelegate
     [self.task cancel];
 }
 
-- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task willPerformHTTPRedirection:(NSHTTPURLResponse *)response newRequest:(NSURLRequest *)request completionHandler:(void (^)(NSURLRequest * _Nullable))completionHandler {
-    [self.client URLProtocol:self wasRedirectedToRequest:request redirectResponse:response];
-    if (response != nil) {
-        self.response = response;
-    }
-    completionHandler(request);
-}
-
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask willCacheResponse:(NSCachedURLResponse *)proposedResponse completionHandler:(void (^)(NSCachedURLResponse * _Nullable))completionHandler {
     completionHandler(nil);
 }
 
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveResponse:(NSURLResponse *)response completionHandler:(void (^)(NSURLSessionResponseDisposition))completionHandler {
-    [self.client URLProtocol:self didReceiveResponse:response cacheStoragePolicy:NSURLCacheStorageAllowed];
+    [self.client URLProtocol:self didReceiveResponse:response cacheStoragePolicy:NSURLCacheStorageNotAllowed];
     completionHandler(NSURLSessionResponseAllow);
     HTTPMonitorModel.responseTimeStamp = [[NSDate date] timeIntervalSince1970] * 1000;
     HTTPMonitorModel.statusCode = ((NSHTTPURLResponse *)response).statusCode;
