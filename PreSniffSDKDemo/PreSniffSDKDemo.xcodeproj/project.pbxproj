@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0578628F1EB88A23003D49D6 /* PreSniffSDKDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0578628E1EB88A23003D49D6 /* PreSniffSDKDemoTests.m */; };
 		B683A5EF1E5C1827007F0459 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B683A5EE1E5C1827007F0459 /* main.m */; };
 		B683A5F21E5C1827007F0459 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B683A5F11E5C1827007F0459 /* AppDelegate.m */; };
 		B683A5F51E5C1827007F0459 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B683A5F41E5C1827007F0459 /* ViewController.m */; };
@@ -18,6 +19,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		057862911EB88A23003D49D6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B683A5E21E5C1827007F0459 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B683A5E91E5C1827007F0459;
+			remoteInfo = PreSniffSDKDemo;
+		};
 		B683A61D1E5C185A007F0459 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = B683A6191E5C185A007F0459 /* PreSniffSDK.xcodeproj */;
@@ -63,6 +71,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0578628C1EB88A22003D49D6 /* PreSniffSDKDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PreSniffSDKDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		0578628E1EB88A23003D49D6 /* PreSniffSDKDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PreSniffSDKDemoTests.m; sourceTree = "<group>"; };
+		057862901EB88A23003D49D6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B683A5EA1E5C1827007F0459 /* PreSniffSDKDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PreSniffSDKDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B683A5EE1E5C1827007F0459 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		B683A5F01E5C1827007F0459 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -78,6 +89,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		057862891EB88A22003D49D6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B683A5E71E5C1827007F0459 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -89,12 +107,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0578628D1EB88A23003D49D6 /* PreSniffSDKDemoTests */ = {
+			isa = PBXGroup;
+			children = (
+				0578628E1EB88A23003D49D6 /* PreSniffSDKDemoTests.m */,
+				057862901EB88A23003D49D6 /* Info.plist */,
+			);
+			path = PreSniffSDKDemoTests;
+			sourceTree = "<group>";
+		};
 		B683A5E11E5C1827007F0459 = {
 			isa = PBXGroup;
 			children = (
 				B6998D281E5D8F4300538140 /* Pods.xcodeproj */,
 				B683A6191E5C185A007F0459 /* PreSniffSDK.xcodeproj */,
 				B683A5EC1E5C1827007F0459 /* PreSniffSDKDemo */,
+				0578628D1EB88A23003D49D6 /* PreSniffSDKDemoTests */,
 				B683A5EB1E5C1827007F0459 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -103,6 +131,7 @@
 			isa = PBXGroup;
 			children = (
 				B683A5EA1E5C1827007F0459 /* PreSniffSDKDemo.app */,
+				0578628C1EB88A22003D49D6 /* PreSniffSDKDemoTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -151,6 +180,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		0578628B1EB88A22003D49D6 /* PreSniffSDKDemoTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 057862971EB88A23003D49D6 /* Build configuration list for PBXNativeTarget "PreSniffSDKDemoTests" */;
+			buildPhases = (
+				057862881EB88A22003D49D6 /* Sources */,
+				057862891EB88A22003D49D6 /* Frameworks */,
+				0578628A1EB88A22003D49D6 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				057862921EB88A23003D49D6 /* PBXTargetDependency */,
+			);
+			name = PreSniffSDKDemoTests;
+			productName = PreSniffSDKDemoTests;
+			productReference = 0578628C1EB88A22003D49D6 /* PreSniffSDKDemoTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		B683A5E91E5C1827007F0459 /* PreSniffSDKDemo */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = B683A6011E5C1827007F0459 /* Build configuration list for PBXNativeTarget "PreSniffSDKDemo" */;
@@ -179,6 +226,12 @@
 				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = "pre-engineering";
 				TargetAttributes = {
+					0578628B1EB88A22003D49D6 = {
+						CreatedOnToolsVersion = 8.3.2;
+						DevelopmentTeam = GDFHW66V92;
+						ProvisioningStyle = Automatic;
+						TestTargetID = B683A5E91E5C1827007F0459;
+					};
 					B683A5E91E5C1827007F0459 = {
 						CreatedOnToolsVersion = 8.2.1;
 						DevelopmentTeam = GDFHW66V92;
@@ -210,6 +263,7 @@
 			projectRoot = "";
 			targets = (
 				B683A5E91E5C1827007F0459 /* PreSniffSDKDemo */,
+				0578628B1EB88A22003D49D6 /* PreSniffSDKDemoTests */,
 			);
 		};
 /* End PBXProject section */
@@ -239,6 +293,13 @@
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
+		0578628A1EB88A22003D49D6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B683A5E81E5C1827007F0459 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -252,6 +313,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		057862881EB88A22003D49D6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0578628F1EB88A23003D49D6 /* PreSniffSDKDemoTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B683A5E61E5C1827007F0459 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -265,6 +334,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		057862921EB88A23003D49D6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B683A5E91E5C1827007F0459 /* PreSniffSDKDemo */;
+			targetProxy = 057862911EB88A23003D49D6 /* PBXContainerItemProxy */;
+		};
 		B6998D351E5D8F5400538140 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = PreSniffSDK;
@@ -292,6 +366,36 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		057862931EB88A23003D49D6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				DEVELOPMENT_TEAM = GDFHW66V92;
+				INFOPLIST_FILE = PreSniffSDKDemoTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.qiniu.PreSniffSDKDemoTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PreSniffSDKDemo.app/PreSniffSDKDemo";
+			};
+			name = Debug;
+		};
+		057862941EB88A23003D49D6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				DEVELOPMENT_TEAM = GDFHW66V92;
+				INFOPLIST_FILE = PreSniffSDKDemoTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.qiniu.PreSniffSDKDemoTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PreSniffSDKDemo.app/PreSniffSDKDemo";
+			};
+			name = Release;
+		};
 		B683A5FF1E5C1827007F0459 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -413,6 +517,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		057862971EB88A23003D49D6 /* Build configuration list for PBXNativeTarget "PreSniffSDKDemoTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				057862931EB88A23003D49D6 /* Debug */,
+				057862941EB88A23003D49D6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		B683A5E51E5C1827007F0459 /* Build configuration list for PBXProject "PreSniffSDKDemo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
