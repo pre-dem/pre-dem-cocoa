@@ -10,7 +10,7 @@ project "PreSniffSDKDemo/PreSniffSDKDemo.xcodeproj"
 
 scheme "PreSniffSDKDemo"
 
-device "iPhone SE"
+#device "iPhone 6s"
 
 # open_report true
 
