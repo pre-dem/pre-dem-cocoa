@@ -18,14 +18,34 @@ default_platform :ios
 platform :ios do
   before_all do
     # ENV["SLACK_URL"] = "https://hooks.slack.com/services/..."
-	ENV["GYM_PROJECT"] = "../PreSniffSDKDemo/PreSniffSDKDemo.xcodeproj"
+	ENV["GYM_PROJECT"] = "PreSniffSDKDemo/PreSniffSDKDemo.xcodeproj"
+  ENV["CODECOV_TOKEN"] = "72217c03-3054-4927-97ba-854f75feb58d"
     
     
   end
 
   desc "Runs all the tests"
   lane :test do
-    scan
+#    scan
+    scan(
+      scheme: "PreSniffSDKDemo",
+      clean: true,
+      code_coverage: true,
+      device: "iPhone 6s",
+    )
+    #gcovr(
+    #  html: true,
+    #  html_details: true,
+    #  output: "./code-coverage/report.html"
+    #)
+    slather(
+      cobertura_xml: true,
+      output_directory: "coverage_output",
+      proj: "PreSniffSDK/PreSniffSDK.xcodeproj",
+      scheme: "PreSniffSDK"
+    #  ignore:['../../*']
+    )
+    sh "cd .. && curl -s https://codecov.io/bash | bash -s -f ./coverage_output/cobertura.xml -J 'PreSniffSDK'"
   end
 
   desc "Submit a new Beta Build to Apple TestFlight"
