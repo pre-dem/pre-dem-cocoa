@@ -19,9 +19,6 @@ platform :ios do
   before_all do
     # ENV["SLACK_URL"] = "https://hooks.slack.com/services/..."
 	ENV["GYM_PROJECT"] = "PreSniffSDKDemo/PreSniffSDKDemo.xcodeproj"
-  ENV["QINIU_AK"] = "$QINIU_AK"
-  ENV["QINIU_SK"] = "$QINIU_SK"
-  ENV["CODECOV_TOKEN"] = "$CODECOV_TOKEN"
     
   end
 
