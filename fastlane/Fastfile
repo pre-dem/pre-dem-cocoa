@@ -29,7 +29,7 @@ platform :ios do
       scheme: "PreSniffSDKDemo",
       clean: true,
       code_coverage: true,
-      device: "iPhone 6s",
+      device: "iPhone 5s (9.3)",
     )
     slather(
       cobertura_xml: true,
