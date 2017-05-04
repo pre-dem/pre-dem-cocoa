@@ -19,8 +19,6 @@ platform :ios do
   before_all do
     # ENV["SLACK_URL"] = "https://hooks.slack.com/services/..."
 	ENV["GYM_PROJECT"] = "PreSniffSDKDemo/PreSniffSDKDemo.xcodeproj"
-  ENV["CODECOV_TOKEN"] = "72217c03-3054-4927-97ba-854f75feb58d"
-    
     
   end
 
@@ -31,13 +29,12 @@ platform :ios do
       scheme: "PreSniffSDKDemo",
       clean: true,
       code_coverage: true,
-      device: "iPhone 6s",
+      device: "iPhone 5s (9.3)",
     )
-    #gcovr(
-    #  html: true,
-    #  html_details: true,
-    #  output: "./code-coverage/report.html"
-    #)
+  end
+
+  desc "Runs code coverage analysis"
+  lane :codecov do
     slather(
       cobertura_xml: true,
       output_directory: "coverage_output",
@@ -45,7 +42,12 @@ platform :ios do
       scheme: "PreSniffSDK"
     #  ignore:['../../*']
     )
+    sh "echo codecov token: " + ENV["CODECOV_TOKEN"]
     sh "cd .. && curl -s https://codecov.io/bash | bash -s -f ./coverage_output/cobertura.xml -J 'PreSniffSDK'"
+    sh "cd .. && slather coverage --html --scheme PreSniffSDK  PreSniffSDK/PreSniffSDK.xcodeproj"
+    sh "cd .. && fastlane/qshell account "+ ENV["QINIU_AK"] + " " + ENV["QINIU_SK"]
+    sh "cd .. && fastlane/qshell qupload fastlane/qiniu_upload.conf"
+    sh "cd .. && sed -i.bak 's/\"\",/\""+ENV["TRAVIS_COMMIT"]+"\",/g' fastlane/qiniu_upload.conf && fastlane/qshell qupload fastlane/qiniu_upload.conf"
   end
 
   desc "Submit a new Beta Build to Apple TestFlight"
