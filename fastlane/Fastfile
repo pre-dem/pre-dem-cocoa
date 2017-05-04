@@ -53,7 +53,7 @@ platform :ios do
     sh "cd .. && slather coverage --html --scheme PreSniffSDK  PreSniffSDK/PreSniffSDK.xcodeproj"
     sh "cd .. && fastlane/qshell account "+ ENV["QINIU_AK"] + " " + ENV["QINIU_SK"]
     sh "cd .. && fastlane/qshell qupload fastlane/qiniu_upload.conf"
-    sh "cd .. && sed -i.bak 's/\"\",/\""+ENV["TRAVIS_COMMIT"]+"/\",/g' fastlane/qiniu_upload.conf && fastlane/qshell qupload fastlane/qiniu_upload.conf"
+    sh "cd .. && sed -i.bak 's/\"\",/\""+ENV["TRAVIS_COMMIT"]+"\\\/"+"\",/g' fastlane/qiniu_upload.conf && fastlane/qshell qupload fastlane/qiniu_upload.conf"
   end
 
   desc "Submit a new Beta Build to Apple TestFlight"
