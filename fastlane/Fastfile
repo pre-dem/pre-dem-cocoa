@@ -35,6 +35,12 @@ platform :ios do
 
   desc "Runs code coverage analysis"
   lane :codecov do
+    scan(
+      scheme: "PreSniffSDKDemo",
+      clean: true,
+      code_coverage: true,
+      device: "iPhone 5s (9.3)",
+    )
     slather(
       cobertura_xml: true,
       output_directory: "coverage_output",
