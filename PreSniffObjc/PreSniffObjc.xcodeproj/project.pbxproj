@@ -1,0 +1,715 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		B60231001EC9B339005AB798 /* PRESApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = B60230A21EC9B339005AB798 /* PRESApplication.m */; };
+		B60231011EC9B339005AB798 /* PRESAttachment.m in Sources */ = {isa = PBXBuildFile; fileRef = B60230A41EC9B339005AB798 /* PRESAttachment.m */; };
+		B60231021EC9B339005AB798 /* PRESBase.m in Sources */ = {isa = PBXBuildFile; fileRef = B60230A61EC9B339005AB798 /* PRESBase.m */; };
+		B60231031EC9B339005AB798 /* PRESBaseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B60230A81EC9B339005AB798 /* PRESBaseManager.m */; };
+		B60231041EC9B339005AB798 /* PRESCategoryContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = B60230AB1EC9B339005AB798 /* PRESCategoryContainer.m */; };
+		B60231051EC9B339005AB798 /* PRESChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = B60230AD1EC9B339005AB798 /* PRESChannel.m */; };
+		B60231061EC9B339005AB798 /* PRESCrashCXXExceptionHandler.mm in Sources */ = {isa = PBXBuildFile; fileRef = B60230B01EC9B339005AB798 /* PRESCrashCXXExceptionHandler.mm */; };
+		B60231071EC9B339005AB798 /* PRESCrashDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = B60230B21EC9B339005AB798 /* PRESCrashDetails.m */; };
+		B60231081EC9B339005AB798 /* PRESCrashManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B60230B51EC9B339005AB798 /* PRESCrashManager.m */; };
+		B60231091EC9B339005AB798 /* PRESCrashMetaData.m in Sources */ = {isa = PBXBuildFile; fileRef = B60230B91EC9B339005AB798 /* PRESCrashMetaData.m */; };
+		B602310A1EC9B339005AB798 /* PRESCrashReportTextFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = B60230BB1EC9B339005AB798 /* PRESCrashReportTextFormatter.m */; };
+		B602310B1EC9B339005AB798 /* PRESData.m in Sources */ = {isa = PBXBuildFile; fileRef = B60230BE1EC9B339005AB798 /* PRESData.m */; };
+		B602310C1EC9B339005AB798 /* PRESDataCompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = B60230C01EC9B339005AB798 /* PRESDataCompressor.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		B602310D1EC9B339005AB798 /* PRESDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = B60230C21EC9B339005AB798 /* PRESDevice.m */; };
+		B602310E1EC9B339005AB798 /* PRESDomain.m in Sources */ = {isa = PBXBuildFile; fileRef = B60230C41EC9B339005AB798 /* PRESDomain.m */; };
+		B602310F1EC9B339005AB798 /* PRESEnvelope.m in Sources */ = {isa = PBXBuildFile; fileRef = B60230C61EC9B339005AB798 /* PRESEnvelope.m */; };
+		B60231101EC9B339005AB798 /* PRESEventData.m in Sources */ = {isa = PBXBuildFile; fileRef = B60230C81EC9B339005AB798 /* PRESEventData.m */; };
+		B60231111EC9B339005AB798 /* PRESHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = B60230CB1EC9B339005AB798 /* PRESHelper.m */; };
+		B60231121EC9B339005AB798 /* PRESHTTPMonitorModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B60230CD1EC9B339005AB798 /* PRESHTTPMonitorModel.m */; };
+		B60231131EC9B339005AB798 /* PRESHTTPMonitorSender.m in Sources */ = {isa = PBXBuildFile; fileRef = B60230CF1EC9B339005AB798 /* PRESHTTPMonitorSender.m */; };
+		B60231141EC9B339005AB798 /* PRESHTTPOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B60230D11EC9B339005AB798 /* PRESHTTPOperation.m */; };
+		B60231151EC9B339005AB798 /* PRESInternal.m in Sources */ = {isa = PBXBuildFile; fileRef = B60230D31EC9B339005AB798 /* PRESInternal.m */; };
+		B60231161EC9B339005AB798 /* PRESKeychainUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = B60230D51EC9B339005AB798 /* PRESKeychainUtils.m */; };
+		B60231171EC9B339005AB798 /* PRESLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = B60230D71EC9B339005AB798 /* PRESLogger.m */; };
+		B60231181EC9B339005AB798 /* PRESMetricsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B60230DA1EC9B339005AB798 /* PRESMetricsManager.m */; };
+		B60231191EC9B339005AB798 /* PRESNetworkClient.m in Sources */ = {isa = PBXBuildFile; fileRef = B60230DD1EC9B339005AB798 /* PRESNetworkClient.m */; };
+		B602311A1EC9B339005AB798 /* PreSniffManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B60230DF1EC9B339005AB798 /* PreSniffManager.m */; };
+		B602311B1EC9B339005AB798 /* PreSniffSDKPrivate.m in Sources */ = {isa = PBXBuildFile; fileRef = B60230E71EC9B339005AB798 /* PreSniffSDKPrivate.m */; };
+		B602311C1EC9B339005AB798 /* PRESPersistence.m in Sources */ = {isa = PBXBuildFile; fileRef = B60230E91EC9B339005AB798 /* PRESPersistence.m */; };
+		B602311D1EC9B339005AB798 /* PRESSender.m in Sources */ = {isa = PBXBuildFile; fileRef = B60230EC1EC9B339005AB798 /* PRESSender.m */; };
+		B602311E1EC9B339005AB798 /* PRESSession.m in Sources */ = {isa = PBXBuildFile; fileRef = B60230EE1EC9B339005AB798 /* PRESSession.m */; };
+		B602311F1EC9B339005AB798 /* PRESSessionStateData.m in Sources */ = {isa = PBXBuildFile; fileRef = B60230F11EC9B339005AB798 /* PRESSessionStateData.m */; };
+		B60231201EC9B339005AB798 /* PRESTelemetryContext.m in Sources */ = {isa = PBXBuildFile; fileRef = B60230F31EC9B339005AB798 /* PRESTelemetryContext.m */; };
+		B60231211EC9B339005AB798 /* PRESTelemetryData.m in Sources */ = {isa = PBXBuildFile; fileRef = B60230F51EC9B339005AB798 /* PRESTelemetryData.m */; };
+		B60231221EC9B339005AB798 /* PRESTelemetryObject.m in Sources */ = {isa = PBXBuildFile; fileRef = B60230F71EC9B339005AB798 /* PRESTelemetryObject.m */; };
+		B60231231EC9B339005AB798 /* PRESURLProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = B60230F91EC9B339005AB798 /* PRESURLProtocol.m */; };
+		B60231241EC9B339005AB798 /* PRESURLSessionSwizzler.m in Sources */ = {isa = PBXBuildFile; fileRef = B60230FB1EC9B339005AB798 /* PRESURLSessionSwizzler.m */; };
+		B60231251EC9B339005AB798 /* PRESUser.m in Sources */ = {isa = PBXBuildFile; fileRef = B60230FD1EC9B339005AB798 /* PRESUser.m */; };
+		B60231261EC9B339005AB798 /* PRESUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = B60230FF1EC9B339005AB798 /* PRESUtilities.m */; };
+		B60231331EC9B73A005AB798 /* PreSniffObjcTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B60231321EC9B73A005AB798 /* PreSniffObjcTests.m */; };
+		B60231351EC9B73A005AB798 /* libPreSniffObjc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B60230911EC9B262005AB798 /* libPreSniffObjc.a */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		B60231361EC9B73A005AB798 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B60230891EC9B262005AB798 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B60230901EC9B262005AB798;
+			remoteInfo = PreSniffObjc;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		B602308F1EC9B262005AB798 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		B60230911EC9B262005AB798 /* libPreSniffObjc.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPreSniffObjc.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		B602309E1EC9B2C5005AB798 /* PreObjcBase.debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = PreObjcBase.debug.xcconfig; sourceTree = "<group>"; };
+		B602309F1EC9B2C5005AB798 /* PreObjcBase.release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = PreObjcBase.release.xcconfig; sourceTree = "<group>"; };
+		B60230A11EC9B339005AB798 /* PRESApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRESApplication.h; sourceTree = "<group>"; };
+		B60230A21EC9B339005AB798 /* PRESApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRESApplication.m; sourceTree = "<group>"; };
+		B60230A31EC9B339005AB798 /* PRESAttachment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRESAttachment.h; sourceTree = "<group>"; };
+		B60230A41EC9B339005AB798 /* PRESAttachment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRESAttachment.m; sourceTree = "<group>"; };
+		B60230A51EC9B339005AB798 /* PRESBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRESBase.h; sourceTree = "<group>"; };
+		B60230A61EC9B339005AB798 /* PRESBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRESBase.m; sourceTree = "<group>"; };
+		B60230A71EC9B339005AB798 /* PRESBaseManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRESBaseManager.h; sourceTree = "<group>"; };
+		B60230A81EC9B339005AB798 /* PRESBaseManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRESBaseManager.m; sourceTree = "<group>"; };
+		B60230A91EC9B339005AB798 /* PRESBaseManagerPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRESBaseManagerPrivate.h; sourceTree = "<group>"; };
+		B60230AA1EC9B339005AB798 /* PRESCategoryContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRESCategoryContainer.h; sourceTree = "<group>"; };
+		B60230AB1EC9B339005AB798 /* PRESCategoryContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRESCategoryContainer.m; sourceTree = "<group>"; };
+		B60230AC1EC9B339005AB798 /* PRESChannel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRESChannel.h; sourceTree = "<group>"; };
+		B60230AD1EC9B339005AB798 /* PRESChannel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRESChannel.m; sourceTree = "<group>"; };
+		B60230AE1EC9B339005AB798 /* PRESChannelPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRESChannelPrivate.h; sourceTree = "<group>"; };
+		B60230AF1EC9B339005AB798 /* PRESCrashCXXExceptionHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRESCrashCXXExceptionHandler.h; sourceTree = "<group>"; };
+		B60230B01EC9B339005AB798 /* PRESCrashCXXExceptionHandler.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PRESCrashCXXExceptionHandler.mm; sourceTree = "<group>"; };
+		B60230B11EC9B339005AB798 /* PRESCrashDetails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRESCrashDetails.h; sourceTree = "<group>"; };
+		B60230B21EC9B339005AB798 /* PRESCrashDetails.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRESCrashDetails.m; sourceTree = "<group>"; };
+		B60230B31EC9B339005AB798 /* PRESCrashDetailsPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRESCrashDetailsPrivate.h; sourceTree = "<group>"; };
+		B60230B41EC9B339005AB798 /* PRESCrashManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRESCrashManager.h; sourceTree = "<group>"; };
+		B60230B51EC9B339005AB798 /* PRESCrashManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRESCrashManager.m; sourceTree = "<group>"; };
+		B60230B61EC9B339005AB798 /* PRESCrashManagerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRESCrashManagerDelegate.h; sourceTree = "<group>"; };
+		B60230B71EC9B339005AB798 /* PRESCrashManagerPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRESCrashManagerPrivate.h; sourceTree = "<group>"; };
+		B60230B81EC9B339005AB798 /* PRESCrashMetaData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRESCrashMetaData.h; sourceTree = "<group>"; };
+		B60230B91EC9B339005AB798 /* PRESCrashMetaData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRESCrashMetaData.m; sourceTree = "<group>"; };
+		B60230BA1EC9B339005AB798 /* PRESCrashReportTextFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRESCrashReportTextFormatter.h; sourceTree = "<group>"; };
+		B60230BB1EC9B339005AB798 /* PRESCrashReportTextFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRESCrashReportTextFormatter.m; sourceTree = "<group>"; };
+		B60230BC1EC9B339005AB798 /* PRESCrashReportTextFormatterPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRESCrashReportTextFormatterPrivate.h; sourceTree = "<group>"; };
+		B60230BD1EC9B339005AB798 /* PRESData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRESData.h; sourceTree = "<group>"; };
+		B60230BE1EC9B339005AB798 /* PRESData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRESData.m; sourceTree = "<group>"; };
+		B60230BF1EC9B339005AB798 /* PRESDataCompressor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRESDataCompressor.h; sourceTree = "<group>"; };
+		B60230C01EC9B339005AB798 /* PRESDataCompressor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRESDataCompressor.m; sourceTree = "<group>"; };
+		B60230C11EC9B339005AB798 /* PRESDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRESDevice.h; sourceTree = "<group>"; };
+		B60230C21EC9B339005AB798 /* PRESDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRESDevice.m; sourceTree = "<group>"; };
+		B60230C31EC9B339005AB798 /* PRESDomain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRESDomain.h; sourceTree = "<group>"; };
+		B60230C41EC9B339005AB798 /* PRESDomain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRESDomain.m; sourceTree = "<group>"; };
+		B60230C51EC9B339005AB798 /* PRESEnvelope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRESEnvelope.h; sourceTree = "<group>"; };
+		B60230C61EC9B339005AB798 /* PRESEnvelope.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRESEnvelope.m; sourceTree = "<group>"; };
+		B60230C71EC9B339005AB798 /* PRESEventData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRESEventData.h; sourceTree = "<group>"; };
+		B60230C81EC9B339005AB798 /* PRESEventData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRESEventData.m; sourceTree = "<group>"; };
+		B60230C91EC9B339005AB798 /* PRESGZIP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRESGZIP.h; sourceTree = "<group>"; };
+		B60230CA1EC9B339005AB798 /* PRESHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRESHelper.h; sourceTree = "<group>"; };
+		B60230CB1EC9B339005AB798 /* PRESHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRESHelper.m; sourceTree = "<group>"; };
+		B60230CC1EC9B339005AB798 /* PRESHTTPMonitorModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRESHTTPMonitorModel.h; sourceTree = "<group>"; };
+		B60230CD1EC9B339005AB798 /* PRESHTTPMonitorModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRESHTTPMonitorModel.m; sourceTree = "<group>"; };
+		B60230CE1EC9B339005AB798 /* PRESHTTPMonitorSender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRESHTTPMonitorSender.h; sourceTree = "<group>"; };
+		B60230CF1EC9B339005AB798 /* PRESHTTPMonitorSender.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRESHTTPMonitorSender.m; sourceTree = "<group>"; };
+		B60230D01EC9B339005AB798 /* PRESHTTPOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRESHTTPOperation.h; sourceTree = "<group>"; };
+		B60230D11EC9B339005AB798 /* PRESHTTPOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRESHTTPOperation.m; sourceTree = "<group>"; };
+		B60230D21EC9B339005AB798 /* PRESInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRESInternal.h; sourceTree = "<group>"; };
+		B60230D31EC9B339005AB798 /* PRESInternal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRESInternal.m; sourceTree = "<group>"; };
+		B60230D41EC9B339005AB798 /* PRESKeychainUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRESKeychainUtils.h; sourceTree = "<group>"; };
+		B60230D51EC9B339005AB798 /* PRESKeychainUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRESKeychainUtils.m; sourceTree = "<group>"; };
+		B60230D61EC9B339005AB798 /* PRESLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRESLogger.h; sourceTree = "<group>"; };
+		B60230D71EC9B339005AB798 /* PRESLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRESLogger.m; sourceTree = "<group>"; };
+		B60230D81EC9B339005AB798 /* PRESLoggerPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRESLoggerPrivate.h; sourceTree = "<group>"; };
+		B60230D91EC9B339005AB798 /* PRESMetricsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRESMetricsManager.h; sourceTree = "<group>"; };
+		B60230DA1EC9B339005AB798 /* PRESMetricsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRESMetricsManager.m; sourceTree = "<group>"; };
+		B60230DB1EC9B339005AB798 /* PRESMetricsManagerPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRESMetricsManagerPrivate.h; sourceTree = "<group>"; };
+		B60230DC1EC9B339005AB798 /* PRESNetworkClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRESNetworkClient.h; sourceTree = "<group>"; };
+		B60230DD1EC9B339005AB798 /* PRESNetworkClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRESNetworkClient.m; sourceTree = "<group>"; };
+		B60230DE1EC9B339005AB798 /* PreSniffManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreSniffManager.h; sourceTree = "<group>"; };
+		B60230DF1EC9B339005AB798 /* PreSniffManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreSniffManager.m; sourceTree = "<group>"; };
+		B60230E01EC9B339005AB798 /* PreSniffManagerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreSniffManagerDelegate.h; sourceTree = "<group>"; };
+		B60230E11EC9B339005AB798 /* PreSniffObjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreSniffObjc.h; sourceTree = "<group>"; };
+		B60230E21EC9B339005AB798 /* PreSniffSDKEnums.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreSniffSDKEnums.h; sourceTree = "<group>"; };
+		B60230E31EC9B339005AB798 /* PreSniffSDKFeatureConfig_CP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreSniffSDKFeatureConfig_CP.h; sourceTree = "<group>"; };
+		B60230E41EC9B339005AB798 /* PreSniffObjcFeatureConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreSniffObjcFeatureConfig.h; sourceTree = "<group>"; };
+		B60230E51EC9B339005AB798 /* PreSniffSDKNullability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreSniffSDKNullability.h; sourceTree = "<group>"; };
+		B60230E61EC9B339005AB798 /* PreSniffSDKPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreSniffSDKPrivate.h; sourceTree = "<group>"; };
+		B60230E71EC9B339005AB798 /* PreSniffSDKPrivate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreSniffSDKPrivate.m; sourceTree = "<group>"; };
+		B60230E81EC9B339005AB798 /* PRESPersistence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRESPersistence.h; sourceTree = "<group>"; };
+		B60230E91EC9B339005AB798 /* PRESPersistence.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRESPersistence.m; sourceTree = "<group>"; };
+		B60230EA1EC9B339005AB798 /* PRESPersistencePrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRESPersistencePrivate.h; sourceTree = "<group>"; };
+		B60230EB1EC9B339005AB798 /* PRESSender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRESSender.h; sourceTree = "<group>"; };
+		B60230EC1EC9B339005AB798 /* PRESSender.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRESSender.m; sourceTree = "<group>"; };
+		B60230ED1EC9B339005AB798 /* PRESSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRESSession.h; sourceTree = "<group>"; };
+		B60230EE1EC9B339005AB798 /* PRESSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRESSession.m; sourceTree = "<group>"; };
+		B60230EF1EC9B339005AB798 /* PRESSessionState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRESSessionState.h; sourceTree = "<group>"; };
+		B60230F01EC9B339005AB798 /* PRESSessionStateData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRESSessionStateData.h; sourceTree = "<group>"; };
+		B60230F11EC9B339005AB798 /* PRESSessionStateData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRESSessionStateData.m; sourceTree = "<group>"; };
+		B60230F21EC9B339005AB798 /* PRESTelemetryContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRESTelemetryContext.h; sourceTree = "<group>"; };
+		B60230F31EC9B339005AB798 /* PRESTelemetryContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRESTelemetryContext.m; sourceTree = "<group>"; };
+		B60230F41EC9B339005AB798 /* PRESTelemetryData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRESTelemetryData.h; sourceTree = "<group>"; };
+		B60230F51EC9B339005AB798 /* PRESTelemetryData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRESTelemetryData.m; sourceTree = "<group>"; };
+		B60230F61EC9B339005AB798 /* PRESTelemetryObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRESTelemetryObject.h; sourceTree = "<group>"; };
+		B60230F71EC9B339005AB798 /* PRESTelemetryObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRESTelemetryObject.m; sourceTree = "<group>"; };
+		B60230F81EC9B339005AB798 /* PRESURLProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRESURLProtocol.h; sourceTree = "<group>"; };
+		B60230F91EC9B339005AB798 /* PRESURLProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRESURLProtocol.m; sourceTree = "<group>"; };
+		B60230FA1EC9B339005AB798 /* PRESURLSessionSwizzler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRESURLSessionSwizzler.h; sourceTree = "<group>"; };
+		B60230FB1EC9B339005AB798 /* PRESURLSessionSwizzler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRESURLSessionSwizzler.m; sourceTree = "<group>"; };
+		B60230FC1EC9B339005AB798 /* PRESUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRESUser.h; sourceTree = "<group>"; };
+		B60230FD1EC9B339005AB798 /* PRESUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRESUser.m; sourceTree = "<group>"; };
+		B60230FE1EC9B339005AB798 /* PRESUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRESUtilities.h; sourceTree = "<group>"; };
+		B60230FF1EC9B339005AB798 /* PRESUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRESUtilities.m; sourceTree = "<group>"; };
+		B60231301EC9B73A005AB798 /* PreSniffObjcTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PreSniffObjcTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B60231321EC9B73A005AB798 /* PreSniffObjcTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PreSniffObjcTests.m; sourceTree = "<group>"; };
+		B60231341EC9B73A005AB798 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B64DE15A1EC9BB790045D6E6 /* CrashReporter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = CrashReporter.framework; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		B602308E1EC9B262005AB798 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B602312D1EC9B73A005AB798 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B60231351EC9B73A005AB798 /* libPreSniffObjc.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		B60230881EC9B262005AB798 = {
+			isa = PBXGroup;
+			children = (
+				B64DE1591EC9BB790045D6E6 /* Vendor */,
+				B60230931EC9B262005AB798 /* PreSniffObjc */,
+				B60231311EC9B73A005AB798 /* PreSniffObjcTests */,
+				B602309D1EC9B2C5005AB798 /* Supporting Files */,
+				B60230921EC9B262005AB798 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		B60230921EC9B262005AB798 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B60230911EC9B262005AB798 /* libPreSniffObjc.a */,
+				B60231301EC9B73A005AB798 /* PreSniffObjcTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B60230931EC9B262005AB798 /* PreSniffObjc */ = {
+			isa = PBXGroup;
+			children = (
+				B60231271EC9B377005AB798 /* Telemetry */,
+				B60231281EC9B38F005AB798 /* Network */,
+				B60231291EC9B3A5005AB798 /* Helper */,
+				B602312A1EC9B3AC005AB798 /* CrashReport */,
+				B602312B1EC9B3B7005AB798 /* HttpMonitor */,
+				B60230DE1EC9B339005AB798 /* PreSniffManager.h */,
+				B60230DF1EC9B339005AB798 /* PreSniffManager.m */,
+				B60230E01EC9B339005AB798 /* PreSniffManagerDelegate.h */,
+				B60230E11EC9B339005AB798 /* PreSniffObjc.h */,
+				B60230E41EC9B339005AB798 /* PreSniffObjcFeatureConfig.h */,
+			);
+			path = PreSniffObjc;
+			sourceTree = "<group>";
+		};
+		B602309D1EC9B2C5005AB798 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				B602309E1EC9B2C5005AB798 /* PreObjcBase.debug.xcconfig */,
+				B602309F1EC9B2C5005AB798 /* PreObjcBase.release.xcconfig */,
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		B60231271EC9B377005AB798 /* Telemetry */ = {
+			isa = PBXGroup;
+			children = (
+				B60230A51EC9B339005AB798 /* PRESBase.h */,
+				B60230A61EC9B339005AB798 /* PRESBase.m */,
+				B60230A11EC9B339005AB798 /* PRESApplication.h */,
+				B60230A21EC9B339005AB798 /* PRESApplication.m */,
+				B60230AA1EC9B339005AB798 /* PRESCategoryContainer.h */,
+				B60230AB1EC9B339005AB798 /* PRESCategoryContainer.m */,
+				B60230AC1EC9B339005AB798 /* PRESChannel.h */,
+				B60230AD1EC9B339005AB798 /* PRESChannel.m */,
+				B60230AE1EC9B339005AB798 /* PRESChannelPrivate.h */,
+				B60230BD1EC9B339005AB798 /* PRESData.h */,
+				B60230BE1EC9B339005AB798 /* PRESData.m */,
+				B60230C11EC9B339005AB798 /* PRESDevice.h */,
+				B60230C21EC9B339005AB798 /* PRESDevice.m */,
+				B60230C31EC9B339005AB798 /* PRESDomain.h */,
+				B60230C41EC9B339005AB798 /* PRESDomain.m */,
+				B60230C51EC9B339005AB798 /* PRESEnvelope.h */,
+				B60230C61EC9B339005AB798 /* PRESEnvelope.m */,
+				B60230C71EC9B339005AB798 /* PRESEventData.h */,
+				B60230C81EC9B339005AB798 /* PRESEventData.m */,
+				B60230C91EC9B339005AB798 /* PRESGZIP.h */,
+				B60230D21EC9B339005AB798 /* PRESInternal.h */,
+				B60230D31EC9B339005AB798 /* PRESInternal.m */,
+				B60230D91EC9B339005AB798 /* PRESMetricsManager.h */,
+				B60230DA1EC9B339005AB798 /* PRESMetricsManager.m */,
+				B60230DB1EC9B339005AB798 /* PRESMetricsManagerPrivate.h */,
+				B60230E81EC9B339005AB798 /* PRESPersistence.h */,
+				B60230E91EC9B339005AB798 /* PRESPersistence.m */,
+				B60230EA1EC9B339005AB798 /* PRESPersistencePrivate.h */,
+				B60230EB1EC9B339005AB798 /* PRESSender.h */,
+				B60230EC1EC9B339005AB798 /* PRESSender.m */,
+				B60230ED1EC9B339005AB798 /* PRESSession.h */,
+				B60230EE1EC9B339005AB798 /* PRESSession.m */,
+				B60230EF1EC9B339005AB798 /* PRESSessionState.h */,
+				B60230F01EC9B339005AB798 /* PRESSessionStateData.h */,
+				B60230F11EC9B339005AB798 /* PRESSessionStateData.m */,
+				B60230F21EC9B339005AB798 /* PRESTelemetryContext.h */,
+				B60230F31EC9B339005AB798 /* PRESTelemetryContext.m */,
+				B60230F41EC9B339005AB798 /* PRESTelemetryData.h */,
+				B60230F51EC9B339005AB798 /* PRESTelemetryData.m */,
+				B60230F61EC9B339005AB798 /* PRESTelemetryObject.h */,
+				B60230F71EC9B339005AB798 /* PRESTelemetryObject.m */,
+				B60230FC1EC9B339005AB798 /* PRESUser.h */,
+				B60230FD1EC9B339005AB798 /* PRESUser.m */,
+			);
+			name = Telemetry;
+			sourceTree = "<group>";
+		};
+		B60231281EC9B38F005AB798 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				B60230D01EC9B339005AB798 /* PRESHTTPOperation.h */,
+				B60230D11EC9B339005AB798 /* PRESHTTPOperation.m */,
+				B60230DC1EC9B339005AB798 /* PRESNetworkClient.h */,
+				B60230DD1EC9B339005AB798 /* PRESNetworkClient.m */,
+			);
+			name = Network;
+			sourceTree = "<group>";
+		};
+		B60231291EC9B3A5005AB798 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				B60230A31EC9B339005AB798 /* PRESAttachment.h */,
+				B60230A41EC9B339005AB798 /* PRESAttachment.m */,
+				B60230A71EC9B339005AB798 /* PRESBaseManager.h */,
+				B60230A81EC9B339005AB798 /* PRESBaseManager.m */,
+				B60230A91EC9B339005AB798 /* PRESBaseManagerPrivate.h */,
+				B60230BF1EC9B339005AB798 /* PRESDataCompressor.h */,
+				B60230C01EC9B339005AB798 /* PRESDataCompressor.m */,
+				B60230CA1EC9B339005AB798 /* PRESHelper.h */,
+				B60230CB1EC9B339005AB798 /* PRESHelper.m */,
+				B60230D61EC9B339005AB798 /* PRESLogger.h */,
+				B60230D71EC9B339005AB798 /* PRESLogger.m */,
+				B60230D81EC9B339005AB798 /* PRESLoggerPrivate.h */,
+				B60230D41EC9B339005AB798 /* PRESKeychainUtils.h */,
+				B60230D51EC9B339005AB798 /* PRESKeychainUtils.m */,
+				B60230E21EC9B339005AB798 /* PreSniffSDKEnums.h */,
+				B60230E31EC9B339005AB798 /* PreSniffSDKFeatureConfig_CP.h */,
+				B60230E51EC9B339005AB798 /* PreSniffSDKNullability.h */,
+				B60230E61EC9B339005AB798 /* PreSniffSDKPrivate.h */,
+				B60230E71EC9B339005AB798 /* PreSniffSDKPrivate.m */,
+				B60230FE1EC9B339005AB798 /* PRESUtilities.h */,
+				B60230FF1EC9B339005AB798 /* PRESUtilities.m */,
+			);
+			name = Helper;
+			sourceTree = "<group>";
+		};
+		B602312A1EC9B3AC005AB798 /* CrashReport */ = {
+			isa = PBXGroup;
+			children = (
+				B60230AF1EC9B339005AB798 /* PRESCrashCXXExceptionHandler.h */,
+				B60230B01EC9B339005AB798 /* PRESCrashCXXExceptionHandler.mm */,
+				B60230B11EC9B339005AB798 /* PRESCrashDetails.h */,
+				B60230B21EC9B339005AB798 /* PRESCrashDetails.m */,
+				B60230B31EC9B339005AB798 /* PRESCrashDetailsPrivate.h */,
+				B60230B41EC9B339005AB798 /* PRESCrashManager.h */,
+				B60230B51EC9B339005AB798 /* PRESCrashManager.m */,
+				B60230B61EC9B339005AB798 /* PRESCrashManagerDelegate.h */,
+				B60230B71EC9B339005AB798 /* PRESCrashManagerPrivate.h */,
+				B60230B81EC9B339005AB798 /* PRESCrashMetaData.h */,
+				B60230B91EC9B339005AB798 /* PRESCrashMetaData.m */,
+				B60230BA1EC9B339005AB798 /* PRESCrashReportTextFormatter.h */,
+				B60230BB1EC9B339005AB798 /* PRESCrashReportTextFormatter.m */,
+				B60230BC1EC9B339005AB798 /* PRESCrashReportTextFormatterPrivate.h */,
+			);
+			name = CrashReport;
+			sourceTree = "<group>";
+		};
+		B602312B1EC9B3B7005AB798 /* HttpMonitor */ = {
+			isa = PBXGroup;
+			children = (
+				B60230CC1EC9B339005AB798 /* PRESHTTPMonitorModel.h */,
+				B60230CD1EC9B339005AB798 /* PRESHTTPMonitorModel.m */,
+				B60230CE1EC9B339005AB798 /* PRESHTTPMonitorSender.h */,
+				B60230CF1EC9B339005AB798 /* PRESHTTPMonitorSender.m */,
+				B60230F81EC9B339005AB798 /* PRESURLProtocol.h */,
+				B60230F91EC9B339005AB798 /* PRESURLProtocol.m */,
+				B60230FA1EC9B339005AB798 /* PRESURLSessionSwizzler.h */,
+				B60230FB1EC9B339005AB798 /* PRESURLSessionSwizzler.m */,
+			);
+			name = HttpMonitor;
+			sourceTree = "<group>";
+		};
+		B60231311EC9B73A005AB798 /* PreSniffObjcTests */ = {
+			isa = PBXGroup;
+			children = (
+				B60231321EC9B73A005AB798 /* PreSniffObjcTests.m */,
+				B60231341EC9B73A005AB798 /* Info.plist */,
+			);
+			path = PreSniffObjcTests;
+			sourceTree = "<group>";
+		};
+		B64DE1591EC9BB790045D6E6 /* Vendor */ = {
+			isa = PBXGroup;
+			children = (
+				B64DE15A1EC9BB790045D6E6 /* CrashReporter.framework */,
+			);
+			path = Vendor;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		B60230901EC9B262005AB798 /* PreSniffObjc */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B602309A1EC9B262005AB798 /* Build configuration list for PBXNativeTarget "PreSniffObjc" */;
+			buildPhases = (
+				B602308D1EC9B262005AB798 /* Sources */,
+				B602308E1EC9B262005AB798 /* Frameworks */,
+				B602308F1EC9B262005AB798 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PreSniffObjc;
+			productName = PreSniffObjc;
+			productReference = B60230911EC9B262005AB798 /* libPreSniffObjc.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		B602312F1EC9B73A005AB798 /* PreSniffObjcTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B60231381EC9B73A005AB798 /* Build configuration list for PBXNativeTarget "PreSniffObjcTests" */;
+			buildPhases = (
+				B602312C1EC9B73A005AB798 /* Sources */,
+				B602312D1EC9B73A005AB798 /* Frameworks */,
+				B602312E1EC9B73A005AB798 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B60231371EC9B73A005AB798 /* PBXTargetDependency */,
+			);
+			name = PreSniffObjcTests;
+			productName = PreSniffObjcTests;
+			productReference = B60231301EC9B73A005AB798 /* PreSniffObjcTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		B60230891EC9B262005AB798 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0830;
+				ORGANIZATIONNAME = "pre-engineering";
+				TargetAttributes = {
+					B60230901EC9B262005AB798 = {
+						CreatedOnToolsVersion = 8.3.2;
+						DevelopmentTeam = GDFHW66V92;
+						ProvisioningStyle = Automatic;
+					};
+					B602312F1EC9B73A005AB798 = {
+						CreatedOnToolsVersion = 8.3.2;
+						DevelopmentTeam = GDFHW66V92;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = B602308C1EC9B262005AB798 /* Build configuration list for PBXProject "PreSniffObjc" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = B60230881EC9B262005AB798;
+			productRefGroup = B60230921EC9B262005AB798 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				B60230901EC9B262005AB798 /* PreSniffObjc */,
+				B602312F1EC9B73A005AB798 /* PreSniffObjcTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		B602312E1EC9B73A005AB798 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		B602308D1EC9B262005AB798 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B602310A1EC9B339005AB798 /* PRESCrashReportTextFormatter.m in Sources */,
+				B60231211EC9B339005AB798 /* PRESTelemetryData.m in Sources */,
+				B602310F1EC9B339005AB798 /* PRESEnvelope.m in Sources */,
+				B60231151EC9B339005AB798 /* PRESInternal.m in Sources */,
+				B60231251EC9B339005AB798 /* PRESUser.m in Sources */,
+				B60231191EC9B339005AB798 /* PRESNetworkClient.m in Sources */,
+				B602311D1EC9B339005AB798 /* PRESSender.m in Sources */,
+				B60231041EC9B339005AB798 /* PRESCategoryContainer.m in Sources */,
+				B60231031EC9B339005AB798 /* PRESBaseManager.m in Sources */,
+				B60231091EC9B339005AB798 /* PRESCrashMetaData.m in Sources */,
+				B602311E1EC9B339005AB798 /* PRESSession.m in Sources */,
+				B60231011EC9B339005AB798 /* PRESAttachment.m in Sources */,
+				B602311F1EC9B339005AB798 /* PRESSessionStateData.m in Sources */,
+				B60231261EC9B339005AB798 /* PRESUtilities.m in Sources */,
+				B60231081EC9B339005AB798 /* PRESCrashManager.m in Sources */,
+				B60231051EC9B339005AB798 /* PRESChannel.m in Sources */,
+				B602310C1EC9B339005AB798 /* PRESDataCompressor.m in Sources */,
+				B60231231EC9B339005AB798 /* PRESURLProtocol.m in Sources */,
+				B60231111EC9B339005AB798 /* PRESHelper.m in Sources */,
+				B602311C1EC9B339005AB798 /* PRESPersistence.m in Sources */,
+				B60231001EC9B339005AB798 /* PRESApplication.m in Sources */,
+				B60231101EC9B339005AB798 /* PRESEventData.m in Sources */,
+				B60231241EC9B339005AB798 /* PRESURLSessionSwizzler.m in Sources */,
+				B602310E1EC9B339005AB798 /* PRESDomain.m in Sources */,
+				B60231131EC9B339005AB798 /* PRESHTTPMonitorSender.m in Sources */,
+				B60231201EC9B339005AB798 /* PRESTelemetryContext.m in Sources */,
+				B60231121EC9B339005AB798 /* PRESHTTPMonitorModel.m in Sources */,
+				B60231161EC9B339005AB798 /* PRESKeychainUtils.m in Sources */,
+				B60231171EC9B339005AB798 /* PRESLogger.m in Sources */,
+				B60231021EC9B339005AB798 /* PRESBase.m in Sources */,
+				B602311A1EC9B339005AB798 /* PreSniffManager.m in Sources */,
+				B602311B1EC9B339005AB798 /* PreSniffSDKPrivate.m in Sources */,
+				B602310B1EC9B339005AB798 /* PRESData.m in Sources */,
+				B60231141EC9B339005AB798 /* PRESHTTPOperation.m in Sources */,
+				B60231071EC9B339005AB798 /* PRESCrashDetails.m in Sources */,
+				B60231061EC9B339005AB798 /* PRESCrashCXXExceptionHandler.mm in Sources */,
+				B602310D1EC9B339005AB798 /* PRESDevice.m in Sources */,
+				B60231221EC9B339005AB798 /* PRESTelemetryObject.m in Sources */,
+				B60231181EC9B339005AB798 /* PRESMetricsManager.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B602312C1EC9B73A005AB798 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B60231331EC9B73A005AB798 /* PreSniffObjcTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		B60231371EC9B73A005AB798 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B60230901EC9B262005AB798 /* PreSniffObjc */;
+			targetProxy = B60231361EC9B73A005AB798 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		B60230981EC9B262005AB798 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B602309E1EC9B2C5005AB798 /* PreObjcBase.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		B60230991EC9B262005AB798 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B602309F1EC9B2C5005AB798 /* PreObjcBase.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		B602309B1EC9B262005AB798 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEVELOPMENT_TEAM = GDFHW66V92;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Vendor",
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		B602309C1EC9B262005AB798 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEVELOPMENT_TEAM = GDFHW66V92;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Vendor",
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		B60231391EC9B73A005AB798 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEVELOPMENT_TEAM = GDFHW66V92;
+				INFOPLIST_FILE = PreSniffObjcTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "pre-engineering.PreSniffObjcTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		B602313A1EC9B73A005AB798 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEVELOPMENT_TEAM = GDFHW66V92;
+				INFOPLIST_FILE = PreSniffObjcTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "pre-engineering.PreSniffObjcTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		B602308C1EC9B262005AB798 /* Build configuration list for PBXProject "PreSniffObjc" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B60230981EC9B262005AB798 /* Debug */,
+				B60230991EC9B262005AB798 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B602309A1EC9B262005AB798 /* Build configuration list for PBXNativeTarget "PreSniffObjc" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B602309B1EC9B262005AB798 /* Debug */,
+				B602309C1EC9B262005AB798 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B60231381EC9B73A005AB798 /* Build configuration list for PBXNativeTarget "PreSniffObjcTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B60231391EC9B73A005AB798 /* Debug */,
+				B602313A1EC9B73A005AB798 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = B60230891EC9B262005AB798 /* Project object */;
+}

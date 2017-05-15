@@ -1,0 +1,3 @@
+target 'PreSniffObjcDemo' do
+  pod 'HappyDNS'
+end
