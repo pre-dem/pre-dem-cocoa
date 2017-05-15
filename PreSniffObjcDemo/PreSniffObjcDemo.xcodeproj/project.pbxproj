@@ -65,9 +65,9 @@
 		B602313B1EC9B7AC005AB798 = {
 			isa = PBXGroup;
 			children = (
-				B64DE15D1EC9BC540045D6E6 /* Supporting Files */,
 				B60231461EC9B7AC005AB798 /* PreSniffObjcDemo */,
 				D36C4441D13DB5C7BD3AC3A7 /* Pods */,
+				B64DE15D1EC9BC540045D6E6 /* Supporting Files */,
 				B60231451EC9B7AC005AB798 /* Products */,
 				873953D5F83C737C48720D4A /* Frameworks */,
 			);
