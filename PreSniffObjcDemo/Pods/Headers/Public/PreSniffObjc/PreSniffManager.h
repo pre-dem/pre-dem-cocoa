@@ -1,1 +1,1 @@
-../../../../../PreSniffObjc/PreSniffManager.h
+../../../../../PreSniffObjc/Public/PreSniffManager.h

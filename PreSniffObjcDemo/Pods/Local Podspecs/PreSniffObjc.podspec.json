@@ -16,7 +16,7 @@
     "tag": "v1.0.0"
   },
   "source_files": "PreSniffObjc/**/*.{h,m,mm}",
-  "public_header_files": "PreSniffObjc/*.h",
+  "public_header_files": "PreSniffObjc/Public/*.h",
   "vendored_frameworks": "Vendor/*.framework",
   "frameworks": [
     "AssetsLibrary",

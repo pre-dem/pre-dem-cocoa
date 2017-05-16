@@ -1,1 +1,1 @@
-../../../../../PreSniffObjc/PreSniffObjcFeatureConfig.h
+../../../../../PreSniffObjc/Public/PreSniffObjcFeatureConfig.h

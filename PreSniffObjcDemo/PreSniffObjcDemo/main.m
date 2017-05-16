@@ -8,11 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "AppDelegate.h"
-#import <PreSniffObjc/PRESURLProtocol.h>
 
 int main(int argc, char * argv[]) {
     @autoreleasepool {
-        [PRESURLProtocol enableHTTPSniff];
         return UIApplicationMain(argc, argv, nil, NSStringFromClass([AppDelegate class]));
     }
 }

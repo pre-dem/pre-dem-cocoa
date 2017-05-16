@@ -13,7 +13,7 @@ Pod::Spec.new do |s|
 
   s.source       = { :git => "https://github.com/pre-sniff/pre-sniff-objc.git", :tag => "v#{s.version}" }
   s.source_files = "PreSniffObjc/**/*.{h,m,mm}"
-  s.public_header_files = 'PreSniffObjc/*.h'
+  s.public_header_files = 'PreSniffObjc/Public/*.h'
   s.vendored_frameworks = 'Vendor/*.framework'
   s.frameworks = "AssetsLibrary", "CoreTelephony", "CoreText", "CoreGraphics", "Foundation", "MobileCoreServices", "Photos", "QuartzCore", "QuickLook", "Security", "SystemConfiguration", "UIKit"
   s.libraries  = "c++", "z"
