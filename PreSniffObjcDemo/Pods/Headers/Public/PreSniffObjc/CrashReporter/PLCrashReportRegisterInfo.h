@@ -1,0 +1,1 @@
+../../../../../../Vendor/CrashReporter.framework/Versions/A/Headers/PLCrashReportRegisterInfo.h

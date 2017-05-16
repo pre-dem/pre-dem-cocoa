@@ -1,12 +1,19 @@
 PODS:
   - HappyDNS (0.3.10)
+  - PreSniffObjc (1.0.0):
+    - HappyDNS
 
 DEPENDENCIES:
-  - HappyDNS
+  - PreSniffObjc (from `../`)
+
+EXTERNAL SOURCES:
+  PreSniffObjc:
+    :path: "../"
 
 SPEC CHECKSUMS:
   HappyDNS: 06a9fed2796663fd87626dbf02552933265bf059
+  PreSniffObjc: e5789ca86af2ed1be636bf21c8ec3598a6feec9d
 
-PODFILE CHECKSUM: ddda780036afaace47038ed5d190f9e345a1aada
+PODFILE CHECKSUM: 96825f99bc90016c138c400ed3d48ecb1e6c3206
 
 COCOAPODS: 1.2.1

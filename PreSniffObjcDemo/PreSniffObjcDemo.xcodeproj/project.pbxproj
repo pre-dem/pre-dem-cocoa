@@ -7,20 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		044062F92CE805B1BA6D6210 /* libPods-PreSniffObjcDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8720C88B9B335CBA99E4C10D /* libPods-PreSniffObjcDemo.a */; };
+		62F62D4E8686211147CFAA48 /* libPods-PreSniffObjcDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BBAB5C53425E36F9ABF19D45 /* libPods-PreSniffObjcDemo.a */; };
 		B60231491EC9B7AC005AB798 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B60231481EC9B7AC005AB798 /* main.m */; };
 		B602314C1EC9B7AC005AB798 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B602314B1EC9B7AC005AB798 /* AppDelegate.m */; };
 		B602314F1EC9B7AC005AB798 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B602314E1EC9B7AC005AB798 /* ViewController.m */; };
 		B60231521EC9B7AC005AB798 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B60231501EC9B7AC005AB798 /* Main.storyboard */; };
 		B60231541EC9B7AC005AB798 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B60231531EC9B7AC005AB798 /* Assets.xcassets */; };
 		B60231571EC9B7AC005AB798 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B60231551EC9B7AC005AB798 /* LaunchScreen.storyboard */; };
-		B64DE1621EC9BF010045D6E6 /* libPreSniffObjc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B64DE1611EC9BF010045D6E6 /* libPreSniffObjc.a */; };
-		B6F1D31A1EC9C04800135FC1 /* PreSniffObjcDemo.debug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = B6F1D3181EC9C04800135FC1 /* PreSniffObjcDemo.debug.xcconfig */; };
-		B6F1D31B1EC9C04800135FC1 /* PreSniffObjcDemo.release.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = B6F1D3191EC9C04800135FC1 /* PreSniffObjcDemo.release.xcconfig */; };
+		B6383AB11ECAA6D400B67A7E /* PreSniffObjc.podspec in Resources */ = {isa = PBXBuildFile; fileRef = B6383AB01ECAA6D400B67A7E /* PreSniffObjc.podspec */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		8720C88B9B335CBA99E4C10D /* libPods-PreSniffObjcDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PreSniffObjcDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B60231441EC9B7AC005AB798 /* PreSniffObjcDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PreSniffObjcDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B60231481EC9B7AC005AB798 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		B602314A1EC9B7AC005AB798 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -31,11 +28,8 @@
 		B60231531EC9B7AC005AB798 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B60231561EC9B7AC005AB798 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B60231581EC9B7AC005AB798 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B64DE1571EC9BAFF0045D6E6 /* libPreSniffObjc.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPreSniffObjc.a; path = "../../../../../Library/Developer/Xcode/DerivedData/PreSniffObjcDemo-fdzyjcdvfcqgaegztcuwbvaqpfhq/Build/Products/Debug-iphonesimulator/libPreSniffObjc.a"; sourceTree = "<group>"; };
-		B64DE15F1EC9BEB00045D6E6 /* libPreSniffObjc.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPreSniffObjc.a; path = "../PreSniffObjc/build/Debug-iphoneos/libPreSniffObjc.a"; sourceTree = "<group>"; };
-		B64DE1611EC9BF010045D6E6 /* libPreSniffObjc.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPreSniffObjc.a; path = "../PreSniffObjc/build/Release-iphoneos/libPreSniffObjc.a"; sourceTree = "<group>"; };
-		B6F1D3181EC9C04800135FC1 /* PreSniffObjcDemo.debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = PreSniffObjcDemo.debug.xcconfig; sourceTree = "<group>"; };
-		B6F1D3191EC9C04800135FC1 /* PreSniffObjcDemo.release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = PreSniffObjcDemo.release.xcconfig; sourceTree = "<group>"; };
+		B6383AB01ECAA6D400B67A7E /* PreSniffObjc.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = PreSniffObjc.podspec; path = ../PreSniffObjc.podspec; sourceTree = "<group>"; };
+		BBAB5C53425E36F9ABF19D45 /* libPods-PreSniffObjcDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PreSniffObjcDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC2DE1862FAA2D9F0AD22B41 /* Pods-PreSniffObjcDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PreSniffObjcDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-PreSniffObjcDemo/Pods-PreSniffObjcDemo.release.xcconfig"; sourceTree = "<group>"; };
 		EEA8E066865EF848E9BA43AC /* Pods-PreSniffObjcDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PreSniffObjcDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PreSniffObjcDemo/Pods-PreSniffObjcDemo.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -45,8 +39,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				044062F92CE805B1BA6D6210 /* libPods-PreSniffObjcDemo.a in Frameworks */,
-				B64DE1621EC9BF010045D6E6 /* libPreSniffObjc.a in Frameworks */,
+				62F62D4E8686211147CFAA48 /* libPods-PreSniffObjcDemo.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -56,10 +49,7 @@
 		873953D5F83C737C48720D4A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				B64DE1611EC9BF010045D6E6 /* libPreSniffObjc.a */,
-				B64DE15F1EC9BEB00045D6E6 /* libPreSniffObjc.a */,
-				B64DE1571EC9BAFF0045D6E6 /* libPreSniffObjc.a */,
-				8720C88B9B335CBA99E4C10D /* libPods-PreSniffObjcDemo.a */,
+				BBAB5C53425E36F9ABF19D45 /* libPods-PreSniffObjcDemo.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -67,9 +57,9 @@
 		B602313B1EC9B7AC005AB798 = {
 			isa = PBXGroup;
 			children = (
+				B6383AB01ECAA6D400B67A7E /* PreSniffObjc.podspec */,
 				B60231461EC9B7AC005AB798 /* PreSniffObjcDemo */,
 				D36C4441D13DB5C7BD3AC3A7 /* Pods */,
-				B6F1D3171EC9C04800135FC1 /* Supporting Files */,
 				B60231451EC9B7AC005AB798 /* Products */,
 				873953D5F83C737C48720D4A /* Frameworks */,
 			);
@@ -105,15 +95,6 @@
 				B60231481EC9B7AC005AB798 /* main.m */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		B6F1D3171EC9C04800135FC1 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				B6F1D3181EC9C04800135FC1 /* PreSniffObjcDemo.debug.xcconfig */,
-				B6F1D3191EC9C04800135FC1 /* PreSniffObjcDemo.release.xcconfig */,
-			);
-			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		D36C4441D13DB5C7BD3AC3A7 /* Pods */ = {
@@ -189,9 +170,8 @@
 			files = (
 				B60231571EC9B7AC005AB798 /* LaunchScreen.storyboard in Resources */,
 				B60231541EC9B7AC005AB798 /* Assets.xcassets in Resources */,
-				B6F1D31B1EC9C04800135FC1 /* PreSniffObjcDemo.release.xcconfig in Resources */,
 				B60231521EC9B7AC005AB798 /* Main.storyboard in Resources */,
-				B6F1D31A1EC9C04800135FC1 /* PreSniffObjcDemo.debug.xcconfig in Resources */,
+				B6383AB11ECAA6D400B67A7E /* PreSniffObjc.podspec in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -280,7 +260,6 @@
 /* Begin XCBuildConfiguration section */
 		B60231591EC9B7AC005AB798 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B6F1D3181EC9C04800135FC1 /* PreSniffObjcDemo.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -330,7 +309,6 @@
 		};
 		B602315A1EC9B7AC005AB798 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B6F1D3191EC9C04800135FC1 /* PreSniffObjcDemo.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -377,6 +355,7 @@
 			baseConfigurationReference = EEA8E066865EF848E9BA43AC /* Pods-PreSniffObjcDemo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = GDFHW66V92;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				HEADER_SEARCH_PATHS = (
@@ -388,6 +367,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "pre-engineering.PreSniffObjcDemo";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Debug;
 		};
@@ -396,6 +376,7 @@
 			baseConfigurationReference = CC2DE1862FAA2D9F0AD22B41 /* Pods-PreSniffObjcDemo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = GDFHW66V92;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -406,6 +387,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "pre-engineering.PreSniffObjcDemo";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Release;
 		};

@@ -5,9 +5,6 @@
       location = "group:PreSniffObjcDemo.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:../PreSniffObjc/PreSniffObjc.xcodeproj">
-   </FileRef>
-   <FileRef
       location = "group:Pods/Pods.xcodeproj">
    </FileRef>
 </Workspace>
