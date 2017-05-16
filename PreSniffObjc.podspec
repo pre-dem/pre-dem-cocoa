@@ -12,19 +12,15 @@ Pod::Spec.new do |s|
 
 
   s.source       = { :git => "https://github.com/pre-sniff/pre-sniff-objc.git", :tag => "#{s.version}" }
-  s.source_files = "PreSniffObjc/**/*.{h,m}"
+  s.source_files = "PreSniffObjc/**/*.{h,m,mm}"
   s.vendored_frameworks = 'Vendor/*.framework'
 
 
-  s.pod_target_xcconfig = { 'GCC_PREPROCESSOR_DEFINITIONS' => 'COCOAPODS=1 $(HOCKEYSDK_GCC_PREPROCESSOR_DEFINITIONS) HOCKEYSDK_CONFIGURATION_$(CONFIGURATION) BITHOCKEY_VERSION="@\""$(VERSION_STRING)"\"" BITHOCKEY_BUILD="@\""$(BUILD_NUMBER)"\"" BITHOCKEY_C_VERSION="\""$(VERSION_STRING)"\"" BITHOCKEY_C_BUILD="\""$(BUILD_NUMBER)"\""', 'OTHER_LDFLAGS' => '-ObjC'}
+  s.pod_target_xcconfig = { 'GCC_PREPROCESSOR_DEFINITIONS' => 'BITHOCKEY_VERSION="@\""$(VERSION_STRING)"\"" BITHOCKEY_BUILD="@\""$(BUILD_NUMBER)"\"" BITHOCKEY_C_VERSION="\""$(VERSION_STRING)"\"" BITHOCKEY_C_BUILD="\""$(BUILD_NUMBER)"\""', 'OTHER_LDFLAGS' => '-ObjC'}
 
   s.frameworks = "AssetsLibrary", "CoreTelephony", "CoreText", "CoreGraphics", "Foundation", "MobileCoreServices", "Photos", "QuartzCore", "QuickLook", "Security", "SystemConfiguration", "UIKit"
   s.libraries  = "c++", "z"
 
-
-  # s.requires_arc = true
-
-  # s.xcconfig = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libxml2" }
   s.dependency "HappyDNS"
 
 end

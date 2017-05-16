@@ -15,10 +15,10 @@
     "git": "https://github.com/pre-sniff/pre-sniff-objc.git",
     "tag": "1.0.0"
   },
-  "source_files": "PreSniffObjc/**/*.{h,m}",
+  "source_files": "PreSniffObjc/**/*.{h,m,mm}",
   "vendored_frameworks": "Vendor/*.framework",
   "pod_target_xcconfig": {
-    "GCC_PREPROCESSOR_DEFINITIONS": "COCOAPODS=1 $(HOCKEYSDK_GCC_PREPROCESSOR_DEFINITIONS) HOCKEYSDK_CONFIGURATION_$(CONFIGURATION) BITHOCKEY_VERSION=\"@\\\"\"$(VERSION_STRING)\"\\\"\" BITHOCKEY_BUILD=\"@\\\"\"$(BUILD_NUMBER)\"\\\"\" BITHOCKEY_C_VERSION=\"\\\"\"$(VERSION_STRING)\"\\\"\" BITHOCKEY_C_BUILD=\"\\\"\"$(BUILD_NUMBER)\"\\\"\"",
+    "GCC_PREPROCESSOR_DEFINITIONS": "BITHOCKEY_VERSION=\"@\\\"\"$(VERSION_STRING)\"\\\"\" BITHOCKEY_BUILD=\"@\\\"\"$(BUILD_NUMBER)\"\\\"\" BITHOCKEY_C_VERSION=\"\\\"\"$(VERSION_STRING)\"\\\"\" BITHOCKEY_C_BUILD=\"\\\"\"$(BUILD_NUMBER)\"\\\"\"",
     "OTHER_LDFLAGS": "-ObjC"
   },
   "frameworks": [
