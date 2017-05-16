@@ -31,6 +31,7 @@
 #import "PRESKeychainUtils.h"
 #import "PreSniffObjc.h"
 #import "PreSniffSDKPrivate.h"
+#import "PreSniffVersion.h"
 #if !defined (HOCKEYSDK_CONFIGURATION_ReleaseCrashOnly) && !defined (HOCKEYSDK_CONFIGURATION_ReleaseCrashOnlyExtensions)
 #import <QuartzCore/QuartzCore.h>
 #endif
@@ -76,8 +77,8 @@ typedef struct {
 
 pres_info_t hockeyapp_library_info __attribute__((section("__TEXT,__pres_ios,regular,no_dead_strip"))) = {
   .info_version = 1,
-  .pres_version = BITHOCKEY_C_VERSION,
-  .pres_build = BITHOCKEY_C_BUILD
+  .pres_version = PRES_VERSION,
+  .pres_build = PRES_BUILD
 };
 
 

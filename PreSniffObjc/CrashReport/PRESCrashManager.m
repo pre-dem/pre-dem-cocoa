@@ -45,6 +45,7 @@
 #import "PRESCrashReportTextFormatter.h"
 #import "PRESCrashDetailsPrivate.h"
 #import "PRESCrashCXXExceptionHandler.h"
+#import "PreSniffVersion.h"
 
 #if HOCKEYSDK_FEATURE_METRICS
 #import "PRESMetricsManagerPrivate.h"
@@ -1585,7 +1586,7 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
                                                       forKey:@"sdk"
                                                     boundary:boundary]];
   
-  [postBody appendData:[PRESNetworkClient dataWithPostValue:BITHOCKEY_VERSION
+  [postBody appendData:[PRESNetworkClient dataWithPostValue:@PRES_VERSION
                                                       forKey:@"sdk_version"
                                                     boundary:boundary]];
   

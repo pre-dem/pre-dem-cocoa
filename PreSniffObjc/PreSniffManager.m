@@ -37,6 +37,7 @@
 #import "PRESHelper.h"
 #import "PRESNetworkClient.h"
 #import "PRESKeychainUtils.h"
+#import "PreSniffVersion.h"
 
 #include <stdint.h>
 
@@ -48,8 +49,8 @@ typedef struct {
 
 bitstadium_info_t bitstadium_library_info __attribute__((section("__TEXT,__bit_hockey,regular,no_dead_strip"))) = {
   .info_version = 1,
-  .hockey_version = BITHOCKEY_C_VERSION,
-  .hockey_build = BITHOCKEY_C_BUILD
+  .hockey_version = PRES_VERSION,
+  .hockey_build = PRES_BUILD
 };
 
 
@@ -578,7 +579,7 @@ bitstadium_info_t bitstadium_library_info __attribute__((section("__TEXT,__bit_h
   
   NSDictionary *params = @{@"timestamp": timeString,
                            @"sdk": BITHOCKEY_NAME,
-                           @"sdk_version": BITHOCKEY_VERSION,
+                           @"sdk_version": @PRES_VERSION,
                            @"bundle_version": [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"]
                            };
   
