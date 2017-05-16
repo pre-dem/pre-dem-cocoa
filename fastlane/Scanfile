@@ -6,9 +6,9 @@
 
 # Remove the # in front of the line to enable the option
 
-project "PreSniffSDKDemo/PreSniffSDKDemo.xcodeproj"
+workspace "PreSniffObjcDemo/PreSniffObjcDemo.xcworkspace"
 
-scheme "PreSniffSDKDemo"
+scheme "PreSniffObjcDemo"
 
 device "iPhone 6s (9.2)"
 
