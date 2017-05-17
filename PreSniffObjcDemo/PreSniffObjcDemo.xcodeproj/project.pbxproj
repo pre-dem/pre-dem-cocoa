@@ -204,7 +204,7 @@
 					B6548F351ECB0C7E0031DD42 = {
 						CreatedOnToolsVersion = 8.3.2;
 						DevelopmentTeam = GDFHW66V92;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 						TestTargetID = B60231431EC9B7AC005AB798;
 					};
 				};
@@ -494,7 +494,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "pre-engineering.PreSniffObjcDemoTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "94dd8f06-abaf-4e6d-8685-5dcad3fc907f";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PreSniffObjcDemo.app/PreSniffObjcDemo";
 			};
 			name = Debug;
@@ -503,12 +504,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				DEVELOPMENT_TEAM = GDFHW66V92;
 				INFOPLIST_FILE = PreSniffObjcDemoTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "pre-engineering.PreSniffObjcDemoTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "94dd8f06-abaf-4e6d-8685-5dcad3fc907f";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PreSniffObjcDemo.app/PreSniffObjcDemo";
 			};
 			name = Release;
