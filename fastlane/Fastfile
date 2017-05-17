@@ -27,29 +27,6 @@ platform :ios do
     )
   end
 
-  desc "Runs code coverage analysis"
-  lane :codecov do
-    scan(
-      scheme: "PreSniffSDKDemo",
-      clean: true,
-      code_coverage: true,
-      device: "iPhone 5s (9.3)",
-    )
-    slather(
-      cobertura_xml: true,
-      output_directory: "coverage_output",
-      proj: "PreSniffSDK/PreSniffSDK.xcodeproj",
-      scheme: "PreSniffSDK"
-    #  ignore:['../../*']
-    )
-    sh "echo codecov token: " + ENV["CODECOV_TOKEN"]
-    sh "cd .. && curl -s https://codecov.io/bash | bash -s -f ./coverage_output/cobertura.xml -J 'PreSniffSDK'"
-    sh "cd .. && slather coverage --html --scheme PreSniffSDK  PreSniffSDK/PreSniffSDK.xcodeproj"
-    sh "cd .. && fastlane/qshell account "+ ENV["QINIU_AK"] + " " + ENV["QINIU_SK"]
-    sh "cd .. && fastlane/qshell qupload fastlane/qiniu_upload.conf"
-    sh "cd .. && sed -i.bak 's/\"\",/\""+ENV["TRAVIS_COMMIT"]+"\\\/"+"\",/g' fastlane/qiniu_upload.conf && fastlane/qshell qupload fastlane/qiniu_upload.conf"
-  end
-
   desc "Submit a new Beta Build to Apple TestFlight"
   desc "This will also make sure the profile is up to date"
   lane :beta do

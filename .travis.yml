@@ -12,14 +12,6 @@ script:
 - "./scripts/add-key.sh"
 - "./scripts/travis.sh"
 before_install:
-- openssl aes-256-cbc -K $encrypted_6b87064fc261_key -iv $encrypted_6b87064fc261_iv
-  -in scripts/profile/preengineeringPreSniffObjcDemo_InHouse.mobileprovision.enc -out scripts/profile/preengineeringPreSniffObjcDemo_InHouse.mobileprovision
-  -d
-- openssl aes-256-cbc -K $encrypted_6b87064fc261_key -iv $encrypted_6b87064fc261_iv
-  -in scripts/certs/dist.cer.enc -out scripts/certs/dist.cer -d
-- openssl aes-256-cbc -K $encrypted_6b87064fc261_key -iv $encrypted_6b87064fc261_iv
-  -in scripts/certs/dist.p12.enc -out scripts/certs/dist.p12 -d
-- openssl aes-256-cbc -K $encrypted_6b87064fc261_key -iv $encrypted_6b87064fc261_iv
-  -in scripts/certs/apple.cer.enc -out scripts/certs/apple.cer -d
+- "./scripts/decript-cer.sh"
 after_success:
 - bash <(curl -s https://codecov.io/bash)
