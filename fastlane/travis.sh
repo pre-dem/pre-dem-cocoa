@@ -1,14 +1,13 @@
-#!/bin/sh
+#!/bin/bash
 
-gem install slather
-gem update fastlane
+bundle install
 
 if [[ "$TRAVIS_PULL_REQUEST" != "false" ]]; then
-  fastlane test
+  bundle exec fastlane test
   exit $?
 fi
 
 if [[ "$TRAVIS_PULL_REQUEST" == "false" ]]; then
-  fastlane codecov
+  bundle exec fastlane beta
   exit $?
 fi

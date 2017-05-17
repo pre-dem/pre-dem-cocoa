@@ -16,12 +16,6 @@ fastlane_version "2.28.7"
 default_platform :ios
 
 platform :ios do
-  before_all do
-    # ENV["SLACK_URL"] = "https://hooks.slack.com/services/..."
-	ENV["GYM_WORKSPACE"] = "PreSniffObjcDemo/PreSniffObjcDemo.xcworkspace"
-    
-  end
-
   desc "Runs all the tests"
   lane :test do
 #    scan
@@ -59,9 +53,12 @@ platform :ios do
   desc "Submit a new Beta Build to Apple TestFlight"
   desc "This will also make sure the profile is up to date"
   lane :beta do
-    # match(type: "appstore") # more information: https://codesigning.guide
-    gym(scheme: "PreSniffObjcDemo") # Build your app - more options available
-    pilot
+    cert
+    sigh
+    gym(
+      workspace:"PreSniffObjcDemo/PreSniffObjcDemo.xcworkspace",
+      scheme: "PreSniffObjcDemo"
+      ) # Build your app - more options available
 
     # sh "your_script.sh"
     # You can also use other beta testing services here (run `fastlane actions`)
@@ -74,23 +71,6 @@ platform :ios do
     gym(scheme: "PreSniffSDKDemo") # Build your app - more options available
     deliver(force: true)
     # frameit
-  end
-
-  # You can define as many lanes as you want
-
-  after_all do |lane|
-    # This block is called, only if the executed lane was successful
-
-    # slack(
-    #   message: "Successfully deployed new App Update."
-    # )
-  end
-
-  error do |lane, exception|
-    # slack(
-    #   message: exception.message,
-    #   success: false
-    # )
   end
 end
 

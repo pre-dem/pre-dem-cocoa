@@ -42,8 +42,6 @@
 		B6383AB01ECAA6D400B67A7E /* PreSniffObjc.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = PreSniffObjc.podspec; path = ../PreSniffObjc.podspec; sourceTree = "<group>"; };
 		B6548F291ECB05660031DD42 /* Appfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Appfile; sourceTree = "<group>"; };
 		B6548F2A1ECB05660031DD42 /* Fastfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Fastfile; sourceTree = "<group>"; };
-		B6548F2B1ECB05660031DD42 /* qiniu_upload.conf */ = {isa = PBXFileReference; lastKnownFileType = text; path = qiniu_upload.conf; sourceTree = "<group>"; };
-		B6548F2C1ECB05660031DD42 /* qshell */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = qshell; sourceTree = "<group>"; };
 		B6548F2D1ECB05660031DD42 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		B6548F2E1ECB05660031DD42 /* Scanfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Scanfile; sourceTree = "<group>"; };
 		B6548F2F1ECB05660031DD42 /* travis.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = travis.sh; sourceTree = "<group>"; };
@@ -137,8 +135,6 @@
 			children = (
 				B6548F291ECB05660031DD42 /* Appfile */,
 				B6548F2A1ECB05660031DD42 /* Fastfile */,
-				B6548F2B1ECB05660031DD42 /* qiniu_upload.conf */,
-				B6548F2C1ECB05660031DD42 /* qshell */,
 				B6548F2D1ECB05660031DD42 /* README.md */,
 				B6548F2E1ECB05660031DD42 /* Scanfile */,
 				B6548F2F1ECB05660031DD42 /* travis.sh */,
@@ -471,6 +467,7 @@
 					"\"${PODS_ROOT}/Headers/Public/HappyDNS\"",
 				);
 				INFOPLIST_FILE = PreSniffObjcDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "pre-engineering.PreSniffObjcDemo";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -491,6 +488,7 @@
 					"\"${PODS_ROOT}/Headers/Public/HappyDNS\"",
 				);
 				INFOPLIST_FILE = PreSniffObjcDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "pre-engineering.PreSniffObjcDemo";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -552,6 +550,7 @@
 				B6548F3F1ECB0C7E0031DD42 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
