@@ -55,9 +55,14 @@ platform :ios do
   lane :beta do
     scan(
       scheme: "PreSniffObjcDemo",
-      clean: true
+      clean: true,
+      code_coverage: true
     )
-
+    gym(
+      export_method:"enterprise",
+      workspace:"PreSniffObjcDemo/PreSniffObjcDemo.xcworkspace",
+      scheme: "PreSniffObjcDemo"
+      ) # Build your app - more options available
 
     # sh "your_script.sh"
     # You can also use other beta testing services here (run `fastlane actions`)
