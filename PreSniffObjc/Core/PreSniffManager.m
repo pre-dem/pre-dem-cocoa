@@ -37,9 +37,10 @@
 #import "PRESHelper.h"
 #import "PRESNetworkClient.h"
 #import "PRESKeychainUtils.h"
-#import "PreSniffVersion.h"
 
 #include <stdint.h>
+#import "PRESConfigManager.h"
+#import "PreSniffVersion.h"
 
 typedef struct {
   uint8_t       info_version;
@@ -79,6 +80,8 @@ bitstadium_info_t bitstadium_library_info __attribute__((section("__TEXT,__bit_h
 #import "PRESCategoryContainer.h"
 #endif /* HOCKEYSDK_FEATURE_METRICS */
 
+#import "PRESURLProtocol.h"
+
 @interface PreSniffManager ()
 
 - (BOOL)shouldUseLiveIdentifier;
@@ -99,6 +102,8 @@ bitstadium_info_t bitstadium_library_info __attribute__((section("__TEXT,__bit_h
   BOOL _managersInitialized;
   
   PRESNetworkClient *_hockeyAppClient;
+    
+  PRESConfig *_config;
 }
 
 #pragma mark - Private Class Methods
@@ -193,6 +198,8 @@ bitstadium_info_t bitstadium_library_info __attribute__((section("__TEXT,__bit_h
   _appIdentifier = [appIdentifier copy];
   
   [self initializeModules];
+    
+  [self applyConfig:[[PRESConfigManager sharedInstance] getConfigWithAppKey:appIdentifier]];
 }
 
 - (void)configureWithIdentifier:(NSString *)appIdentifier delegate:(id)delegate {
@@ -200,6 +207,8 @@ bitstadium_info_t bitstadium_library_info __attribute__((section("__TEXT,__bit_h
   _appIdentifier = [appIdentifier copy];
   
   [self initializeModules];
+    
+  [self applyConfig:[[PRESConfigManager sharedInstance] getConfigWithAppKey:appIdentifier]];
 }
 
 - (void)configureWithBetaIdentifier:(NSString *)betaIdentifier liveIdentifier:(NSString *)liveIdentifier delegate:(id)delegate {
@@ -219,6 +228,8 @@ bitstadium_info_t bitstadium_library_info __attribute__((section("__TEXT,__bit_h
   }
   
   [self initializeModules];
+
+  [self applyConfig:[[PRESConfigManager sharedInstance] getConfigWithAppKey:_appIdentifier]];
 }
 
 
@@ -323,6 +334,9 @@ bitstadium_info_t bitstadium_library_info __attribute__((section("__TEXT,__bit_h
     [PRESCategoryContainer activateCategory];
   }
 #endif /* HOCKEYSDK_FEATURE_METRICS */
+  if (!self.isHttpMonitorDisabled) {
+      [PRESURLProtocol enableHTTPSniff];
+  }
 }
 
 
@@ -364,6 +378,15 @@ bitstadium_info_t bitstadium_library_info __attribute__((section("__TEXT,__bit_h
   
 }
 #endif /* HOCKEYSDK_FEATURE_METRICS */
+
+- (void)setDisableHttpMonitor:(BOOL)disableHttpMonitor {
+    _disableHttpMonitor = disableHttpMonitor;
+    if (disableHttpMonitor) {
+        [PRESURLProtocol disableHTTPSniff];
+    } else {
+        [PRESURLProtocol enableHTTPSniff];
+    }
+}
 
 - (void)setServerURL:(NSString *)aServerURL {
   // ensure url ends with a trailing slash
@@ -738,6 +761,12 @@ bitstadium_info_t bitstadium_library_info __attribute__((section("__TEXT,__bit_h
   } else {
     [self logInvalidIdentifier:@"app identifier"];
   }
+}
+
+- (void)applyConfig:(PRESConfig *)config {
+    self.disableCrashManager = !config.crashReportEnabled;
+    self.disableMetricsManager = !config.telemetryEnabled;
+    self.disableHttpMonitor = !config.httpMonitorEnabled;
 }
 
 @end

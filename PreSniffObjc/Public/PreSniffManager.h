@@ -30,7 +30,6 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-#import "PreSniffObjcFeatureConfig.h"
 #import "PreSniffSDKEnums.h"
 
 @protocol PreSniffManagerDelegate;
@@ -399,6 +398,16 @@ NS_ASSUME_NONNULL_BEGIN
  @see metricsManager
  */
 @property (nonatomic, getter = isMetricsManagerDisabled) BOOL disableMetricsManager;
+
+/**
+ Flag the determines whether the HttpMonitor should be disabled
+ 
+ If this flag is enabled, then sending HttpMonitor data
+ will be turned off!
+ 
+ *Default*: _NO_
+ */
+@property (nonatomic, getter = isHttpMonitorDisabled) BOOL disableHttpMonitor;
 
 #endif
 
