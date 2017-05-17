@@ -7,3 +7,8 @@ env:
   - secure: aDR2h9BclBtUd3I43vEhK4CWeMesJlx2oLOMlM5Nqi/TmDPlF84q/JgXKKLEao3ojCvD+0rpNdu5HEmOQ2cCe2kkzejo//1hSkAyUUA3QNTcbfq446ydTW87b/HHkWC4Wkw93KgKrAftxvhwYXwumioL2b2RgGhO0cADLCn3MQwBT8QQhgkM4TrLQVR0J3NdFyBY7bsOdiXsxaz6Ch7eR6Rm2BG4zwmRPIlx1gng/PYCpERwsrrDnwrmUdtCYkWX6SLnYr4SIC6/WSekoyOyerWjKvAr0jTXkdyAi0A+vM+qWqIx6zEPdcORh1kjCdDHVyjoAm30Z8V9xwJDxLMDZtMTNpJGhzv00ZjlyHjkfHHyQpt0tQfV6jEdUWVTbwqkHBylrIlOzUHnaP8LeOl0s6WmxS21dkbtIlwZDppQ9zwHyRZ1LHhxSRnkvpEC91TnfluucKxbTsGKJOFukPjBugQpWupL3PA2t1Uoq5WffSJVel1H2wNLisGmVtq512e3JLdXPs9KqrG9HskGAY223BknStqJjNseJTB5lrklG3ARrbjCatfciVLlVMSf3sQpuCyw5N9HfXEBtZtrYcnP6LTON7VgMQOgyEq3FW84ji15N6rgarPu6WuQMkrwXwsG/HAkTF1fLQJWrK0amtU+mw4tYud1I0LfgpGyA1yL8Pw=
 script:
 - "./fastlane/travis.sh"
+before_install:
+- openssl aes-256-cbc -K $encrypted_6b87064fc261_key -iv $encrypted_6b87064fc261_iv
+  -in fastlane/Certificates.cer.enc -out fastlane/Certificates.cer -d
+- openssl aes-256-cbc -K $encrypted_6b87064fc261_key -iv $encrypted_6b87064fc261_iv
+  -in fastlane/Certificates.p12.enc -out fastlane/Certificates.p12 -d
