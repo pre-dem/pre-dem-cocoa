@@ -45,6 +45,7 @@
 		B6548F361ECB0C7E0031DD42 /* PreSniffObjcDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PreSniffObjcDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6548F381ECB0C7E0031DD42 /* PreSniffObjcDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PreSniffObjcDemoTests.m; sourceTree = "<group>"; };
 		B6548F3A1ECB0C7E0031DD42 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B6AC979A1ECC61C80084F2A3 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		B6CD372B1ECC346F00186D6D /* scripts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = scripts; path = ../scripts; sourceTree = "<group>"; };
 		B6CD372C1ECC348400186D6D /* fastlane */ = {isa = PBXFileReference; lastKnownFileType = folder; name = fastlane; path = ../fastlane; sourceTree = "<group>"; };
 		BBAB5C53425E36F9ABF19D45 /* libPods-PreSniffObjcDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PreSniffObjcDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -82,6 +83,7 @@
 		B602313B1EC9B7AC005AB798 = {
 			isa = PBXGroup;
 			children = (
+				B6AC979A1ECC61C80084F2A3 /* README.md */,
 				B6548F311ECB067C0031DD42 /* .gitignore */,
 				B6548F301ECB06710031DD42 /* .travis.yml */,
 				B6383AB01ECAA6D400B67A7E /* PreSniffObjc.podspec */,
