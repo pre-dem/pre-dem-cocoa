@@ -27,4 +27,4 @@ security import ./scripts/profile/dist.p12 -k ~/Library/Keychains/ios-build.keyc
 
 # Put the provisioning profile in place
 mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
-cp "./scripts/profile/preengineeringPreSniffSDKDemo_InHouse.mobileprovision" ~/Library/MobileDevice/Provisioning\ Profiles/
+cp "./scripts/profile/preengineeringPreSniffObjcDemo_InHouse.mobileprovision" ~/Library/MobileDevice/Provisioning\ Profiles/
