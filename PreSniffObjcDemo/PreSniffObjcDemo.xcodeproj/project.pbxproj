@@ -199,7 +199,7 @@
 					B60231431EC9B7AC005AB798 = {
 						CreatedOnToolsVersion = 8.3.2;
 						DevelopmentTeam = GDFHW66V92;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 					};
 					B6548F351ECB0C7E0031DD42 = {
 						CreatedOnToolsVersion = 8.3.2;
@@ -443,6 +443,7 @@
 			baseConfigurationReference = EEA8E066865EF848E9BA43AC /* Pods-PreSniffObjcDemo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = GDFHW66V92;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -456,8 +457,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "pre-engineering.PreSniffObjcDemo";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "90739617-a819-41f0-b1c3-5a705d512a22";
-				PROVISIONING_PROFILE_SPECIFIER = "Wildcard(new)";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Debug;
 		};
@@ -466,7 +467,8 @@
 			baseConfigurationReference = CC2DE1862FAA2D9F0AD22B41 /* Pods-PreSniffObjcDemo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = GDFHW66V92;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -478,8 +480,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "pre-engineering.PreSniffObjcDemo";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "94dd8f06-abaf-4e6d-8685-5dcad3fc907f";
-				PROVISIONING_PROFILE_SPECIFIER = "pre-engineering.PreSniffObjcDemo InHouse";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Release;
 		};
