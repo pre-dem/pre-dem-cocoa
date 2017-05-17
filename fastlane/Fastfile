@@ -53,9 +53,8 @@ platform :ios do
   desc "Submit a new Beta Build to Apple TestFlight"
   desc "This will also make sure the profile is up to date"
   lane :beta do
-    cert
-    sigh
     gym(
+      export_method:"enterprise",
       workspace:"PreSniffObjcDemo/PreSniffObjcDemo.xcworkspace",
       scheme: "PreSniffObjcDemo"
       ) # Build your app - more options available
