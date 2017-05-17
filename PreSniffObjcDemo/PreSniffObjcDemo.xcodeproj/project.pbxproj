@@ -40,17 +40,13 @@
 		B60231561EC9B7AC005AB798 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B60231581EC9B7AC005AB798 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B6383AB01ECAA6D400B67A7E /* PreSniffObjc.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = PreSniffObjc.podspec; path = ../PreSniffObjc.podspec; sourceTree = "<group>"; };
-		B6548F291ECB05660031DD42 /* Appfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Appfile; sourceTree = "<group>"; };
-		B6548F2A1ECB05660031DD42 /* Fastfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Fastfile; sourceTree = "<group>"; };
-		B6548F2D1ECB05660031DD42 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		B6548F2E1ECB05660031DD42 /* Scanfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Scanfile; sourceTree = "<group>"; };
-		B6548F2F1ECB05660031DD42 /* travis.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = travis.sh; sourceTree = "<group>"; };
 		B6548F301ECB06710031DD42 /* .travis.yml */ = {isa = PBXFileReference; lastKnownFileType = text; name = .travis.yml; path = ../.travis.yml; sourceTree = "<group>"; };
 		B6548F311ECB067C0031DD42 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; name = .gitignore; path = ../.gitignore; sourceTree = "<group>"; };
 		B6548F361ECB0C7E0031DD42 /* PreSniffObjcDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PreSniffObjcDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6548F381ECB0C7E0031DD42 /* PreSniffObjcDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PreSniffObjcDemoTests.m; sourceTree = "<group>"; };
 		B6548F3A1ECB0C7E0031DD42 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B6CD372A1ECC2E1D00186D6D /* add-key.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "add-key.sh"; sourceTree = "<group>"; };
+		B6CD372B1ECC346F00186D6D /* scripts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = scripts; path = ../scripts; sourceTree = "<group>"; };
+		B6CD372C1ECC348400186D6D /* fastlane */ = {isa = PBXFileReference; lastKnownFileType = folder; name = fastlane; path = ../fastlane; sourceTree = "<group>"; };
 		BBAB5C53425E36F9ABF19D45 /* libPods-PreSniffObjcDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PreSniffObjcDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC2DE1862FAA2D9F0AD22B41 /* Pods-PreSniffObjcDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PreSniffObjcDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-PreSniffObjcDemo/Pods-PreSniffObjcDemo.release.xcconfig"; sourceTree = "<group>"; };
 		EEA8E066865EF848E9BA43AC /* Pods-PreSniffObjcDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PreSniffObjcDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PreSniffObjcDemo/Pods-PreSniffObjcDemo.debug.xcconfig"; sourceTree = "<group>"; };
@@ -89,7 +85,8 @@
 				B6548F311ECB067C0031DD42 /* .gitignore */,
 				B6548F301ECB06710031DD42 /* .travis.yml */,
 				B6383AB01ECAA6D400B67A7E /* PreSniffObjc.podspec */,
-				B6548F281ECB05660031DD42 /* fastlane */,
+				B6CD372C1ECC348400186D6D /* fastlane */,
+				B6CD372B1ECC346F00186D6D /* scripts */,
 				B60231461EC9B7AC005AB798 /* PreSniffObjcDemo */,
 				D36C4441D13DB5C7BD3AC3A7 /* Pods */,
 				B6548F371ECB0C7E0031DD42 /* PreSniffObjcDemoTests */,
@@ -129,20 +126,6 @@
 				B60231481EC9B7AC005AB798 /* main.m */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		B6548F281ECB05660031DD42 /* fastlane */ = {
-			isa = PBXGroup;
-			children = (
-				B6548F291ECB05660031DD42 /* Appfile */,
-				B6548F2A1ECB05660031DD42 /* Fastfile */,
-				B6548F2D1ECB05660031DD42 /* README.md */,
-				B6548F2E1ECB05660031DD42 /* Scanfile */,
-				B6548F2F1ECB05660031DD42 /* travis.sh */,
-				B6CD372A1ECC2E1D00186D6D /* add-key.sh */,
-			);
-			name = fastlane;
-			path = ../fastlane;
 			sourceTree = "<group>";
 		};
 		B6548F371ECB0C7E0031DD42 /* PreSniffObjcDemoTests */ = {
