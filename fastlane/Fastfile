@@ -27,8 +27,7 @@ platform :ios do
     )
   end
 
-  desc "Submit a new Beta Build to Apple TestFlight"
-  desc "This will also make sure the profile is up to date"
+  desc "Submit a new Beta Build to fir.im"
   lane :beta do
     scan(
       scheme: "PreSniffObjcDemo",
