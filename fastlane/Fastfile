@@ -22,8 +22,7 @@ platform :ios do
     scan(
       scheme: "PreSniffObjcDemo",
       clean: true,
-      code_coverage: true,
-      device: "iPhone 5s (9.3)",
+      code_coverage: true
     )
   end
 
