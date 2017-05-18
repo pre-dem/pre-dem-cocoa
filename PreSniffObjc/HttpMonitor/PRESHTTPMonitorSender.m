@@ -221,10 +221,10 @@ NSURLSessionDelegate
             [_indexFileIOLock unlock];
             return err;
         }
-        _mReadFileIndex = [[dic objectForKey:PRESReadFileIndexKey] unsignedIntegerValue];
-        _mReadFilePosition = [[dic objectForKey:PRESReadFilePositionKey] unsignedIntegerValue];
-        _mWriteFileIndex = [[dic objectForKey:PRESWriteFileIndexKey] unsignedIntegerValue];
-        _mWriteFilePosition = [[dic objectForKey:PRESWriteFilePosition] unsignedIntegerValue];
+        _mReadFileIndex = (unsigned int)[[dic objectForKey:PRESReadFileIndexKey] unsignedIntegerValue];
+        _mReadFilePosition = (unsigned int)[[dic objectForKey:PRESReadFilePositionKey] unsignedIntegerValue];
+        _mWriteFileIndex = (unsigned int)[[dic objectForKey:PRESWriteFileIndexKey] unsignedIntegerValue];
+        _mWriteFilePosition = (unsigned int)[[dic objectForKey:PRESWriteFilePosition] unsignedIntegerValue];
     }
     [_indexFileIOLock unlock];
     return nil;
