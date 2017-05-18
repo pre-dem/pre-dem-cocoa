@@ -28,11 +28,7 @@ platform :ios do
 
   desc "Submit a new Beta Build to fir.im"
   lane :beta do
-    scan(
-      scheme: "PreSniffObjcDemo",
-      clean: true,
-      code_coverage: true
-    )
+    scan
     gym(
       export_method:"enterprise",
       workspace:"PreSniffObjcDemo/PreSniffObjcDemo.xcworkspace",
