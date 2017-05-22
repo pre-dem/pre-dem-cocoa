@@ -29,20 +29,19 @@ xcode-select --install
 </table>
 
 # Available Actions
-## iOS
-### ios test
+### test
 ```
-fastlane ios test
+fastlane test
 ```
 Runs all the tests
-### ios beta
+### beta
 ```
-fastlane ios beta
+fastlane beta
 ```
 Submit a new Beta Build to fir.im
-### ios release
+### release
 ```
-fastlane ios release
+fastlane release
 ```
 Deploy a new version to the App Store
 
