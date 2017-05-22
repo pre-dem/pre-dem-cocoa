@@ -6,7 +6,7 @@
 #  Created by WangSiyu on 17/05/2017.
 #  Copyright © 2017 pre-engineering. All rights reserved.
 
-if [[ "$TRAVIS_PULL_REQUEST" == "false" ]]; then
+if [[ $TRAVIS_PULL_REQUEST == "false" && $TRAVIS_TAG =~ "^v.*\.rc[1-9]$" ]]; then
 # Create a custom keychain
 security create-keychain -p travis ios-build.keychain
 

@@ -37,22 +37,16 @@
 #import "PRESHelper.h"
 #import "PRESNetworkClient.h"
 #import "PRESKeychainUtils.h"
+#import "PRESVersion.h"
 
 #include <stdint.h>
 #import "PRESConfigManager.h"
-#import "PreSniffVersion.h"
 
 typedef struct {
   uint8_t       info_version;
   const char    hockey_version[16];
   const char    hockey_build[16];
 } bitstadium_info_t;
-
-bitstadium_info_t bitstadium_library_info __attribute__((section("__TEXT,__bit_hockey,regular,no_dead_strip"))) = {
-  .info_version = 1,
-  .hockey_version = PRES_VERSION,
-  .hockey_build = PRES_BUILD
-};
 
 
 #if HOCKEYSDK_FEATURE_CRASH_REPORTER
@@ -533,11 +527,11 @@ bitstadium_info_t bitstadium_library_info __attribute__((section("__TEXT,__bit_h
 
 
 - (NSString *)version {
-  return [NSString stringWithUTF8String:bitstadium_library_info.hockey_version];
+  return [PRESVersion getSDKVersion];
 }
 
 - (NSString *)build {
-  return [NSString stringWithUTF8String:bitstadium_library_info.hockey_build];
+  return [PRESVersion getSDKBuild];
 }
 
 
@@ -602,7 +596,7 @@ bitstadium_info_t bitstadium_library_info __attribute__((section("__TEXT,__bit_h
   
   NSDictionary *params = @{@"timestamp": timeString,
                            @"sdk": BITHOCKEY_NAME,
-                           @"sdk_version": @PRES_VERSION,
+                           @"sdk_version": [PRESVersion getSDKVersion],
                            @"bundle_version": [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"]
                            };
   

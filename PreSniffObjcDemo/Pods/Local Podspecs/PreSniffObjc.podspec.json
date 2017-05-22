@@ -36,6 +36,9 @@
     "c++",
     "z"
   ],
+  "resource_bundles": {
+    "PRESResources": "PreSniffObjc/Resources/*.plist"
+  },
   "dependencies": {
     "HappyDNS": [
 
