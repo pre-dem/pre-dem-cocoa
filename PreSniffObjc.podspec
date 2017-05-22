@@ -17,6 +17,7 @@ Pod::Spec.new do |s|
   s.vendored_frameworks = 'Vendor/*.framework'
   s.frameworks = "AssetsLibrary", "CoreTelephony", "CoreText", "CoreGraphics", "Foundation", "MobileCoreServices", "Photos", "QuartzCore", "QuickLook", "Security", "SystemConfiguration", "UIKit"
   s.libraries  = "c++", "z"
+  s.resource_bundles = { 'PRESResources' => 'PreSniffObjc/Resources/*.plist' }
 
   s.dependency "HappyDNS"
 

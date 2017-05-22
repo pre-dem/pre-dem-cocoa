@@ -31,7 +31,7 @@
 #import "PRESKeychainUtils.h"
 #import "PreSniffObjc.h"
 #import "PreSniffSDKPrivate.h"
-#import "PreSniffVersion.h"
+#import "PRESVersion.h"
 #if !defined (HOCKEYSDK_CONFIGURATION_ReleaseCrashOnly) && !defined (HOCKEYSDK_CONFIGURATION_ReleaseCrashOnlyExtensions)
 #import <QuartzCore/QuartzCore.h>
 #endif
@@ -74,13 +74,6 @@ typedef struct {
   const char    pres_version[16];
   const char    pres_build[16];
 } pres_info_t;
-
-pres_info_t hockeyapp_library_info __attribute__((section("__TEXT,__pres_ios,regular,no_dead_strip"))) = {
-  .info_version = 1,
-  .pres_version = PRES_VERSION,
-  .pres_build = PRES_BUILD
-};
-
 
 #pragma mark - Helpers
 
@@ -587,7 +580,7 @@ NSString *pres_screenSize(void){
 }
 
 NSString *pres_sdkVersion(void){
-  return [NSString stringWithFormat:@"ios:%@", [NSString stringWithUTF8String:hockeyapp_library_info.pres_version]];
+  return [NSString stringWithFormat:@"ios:%@", [PRESVersion getSDKVersion]];
 }
 
 NSString *pres_appVersion(void){

@@ -12,7 +12,11 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   HappyDNS: 06a9fed2796663fd87626dbf02552933265bf059
+<<<<<<< HEAD
   PreSniffObjc: 674751458140b2166c2e7c086ef4dbde170124a3
+=======
+  PreSniffObjc: e174686ad129c4eb4d3bd2bdfeac09d93bb7a593
+>>>>>>> update build
 
 PODFILE CHECKSUM: 528050cb8bdcd2cceaa0a91367139dff4aec0344
 
