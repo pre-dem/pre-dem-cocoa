@@ -6,6 +6,7 @@
 #  Created by WangSiyu on 17/05/2017.
 #  Copyright © 2017 pre-engineering. All rights reserved.
 
+if [[ "$TRAVIS_PULL_REQUEST" == "false" ]]; then
 # Create a custom keychain
 security create-keychain -p travis ios-build.keychain
 
@@ -28,3 +29,5 @@ security import ./scripts/certs/dist.p12 -k ~/Library/Keychains/ios-build.keycha
 # Put the provisioning profile in place
 mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
 cp "./scripts/profile/preengineeringPreSniffObjcDemo_InHouse.mobileprovision" ~/Library/MobileDevice/Provisioning\ Profiles/
+exit $?
+fi

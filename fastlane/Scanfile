@@ -15,3 +15,5 @@ device "iPhone 6s (9.2)"
 # open_report true
 
 clean true
+
+code_coverage true

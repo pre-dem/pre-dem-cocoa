@@ -35,18 +35,11 @@ xcode-select --install
 fastlane ios test
 ```
 Runs all the tests
-### ios codecov
-```
-fastlane ios codecov
-```
-Runs code coverage analysis
 ### ios beta
 ```
 fastlane ios beta
 ```
-Submit a new Beta Build to Apple TestFlight
-
-This will also make sure the profile is up to date
+Submit a new Beta Build to fir.im
 ### ios release
 ```
 fastlane ios release

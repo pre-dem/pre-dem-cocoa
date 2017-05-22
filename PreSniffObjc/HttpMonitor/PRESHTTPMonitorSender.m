@@ -16,7 +16,7 @@
 
 #define PRESErrorDomain             @"error.sdk.presniff"
 #define PRESHTTPMonitorDomain       @"http://localhost:8080"
-#define PRESHTTPMonitorReportPath   @"/httpmonitor"
+#define PRESHTTPMonitorReportPath   @"/http_monitor"
 #define PRESReadFileIndexKey        @"read_file_index"
 #define PRESReadFilePositionKey     @"read_file_position"
 #define PRESWriteFileIndexKey       @"write_file_index"
@@ -221,10 +221,10 @@ NSURLSessionDelegate
             [_indexFileIOLock unlock];
             return err;
         }
-        _mReadFileIndex = [[dic objectForKey:PRESReadFileIndexKey] unsignedIntegerValue];
-        _mReadFilePosition = [[dic objectForKey:PRESReadFilePositionKey] unsignedIntegerValue];
-        _mWriteFileIndex = [[dic objectForKey:PRESWriteFileIndexKey] unsignedIntegerValue];
-        _mWriteFilePosition = [[dic objectForKey:PRESWriteFilePosition] unsignedIntegerValue];
+        _mReadFileIndex = (unsigned int)[[dic objectForKey:PRESReadFileIndexKey] unsignedIntegerValue];
+        _mReadFilePosition = (unsigned int)[[dic objectForKey:PRESReadFilePositionKey] unsignedIntegerValue];
+        _mWriteFileIndex = (unsigned int)[[dic objectForKey:PRESWriteFileIndexKey] unsignedIntegerValue];
+        _mWriteFilePosition = (unsigned int)[[dic objectForKey:PRESWriteFilePosition] unsignedIntegerValue];
     }
     [_indexFileIOLock unlock];
     return nil;
@@ -363,7 +363,7 @@ NSURLSessionDelegate
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error {
     NSHTTPURLResponse *response = (NSHTTPURLResponse *)task.response;
     NSError *err;
-    if (response.statusCode == 200 && !error) {
+    if (!error && response.statusCode == 201) {
         if (_logPathToBeRemoved) {
             [[NSFileManager defaultManager] removeItemAtPath:_logPathToBeRemoved error:&err];
             if (err) {
