@@ -161,7 +161,6 @@
 				B60231421EC9B7AC005AB798 /* Resources */,
 				027BF004E3AE00FE7FFDBC13 /* [CP] Embed Pods Frameworks */,
 				B3C044CDD3FBBE430FAFB754 /* [CP] Copy Pods Resources */,
-				B66B325A1ED2B915000AAC9D /* Update Build */,
 			);
 			buildRules = (
 			);
@@ -297,20 +296,6 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PreSniffObjcDemo/Pods-PreSniffObjcDemo-resources.sh\"\n";
 			showEnvVarsInLog = 0;
-		};
-		B66B325A1ED2B915000AAC9D /* Update Build */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Update Build";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "gitVersion=$(git log -1 --pretty=format:\"%cd-%h\" --date=short)\n/usr/libexec/PlistBuddy -c 'SET :Build '${gitVersion} ../PreSniffObjc/Resources/Version.plist\n/usr/libexec/PlistBuddy -c 'SET :CFBundleVersion '${gitVersion} PreSniffObjcDemo/Info.plist";
 		};
 /* End PBXShellScriptBuildPhase section */
 
