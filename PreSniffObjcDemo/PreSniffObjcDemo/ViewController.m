@@ -11,6 +11,8 @@
 
 @interface ViewController ()
 
+@property (nonatomic, strong) IBOutlet UILabel *versionLable;
+
 @end
 
 @implementation ViewController
@@ -18,6 +20,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+    self.versionLable.text = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
 }
 
 - (IBAction)sendHTTPRequest:(id)sender {
