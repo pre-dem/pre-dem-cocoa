@@ -25,12 +25,12 @@ end
 desc "Submit a new Beta Build to fir.im"
 lane :beta do
   scan
-  gym(
+  path = gym(
     export_method:"enterprise",
     workspace:"PreSniffObjcDemo/PreSniffObjcDemo.xcworkspace",
     scheme: "PreSniffObjcDemo"
     ) # Build your app - more options available
-  sh "cd .. && fir publish PreSniffObjcDemo.ipa -T " + ENV["FIR_TOKEN"]
+  sh "fir publish #{path} -T " + ENV["FIR_TOKEN"]
 end
 
 desc "Deploy a new version to the App Store"
