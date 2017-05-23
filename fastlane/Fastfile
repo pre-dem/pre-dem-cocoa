@@ -30,7 +30,7 @@ lane :beta do
     workspace:"PreSniffObjcDemo/PreSniffObjcDemo.xcworkspace",
     scheme: "PreSniffObjcDemo"
     ) # Build your app - more options available
-  sh "fir publish #{path} -T " + ENV["FIR_TOKEN"]
+  sh "bundle exec fir publish #{path} -T " + ENV["FIR_TOKEN"]
 end
 
 desc "Deploy a new version to the App Store"
