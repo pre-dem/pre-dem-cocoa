@@ -2,6 +2,8 @@
 
 bundle install
 
+env
+
 # rc
 if [[ $TRAVIS_PULL_REQUEST == "false" && $TRAVIS_TAG =~ "^v.*\.rc[1-9]$" ]]; then
   bundle exec fastlane beta
