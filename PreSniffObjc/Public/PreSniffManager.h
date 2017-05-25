@@ -85,7 +85,11 @@
  */
 
 #import "PreSniffSDKNullability.h"
+#import "PRESNetDiagResult.h"
+
 NS_ASSUME_NONNULL_BEGIN
+
+typedef void (^PRESNetDiagCompleteHandler)(PRESNetDiagResult* result);
 
 @interface PreSniffManager: NSObject
 
@@ -528,6 +532,9 @@ NS_ASSUME_NONNULL_BEGIN
  This call is ignored if the app is running in the App Store!.
  */
 - (void)testIdentifier;
+
+- (void)diagnose:(NSString *)host
+        complete:(PRESNetDiagCompleteHandler)complete;
 
 
 ///-----------------------------------------------------------------------------

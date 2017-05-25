@@ -15,5 +15,6 @@
 + (NSString *)getOsVersion;
 + (NSString *)getDeviceModel;
 + (NSString *)getDeviceUUID;
++ (NSDictionary*)getObjectData:(id)obj;
 
 @end

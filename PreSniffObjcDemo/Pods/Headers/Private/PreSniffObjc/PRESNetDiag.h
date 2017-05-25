@@ -1,1 +1,1 @@
-../../../../../PreSniffObjc/Public/PRESNetDiag.h
+../../../../../PreSniffObjc/Helper/PRESNetDiag.h

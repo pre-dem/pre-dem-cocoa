@@ -30,7 +30,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QPF-qD-pBb">
-                                <rect key="frame" x="93" y="269" width="134" height="30"/>
+                                <rect key="frame" x="93" y="219" width="134" height="30"/>
                                 <state key="normal" title="点我触发一次 crash"/>
                                 <connections>
                                     <action selector="forceCrash:" destination="BYZ-38-t0r" eventType="touchUpInside" id="cy4-MH-C6a"/>
@@ -44,22 +44,31 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1.0.0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iZc-eD-4Yh">
-                                <rect key="frame" x="142" y="507.5" width="36" height="21"/>
+                                <rect key="frame" x="142" y="537.5" width="36" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a1F-JE-yhx">
+                                <rect key="frame" x="99" y="319" width="123" height="30"/>
+                                <state key="normal" title="点我诊断一下网络"/>
+                                <connections>
+                                    <action selector="diagnoseNetwork:" destination="BYZ-38-t0r" eventType="touchUpInside" id="7Bt-Tz-EPv"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="iZc-eD-4Yh" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="2za-lL-bop"/>
                             <constraint firstItem="4XG-nN-BeY" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="4xf-8B-HaY"/>
                             <constraint firstItem="UuS-Fo-nh4" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="DMO-P1-8UZ"/>
+                            <constraint firstItem="a1F-JE-yhx" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="50" id="DTD-N7-zpp"/>
                             <constraint firstItem="UuS-Fo-nh4" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="-150" id="FJe-Y4-tRn"/>
                             <constraint firstItem="QPF-qD-pBb" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="TVN-hD-9f7"/>
-                            <constraint firstItem="iZc-eD-4Yh" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="bottom" constant="-50" id="VBF-Vc-jsI"/>
+                            <constraint firstItem="iZc-eD-4Yh" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="bottom" constant="-20" id="VBF-Vc-jsI"/>
                             <constraint firstItem="4XG-nN-BeY" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="150" id="XIL-1H-SpZ"/>
-                            <constraint firstItem="QPF-qD-pBb" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="tIf-DC-LdN"/>
+                            <constraint firstItem="QPF-qD-pBb" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="-50" id="tIf-DC-LdN"/>
+                            <constraint firstItem="a1F-JE-yhx" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="us1-rP-WCR"/>
                         </constraints>
                     </view>
                     <connections>
