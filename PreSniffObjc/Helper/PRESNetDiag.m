@@ -18,11 +18,14 @@
 + (void)diagnose:(NSString *)host
         complete:(PRESNetDiagCompleteHandler)complete
           appKey:(NSString *)appKey {
+    NSLock *lock = [NSLock new];
     NSUInteger operationCount = 5;
     __block NSUInteger completedCount = 0;
     PRESNetDiagResult *result = [PRESNetDiagResult new];
     [QNNPing start:host size:64 output:nil complete:^(QNNPingResult *r) {
+        [lock lock];
         completedCount ++;
+        [lock unlock];
         result.ping_code = r.code;
         result.ping_ip = r.ip;
         result.ping_size = r.size;
@@ -39,7 +42,9 @@
         }
     }];
     [QNNTcpPing start:host output:nil complete:^(QNNTcpPingResult *r) {
+        [lock lock];
         completedCount ++;
+        [lock unlock];
         result.tcp_code = r.code;
         result.tcp_ip = r.ip;
         result.tcp_max_time = r.maxTime;
@@ -55,7 +60,9 @@
         }
     }];
     [QNNTraceRoute start:host output:nil complete:^(QNNTraceRouteResult *r) {
+        [lock lock];
         completedCount++;
+        [lock unlock];
         result.tr_code = r.code;
         result.tr_ip = r.ip;
         result.tr_content = r.content;
@@ -65,7 +72,9 @@
         }
     }];
     [QNNNslookup start:host output:nil complete:^(NSArray *r) {
+        [lock lock];
         completedCount++;
+        [lock unlock];
         NSMutableString *recordString = [[NSMutableString alloc] initWithCapacity:30];
         for (QNNRecord *record in r) {
             [recordString appendFormat:@"%@\t", record.value];
@@ -79,7 +88,9 @@
         }
     }];
     [QNNHttp start:host output:nil complete:^(QNNHttpResult *r) {
+        [lock lock];
         completedCount++;
+        [lock unlock];
         result.http_code = r.code;
         result.http_ip = r.ip;
         result.http_duration = r.duration;
