@@ -25,10 +25,10 @@
     __weak typeof(self) wSelf = self;
     [QNNPing start:host size:64 output:nil complete:^(QNNPingResult *r) {
         __strong typeof(wSelf) strongSelf = wSelf;
+        [result setPingResult:r];
         [lock lock];
         completedCount ++;
         [lock unlock];
-        [result setPingResult:r];
         if (completedCount == operationCount) {
             complete(result);
             [strongSelf sendReport:result appKey:appKey];
@@ -36,10 +36,10 @@
     }];
     [QNNTcpPing start:host output:nil complete:^(QNNTcpPingResult *r) {
         __strong typeof(wSelf) strongSelf = wSelf;
+        [result setTcpResult:r];
         [lock lock];
         completedCount ++;
         [lock unlock];
-        [result setTcpResult:r];
         if (completedCount == operationCount) {
             complete(result);
             [strongSelf sendReport:result appKey:appKey];
@@ -47,10 +47,10 @@
     }];
     [QNNTraceRoute start:host output:nil complete:^(QNNTraceRouteResult *r) {
         __strong typeof(wSelf) strongSelf = wSelf;
-        [lock lock];
-        completedCount++;
-        [lock unlock];
         [result setTrResult:r];
+        [lock lock];
+        completedCount ++;
+        [lock unlock];
         if (completedCount == operationCount) {
             complete(result);
             [strongSelf sendReport:result appKey:appKey];
@@ -58,10 +58,10 @@
     }];
     [QNNNslookup start:host output:nil complete:^(NSArray *r) {
         __strong typeof(wSelf) strongSelf = wSelf;
-        [lock lock];
-        completedCount++;
-        [lock unlock];
         [result setNsLookupResult:r];
+        [lock lock];
+        completedCount ++;
+        [lock unlock];
         if (completedCount == operationCount) {
             complete(result);
             [strongSelf sendReport:result appKey:appKey];
@@ -69,10 +69,10 @@
     }];
     [QNNHttp start:host output:nil complete:^(QNNHttpResult *r) {
         __strong typeof(wSelf) strongSelf = wSelf;
-        [lock lock];
-        completedCount++;
-        [lock unlock];
         [result setHttpResult:r];
+        [lock lock];
+        completedCount ++;
+        [lock unlock];
         if (completedCount == operationCount) {
             complete(result);
             [strongSelf sendReport:result appKey:appKey];
