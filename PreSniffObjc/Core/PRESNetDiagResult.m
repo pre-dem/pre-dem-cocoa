@@ -8,6 +8,7 @@
 
 #import "PRESNetDiagResult.h"
 #import "PRESUtilities.h"
+#import <CommonCrypto/CommonDigest.h>
 
 #define PRESTotalResultNeeded   5
 #define PRESSendRetryInterval   10
@@ -100,11 +101,16 @@
     self.completedCount++;
     if (self.completedCount == PRESTotalResultNeeded) {
         [self.lock unlock];
+        [self generateResultID];
         self.complete(self);
         [self sendReport:self.appKey];
         return;
     }
     [self.lock unlock];
+}
+
+- (void)generateResultID {
+    self.result_id = [self MD5:[NSString stringWithFormat:@"%f%@%@%@", [[NSDate date] timeIntervalSince1970], self.ping_ip, self.tr_content, self.dns_records]];
 }
 
 - (void)sendReport:(NSString *)appKey {
@@ -128,6 +134,17 @@
             });
         }
     }] resume];
+}
+
+- (NSString *)MD5:(NSString *)mdStr
+{
+    const char *original_str = [mdStr UTF8String];
+    unsigned char result[CC_MD5_DIGEST_LENGTH];
+    CC_MD5(original_str, strlen(original_str), result);
+    NSMutableString *hash = [NSMutableString string];
+    for (int i = 0; i < CC_MD5_DIGEST_LENGTH; i++)
+        [hash appendFormat:@"%02X", result[i]];
+    return [hash lowercaseString];
 }
 
 @end

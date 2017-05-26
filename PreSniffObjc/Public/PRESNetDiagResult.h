@@ -12,6 +12,8 @@
 
 @interface PRESNetDiagResult : NSObject
 
+@property (nonatomic, assign) NSString *result_id;
+
 @property (nonatomic, assign) NSInteger ping_code;
 @property (nonatomic, strong) NSString* ping_ip;
 @property (nonatomic, assign) NSUInteger ping_size;
