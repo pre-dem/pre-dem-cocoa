@@ -85,8 +85,8 @@
  */
 
 #import "PreSniffSDKNullability.h"
-#import "PRESNetDiagResult.h"
 
+@class PRESNetDiagResult;
 NS_ASSUME_NONNULL_BEGIN
 
 typedef void (^PRESNetDiagCompleteHandler)(PRESNetDiagResult* result);

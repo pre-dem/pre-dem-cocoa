@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "QNNetDiag.h"
+#import "PreSniffObjc.h"
 
 @interface PRESNetDiagResult : NSObject
 
@@ -43,11 +44,12 @@
 @property (nonatomic, assign) NSTimeInterval http_duration;
 @property (nonatomic, assign) NSInteger http_body_size;
 
+- (instancetype)initWithComplete:(PRESNetDiagCompleteHandler)complete appKey:(NSString *)appKey;
+- (void)gotTcpResult:(QNNTcpPingResult *)r;
+- (void)gotPingResult:(QNNPingResult *)r;
+- (void)gotHttpResult:(QNNHttpResult *)r;
+- (void)gotTrResult:(QNNTraceRouteResult *)r;
+- (void)gotNsLookupResult:(NSArray<QNNRecord *> *) r;
 - (NSDictionary *)toDic;
-- (void)setTcpResult:(QNNTcpPingResult *)r;
-- (void)setPingResult:(QNNPingResult *)r;
-- (void)setHttpResult:(QNNHttpResult *)r;
-- (void)setTrResult:(QNNTraceRouteResult *)r;
-- (void)setNsLookupResult:(NSArray<QNNRecord *> *) r;
 
 @end
