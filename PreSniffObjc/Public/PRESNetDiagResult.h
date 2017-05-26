@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "QNNetDiag.h"
 
 @interface PRESNetDiagResult : NSObject
 
@@ -43,5 +44,10 @@
 @property (nonatomic, assign) NSInteger http_body_size;
 
 - (NSDictionary *)toDic;
+- (void)setTcpResult:(QNNTcpPingResult *)r;
+- (void)setPingResult:(QNNPingResult *)r;
+- (void)setHttpResult:(QNNHttpResult *)r;
+- (void)setTrResult:(QNNTraceRouteResult *)r;
+- (void)setNsLookupResult:(NSArray<QNNRecord *> *) r;
 
 @end

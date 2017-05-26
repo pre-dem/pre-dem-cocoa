@@ -22,82 +22,60 @@
     NSUInteger operationCount = 5;
     __block NSUInteger completedCount = 0;
     PRESNetDiagResult *result = [PRESNetDiagResult new];
+    __weak typeof(self) wSelf = self;
     [QNNPing start:host size:64 output:nil complete:^(QNNPingResult *r) {
+        __strong typeof(wSelf) strongSelf = wSelf;
         [lock lock];
         completedCount ++;
         [lock unlock];
-        result.ping_code = r.code;
-        result.ping_ip = r.ip;
-        result.ping_size = r.size;
-        result.ping_max_rtt = r.maxRtt;
-        result.ping_min_rtt = r.minRtt;
-        result.ping_avg_rtt = r.avgRtt;
-        result.ping_loss = r.loss;
-        result.ping_count = r.count;
-        result.ping_total_time = r.totalTime;
-        result.ping_stddev = r.stddev;
+        [result setPingResult:r];
         if (completedCount == operationCount) {
             complete(result);
-            [self sendReport:result appKey:appKey];
+            [strongSelf sendReport:result appKey:appKey];
         }
     }];
     [QNNTcpPing start:host output:nil complete:^(QNNTcpPingResult *r) {
+        __strong typeof(wSelf) strongSelf = wSelf;
         [lock lock];
         completedCount ++;
         [lock unlock];
-        result.tcp_code = r.code;
-        result.tcp_ip = r.ip;
-        result.tcp_max_time = r.maxTime;
-        result.tcp_min_time = r.minTime;
-        result.tcp_avg_time = r.avgTime;
-        result.tcp_loss = r.loss;
-        result.tcp_count = r.count;
-        result.tcp_total_time = r.totalTime;
-        result.tcp_stddev = r.stddev;
+        [result setTcpResult:r];
         if (completedCount == operationCount) {
             complete(result);
-            [self sendReport:result appKey:appKey];
+            [strongSelf sendReport:result appKey:appKey];
         }
     }];
     [QNNTraceRoute start:host output:nil complete:^(QNNTraceRouteResult *r) {
+        __strong typeof(wSelf) strongSelf = wSelf;
         [lock lock];
         completedCount++;
         [lock unlock];
-        result.tr_code = r.code;
-        result.tr_ip = r.ip;
-        result.tr_content = r.content;
+        [result setTrResult:r];
         if (completedCount == operationCount) {
             complete(result);
-            [self sendReport:result appKey:appKey];
+            [strongSelf sendReport:result appKey:appKey];
         }
     }];
     [QNNNslookup start:host output:nil complete:^(NSArray *r) {
+        __strong typeof(wSelf) strongSelf = wSelf;
         [lock lock];
         completedCount++;
         [lock unlock];
-        NSMutableString *recordString = [[NSMutableString alloc] initWithCapacity:30];
-        for (QNNRecord *record in r) {
-            [recordString appendFormat:@"%@\t", record.value];
-            [recordString appendFormat:@"%d\t", record.ttl];
-            [recordString appendFormat:@"%d\n", record.type];
-        }
-        result.dns_records = recordString;
+        [result setNsLookupResult:r];
         if (completedCount == operationCount) {
             complete(result);
-            [self sendReport:result appKey:appKey];
+            [strongSelf sendReport:result appKey:appKey];
         }
     }];
     [QNNHttp start:host output:nil complete:^(QNNHttpResult *r) {
+        __strong typeof(wSelf) strongSelf = wSelf;
         [lock lock];
         completedCount++;
         [lock unlock];
-        result.http_code = r.code;
-        result.http_ip = r.ip;
-        result.http_duration = r.duration;
-        result.http_body_size = r.body.length;
+        [result setHttpResult:r];
         if (completedCount == operationCount) {
             complete(result);
-            [self sendReport:result appKey:appKey];
+            [strongSelf sendReport:result appKey:appKey];
         }
     }];
 }
@@ -116,7 +94,7 @@
                      inRequest:request];
     [[[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-        if (error || httpResponse.statusCode != 201) {
+        if (error || httpResponse.statusCode != 200) {
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(PRESSendRetryInterval * NSEC_PER_SEC)), dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
                 [PRESNetDiag sendReport:result  appKey:appKey];
             });
