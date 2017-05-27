@@ -104,9 +104,9 @@
         [self generateResultID];
         self.complete(self);
         [self sendReport:self.appKey];
-        return;
+    } else {
+        [self.lock unlock];
     }
-    [self.lock unlock];
 }
 
 - (void)generateResultID {
