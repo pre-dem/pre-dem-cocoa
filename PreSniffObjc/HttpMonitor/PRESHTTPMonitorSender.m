@@ -16,7 +16,7 @@
 
 #define PRESErrorDomain             @"error.sdk.presniff"
 #define PRESHTTPMonitorDomain       @"http://localhost:8080"
-#define PRESHTTPMonitorReportPath   @"/http_monitor"
+#define PRESHTTPMonitorReportPath   @"/v1/http_monitor"
 #define PRESReadFileIndexKey        @"read_file_index"
 #define PRESReadFilePositionKey     @"read_file_position"
 #define PRESWriteFileIndexKey       @"write_file_index"

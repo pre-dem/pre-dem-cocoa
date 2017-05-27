@@ -20,5 +20,6 @@ Pod::Spec.new do |s|
   s.resource_bundles = { 'PRESResources' => 'PreSniffObjc/Resources/*.plist' }
 
   s.dependency "HappyDNS"
+  s.dependency "QNNetDiag"
 
 end

@@ -41,6 +41,7 @@
 
 #include <stdint.h>
 #import "PRESConfigManager.h"
+#import "PRESNetDiag.h"
 
 typedef struct {
   uint8_t       info_version;
@@ -761,6 +762,11 @@ typedef struct {
     self.disableCrashManager = !config.crashReportEnabled;
     self.disableMetricsManager = !config.telemetryEnabled;
     self.disableHttpMonitor = !config.httpMonitorEnabled;
+}
+
+- (void)diagnose:(NSString *)host
+        complete:(PRESNetDiagCompleteHandler)complete {
+    [PRESNetDiag diagnose:host appKey:_appIdentifier complete:complete];
 }
 
 @end

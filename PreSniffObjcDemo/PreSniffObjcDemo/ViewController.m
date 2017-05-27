@@ -37,6 +37,12 @@
     }
 }
 
+- (IBAction)diagnoseNetwork:(id)sender {
+    [[PreSniffManager sharedPreSniffManager] diagnose:@"www.baidu.com" complete:^(PRESNetDiagResult * _Nonnull result) {
+        NSLog(@"%@", result);
+    }];
+}
+
 - (IBAction)forceCrash:(id)sender {
     @throw [NSException exceptionWithName:@"Manually Exception" reason:@"嗯，我是故意的" userInfo:nil];
 }

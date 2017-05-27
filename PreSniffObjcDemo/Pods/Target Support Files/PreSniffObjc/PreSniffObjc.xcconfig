@@ -1,8 +1,8 @@
 CONFIGURATION_BUILD_DIR = $PODS_CONFIGURATION_BUILD_DIR/PreSniffObjc
 FRAMEWORK_SEARCH_PATHS = $(inherited) "${PODS_ROOT}/../../Vendor"
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
-HEADER_SEARCH_PATHS = "${PODS_ROOT}/Headers/Private" "${PODS_ROOT}/Headers/Private/PreSniffObjc" "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/HappyDNS" "${PODS_ROOT}/Headers/Public/PreSniffObjc"
-LIBRARY_SEARCH_PATHS = $(inherited) "$PODS_CONFIGURATION_BUILD_DIR/HappyDNS"
+HEADER_SEARCH_PATHS = "${PODS_ROOT}/Headers/Private" "${PODS_ROOT}/Headers/Private/PreSniffObjc" "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/HappyDNS" "${PODS_ROOT}/Headers/Public/PreSniffObjc" "${PODS_ROOT}/Headers/Public/QNNetDiag"
+LIBRARY_SEARCH_PATHS = $(inherited) "$PODS_CONFIGURATION_BUILD_DIR/HappyDNS" "$PODS_CONFIGURATION_BUILD_DIR/QNNetDiag"
 OTHER_LDFLAGS = -l"c++" -l"z" -framework "AssetsLibrary" -framework "CoreGraphics" -framework "CoreTelephony" -framework "CoreText" -framework "CrashReporter" -framework "Foundation" -framework "MobileCoreServices" -framework "Photos" -framework "QuartzCore" -framework "QuickLook" -framework "Security" -framework "SystemConfiguration" -framework "UIKit"
 PODS_BUILD_DIR = $BUILD_DIR
 PODS_CONFIGURATION_BUILD_DIR = $PODS_BUILD_DIR/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)
