@@ -13,9 +13,9 @@
 @implementation PRESNetDiag
 
 + (void)diagnose:(NSString *)host
-        complete:(PRESNetDiagCompleteHandler)complete
-          appKey:(NSString *)appKey {
-    PRESNetDiagResult *result = [[PRESNetDiagResult alloc] initWithComplete:complete appKey:appKey];
+          appKey:(NSString *)appKey
+        complete:(PRESNetDiagCompleteHandler)complete {
+    PRESNetDiagResult *result = [[PRESNetDiagResult alloc] initWithAppKey:appKey complete:complete];
     [QNNPing start:host size:64 output:nil complete:^(QNNPingResult *r) {
         [result gotPingResult:r];
     }];

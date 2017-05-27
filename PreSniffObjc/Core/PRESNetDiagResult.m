@@ -28,7 +28,7 @@
 
 @implementation PRESNetDiagResult
 
-- (instancetype)initWithComplete:(PRESNetDiagCompleteHandler)complete appKey:(NSString *)appKey {
+- (instancetype)initWithAppKey:(NSString *)appKey complete:(PRESNetDiagCompleteHandler)complete {
     if (self = [super init]) {
         self.completedCount = 0;
         self.retryTimes = 0;

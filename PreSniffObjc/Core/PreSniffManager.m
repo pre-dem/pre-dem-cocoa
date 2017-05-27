@@ -766,7 +766,7 @@ typedef struct {
 
 - (void)diagnose:(NSString *)host
         complete:(PRESNetDiagCompleteHandler)complete {
-    [PRESNetDiag diagnose:host complete:complete appKey:_appIdentifier];
+    [PRESNetDiag diagnose:host appKey:_appIdentifier complete:complete];
 }
 
 @end

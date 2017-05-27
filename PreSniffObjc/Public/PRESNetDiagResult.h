@@ -46,7 +46,7 @@
 @property (nonatomic, assign) NSTimeInterval http_duration;
 @property (nonatomic, assign) NSInteger http_body_size;
 
-- (instancetype)initWithComplete:(PRESNetDiagCompleteHandler)complete appKey:(NSString *)appKey;
+- (instancetype)initWithAppKey:(NSString *)appKey complete:(PRESNetDiagCompleteHandler)complete ;
 - (void)gotTcpResult:(QNNTcpPingResult *)r;
 - (void)gotPingResult:(QNNPingResult *)r;
 - (void)gotHttpResult:(QNNHttpResult *)r;

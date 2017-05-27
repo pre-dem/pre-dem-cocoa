@@ -12,7 +12,7 @@
 @interface PRESNetDiag : NSObject
 
 + (void)diagnose:(NSString *)host
-        complete:(PRESNetDiagCompleteHandler)complete
-          appKey:(NSString *)appKey;
+          appKey:(NSString *)appKey
+        complete:(PRESNetDiagCompleteHandler)complete;
 
 @end
