@@ -27,9 +27,6 @@
  */
 
 #import "PreSniffObjc.h"
-
-#if HOCKEYSDK_FEATURE_CRASH_REPORTER
-
 #import "PRESCrashCXXExceptionHandler.h"
 #import <vector>
 #import <cxxabi.h>
@@ -235,5 +232,3 @@ static void BITCrashUncaughtCXXTerminateHandler(void)
 }
 
 @end
-
-#endif /* HOCKEYSDK_FEATURE_CRASH_REPORTER */

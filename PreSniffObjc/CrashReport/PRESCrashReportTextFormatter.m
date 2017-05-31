@@ -33,9 +33,6 @@
 
 #import "PreSniffObjc.h"
 #import "PreSniffSDKPrivate.h"
-
-#if HOCKEYSDK_FEATURE_CRASH_REPORTER
-
 #import <CrashReporter/CrashReporter.h>
 
 #import <mach-o/dyld.h>
@@ -924,5 +921,3 @@ NSString *const BITXamarinStackTraceDelimiter = @"Xamarin Exception Stack:";
 }
 
 @end
-
-#endif /* HOCKEYSDK_FEATURE_CRASH_REPORTER */

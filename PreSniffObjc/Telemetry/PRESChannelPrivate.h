@@ -1,7 +1,4 @@
 #import <Foundation/Foundation.h>
-#import "PreSniffObjcFeatureConfig.h"
-
-#if HOCKEYSDK_FEATURE_METRICS
 
 @class PRESTelemetryData;
 @class PRESTelemetryContext;
@@ -106,5 +103,3 @@ void pres_resetSafeJsonStream(char *__nonnull*__nonnull jsonStream);
 @end
 
 NS_ASSUME_NONNULL_END
-
-#endif /* HOCKEYSDK_FEATURE_METRICS */

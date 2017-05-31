@@ -27,9 +27,6 @@
  */
 
 #import "PreSniffObjc.h"
-
-#if HOCKEYSDK_FEATURE_CRASH_REPORTER
-
 #import "PRESCrashDetails.h"
 #import "PRESCrashDetailsPrivate.h"
 
@@ -77,5 +74,3 @@ NSString *const kBITCrashKillSignal = @"SIGKILL";
 }
 
 @end
-
-#endif /* HOCKEYSDK_FEATURE_CRASH_REPORTER */

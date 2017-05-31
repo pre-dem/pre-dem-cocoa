@@ -1,7 +1,3 @@
-#import "PreSniffObjcFeatureConfig.h"
-
-#if HOCKEYSDK_FEATURE_METRICS
-
 #import "PRESPersistence.h"
 
 #import "PreSniffSDKNullability.h"
@@ -137,8 +133,6 @@ FOUNDATION_EXPORT NSString *const PRESPersistenceSuccessNotification;
 - (nullable NSString *)fileURLForType:(PRESPersistenceType)type;
 
 - (void)createDirectoryStructureIfNeeded;
-
-#endif /* HOCKEYSDK_FEATURE_METRICS */
 
 @end
 

@@ -1,7 +1,4 @@
 #import "PreSniffObjc.h"
-
-#if HOCKEYSDK_FEATURE_METRICS
-
 #import "PRESPersistence.h"
 #import "PRESPersistencePrivate.h"
 #import "PreSniffSDKPrivate.h"
@@ -295,6 +292,3 @@ static NSUInteger const PRESDefaultFileCount = 50;
 }
 
 @end
-
-#endif /* HOCKEYSDK_FEATURE_METRICS */
-

@@ -28,9 +28,6 @@
 
 
 #import "PreSniffObjc.h"
-
-#if HOCKEYSDK_FEATURE_CRASH_REPORTER
-
 #import <CrashReporter/CrashReporter.h>
 
 @class PRESNetworkClient;
@@ -70,19 +67,6 @@
 
 @property (nonatomic, strong) NSString *crashesDir;
 
-#if HOCKEYSDK_FEATURE_AUTHENTICATOR
-
-// Only set via BITAuthenticator
-@property (nonatomic, strong) NSString *installationIdentification;
-
-// Only set via BITAuthenticator
-@property (nonatomic) BITAuthenticatorIdentificationType installationIdentificationType;
-
-// Only set via BITAuthenticator
-@property (nonatomic) BOOL installationIdentified;
-
-#endif /* HOCKEYSDK_FEATURE_AUTHENTICATOR */
-
 - (instancetype)initWithAppIdentifier:(NSString *)appIdentifier appEnvironment:(BITEnvironment)environment hockeyAppClient:(PRESNetworkClient *)hockeyAppClient NS_DESIGNATED_INITIALIZER;
 
 - (void)cleanCrashReports;
@@ -108,6 +92,3 @@
 - (void)leavingAppSafely;
 
 @end
-
-
-#endif /* HOCKEYSDK_FEATURE_CRASH_REPORTER */

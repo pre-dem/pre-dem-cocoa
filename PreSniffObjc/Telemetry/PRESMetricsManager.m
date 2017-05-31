@@ -1,7 +1,4 @@
 #import "PreSniffObjc.h"
-
-#if HOCKEYSDK_FEATURE_METRICS
-
 #import "PRESMetricsManager.h"
 #import "PRESTelemetryContext.h"
 #import "PRESMetricsManagerPrivate.h"
@@ -259,5 +256,3 @@ static NSString *const PRESMetricsURLPathString = @"v2/track";
 }
 
 @end
-
-#endif /* HOCKEYSDK_FEATURE_METRICS */

@@ -27,23 +27,7 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "PreSniffObjcFeatureConfig.h"
-
-#if HOCKEYSDK_FEATURE_CRASH_REPORTER
 #import "PRESCrashManagerDelegate.h"
-#endif
-
-#if HOCKEYSDK_FEATURE_UPDATES
-#import "BITUpdateManagerDelegate.h"
-#endif
-
-#if HOCKEYSDK_FEATURE_FEEDBACK
-#import "BITFeedbackManagerDelegate.h"
-#endif
-
-#if HOCKEYSDK_FEATURE_AUTHENTICATOR
-#import "BITAuthenticator.h"
-#endif
 
 @class PreSniffManager;
 @class PRESBaseManager;
@@ -53,20 +37,11 @@
   the behaviour of `PreSniffManager`, as well as the delegate of the modules it manages.
  */
 
-@protocol PreSniffManagerDelegate <NSObject
-#if HOCKEYSDK_FEATURE_CRASH_REPORTER
-  , PRESCrashManagerDelegate
-#endif
-#if HOCKEYSDK_FEATURE_UPDATES
-  , BITUpdateManagerDelegate
-#endif
-#if HOCKEYSDK_FEATURE_FEEDBACK
-  , BITFeedbackManagerDelegate
-#endif
-#if HOCKEYSDK_FEATURE_AUTHENTICATOR
-  , BITAuthenticatorDelegate
-#endif
-  >
+@protocol PreSniffManagerDelegate
+<
+NSObject,
+PRESCrashManagerDelegate
+>
 
 @optional
 

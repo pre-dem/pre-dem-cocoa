@@ -19,51 +19,15 @@ FOUNDATION_EXPORT const unsigned char PreSniffSDKVersionString[];
 #endif
 
 
-#import "PreSniffObjcFeatureConfig.h"
 #import "PreSniffSDKEnums.h"
 #import "PreSniffSDKNullability.h"
-
 #import "PreSniffManager.h"
 #import "PreSniffManagerDelegate.h"
-
-#if HOCKEYSDK_FEATURE_CRASH_REPORTER || HOCKEYSDK_FEATURE_FEEDBACK
-#import "PRESAttachment.h"
-#endif
-
-#if HOCKEYSDK_FEATURE_CRASH_REPORTER
 #import "PRESCrashManager.h"
 #import "PRESCrashManagerDelegate.h"
 #import "PRESCrashDetails.h"
 #import "PRESCrashMetaData.h"
-#endif /* HOCKEYSDK_FEATURE_CRASH_REPORTER */
-
-#if HOCKEYSDK_FEATURE_UPDATES
-#import "BITUpdateManager.h"
-#import "BITUpdateManagerDelegate.h"
-#import "BITUpdateViewController.h"
-#endif /* HOCKEYSDK_FEATURE_UPDATES */
-
-#if HOCKEYSDK_FEATURE_STORE_UPDATES
-#import "BITStoreUpdateManager.h"
-#import "BITStoreUpdateManagerDelegate.h"
-#endif /* HOCKEYSDK_FEATURE_STORE_UPDATES */
-
-#if HOCKEYSDK_FEATURE_FEEDBACK
-#import "BITFeedbackManager.h"
-#import "BITFeedbackManagerDelegate.h"
-#import "BITFeedbackActivity.h"
-#import "BITFeedbackComposeViewController.h"
-#import "BITFeedbackComposeViewControllerDelegate.h"
-#import "BITFeedbackListViewController.h"
-#endif /* HOCKEYSDK_FEATURE_FEEDBACK */
-
-#if HOCKEYSDK_FEATURE_AUTHENTICATOR
-#import "BITAuthenticator.h"
-#endif /* HOCKEYSDK_FEATURE_AUTHENTICATOR */
-
-#if HOCKEYSDK_FEATURE_METRICS
 #import "PRESMetricsManager.h"
-#endif /* HOCKEYSDK_FEATURE_METRICS */
 
 // Notification message which HockeyManager is listening to, to retry requesting updated from the server.
 // This can be used by app developers to trigger additional points where the HockeySDK can try sending

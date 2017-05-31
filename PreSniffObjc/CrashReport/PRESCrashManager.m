@@ -28,10 +28,6 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#import "PreSniffObjcFeatureConfig.h"
-
-#if HOCKEYSDK_FEATURE_CRASH_REPORTER
-
 #import <SystemConfiguration/SystemConfiguration.h>
 #import <UIKit/UIKit.h>
 
@@ -46,14 +42,11 @@
 #import "PRESCrashDetailsPrivate.h"
 #import "PRESCrashCXXExceptionHandler.h"
 #import "PRESVersion.h"
-
-#if HOCKEYSDK_FEATURE_METRICS
 #import "PRESMetricsManagerPrivate.h"
 #import "PRESChannel.h"
 #import "PRESPersistencePrivate.h"
-#endif
-
 #include <sys/sysctl.h>
+#import "PRESAttachment.h"
 
 // stores the set of crashreports that have been approved but aren't sent yet
 #define kBITCrashApprovedReports @"HockeySDKCrashApprovedReports"
@@ -87,17 +80,13 @@ static NSString *const kBITFakeCrashOSVersion = @"BITFakeCrashOSVersion";
 static NSString *const kBITFakeCrashDeviceModel = @"BITFakeCrashDeviceModel";
 static NSString *const kBITFakeCrashAppBinaryUUID = @"BITFakeCrashAppBinaryUUID";
 static NSString *const kBITFakeCrashReport = @"BITFakeCrashAppString";
-
-#if HOCKEYSDK_FEATURE_METRICS
 static char const *BITSaveEventsFilePath;
-#endif
 
 static PRESCrashManagerCallbacks bitCrashCallbacks = {
   .context = NULL,
   .handleSignal = NULL
 };
 
-#if HOCKEYSDK_FEATURE_METRICS
 static void pres_save_events_callback(siginfo_t *info, ucontext_t *uap, void *context) {
   
   // Do not flush metrics queue if queue is empty (metrics module disabled) to not freeze the app
@@ -118,13 +107,10 @@ static void pres_save_events_callback(siginfo_t *info, ucontext_t *uap, void *co
   }
   close(fd);
 }
-#endif
 
 // Proxy implementation for PLCrashReporter to keep our interface stable while this can change
 static void plcr_post_crash_callback (siginfo_t *info, ucontext_t *uap, void *context) {
-#if HOCKEYSDK_FEATURE_METRICS
   pres_save_events_callback(info, uap, context);
-#endif
   if (bitCrashCallbacks.handleSignal != NULL) {
     bitCrashCallbacks.handleSignal(context);
   }
@@ -631,16 +617,6 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
  */
 - (NSString *)userIDForCrashReport {
   NSString *userID;
-#if HOCKEYSDK_FEATURE_AUTHENTICATOR
-  // if we have an identification from BITAuthenticator, use this as a default.
-  if ((
-       self.installationIdentificationType == BITAuthenticatorIdentificationTypeAnonymous ||
-       self.installationIdentificationType == BITAuthenticatorIdentificationTypeDevice
-       ) &&
-      self.installationIdentification) {
-    userID = self.installationIdentification;
-  }
-#endif
   
   // first check the global keychain storage
   NSString *userIdFromKeychain = [self stringValueFromKeychainForKey:kBITHockeyMetaUserID];
@@ -683,18 +659,6 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
 - (NSString *)userEmailForCrashReport {
   // first check the global keychain storage
   NSString *useremail = [self stringValueFromKeychainForKey:kBITHockeyMetaUserEmail] ?: @"";
-  
-#if HOCKEYSDK_FEATURE_AUTHENTICATOR
-  // if we have an identification from BITAuthenticator, use this as a default.
-  if ((
-       self.installationIdentificationType == BITAuthenticatorIdentificationTypeHockeyAppEmail ||
-       self.installationIdentificationType == BITAuthenticatorIdentificationTypeHockeyAppUser ||
-       self.installationIdentificationType == BITAuthenticatorIdentificationTypeWebAuth
-       ) &&
-      self.installationIdentification) {
-    useremail = self.installationIdentification;
-  }
-#endif
 
   if ([[PreSniffManager sharedPreSniffManager].delegate respondsToSelector:@selector(userEmailForHockeyManager:componentManager:)]) {
     useremail = [[PreSniffManager sharedPreSniffManager].delegate
@@ -726,13 +690,11 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
   plCrashCallbacks.context = callbacks->context;
 }
 
-#if HOCKEYSDK_FEATURE_METRICS
 - (void)configDefaultCrashCallback {
   PRESMetricsManager *metricsManager = [PreSniffManager sharedPreSniffManager].metricsManager;
   PRESPersistence *persistence = metricsManager.persistence;
   BITSaveEventsFilePath = strdup([persistence fileURLForType:PRESPersistenceTypeTelemetry].UTF8String);
 }
-#endif
 
 #pragma mark - Public
 
@@ -1221,9 +1183,7 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
         // can't break this
         NSError *error = NULL;
         
-#if HOCKEYSDK_FEATURE_METRICS
         [self configDefaultCrashCallback];
-#endif
         // Set plCrashReporter callback which contains our default callback and potentially user defined callbacks
         [self.plCrashReporter setCrashCallbacks:&plCrashCallbacks];
         
@@ -1761,6 +1721,3 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
 }
 
 @end
-
-#endif /* HOCKEYSDK_FEATURE_CRASH_REPORTER */
-

@@ -1,7 +1,4 @@
 #import "PRESSender.h"
-
-#if HOCKEYSDK_FEATURE_METRICS
-
 #import "PRESPersistencePrivate.h"
 #import "PRESChannelPrivate.h"
 #import "PRESGZIP.h"
@@ -220,6 +217,3 @@ static NSUInteger const PRESDefaultRequestLimit = 10;
 }
 
 @end
-
-#endif /* HOCKEYSDK_FEATURE_METRICS */
-

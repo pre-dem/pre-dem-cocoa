@@ -1,8 +1,4 @@
 #import <Foundation/Foundation.h>
-#import "PreSniffObjcFeatureConfig.h"
-
-#if HOCKEYSDK_FEATURE_METRICS
-
 #import "PreSniffSDKNullability.h"
 NS_ASSUME_NONNULL_BEGIN
 
@@ -13,5 +9,3 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 NS_ASSUME_NONNULL_END
-
-#endif /* HOCKEYSDK_FEATURE_METRICS */

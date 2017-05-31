@@ -27,9 +27,6 @@
  */
 
 #import "PreSniffObjc.h"
-
-#if HOCKEYSDK_FEATURE_CRASH_REPORTER || HOCKEYSDK_FEATURE_FEEDBACK
-
 #import "PRESAttachment.h"
 
 @implementation PRESAttachment
@@ -77,5 +74,3 @@
 }
 
 @end
-
-#endif /* HOCKEYSDK_FEATURE_CRASH_REPORTER || HOCKEYSDK_FEATURE_FEEDBACK */

@@ -1,7 +1,3 @@
-#import "PreSniffObjcFeatureConfig.h"
-
-#if HOCKEYSDK_FEATURE_METRICS
-
 #import "PreSniffSDKPrivate.h"
 #import "PRESChannelPrivate.h"
 #import "PRESHelper.h"
@@ -268,5 +264,3 @@ void pres_resetSafeJsonStream(char **string) {
 @end
 
 NS_ASSUME_NONNULL_END
-
-#endif /* HOCKEYSDK_FEATURE_METRICS */

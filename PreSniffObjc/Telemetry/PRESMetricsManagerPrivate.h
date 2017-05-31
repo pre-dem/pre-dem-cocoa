@@ -1,7 +1,3 @@
-#import "PreSniffObjcFeatureConfig.h"
-
-#if HOCKEYSDK_FEATURE_METRICS
-
 #import "PRESMetricsManager.h"
 #import "PRESSessionState.h"
 
@@ -121,5 +117,3 @@ FOUNDATION_EXPORT NSString *const kPRESApplicationWasLaunched;
 @end
 
 NS_ASSUME_NONNULL_END
-
-#endif /* HOCKEYSDK_FEATURE_METRICS */

@@ -1,8 +1,5 @@
 #import <Foundation/Foundation.h>
 #import "PRESTelemetryContext.h"
-
-#if HOCKEYSDK_FEATURE_METRICS
-
 #import "PRESMetricsManagerPrivate.h"
 #import "PRESHelper.h"
 #import "PRESPersistence.h"
@@ -375,5 +372,3 @@ static char *const PRESContextOperationsQueue = "net.hockeyapp.telemetryContextQ
 }
 
 @end
-
-#endif /* HOCKEYSDK_FEATURE_METRICS */

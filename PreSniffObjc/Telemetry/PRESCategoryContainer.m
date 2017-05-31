@@ -1,8 +1,5 @@
 #import "PRESCategoryContainer.h"
-#import "PreSniffObjcFeatureConfig.h"
 #import <objc/runtime.h>
-
-#if HOCKEYSDK_FEATURE_METRICS
 
 @implementation PRESCategoryContainer
 
@@ -134,5 +131,3 @@ static const NSUInteger ChunkSize = 16384;
 }
 
 @end
-
-#endif /* HOCKEYSDK_FEATURE_METRICS */
