@@ -12,31 +12,31 @@
 /**
  *  HockeySDK Log Levels
  */
-typedef NS_ENUM(NSUInteger, BITLogLevel) {
+typedef NS_ENUM(NSUInteger, PRESLogLevel) {
     /**
      *  Logging is disabled
      */
-    BITLogLevelNone = 0,
+    PRESLogLevelNone = 0,
     /**
      *  Only errors will be logged
      */
-    BITLogLevelError = 1,
+    PRESLogLevelError = 1,
     /**
      *  Errors and warnings will be logged
      */
-    BITLogLevelWarning = 2,
+    PRESLogLevelWarning = 2,
     /**
      *  Debug information will be logged
      */
-    BITLogLevelDebug = 3,
+    PRESLogLevelDebug = 3,
     /**
      *  Logging will be very chatty
      */
-    BITLogLevelVerbose = 4
+    PRESLogLevelVerbose = 4
 };
 
-typedef NSString *(^BITLogMessageProvider)(void);
-typedef void (^BITLogHandler)(BITLogMessageProvider messageProvider, BITLogLevel logLevel, const char *file, const char *function, uint line);
+typedef NSString *(^PRESLogMessageProvider)(void);
+typedef void (^PRESLogHandler)(PRESLogMessageProvider messageProvider, PRESLogLevel logLevel, const char *file, const char *function, uint line);
 
 /**
  *  HockeySDK App environment
@@ -60,128 +60,128 @@ typedef NS_ENUM(NSInteger, PRESEnvironment) {
 /**
  *  HockeySDK Crash Reporter error domain
  */
-typedef NS_ENUM (NSInteger, BITCrashErrorReason) {
+typedef NS_ENUM (NSInteger, PRESCrashErrorReason) {
     /**
      *  Unknown error
      */
-    BITCrashErrorUnknown,
+    PRESCrashErrorUnknown,
     /**
      *  API Server rejected app version
      */
-    BITCrashAPIAppVersionRejected,
+    PRESCrashAPIAppVersionRejected,
     /**
      *  API Server returned empty response
      */
-    BITCrashAPIReceivedEmptyResponse,
+    PRESCrashAPIReceivedEmptyResponse,
     /**
      *  Connection error with status code
      */
-    BITCrashAPIErrorWithStatusCode
+    PRESCrashAPIErrorWithStatusCode
 };
 
 /**
  *  HockeySDK Update error domain
  */
-typedef NS_ENUM (NSInteger, BITUpdateErrorReason) {
+typedef NS_ENUM (NSInteger, PRESUpdateErrorReason) {
     /**
      *  Unknown error
      */
-    BITUpdateErrorUnknown,
+    PRESUpdateErrorUnknown,
     /**
      *  API Server returned invalid status
      */
-    BITUpdateAPIServerReturnedInvalidStatus,
+    PRESUpdateAPIServerReturnedInvalidStatus,
     /**
      *  API Server returned invalid data
      */
-    BITUpdateAPIServerReturnedInvalidData,
+    PRESUpdateAPIServerReturnedInvalidData,
     /**
      *  API Server returned empty response
      */
-    BITUpdateAPIServerReturnedEmptyResponse,
+    PRESUpdateAPIServerReturnedEmptyResponse,
     /**
      *  Authorization secret missing
      */
-    BITUpdateAPIClientAuthorizationMissingSecret,
+    PRESUpdateAPIClientAuthorizationMissingSecret,
     /**
      *  No internet connection
      */
-    BITUpdateAPIClientCannotCreateConnection
+    PRESUpdateAPIClientCannotCreateConnection
 };
 
 /**
  *  HockeySDK Feedback error domain
  */
-typedef NS_ENUM(NSInteger, BITFeedbackErrorReason) {
+typedef NS_ENUM(NSInteger, PRESFeedbackErrorReason) {
     /**
      *  Unknown error
      */
-    BITFeedbackErrorUnknown,
+    PRESFeedbackErrorUnknown,
     /**
      *  API Server returned invalid status
      */
-    BITFeedbackAPIServerReturnedInvalidStatus,
+    PRESFeedbackAPIServerReturnedInvalidStatus,
     /**
      *  API Server returned invalid data
      */
-    BITFeedbackAPIServerReturnedInvalidData,
+    PRESFeedbackAPIServerReturnedInvalidData,
     /**
      *  API Server returned empty response
      */
-    BITFeedbackAPIServerReturnedEmptyResponse,
+    PRESFeedbackAPIServerReturnedEmptyResponse,
     /**
      *  Authorization secret missing
      */
-    BITFeedbackAPIClientAuthorizationMissingSecret,
+    PRESFeedbackAPIClientAuthorizationMissingSecret,
     /**
      *  No internet connection
      */
-    BITFeedbackAPIClientCannotCreateConnection
+    PRESFeedbackAPIClientCannotCreateConnection
 };
 
 /**
  *  HockeySDK Authenticator error domain
  */
-typedef NS_ENUM(NSInteger, BITAuthenticatorReason) {
+typedef NS_ENUM(NSInteger, PRESAuthenticatorReason) {
     /**
      *  Unknown error
      */
-    BITAuthenticatorErrorUnknown,
+    PRESAuthenticatorErrorUnknown,
     /**
      *  Network error
      */
-    BITAuthenticatorNetworkError,
+    PRESAuthenticatorNetworkError,
     
     /**
      *  API Server returned invalid response
      */
-    BITAuthenticatorAPIServerReturnedInvalidResponse,
+    PRESAuthenticatorAPIServerReturnedInvalidResponse,
     /**
      *  Not Authorized
      */
-    BITAuthenticatorNotAuthorized,
+    PRESAuthenticatorNotAuthorized,
     /**
      *  Unknown Application ID (configuration error)
      */
-    BITAuthenticatorUnknownApplicationID,
+    PRESAuthenticatorUnknownApplicationID,
     /**
      *  Authorization secret missing
      */
-    BITAuthenticatorAuthorizationSecretMissing,
+    PRESAuthenticatorAuthorizationSecretMissing,
     /**
      *  Not yet identified
      */
-    BITAuthenticatorNotIdentified,
+    PRESAuthenticatorNotIdentified,
 };
 
 /**
  *  HockeySDK global error domain
  */
-typedef NS_ENUM(NSInteger, BITHockeyErrorReason) {
+typedef NS_ENUM(NSInteger, PRESHockeyErrorReason) {
     /**
      *  Unknown error
      */
-    BITHockeyErrorUnknown
+    PRESHockeyErrorUnknown
 };
 
 #endif /* HockeySDK_HockeyEnums_h */

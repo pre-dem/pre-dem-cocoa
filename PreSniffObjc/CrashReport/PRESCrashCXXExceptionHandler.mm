@@ -45,13 +45,13 @@ typedef struct
     void *exception_object;
     uintptr_t call_stack[128];
     uint32_t num_frames;
-} BITCrashCXXExceptionTSInfo;
+} PRESCrashCXXExceptionTSInfo;
 
-static bool _BITCrashIsOurTerminateHandlerInstalled = false;
-static std::terminate_handler _BITCrashOriginalTerminateHandler = nullptr;
-static PRESCrashUncaughtCXXExceptionHandlerList _BITCrashUncaughtExceptionHandlerList;
-static OSSpinLock _BITCrashCXXExceptionHandlingLock = OS_SPINLOCK_INIT;
-static pthread_key_t _BITCrashCXXExceptionInfoTSDKey = 0;
+static bool _PRESCrashIsOurTerminateHandlerInstalled = false;
+static std::terminate_handler _PRESCrashOriginalTerminateHandler = nullptr;
+static PRESCrashUncaughtCXXExceptionHandlerList _PRESCrashUncaughtExceptionHandlerList;
+static OSSpinLock _PRESCrashCXXExceptionHandlingLock = OS_SPINLOCK_INIT;
+static pthread_key_t _PRESCrashCXXExceptionInfoTSDKey = 0;
 
 @implementation PRESCrashUncaughtCXXExceptionHandlerManager
 
@@ -90,12 +90,12 @@ extern "C" void LIBCXXABI_NORETURN __cxa_throw(void *exception_object, std::type
     // a backtrace.
     // Invariant: If the terminate handler is installed, the TSD key must also be
     // initialized.
-    if (_BITCrashIsOurTerminateHandlerInstalled) {
-        BITCrashCXXExceptionTSInfo *info = static_cast<BITCrashCXXExceptionTSInfo *>(pthread_getspecific(_BITCrashCXXExceptionInfoTSDKey));
+    if (_PRESCrashIsOurTerminateHandlerInstalled) {
+        PRESCrashCXXExceptionTSInfo *info = static_cast<PRESCrashCXXExceptionTSInfo *>(pthread_getspecific(_PRESCrashCXXExceptionInfoTSDKey));
         
         if (!info) {
-            info = reinterpret_cast<BITCrashCXXExceptionTSInfo *>(calloc(1, sizeof(BITCrashCXXExceptionTSInfo)));
-            pthread_setspecific(_BITCrashCXXExceptionInfoTSDKey, info);
+            info = reinterpret_cast<PRESCrashCXXExceptionTSInfo *>(calloc(1, sizeof(PRESCrashCXXExceptionTSInfo)));
+            pthread_setspecific(_PRESCrashCXXExceptionInfoTSDKey, info);
         }
         info->exception_object = exception_object;
         // XXX: All significant time in this call is spent right here.
@@ -115,14 +115,14 @@ callthrough:
 }
 
 __attribute__((always_inline))
-static inline void BITCrashIterateExceptionHandlers_unlocked(const PRESCrashUncaughtCXXExceptionInfo &info)
+static inline void PRESCrashIterateExceptionHandlers_unlocked(const PRESCrashUncaughtCXXExceptionInfo &info)
 {
-    for (const auto &handler : _BITCrashUncaughtExceptionHandlerList) {
+    for (const auto &handler : _PRESCrashUncaughtExceptionHandlerList) {
         handler(&info);
     }
 }
 
-static void BITCrashUncaughtCXXTerminateHandler(void)
+static void PRESCrashUncaughtCXXTerminateHandler(void)
 {
     PRESCrashUncaughtCXXExceptionInfo info = {
         .exception = nullptr,
@@ -133,12 +133,12 @@ static void BITCrashUncaughtCXXTerminateHandler(void)
     };
     auto p = std::current_exception();
     
-    OSSpinLockLock(&_BITCrashCXXExceptionHandlingLock); {
+    OSSpinLockLock(&_PRESCrashCXXExceptionHandlingLock); {
         if (p) { // explicit operator bool
             info.exception = reinterpret_cast<const void *>(&p);
             info.exception_type_name = __cxxabiv1::__cxa_current_exception_type()->name();
             
-            BITCrashCXXExceptionTSInfo *recorded_info = reinterpret_cast<BITCrashCXXExceptionTSInfo *>(pthread_getspecific(_BITCrashCXXExceptionInfoTSDKey));
+            PRESCrashCXXExceptionTSInfo *recorded_info = reinterpret_cast<PRESCrashCXXExceptionTSInfo *>(pthread_getspecific(_PRESCrashCXXExceptionInfoTSDKey));
             
             if (recorded_info) {
                 info.exception_frames_count = recorded_info->num_frames - 1;
@@ -156,33 +156,33 @@ static void BITCrashUncaughtCXXTerminateHandler(void)
                 std::rethrow_exception(p);
             } catch (const std::exception &e) { // C++ exception.
                 info.exception_message = e.what();
-                BITCrashIterateExceptionHandlers_unlocked(info);
+                PRESCrashIterateExceptionHandlers_unlocked(info);
             } catch (const std::exception *e) { // C++ exception by pointer.
                 info.exception_message = e->what();
-                BITCrashIterateExceptionHandlers_unlocked(info);
+                PRESCrashIterateExceptionHandlers_unlocked(info);
             } catch (const std::string &e) { // C++ string as exception.
                 info.exception_message = e.c_str();
-                BITCrashIterateExceptionHandlers_unlocked(info);
+                PRESCrashIterateExceptionHandlers_unlocked(info);
             } catch (const std::string *e) { // C++ string pointer as exception.
                 info.exception_message = e->c_str();
-                BITCrashIterateExceptionHandlers_unlocked(info);
+                PRESCrashIterateExceptionHandlers_unlocked(info);
             } catch (const char *e) { // Plain string as exception.
                 info.exception_message = e;
-                BITCrashIterateExceptionHandlers_unlocked(info);
+                PRESCrashIterateExceptionHandlers_unlocked(info);
             } catch (id e) { // Objective-C exception. Pass it on to Foundation.
-                OSSpinLockUnlock(&_BITCrashCXXExceptionHandlingLock);
-                if (_BITCrashOriginalTerminateHandler != nullptr) {
-                    _BITCrashOriginalTerminateHandler();
+                OSSpinLockUnlock(&_PRESCrashCXXExceptionHandlingLock);
+                if (_PRESCrashOriginalTerminateHandler != nullptr) {
+                    _PRESCrashOriginalTerminateHandler();
                 }
                 return;
             } catch (...) { // Any other kind of exception. No message.
-                BITCrashIterateExceptionHandlers_unlocked(info);
+                PRESCrashIterateExceptionHandlers_unlocked(info);
             }
         }
-    } OSSpinLockUnlock(&_BITCrashCXXExceptionHandlingLock); // In case terminate is called reentrantly by pasing it on
+    } OSSpinLockUnlock(&_PRESCrashCXXExceptionHandlingLock); // In case terminate is called reentrantly by pasing it on
     
-    if (_BITCrashOriginalTerminateHandler != nullptr) {
-        _BITCrashOriginalTerminateHandler();
+    if (_PRESCrashOriginalTerminateHandler != nullptr) {
+        _PRESCrashOriginalTerminateHandler();
     } else {
         abort();
     }
@@ -195,40 +195,40 @@ static void BITCrashUncaughtCXXTerminateHandler(void)
     // This only EVER has to be done once, since we don't delete the TSD later
     // (there's no reason to delete it).
     dispatch_once(&key_predicate, ^ {
-        pthread_key_create(&_BITCrashCXXExceptionInfoTSDKey, free);
+        pthread_key_create(&_PRESCrashCXXExceptionInfoTSDKey, free);
     });
     
-    OSSpinLockLock(&_BITCrashCXXExceptionHandlingLock); {
-        if (!_BITCrashIsOurTerminateHandlerInstalled) {
-            _BITCrashOriginalTerminateHandler = std::set_terminate(BITCrashUncaughtCXXTerminateHandler);
-            _BITCrashIsOurTerminateHandlerInstalled = true;
+    OSSpinLockLock(&_PRESCrashCXXExceptionHandlingLock); {
+        if (!_PRESCrashIsOurTerminateHandlerInstalled) {
+            _PRESCrashOriginalTerminateHandler = std::set_terminate(PRESCrashUncaughtCXXTerminateHandler);
+            _PRESCrashIsOurTerminateHandlerInstalled = true;
         }
-        _BITCrashUncaughtExceptionHandlerList.push_back(handler);
-    } OSSpinLockUnlock(&_BITCrashCXXExceptionHandlingLock);
+        _PRESCrashUncaughtExceptionHandlerList.push_back(handler);
+    } OSSpinLockUnlock(&_PRESCrashCXXExceptionHandlingLock);
 }
 
 + (void)removeCXXExceptionHandler:(PRESCrashUncaughtCXXExceptionHandler)handler
 {
-    OSSpinLockLock(&_BITCrashCXXExceptionHandlingLock); {
-        auto i = std::find(_BITCrashUncaughtExceptionHandlerList.begin(), _BITCrashUncaughtExceptionHandlerList.end(), handler);
+    OSSpinLockLock(&_PRESCrashCXXExceptionHandlingLock); {
+        auto i = std::find(_PRESCrashUncaughtExceptionHandlerList.begin(), _PRESCrashUncaughtExceptionHandlerList.end(), handler);
         
-        if (i != _BITCrashUncaughtExceptionHandlerList.end()) {
-            _BITCrashUncaughtExceptionHandlerList.erase(i);
+        if (i != _PRESCrashUncaughtExceptionHandlerList.end()) {
+            _PRESCrashUncaughtExceptionHandlerList.erase(i);
         }
         
-        if (_BITCrashIsOurTerminateHandlerInstalled) {
-            if (_BITCrashUncaughtExceptionHandlerList.empty()) {
-                std::terminate_handler previous_handler = std::set_terminate(_BITCrashOriginalTerminateHandler);
+        if (_PRESCrashIsOurTerminateHandlerInstalled) {
+            if (_PRESCrashUncaughtExceptionHandlerList.empty()) {
+                std::terminate_handler previous_handler = std::set_terminate(_PRESCrashOriginalTerminateHandler);
                 
-                if (previous_handler != BITCrashUncaughtCXXTerminateHandler) {
+                if (previous_handler != PRESCrashUncaughtCXXTerminateHandler) {
                     std::set_terminate(previous_handler);
                 } else {
-                    _BITCrashIsOurTerminateHandlerInstalled = false;
-                    _BITCrashOriginalTerminateHandler = nullptr;
+                    _PRESCrashIsOurTerminateHandlerInstalled = false;
+                    _PRESCrashOriginalTerminateHandler = nullptr;
                 }
             }
         }
-    } OSSpinLockUnlock(&_BITCrashCXXExceptionHandlingLock);
+    } OSSpinLockUnlock(&_PRESCrashCXXExceptionHandlingLock);
 }
 
 @end

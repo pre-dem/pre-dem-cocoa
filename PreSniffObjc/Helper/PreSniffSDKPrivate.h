@@ -35,44 +35,44 @@
 #ifndef HockeySDK_PreSniffSDKPrivate_h
 #define HockeySDK_PreSniffSDKPrivate_h
 
-#define BITHOCKEY_NAME @"HockeySDK"
-#define BITHOCKEY_IDENTIFIER @"net.hockeyapp.sdk.ios"
-#define BITHOCKEY_CRASH_SETTINGS @"PRESCrashManager.plist"
-#define BITHOCKEY_CRASH_ANALYZER @"PRESCrashManager.analyzer"
+#define PRESHOCKEY_NAME @"HockeySDK"
+#define PRESHOCKEY_IDENTIFIER @"net.hockeyapp.sdk.ios"
+#define PRESHOCKEY_CRASH_SETTINGS @"PRESCrashManager.plist"
+#define PRESHOCKEY_CRASH_ANALYZER @"PRESCrashManager.analyzer"
 
-#define BITHOCKEY_FEEDBACK_SETTINGS @"BITFeedbackManager.plist"
+#define PRESHOCKEY_FEEDBACK_SETTINGS @"PRESFeedbackManager.plist"
 
-#define BITHOCKEY_USAGE_DATA @"BITUpdateManager.plist"
+#define PRESHOCKEY_USAGE_DATA @"PRESUpdateManager.plist"
 
-#define kBITHockeyMetaUserName  @"BITHockeyMetaUserName"
-#define kBITHockeyMetaUserEmail @"BITHockeyMetaUserEmail"
-#define kBITHockeyMetaUserID    @"BITHockeyMetaUserID"
+#define kPRESHockeyMetaUserName  @"PRESHockeyMetaUserName"
+#define kPRESHockeyMetaUserEmail @"PRESHockeyMetaUserEmail"
+#define kPRESHockeyMetaUserID    @"PRESHockeyMetaUserID"
 
-#define kBITUpdateInstalledUUID              @"BITUpdateInstalledUUID"
-#define kBITUpdateInstalledVersionID         @"BITUpdateInstalledVersionID"
-#define kBITUpdateCurrentCompanyName         @"BITUpdateCurrentCompanyName"
-#define kBITUpdateArrayOfLastCheck           @"BITUpdateArrayOfLastCheck"
-#define kBITUpdateDateOfLastCheck            @"BITUpdateDateOfLastCheck"
-#define kBITUpdateDateOfVersionInstallation  @"BITUpdateDateOfVersionInstallation"
-#define kBITUpdateUsageTimeOfCurrentVersion  @"BITUpdateUsageTimeOfCurrentVersion"
-#define kBITUpdateUsageTimeForUUID           @"BITUpdateUsageTimeForUUID"
-#define kBITUpdateInstallationIdentification @"BITUpdateInstallationIdentification"
+#define kPRESUpdateInstalledUUID              @"PRESUpdateInstalledUUID"
+#define kPRESUpdateInstalledVersionID         @"PRESUpdateInstalledVersionID"
+#define kPRESUpdateCurrentCompanyName         @"PRESUpdateCurrentCompanyName"
+#define kPRESUpdateArrayOfLastCheck           @"PRESUpdateArrayOfLastCheck"
+#define kPRESUpdateDateOfLastCheck            @"PRESUpdateDateOfLastCheck"
+#define kPRESUpdateDateOfVersionInstallation  @"PRESUpdateDateOfVersionInstallation"
+#define kPRESUpdateUsageTimeOfCurrentVersion  @"PRESUpdateUsageTimeOfCurrentVersion"
+#define kPRESUpdateUsageTimeForUUID           @"PRESUpdateUsageTimeForUUID"
+#define kPRESUpdateInstallationIdentification @"PRESUpdateInstallationIdentification"
 
-#define kBITStoreUpdateDateOfLastCheck       @"BITStoreUpdateDateOfLastCheck"
-#define kBITStoreUpdateLastStoreVersion      @"BITStoreUpdateLastStoreVersion"
-#define kBITStoreUpdateLastUUID              @"BITStoreUpdateLastUUID"
-#define kBITStoreUpdateIgnoreVersion         @"BITStoreUpdateIgnoredVersion"
+#define kPRESStoreUpdateDateOfLastCheck       @"PRESStoreUpdateDateOfLastCheck"
+#define kPRESStoreUpdateLastStoreVersion      @"PRESStoreUpdateLastStoreVersion"
+#define kPRESStoreUpdateLastUUID              @"PRESStoreUpdateLastUUID"
+#define kPRESStoreUpdateIgnoreVersion         @"PRESStoreUpdateIgnoredVersion"
 
-#define BITHOCKEY_INTEGRATIONFLOW_TIMESTAMP  @"BITIntegrationFlowStartTimestamp"
+#define PRESHOCKEY_INTEGRATIONFLOW_TIMESTAMP  @"PRESIntegrationFlowStartTimestamp"
 
-#define BITHOCKEYSDK_BUNDLE @"HockeySDKResources.bundle"
-#define BITHOCKEYSDK_URL @"https://sdk.hockeyapp.net/"
+#define PRESHOCKEYSDK_BUNDLE @"HockeySDKResources.bundle"
+#define PRESHOCKEYSDK_URL @"https://sdk.hockeyapp.net/"
 
-#define BIT_RGBCOLOR(r,g,b) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:1]
+#define PRES_RGBCOLOR(r,g,b) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:1]
 
-NSBundle *BITHockeyBundle(void);
-NSString *BITHockeyLocalizedString(NSString *stringToken);
-NSString *BITHockeyMD5(NSString *str);
+NSBundle *PRESHockeyBundle(void);
+NSString *PRESHockeyLocalizedString(NSString *stringToken);
+NSString *PRESHockeyMD5(NSString *str);
 
 #ifndef __IPHONE_8_0
 #define __IPHONE_8_0     80000
@@ -94,11 +94,11 @@ NSString *BITHockeyMD5(NSString *str);
 
 #if __IPHONE_OS_VERSION_MIN_REQUIRED > __IPHONE_6_1
 
-#define kBITButtonTypeSystem                UIButtonTypeSystem
+#define kPRESButtonTypeSystem                UIButtonTypeSystem
 
 #else
 
-#define kBITButtonTypeSystem                UIButtonTypeRoundedRect
+#define kPRESButtonTypeSystem                UIButtonTypeRoundedRect
 
 #endif
 

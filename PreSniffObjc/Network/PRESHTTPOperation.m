@@ -121,7 +121,7 @@
     return _data;
 }
 
-- (void)setCompletion:(BITNetworkCompletionBlock)completion {
+- (void)setCompletion:(PRESNetworkCompletionBlock)completion {
     if(!completion) {
         [super setCompletionBlock:nil];
     } else {

@@ -170,7 +170,7 @@ static NSString *const PRESMetricsURLPathString = @"v2/track";
 
 - (void)trackSessionWithState:(PRESSessionState)state {
     if (self.disabled) {
-        BITHockeyLogDebug(@"INFO: PRESMetricsManager is disabled, therefore this tracking call was ignored.");
+        PRESHockeyLogDebug(@"INFO: PRESMetricsManager is disabled, therefore this tracking call was ignored.");
         return;
     }
     PRESSessionStateData *sessionStateData = [PRESSessionStateData new];
@@ -183,7 +183,7 @@ static NSString *const PRESMetricsURLPathString = @"v2/track";
 - (void)trackEventWithName:(nonnull NSString *)eventName {
     if (!eventName) { return; }
     if (self.disabled) {
-        BITHockeyLogDebug(@"INFO: PRESMetricsManager is disabled, therefore this tracking call was ignored.");
+        PRESHockeyLogDebug(@"INFO: PRESMetricsManager is disabled, therefore this tracking call was ignored.");
         return;
     }
     
@@ -199,7 +199,7 @@ static NSString *const PRESMetricsURLPathString = @"v2/track";
 - (void)trackEventWithName:(nonnull NSString *)eventName properties:(nullable NSDictionary<NSString *, NSString *> *)properties measurements:(nullable NSDictionary<NSString *, NSNumber *> *)measurements {
     if (!eventName) { return; }
     if (self.disabled) {
-        BITHockeyLogDebug(@"INFO: PRESMetricsManager is disabled, therefore this tracking call was ignored.");
+        PRESHockeyLogDebug(@"INFO: PRESMetricsManager is disabled, therefore this tracking call was ignored.");
         return;
     }
     
@@ -218,7 +218,7 @@ static NSString *const PRESMetricsURLPathString = @"v2/track";
 
 - (void)trackDataItem:(PRESTelemetryData *)dataItem {
     if (self.disabled) {
-        BITHockeyLogDebug(@"INFO: PRESMetricsManager is disabled, therefore this tracking call was ignored.");
+        PRESHockeyLogDebug(@"INFO: PRESMetricsManager is disabled, therefore this tracking call was ignored.");
         return;
     }
     

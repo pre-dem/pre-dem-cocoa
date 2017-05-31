@@ -38,29 +38,29 @@
 
 
 // Dictionary keys for array elements returned by arrayOfAppUUIDsForCrashReport:
-#ifndef kBITBinaryImageKeyUUID
-#define kBITBinaryImageKeyUUID @"uuid"
-#define kBITBinaryImageKeyArch @"arch"
-#define kBITBinaryImageKeyType @"type"
+#ifndef kPRESBinaryImageKeyUUID
+#define kPRESBinaryImageKeyUUID @"uuid"
+#define kPRESBinaryImageKeyArch @"arch"
+#define kPRESBinaryImageKeyType @"type"
 #endif
 
 
 /**
  *  HockeySDK Crash Reporter error domain
  */
-typedef NS_ENUM (NSInteger, BITBinaryImageType) {
+typedef NS_ENUM (NSInteger, PRESBinaryImageType) {
     /**
      *  App binary
      */
-    BITBinaryImageTypeAppBinary,
+    PRESBinaryImageTypeAppBinary,
     /**
      *  App provided framework
      */
-    BITBinaryImageTypeAppFramework,
+    PRESBinaryImageTypeAppFramework,
     /**
      *  Image not related to the app
      */
-    BITBinaryImageTypeOther
+    PRESBinaryImageTypeOther
 };
 
 
@@ -70,6 +70,6 @@ typedef NS_ENUM (NSInteger, BITBinaryImageType) {
 + (NSString *)stringValueForCrashReport:(PLCrashReport *)report crashReporterKey:(NSString *)crashReporterKey;
 + (NSArray *)arrayOfAppUUIDsForCrashReport:(PLCrashReport *)report;
 + (NSString *)pres_archNameFromCPUType:(uint64_t)cpuType subType:(uint64_t)subType;
-+ (BITBinaryImageType)pres_imageTypeForImagePath:(NSString *)imagePath processPath:(NSString *)processPath;
++ (PRESBinaryImageType)pres_imageTypeForImagePath:(NSString *)imagePath processPath:(NSString *)processPath;
 
 @end

@@ -34,11 +34,11 @@ FOUNDATION_EXPORT const unsigned char PreSniffSDKVersionString[];
 // This can be used by app developers to trigger additional points where the HockeySDK can try sending
 // pending crash reports or feedback messages.
 // By default the SDK retries sending pending data only when the app becomes active.
-#define BITHockeyNetworkDidBecomeReachableNotification @"BITHockeyNetworkDidBecomeReachable"
+#define PRESHockeyNetworkDidBecomeReachableNotification @"PRESHockeyNetworkDidBecomeReachable"
 
-extern NSString *const __attribute__((unused)) kBITCrashErrorDomain;
-extern NSString *const __attribute__((unused)) kBITUpdateErrorDomain;
-extern NSString *const __attribute__((unused)) kBITFeedbackErrorDomain;
-extern NSString *const __attribute__((unused)) kBITAuthenticatorErrorDomain;
-extern NSString *const __attribute__((unused)) kBITHockeyErrorDomain;
+extern NSString *const __attribute__((unused)) kPRESCrashErrorDomain;
+extern NSString *const __attribute__((unused)) kPRESUpdateErrorDomain;
+extern NSString *const __attribute__((unused)) kPRESFeedbackErrorDomain;
+extern NSString *const __attribute__((unused)) kPRESAuthenticatorErrorDomain;
+extern NSString *const __attribute__((unused)) kPRESHockeyErrorDomain;
 

@@ -63,7 +63,7 @@
 
 @property (nonatomic) NSString *lastCrashFilename;
 
-@property (nonatomic, copy, setter = setAlertViewHandler:) BITCustomAlertViewHandler alertViewHandler;
+@property (nonatomic, copy, setter = setAlertViewHandler:) PRESCustomAlertViewHandler alertViewHandler;
 
 @property (nonatomic, strong) NSString *crashesDir;
 

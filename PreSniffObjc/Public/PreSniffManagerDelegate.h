@@ -85,7 +85,7 @@ PRESCrashManagerDelegate
  behavior or if you want to define any other parent view controller.
  
  @param hockeyManager The `PreSniffManager` HockeyManager instance invoking this delegate
- @param componentManager The `PRESBaseManager` component instance invoking this delegate, can be `PRESCrashManager` or `BITFeedbackManager`
+ @param componentManager The `PRESBaseManager` component instance invoking this delegate, can be `PRESCrashManager` or `PRESFeedbackManager`
  */
 - (UIViewController *)viewControllerForHockeyManager:(PreSniffManager *)hockeyManager componentManager:(PRESBaseManager *)componentManager;
 
@@ -98,9 +98,9 @@ PRESCrashManagerDelegate
 /** Return the userid that should used in the SDK components
  
  Right now this is used by the `PRESCrashManager` to attach to a crash report.
- `BITFeedbackManager` uses it too for assigning the user to a discussion thread.
+ `PRESFeedbackManager` uses it too for assigning the user to a discussion thread.
  
- In addition, if this returns not nil for `BITFeedbackManager` the user will
+ In addition, if this returns not nil for `PRESFeedbackManager` the user will
  not be asked for any user details by the component, including userName or userEmail.
  
  You can find out the component requesting the userID like this:
@@ -123,7 +123,7 @@ PRESCrashManagerDelegate
  are not anonymous any more and the crash alerts will not show the word "anonymous"!
  
  @param hockeyManager The `PreSniffManager` HockeyManager instance invoking this delegate
- @param componentManager The `PRESBaseManager` component instance invoking this delegate, can be `PRESCrashManager` or `BITFeedbackManager`
+ @param componentManager The `PRESBaseManager` component instance invoking this delegate, can be `PRESCrashManager` or `PRESFeedbackManager`
  @see userNameForHockeyManager:componentManager:
  @see userEmailForHockeyManager:componentManager:
  @see [PreSniffManager userID]
@@ -134,9 +134,9 @@ PRESCrashManagerDelegate
 /** Return the user name that should used in the SDK components
  
  Right now this is used by the `PRESCrashManager` to attach to a crash report.
- `BITFeedbackManager` uses it too for assigning the user to a discussion thread.
+ `PRESFeedbackManager` uses it too for assigning the user to a discussion thread.
  
- In addition, if this returns not nil for `BITFeedbackManager` the user will
+ In addition, if this returns not nil for `PRESFeedbackManager` the user will
  not be asked for any user details by the component, including userName or userEmail.
  
  You can find out the component requesting the user name like this:
@@ -159,7 +159,7 @@ PRESCrashManagerDelegate
  are not anonymous any more and the crash alerts will not show the word "anonymous"!
  
  @param hockeyManager The `PreSniffManager` HockeyManager instance invoking this delegate
- @param componentManager The `PRESBaseManager` component instance invoking this delegate, can be `PRESCrashManager` or `BITFeedbackManager`
+ @param componentManager The `PRESBaseManager` component instance invoking this delegate, can be `PRESCrashManager` or `PRESFeedbackManager`
  @see userIDForHockeyManager:componentManager:
  @see userEmailForHockeyManager:componentManager:
  @see [PreSniffManager userName]
@@ -170,9 +170,9 @@ PRESCrashManagerDelegate
 /** Return the users email address that should used in the SDK components
  
  Right now this is used by the `PRESCrashManager` to attach to a crash report.
- `BITFeedbackManager` uses it too for assigning the user to a discussion thread.
+ `PRESFeedbackManager` uses it too for assigning the user to a discussion thread.
  
- In addition, if this returns not nil for `BITFeedbackManager` the user will
+ In addition, if this returns not nil for `PRESFeedbackManager` the user will
  not be asked for any user details by the component, including userName or userEmail.
  
  You can find out the component requesting the user email like this:
@@ -195,7 +195,7 @@ PRESCrashManagerDelegate
  are not anonymous any more and the crash alerts will not show the word "anonymous"!
  
  @param hockeyManager The `PreSniffManager` HockeyManager instance invoking this delegate
- @param componentManager The `PRESBaseManager` component instance invoking this delegate, can be `PRESCrashManager` or `BITFeedbackManager`
+ @param componentManager The `PRESBaseManager` component instance invoking this delegate, can be `PRESCrashManager` or `PRESFeedbackManager`
  @see userIDForHockeyManager:componentManager:
  @see userNameForHockeyManager:componentManager:
  @see [PreSniffManager userEmail]

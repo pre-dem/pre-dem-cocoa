@@ -31,7 +31,7 @@
 #import "PreSniffManager.h"
 
 @class PRESBaseManager;
-@class BITHockeyBaseViewController;
+@class PRESHockeyBaseViewController;
 
 @interface PRESBaseManager()
 

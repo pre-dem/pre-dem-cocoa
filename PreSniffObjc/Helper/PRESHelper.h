@@ -32,7 +32,7 @@
 
 @interface PRESHelper : NSObject
 
-FOUNDATION_EXPORT NSString *const kBITExcludeApplicationSupportFromBackup;
+FOUNDATION_EXPORT NSString *const kPRESExcludeApplicationSupportFromBackup;
 
 + (BOOL)isURLSessionSupported;
 

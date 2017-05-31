@@ -68,7 +68,7 @@
     if ([NSJSONSerialization isValidJSONObject:dataDict]) {
         [dict setObject:dataDict forKey:@"data"];
     } else {
-        BITHockeyLogError(@"[PreSniffSDK] Some of the telemetry data was not NSJSONSerialization compatible and could not be serialized!");
+        PRESHockeyLogError(@"[PreSniffSDK] Some of the telemetry data was not NSJSONSerialization compatible and could not be serialized!");
     }
     return dict;
 }

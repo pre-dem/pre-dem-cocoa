@@ -38,8 +38,8 @@
 
 #import <sys/sysctl.h>
 
-static NSString *const kBITUtcDateFormatter = @"utcDateFormatter";
-NSString *const kBITExcludeApplicationSupportFromBackup = @"kBITExcludeApplicationSupportFromBackup";
+static NSString *const kPRESUtcDateFormatter = @"utcDateFormatter";
+NSString *const kPRESExcludeApplicationSupportFromBackup = @"kPRESExcludeApplicationSupportFromBackup";
 
 @implementation PRESHelper
 
@@ -64,7 +64,7 @@ NSString *const kBITExcludeApplicationSupportFromBackup = @"kBITExcludeApplicati
 @end
 
 #if __IPHONE_OS_VERSION_MAX_ALLOWED < 70000
-@interface NSData (BITHockeySDKiOS7)
+@interface NSData (PRESHockeySDKiOS7)
 - (NSString *)base64Encoding;
 @end
 #endif
@@ -86,7 +86,7 @@ NSString *pres_settingsDir(void) {
         
         // temporary directory for crashes grabbed from PLCrashReporter
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-        settingsDir = [[paths objectAtIndex:0] stringByAppendingPathComponent:BITHOCKEY_IDENTIFIER];
+        settingsDir = [[paths objectAtIndex:0] stringByAppendingPathComponent:PRESHOCKEY_IDENTIFIER];
         
         if (![fileManager fileExistsAtPath:settingsDir]) {
             NSDictionary *attributes = [NSDictionary dictionaryWithObject: [NSNumber numberWithUnsignedLong: 0755] forKey: NSFilePosixPermissions];
@@ -152,7 +152,7 @@ NSComparisonResult pres_versionCompare(NSString *stringA, NSString *stringB) {
 
 void pres_fixBackupAttributeForURL(NSURL *directoryURL) {
     
-    BOOL shouldExcludeAppSupportDirFromBackup = [[NSUserDefaults standardUserDefaults] boolForKey:kBITExcludeApplicationSupportFromBackup];
+    BOOL shouldExcludeAppSupportDirFromBackup = [[NSUserDefaults standardUserDefaults] boolForKey:kPRESExcludeApplicationSupportFromBackup];
     if (shouldExcludeAppSupportDirFromBackup) {
         return;
     }
@@ -407,7 +407,7 @@ BOOL pres_isDebuggerAttached(void) {
         name[3] = getpid();
         
         if (sysctl(name, 4, &info, &info_size, NULL, 0) == -1) {
-            BITHockeyLogError(@"[HockeySDK] ERROR: Checking for a running debugger via sysctl() failed.");
+            PRESHockeyLogError(@"[HockeySDK] ERROR: Checking for a running debugger via sysctl() failed.");
             debuggerIsAttached = false;
         }
         
@@ -460,7 +460,7 @@ NSString *pres_utcDateString(NSDate *date){
     // NSDateFormatter is not thread-safe prior to iOS 7
     if (pres_isPreiOS7Environment()) {
         NSMutableDictionary *threadDictionary = [NSThread currentThread].threadDictionary;
-        dateFormatter = threadDictionary[kBITUtcDateFormatter];
+        dateFormatter = threadDictionary[kPRESUtcDateFormatter];
         
         if (!dateFormatter) {
             dateFormatter = [NSDateFormatter new];
@@ -468,7 +468,7 @@ NSString *pres_utcDateString(NSDate *date){
             dateFormatter.locale = enUSPOSIXLocale;
             dateFormatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
             dateFormatter.timeZone = [NSTimeZone timeZoneForSecondsFromGMT:0];
-            threadDictionary[kBITUtcDateFormatter] = dateFormatter;
+            threadDictionary[kPRESUtcDateFormatter] = dateFormatter;
         }
         
         NSString *dateString = [dateFormatter stringFromDate:date];
@@ -823,7 +823,7 @@ UIImage *pres_addGlossToImage(UIImage *inputImage) {
     UIGraphicsBeginImageContextWithOptions(inputImage.size, NO, 0.0);
     
     [inputImage drawAtPoint:CGPointZero];
-    UIImage *iconGradient = pres_imageNamed(@"IconGradient.png", BITHOCKEYSDK_BUNDLE);
+    UIImage *iconGradient = pres_imageNamed(@"IconGradient.png", PRESHOCKEYSDK_BUNDLE);
     [iconGradient drawInRect:CGRectMake(0, 0, inputImage.size.width, inputImage.size.height) blendMode:kCGBlendModeNormal alpha:0.5];
     
     UIImage *result = UIGraphicsGetImageFromCurrentImageContext();

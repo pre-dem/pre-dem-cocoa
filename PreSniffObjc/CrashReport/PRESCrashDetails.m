@@ -30,7 +30,7 @@
 #import "PRESCrashDetails.h"
 #import "PRESCrashDetailsPrivate.h"
 
-NSString *const kBITCrashKillSignal = @"SIGKILL";
+NSString *const kPRESCrashKillSignal = @"SIGKILL";
 
 @implementation PRESCrashDetails
 
@@ -67,7 +67,7 @@ NSString *const kBITCrashKillSignal = @"SIGKILL";
 - (BOOL)isAppKill {
     BOOL result = NO;
     
-    if (_signal && [[_signal uppercaseString] isEqualToString:kBITCrashKillSignal])
+    if (_signal && [[_signal uppercaseString] isEqualToString:kPRESCrashKillSignal])
         result = YES;
     
     return result;

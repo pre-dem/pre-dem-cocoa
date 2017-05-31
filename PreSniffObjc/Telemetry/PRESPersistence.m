@@ -53,16 +53,16 @@ static NSUInteger const PRESDefaultFileCount = 50;
             typeof(self) strongSelf = weakSelf;
             BOOL success = [bundle writeToFile:fileURL atomically:YES];
             if (success) {
-                BITHockeyLogDebug(@"INFO: Wrote bundle to %@", fileURL);
+                PRESHockeyLogDebug(@"INFO: Wrote bundle to %@", fileURL);
                 [strongSelf sendBundleSavedNotification];
             }
             else {
-                BITHockeyLogError(@"Error writing bundle to %@", fileURL);
+                PRESHockeyLogError(@"Error writing bundle to %@", fileURL);
             }
         });
     }
     else {
-        BITHockeyLogWarning(@"WARNING: Unable to write %@ as provided bundle was null", fileURL);
+        PRESHockeyLogWarning(@"WARNING: Unable to write %@ as provided bundle was null", fileURL);
     }
 }
 
@@ -100,7 +100,7 @@ static NSUInteger const PRESDefaultFileCount = 50;
     if ([bundle isKindOfClass:NSDictionary.class]) {
         return (NSDictionary *) bundle;
     }
-    BITHockeyLogDebug(@"INFO: The context meta data file could not be loaded.");
+    PRESHockeyLogDebug(@"INFO: The context meta data file could not be loaded.");
     return [NSDictionary dictionary];
 }
 
@@ -132,14 +132,14 @@ static NSUInteger const PRESDefaultFileCount = 50;
         if ([path rangeOfString:kPRESFileBaseString].location != NSNotFound) {
             NSError *error = nil;
             if (![[NSFileManager defaultManager] removeItemAtPath:path error:&error]) {
-                BITHockeyLogError(@"Error deleting file at path %@", path);
+                PRESHockeyLogError(@"Error deleting file at path %@", path);
             }
             else {
-                BITHockeyLogDebug(@"INFO: Successfully deleted file at path %@", path);
+                PRESHockeyLogDebug(@"INFO: Successfully deleted file at path %@", path);
                 [strongSelf.requestedBundlePaths removeObject:path];
             }
         } else {
-            BITHockeyLogDebug(@"INFO: Empty path, nothing to delete");
+            PRESHockeyLogDebug(@"INFO: Empty path, nothing to delete");
         }
     });
     
@@ -193,14 +193,14 @@ static NSUInteger const PRESDefaultFileCount = 50;
         
         // Create PreSniffSDK folder if needed
         if (![fileManager createDirectoryAtURL:appURL withIntermediateDirectories:YES attributes:nil error:&error]) {
-            BITHockeyLogError(@"ERROR: %@", error.localizedDescription);
+            PRESHockeyLogError(@"ERROR: %@", error.localizedDescription);
             return;
         }
         
         // Create metadata subfolder
         NSURL *metaDataURL = [appURL URLByAppendingPathComponent:kPRESMetaDataDirectory];
         if (![fileManager createDirectoryAtURL:metaDataURL withIntermediateDirectories:YES attributes:nil error:&error]) {
-            BITHockeyLogError(@"ERROR: %@", error.localizedDescription);
+            PRESHockeyLogError(@"ERROR: %@", error.localizedDescription);
             return;
         }
         
@@ -211,7 +211,7 @@ static NSUInteger const PRESDefaultFileCount = 50;
         //No need to check if the directory already exists.
         NSURL *telemetryURL = [appURL URLByAppendingPathComponent:kPRESTelemetryDirectory];
         if (![fileManager createDirectoryAtURL:telemetryURL withIntermediateDirectories:YES attributes:nil error:&error]) {
-            BITHockeyLogError(@"ERROR: %@", error.localizedDescription);
+            PRESHockeyLogError(@"ERROR: %@", error.localizedDescription);
             return;
         }
         
@@ -219,9 +219,9 @@ static NSUInteger const PRESDefaultFileCount = 50;
         if (![appURL setResourceValue:@YES
                                forKey:NSURLIsExcludedFromBackupKey
                                 error:&error]) {
-            BITHockeyLogError(@"ERROR: Error excluding %@ from backup %@", appURL.lastPathComponent, error.localizedDescription);
+            PRESHockeyLogError(@"ERROR: Error excluding %@ from backup %@", appURL.lastPathComponent, error.localizedDescription);
         } else {
-            BITHockeyLogDebug(@"INFO: Exclude %@ from backup", appURL);
+            PRESHockeyLogDebug(@"INFO: Exclude %@ from backup", appURL);
         }
         
         _directorySetupComplete = YES;

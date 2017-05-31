@@ -71,7 +71,7 @@ extern NSString * const kPRESNetworkClientBoundary;
  *	@return	operation, which can be queued via enqueueHTTPOperation:
  */
 - (PRESHTTPOperation*) operationWithURLRequest:(NSURLRequest*) request
-                                    completion:(BITNetworkCompletionBlock) completion;
+                                    completion:(PRESNetworkCompletionBlock) completion;
 
 /**
  *	Creates an operation for the given path, and enqueues it
@@ -83,7 +83,7 @@ extern NSString * const kPRESNetworkClientBoundary;
  */
 - (void) getPath:(NSString*) path
       parameters:(NSDictionary *) params
-      completion:(BITNetworkCompletionBlock) completion;
+      completion:(PRESNetworkCompletionBlock) completion;
 
 /**
  *	Creates an operation for the given path, and enqueues it
@@ -95,7 +95,7 @@ extern NSString * const kPRESNetworkClientBoundary;
  */
 - (void) postPath:(NSString*) path
        parameters:(NSDictionary *) params
-       completion:(BITNetworkCompletionBlock) completion;
+       completion:(PRESNetworkCompletionBlock) completion;
 /**
  *	adds the given operation to the internal queue
  *

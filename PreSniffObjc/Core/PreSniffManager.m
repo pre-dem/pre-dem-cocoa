@@ -67,8 +67,6 @@ typedef struct {
     
     BOOL _startManagerIsInvoked;
     
-    BOOL _startUpdateManagerIsInvoked;
-    
     BOOL _managersInitialized;
     
     PRESNetworkClient *_hockeyAppClient;
@@ -93,9 +91,9 @@ typedef struct {
 - (void)logInvalidIdentifier:(NSString *)environment {
     if (self.appEnvironment != PRESEnvironmentAppStore) {
         if ([environment isEqualToString:@"liveIdentifier"]) {
-            BITHockeyLogWarning(@"[HockeySDK] WARNING: The liveIdentifier is invalid! The SDK will be disabled when deployed to the App Store without setting a valid app identifier!");
+            PRESHockeyLogWarning(@"[HockeySDK] WARNING: The liveIdentifier is invalid! The SDK will be disabled when deployed to the App Store without setting a valid app identifier!");
         } else {
-            BITHockeyLogError(@"[HockeySDK] ERROR: The %@ is invalid! Please use the HockeyApp app identifier you find on the apps website on HockeyApp! The SDK is disabled!", environment);
+            PRESHockeyLogError(@"[HockeySDK] ERROR: The %@ is invalid! Please use the HockeyApp app identifier you find on the apps website on HockeyApp! The SDK is disabled!", environment);
         }
     }
 }
@@ -117,7 +115,7 @@ typedef struct {
 
 - (instancetype)init {
     if ((self = [super init])) {
-        _serverURL = BITHOCKEYSDK_URL;
+        _serverURL = PRESHOCKEYSDK_URL;
         _delegate = nil;
         _managersInitialized = NO;
         
@@ -128,7 +126,6 @@ typedef struct {
         
         _appEnvironment = pres_currentAppEnvironment();
         _startManagerIsInvoked = NO;
-        _startUpdateManagerIsInvoked = NO;
         
         _liveIdentifier = nil;
         _installString = pres_appAnonID(NO);
@@ -183,7 +180,7 @@ typedef struct {
 - (void)startManager {
     if (!_validAppIdentifier) return;
     if (_startManagerIsInvoked) {
-        BITHockeyLogWarning(@"[HockeySDK] Warning: startManager should only be invoked once! This call is ignored.");
+        PRESHockeyLogWarning(@"[HockeySDK] Warning: startManager should only be invoked once! This call is ignored.");
         return;
     }
     
@@ -198,12 +195,12 @@ typedef struct {
         _installString = pres_appAnonID(YES);
     }
     
-    BITHockeyLogDebug(@"INFO: Starting HockeyManager");
+    PRESHockeyLogDebug(@"INFO: Starting HockeyManager");
     _startManagerIsInvoked = YES;
     
     // start CrashManager
     if (![self isCrashManagerDisabled]) {
-        BITHockeyLogDebug(@"INFO: Start CrashManager");
+        PRESHockeyLogDebug(@"INFO: Start CrashManager");
         
         [_crashManager startManager];
     }
@@ -215,7 +212,7 @@ typedef struct {
     
     // start MetricsManager
     if (!self.isMetricsManagerDisabled) {
-        BITHockeyLogDebug(@"INFO: Start MetricsManager");
+        PRESHockeyLogDebug(@"INFO: Start MetricsManager");
         [_metricsManager startManager];
         [PRESCategoryContainer activateCategory];
     }
@@ -251,7 +248,7 @@ typedef struct {
         _serverURL = [aServerURL copy];
         
         if (_hockeyAppClient) {
-            _hockeyAppClient.baseURL = [NSURL URLWithString:_serverURL ?: BITHOCKEYSDK_URL];
+            _hockeyAppClient.baseURL = [NSURL URLWithString:_serverURL ?: PRESHOCKEYSDK_URL];
         }
     }
 }
@@ -260,7 +257,7 @@ typedef struct {
 - (void)setDelegate:(id<PreSniffManagerDelegate>)delegate {
     if (self.appEnvironment != PRESEnvironmentAppStore) {
         if (_startManagerIsInvoked) {
-            BITHockeyLogError(@"[HockeySDK] ERROR: The `delegate` property has to be set before calling [[PreSniffManager sharedPreSniffManager] startManager] !");
+            PRESHockeyLogError(@"[HockeySDK] ERROR: The `delegate` property has to be set before calling [[PreSniffManager sharedPreSniffManager] startManager] !");
         }
     }
     
@@ -273,24 +270,15 @@ typedef struct {
     }
 }
 
-- (void)setDebugLogEnabled:(BOOL)debugLogEnabled {
-    _debugLogEnabled = debugLogEnabled;
-    if (debugLogEnabled) {
-        self.logLevel = BITLogLevelDebug;
-    } else {
-        self.logLevel = BITLogLevelWarning;
-    }
-}
-
-- (BITLogLevel)logLevel {
+- (PRESLogLevel)logLevel {
     return PRESLogger.currentLogLevel;
 }
 
-- (void)setLogLevel:(BITLogLevel)logLevel {
+- (void)setLogLevel:(PRESLogLevel)logLevel {
     PRESLogger.currentLogLevel = logLevel;
 }
 
-- (void)setLogHandler:(BITLogHandler)logHandler {
+- (void)setLogHandler:(PRESLogHandler)logHandler {
     [PRESLogger setLogHandler:logHandler];
 }
 
@@ -319,7 +307,7 @@ typedef struct {
     
     if (!success) {
         NSString *errorDescription = [error description] ?: @"";
-        BITHockeyLogError(@"ERROR: Couldn't %@ key %@ in the keychain. %@", updateType, key, errorDescription);
+        PRESHockeyLogError(@"ERROR: Couldn't %@ key %@ in the keychain. %@", updateType, key, errorDescription);
     }
 }
 
@@ -327,21 +315,21 @@ typedef struct {
     // always set it, since nil value will trigger removal of the keychain entry
     _userID = userID;
     
-    [self modifyKeychainUserValue:userID forKey:kBITHockeyMetaUserID];
+    [self modifyKeychainUserValue:userID forKey:kPRESHockeyMetaUserID];
 }
 
 - (void)setUserName:(NSString *)userName {
     // always set it, since nil value will trigger removal of the keychain entry
     _userName = userName;
     
-    [self modifyKeychainUserValue:userName forKey:kBITHockeyMetaUserName];
+    [self modifyKeychainUserValue:userName forKey:kPRESHockeyMetaUserName];
 }
 
 - (void)setUserEmail:(NSString *)userEmail {
     // always set it, since nil value will trigger removal of the keychain entry
     _userEmail = userEmail;
     
-    [self modifyKeychainUserValue:userEmail forKey:kBITHockeyMetaUserEmail];
+    [self modifyKeychainUserValue:userEmail forKey:kPRESHockeyMetaUserEmail];
 }
 
 - (void)testIdentifier {
@@ -377,7 +365,7 @@ typedef struct {
 }
 
 - (NSString *)integrationFlowTimeString {
-    NSString *timeString = [[NSBundle mainBundle] objectForInfoDictionaryKey:BITHOCKEY_INTEGRATIONFLOW_TIMESTAMP];
+    NSString *timeString = [[NSBundle mainBundle] objectForInfoDictionaryKey:PRESHOCKEY_INTEGRATIONFLOW_TIMESTAMP];
     
     return timeString;
 }
@@ -407,10 +395,10 @@ typedef struct {
     
     NSString *integrationPath = [NSString stringWithFormat:@"api/3/apps/%@/integration", pres_encodeAppIdentifier(appIdentifier)];
     
-    BITHockeyLogDebug(@"INFO: Sending integration workflow ping to %@", integrationPath);
+    PRESHockeyLogDebug(@"INFO: Sending integration workflow ping to %@", integrationPath);
     
     NSDictionary *params = @{@"timestamp": timeString,
-                             @"sdk": BITHOCKEY_NAME,
+                             @"sdk": PRESHOCKEY_NAME,
                              @"sdk_version": [PRESVersion getSDKVersion],
                              @"bundle_version": [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"]
                              };
@@ -440,16 +428,16 @@ typedef struct {
 - (void)logPingMessageForStatusCode:(NSInteger)statusCode {
     switch (statusCode) {
         case 400:
-            BITHockeyLogError(@"ERROR: App ID not found");
+            PRESHockeyLogError(@"ERROR: App ID not found");
             break;
         case 201:
-            BITHockeyLogDebug(@"INFO: Ping accepted.");
+            PRESHockeyLogDebug(@"INFO: Ping accepted.");
             break;
         case 200:
-            BITHockeyLogDebug(@"INFO: Ping accepted. Server already knows.");
+            PRESHockeyLogDebug(@"INFO: Ping accepted. Server already knows.");
             break;
         default:
-            BITHockeyLogError(@"ERROR: Unknown error");
+            PRESHockeyLogError(@"ERROR: Unknown error");
             break;
     }
 }
@@ -457,7 +445,7 @@ typedef struct {
 - (void)validateStartManagerIsInvoked {
     if (_validAppIdentifier && (self.appEnvironment != PRESEnvironmentAppStore)) {
         if (!_startManagerIsInvoked) {
-            BITHockeyLogError(@"[HockeySDK] ERROR: You did not call [[PreSniffManager sharedPreSniffManager] startManager] to startup the HockeySDK! Please do so after setting up all properties. The SDK is NOT running.");
+            PRESHockeyLogError(@"[HockeySDK] ERROR: You did not call [[PreSniffManager sharedPreSniffManager] startManager] to startup the HockeySDK! Please do so after setting up all properties. The SDK is NOT running.");
         }
     }
 }
@@ -467,9 +455,9 @@ typedef struct {
     
     if (!NSThread.isMainThread) {
         if (self.appEnvironment == PRESEnvironmentAppStore) {
-            BITHockeyLogError(@"%@", errorString);
+            PRESHockeyLogError(@"%@", errorString);
         } else {
-            BITHockeyLogError(@"%@", errorString);
+            PRESHockeyLogError(@"%@", errorString);
             NSAssert(NSThread.isMainThread, errorString);
         }
         
@@ -490,7 +478,7 @@ typedef struct {
 
 - (void)initializeModules {
     if (_managersInitialized) {
-        BITHockeyLogWarning(@"[HockeySDK] Warning: The SDK should only be initialized once! This call is ignored.");
+        PRESHockeyLogWarning(@"[HockeySDK] Warning: The SDK should only be initialized once! This call is ignored.");
         return;
     }
     
@@ -501,14 +489,14 @@ typedef struct {
     _startManagerIsInvoked = NO;
     
     if (_validAppIdentifier) {
-        BITHockeyLogDebug(@"INFO: Setup CrashManager");
+        PRESHockeyLogDebug(@"INFO: Setup CrashManager");
         _crashManager = [[PRESCrashManager alloc] initWithAppIdentifier:_appIdentifier
                                                          appEnvironment:_appEnvironment
                                                         hockeyAppClient:[self hockeyAppClient]];
         _crashManager.delegate = _delegate;
         
         
-        BITHockeyLogDebug(@"INFO: Setup MetricsManager");
+        PRESHockeyLogDebug(@"INFO: Setup MetricsManager");
         NSString *iKey = pres_appIdentifierToGuid(_appIdentifier);
         _metricsManager = [[PRESMetricsManager alloc] initWithAppIdentifier:iKey appEnvironment:_appEnvironment];
         

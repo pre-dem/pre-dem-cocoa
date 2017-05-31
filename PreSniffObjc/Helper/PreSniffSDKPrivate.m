@@ -31,32 +31,32 @@
 #import "PreSniffSDKPrivate.h"
 #include <CommonCrypto/CommonDigest.h>
 
-NSString *const kBITCrashErrorDomain = @"BITCrashReporterErrorDomain";
-NSString *const kBITUpdateErrorDomain = @"BITUpdaterErrorDomain";
-NSString *const kBITFeedbackErrorDomain = @"BITFeedbackErrorDomain";
-NSString *const kBITHockeyErrorDomain = @"BITHockeyErrorDomain";
-NSString *const kBITAuthenticatorErrorDomain = @"BITAuthenticatorErrorDomain";
+NSString *const kPRESCrashErrorDomain = @"PRESCrashReporterErrorDomain";
+NSString *const kPRESUpdateErrorDomain = @"PRESUpdaterErrorDomain";
+NSString *const kPRESFeedbackErrorDomain = @"PRESFeedbackErrorDomain";
+NSString *const kPRESHockeyErrorDomain = @"PRESHockeyErrorDomain";
+NSString *const kPRESAuthenticatorErrorDomain = @"PRESAuthenticatorErrorDomain";
 
 // Load the framework bundle.
-NSBundle *BITHockeyBundle(void) {
+NSBundle *PRESHockeyBundle(void) {
     static NSBundle *bundle = nil;
     static dispatch_once_t predicate;
     dispatch_once(&predicate, ^{
         NSString* mainBundlePath = [[NSBundle bundleForClass:[PreSniffManager class]] resourcePath];
-        NSString* frameworkBundlePath = [mainBundlePath stringByAppendingPathComponent:BITHOCKEYSDK_BUNDLE];
+        NSString* frameworkBundlePath = [mainBundlePath stringByAppendingPathComponent:PRESHOCKEYSDK_BUNDLE];
         bundle = [NSBundle bundleWithPath:frameworkBundlePath];
     });
     return bundle;
 }
 
-NSString *BITHockeyLocalizedString(NSString *stringToken) {
+NSString *PRESHockeyLocalizedString(NSString *stringToken) {
     if (!stringToken) return @"";
     
     NSString *appSpecificLocalizationString = NSLocalizedString(stringToken, @"");
     if (appSpecificLocalizationString && ![stringToken isEqualToString:appSpecificLocalizationString]) {
         return appSpecificLocalizationString;
-    } else if (BITHockeyBundle()) {
-        NSString *bundleSpecificLocalizationString = NSLocalizedStringFromTableInBundle(stringToken, @"HockeySDK", BITHockeyBundle(), @"");
+    } else if (PRESHockeyBundle()) {
+        NSString *bundleSpecificLocalizationString = NSLocalizedStringFromTableInBundle(stringToken, @"HockeySDK", PRESHockeyBundle(), @"");
         if (bundleSpecificLocalizationString)
             return bundleSpecificLocalizationString;
         return stringToken;
@@ -65,7 +65,7 @@ NSString *BITHockeyLocalizedString(NSString *stringToken) {
     }
 }
 
-NSString *BITHockeyMD5(NSString *str) {
+NSString *PRESHockeyMD5(NSString *str) {
     NSData *utf8Bytes = [str dataUsingEncoding:NSUTF8StringEncoding];
     unsigned char result[CC_MD5_DIGEST_LENGTH] = {0};
     CC_MD5( utf8Bytes.bytes, (CC_LONG)utf8Bytes.length, result );

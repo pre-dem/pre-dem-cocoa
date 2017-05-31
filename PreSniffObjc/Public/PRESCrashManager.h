@@ -39,7 +39,7 @@
 /**
  * Custom block that handles the alert that prompts the user whether he wants to send crash reports
  */
-typedef void(^BITCustomAlertViewHandler)();
+typedef void(^PRESCustomAlertViewHandler)();
 
 
 /**
@@ -358,7 +358,7 @@ typedef NS_ENUM(NSUInteger, PRESCrashManagerUserInput) {
  
  @warning This needs to be set before calling `[PreSniffManager startManager]`!
  */
-- (void)setAlertViewHandler:(BITCustomAlertViewHandler)alertViewHandler;
+- (void)setAlertViewHandler:(PRESCustomAlertViewHandler)alertViewHandler;
 
 /**
  * Provides details about the crash that occurred in the last app session

@@ -192,7 +192,7 @@ static const char *findSEL (const char *imageName, NSString *imageUUID, uint64_t
  */
 @implementation PRESCrashReportTextFormatter
 
-NSString *const BITXamarinStackTraceDelimiter = @"Xamarin Exception Stack:";
+NSString *const PRESXamarinStackTraceDelimiter = @"Xamarin Exception Stack:";
 
 /**
  * Formats the provided @a report as human-readable text in the given @a textFormat, and return
@@ -402,7 +402,7 @@ NSString *const BITXamarinStackTraceDelimiter = @"Xamarin Exception Stack:";
         // Check if exception data contains xamarin stacktrace in order to determine report version
         if (report.hasExceptionInfo) {
             exceptionReason = report.exceptionInfo.exceptionReason;
-            NSInteger xamarinTracePosition = [exceptionReason rangeOfString:BITXamarinStackTraceDelimiter].location;
+            NSInteger xamarinTracePosition = [exceptionReason rangeOfString:PRESXamarinStackTraceDelimiter].location;
             if (xamarinTracePosition != NSNotFound) {
                 xamarinTrace = [exceptionReason substringFromIndex:xamarinTracePosition];
                 xamarinTrace = [xamarinTrace stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
@@ -580,9 +580,9 @@ NSString *const BITXamarinStackTraceDelimiter = @"Xamarin Exception Stack:";
         
         /* Determine if this is the main executable or an app specific framework*/
         NSString *binaryDesignator = @" ";
-        BITBinaryImageType imageType = [[self class] pres_imageTypeForImagePath:imageInfo.imageName
+        PRESBinaryImageType imageType = [[self class] pres_imageTypeForImagePath:imageInfo.imageName
                                                                     processPath:report.processInfo.processPath];
-        if (imageType != BITBinaryImageTypeOther) {
+        if (imageType != PRESBinaryImageTypeOther) {
             binaryDesignator = @"+";
         }
         
@@ -678,20 +678,20 @@ NSString *const BITXamarinStackTraceDelimiter = @"Xamarin Exception Stack:";
         NSString *archName = [[self class] pres_archNameFromImageInfo:imageInfo];
         
         /* Determine if this is the app executable or app specific framework */
-        BITBinaryImageType imageType = [[self class] pres_imageTypeForImagePath:imageInfo.imageName
+        PRESBinaryImageType imageType = [[self class] pres_imageTypeForImagePath:imageInfo.imageName
                                                                     processPath:report.processInfo.processPath];
-        if (imageType != BITBinaryImageTypeOther) {
+        if (imageType != PRESBinaryImageTypeOther) {
             NSString *imageTypeString;
             
-            if (imageType == BITBinaryImageTypeAppBinary) {
+            if (imageType == PRESBinaryImageTypeAppBinary) {
                 imageTypeString = @"app";
             } else {
                 imageTypeString = @"framework";
             }
             
-            [appUUIDs addObject:@{kBITBinaryImageKeyUUID: uuid,
-                                  kBITBinaryImageKeyArch: archName,
-                                  kBITBinaryImageKeyType: imageTypeString}
+            [appUUIDs addObject:@{kPRESBinaryImageKeyUUID: uuid,
+                                  kPRESBinaryImageKeyArch: archName,
+                                  kPRESBinaryImageKeyType: imageTypeString}
              ];
         }
     }
@@ -700,11 +700,11 @@ NSString *const BITXamarinStackTraceDelimiter = @"Xamarin Exception Stack:";
 }
 
 /* Determine if in binary image is the app executable or app specific framework */
-+ (BITBinaryImageType)pres_imageTypeForImagePath:(NSString *)imagePath processPath:(NSString *)processPath {
++ (PRESBinaryImageType)pres_imageTypeForImagePath:(NSString *)imagePath processPath:(NSString *)processPath {
     if (!imagePath || !processPath) {
-        return BITBinaryImageTypeOther;
+        return PRESBinaryImageTypeOther;
     }
-    BITBinaryImageType imageType = BITBinaryImageTypeOther;
+    PRESBinaryImageType imageType = PRESBinaryImageTypeOther;
     
     NSString *standardizedImagePath = [[imagePath stringByStandardizingPath] lowercaseString];
     NSString *lowercaseImagePath = [imagePath lowercaseString];
@@ -722,11 +722,11 @@ NSString *const BITXamarinStackTraceDelimiter = @"Xamarin Exception Stack:";
         if ([standardizedImagePath isEqual: lowercaseProcessPath] ||
             // Fix issue with iOS 8 `stringByStandardizingPath` removing leading `/private` path (when not running in the debugger or simulator only)
             [lowercaseImagePath hasPrefix:lowercaseProcessPath]) {
-            imageType = BITBinaryImageTypeAppBinary;
+            imageType = PRESBinaryImageTypeAppBinary;
         } else if ([standardizedImagePath hasPrefix:appBundleContentsPath] ||
                    // Fix issue with iOS 8 `stringByStandardizingPath` removing leading `/private` path (when not running in the debugger or simulator only)
                    [lowercaseImagePath hasPrefix:appBundleContentsPath]) {
-            imageType = BITBinaryImageTypeAppFramework;
+            imageType = PRESBinaryImageTypeAppFramework;
         }
     }
     
@@ -855,9 +855,9 @@ NSString *const BITXamarinStackTraceDelimiter = @"Xamarin Exception Stack:";
     
     /* If symbol info is available, the format used in Apple's reports is Sym + OffsetFromSym. Otherwise,
      * the format used is imageBaseAddress + offsetToIP */
-    BITBinaryImageType imageType = [[self class] pres_imageTypeForImagePath:imageInfo.imageName
+    PRESBinaryImageType imageType = [[self class] pres_imageTypeForImagePath:imageInfo.imageName
                                                                 processPath:report.processInfo.processPath];
-    if (frameInfo.symbolInfo != nil && imageType == BITBinaryImageTypeOther) {
+    if (frameInfo.symbolInfo != nil && imageType == PRESBinaryImageTypeOther) {
         NSString *symbolName = frameInfo.symbolInfo.symbolName;
         
         /* Apple strips the _ symbol prefix in their reports. Only OS X makes use of an
@@ -871,7 +871,7 @@ NSString *const BITXamarinStackTraceDelimiter = @"Xamarin Exception Stack:";
                     break;
                     
                 default:
-                    BITHockeyLogDebug(@"Symbol prefix rules are unknown for this OS!");
+                    PRESHockeyLogDebug(@"Symbol prefix rules are unknown for this OS!");
                     break;
             }
         }
@@ -911,7 +911,7 @@ NSString *const BITXamarinStackTraceDelimiter = @"Xamarin Exception Stack:";
         NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"(/Users/[^/]+/)" options:0 error:&error];
         anonymizedProcessPath = [regex stringByReplacingMatchesInString:path options:0 range:NSMakeRange(0, [path length]) withTemplate:@"/Users/USER/"];
         if (error) {
-            BITHockeyLogError(@"ERROR: String replacing failed - %@", error.localizedDescription);
+            PRESHockeyLogError(@"ERROR: String replacing failed - %@", error.localizedDescription);
         }
     }
     else if(([path length] > 0) && (![path containsString:@"Users"])) {

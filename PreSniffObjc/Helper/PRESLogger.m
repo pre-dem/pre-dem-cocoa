@@ -3,10 +3,10 @@
 
 @implementation PRESLogger
 
-static BITLogLevel _currentLogLevel = BITLogLevelWarning;
-static BITLogHandler currentLogHandler;
+static PRESLogLevel _currentLogLevel = PRESLogLevelWarning;
+static PRESLogHandler currentLogHandler;
 
-BITLogHandler defaultLogHandler = ^(BITLogMessageProvider messageProvider, BITLogLevel logLevel, const char *file, const char *function, uint line) {
+PRESLogHandler defaultLogHandler = ^(PRESLogMessageProvider messageProvider, PRESLogLevel logLevel, const char *file, const char *function, uint line) {
     if (messageProvider) {
         if (_currentLogLevel < logLevel) {
             return;
@@ -20,19 +20,19 @@ BITLogHandler defaultLogHandler = ^(BITLogMessageProvider messageProvider, BITLo
     currentLogHandler = defaultLogHandler;
 }
 
-+ (BITLogLevel)currentLogLevel {
++ (PRESLogLevel)currentLogLevel {
     return _currentLogLevel;
 }
 
-+ (void)setCurrentLogLevel:(BITLogLevel)currentLogLevel {
++ (void)setCurrentLogLevel:(PRESLogLevel)currentLogLevel {
     _currentLogLevel = currentLogLevel;
 }
 
-+ (void)setLogHandler:(BITLogHandler)logHandler {
++ (void)setLogHandler:(PRESLogHandler)logHandler {
     currentLogHandler = logHandler;
 }
 
-+ (void)logMessage:(BITLogMessageProvider)messageProvider level:(BITLogLevel)loglevel file:(const char *)file function:(const char *)function line:(uint)line {
++ (void)logMessage:(PRESLogMessageProvider)messageProvider level:(PRESLogLevel)loglevel file:(const char *)file function:(const char *)function line:(uint)line {
     if (currentLogHandler) {
         currentLogHandler(messageProvider, loglevel, file, function, line);
     }

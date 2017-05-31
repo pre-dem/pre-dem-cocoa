@@ -126,7 +126,7 @@ NSString * const kPRESNetworkClientBoundary = @"----FOO";
 }
 
 - (PRESHTTPOperation*) operationWithURLRequest:(NSURLRequest*) request
-                                    completion:(BITNetworkCompletionBlock) completion {
+                                    completion:(PRESNetworkCompletionBlock) completion {
     PRESHTTPOperation *operation = [PRESHTTPOperation operationWithRequest:request
                                     ];
     [operation setCompletion:completion];
@@ -134,14 +134,14 @@ NSString * const kPRESNetworkClientBoundary = @"----FOO";
     return operation;
 }
 
-- (void)getPath:(NSString *)path parameters:(NSDictionary *)params completion:(BITNetworkCompletionBlock)completion {
+- (void)getPath:(NSString *)path parameters:(NSDictionary *)params completion:(PRESNetworkCompletionBlock)completion {
     NSURLRequest *request = [self requestWithMethod:@"GET" path:path parameters:params];
     PRESHTTPOperation *op = [self operationWithURLRequest:request
                                                completion:completion];
     [self enqeueHTTPOperation:op];
 }
 
-- (void)postPath:(NSString *)path parameters:(NSDictionary *)params completion:(BITNetworkCompletionBlock)completion {
+- (void)postPath:(NSString *)path parameters:(NSDictionary *)params completion:(PRESNetworkCompletionBlock)completion {
     NSURLRequest *request = [self requestWithMethod:@"POST" path:path parameters:params];
     PRESHTTPOperation *op = [self operationWithURLRequest:request
                                                completion:completion];

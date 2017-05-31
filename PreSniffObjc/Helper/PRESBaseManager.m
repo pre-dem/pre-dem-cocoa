@@ -53,11 +53,11 @@
 
 - (instancetype)init {
     if ((self = [super init])) {
-        _serverURL = BITHOCKEYSDK_URL;
+        _serverURL = PRESHOCKEYSDK_URL;
         
         if ([self isPreiOS7Environment]) {
             _barStyle = UIBarStyleBlackOpaque;
-            self.navigationBarTintColor = BIT_RGBCOLOR(25, 25, 25);
+            self.navigationBarTintColor = PRES_RGBCOLOR(25, 25, 25);
         } else {
             _barStyle = UIBarStyleDefault;
         }
@@ -84,7 +84,7 @@
 #pragma mark - Private
 
 - (void)reportError:(NSError *)error {
-    BITHockeyLogError(@"ERROR: %@", [error localizedDescription]);
+    PRESHockeyLogError(@"ERROR: %@", [error localizedDescription]);
 }
 
 - (NSString *)encodedAppIdentifier {
@@ -157,7 +157,7 @@
         if ([UIWindow instancesRespondToSelector:@selector(rootViewController)]) {
             if (!(window.hidden) && ([window rootViewController])) {
                 visibleWindow = window;
-                BITHockeyLogDebug(@"INFO: UIWindow with rootViewController found: %@", visibleWindow);
+                PRESHockeyLogDebug(@"INFO: UIWindow with rootViewController found: %@", visibleWindow);
                 break;
             }
         }
@@ -183,7 +183,7 @@
         // in case of iOS 7 we overwrite the tint color on the navigation bar
         if (![self isPreiOS7Environment]) {
             if ([UIWindow instancesRespondToSelector:NSSelectorFromString(@"tintColor")]) {
-                [navController.navigationBar setTintColor:BIT_RGBCOLOR(0, 122, 255)];
+                [navController.navigationBar setTintColor:PRES_RGBCOLOR(0, 122, 255)];
             }
         }
     }
@@ -281,7 +281,7 @@
     NSDate *date = nil;
     NSError *error = nil; 
     if (![_rfc3339Formatter getObjectValue:&date forString:dateString range:nil error:&error]) {
-        BITHockeyLogWarning(@"WARNING: Invalid date '%@' string: %@", dateString, error);
+        PRESHockeyLogWarning(@"WARNING: Invalid date '%@' string: %@", dateString, error);
     }
     
     return date;

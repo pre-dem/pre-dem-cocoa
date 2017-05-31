@@ -120,8 +120,8 @@
 /** Invoked after sending crash reports failed
  
  @param crashManager The `PRESCrashManager` instance invoking this delegate
- @param error The error returned from the NSURLConnection/NSURLSession call or `kBITCrashErrorDomain`
- with reason of type `BITCrashErrorReason`.
+ @param error The error returned from the NSURLConnection/NSURLSession call or `kPRESCrashErrorDomain`
+ with reason of type `PRESCrashErrorReason`.
  */
 - (void)crashManager:(PRESCrashManager *)crashManager didFailWithError:(NSError *)error;
 
