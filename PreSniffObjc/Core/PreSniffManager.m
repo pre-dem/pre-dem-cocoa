@@ -91,7 +91,7 @@ typedef struct {
 }
 
 - (void)logInvalidIdentifier:(NSString *)environment {
-    if (self.appEnvironment != BITEnvironmentAppStore) {
+    if (self.appEnvironment != PRESEnvironmentAppStore) {
         if ([environment isEqualToString:@"liveIdentifier"]) {
             BITHockeyLogWarning(@"[HockeySDK] WARNING: The liveIdentifier is invalid! The SDK will be disabled when deployed to the App Store without setting a valid app identifier!");
         } else {
@@ -194,7 +194,7 @@ typedef struct {
     
     if (![self isSetUpOnMainThread]) return;
     
-    if ((self.appEnvironment == BITEnvironmentAppStore) && [self isInstallTrackingDisabled]) {
+    if ((self.appEnvironment == PRESEnvironmentAppStore) && [self isInstallTrackingDisabled]) {
         _installString = pres_appAnonID(YES);
     }
     
@@ -258,7 +258,7 @@ typedef struct {
 
 
 - (void)setDelegate:(id<PreSniffManagerDelegate>)delegate {
-    if (self.appEnvironment != BITEnvironmentAppStore) {
+    if (self.appEnvironment != PRESEnvironmentAppStore) {
         if (_startManagerIsInvoked) {
             BITHockeyLogError(@"[HockeySDK] ERROR: The `delegate` property has to be set before calling [[PreSniffManager sharedPreSniffManager] startManager] !");
         }
@@ -345,7 +345,7 @@ typedef struct {
 }
 
 - (void)testIdentifier {
-    if (!_appIdentifier || (self.appEnvironment == BITEnvironmentAppStore)) {
+    if (!_appIdentifier || (self.appEnvironment == PRESEnvironmentAppStore)) {
         return;
     }
     
@@ -383,7 +383,7 @@ typedef struct {
 }
 
 - (BOOL)integrationFlowStartedWithTimeString:(NSString *)timeString {
-    if (timeString == nil || (self.appEnvironment == BITEnvironmentAppStore)) {
+    if (timeString == nil || (self.appEnvironment == PRESEnvironmentAppStore)) {
         return NO;
     }
     
@@ -401,7 +401,7 @@ typedef struct {
 }
 
 - (void)pingServerForIntegrationStartWorkflowWithTimeString:(NSString *)timeString appIdentifier:(NSString *)appIdentifier {
-    if (!appIdentifier || (self.appEnvironment == BITEnvironmentAppStore)) {
+    if (!appIdentifier || (self.appEnvironment == PRESEnvironmentAppStore)) {
         return;
     }
     
@@ -455,7 +455,7 @@ typedef struct {
 }
 
 - (void)validateStartManagerIsInvoked {
-    if (_validAppIdentifier && (self.appEnvironment != BITEnvironmentAppStore)) {
+    if (_validAppIdentifier && (self.appEnvironment != PRESEnvironmentAppStore)) {
         if (!_startManagerIsInvoked) {
             BITHockeyLogError(@"[HockeySDK] ERROR: You did not call [[PreSniffManager sharedPreSniffManager] startManager] to startup the HockeySDK! Please do so after setting up all properties. The SDK is NOT running.");
         }
@@ -466,7 +466,7 @@ typedef struct {
     NSString *errorString = @"ERROR: HockeySDK has to be setup on the main thread!";
     
     if (!NSThread.isMainThread) {
-        if (self.appEnvironment == BITEnvironmentAppStore) {
+        if (self.appEnvironment == PRESEnvironmentAppStore) {
             BITHockeyLogError(@"%@", errorString);
         } else {
             BITHockeyLogError(@"%@", errorString);
@@ -485,7 +485,7 @@ typedef struct {
         delegateResult = [(NSObject <PreSniffManagerDelegate>*)_delegate shouldUseLiveIdentifierForHockeyManager:self];
     }
     
-    return (delegateResult) || (_appEnvironment == BITEnvironmentAppStore);
+    return (delegateResult) || (_appEnvironment == PRESEnvironmentAppStore);
 }
 
 - (void)initializeModules {
@@ -512,7 +512,7 @@ typedef struct {
         NSString *iKey = pres_appIdentifierToGuid(_appIdentifier);
         _metricsManager = [[PRESMetricsManager alloc] initWithAppIdentifier:iKey appEnvironment:_appEnvironment];
         
-        if (self.appEnvironment != BITEnvironmentAppStore) {
+        if (self.appEnvironment != PRESEnvironmentAppStore) {
             NSString *integrationFlowTime = [self integrationFlowTimeString];
             if (integrationFlowTime && [self integrationFlowStartedWithTimeString:integrationFlowTime]) {
                 [self pingServerForIntegrationStartWorkflowWithTimeString:integrationFlowTime appIdentifier:_appIdentifier];

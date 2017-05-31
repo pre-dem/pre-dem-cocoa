@@ -292,9 +292,9 @@ typedef void (^PRESNetDiagCompleteHandler)(PRESNetDiagResult* result);
  TestFlight and Other. Other summarizes several different distribution methods
  and we might define additional specifc values for other environments in the future.
  
- @see BITEnvironment
+ @see PRESEnvironment
  */
-@property (nonatomic, readonly) BITEnvironment appEnvironment;
+@property (nonatomic, readonly) PRESEnvironment appEnvironment;
 
 
 /**

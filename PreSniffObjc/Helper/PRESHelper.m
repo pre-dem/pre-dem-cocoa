@@ -358,26 +358,26 @@ BOOL pres_hasEmbeddedMobileProvision(void) {
     return hasEmbeddedMobileProvision;
 }
 
-BITEnvironment pres_currentAppEnvironment(void) {
+PRESEnvironment pres_currentAppEnvironment(void) {
 #if TARGET_OS_SIMULATOR
-    return BITEnvironmentOther;
+    return PRESEnvironmentOther;
 #else
     
     // MobilePovision profiles are a clear indicator for Ad-Hoc distribution
     if (pres_hasEmbeddedMobileProvision()) {
-        return BITEnvironmentOther;
+        return PRESEnvironmentOther;
     }
     
     // TestFlight is only supported from iOS 8 onwards, so at this point we have to be in the AppStore
     if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1) {
-        return BITEnvironmentAppStore;
+        return PRESEnvironmentAppStore;
     }
     
     if (pres_isAppStoreReceiptSandbox()) {
-        return BITEnvironmentTestFlight;
+        return PRESEnvironmentTestFlight;
     }
     
-    return BITEnvironmentAppStore;
+    return PRESEnvironmentAppStore;
 #endif
 }
 

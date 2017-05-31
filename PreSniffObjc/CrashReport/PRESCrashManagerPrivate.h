@@ -67,7 +67,7 @@
 
 @property (nonatomic, strong) NSString *crashesDir;
 
-- (instancetype)initWithAppIdentifier:(NSString *)appIdentifier appEnvironment:(BITEnvironment)environment hockeyAppClient:(PRESNetworkClient *)hockeyAppClient NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithAppIdentifier:(NSString *)appIdentifier appEnvironment:(PRESEnvironment)environment hockeyAppClient:(PRESNetworkClient *)hockeyAppClient NS_DESIGNATED_INITIALIZER;
 
 - (void)cleanCrashReports;
 

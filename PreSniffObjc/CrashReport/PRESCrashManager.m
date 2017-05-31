@@ -191,7 +191,7 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
     id _networkDidBecomeReachableObserver;
 }
 
-- (instancetype)initWithAppIdentifier:(NSString *)appIdentifier appEnvironment:(BITEnvironment)environment hockeyAppClient:(PRESNetworkClient *)hockeyAppClient {
+- (instancetype)initWithAppIdentifier:(NSString *)appIdentifier appEnvironment:(PRESEnvironment)environment hockeyAppClient:(PRESNetworkClient *)hockeyAppClient {
     if ((self = [super initWithAppIdentifier:appIdentifier appEnvironment:environment])) {
         _delegate = nil;
         _isSetup = NO;
@@ -708,7 +708,7 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
 
 
 - (void)generateTestCrash {
-    if (self.appEnvironment != BITEnvironmentAppStore) {
+    if (self.appEnvironment != PRESEnvironmentAppStore) {
         
         if ([self isDebuggerAttached]) {
             BITHockeyLogWarning(@"[HockeySDK] WARNING: The debugger is attached. The following crash cannot be detected by the SDK!");
@@ -1156,7 +1156,7 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
             // We only check for this if we are not in the App Store environment
             
             BOOL debuggerIsAttached = NO;
-            if (self.appEnvironment != BITEnvironmentAppStore) {
+            if (self.appEnvironment != PRESEnvironmentAppStore) {
                 if ([self isDebuggerAttached]) {
                     debuggerIsAttached = YES;
                     BITHockeyLogWarning(@"[HockeySDK] WARNING: Detecting crashes is NOT enabled due to running the app with a debugger attached.");

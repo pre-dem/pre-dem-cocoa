@@ -41,20 +41,20 @@ typedef void (^BITLogHandler)(BITLogMessageProvider messageProvider, BITLogLevel
 /**
  *  HockeySDK App environment
  */
-typedef NS_ENUM(NSInteger, BITEnvironment) {
+typedef NS_ENUM(NSInteger, PRESEnvironment) {
     /**
      *  App has been downloaded from the AppStore
      */
-    BITEnvironmentAppStore = 0,
+    PRESEnvironmentAppStore = 0,
     /**
      *  App has been downloaded from TestFlight
      */
-    BITEnvironmentTestFlight = 1,
+    PRESEnvironmentTestFlight = 1,
     /**
      *  App has been installed by some other mechanism.
      *  This could be Ad-Hoc, Enterprise, etc.
      */
-    BITEnvironmentOther = 99
+    PRESEnvironmentOther = 99
 };
 
 /**

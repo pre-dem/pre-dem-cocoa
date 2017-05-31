@@ -72,7 +72,7 @@
     return self;
 }
 
-- (instancetype)initWithAppIdentifier:(NSString *)appIdentifier appEnvironment:(BITEnvironment)environment {
+- (instancetype)initWithAppIdentifier:(NSString *)appIdentifier appEnvironment:(PRESEnvironment)environment {
     if ((self = [self init])) {
         _appIdentifier = appIdentifier;
         _appEnvironment = environment;

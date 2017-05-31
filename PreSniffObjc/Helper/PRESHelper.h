@@ -65,7 +65,7 @@ BOOL pres_isPreiOS8Environment(void);
 BOOL pres_isPreiOS10Environment(void);
 BOOL pres_isAppStoreReceiptSandbox(void);
 BOOL pres_hasEmbeddedMobileProvision(void);
-BITEnvironment pres_currentAppEnvironment(void);
+PRESEnvironment pres_currentAppEnvironment(void);
 BOOL pres_isRunningInAppExtension(void);
 
 /**

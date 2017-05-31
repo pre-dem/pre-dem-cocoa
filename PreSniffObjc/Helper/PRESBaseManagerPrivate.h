@@ -37,9 +37,9 @@
 
 @property (nonatomic, strong) NSString *appIdentifier;
 
-@property (nonatomic, assign, readonly) BITEnvironment appEnvironment;
+@property (nonatomic, assign, readonly) PRESEnvironment appEnvironment;
 
-- (instancetype)initWithAppIdentifier:(NSString *)appIdentifier appEnvironment:(BITEnvironment)environment;
+- (instancetype)initWithAppIdentifier:(NSString *)appIdentifier appEnvironment:(PRESEnvironment)environment;
 
 - (void)startManager;
 
