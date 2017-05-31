@@ -324,7 +324,7 @@ typedef void (^PRESNetDiagCompleteHandler)(PRESNetDiagResult* result);
  
  ```
  [[PreSniffManager sharedPreSniffManager] setLogHandler:^(PRESLogMessageProvider messageProvider, PRESLogLevel logLevel, const char *file, const char *function, uint line) {
- [DDLog log:YES message:messageProvider() level:ddLogLevel flag:(DDLogFlag)(1 << (logLevel-1)) context:<#CocoaLumberjackContext#> file:file function:function line:line tag:nil];
+ [DDLog log:YES message:messageProvider() level:ddLogLevel flag:(DDLogFlag)(1 << (logLevel-1)) context:CocoaLumberjackContext file:file function:function line:line tag:nil];
  }];
  ```
  
