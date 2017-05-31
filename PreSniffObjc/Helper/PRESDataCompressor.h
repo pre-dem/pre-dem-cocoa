@@ -14,8 +14,8 @@
 #import <zlib.h>
 
 @interface PRESDataCompressor : NSObject {
-	BOOL streamReady;
-	z_stream zStream;
+    BOOL streamReady;
+    z_stream zStream;
 }
 
 // Convenience constructor will call setupStream for you

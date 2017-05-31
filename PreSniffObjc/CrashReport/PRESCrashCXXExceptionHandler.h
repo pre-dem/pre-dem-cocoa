@@ -38,7 +38,7 @@ typedef struct {
 } PRESCrashUncaughtCXXExceptionInfo;
 
 typedef void (*PRESCrashUncaughtCXXExceptionHandler)(
-    const PRESCrashUncaughtCXXExceptionInfo * __nonnull info
+const PRESCrashUncaughtCXXExceptionInfo * __nonnull info
 );
 
 @interface PRESCrashUncaughtCXXExceptionHandlerManager : NSObject

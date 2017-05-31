@@ -34,7 +34,7 @@
 
 /**
  The `PreSniffManagerDelegate` formal protocol defines methods further configuring
-  the behaviour of `PreSniffManager`, as well as the delegate of the modules it manages.
+ the behaviour of `PreSniffManager`, as well as the delegate of the modules it manages.
  */
 
 @protocol PreSniffManagerDelegate
@@ -59,12 +59,12 @@ PRESCrashManagerDelegate
  
  Example:
  
-     - (BOOL)shouldUseLiveIdentifierForHockeyManager:(PreSniffManager *)hockeyManager {
-     #ifdef (CONFIGURATION_AppStore)
-       return YES;
-     #endif
-       return NO;
-     }
+ - (BOOL)shouldUseLiveIdentifierForHockeyManager:(PreSniffManager *)hockeyManager {
+ #ifdef (CONFIGURATION_AppStore)
+ return YES;
+ #endif
+ return NO;
+ }
  
  @param hockeyManager PreSniffManager instance
  */
@@ -105,20 +105,20 @@ PRESCrashManagerDelegate
  
  You can find out the component requesting the userID like this:
  
-    - (NSString *)userIDForHockeyManager:(PreSniffManager *)hockeyManager componentManager:(PRESBaseManager *)componentManager {
-      if (componentManager == hockeyManager.feedbackManager) {
-        return UserIDForFeedback;
-      } else if (componentManager == hockeyManager.crashManager) {
-        return UserIDForCrashReports;
-      } else {
-        return nil;
-      }
-    }
+ - (NSString *)userIDForHockeyManager:(PreSniffManager *)hockeyManager componentManager:(PRESBaseManager *)componentManager {
+ if (componentManager == hockeyManager.feedbackManager) {
+ return UserIDForFeedback;
+ } else if (componentManager == hockeyManager.crashManager) {
+ return UserIDForCrashReports;
+ } else {
+ return nil;
+ }
+ }
  
  For crash reports, this delegate is invoked on the startup after the crash!
  
  Alternatively you can also use `[PreSniffManager userID]` which will cache the value in the keychain.
-
+ 
  @warning When returning a non nil value for the `PRESCrashManager` component, crash reports
  are not anonymous any more and the crash alerts will not show the word "anonymous"!
  
@@ -141,23 +141,23 @@ PRESCrashManagerDelegate
  
  You can find out the component requesting the user name like this:
  
-    - (NSString *)userNameForHockeyManager:(PreSniffManager *)hockeyManager componentManager:(PRESBaseManager *)componentManager {
-      if (componentManager == hockeyManager.feedbackManager) {
-        return UserNameForFeedback;
-      } else if (componentManager == hockeyManager.crashManager) {
-        return UserNameForCrashReports;
-      } else {
-        return nil;
-      }
+ - (NSString *)userNameForHockeyManager:(PreSniffManager *)hockeyManager componentManager:(PRESBaseManager *)componentManager {
+ if (componentManager == hockeyManager.feedbackManager) {
+ return UserNameForFeedback;
+ } else if (componentManager == hockeyManager.crashManager) {
+ return UserNameForCrashReports;
+ } else {
+ return nil;
  }
-
+ }
+ 
  For crash reports, this delegate is invoked on the startup after the crash!
  
  Alternatively you can also use `[PreSniffManager userName]` which will cache the value in the keychain.
  
  @warning When returning a non nil value for the `PRESCrashManager` component, crash reports
  are not anonymous any more and the crash alerts will not show the word "anonymous"!
-
+ 
  @param hockeyManager The `PreSniffManager` HockeyManager instance invoking this delegate
  @param componentManager The `PRESBaseManager` component instance invoking this delegate, can be `PRESCrashManager` or `BITFeedbackManager`
  @see userIDForHockeyManager:componentManager:
@@ -177,15 +177,15 @@ PRESCrashManagerDelegate
  
  You can find out the component requesting the user email like this:
  
-    - (NSString *)userEmailForHockeyManager:(PreSniffManager *)hockeyManager componentManager:(PRESBaseManager *)componentManager {
-      if (componentManager == hockeyManager.feedbackManager) {
-        return UserEmailForFeedback;
-      } else if (componentManager == hockeyManager.crashManager) {
-        return UserEmailForCrashReports;
-       } else {
-        return nil;
-       }
-    }
+ - (NSString *)userEmailForHockeyManager:(PreSniffManager *)hockeyManager componentManager:(PRESBaseManager *)componentManager {
+ if (componentManager == hockeyManager.feedbackManager) {
+ return UserEmailForFeedback;
+ } else if (componentManager == hockeyManager.crashManager) {
+ return UserEmailForCrashReports;
+ } else {
+ return nil;
+ }
+ }
  
  For crash reports, this delegate is invoked on the startup after the crash!
  
@@ -193,7 +193,7 @@ PRESCrashManagerDelegate
  
  @warning When returning a non nil value for the `PRESCrashManager` component, crash reports
  are not anonymous any more and the crash alerts will not show the word "anonymous"!
-
+ 
  @param hockeyManager The `PreSniffManager` HockeyManager instance invoking this delegate
  @param componentManager The `PRESBaseManager` component instance invoking this delegate, can be `PRESCrashManager` or `BITFeedbackManager`
  @see userIDForHockeyManager:componentManager:

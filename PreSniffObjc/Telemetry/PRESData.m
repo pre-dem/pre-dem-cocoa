@@ -22,17 +22,17 @@
 #pragma mark - NSCoding
 
 - (instancetype)initWithCoder:(NSCoder *)coder {
-  self = [super initWithCoder:coder];
-  if(self) {
-    _baseData = [coder decodeObjectForKey:@"self.baseData"];
-  }
-
-  return self;
+    self = [super initWithCoder:coder];
+    if(self) {
+        _baseData = [coder decodeObjectForKey:@"self.baseData"];
+    }
+    
+    return self;
 }
 
 - (void)encodeWithCoder:(NSCoder *)coder {
-  [super encodeWithCoder:coder];
-  [coder encodeObject:self.baseData forKey:@"self.baseData"];
+    [super encodeWithCoder:coder];
+    [coder encodeObject:self.baseData forKey:@"self.baseData"];
 }
 
 

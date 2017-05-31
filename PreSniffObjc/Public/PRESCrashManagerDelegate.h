@@ -46,7 +46,7 @@
 ///-----------------------------------------------------------------------------
 
 /** Return any log string based data the crash report being processed should contain
-
+ 
  @param crashManager The `PRESCrashManager` instance invoking this delegate
  @see attachmentForCrashManager:
  @see PreSniffManagerDelegate userNameForHockeyManager:componentManager:
@@ -62,14 +62,14 @@
  
  Example implementation:
  
-     - (PRESAttachment *)attachmentForCrashManager:(PRESCrashManager *)crashManager {
-       NSData *data = [NSData dataWithContentsOfURL:@"mydatafile"];
+ - (PRESAttachment *)attachmentForCrashManager:(PRESCrashManager *)crashManager {
+ NSData *data = [NSData dataWithContentsOfURL:@"mydatafile"];
  
-       PRESAttachment *attachment = [[PRESAttachment alloc] initWithFilename:@"myfile.data"
-                                                                  hockeyAttachmentData:data
-                                                                           contentType:@"'application/octet-stream"];
-       return attachment;
-     }
+ PRESAttachment *attachment = [[PRESAttachment alloc] initWithFilename:@"myfile.data"
+ hockeyAttachmentData:data
+ contentType:@"'application/octet-stream"];
+ return attachment;
+ }
  
  @param crashManager The `PRESCrashManager` instance invoking this delegate
  @see PRESAttachment

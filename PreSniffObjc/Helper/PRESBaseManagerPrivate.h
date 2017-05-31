@@ -46,7 +46,7 @@
 /** Check if the device is running an iOS version previous to iOS 7 */
 - (BOOL)isPreiOS7Environment;
 
-/** 
+/**
  * by default, just logs the message
  *
  * can be overridden by subclasses to do their own error handling,
@@ -81,9 +81,9 @@
  *  @param alertController The UIAlertController to be presented.
  */
 /* We won't use this for now until we have a more robust solution for displaying UIAlertController
-- (void)showAlertController:(UIViewController *)alertController;
-*/
- - (void)showView:(UIViewController *)viewController;
+ - (void)showAlertController:(UIViewController *)alertController;
+ */
+- (void)showView:(UIViewController *)viewController;
 #endif
 
 // Date helpers

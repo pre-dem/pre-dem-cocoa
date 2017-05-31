@@ -129,7 +129,7 @@ FOUNDATION_EXPORT NSString *const PRESPersistenceSuccessNotification;
  * The filename includes the timestamp.
  *
  * @param the type that you want the fileURL for
-*/
+ */
 - (nullable NSString *)fileURLForType:(PRESPersistenceType)type;
 
 - (void)createDirectoryStructureIfNeeded;

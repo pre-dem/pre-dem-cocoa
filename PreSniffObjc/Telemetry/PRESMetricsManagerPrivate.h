@@ -15,7 +15,7 @@ FOUNDATION_EXPORT NSString *const kPRESApplicationWasLaunched;
 @interface PRESMetricsManager()
 
 /**
- *  Create a new PRESMetricsManager instance by passing the channel, the telemetry context, and persistence instance to use 
+ *  Create a new PRESMetricsManager instance by passing the channel, the telemetry context, and persistence instance to use
  for processing metrics. This method can be used for dependency injection.
  */
 - (instancetype)initWithChannel:(PRESChannel *)channel

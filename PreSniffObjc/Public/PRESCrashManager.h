@@ -46,18 +46,18 @@ typedef void(^BITCustomAlertViewHandler)();
  * Crash Manager status
  */
 typedef NS_ENUM(NSUInteger, PRESCrashManagerStatus) {
-  /**
-   *	Crash reporting is disabled
-   */
-  PRESCrashManagerStatusDisabled = 0,
-  /**
-   *	User is asked each time before sending
-   */
-  PRESCrashManagerStatusAlwaysAsk = 1,
-  /**
-   *	Each crash report is send automatically
-   */
-  PRESCrashManagerStatusAutoSend = 2
+    /**
+     *	Crash reporting is disabled
+     */
+    PRESCrashManagerStatusDisabled = 0,
+    /**
+     *	User is asked each time before sending
+     */
+    PRESCrashManagerStatusAlwaysAsk = 1,
+    /**
+     *	Each crash report is send automatically
+     */
+    PRESCrashManagerStatusAutoSend = 2
 };
 
 
@@ -80,13 +80,13 @@ typedef void (*PRESCrashManagerPostCrashSignalCallback)(void *context);
  * @see `[PRESCrashManager setCrashCallbacks:]`
  */
 typedef struct PRESCrashManagerCallbacks {
-  /** An arbitrary user-supplied context value. This value may be NULL. */
-  void *context;
-  
-  /**
-   * The callback used to report caught signal information.
-   */
-  PRESCrashManagerPostCrashSignalCallback handleSignal;
+    /** An arbitrary user-supplied context value. This value may be NULL. */
+    void *context;
+    
+    /**
+     * The callback used to report caught signal information.
+     */
+    PRESCrashManagerPostCrashSignalCallback handleSignal;
 } PRESCrashManagerCallbacks;
 
 
@@ -94,19 +94,19 @@ typedef struct PRESCrashManagerCallbacks {
  * Crash Manager alert user input
  */
 typedef NS_ENUM(NSUInteger, PRESCrashManagerUserInput) {
-  /**
-   *  User chose not to send the crash report
-   */
-  PRESCrashManagerUserInputDontSend = 0,
-  /**
-   *  User wants the crash report to be sent
-   */
-  PRESCrashManagerUserInputSend = 1,
-  /**
-   *  User chose to always send crash reports
-   */
-  PRESCrashManagerUserInputAlwaysSend = 2
-  
+    /**
+     *  User chose not to send the crash report
+     */
+    PRESCrashManagerUserInputDontSend = 0,
+    /**
+     *  User wants the crash report to be sent
+     */
+    PRESCrashManagerUserInputSend = 1,
+    /**
+     *  User chose to always send crash reports
+     */
+    PRESCrashManagerUserInputAlwaysSend = 2
+    
 };
 
 
@@ -169,7 +169,7 @@ typedef NS_ENUM(NSUInteger, PRESCrashManagerUserInput) {
  asking.
  
  The default value is `PRESCrashManagerStatusAlwaysAsk`. The user can switch to
- `PRESCrashManagerStatusAutoSend` by choosing "Always" in the dialog (since 
+ `PRESCrashManagerStatusAutoSend` by choosing "Always" in the dialog (since
  `showAlwaysButton` default is _YES_).
  
  The current value is always stored in User Defaults with the key
@@ -299,7 +299,7 @@ typedef NS_ENUM(NSUInteger, PRESCrashManagerUserInput) {
  
  If If `crashManagerStatus` is set to `PRESCrashManagerStatusAutoSend`, this property
  has no effect, since no alert will be presented.
-
+ 
  Default: _YES_
  
  @see crashManagerStatus
@@ -313,7 +313,7 @@ typedef NS_ENUM(NSUInteger, PRESCrashManagerUserInput) {
 
 /**
  Indicates if the app crash in the previous session
-
+ 
  Use this on startup, to check if the app starts the first time after it crashed
  previously. You can use this also to disable specific events, like asking
  the user to rate your app.

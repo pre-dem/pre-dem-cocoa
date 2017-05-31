@@ -4,14 +4,14 @@
 
 // empty implementation for the base class
 - (NSDictionary *)serializeToDictionary{
-  return [NSDictionary dictionary];
+    return [NSDictionary dictionary];
 }
 
 - (void)encodeWithCoder:(NSCoder *)coder {
 }
 
 - (instancetype)initWithCoder:(NSCoder *)coder {
-  return [super init];
+    return [super init];
 }
 
 

@@ -29,7 +29,7 @@
 extern NSString *const __attribute__((unused)) kBITCrashKillSignal;
 
 @interface PRESCrashDetails () {
-  
+    
 }
 
 - (instancetype)initWithIncidentIdentifier:(NSString *)incidentIdentifier

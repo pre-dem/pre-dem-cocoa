@@ -38,7 +38,7 @@
 @class PRESCrashManager;
 @class PRESMetricsManager;
 
-/** 
+/**
  The HockeySDK manager. Responsible for setup and management of all components
  
  This is the principal SDK class. It represents the entry point for the HockeySDK. The main promises of the class are initializing the SDK modules, providing access to global properties and to all modules. Initialization is divided into several distinct phases:
@@ -49,7 +49,7 @@
  4. Start up all modules.
  
  The SDK is optimized to defer everything possible to a later time while making sure e.g. crashes on startup can also be caught and each module executes other code with a delay some seconds. This ensures that applicationDidFinishLaunching will process as fast as possible and the SDK will not block the startup sequence resulting in a possible kill by the watchdog process.
-
+ 
  All modules do **NOT** show any user interface if the module is not activated or not integrated.
  `PRESCrashManager`: Shows an alert on startup asking the user if he/she agrees on sending the crash report, if `[PRESCrashManager crashManagerStatus]` is set to `PRESCrashManagerStatusAlwaysAsk` (default)
  `BITUpdateManager`: Is automatically deactivated when the SDK detects it is running from a build distributed via the App Store. Otherwise if it is not deactivated manually, it will show an alert after startup informing the user about a pending update, if one is available. If the user then decides to view the update another screen is presented with further details and an option to install the update.
@@ -57,15 +57,15 @@
  
  Example:
  
-    [[PreSniffManager sharedPreSniffManager]
-      configureWithIdentifier:@"<AppIdentifierFromHockeyApp>"
-                     delegate:nil];
-    [[PreSniffManager sharedPreSniffManager] startManager];
+ [[PreSniffManager sharedPreSniffManager]
+ configureWithIdentifier:@"<AppIdentifierFromHockeyApp>"
+ delegate:nil];
+ [[PreSniffManager sharedPreSniffManager] startManager];
  
  @warning The SDK is **NOT** thread safe and has to be set up on the main thread!
  
  @warning Most properties of all components require to be set **BEFORE** calling`startManager`!
-
+ 
  */
 
 #import "PreSniffSDKNullability.h"
@@ -96,8 +96,8 @@ typedef void (^PRESNetDiagCompleteHandler)(PRESNetDiagResult* result);
  
  Initialize the manager with a HockeyApp app identifier.
  
-    [[PreSniffManager sharedPreSniffManager]
-      configureWithIdentifier:@"<AppIdentifierFromHockeyApp>"];
+ [[PreSniffManager sharedPreSniffManager]
+ configureWithIdentifier:@"<AppIdentifierFromHockeyApp>"];
  
  @see configureWithIdentifier:delegate:
  @see configureWithBetaIdentifier:liveIdentifier:delegate:
@@ -114,10 +114,10 @@ typedef void (^PRESNetDiagCompleteHandler)(PRESNetDiagResult* result);
  implements the optional protocols `PreSniffManagerDelegate`, `PRESCrashManagerDelegate` or
  `BITUpdateManagerDelegate`.
  
-    [[PreSniffManager sharedPreSniffManager]
-      configureWithIdentifier:@"<AppIdentifierFromHockeyApp>"
-                     delegate:nil];
-
+ [[PreSniffManager sharedPreSniffManager]
+ configureWithIdentifier:@"<AppIdentifierFromHockeyApp>"
+ delegate:nil];
+ 
  @see configureWithIdentifier:
  @see configureWithBetaIdentifier:liveIdentifier:delegate:
  @see startManager
@@ -140,11 +140,11 @@ typedef void (^PRESNetDiagCompleteHandler)(PRESNetDiagResult* result);
  And also assign the class that implements the optional protocols `PreSniffManagerDelegate`,
  `PRESCrashManagerDelegate` or `BITUpdateManagerDelegate`
  
-    [[PreSniffManager sharedPreSniffManager]
-      configureWithBetaIdentifier:@"<AppIdentifierForBetaAppFromHockeyApp>"
-                   liveIdentifier:@"<AppIdentifierForLiveAppFromHockeyApp>"
-                         delegate:nil];
-
+ [[PreSniffManager sharedPreSniffManager]
+ configureWithBetaIdentifier:@"<AppIdentifierForBetaAppFromHockeyApp>"
+ liveIdentifier:@"<AppIdentifierForLiveAppFromHockeyApp>"
+ delegate:nil];
+ 
  We recommend using one app entry on HockeyApp for your beta versions and another one for
  your live versions. The reason is that you will have way more beta versions than live
  versions, but on the other side get way more crash reports on the live version. Separating
@@ -153,7 +153,7 @@ typedef void (^PRESNetDiagCompleteHandler)(PRESNetDiagResult* result);
  would mix different data into the same version. Also the live version does not require
  you to upload any IPA files, uploading only the dSYM package for crash reporting is
  just fine.
-
+ 
  @see configureWithIdentifier:
  @see configureWithIdentifier:delegate:
  @see startManager
@@ -218,7 +218,7 @@ typedef void (^PRESNetDiagCompleteHandler)(PRESNetDiagResult* result);
 
 /**
  Reference to the initialized PRESCrashManager module
-
+ 
  Returns the PRESCrashManager instance initialized by PreSniffManager
  
  @see configureWithIdentifier:delegate:
@@ -237,9 +237,9 @@ typedef void (^PRESNetDiagCompleteHandler)(PRESNetDiagResult* result);
  
  Please note that the Crash Manager instance will be initialized anyway, but crash report
  handling (signal and uncaught exception handlers) will **not** be registered.
-
+ 
  @warning This property needs to be set before calling `startManager`
-
+ 
  *Default*: _NO_
  @see crashManager
  */
@@ -255,11 +255,11 @@ typedef void (^PRESNetDiagCompleteHandler)(PRESNetDiagResult* result);
 /**
  Flag the determines whether the BITMetricsManager should be disabled
  
- If this flag is enabled, then sending metrics data such as sessions and users 
+ If this flag is enabled, then sending metrics data such as sessions and users
  will be turned off!
  
  Please note that the BITMetricsManager instance will be initialized anyway!
-  
+ 
  *Default*: _NO_
  @see metricsManager
  */
@@ -283,9 +283,9 @@ typedef void (^PRESNetDiagCompleteHandler)(PRESNetDiagResult* result);
 /**
  Enum that indicates what kind of environment the application is installed and running in.
  
- This property can be used to disable or enable specific funtionality 
+ This property can be used to disable or enable specific funtionality
  only when specific conditions are met.
- That could mean for example, to only enable debug UI elements 
+ That could mean for example, to only enable debug UI elements
  when the app has been installed over HockeyApp but not in the AppStore.
  
  The underlying enum type at the moment only specifies values for the AppStore,
@@ -350,23 +350,23 @@ typedef void (^PRESNetDiagCompleteHandler)(PRESNetDiagResult* result);
 
 /**
  Set a custom block that handles all the log messages that are emitted from the SDK.
-
+ 
  You can use this to reroute the messages that would normally be logged by `NSLog();`
  to your own custom logging framework.
-
+ 
  An example of how to do this with NSLogger:
  
  ```
  [[PreSniffManager sharedPreSniffManager] setLogHandler:^(BITLogMessageProvider messageProvider, BITLogLevel logLevel, const char *file, const char *function, uint line) {
-    LogMessageRawF(file, (int)line, function, @"HockeySDK", (int)logLevel-1, messageProvider());
+ LogMessageRawF(file, (int)line, function, @"HockeySDK", (int)logLevel-1, messageProvider());
  }];
  ```
-
+ 
  or with CocoaLumberjack:
  
  ```
  [[PreSniffManager sharedPreSniffManager] setLogHandler:^(BITLogMessageProvider messageProvider, BITLogLevel logLevel, const char *file, const char *function, uint line) {
-    [DDLog log:YES message:messageProvider() level:ddLogLevel flag:(DDLogFlag)(1 << (logLevel-1)) context:<#CocoaLumberjackContext#> file:file function:function line:line tag:nil];
+ [DDLog log:YES message:messageProvider() level:ddLogLevel flag:(DDLogFlag)(1 << (logLevel-1)) context:<#CocoaLumberjackContext#> file:file function:function line:line tag:nil];
  }];
  ```
  
@@ -388,7 +388,7 @@ typedef void (^PRESNetDiagCompleteHandler)(PRESNetDiagResult* result);
  Once invoked, check the apps page on HockeyApp for a verification.
  
  If you setup the SDK with a beta and live identifier, a call to both app IDs will be done.
-
+ 
  This call is ignored if the app is running in the App Store!.
  */
 - (void)testIdentifier;
@@ -405,7 +405,7 @@ typedef void (^PRESNetDiagCompleteHandler)(PRESNetDiagResult* result);
  
  Right now this is used by the `PRESCrashManager` to attach to a crash report.
  `BITFeedbackManager` uses it too for assigning the user to a discussion thread.
-
+ 
  The value can be set at any time and will be stored in the keychain on the current
  device only! To delete the value from the keychain set the value to `nil`.
  
@@ -418,7 +418,7 @@ typedef void (^PRESNetDiagCompleteHandler)(PRESNetDiagResult* result);
  
  @warning This property needs to be set before calling `startManager` to be considered
  for being added to crash reports as meta data.
-
+ 
  @see userName
  @see userEmail
  @see `[PreSniffManagerDelegate userIDForHockeyManager:componentManager:]`
@@ -437,13 +437,13 @@ typedef void (^PRESNetDiagCompleteHandler)(PRESNetDiagResult* result);
  This property is optional and can be used as an alternative to the delegate. If you
  want to define specific data for each component, use the delegate instead which does
  overwrite the values set by this property.
-
+ 
  @warning When returning a non nil value, crash reports are not anonymous any more
  and the crash alerts will not show the word "anonymous"!
-
+ 
  @warning This property needs to be set before calling `startManager` to be considered
  for being added to crash reports as meta data.
-
+ 
  @see userID
  @see userEmail
  @see `[PreSniffManagerDelegate userNameForHockeyManager:componentManager:]`
@@ -468,7 +468,7 @@ typedef void (^PRESNetDiagCompleteHandler)(PRESNetDiagResult* result);
  
  @warning This property needs to be set before calling `startManager` to be considered
  for being added to crash reports as meta data.
-
+ 
  @see userID
  @see userName
  @see [PreSniffManagerDelegate userEmailForHockeyManager:componentManager:]

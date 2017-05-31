@@ -33,74 +33,74 @@
     if(self.authUserAcquisitionDate != nil) {
         [dict setObject:self.authUserAcquisitionDate forKey:@"ai.user.authUserAcquisitionDate"];
     }
-  return dict;
+    return dict;
 }
 
 #pragma mark - NSCoding
 
 - (instancetype)initWithCoder:(NSCoder *)coder {
-  self = [super initWithCoder:coder];
-  if(self) {
-    _accountAcquisitionDate = [coder decodeObjectForKey:@"self.accountAcquisitionDate"];
-    _accountId = [coder decodeObjectForKey:@"self.accountId"];
-    _userAgent = [coder decodeObjectForKey:@"self.userAgent"];
-    _userId = [coder decodeObjectForKey:@"self.userId"];
-    _storeRegion = [coder decodeObjectForKey:@"self.storeRegion"];
-    _authUserId = [coder decodeObjectForKey:@"self.authUserId"];
-    _anonUserAcquisitionDate = [coder decodeObjectForKey:@"self.anonUserAcquisitionDate"];
-    _authUserAcquisitionDate = [coder decodeObjectForKey:@"self.authUserAcquisitionDate"];
-  }
-
-  return self;
+    self = [super initWithCoder:coder];
+    if(self) {
+        _accountAcquisitionDate = [coder decodeObjectForKey:@"self.accountAcquisitionDate"];
+        _accountId = [coder decodeObjectForKey:@"self.accountId"];
+        _userAgent = [coder decodeObjectForKey:@"self.userAgent"];
+        _userId = [coder decodeObjectForKey:@"self.userId"];
+        _storeRegion = [coder decodeObjectForKey:@"self.storeRegion"];
+        _authUserId = [coder decodeObjectForKey:@"self.authUserId"];
+        _anonUserAcquisitionDate = [coder decodeObjectForKey:@"self.anonUserAcquisitionDate"];
+        _authUserAcquisitionDate = [coder decodeObjectForKey:@"self.authUserAcquisitionDate"];
+    }
+    
+    return self;
 }
 
 - (void)encodeWithCoder:(NSCoder *)coder {
-  [super encodeWithCoder:coder];
-  [coder encodeObject:self.accountAcquisitionDate forKey:@"self.accountAcquisitionDate"];
-  [coder encodeObject:self.accountId forKey:@"self.accountId"];
-  [coder encodeObject:self.userAgent forKey:@"self.userAgent"];
-  [coder encodeObject:self.userId forKey:@"self.userId"];
-  [coder encodeObject:self.storeRegion forKey:@"self.storeRegion"];
-  [coder encodeObject:self.authUserId forKey:@"self.authUserId"];
-  [coder encodeObject:self.anonUserAcquisitionDate forKey:@"self.anonUserAcquisitionDate"];
-  [coder encodeObject:self.authUserAcquisitionDate forKey:@"self.authUserAcquisitionDate"];
+    [super encodeWithCoder:coder];
+    [coder encodeObject:self.accountAcquisitionDate forKey:@"self.accountAcquisitionDate"];
+    [coder encodeObject:self.accountId forKey:@"self.accountId"];
+    [coder encodeObject:self.userAgent forKey:@"self.userAgent"];
+    [coder encodeObject:self.userId forKey:@"self.userId"];
+    [coder encodeObject:self.storeRegion forKey:@"self.storeRegion"];
+    [coder encodeObject:self.authUserId forKey:@"self.authUserId"];
+    [coder encodeObject:self.anonUserAcquisitionDate forKey:@"self.anonUserAcquisitionDate"];
+    [coder encodeObject:self.authUserAcquisitionDate forKey:@"self.authUserAcquisitionDate"];
 }
 
 #pragma mark - Compare
 
 - (BOOL)isEqualToUser:(PRESUser *)aUser {
-  if (aUser == self) {
+    if (aUser == self) {
+        return YES;
+    }
+    if (!aUser || ![aUser isKindOfClass:[self class]]) {
+        return NO;
+    }
+    if (![self.userId isEqualToString: aUser.userId]) {
+        return NO;
+    }
+    if(![self.authUserId isEqualToString: aUser.authUserId]) {
+        return NO;
+    }
+    if (![self.accountId isEqualToString: aUser.accountId]) {
+        return NO;
+    }
+    if(![self.anonUserAcquisitionDate isEqualToString: aUser.anonUserAcquisitionDate]) {
+        return NO;
+    }
+    if(![self.authUserAcquisitionDate isEqualToString: aUser.authUserAcquisitionDate]) {
+        return NO;
+    }
+    if (![self.accountAcquisitionDate isEqualToString: aUser.accountAcquisitionDate]) {
+        return NO;
+    }
+    if (![self.userAgent isEqualToString: aUser.userAgent]) {
+        return NO;
+    }
+    if(![self.storeRegion isEqualToString: aUser.storeRegion]) {
+        return NO;
+    }
+    
     return YES;
-  }
-  if (!aUser || ![aUser isKindOfClass:[self class]]) {
-    return NO;
-  }
-  if (![self.userId isEqualToString: aUser.userId]) {
-    return NO;
-  }
-  if(![self.authUserId isEqualToString: aUser.authUserId]) {
-    return NO;
-  }
-  if (![self.accountId isEqualToString: aUser.accountId]) {
-    return NO;
-  }
-  if(![self.anonUserAcquisitionDate isEqualToString: aUser.anonUserAcquisitionDate]) {
-    return NO;
-  }
-  if(![self.authUserAcquisitionDate isEqualToString: aUser.authUserAcquisitionDate]) {
-    return NO;
-  }
-  if (![self.accountAcquisitionDate isEqualToString: aUser.accountAcquisitionDate]) {
-    return NO;
-  }
-  if (![self.userAgent isEqualToString: aUser.userAgent]) {
-    return NO;
-  }
-  if(![self.storeRegion isEqualToString: aUser.storeRegion]) {
-    return NO;
-  }
-
-  return YES;
 }
 
 @end

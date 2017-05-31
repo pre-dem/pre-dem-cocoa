@@ -49,18 +49,18 @@
  *  HockeySDK Crash Reporter error domain
  */
 typedef NS_ENUM (NSInteger, BITBinaryImageType) {
-  /**
-   *  App binary
-   */
-  BITBinaryImageTypeAppBinary,
-  /**
-   *  App provided framework
-   */
-  BITBinaryImageTypeAppFramework,
-  /**
-   *  Image not related to the app
-   */
-  BITBinaryImageTypeOther
+    /**
+     *  App binary
+     */
+    BITBinaryImageTypeAppBinary,
+    /**
+     *  App provided framework
+     */
+    BITBinaryImageTypeAppFramework,
+    /**
+     *  Image not related to the app
+     */
+    BITBinaryImageTypeOther
 };
 
 

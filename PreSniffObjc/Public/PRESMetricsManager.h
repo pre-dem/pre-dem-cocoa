@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
  
  Before starting to track events, ask yourself the questions that you want to get answers to.
  For instance, you might be interested in business, performance/quality or user experience aspects.
- Name your events in a meaningful way and keep in mind that you will use these names 
+ Name your events in a meaningful way and keep in mind that you will use these names
  when searching for events in the HockeyApp web portal.
  
  It is your reponsibility to not collect personal information as part of the events tracking or get

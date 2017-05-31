@@ -21,18 +21,18 @@
 #pragma mark - NSCoding
 
 - (instancetype)initWithCoder:(NSCoder *)coder {
-  self = [super init];
-  if(self) {
-    _sdkVersion = [coder decodeObjectForKey:@"self.sdkVersion"];
-    _agentVersion = [coder decodeObjectForKey:@"self.agentVersion"];
-  }
-
-  return self;
+    self = [super init];
+    if(self) {
+        _sdkVersion = [coder decodeObjectForKey:@"self.sdkVersion"];
+        _agentVersion = [coder decodeObjectForKey:@"self.agentVersion"];
+    }
+    
+    return self;
 }
 
 - (void)encodeWithCoder:(NSCoder *)coder {
-  [coder encodeObject:self.sdkVersion forKey:@"self.sdkVersion"];
-  [coder encodeObject:self.agentVersion forKey:@"self.agentVersion"];
+    [coder encodeObject:self.sdkVersion forKey:@"self.sdkVersion"];
+    [coder encodeObject:self.agentVersion forKey:@"self.agentVersion"];
 }
 
 
