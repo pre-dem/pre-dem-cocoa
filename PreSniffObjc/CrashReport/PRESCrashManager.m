@@ -46,7 +46,6 @@
 #import "PRESChannel.h"
 #import "PRESPersistencePrivate.h"
 #include <sys/sysctl.h>
-#import "PRESAttachment.h"
 
 // stores the set of crashreports that have been approved but aren't sent yet
 #define kBITCrashApprovedReports @"HockeySDKCrashApprovedReports"

@@ -28,6 +28,7 @@ FOUNDATION_EXPORT const unsigned char PreSniffSDKVersionString[];
 #import "PRESCrashDetails.h"
 #import "PRESCrashMetaData.h"
 #import "PRESMetricsManager.h"
+#import "PRESAttachment.h"
 
 // Notification message which HockeyManager is listening to, to retry requesting updated from the server.
 // This can be used by app developers to trigger additional points where the HockeySDK can try sending
