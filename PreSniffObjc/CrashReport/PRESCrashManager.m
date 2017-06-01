@@ -233,8 +233,8 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
         _analyzerInProgressFile = [_crashesDir stringByAppendingPathComponent:PRESHOCKEY_CRASH_ANALYZER];
         
         
-        if (!PRESHockeyBundle() && !pres_isRunningInAppExtension()) {
-            PRESHockeyLogWarning(@"[HockeySDK] WARNING: %@ is missing, will send reports automatically!", PRESHOCKEYSDK_BUNDLE);
+        if (!PRESBundle() && !pres_isRunningInAppExtension()) {
+            PRESLogWarning(@"[HockeySDK] WARNING: %@ is missing, will send reports automatically!", PRESHOCKEYSDK_BUNDLE);
         }
     }
     return self;
@@ -279,7 +279,7 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
     if (plist) {
         [plist writeToFile:_settingsFile atomically:YES];
     } else {
-        PRESHockeyLogError(@"ERROR: Writing settings. %@", [error description]);
+        PRESLogError(@"ERROR: Writing settings. %@", [error description]);
     }
 }
 
@@ -306,7 +306,7 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
         if ([rootObj objectForKey:kPRESCrashApprovedReports])
             [_approvedCrashReports setDictionary:[rootObj objectForKey:kPRESCrashApprovedReports]];
     } else {
-        PRESHockeyLogError(@"ERROR: Reading crash manager settings.");
+        PRESLogError(@"ERROR: Reading crash manager settings.");
     }
 }
 
@@ -459,7 +459,7 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
     }
     
     if(nil == _networkDidBecomeReachableObserver) {
-        _networkDidBecomeReachableObserver = [[NSNotificationCenter defaultCenter] addObserverForName:PRESHockeyNetworkDidBecomeReachableNotification
+        _networkDidBecomeReachableObserver = [[NSNotificationCenter defaultCenter] addObserverForName:PRESNetworkDidBecomeReachableNotification
                                                                                                object:nil
                                                                                                 queue:NSOperationQueue.mainQueue
                                                                                            usingBlock:^(NSNotification *note) {
@@ -618,7 +618,7 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
     NSString *userID;
     
     // first check the global keychain storage
-    NSString *userIdFromKeychain = [self stringValueFromKeychainForKey:kPRESHockeyMetaUserID];
+    NSString *userIdFromKeychain = [self stringValueFromKeychainForKey:kPRESMetaUserID];
     if (userIdFromKeychain) {
         userID = userIdFromKeychain;
     }
@@ -639,7 +639,7 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
  */
 - (NSString *)userNameForCrashReport {
     // first check the global keychain storage
-    NSString *username = [self stringValueFromKeychainForKey:kPRESHockeyMetaUserName] ?: @"";
+    NSString *username = [self stringValueFromKeychainForKey:kPRESMetaUserName] ?: @"";
     
     if ([[PRESManager sharedPRESManager].delegate respondsToSelector:@selector(userNameForHockeyManager:componentManager:)]) {
         username = [[PRESManager sharedPRESManager].delegate
@@ -657,7 +657,7 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
  */
 - (NSString *)userEmailForCrashReport {
     // first check the global keychain storage
-    NSString *useremail = [self stringValueFromKeychainForKey:kPRESHockeyMetaUserEmail] ?: @"";
+    NSString *useremail = [self stringValueFromKeychainForKey:kPRESMetaUserEmail] ?: @"";
     
     if ([[PRESManager sharedPRESManager].delegate respondsToSelector:@selector(userEmailForHockeyManager:componentManager:)]) {
         useremail = [[PRESManager sharedPRESManager].delegate
@@ -678,7 +678,7 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
 - (void)setCrashCallbacks:(PRESCrashManagerCallbacks *)callbacks {
     if (!callbacks) return;
     if (_isSetup) {
-        PRESHockeyLogWarning(@"WARNING: CrashCallbacks need to be configured before calling startManager!");
+        PRESLogWarning(@"WARNING: CrashCallbacks need to be configured before calling startManager!");
     }
     
     // set our proxy callback struct
@@ -711,7 +711,7 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
     if (self.appEnvironment != PRESEnvironmentAppStore) {
         
         if ([self isDebuggerAttached]) {
-            PRESHockeyLogWarning(@"[HockeySDK] WARNING: The debugger is attached. The following crash cannot be detected by the SDK!");
+            PRESLogWarning(@"[HockeySDK] WARNING: The debugger is attached. The following crash cannot be detected by the SDK!");
         }
         
         __builtin_trap();
@@ -724,7 +724,7 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
  *  @param filename the crash reports temp filename
  */
 - (void)storeMetaDataForCrashReportFilename:(NSString *)filename {
-    PRESHockeyLogVerbose(@"VERBOSE: Storing meta data for crash report with filename %@", filename);
+    PRESLogVerbose(@"VERBOSE: Storing meta data for crash report with filename %@", filename);
     NSError *error = NULL;
     NSMutableDictionary *metaDict = [NSMutableDictionary dictionaryWithCapacity:4];
     NSString *applicationLog = @"";
@@ -739,18 +739,18 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
     [metaDict setObject:applicationLog forKey:kPRESCrashMetaApplicationLog];
     
     if ([self.delegate respondsToSelector:@selector(attachmentForCrashManager:)]) {
-        PRESHockeyLogVerbose(@"VERBOSE: Processing attachment for crash report with filename %@", filename);
+        PRESLogVerbose(@"VERBOSE: Processing attachment for crash report with filename %@", filename);
         PRESAttachment *attachment = [self.delegate attachmentForCrashManager:self];
         
         if (attachment && attachment.hockeyAttachmentData) {
             BOOL success = [self persistAttachment:attachment withFilename:[_crashesDir stringByAppendingPathComponent: filename]];
             if (!success) {
-                PRESHockeyLogError(@"ERROR: Persisting the crash attachment failed");
+                PRESLogError(@"ERROR: Persisting the crash attachment failed");
             } else {
-                PRESHockeyLogVerbose(@"VERBOSE: Crash attachment successfully persisted.");
+                PRESLogVerbose(@"VERBOSE: Crash attachment successfully persisted.");
             }
         } else {
-            PRESHockeyLogDebug(@"INFO: Crash attachment was nil");
+            PRESLogDebug(@"INFO: Crash attachment was nil");
         }
     }
     
@@ -761,12 +761,12 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
     if (plist) {
         BOOL success = [plist writeToFile:[_crashesDir stringByAppendingPathComponent: [filename stringByAppendingPathExtension:@"meta"]] atomically:YES];
         if (!success) {
-            PRESHockeyLogError(@"ERROR: Writing crash meta data failed.");
+            PRESLogError(@"ERROR: Writing crash meta data failed.");
         }
     } else {
-        PRESHockeyLogError(@"ERROR: Writing crash meta data failed. %@", error);
+        PRESLogError(@"ERROR: Writing crash meta data failed. %@", error);
     }
-    PRESHockeyLogVerbose(@"VERBOSE: Storing crash meta data finished.");
+    PRESLogVerbose(@"VERBOSE: Storing crash meta data finished.");
 }
 
 - (BOOL)handleUserInput:(PRESCrashManagerUserInput)userInput withUserProvidedMetaData:(PRESCrashMetaData *)userProvidedMetaData {
@@ -818,7 +818,7 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
  * Parse the new crash report and gather additional meta data from the app which will be stored along the crash report
  */
 - (void) handleCrashReport {
-    PRESHockeyLogVerbose(@"VERBOSE: Handling crash report");
+    PRESLogVerbose(@"VERBOSE: Handling crash report");
     NSError *error = NULL;
     
     if (!self.plCrashReporter) return;
@@ -827,7 +827,7 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
     if (![_fileManager fileExistsAtPath:_analyzerInProgressFile]) {
         // mark the start of the routine
         [_fileManager createFileAtPath:_analyzerInProgressFile contents:nil attributes:nil];
-        PRESHockeyLogVerbose(@"VERBOSE: AnalyzerInProgress file created");
+        PRESLogVerbose(@"VERBOSE: AnalyzerInProgress file created");
         
         [self saveSettings];
         
@@ -838,13 +838,13 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
         _lastCrashFilename = cacheFilename;
         
         if (crashData == nil) {
-            PRESHockeyLogError(@"ERROR: Could not load crash report: %@", error);
+            PRESLogError(@"ERROR: Could not load crash report: %@", error);
         } else {
             // get the startup timestamp from the crash report, and the file timestamp to calculate the timeinterval when the crash happened after startup
             BITPLCrashReport *report = [[BITPLCrashReport alloc] initWithData:crashData error:&error];
             
             if (report == nil) {
-                PRESHockeyLogWarning(@"WARNING: Could not parse crash report");
+                PRESLogWarning(@"WARNING: Could not parse crash report");
             } else {
                 NSDate *appStartTime = nil;
                 NSDate *appCrashTime = nil;
@@ -884,7 +884,7 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
             }
         }
     } else {
-        PRESHockeyLogWarning(@"WARNING: AnalyzerInProgress file found, handling crash report skipped");
+        PRESLogWarning(@"WARNING: AnalyzerInProgress file found, handling crash report skipped");
     }
     
     // Purge the report
@@ -948,7 +948,7 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
     }
     
     if ([_crashFiles count] > 0) {
-        PRESHockeyLogDebug(@"INFO: %lu pending crash reports found.", (unsigned long)[_crashFiles count]);
+        PRESLogDebug(@"INFO: %lu pending crash reports found.", (unsigned long)[_crashFiles count]);
         return YES;
     } else {
         if (_didCrashInLastSession) {
@@ -973,7 +973,7 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
 }
 
 - (void)triggerDelayedProcessing {
-    PRESHockeyLogVerbose(@"VERBOSE: Triggering delayed crash processing.");
+    PRESLogVerbose(@"VERBOSE: Triggering delayed crash processing.");
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(invokeDelayedProcessing) object:nil];
     [self performSelector:@selector(invokeDelayedProcessing) withObject:nil afterDelay:0.5];
 }
@@ -993,7 +993,7 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
     }
 #endif
     
-    PRESHockeyLogDebug(@"INFO: Start delayed CrashManager processing");
+    PRESLogDebug(@"INFO: Start delayed CrashManager processing");
     
     // was our own exception handler successfully added?
     if (self.exceptionHandler) {
@@ -1003,7 +1003,7 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
         // If the top level error handler differs from our own, then at least another one was added.
         // This could cause exception crashes not to be reported to HockeyApp. See log message for details.
         if (self.exceptionHandler != currentHandler) {
-            PRESHockeyLogWarning(@"[HockeySDK] WARNING: Another exception handler was added. If this invokes any kind exit() after processing the exception, which causes any subsequent error handler not to be invoked, these crashes will NOT be reported to HockeyApp!");
+            PRESLogWarning(@"[HockeySDK] WARNING: Another exception handler was added. If this invokes any kind exit() after processing the exception, which causes any subsequent error handler not to be invoked, these crashes will NOT be reported to HockeyApp!");
         }
     }
     
@@ -1017,7 +1017,7 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
             _lastCrashFilename = [notApprovedReportFilename lastPathComponent];
         }
         
-        if (!PRESHockeyBundle() || pres_isRunningInAppExtension()) {
+        if (!PRESBundle() || pres_isRunningInAppExtension()) {
             [self approveLatestCrashReport];
             [self sendNextCrashReport];
             
@@ -1029,8 +1029,8 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
                 [self.delegate crashManagerWillShowSubmitCrashReportAlert:self];
             }
             
-            NSString *appName = pres_appName(PRESHockeyLocalizedString(@"HockeyAppNamePlaceholder"));
-            NSString *alertDescription = [NSString stringWithFormat:PRESHockeyLocalizedString(@"CrashDataFoundAnonymousDescription"), appName];
+            NSString *appName = pres_appName(PRESLocalizedString(@"HockeyAppNamePlaceholder"));
+            NSString *alertDescription = [NSString stringWithFormat:PRESLocalizedString(@"CrashDataFoundAnonymousDescription"), appName];
             
             // the crash report is not anonymous any more if username or useremail are not nil
             NSString *userid = [self userIDForCrashReport];
@@ -1040,7 +1040,7 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
             if ((userid && [userid length] > 0) ||
                 (username && [username length] > 0) ||
                 (useremail && [useremail length] > 0)) {
-                alertDescription = [NSString stringWithFormat:PRESHockeyLocalizedString(@"CrashDataFoundDescription"), appName];
+                alertDescription = [NSString stringWithFormat:PRESLocalizedString(@"CrashDataFoundDescription"), appName];
             }
             
             if (_alertViewHandler) {
@@ -1052,12 +1052,12 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
                  if (uialertcontrollerClass) {
                  __weak typeof(self) weakSelf = self;
                  
-                 UIAlertController *alertController = [UIAlertController alertControllerWithTitle:[NSString stringWithFormat:PRESHockeyLocalizedString(@"CrashDataFoundTitle"), appName]
+                 UIAlertController *alertController = [UIAlertController alertControllerWithTitle:[NSString stringWithFormat:PRESLocalizedString(@"CrashDataFoundTitle"), appName]
                  message:alertDescription
                  preferredStyle:UIAlertControllerStyleAlert];
                  
                  
-                 UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:PRESHockeyLocalizedString(@"CrashDontSendReport")
+                 UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:PRESLocalizedString(@"CrashDontSendReport")
                  style:UIAlertActionStyleCancel
                  handler:^(UIAlertAction * action) {
                  typeof(self) strongSelf = weakSelf;
@@ -1067,7 +1067,7 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
                  
                  [alertController addAction:cancelAction];
                  
-                 UIAlertAction *sendAction = [UIAlertAction actionWithTitle:PRESHockeyLocalizedString(@"CrashSendReport")
+                 UIAlertAction *sendAction = [UIAlertAction actionWithTitle:PRESLocalizedString(@"CrashSendReport")
                  style:UIAlertActionStyleDefault
                  handler:^(UIAlertAction * action) {
                  typeof(self) strongSelf = weakSelf;
@@ -1077,7 +1077,7 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
                  [alertController addAction:sendAction];
                  
                  if (self.shouldShowAlwaysButton) {
-                 UIAlertAction *alwaysSendAction = [UIAlertAction actionWithTitle:PRESHockeyLocalizedString(@"CrashSendReportAlways")
+                 UIAlertAction *alwaysSendAction = [UIAlertAction actionWithTitle:PRESLocalizedString(@"CrashSendReportAlways")
                  style:UIAlertActionStyleDefault
                  handler:^(UIAlertAction * action) {
                  typeof(self) strongSelf = weakSelf;
@@ -1092,14 +1092,14 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
                  */
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:PRESHockeyLocalizedString(@"CrashDataFoundTitle"), appName]
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:PRESLocalizedString(@"CrashDataFoundTitle"), appName]
                                                                     message:alertDescription
                                                                    delegate:self
-                                                          cancelButtonTitle:PRESHockeyLocalizedString(@"CrashDontSendReport")
-                                                          otherButtonTitles:PRESHockeyLocalizedString(@"CrashSendReport"), nil];
+                                                          cancelButtonTitle:PRESLocalizedString(@"CrashDontSendReport")
+                                                          otherButtonTitles:PRESLocalizedString(@"CrashSendReport"), nil];
                 
                 if (self.shouldShowAlwaysButton) {
-                    [alertView addButtonWithTitle:PRESHockeyLocalizedString(@"CrashSendReportAlways")];
+                    [alertView addButtonWithTitle:PRESLocalizedString(@"CrashSendReportAlways")];
                 }
                 
                 [alertView show];
@@ -1159,7 +1159,7 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
             if (self.appEnvironment != PRESEnvironmentAppStore) {
                 if ([self isDebuggerAttached]) {
                     debuggerIsAttached = YES;
-                    PRESHockeyLogWarning(@"[HockeySDK] WARNING: Detecting crashes is NOT enabled due to running the app with a debugger attached.");
+                    PRESLogWarning(@"[HockeySDK] WARNING: Detecting crashes is NOT enabled due to running the app with a debugger attached.");
                 }
             }
             
@@ -1188,7 +1188,7 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
                 
                 // Enable the Crash Reporter
                 if (![self.plCrashReporter enableCrashReporterAndReturnError: &error])
-                    PRESHockeyLogError(@"[HockeySDK] ERROR: Could not enable crash reporter: %@", [error localizedDescription]);
+                    PRESLogError(@"[HockeySDK] ERROR: Could not enable crash reporter: %@", [error localizedDescription]);
                 
                 // get the new current top level error handler, which should now be the one from PLCrashReporter
                 NSUncaughtExceptionHandler *currentHandler = NSGetUncaughtExceptionHandler();
@@ -1197,10 +1197,10 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
                 if (currentHandler && currentHandler != initialHandler) {
                     self.exceptionHandler = currentHandler;
                     
-                    PRESHockeyLogDebug(@"INFO: Exception handler successfully initialized.");
+                    PRESLogDebug(@"INFO: Exception handler successfully initialized.");
                 } else {
                     // this should never happen, theoretically only if NSSetUncaugtExceptionHandler() has some internal issues
-                    PRESHockeyLogError(@"[HockeySDK] ERROR: Exception handler could not be set. Make sure there is no other exception handler set up!");
+                    PRESLogError(@"[HockeySDK] ERROR: Exception handler could not be set. Make sure there is no other exception handler set up!");
                 }
                 
                 // Add the C++ uncaught exception handler, which is currently not handled by PLCrashReporter internally
@@ -1227,7 +1227,7 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
             }
             
             if (considerReport) {
-                PRESHockeyLogVerbose(@"INFO: App kill detected, creating crash report.");
+                PRESLogVerbose(@"INFO: App kill detected, creating crash report.");
                 [self createCrashReportForAppKill];
                 
                 _didCrashInLastSession = YES;
@@ -1251,7 +1251,7 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
     }
     
     [self triggerDelayedProcessing];
-    PRESHockeyLogVerbose(@"VERBOSE: CrashManager startManager has finished.");
+    PRESLogVerbose(@"VERBOSE: CrashManager startManager has finished.");
 }
 
 /**
@@ -1354,7 +1354,7 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
             [self storeMetaDataForCrashReportFilename:fakeReportFilename];
         }
     } else {
-        PRESHockeyLogError(@"ERROR: Writing fake crash report. %@", [error description]);
+        PRESLogError(@"ERROR: Writing fake crash report. %@", [error description]);
     }
 }
 
@@ -1423,7 +1423,7 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
         }
         
         if (report == nil && crashLogString == nil) {
-            PRESHockeyLogWarning(@"WARNING: Could not parse crash report");
+            PRESLogWarning(@"WARNING: Could not parse crash report");
             // we cannot do anything with this report, so delete it
             [self cleanCrashReportWithFilename:filename];
             // we don't continue with the next report here, even if there are to prevent calling sendCrashReports from itself again
@@ -1475,7 +1475,7 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
             description = [NSString stringWithContentsOfFile:[NSString stringWithFormat:@"%@.desc", [_crashesDir stringByAppendingPathComponent: cacheFilename]] encoding:NSUTF8StringEncoding error:&error];
             attachment = [self attachmentForCrashReport:attachmentFilename];
         } else {
-            PRESHockeyLogError(@"ERROR: Reading crash meta data. %@", error);
+            PRESLogError(@"ERROR: Reading crash meta data. %@", error);
         }
         
         if ([applicationLog length] > 0) {
@@ -1503,7 +1503,7 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
                     installString,
                     [description stringByReplacingOccurrencesOfString:@"]]>" withString:@"]]" @"]]><![CDATA[" @">" options:NSLiteralSearch range:NSMakeRange(0,description.length)]];
         
-        PRESHockeyLogDebug(@"INFO: Sending crash reports:\n%@", crashXML);
+        PRESLogDebug(@"INFO: Sending crash reports:\n%@", crashXML);
         [self sendCrashReportWithFilename:filename xml:crashXML attachment:attachment];
     } else {
         // we cannot do anything with this report, so delete it
@@ -1616,7 +1616,7 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
                                                                                           options:NSPropertyListMutableContainersAndLeaves
                                                                                            format:nil
                                                                                             error:&theError];
-                PRESHockeyLogDebug(@"INFO: Received API response: %@", response);
+                PRESLogDebug(@"INFO: Received API response: %@", response);
                 
                 if ([self.delegate respondsToSelector:@selector(crashManagerDidFinishSendingCrashReport:)]) {
                     [self.delegate crashManagerDidFinishSendingCrashReport:self];
@@ -1648,7 +1648,7 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
                 [self.delegate crashManager:self didFailWithError:theError];
             }
             
-            PRESHockeyLogError(@"ERROR: %@", [theError localizedDescription]);
+            PRESLogError(@"ERROR: %@", [theError localizedDescription]);
         }
     });
 }
@@ -1712,7 +1712,7 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
         [self.delegate crashManagerWillSendCrashReport:self];
     }
     
-    PRESHockeyLogDebug(@"INFO: Sending crash reports started.");
+    PRESLogDebug(@"INFO: Sending crash reports started.");
 }
 
 - (NSTimeInterval)timeintervalCrashInLastSessionOccured {

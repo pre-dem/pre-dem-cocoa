@@ -4,14 +4,14 @@
 #import "PRESPrivate.h"
 #import "PRESHelper.h"
 
-NSString *const PRESPersistenceSuccessNotification = @"PRESHockeyPersistenceSuccessNotification";
+NSString *const PRESPersistenceSuccessNotification = @"PRESPersistenceSuccessNotification";
 
 static NSString *const kPRESTelemetry = @"Telemetry";
 static NSString *const kPRESMetaData = @"MetaData";
 static NSString *const kPRESFileBaseString = @"hockey-app-bundle-";
 static NSString *const kPRESFileBaseStringMeta = @"metadata";
 
-static NSString *const kPRESHockeyDirectory = @"com.microsoft.HockeyApp";
+static NSString *const kPRESDirectory = @"com.microsoft.HockeyApp";
 static NSString *const kPRESTelemetryDirectory = @"Telemetry";
 static NSString *const kPRESMetaDataDirectory = @"MetaData";
 
@@ -41,7 +41,7 @@ static NSUInteger const PRESDefaultFileCount = 50;
 
 /**
  * Saves the Bundle using NSKeyedArchiver and NSData's writeToFile:atomically
- * Sends out a PRESHockeyPersistenceSuccessNotification in case of success
+ * Sends out a PRESPersistenceSuccessNotification in case of success
  */
 - (void)persistBundle:(NSData *)bundle {
     //TODO send out a fail notification?
@@ -53,16 +53,16 @@ static NSUInteger const PRESDefaultFileCount = 50;
             typeof(self) strongSelf = weakSelf;
             BOOL success = [bundle writeToFile:fileURL atomically:YES];
             if (success) {
-                PRESHockeyLogDebug(@"INFO: Wrote bundle to %@", fileURL);
+                PRESLogDebug(@"INFO: Wrote bundle to %@", fileURL);
                 [strongSelf sendBundleSavedNotification];
             }
             else {
-                PRESHockeyLogError(@"Error writing bundle to %@", fileURL);
+                PRESLogError(@"Error writing bundle to %@", fileURL);
             }
         });
     }
     else {
-        PRESHockeyLogWarning(@"WARNING: Unable to write %@ as provided bundle was null", fileURL);
+        PRESLogWarning(@"WARNING: Unable to write %@ as provided bundle was null", fileURL);
     }
 }
 
@@ -100,7 +100,7 @@ static NSUInteger const PRESDefaultFileCount = 50;
     if ([bundle isKindOfClass:NSDictionary.class]) {
         return (NSDictionary *) bundle;
     }
-    PRESHockeyLogDebug(@"INFO: The context meta data file could not be loaded.");
+    PRESLogDebug(@"INFO: The context meta data file could not be loaded.");
     return [NSDictionary dictionary];
 }
 
@@ -132,14 +132,14 @@ static NSUInteger const PRESDefaultFileCount = 50;
         if ([path rangeOfString:kPRESFileBaseString].location != NSNotFound) {
             NSError *error = nil;
             if (![[NSFileManager defaultManager] removeItemAtPath:path error:&error]) {
-                PRESHockeyLogError(@"Error deleting file at path %@", path);
+                PRESLogError(@"Error deleting file at path %@", path);
             }
             else {
-                PRESHockeyLogDebug(@"INFO: Successfully deleted file at path %@", path);
+                PRESLogDebug(@"INFO: Successfully deleted file at path %@", path);
                 [strongSelf.requestedBundlePaths removeObject:path];
             }
         } else {
-            PRESHockeyLogDebug(@"INFO: Empty path, nothing to delete");
+            PRESLogDebug(@"INFO: Empty path, nothing to delete");
         }
     });
     
@@ -193,14 +193,14 @@ static NSUInteger const PRESDefaultFileCount = 50;
         
         // Create PreSniffSDK folder if needed
         if (![fileManager createDirectoryAtURL:appURL withIntermediateDirectories:YES attributes:nil error:&error]) {
-            PRESHockeyLogError(@"ERROR: %@", error.localizedDescription);
+            PRESLogError(@"ERROR: %@", error.localizedDescription);
             return;
         }
         
         // Create metadata subfolder
         NSURL *metaDataURL = [appURL URLByAppendingPathComponent:kPRESMetaDataDirectory];
         if (![fileManager createDirectoryAtURL:metaDataURL withIntermediateDirectories:YES attributes:nil error:&error]) {
-            PRESHockeyLogError(@"ERROR: %@", error.localizedDescription);
+            PRESLogError(@"ERROR: %@", error.localizedDescription);
             return;
         }
         
@@ -211,7 +211,7 @@ static NSUInteger const PRESDefaultFileCount = 50;
         //No need to check if the directory already exists.
         NSURL *telemetryURL = [appURL URLByAppendingPathComponent:kPRESTelemetryDirectory];
         if (![fileManager createDirectoryAtURL:telemetryURL withIntermediateDirectories:YES attributes:nil error:&error]) {
-            PRESHockeyLogError(@"ERROR: %@", error.localizedDescription);
+            PRESLogError(@"ERROR: %@", error.localizedDescription);
             return;
         }
         
@@ -219,9 +219,9 @@ static NSUInteger const PRESDefaultFileCount = 50;
         if (![appURL setResourceValue:@YES
                                forKey:NSURLIsExcludedFromBackupKey
                                 error:&error]) {
-            PRESHockeyLogError(@"ERROR: Error excluding %@ from backup %@", appURL.lastPathComponent, error.localizedDescription);
+            PRESLogError(@"ERROR: Error excluding %@ from backup %@", appURL.lastPathComponent, error.localizedDescription);
         } else {
-            PRESHockeyLogDebug(@"INFO: Exclude %@ from backup", appURL);
+            PRESLogDebug(@"INFO: Exclude %@ from backup", appURL);
         }
         
         _directorySetupComplete = YES;
@@ -270,7 +270,7 @@ static NSUInteger const PRESDefaultFileCount = 50;
 }
 
 /**
- * Send a PRESHockeyPersistenceSuccessNotification to the main thread to notify observers that we have successfully saved a file
+ * Send a PRESPersistenceSuccessNotification to the main thread to notify observers that we have successfully saved a file
  * This is typically used to trigger sending.
  */
 - (void)sendBundleSavedNotification {
@@ -285,7 +285,7 @@ static NSUInteger const PRESDefaultFileCount = 50;
     if (!_appPreSniffSDKDirectoryPath) {
         NSString *appSupportPath = [[NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES) lastObject] stringByStandardizingPath];
         if (appSupportPath) {
-            _appPreSniffSDKDirectoryPath = [appSupportPath stringByAppendingPathComponent:kPRESHockeyDirectory];
+            _appPreSniffSDKDirectoryPath = [appSupportPath stringByAppendingPathComponent:kPRESDirectory];
         }
     }
     return _appPreSniffSDKDirectoryPath;

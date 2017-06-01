@@ -31,7 +31,7 @@
 #import "PRESManager.h"
 
 @class PRESBaseManager;
-@class PRESHockeyBaseViewController;
+@class PRESBaseViewController;
 
 @interface PRESBaseManager()
 

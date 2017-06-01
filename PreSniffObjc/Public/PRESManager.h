@@ -29,7 +29,7 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-
+#import "PRESNullability.h"
 #import "PRESEnums.h"
 
 @protocol PRESManagerDelegate;
@@ -37,9 +37,6 @@
 @class PRESBaseManager;
 @class PRESCrashManager;
 @class PRESMetricsManager;
-
-#import "PRESNullability.h"
-
 @class PRESNetDiagResult;
 
 NS_ASSUME_NONNULL_BEGIN

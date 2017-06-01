@@ -91,9 +91,9 @@ typedef struct {
 - (void)logInvalidIdentifier:(NSString *)environment {
     if (self.appEnvironment != PRESEnvironmentAppStore) {
         if ([environment isEqualToString:@"liveIdentifier"]) {
-            PRESHockeyLogWarning(@"[HockeySDK] WARNING: The liveIdentifier is invalid! The SDK will be disabled when deployed to the App Store without setting a valid app identifier!");
+            PRESLogWarning(@"[HockeySDK] WARNING: The liveIdentifier is invalid! The SDK will be disabled when deployed to the App Store without setting a valid app identifier!");
         } else {
-            PRESHockeyLogError(@"[HockeySDK] ERROR: The %@ is invalid! Please use the HockeyApp app identifier you find on the apps website on HockeyApp! The SDK is disabled!", environment);
+            PRESLogError(@"[HockeySDK] ERROR: The %@ is invalid! Please use the HockeyApp app identifier you find on the apps website on HockeyApp! The SDK is disabled!", environment);
         }
     }
 }
@@ -180,7 +180,7 @@ typedef struct {
 - (void)startManager {
     if (!_validAppIdentifier) return;
     if (_startManagerIsInvoked) {
-        PRESHockeyLogWarning(@"[HockeySDK] Warning: startManager should only be invoked once! This call is ignored.");
+        PRESLogWarning(@"[HockeySDK] Warning: startManager should only be invoked once! This call is ignored.");
         return;
     }
     
@@ -195,12 +195,12 @@ typedef struct {
         _installString = pres_appAnonID(YES);
     }
     
-    PRESHockeyLogDebug(@"INFO: Starting HockeyManager");
+    PRESLogDebug(@"INFO: Starting HockeyManager");
     _startManagerIsInvoked = YES;
     
     // start CrashManager
     if (![self isCrashManagerDisabled]) {
-        PRESHockeyLogDebug(@"INFO: Start CrashManager");
+        PRESLogDebug(@"INFO: Start CrashManager");
         
         [_crashManager startManager];
     }
@@ -212,7 +212,7 @@ typedef struct {
     
     // start MetricsManager
     if (!self.isMetricsManagerDisabled) {
-        PRESHockeyLogDebug(@"INFO: Start MetricsManager");
+        PRESLogDebug(@"INFO: Start MetricsManager");
         [_metricsManager startManager];
         [PRESCategoryContainer activateCategory];
     }
@@ -257,7 +257,7 @@ typedef struct {
 - (void)setDelegate:(id<PRESManagerDelegate>)delegate {
     if (self.appEnvironment != PRESEnvironmentAppStore) {
         if (_startManagerIsInvoked) {
-            PRESHockeyLogError(@"[HockeySDK] ERROR: The `delegate` property has to be set before calling [[PRESManager sharedPRESManager] startManager] !");
+            PRESLogError(@"[HockeySDK] ERROR: The `delegate` property has to be set before calling [[PRESManager sharedPRESManager] startManager] !");
         }
     }
     
@@ -307,7 +307,7 @@ typedef struct {
     
     if (!success) {
         NSString *errorDescription = [error description] ?: @"";
-        PRESHockeyLogError(@"ERROR: Couldn't %@ key %@ in the keychain. %@", updateType, key, errorDescription);
+        PRESLogError(@"ERROR: Couldn't %@ key %@ in the keychain. %@", updateType, key, errorDescription);
     }
 }
 
@@ -315,21 +315,21 @@ typedef struct {
     // always set it, since nil value will trigger removal of the keychain entry
     _userID = userID;
     
-    [self modifyKeychainUserValue:userID forKey:kPRESHockeyMetaUserID];
+    [self modifyKeychainUserValue:userID forKey:kPRESMetaUserID];
 }
 
 - (void)setUserName:(NSString *)userName {
     // always set it, since nil value will trigger removal of the keychain entry
     _userName = userName;
     
-    [self modifyKeychainUserValue:userName forKey:kPRESHockeyMetaUserName];
+    [self modifyKeychainUserValue:userName forKey:kPRESMetaUserName];
 }
 
 - (void)setUserEmail:(NSString *)userEmail {
     // always set it, since nil value will trigger removal of the keychain entry
     _userEmail = userEmail;
     
-    [self modifyKeychainUserValue:userEmail forKey:kPRESHockeyMetaUserEmail];
+    [self modifyKeychainUserValue:userEmail forKey:kPRESMetaUserEmail];
 }
 
 - (void)testIdentifier {
@@ -395,7 +395,7 @@ typedef struct {
     
     NSString *integrationPath = [NSString stringWithFormat:@"api/3/apps/%@/integration", pres_encodeAppIdentifier(appIdentifier)];
     
-    PRESHockeyLogDebug(@"INFO: Sending integration workflow ping to %@", integrationPath);
+    PRESLogDebug(@"INFO: Sending integration workflow ping to %@", integrationPath);
     
     NSDictionary *params = @{@"timestamp": timeString,
                              @"sdk": PRESHOCKEY_NAME,
@@ -428,16 +428,16 @@ typedef struct {
 - (void)logPingMessageForStatusCode:(NSInteger)statusCode {
     switch (statusCode) {
         case 400:
-            PRESHockeyLogError(@"ERROR: App ID not found");
+            PRESLogError(@"ERROR: App ID not found");
             break;
         case 201:
-            PRESHockeyLogDebug(@"INFO: Ping accepted.");
+            PRESLogDebug(@"INFO: Ping accepted.");
             break;
         case 200:
-            PRESHockeyLogDebug(@"INFO: Ping accepted. Server already knows.");
+            PRESLogDebug(@"INFO: Ping accepted. Server already knows.");
             break;
         default:
-            PRESHockeyLogError(@"ERROR: Unknown error");
+            PRESLogError(@"ERROR: Unknown error");
             break;
     }
 }
@@ -445,7 +445,7 @@ typedef struct {
 - (void)validateStartManagerIsInvoked {
     if (_validAppIdentifier && (self.appEnvironment != PRESEnvironmentAppStore)) {
         if (!_startManagerIsInvoked) {
-            PRESHockeyLogError(@"[HockeySDK] ERROR: You did not call [[PRESManager sharedPRESManager] startManager] to startup the HockeySDK! Please do so after setting up all properties. The SDK is NOT running.");
+            PRESLogError(@"[HockeySDK] ERROR: You did not call [[PRESManager sharedPRESManager] startManager] to startup the HockeySDK! Please do so after setting up all properties. The SDK is NOT running.");
         }
     }
 }
@@ -455,9 +455,9 @@ typedef struct {
     
     if (!NSThread.isMainThread) {
         if (self.appEnvironment == PRESEnvironmentAppStore) {
-            PRESHockeyLogError(@"%@", errorString);
+            PRESLogError(@"%@", errorString);
         } else {
-            PRESHockeyLogError(@"%@", errorString);
+            PRESLogError(@"%@", errorString);
             NSAssert(NSThread.isMainThread, errorString);
         }
         
@@ -478,7 +478,7 @@ typedef struct {
 
 - (void)initializeModules {
     if (_managersInitialized) {
-        PRESHockeyLogWarning(@"[HockeySDK] Warning: The SDK should only be initialized once! This call is ignored.");
+        PRESLogWarning(@"[HockeySDK] Warning: The SDK should only be initialized once! This call is ignored.");
         return;
     }
     
@@ -489,14 +489,14 @@ typedef struct {
     _startManagerIsInvoked = NO;
     
     if (_validAppIdentifier) {
-        PRESHockeyLogDebug(@"INFO: Setup CrashManager");
+        PRESLogDebug(@"INFO: Setup CrashManager");
         _crashManager = [[PRESCrashManager alloc] initWithAppIdentifier:_appIdentifier
                                                          appEnvironment:_appEnvironment
                                                         hockeyAppClient:[self hockeyAppClient]];
         _crashManager.delegate = _delegate;
         
         
-        PRESHockeyLogDebug(@"INFO: Setup MetricsManager");
+        PRESLogDebug(@"INFO: Setup MetricsManager");
         NSString *iKey = pres_appIdentifierToGuid(_appIdentifier);
         _metricsManager = [[PRESMetricsManager alloc] initWithAppIdentifier:iKey appEnvironment:_appEnvironment];
         

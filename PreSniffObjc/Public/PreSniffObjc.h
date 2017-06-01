@@ -22,11 +22,11 @@
 // This can be used by app developers to trigger additional points where the HockeySDK can try sending
 // pending crash reports or feedback messages.
 // By default the SDK retries sending pending data only when the app becomes active.
-#define PRESHockeyNetworkDidBecomeReachableNotification @"PRESHockeyNetworkDidBecomeReachable"
+#define PRESNetworkDidBecomeReachableNotification @"PRESNetworkDidBecomeReachable"
 
 extern NSString *const __attribute__((unused)) kPRESCrashErrorDomain;
 extern NSString *const __attribute__((unused)) kPRESUpdateErrorDomain;
 extern NSString *const __attribute__((unused)) kPRESFeedbackErrorDomain;
 extern NSString *const __attribute__((unused)) kPRESAuthenticatorErrorDomain;
-extern NSString *const __attribute__((unused)) kPRESHockeyErrorDomain;
+extern NSString *const __attribute__((unused)) kPRESErrorDomain;
 

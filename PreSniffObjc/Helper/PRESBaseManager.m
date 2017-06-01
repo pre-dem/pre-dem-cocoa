@@ -84,7 +84,7 @@
 #pragma mark - Private
 
 - (void)reportError:(NSError *)error {
-    PRESHockeyLogError(@"ERROR: %@", [error localizedDescription]);
+    PRESLogError(@"ERROR: %@", [error localizedDescription]);
 }
 
 - (NSString *)encodedAppIdentifier {
@@ -157,7 +157,7 @@
         if ([UIWindow instancesRespondToSelector:@selector(rootViewController)]) {
             if (!(window.hidden) && ([window rootViewController])) {
                 visibleWindow = window;
-                PRESHockeyLogDebug(@"INFO: UIWindow with rootViewController found: %@", visibleWindow);
+                PRESLogDebug(@"INFO: UIWindow with rootViewController found: %@", visibleWindow);
                 break;
             }
         }
@@ -281,7 +281,7 @@
     NSDate *date = nil;
     NSError *error = nil; 
     if (![_rfc3339Formatter getObjectValue:&date forString:dateString range:nil error:&error]) {
-        PRESHockeyLogWarning(@"WARNING: Invalid date '%@' string: %@", dateString, error);
+        PRESLogWarning(@"WARNING: Invalid date '%@' string: %@", dateString, error);
     }
     
     return date;

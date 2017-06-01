@@ -64,7 +64,7 @@ NSString *const kPRESExcludeApplicationSupportFromBackup = @"kPRESExcludeApplica
 @end
 
 #if __IPHONE_OS_VERSION_MAX_ALLOWED < 70000
-@interface NSData (PRESHockeySDKiOS7)
+@interface NSData (PRESSDKiOS7)
 - (NSString *)base64Encoding;
 @end
 #endif
@@ -407,7 +407,7 @@ BOOL pres_isDebuggerAttached(void) {
         name[3] = getpid();
         
         if (sysctl(name, 4, &info, &info_size, NULL, 0) == -1) {
-            PRESHockeyLogError(@"[HockeySDK] ERROR: Checking for a running debugger via sysctl() failed.");
+            PRESLogError(@"[HockeySDK] ERROR: Checking for a running debugger via sysctl() failed.");
             debuggerIsAttached = false;
         }
         

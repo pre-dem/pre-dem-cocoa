@@ -871,7 +871,7 @@ NSString *const PRESXamarinStackTraceDelimiter = @"Xamarin Exception Stack:";
                     break;
                     
                 default:
-                    PRESHockeyLogDebug(@"Symbol prefix rules are unknown for this OS!");
+                    PRESLogDebug(@"Symbol prefix rules are unknown for this OS!");
                     break;
             }
         }
@@ -911,7 +911,7 @@ NSString *const PRESXamarinStackTraceDelimiter = @"Xamarin Exception Stack:";
         NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"(/Users/[^/]+/)" options:0 error:&error];
         anonymizedProcessPath = [regex stringByReplacingMatchesInString:path options:0 range:NSMakeRange(0, [path length]) withTemplate:@"/Users/USER/"];
         if (error) {
-            PRESHockeyLogError(@"ERROR: String replacing failed - %@", error.localizedDescription);
+            PRESLogError(@"ERROR: String replacing failed - %@", error.localizedDescription);
         }
     }
     else if(([path length] > 0) && (![path containsString:@"Users"])) {

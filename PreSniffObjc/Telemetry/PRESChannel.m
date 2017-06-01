@@ -92,7 +92,7 @@ NS_ASSUME_NONNULL_BEGIN
     
     if (!item) {
         // Case 1: Item is nil: Do not enqueue item and abort operation
-        PRESHockeyLogWarning(@"WARNING: TelemetryItem was nil.");
+        PRESLogWarning(@"WARNING: TelemetryItem was nil.");
         return;
     }
     
@@ -102,7 +102,7 @@ NS_ASSUME_NONNULL_BEGIN
         
         if (strongSelf.isQueueBusy) {
             // Case 2: Channel is in blocked state: Trigger sender, start timer to check after again after a while and abort operation.
-            PRESHockeyLogDebug(@"INFO: The channel is saturated. %@ was dropped.", item.debugDescription);
+            PRESLogDebug(@"INFO: The channel is saturated. %@ was dropped.", item.debugDescription);
             if (![strongSelf timerIsRunning]) {
                 [strongSelf startTimer];
             }
@@ -159,7 +159,7 @@ NS_ASSUME_NONNULL_BEGIN
     NSError *error;
     NSData *data = [NSJSONSerialization dataWithJSONObject:dictionary options:(NSJSONWritingOptions)0 error:&error];
     if (!data) {
-        PRESHockeyLogError(@"ERROR: JSONSerialization error: %@", error.localizedDescription);
+        PRESLogError(@"ERROR: JSONSerialization error: %@", error.localizedDescription);
         return @"{}";
     } else {
         return [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
@@ -250,7 +250,7 @@ void pres_resetSafeJsonStream(char **string) {
 }
 
 /**
- * Send a PRESHockeyBlockingChannelNotification to the main thread to notify observers that channel can't enqueue new items.
+ * Send a PRESBlockingChannelNotification to the main thread to notify observers that channel can't enqueue new items.
  * This is typically used to trigger sending.
  */
 - (void)sendBlockingChannelNotification {

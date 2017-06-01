@@ -177,11 +177,11 @@ typedef NS_ENUM(NSInteger, PRESAuthenticatorReason) {
 /**
  *  HockeySDK global error domain
  */
-typedef NS_ENUM(NSInteger, PRESHockeyErrorReason) {
+typedef NS_ENUM(NSInteger, PRESErrorReason) {
     /**
      *  Unknown error
      */
-    PRESHockeyErrorUnknown
+    PRESErrorUnknown
 };
 
 #endif /* HockeySDK_HockeyEnums_h */

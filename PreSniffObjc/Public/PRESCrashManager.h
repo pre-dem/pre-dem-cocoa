@@ -121,7 +121,7 @@ typedef NS_ENUM(NSUInteger, PRESCrashManagerUserInput) {
  
  This module works as a wrapper around the underlying crash reporting framework and provides functionality to
  detect new crashes, queues them if networking is not available, present a user interface to approve sending
- the reports to the HockeyApp servers and more.
+ the reports to the PreSniff servers and more.
  
  It also provides options to add additional meta information to each crash report, like `userName`, `userEmail`
  via `PRESManagerDelegate` protocol, and additional textual log information via `PRESCrashManagerDelegate`

@@ -3,12 +3,12 @@
 #import <Foundation/Foundation.h>
 #import "PRESEnums.h"
 
-#define PRESHockeyLog(_level, _message) [PRESLogger logMessage:_message level:_level file:__FILE__ function:__PRETTY_FUNCTION__ line:__LINE__]
+#define PRESLog(_level, _message) [PRESLogger logMessage:_message level:_level file:__FILE__ function:__PRETTY_FUNCTION__ line:__LINE__]
 
-#define PRESHockeyLogError(format, ...)   PRESHockeyLog(PRESLogLevelError,   (^{ return [NSString stringWithFormat:(format), ##__VA_ARGS__]; }))
-#define PRESHockeyLogWarning(format, ...) PRESHockeyLog(PRESLogLevelWarning, (^{ return [NSString stringWithFormat:(format), ##__VA_ARGS__]; }))
-#define PRESHockeyLogDebug(format, ...)   PRESHockeyLog(PRESLogLevelDebug,   (^{ return [NSString stringWithFormat:(format), ##__VA_ARGS__]; }))
-#define PRESHockeyLogVerbose(format, ...) PRESHockeyLog(PRESLogLevelVerbose, (^{ return [NSString stringWithFormat:(format), ##__VA_ARGS__]; }))
+#define PRESLogError(format, ...)   PRESLog(PRESLogLevelError,   (^{ return [NSString stringWithFormat:(format), ##__VA_ARGS__]; }))
+#define PRESLogWarning(format, ...) PRESLog(PRESLogLevelWarning, (^{ return [NSString stringWithFormat:(format), ##__VA_ARGS__]; }))
+#define PRESLogDebug(format, ...)   PRESLog(PRESLogLevelDebug,   (^{ return [NSString stringWithFormat:(format), ##__VA_ARGS__]; }))
+#define PRESLogVerbose(format, ...) PRESLog(PRESLogLevelVerbose, (^{ return [NSString stringWithFormat:(format), ##__VA_ARGS__]; }))
 
 @interface PRESLogger : NSObject
 

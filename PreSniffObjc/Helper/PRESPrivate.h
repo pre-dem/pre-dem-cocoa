@@ -44,9 +44,9 @@
 
 #define PRESHOCKEY_USAGE_DATA @"PRESUpdateManager.plist"
 
-#define kPRESHockeyMetaUserName  @"PRESHockeyMetaUserName"
-#define kPRESHockeyMetaUserEmail @"PRESHockeyMetaUserEmail"
-#define kPRESHockeyMetaUserID    @"PRESHockeyMetaUserID"
+#define kPRESMetaUserName  @"PRESMetaUserName"
+#define kPRESMetaUserEmail @"PRESMetaUserEmail"
+#define kPRESMetaUserID    @"PRESMetaUserID"
 
 #define kPRESUpdateInstalledUUID              @"PRESUpdateInstalledUUID"
 #define kPRESUpdateInstalledVersionID         @"PRESUpdateInstalledVersionID"
@@ -70,9 +70,9 @@
 
 #define PRES_RGBCOLOR(r,g,b) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:1]
 
-NSBundle *PRESHockeyBundle(void);
-NSString *PRESHockeyLocalizedString(NSString *stringToken);
-NSString *PRESHockeyMD5(NSString *str);
+NSBundle *PRESBundle(void);
+NSString *PRESLocalizedString(NSString *stringToken);
+NSString *PRESMD5(NSString *str);
 
 #ifndef __IPHONE_8_0
 #define __IPHONE_8_0     80000

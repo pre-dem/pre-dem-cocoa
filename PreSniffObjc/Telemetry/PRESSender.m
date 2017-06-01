@@ -70,7 +70,7 @@ static NSUInteger const PRESDefaultRequestLimit = 10;
     @synchronized(self){
         if(_runningRequestsCount < _maxRequestCount){
             _runningRequestsCount++;
-            PRESHockeyLogDebug(@"INFO: Create new sender thread. Current count is %ld", (long) _runningRequestsCount);
+            PRESLogDebug(@"INFO: Create new sender thread. Current count is %ld", (long) _runningRequestsCount);
         }else{
             return;
         }
@@ -90,7 +90,7 @@ static NSUInteger const PRESDefaultRequestLimit = 10;
         [self sendRequest:request filePath:filePath];
     } else {
         self.runningRequestsCount -= 1;
-        PRESHockeyLogDebug(@"INFO: Close sender thread due empty package. Current count is %ld", (long) _runningRequestsCount);
+        PRESLogDebug(@"INFO: Close sender thread due empty package. Current count is %ld", (long) _runningRequestsCount);
         // TODO: Delete data and send next file
     }
 }
@@ -138,17 +138,17 @@ static NSUInteger const PRESDefaultRequestLimit = 10;
 
 - (void)handleResponseWithStatusCode:(NSInteger)statusCode responseData:(nonnull NSData *)responseData filePath:(nonnull NSString *)filePath error:(nonnull NSError *)error {
     self.runningRequestsCount -= 1;
-    PRESHockeyLogDebug(@"INFO: Close sender thread due incoming response. Current count is %ld", (long) _runningRequestsCount);
+    PRESLogDebug(@"INFO: Close sender thread due incoming response. Current count is %ld", (long) _runningRequestsCount);
     
     if (responseData && (responseData.length > 0) && [self shouldDeleteDataWithStatusCode:statusCode]) {
         //we delete data that was either sent successfully or if we have a non-recoverable error
-        PRESHockeyLogDebug(@"INFO: Sent data with status code: %ld", (long) statusCode);
-        PRESHockeyLogDebug(@"INFO: Response data:\n%@", [NSJSONSerialization JSONObjectWithData:responseData options:0 error:nil]);
+        PRESLogDebug(@"INFO: Sent data with status code: %ld", (long) statusCode);
+        PRESLogDebug(@"INFO: Response data:\n%@", [NSJSONSerialization JSONObjectWithData:responseData options:0 error:nil]);
         [self.persistence deleteFileAtPath:filePath];
         [self sendSavedData];
     } else {
-        PRESHockeyLogError(@"ERROR: Sending telemetry data failed");
-        PRESHockeyLogError(@"Error description: %@", error.localizedDescription);
+        PRESLogError(@"ERROR: Sending telemetry data failed");
+        PRESLogError(@"Error description: %@", error.localizedDescription);
         [self.persistence giveBackRequestedFilePath:filePath];
     }
 }

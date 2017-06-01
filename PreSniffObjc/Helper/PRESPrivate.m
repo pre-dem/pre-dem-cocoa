@@ -34,11 +34,11 @@
 NSString *const kPRESCrashErrorDomain = @"PRESCrashReporterErrorDomain";
 NSString *const kPRESUpdateErrorDomain = @"PRESUpdaterErrorDomain";
 NSString *const kPRESFeedbackErrorDomain = @"PRESFeedbackErrorDomain";
-NSString *const kPRESHockeyErrorDomain = @"PRESHockeyErrorDomain";
+NSString *const kPRESErrorDomain = @"PRESErrorDomain";
 NSString *const kPRESAuthenticatorErrorDomain = @"PRESAuthenticatorErrorDomain";
 
 // Load the framework bundle.
-NSBundle *PRESHockeyBundle(void) {
+NSBundle *PRESBundle(void) {
     static NSBundle *bundle = nil;
     static dispatch_once_t predicate;
     dispatch_once(&predicate, ^{
@@ -49,14 +49,14 @@ NSBundle *PRESHockeyBundle(void) {
     return bundle;
 }
 
-NSString *PRESHockeyLocalizedString(NSString *stringToken) {
+NSString *PRESLocalizedString(NSString *stringToken) {
     if (!stringToken) return @"";
     
     NSString *appSpecificLocalizationString = NSLocalizedString(stringToken, @"");
     if (appSpecificLocalizationString && ![stringToken isEqualToString:appSpecificLocalizationString]) {
         return appSpecificLocalizationString;
-    } else if (PRESHockeyBundle()) {
-        NSString *bundleSpecificLocalizationString = NSLocalizedStringFromTableInBundle(stringToken, @"HockeySDK", PRESHockeyBundle(), @"");
+    } else if (PRESBundle()) {
+        NSString *bundleSpecificLocalizationString = NSLocalizedStringFromTableInBundle(stringToken, @"HockeySDK", PRESBundle(), @"");
         if (bundleSpecificLocalizationString)
             return bundleSpecificLocalizationString;
         return stringToken;
@@ -65,7 +65,7 @@ NSString *PRESHockeyLocalizedString(NSString *stringToken) {
     }
 }
 
-NSString *PRESHockeyMD5(NSString *str) {
+NSString *PRESMD5(NSString *str) {
     NSData *utf8Bytes = [str dataUsingEncoding:NSUTF8StringEncoding];
     unsigned char result[CC_MD5_DIGEST_LENGTH] = {0};
     CC_MD5( utf8Bytes.bytes, (CC_LONG)utf8Bytes.length, result );
