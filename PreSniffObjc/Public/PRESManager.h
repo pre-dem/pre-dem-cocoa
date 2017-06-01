@@ -336,7 +336,6 @@ typedef void (^PRESNetDiagCompleteHandler)(PRESNetDiagResult* result);
 /** Set the userid that should used in the SDK components
  
  Right now this is used by the `PRESCrashManager` to attach to a crash report.
- `PRESFeedbackManager` uses it too for assigning the user to a discussion thread.
  
  The value can be set at any time and will be stored in the keychain on the current
  device only! To delete the value from the keychain set the value to `nil`.
@@ -361,7 +360,6 @@ typedef void (^PRESNetDiagCompleteHandler)(PRESNetDiagResult* result);
 /** Set the user name that should used in the SDK components
  
  Right now this is used by the `PRESCrashManager` to attach to a crash report.
- `PRESFeedbackManager` uses it too for assigning the user to a discussion thread.
  
  The value can be set at any time and will be stored in the keychain on the current
  device only! To delete the value from the keychain set the value to `nil`.
@@ -386,7 +384,6 @@ typedef void (^PRESNetDiagCompleteHandler)(PRESNetDiagResult* result);
 /** Set the users email address that should used in the SDK components
  
  Right now this is used by the `PRESCrashManager` to attach to a crash report.
- `PRESFeedbackManager` uses it too for assigning the user to a discussion thread.
  
  The value can be set at any time and will be stored in the keychain on the current
  device only! To delete the value from the keychain set the value to `nil`.

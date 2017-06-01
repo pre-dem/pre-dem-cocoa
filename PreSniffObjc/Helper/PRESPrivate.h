@@ -40,28 +40,9 @@
 #define PRES_CRASH_SETTINGS @"PRESCrashManager.plist"
 #define PRES_CRASH_ANALYZER @"PRESCrashManager.analyzer"
 
-#define PRES_FEEDBACK_SETTINGS @"PRESFeedbackManager.plist"
-
-#define PRES_USAGE_DATA @"PRESUpdateManager.plist"
-
 #define kPRESMetaUserName  @"PRESMetaUserName"
 #define kPRESMetaUserEmail @"PRESMetaUserEmail"
 #define kPRESMetaUserID    @"PRESMetaUserID"
-
-#define kPRESUpdateInstalledUUID              @"PRESUpdateInstalledUUID"
-#define kPRESUpdateInstalledVersionID         @"PRESUpdateInstalledVersionID"
-#define kPRESUpdateCurrentCompanyName         @"PRESUpdateCurrentCompanyName"
-#define kPRESUpdateArrayOfLastCheck           @"PRESUpdateArrayOfLastCheck"
-#define kPRESUpdateDateOfLastCheck            @"PRESUpdateDateOfLastCheck"
-#define kPRESUpdateDateOfVersionInstallation  @"PRESUpdateDateOfVersionInstallation"
-#define kPRESUpdateUsageTimeOfCurrentVersion  @"PRESUpdateUsageTimeOfCurrentVersion"
-#define kPRESUpdateUsageTimeForUUID           @"PRESUpdateUsageTimeForUUID"
-#define kPRESUpdateInstallationIdentification @"PRESUpdateInstallationIdentification"
-
-#define kPRESStoreUpdateDateOfLastCheck       @"PRESStoreUpdateDateOfLastCheck"
-#define kPRESStoreUpdateLastStoreVersion      @"PRESStoreUpdateLastStoreVersion"
-#define kPRESStoreUpdateLastUUID              @"PRESStoreUpdateLastUUID"
-#define kPRESStoreUpdateIgnoreVersion         @"PRESStoreUpdateIgnoredVersion"
 
 #define PRES_INTEGRATIONFLOW_TIMESTAMP  @"PRESIntegrationFlowStartTimestamp"
 
@@ -91,15 +72,5 @@ NSString *PRESMD5(NSString *str);
 #endif /* TARGET_IPHONE_SIMULATOR */
 
 #endif /* TARGET_OS_SIMULATOR */
-
-#if __IPHONE_OS_VERSION_MIN_REQUIRED > __IPHONE_6_1
-
-#define kPRESButtonTypeSystem                UIButtonTypeSystem
-
-#else
-
-#define kPRESButtonTypeSystem                UIButtonTypeRoundedRect
-
-#endif
 
 #endif /* PreSniffObjc_PRESPrivate_h */

@@ -191,38 +191,6 @@
     return navController;
 }
 
-- (UIViewController *)visibleWindowRootViewController {
-    UIViewController *parentViewController = nil;
-    
-    if ([[PRESManager sharedPRESManager].delegate respondsToSelector:@selector(viewControllerForPRESManager:componentManager:)]) {
-        parentViewController = [[PRESManager sharedPRESManager].delegate viewControllerForPRESManager:[PRESManager sharedPRESManager] componentManager:self];
-    }
-    
-    UIWindow *visibleWindow = [self findVisibleWindow];
-    
-    if (parentViewController == nil) {
-        parentViewController = [visibleWindow rootViewController];
-    }
-    
-    // use topmost modal view
-    while (parentViewController.presentedViewController) {
-        parentViewController = parentViewController.presentedViewController;
-    }
-    
-    // special addition to get rootViewController from three20 which has it's own controller handling
-    if (NSClassFromString(@"TTNavigator")) {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-        UIViewController *ttParentViewController = nil;
-        ttParentViewController = [[NSClassFromString(@"TTNavigator") performSelector:(NSSelectorFromString(@"navigator"))] visibleViewController];
-        if (ttParentViewController)
-            parentViewController = ttParentViewController;
-#pragma clang diagnostic pop
-    }
-    
-    return parentViewController;
-}
-
 - (BOOL)addStringValueToKeychain:(NSString *)stringValue forKey:(NSString *)key {
     if (!key || !stringValue)
         return NO;

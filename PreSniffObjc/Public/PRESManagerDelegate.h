@@ -76,20 +76,6 @@ PRESCrashManagerDelegate
 ///-----------------------------------------------------------------------------
 
 
-// optional parent view controller for the feedback screen when invoked via the alert view, default is the root UIWindow instance
-/**
- Return a custom parent view controller for presenting modal sheets
- 
- By default the SDK is using the root UIWindow instance to present any required
- view controllers. Overwrite this if this doesn't result in a satisfying
- behavior or if you want to define any other parent view controller.
- 
- @param PRESManager The `PRESManager` PRESManager instance invoking this delegate
- @param componentManager The `PRESBaseManager` component instance invoking this delegate, can be `PRESCrashManager` or `PRESFeedbackManager`
- */
-- (UIViewController *)viewControllerForPRESManager:(PRESManager *)PRESManager componentManager:(PRESBaseManager *)componentManager;
-
-
 ///-----------------------------------------------------------------------------
 /// @name Additional meta data
 ///-----------------------------------------------------------------------------
@@ -98,10 +84,6 @@ PRESCrashManagerDelegate
 /** Return the userid that should used in the SDK components
  
  Right now this is used by the `PRESCrashManager` to attach to a crash report.
- `PRESFeedbackManager` uses it too for assigning the user to a discussion thread.
- 
- In addition, if this returns not nil for `PRESFeedbackManager` the user will
- not be asked for any user details by the component, including userName or userEmail.
  
  You can find out the component requesting the userID like this:
  
@@ -123,7 +105,7 @@ PRESCrashManagerDelegate
  are not anonymous any more and the crash alerts will not show the word "anonymous"!
  
  @param PRESManager The `PRESManager` PRESManager instance invoking this delegate
- @param componentManager The `PRESBaseManager` component instance invoking this delegate, can be `PRESCrashManager` or `PRESFeedbackManager`
+ @param componentManager The `PRESBaseManager` component instance invoking this delegate, can be `PRESCrashManager`
  @see userNameForPRESManager:componentManager:
  @see userEmailForPRESManager:componentManager:
  @see [PRESManager userID]
@@ -134,10 +116,6 @@ PRESCrashManagerDelegate
 /** Return the user name that should used in the SDK components
  
  Right now this is used by the `PRESCrashManager` to attach to a crash report.
- `PRESFeedbackManager` uses it too for assigning the user to a discussion thread.
- 
- In addition, if this returns not nil for `PRESFeedbackManager` the user will
- not be asked for any user details by the component, including userName or userEmail.
  
  You can find out the component requesting the user name like this:
  
@@ -159,7 +137,7 @@ PRESCrashManagerDelegate
  are not anonymous any more and the crash alerts will not show the word "anonymous"!
  
  @param PRESManager The `PRESManager` PRESManager instance invoking this delegate
- @param componentManager The `PRESBaseManager` component instance invoking this delegate, can be `PRESCrashManager` or `PRESFeedbackManager`
+ @param componentManager The `PRESBaseManager` component instance invoking this delegate, can be `PRESCrashManager`
  @see userIDForPRESManager:componentManager:
  @see userEmailForPRESManager:componentManager:
  @see [PRESManager userName]
@@ -170,10 +148,6 @@ PRESCrashManagerDelegate
 /** Return the users email address that should used in the SDK components
  
  Right now this is used by the `PRESCrashManager` to attach to a crash report.
- `PRESFeedbackManager` uses it too for assigning the user to a discussion thread.
- 
- In addition, if this returns not nil for `PRESFeedbackManager` the user will
- not be asked for any user details by the component, including userName or userEmail.
  
  You can find out the component requesting the user email like this:
  
@@ -195,7 +169,7 @@ PRESCrashManagerDelegate
  are not anonymous any more and the crash alerts will not show the word "anonymous"!
  
  @param PRESManager The `PRESManager` PRESManager instance invoking this delegate
- @param componentManager The `PRESBaseManager` component instance invoking this delegate, can be `PRESCrashManager` or `PRESFeedbackManager`
+ @param componentManager The `PRESBaseManager` component instance invoking this delegate, can be `PRESCrashManager`
  @see userIDForPRESManager:componentManager:
  @see userNameForPRESManager:componentManager:
  @see [PRESManager userEmail]
