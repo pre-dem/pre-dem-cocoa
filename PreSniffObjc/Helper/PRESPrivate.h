@@ -32,10 +32,10 @@
 #import <Foundation/Foundation.h>
 #import "PRESLogger.h"
 
-#ifndef HockeySDK_PRESPrivate_h
-#define HockeySDK_PRESPrivate_h
+#ifndef PreSniffObjc_PRESPrivate_h
+#define PreSniffObjc_PRESPrivate_h
 
-#define PRESHOCKEY_NAME @"HockeySDK"
+#define PRESHOCKEY_NAME @"PreSniffObjc"
 #define PRESHOCKEY_IDENTIFIER @"net.hockeyapp.sdk.ios"
 #define PRESHOCKEY_CRASH_SETTINGS @"PRESCrashManager.plist"
 #define PRESHOCKEY_CRASH_ANALYZER @"PRESCrashManager.analyzer"
@@ -65,7 +65,7 @@
 
 #define PRESHOCKEY_INTEGRATIONFLOW_TIMESTAMP  @"PRESIntegrationFlowStartTimestamp"
 
-#define PRESHOCKEYSDK_BUNDLE @"HockeySDKResources.bundle"
+#define PRESHOCKEYSDK_BUNDLE @"PreSniffObjcResources.bundle"
 #define PRESHOCKEYSDK_URL @"https://sdk.hockeyapp.net/"
 
 #define PRES_RGBCOLOR(r,g,b) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:1]
@@ -102,4 +102,4 @@ NSString *PRESMD5(NSString *str);
 
 #endif
 
-#endif /* HockeySDK_PRESPrivate_h */
+#endif /* PreSniffObjc_PRESPrivate_h */

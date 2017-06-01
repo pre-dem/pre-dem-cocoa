@@ -59,16 +59,16 @@ PRESCrashManagerDelegate
  
  Example:
  
- - (BOOL)shouldUseLiveIdentifierForHockeyManager:(PRESManager *)hockeyManager {
+ - (BOOL)shouldUseLiveIdentifierForHockeyManager:(PRESManager *)PRESManager {
  #ifdef (CONFIGURATION_AppStore)
  return YES;
  #endif
  return NO;
  }
  
- @param hockeyManager PRESManager instance
+ @param PRESManager PRESManager instance
  */
-- (BOOL)shouldUseLiveIdentifierForHockeyManager:(PRESManager *)hockeyManager;
+- (BOOL)shouldUseLiveIdentifierForHockeyManager:(PRESManager *)PRESManager;
 
 
 ///-----------------------------------------------------------------------------
@@ -84,10 +84,10 @@ PRESCrashManagerDelegate
  view controllers. Overwrite this if this doesn't result in a satisfying
  behavior or if you want to define any other parent view controller.
  
- @param hockeyManager The `PRESManager` HockeyManager instance invoking this delegate
+ @param PRESManager The `PRESManager` HockeyManager instance invoking this delegate
  @param componentManager The `PRESBaseManager` component instance invoking this delegate, can be `PRESCrashManager` or `PRESFeedbackManager`
  */
-- (UIViewController *)viewControllerForHockeyManager:(PRESManager *)hockeyManager componentManager:(PRESBaseManager *)componentManager;
+- (UIViewController *)viewControllerForPRESManager:(PRESManager *)PRESManager componentManager:(PRESBaseManager *)componentManager;
 
 
 ///-----------------------------------------------------------------------------
@@ -105,10 +105,10 @@ PRESCrashManagerDelegate
  
  You can find out the component requesting the userID like this:
  
- - (NSString *)userIDForHockeyManager:(PRESManager *)hockeyManager componentManager:(PRESBaseManager *)componentManager {
- if (componentManager == hockeyManager.feedbackManager) {
+ - (NSString *)userIDForHockeyManager:(PRESManager *)PRESManager componentManager:(PRESBaseManager *)componentManager {
+ if (componentManager == PRESManager.feedbackManager) {
  return UserIDForFeedback;
- } else if (componentManager == hockeyManager.crashManager) {
+ } else if (componentManager == PRESManager.crashManager) {
  return UserIDForCrashReports;
  } else {
  return nil;
@@ -122,13 +122,13 @@ PRESCrashManagerDelegate
  @warning When returning a non nil value for the `PRESCrashManager` component, crash reports
  are not anonymous any more and the crash alerts will not show the word "anonymous"!
  
- @param hockeyManager The `PRESManager` HockeyManager instance invoking this delegate
+ @param PRESManager The `PRESManager` HockeyManager instance invoking this delegate
  @param componentManager The `PRESBaseManager` component instance invoking this delegate, can be `PRESCrashManager` or `PRESFeedbackManager`
  @see userNameForHockeyManager:componentManager:
  @see userEmailForHockeyManager:componentManager:
  @see [PRESManager userID]
  */
-- (NSString *)userIDForHockeyManager:(PRESManager *)hockeyManager componentManager:(PRESBaseManager *)componentManager;
+- (NSString *)userIDForHockeyManager:(PRESManager *)PRESManager componentManager:(PRESBaseManager *)componentManager;
 
 
 /** Return the user name that should used in the SDK components
@@ -141,10 +141,10 @@ PRESCrashManagerDelegate
  
  You can find out the component requesting the user name like this:
  
- - (NSString *)userNameForHockeyManager:(PRESManager *)hockeyManager componentManager:(PRESBaseManager *)componentManager {
- if (componentManager == hockeyManager.feedbackManager) {
+ - (NSString *)userNameForHockeyManager:(PRESManager *)PRESManager componentManager:(PRESBaseManager *)componentManager {
+ if (componentManager == PRESManager.feedbackManager) {
  return UserNameForFeedback;
- } else if (componentManager == hockeyManager.crashManager) {
+ } else if (componentManager == PRESManager.crashManager) {
  return UserNameForCrashReports;
  } else {
  return nil;
@@ -158,13 +158,13 @@ PRESCrashManagerDelegate
  @warning When returning a non nil value for the `PRESCrashManager` component, crash reports
  are not anonymous any more and the crash alerts will not show the word "anonymous"!
  
- @param hockeyManager The `PRESManager` HockeyManager instance invoking this delegate
+ @param PRESManager The `PRESManager` HockeyManager instance invoking this delegate
  @param componentManager The `PRESBaseManager` component instance invoking this delegate, can be `PRESCrashManager` or `PRESFeedbackManager`
  @see userIDForHockeyManager:componentManager:
  @see userEmailForHockeyManager:componentManager:
  @see [PRESManager userName]
  */
-- (NSString *)userNameForHockeyManager:(PRESManager *)hockeyManager componentManager:(PRESBaseManager *)componentManager;
+- (NSString *)userNameForHockeyManager:(PRESManager *)PRESManager componentManager:(PRESBaseManager *)componentManager;
 
 
 /** Return the users email address that should used in the SDK components
@@ -177,10 +177,10 @@ PRESCrashManagerDelegate
  
  You can find out the component requesting the user email like this:
  
- - (NSString *)userEmailForHockeyManager:(PRESManager *)hockeyManager componentManager:(PRESBaseManager *)componentManager {
- if (componentManager == hockeyManager.feedbackManager) {
+ - (NSString *)userEmailForHockeyManager:(PRESManager *)PRESManager componentManager:(PRESBaseManager *)componentManager {
+ if (componentManager == PRESManager.feedbackManager) {
  return UserEmailForFeedback;
- } else if (componentManager == hockeyManager.crashManager) {
+ } else if (componentManager == PRESManager.crashManager) {
  return UserEmailForCrashReports;
  } else {
  return nil;
@@ -194,12 +194,12 @@ PRESCrashManagerDelegate
  @warning When returning a non nil value for the `PRESCrashManager` component, crash reports
  are not anonymous any more and the crash alerts will not show the word "anonymous"!
  
- @param hockeyManager The `PRESManager` HockeyManager instance invoking this delegate
+ @param PRESManager The `PRESManager` HockeyManager instance invoking this delegate
  @param componentManager The `PRESBaseManager` component instance invoking this delegate, can be `PRESCrashManager` or `PRESFeedbackManager`
  @see userIDForHockeyManager:componentManager:
  @see userNameForHockeyManager:componentManager:
  @see [PRESManager userEmail]
  */
-- (NSString *)userEmailForHockeyManager:(PRESManager *)hockeyManager componentManager:(PRESBaseManager *)componentManager;
+- (NSString *)userEmailForHockeyManager:(PRESManager *)PRESManager componentManager:(PRESBaseManager *)componentManager;
 
 @end

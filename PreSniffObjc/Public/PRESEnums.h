@@ -1,16 +1,16 @@
 //
 //  PRESEnums.h
-//  HockeySDK
+//  PreSniffObjc
 //
 //  Created by Lukas Spieß on 08/10/15.
 //
 //
 
-#ifndef HockeySDK_HockeyEnums_h
-#define HockeySDK_HockeyEnums_h
+#ifndef PreSniffObjc_HockeyEnums_h
+#define PreSniffObjc_HockeyEnums_h
 
 /**
- *  HockeySDK Log Levels
+ *  PreSniffObjc Log Levels
  */
 typedef NS_ENUM(NSUInteger, PRESLogLevel) {
     /**
@@ -39,7 +39,7 @@ typedef NSString *(^PRESLogMessageProvider)(void);
 typedef void (^PRESLogHandler)(PRESLogMessageProvider messageProvider, PRESLogLevel logLevel, const char *file, const char *function, uint line);
 
 /**
- *  HockeySDK App environment
+ *  PreSniffObjc App environment
  */
 typedef NS_ENUM(NSInteger, PRESEnvironment) {
     /**
@@ -58,7 +58,7 @@ typedef NS_ENUM(NSInteger, PRESEnvironment) {
 };
 
 /**
- *  HockeySDK Crash Reporter error domain
+ *  PreSniffObjc Crash Reporter error domain
  */
 typedef NS_ENUM (NSInteger, PRESCrashErrorReason) {
     /**
@@ -80,7 +80,7 @@ typedef NS_ENUM (NSInteger, PRESCrashErrorReason) {
 };
 
 /**
- *  HockeySDK Update error domain
+ *  PreSniffObjc Update error domain
  */
 typedef NS_ENUM (NSInteger, PRESUpdateErrorReason) {
     /**
@@ -110,7 +110,7 @@ typedef NS_ENUM (NSInteger, PRESUpdateErrorReason) {
 };
 
 /**
- *  HockeySDK Feedback error domain
+ *  PreSniffObjc Feedback error domain
  */
 typedef NS_ENUM(NSInteger, PRESFeedbackErrorReason) {
     /**
@@ -140,7 +140,7 @@ typedef NS_ENUM(NSInteger, PRESFeedbackErrorReason) {
 };
 
 /**
- *  HockeySDK Authenticator error domain
+ *  PreSniffObjc Authenticator error domain
  */
 typedef NS_ENUM(NSInteger, PRESAuthenticatorReason) {
     /**
@@ -175,7 +175,7 @@ typedef NS_ENUM(NSInteger, PRESAuthenticatorReason) {
 };
 
 /**
- *  HockeySDK global error domain
+ *  PreSniffObjc global error domain
  */
 typedef NS_ENUM(NSInteger, PRESErrorReason) {
     /**
@@ -184,4 +184,4 @@ typedef NS_ENUM(NSInteger, PRESErrorReason) {
     PRESErrorUnknown
 };
 
-#endif /* HockeySDK_HockeyEnums_h */
+#endif /* PreSniffObjc_HockeyEnums_h */

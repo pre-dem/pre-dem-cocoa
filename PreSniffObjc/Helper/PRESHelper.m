@@ -32,10 +32,7 @@
 #import "PreSniffObjc.h"
 #import "PRESPrivate.h"
 #import "PRESVersion.h"
-#if !defined (HOCKEYSDK_CONFIGURATION_ReleaseCrashOnly) && !defined (HOCKEYSDK_CONFIGURATION_ReleaseCrashOnlyExtensions)
 #import <QuartzCore/QuartzCore.h>
-#endif
-
 #import <sys/sysctl.h>
 
 static NSString *const kPRESUtcDateFormatter = @"utcDateFormatter";
@@ -113,12 +110,12 @@ BOOL pres_validateEmail(NSString *email) {
     return [emailTest evaluateWithObject:email];
 }
 
-NSString *pres_keychainHockeySDKServiceName(void) {
+NSString *pres_keychainPreSniffObjcServiceName(void) {
     static NSString *serviceName = nil;
     static dispatch_once_t predServiceName;
     
     dispatch_once(&predServiceName, ^{
-        serviceName = [NSString stringWithFormat:@"%@.HockeySDK", pres_mainBundleIdentifier()];
+        serviceName = [NSString stringWithFormat:@"%@.PreSniffObjc", pres_mainBundleIdentifier()];
     });
     
     return serviceName;
@@ -242,7 +239,7 @@ NSString *pres_appAnonID(BOOL forceNewAnonID) {
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
                 [PRESKeychainUtils storeUsername:appAnonIDKey
                                      andPassword:appAnonID
-                                  forServiceName:pres_keychainHockeySDKServiceName()
+                                  forServiceName:pres_keychainPreSniffObjcServiceName()
                                   updateExisting:YES
                                    accessibility:kSecAttrAccessibleAlwaysThisDeviceOnly
                                            error:&error];
@@ -251,7 +248,7 @@ NSString *pres_appAnonID(BOOL forceNewAnonID) {
     } else {
         dispatch_once(&predAppAnonID, ^{
             // first check if we already have an install string in the keychain
-            appAnonID = [PRESKeychainUtils getPasswordForUsername:appAnonIDKey andServiceName:pres_keychainHockeySDKServiceName() error:&error];
+            appAnonID = [PRESKeychainUtils getPasswordForUsername:appAnonIDKey andServiceName:pres_keychainPreSniffObjcServiceName() error:&error];
             
             if (!appAnonID) {
                 appAnonID = pres_UUID();
@@ -262,7 +259,7 @@ NSString *pres_appAnonID(BOOL forceNewAnonID) {
                     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
                         [PRESKeychainUtils storeUsername:appAnonIDKey
                                              andPassword:appAnonID
-                                          forServiceName:pres_keychainHockeySDKServiceName()
+                                          forServiceName:pres_keychainPreSniffObjcServiceName()
                                           updateExisting:YES
                                            accessibility:kSecAttrAccessibleAlwaysThisDeviceOnly
                                                    error:&error];
@@ -407,7 +404,7 @@ BOOL pres_isDebuggerAttached(void) {
         name[3] = getpid();
         
         if (sysctl(name, 4, &info, &info_size, NULL, 0) == -1) {
-            PRESLogError(@"[HockeySDK] ERROR: Checking for a running debugger via sysctl() failed.");
+            PRESLogError(@"[PreSniffObjc] ERROR: Checking for a running debugger via sysctl() failed.");
             debuggerIsAttached = false;
         }
         
@@ -593,8 +590,6 @@ NSString *pres_appVersion(void){
         return build;
     }
 }
-
-#if !defined (HOCKEYSDK_CONFIGURATION_ReleaseCrashOnly) && !defined (HOCKEYSDK_CONFIGURATION_ReleaseCrashOnlyExtensions)
 
 #pragma mark AppIcon helpers
 
@@ -1140,4 +1135,3 @@ UIImage *pres_screenshot(void) {
     return image;
 }
 
-#endif /* HOCKEYSDK_CONFIGURATION_ReleaseCrashOnly && HOCKEYSDK_CONFIGURATION_ReleaseCrashOnlyExtensions */

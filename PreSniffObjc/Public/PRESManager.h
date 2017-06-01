@@ -313,7 +313,7 @@ typedef void (^PRESNetDiagCompleteHandler)(PRESNetDiagResult* result);
  
  ```
  [[PRESManager sharedPRESManager] setLogHandler:^(PRESLogMessageProvider messageProvider, PRESLogLevel logLevel, const char *file, const char *function, uint line) {
- LogMessageRawF(file, (int)line, function, @"HockeySDK", (int)logLevel-1, messageProvider());
+ LogMessageRawF(file, (int)line, function, @"PreSniffObjc", (int)logLevel-1, messageProvider());
  }];
  ```
  

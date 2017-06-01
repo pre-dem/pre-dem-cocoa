@@ -48,7 +48,7 @@
 #include <sys/sysctl.h>
 
 // stores the set of crashreports that have been approved but aren't sent yet
-#define kPRESCrashApprovedReports @"HockeySDKCrashApprovedReports"
+#define kPRESCrashApprovedReports @"PreSniffObjcCrashApprovedReports"
 
 // keys for meta information associated to each crash
 #define kPRESCrashMetaUserName @"PRESCrashMetaUserName"
@@ -234,7 +234,7 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
         
         
         if (!PRESBundle() && !pres_isRunningInAppExtension()) {
-            PRESLogWarning(@"[HockeySDK] WARNING: %@ is missing, will send reports automatically!", PRESHOCKEYSDK_BUNDLE);
+            PRESLogWarning(@"[PreSniffObjc] WARNING: %@ is missing, will send reports automatically!", PRESHOCKEYSDK_BUNDLE);
         }
     }
     return self;
@@ -711,7 +711,7 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
     if (self.appEnvironment != PRESEnvironmentAppStore) {
         
         if ([self isDebuggerAttached]) {
-            PRESLogWarning(@"[HockeySDK] WARNING: The debugger is attached. The following crash cannot be detected by the SDK!");
+            PRESLogWarning(@"[PreSniffObjc] WARNING: The debugger is attached. The following crash cannot be detected by the SDK!");
         }
         
         __builtin_trap();
@@ -986,12 +986,10 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
  * - Send pending approved crash reports
  */
 - (void)invokeDelayedProcessing {
-#if !defined (HOCKEYSDK_CONFIGURATION_ReleaseCrashOnlyExtensions)
     if (!pres_isRunningInAppExtension() &&
         [[UIApplication sharedApplication] applicationState] != UIApplicationStateActive) {
         return;
     }
-#endif
     
     PRESLogDebug(@"INFO: Start delayed CrashManager processing");
     
@@ -1003,7 +1001,7 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
         // If the top level error handler differs from our own, then at least another one was added.
         // This could cause exception crashes not to be reported to HockeyApp. See log message for details.
         if (self.exceptionHandler != currentHandler) {
-            PRESLogWarning(@"[HockeySDK] WARNING: Another exception handler was added. If this invokes any kind exit() after processing the exception, which causes any subsequent error handler not to be invoked, these crashes will NOT be reported to HockeyApp!");
+            PRESLogWarning(@"[PreSniffObjc] WARNING: Another exception handler was added. If this invokes any kind exit() after processing the exception, which causes any subsequent error handler not to be invoked, these crashes will NOT be reported to HockeyApp!");
         }
     }
     
@@ -1020,9 +1018,6 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
         if (!PRESBundle() || pres_isRunningInAppExtension()) {
             [self approveLatestCrashReport];
             [self sendNextCrashReport];
-            
-#if !defined (HOCKEYSDK_CONFIGURATION_ReleaseCrashOnlyExtensions)
-            
         } else if (_crashManagerStatus != PRESCrashManagerStatusAutoSend && notApprovedReportFilename) {
             
             if ([self.delegate respondsToSelector:@selector(crashManagerWillShowSubmitCrashReportAlert:)]) {
@@ -1106,8 +1101,6 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
 #pragma clang diagnostic pop
                 /*}*/
             }
-#endif /* !defined (HOCKEYSDK_CONFIGURATION_ReleaseCrashOnlyExtensions) */
-            
         } else {
             [self approveLatestCrashReport];
             [self sendNextCrashReport];
@@ -1159,7 +1152,7 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
             if (self.appEnvironment != PRESEnvironmentAppStore) {
                 if ([self isDebuggerAttached]) {
                     debuggerIsAttached = YES;
-                    PRESLogWarning(@"[HockeySDK] WARNING: Detecting crashes is NOT enabled due to running the app with a debugger attached.");
+                    PRESLogWarning(@"[PreSniffObjc] WARNING: Detecting crashes is NOT enabled due to running the app with a debugger attached.");
                 }
             }
             
@@ -1173,7 +1166,7 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
                 // and can show a debug warning log message, that the dev has to make sure the "newer" error handler
                 // doesn't exit the process itself, because then all subsequent handlers would never be invoked.
                 //
-                // Note: ANY error handler setup BEFORE HockeySDK initialization will not be processed!
+                // Note: ANY error handler setup BEFORE PreSniffObjc initialization will not be processed!
                 
                 // get the current top level error handler
                 NSUncaughtExceptionHandler *initialHandler = NSGetUncaughtExceptionHandler();
@@ -1188,7 +1181,7 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
                 
                 // Enable the Crash Reporter
                 if (![self.plCrashReporter enableCrashReporterAndReturnError: &error])
-                    PRESLogError(@"[HockeySDK] ERROR: Could not enable crash reporter: %@", [error localizedDescription]);
+                    PRESLogError(@"[PreSniffObjc] ERROR: Could not enable crash reporter: %@", [error localizedDescription]);
                 
                 // get the new current top level error handler, which should now be the one from PLCrashReporter
                 NSUncaughtExceptionHandler *currentHandler = NSGetUncaughtExceptionHandler();
@@ -1200,7 +1193,7 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
                     PRESLogDebug(@"INFO: Exception handler successfully initialized.");
                 } else {
                     // this should never happen, theoretically only if NSSetUncaugtExceptionHandler() has some internal issues
-                    PRESLogError(@"[HockeySDK] ERROR: Exception handler could not be set. Make sure there is no other exception handler set up!");
+                    PRESLogError(@"[PreSniffObjc] ERROR: Exception handler could not be set. Make sure there is no other exception handler set up!");
                 }
                 
                 // Add the C++ uncaught exception handler, which is currently not handled by PLCrashReporter internally
@@ -1234,14 +1227,10 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
             }
         }
     }
-    
-#if !defined (HOCKEYSDK_CONFIGURATION_ReleaseCrashOnlyExtensions)
     if ([[UIApplication sharedApplication] applicationState] == UIApplicationStateActive) {
         [self appEnteredForeground];
     }
-#else
     [self appEnteredForeground];
-#endif
     
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kPRESAppDidReceiveLowMemoryNotification];
     
@@ -1511,8 +1500,6 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
     }
 }
 
-#if !defined (HOCKEYSDK_CONFIGURATION_ReleaseCrashOnlyExtensions)
-
 #pragma mark - UIAlertView Delegate
 
 #pragma clang diagnostic push
@@ -1531,9 +1518,6 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
     }
 }
 #pragma clang diagnostic pop
-
-#endif /* !defined (HOCKEYSDK_CONFIGURATION_ReleaseCrashOnlyExtensions) */
-
 
 #pragma mark - Networking
 
@@ -1584,7 +1568,7 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
                                                                 parameters:nil];
     
     [request setCachePolicy: NSURLRequestReloadIgnoringLocalCacheData];
-    [request setValue:@"HockeySDK/iOS" forHTTPHeaderField:@"User-Agent"];
+    [request setValue:@"PreSniffObjc/iOS" forHTTPHeaderField:@"User-Agent"];
     [request setValue:@"gzip" forHTTPHeaderField:@"Accept-Encoding"];
     
     NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@", boundary];

@@ -115,7 +115,7 @@ typedef NS_ENUM(NSUInteger, PRESCrashManagerUserInput) {
 /**
  The crash reporting module.
  
- This is the HockeySDK module for handling crash reports, including when distributed via the App Store.
+ This is the PreSniffObjc module for handling crash reports, including when distributed via the App Store.
  As a foundation it is using the open source, reliable and async-safe crash reporting framework
  [PLCrashReporter](https://code.google.com/p/plcrashreporter/).
  

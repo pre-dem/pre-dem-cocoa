@@ -47,7 +47,7 @@ FOUNDATION_EXPORT NSString *const kPRESExcludeApplicationSupportFromBackup;
 NSString *pres_settingsDir(void);
 
 BOOL pres_validateEmail(NSString *email);
-NSString *pres_keychainHockeySDKServiceName(void);
+NSString *pres_keychainPreSniffObjcServiceName(void);
 
 /* Fix bug where Application Support was excluded from backup. */
 void pres_fixBackupAttributeForURL(NSURL *directoryURL);
@@ -94,7 +94,6 @@ NSString *pres_screenSize(void);
 NSString *pres_sdkVersion(void);
 NSString *pres_appVersion(void);
 
-#if !defined (HOCKEYSDK_CONFIGURATION_ReleaseCrashOnly) && !defined (HOCKEYSDK_CONFIGURATION_ReleaseCrashOnlyExtensions)
 /* AppIcon helper */
 NSString *pres_validAppIconStringFromIcons(NSBundle *resourceBundle, NSArray *icons);
 NSString *pres_validAppIconFilename(NSBundle *bundle, NSBundle *resourceBundle);
@@ -109,5 +108,3 @@ UIImage *pres_imageWithContentsOfResolutionIndependentFile(NSString * path);
 UIImage *pres_imageNamed(NSString *imageName, NSString *bundleName);
 UIImage *pres_screenshot(void);
 UIImage *pres_appIcon(void);
-
-#endif

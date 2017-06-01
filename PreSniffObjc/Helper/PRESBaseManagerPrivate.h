@@ -67,24 +67,9 @@
 - (NSString *)getDevicePlatform;
 - (NSString *)executableUUID;
 
-#if !defined (HOCKEYSDK_CONFIGURATION_ReleaseCrashOnlyExtensions)
 // UI helpers
 - (UIWindow *)findVisibleWindow;
 - (UINavigationController *)customNavigationControllerWithRootViewController:(UIViewController *)viewController presentationStyle:(UIModalPresentationStyle)presentationStyle;
-
-/**
- *  Present an UIAlertController on the visible root UIViewController.
- *
- *  Uses `visibleWindowRootViewController` to find a controller on which to present the UIAlertController on.
- *  This method is always dispatched on the main queue.
- *
- *  @param alertController The UIAlertController to be presented.
- */
-/* We won't use this for now until we have a more robust solution for displaying UIAlertController
- - (void)showAlertController:(UIViewController *)alertController;
- */
-- (void)showView:(UIViewController *)viewController;
-#endif
 
 // Date helpers
 - (NSDate *)parseRFC3339Date:(NSString *)dateString;

@@ -91,9 +91,9 @@ typedef struct {
 - (void)logInvalidIdentifier:(NSString *)environment {
     if (self.appEnvironment != PRESEnvironmentAppStore) {
         if ([environment isEqualToString:@"liveIdentifier"]) {
-            PRESLogWarning(@"[HockeySDK] WARNING: The liveIdentifier is invalid! The SDK will be disabled when deployed to the App Store without setting a valid app identifier!");
+            PRESLogWarning(@"[PreSniffObjc] WARNING: The liveIdentifier is invalid! The SDK will be disabled when deployed to the App Store without setting a valid app identifier!");
         } else {
-            PRESLogError(@"[HockeySDK] ERROR: The %@ is invalid! Please use the HockeyApp app identifier you find on the apps website on HockeyApp! The SDK is disabled!", environment);
+            PRESLogError(@"[PreSniffObjc] ERROR: The %@ is invalid! Please use the HockeyApp app identifier you find on the apps website on HockeyApp! The SDK is disabled!", environment);
         }
     }
 }
@@ -180,7 +180,7 @@ typedef struct {
 - (void)startManager {
     if (!_validAppIdentifier) return;
     if (_startManagerIsInvoked) {
-        PRESLogWarning(@"[HockeySDK] Warning: startManager should only be invoked once! This call is ignored.");
+        PRESLogWarning(@"[PreSniffObjc] Warning: startManager should only be invoked once! This call is ignored.");
         return;
     }
     
@@ -257,7 +257,7 @@ typedef struct {
 - (void)setDelegate:(id<PRESManagerDelegate>)delegate {
     if (self.appEnvironment != PRESEnvironmentAppStore) {
         if (_startManagerIsInvoked) {
-            PRESLogError(@"[HockeySDK] ERROR: The `delegate` property has to be set before calling [[PRESManager sharedPRESManager] startManager] !");
+            PRESLogError(@"[PreSniffObjc] ERROR: The `delegate` property has to be set before calling [[PRESManager sharedPRESManager] startManager] !");
         }
     }
     
@@ -290,17 +290,17 @@ typedef struct {
     if (value) {
         success = [PRESKeychainUtils storeUsername:key
                                        andPassword:value
-                                    forServiceName:pres_keychainHockeySDKServiceName()
+                                    forServiceName:pres_keychainPreSniffObjcServiceName()
                                     updateExisting:YES
                                      accessibility:kSecAttrAccessibleAlwaysThisDeviceOnly
                                              error:&error];
     } else {
         updateType = @"delete";
         if ([PRESKeychainUtils getPasswordForUsername:key
-                                       andServiceName:pres_keychainHockeySDKServiceName()
+                                       andServiceName:pres_keychainPreSniffObjcServiceName()
                                                 error:&error]) {
             success = [PRESKeychainUtils deleteItemForUsername:key
-                                                andServiceName:pres_keychainHockeySDKServiceName()
+                                                andServiceName:pres_keychainPreSniffObjcServiceName()
                                                          error:&error];
         }
     }
@@ -445,13 +445,13 @@ typedef struct {
 - (void)validateStartManagerIsInvoked {
     if (_validAppIdentifier && (self.appEnvironment != PRESEnvironmentAppStore)) {
         if (!_startManagerIsInvoked) {
-            PRESLogError(@"[HockeySDK] ERROR: You did not call [[PRESManager sharedPRESManager] startManager] to startup the HockeySDK! Please do so after setting up all properties. The SDK is NOT running.");
+            PRESLogError(@"[PreSniffObjc] ERROR: You did not call [[PRESManager sharedPRESManager] startManager] to startup the PreSniffObjc! Please do so after setting up all properties. The SDK is NOT running.");
         }
     }
 }
 
 - (BOOL)isSetUpOnMainThread {
-    NSString *errorString = @"ERROR: HockeySDK has to be setup on the main thread!";
+    NSString *errorString = @"ERROR: PreSniffObjc has to be setup on the main thread!";
     
     if (!NSThread.isMainThread) {
         if (self.appEnvironment == PRESEnvironmentAppStore) {
@@ -478,7 +478,7 @@ typedef struct {
 
 - (void)initializeModules {
     if (_managersInitialized) {
-        PRESLogWarning(@"[HockeySDK] Warning: The SDK should only be initialized once! This call is ignored.");
+        PRESLogWarning(@"[PreSniffObjc] Warning: The SDK should only be initialized once! This call is ignored.");
         return;
     }
     

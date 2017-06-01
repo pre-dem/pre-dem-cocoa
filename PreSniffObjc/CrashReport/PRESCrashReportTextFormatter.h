@@ -46,7 +46,7 @@
 
 
 /**
- *  HockeySDK Crash Reporter error domain
+ *  PreSniffObjc Crash Reporter error domain
  */
 typedef NS_ENUM (NSInteger, PRESBinaryImageType) {
     /**

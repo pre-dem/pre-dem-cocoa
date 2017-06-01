@@ -56,7 +56,7 @@ NSString *PRESLocalizedString(NSString *stringToken) {
     if (appSpecificLocalizationString && ![stringToken isEqualToString:appSpecificLocalizationString]) {
         return appSpecificLocalizationString;
     } else if (PRESBundle()) {
-        NSString *bundleSpecificLocalizationString = NSLocalizedStringFromTableInBundle(stringToken, @"HockeySDK", PRESBundle(), @"");
+        NSString *bundleSpecificLocalizationString = NSLocalizedStringFromTableInBundle(stringToken, @"PreSniffObjc", PRESBundle(), @"");
         if (bundleSpecificLocalizationString)
             return bundleSpecificLocalizationString;
         return stringToken;

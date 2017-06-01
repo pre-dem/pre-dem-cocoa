@@ -11,7 +11,7 @@ PRESLogHandler defaultLogHandler = ^(PRESLogMessageProvider messageProvider, PRE
         if (_currentLogLevel < logLevel) {
             return;
         }
-        NSLog((@"[HockeySDK] %s/%d %@"), function, line, messageProvider());
+        NSLog((@"[PreSniffObjc] %s/%d %@"), function, line, messageProvider());
     }
 };
 

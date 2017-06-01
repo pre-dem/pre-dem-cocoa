@@ -140,7 +140,6 @@
     return @"";
 }
 
-#if !defined (HOCKEYSDK_CONFIGURATION_ReleaseCrashOnlyExtensions)
 - (UIWindow *)findVisibleWindow {
     UIWindow *visibleWindow = [UIApplication sharedApplication].keyWindow;
     
@@ -195,8 +194,8 @@
 - (UIViewController *)visibleWindowRootViewController {
     UIViewController *parentViewController = nil;
     
-    if ([[PRESManager sharedPRESManager].delegate respondsToSelector:@selector(viewControllerForHockeyManager:componentManager:)]) {
-        parentViewController = [[PRESManager sharedPRESManager].delegate viewControllerForHockeyManager:[PRESManager sharedPRESManager] componentManager:self];
+    if ([[PRESManager sharedPRESManager].delegate respondsToSelector:@selector(viewControllerForPRESManager:componentManager:)]) {
+        parentViewController = [[PRESManager sharedPRESManager].delegate viewControllerForPRESManager:[PRESManager sharedPRESManager] componentManager:self];
     }
     
     UIWindow *visibleWindow = [self findVisibleWindow];
@@ -224,9 +223,6 @@
     return parentViewController;
 }
 
-#endif // HOCKEYSDK_CONFIGURATION_ReleaseCrashOnlyExtensions && HOCKEYSDK_CONFIGURATION_RelaseCrashOnlyWatchOS
-
-
 - (BOOL)addStringValueToKeychain:(NSString *)stringValue forKey:(NSString *)key {
     if (!key || !stringValue)
         return NO;
@@ -234,7 +230,7 @@
     NSError *error = nil;
     return [PRESKeychainUtils storeUsername:key
                                 andPassword:stringValue
-                             forServiceName:pres_keychainHockeySDKServiceName()
+                             forServiceName:pres_keychainPreSniffObjcServiceName()
                              updateExisting:YES
                                       error:&error];
 }
@@ -246,7 +242,7 @@
     NSError *error = nil;
     return [PRESKeychainUtils storeUsername:key
                                 andPassword:stringValue
-                             forServiceName:pres_keychainHockeySDKServiceName()
+                             forServiceName:pres_keychainPreSniffObjcServiceName()
                              updateExisting:YES
                               accessibility:kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly
                                       error:&error];
@@ -258,14 +254,14 @@
     
     NSError *error = nil;
     return [PRESKeychainUtils getPasswordForUsername:key
-                                      andServiceName:pres_keychainHockeySDKServiceName()
+                                      andServiceName:pres_keychainPreSniffObjcServiceName()
                                                error:&error];
 }
 
 - (BOOL)removeKeyFromKeychain:(NSString *)key {
     NSError *error = nil;
     return [PRESKeychainUtils deleteItemForUsername:key
-                                     andServiceName:pres_keychainHockeySDKServiceName()
+                                     andServiceName:pres_keychainPreSniffObjcServiceName()
                                               error:&error];
 }
 
