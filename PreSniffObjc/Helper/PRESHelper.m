@@ -175,20 +175,6 @@ NSString *pres_encodeAppIdentifier(NSString *inputString) {
     return (inputString ? pres_URLEncodedString(inputString) : pres_URLEncodedString(pres_mainBundleIdentifier()));
 }
 
-NSString *pres_appIdentifierToGuid(NSString *appIdentifier) {
-    NSMutableString *guid;
-    NSString *cleanAppId = [appIdentifier stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-    if(cleanAppId && cleanAppId.length == 32) {
-        // Insert dashes so that DC will accept th appidentifier (as a replacement for iKey)
-        guid = [NSMutableString stringWithString:cleanAppId];
-        [guid insertString:@"-" atIndex:20];
-        [guid insertString:@"-" atIndex:16];
-        [guid insertString:@"-" atIndex:12];
-        [guid insertString:@"-" atIndex:8];
-    }
-    return [guid copy];
-}
-
 NSString *pres_appName(NSString *placeHolderString) {
     NSString *appName = [[[NSBundle mainBundle] localizedInfoDictionary] objectForKey:@"CFBundleDisplayName"];
     if (!appName)

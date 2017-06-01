@@ -55,7 +55,6 @@ void pres_fixBackupAttributeForURL(NSURL *directoryURL);
 NSComparisonResult pres_versionCompare(NSString *stringA, NSString *stringB);
 NSString *pres_mainBundleIdentifier(void);
 NSString *pres_encodeAppIdentifier(NSString *inputString);
-NSString *pres_appIdentifierToGuid(NSString *appIdentifier);
 NSString *pres_appName(NSString *placeHolderString);
 NSString *pres_UUIDPreiOS6(void);
 NSString *pres_UUID(void);

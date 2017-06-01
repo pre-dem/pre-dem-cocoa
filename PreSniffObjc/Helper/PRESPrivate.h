@@ -44,8 +44,6 @@
 #define kPRESMetaUserEmail @"PRESMetaUserEmail"
 #define kPRESMetaUserID    @"PRESMetaUserID"
 
-#define PRES_INTEGRATIONFLOW_TIMESTAMP  @"PRESIntegrationFlowStartTimestamp"
-
 #define PRES_BUNDLE @"PreSniffObjcResources.bundle"
 #define PRES_URL @"https://sdk.hockeyapp.net/"
 

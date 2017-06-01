@@ -38,7 +38,6 @@
 #import "PRESNetDiag.h"
 #import "PRESCrashManagerPrivate.h"
 #import "PRESMetricsManagerPrivate.h"
-#import "PRESCategoryContainer.h"
 #import "PRESURLProtocol.h"
 
 @interface PRESManager ()
@@ -177,8 +176,8 @@ PRESConfigManagerDelegate
     if (!self.isMetricsManagerDisabled) {
         PRESLogDebug(@"INFO: Start MetricsManager");
         [_metricsManager startManager];
-        [PRESCategoryContainer activateCategory];
     }
+    
     if (!self.isHttpMonitorDisabled) {
         [PRESURLProtocol enableHTTPSniff];
     }
@@ -295,20 +294,6 @@ PRESConfigManagerDelegate
     [self modifyKeychainUserValue:userEmail forKey:kPRESMetaUserEmail];
 }
 
-- (void)testIdentifier {
-    if (!_appIdentifier || (self.appEnvironment == PRESEnvironmentAppStore)) {
-        return;
-    }
-    
-    NSDate *now = [NSDate date];
-    NSString *timeString = [NSString stringWithFormat:@"%.0f", [now timeIntervalSince1970]];
-    [self pingServerForIntegrationStartWorkflowWithTimeString:timeString appIdentifier:_appIdentifier];
-    
-    if (_liveIdentifier) {
-        [self pingServerForIntegrationStartWorkflowWithTimeString:timeString appIdentifier:_liveIdentifier];
-    }
-}
-
 
 - (NSString *)version {
     return [PRESVersion getSDKVersion];
@@ -325,67 +310,6 @@ PRESConfigManagerDelegate
         _hockeyAppClient = [[PRESNetworkClient alloc] initWithBaseURL:[NSURL URLWithString:self.serverURL]];
     }
     return _hockeyAppClient;
-}
-
-- (NSString *)integrationFlowTimeString {
-    NSString *timeString = [[NSBundle mainBundle] objectForInfoDictionaryKey:PRES_INTEGRATIONFLOW_TIMESTAMP];
-    
-    return timeString;
-}
-
-- (BOOL)integrationFlowStartedWithTimeString:(NSString *)timeString {
-    if (timeString == nil || (self.appEnvironment == PRESEnvironmentAppStore)) {
-        return NO;
-    }
-    
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    NSLocale *enUSPOSIXLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
-    [dateFormatter setLocale:enUSPOSIXLocale];
-    [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZ"];
-    NSDate *integrationFlowStartDate = [dateFormatter dateFromString:timeString];
-    
-    if (integrationFlowStartDate && [integrationFlowStartDate timeIntervalSince1970] > [[NSDate date] timeIntervalSince1970] - (60 * 10) ) {
-        return YES;
-    }
-    
-    return NO;
-}
-
-- (void)pingServerForIntegrationStartWorkflowWithTimeString:(NSString *)timeString appIdentifier:(NSString *)appIdentifier {
-    if (!appIdentifier || (self.appEnvironment == PRESEnvironmentAppStore)) {
-        return;
-    }
-    
-    NSString *integrationPath = [NSString stringWithFormat:@"api/3/apps/%@/integration", pres_encodeAppIdentifier(appIdentifier)];
-    
-    PRESLogDebug(@"INFO: Sending integration workflow ping to %@", integrationPath);
-    
-    NSDictionary *params = @{@"timestamp": timeString,
-                             @"sdk": PRES_NAME,
-                             @"sdk_version": [PRESVersion getSDKVersion],
-                             @"bundle_version": [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"]
-                             };
-    
-    if ([PRESHelper isURLSessionSupported]) {
-        NSURLSessionConfiguration *sessionConfiguration = [NSURLSessionConfiguration defaultSessionConfiguration];
-        __block NSURLSession *session = [NSURLSession sessionWithConfiguration:sessionConfiguration];
-        NSURLRequest *request = [[self hockeyAppClient] requestWithMethod:@"POST" path:integrationPath parameters:params];
-        NSURLSessionDataTask *task = [session dataTaskWithRequest:request
-                                                completionHandler: ^(NSData *data, NSURLResponse *response, NSError *error) {
-                                                    [session finishTasksAndInvalidate];
-                                                    
-                                                    NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*) response;
-                                                    [self logPingMessageForStatusCode:httpResponse.statusCode];
-                                                }];
-        [task resume];
-    }else{
-        [[self hockeyAppClient] postPath:integrationPath
-                              parameters:params
-                              completion:^(PRESHTTPOperation *operation, NSData* responseData, NSError *error) {
-                                  [self logPingMessageForStatusCode:operation.response.statusCode];
-                              }];
-    }
-    
 }
 
 - (void)logPingMessageForStatusCode:(NSInteger)statusCode {
@@ -460,15 +384,8 @@ PRESConfigManagerDelegate
         
         
         PRESLogDebug(@"INFO: Setup MetricsManager");
-        NSString *iKey = pres_appIdentifierToGuid(_appIdentifier);
-        _metricsManager = [[PRESMetricsManager alloc] initWithAppIdentifier:iKey appEnvironment:_appEnvironment];
+        _metricsManager = [[PRESMetricsManager alloc] initWithAppIdentifier:_appIdentifier appEnvironment:_appEnvironment];
         
-        if (self.appEnvironment != PRESEnvironmentAppStore) {
-            NSString *integrationFlowTime = [self integrationFlowTimeString];
-            if (integrationFlowTime && [self integrationFlowStartedWithTimeString:integrationFlowTime]) {
-                [self pingServerForIntegrationStartWorkflowWithTimeString:integrationFlowTime appIdentifier:_appIdentifier];
-            }
-        }
         _managersInitialized = YES;
     } else {
         [self logInvalidIdentifier:@"app identifier"];

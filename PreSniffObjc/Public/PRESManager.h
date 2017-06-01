@@ -173,25 +173,6 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)setLogHandler:(PRESLogHandler)logHandler;
 
-
-///-----------------------------------------------------------------------------
-/// @name Integration test
-///-----------------------------------------------------------------------------
-
-/**
- Pings the server with the PreSniff app identifiers used for initialization
- 
- Call this method once for debugging purposes to test if your SDK setup code
- reaches the server successfully.
- 
- Once invoked, check the apps page on PreSniff for a verification.
- 
- If you setup the SDK with a beta and live identifier, a call to both app IDs will be done.
- 
- This call is ignored if the app is running in the App Store!.
- */
-- (void)testIdentifier;
-
 ///-----------------------------------------------------------------------------
 /// @name SDK meta data
 ///-----------------------------------------------------------------------------

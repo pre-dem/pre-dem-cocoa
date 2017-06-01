@@ -1,15 +1,3 @@
-#import "PRESCategoryContainer.h"
-#import <objc/runtime.h>
-
-@implementation PRESCategoryContainer
-
-+ (void)activateCategory {
-    
-}
-
-@end
-
-
 #pragma mark - GZIP library
 
 
