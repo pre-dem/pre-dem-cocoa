@@ -32,7 +32,7 @@
  */
 
 #import "PreSniffObjc.h"
-#import "PreSniffSDKPrivate.h"
+#import "PRESPrivate.h"
 #import <CrashReporter/CrashReporter.h>
 
 #import <mach-o/dyld.h>

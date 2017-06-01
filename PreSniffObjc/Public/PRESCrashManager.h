@@ -124,7 +124,7 @@ typedef NS_ENUM(NSUInteger, PRESCrashManagerUserInput) {
  the reports to the HockeyApp servers and more.
  
  It also provides options to add additional meta information to each crash report, like `userName`, `userEmail`
- via `PreSniffManagerDelegate` protocol, and additional textual log information via `PRESCrashManagerDelegate`
+ via `PRESManagerDelegate` protocol, and additional textual log information via `PRESCrashManagerDelegate`
  protocol and a way to detect startup crashes so you can adjust your startup process to get these crash reports
  too and delay your app initialization.
  
@@ -318,7 +318,7 @@ typedef NS_ENUM(NSUInteger, PRESCrashManagerUserInput) {
  previously. You can use this also to disable specific events, like asking
  the user to rate your app.
  
- @warning This property only has a correct value, once `[PreSniffManager startManager]` was
+ @warning This property only has a correct value, once `[PRESManager startManager]` was
  invoked!
  
  @see lastSessionCrashDetails
@@ -356,7 +356,7 @@ typedef NS_ENUM(NSUInteger, PRESCrashManagerUserInput) {
  
  @warning Block needs to call the `[PRESCrashManager handleUserInput:withUserProvidedMetaData:]` method!
  
- @warning This needs to be set before calling `[PreSniffManager startManager]`!
+ @warning This needs to be set before calling `[PRESManager startManager]`!
  */
 - (void)setAlertViewHandler:(PRESCustomAlertViewHandler)alertViewHandler;
 
@@ -378,7 +378,7 @@ typedef NS_ENUM(NSUInteger, PRESCrashManagerUserInput) {
  Also the app could have received a low memory warning, but the reason for being killed was
  actually different.
  
- @warning This property only has a correct value, once `[PreSniffManager startManager]` was
+ @warning This property only has a correct value, once `[PRESManager startManager]` was
  invoked!
  
  @see enableAppNotTerminatingCleanlyDetection

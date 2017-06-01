@@ -19,10 +19,10 @@ FOUNDATION_EXPORT const unsigned char PreSniffSDKVersionString[];
 #endif
 
 
-#import "PreSniffSDKEnums.h"
-#import "PreSniffSDKNullability.h"
-#import "PreSniffManager.h"
-#import "PreSniffManagerDelegate.h"
+#import "PRESEnums.h"
+#import "PRESNullability.h"
+#import "PRESManager.h"
+#import "PRESManagerDelegate.h"
 #import "PRESCrashManager.h"
 #import "PRESCrashManagerDelegate.h"
 #import "PRESCrashDetails.h"

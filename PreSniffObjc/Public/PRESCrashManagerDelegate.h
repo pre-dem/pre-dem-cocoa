@@ -49,8 +49,8 @@
  
  @param crashManager The `PRESCrashManager` instance invoking this delegate
  @see attachmentForCrashManager:
- @see PreSniffManagerDelegate userNameForHockeyManager:componentManager:
- @see PreSniffManagerDelegate userEmailForHockeyManager:componentManager:
+ @see PRESManagerDelegate userNameForHockeyManager:componentManager:
+ @see PRESManagerDelegate userEmailForHockeyManager:componentManager:
  */
 -(NSString *)applicationLogForCrashManager:(PRESCrashManager *)crashManager;
 
@@ -74,8 +74,8 @@
  @param crashManager The `PRESCrashManager` instance invoking this delegate
  @see PRESAttachment
  @see applicationLogForCrashManager:
- @see PreSniffManagerDelegate userNameForHockeyManager:componentManager:
- @see PreSniffManagerDelegate userEmailForHockeyManager:componentManager:
+ @see PRESManagerDelegate userNameForHockeyManager:componentManager:
+ @see PRESManagerDelegate userEmailForHockeyManager:componentManager:
  */
 -(PRESAttachment *)attachmentForCrashManager:(PRESCrashManager *)crashManager;
 

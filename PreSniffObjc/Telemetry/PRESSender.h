@@ -3,7 +3,7 @@
 
 @class PRESPersistence;
 
-#import "PreSniffSDKNullability.h"
+#import "PRESNullability.h"
 NS_ASSUME_NONNULL_BEGIN
 
 /**

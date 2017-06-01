@@ -38,7 +38,7 @@
 }
 
 - (IBAction)diagnoseNetwork:(id)sender {
-    [[PreSniffManager sharedPreSniffManager] diagnose:@"www.baidu.com" complete:^(PRESNetDiagResult * _Nonnull result) {
+    [[PRESManager sharedPRESManager] diagnose:@"www.baidu.com" complete:^(PRESNetDiagResult * _Nonnull result) {
         NSLog(@"%@", result);
     }];
 }
@@ -48,7 +48,7 @@
 }
 
 - (IBAction)diyEvent:(id)sender {
-    PRESMetricsManager *metricsManager = [PreSniffManager sharedPreSniffManager].metricsManager;
+    PRESMetricsManager *metricsManager = [PRESManager sharedPRESManager].metricsManager;
     
     [metricsManager trackEventWithName:@"viewDidLoadEvent" properties:@{@"helloKey": @"worldValue"} measurements:@{@"helloKey": @7}];
 }

@@ -1,5 +1,5 @@
 //
-//  PreSniffSDKEnums.h
+//  PRESEnums.h
 //  HockeySDK
 //
 //  Created by Lukas Spieß on 08/10/15.

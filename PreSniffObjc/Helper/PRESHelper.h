@@ -28,7 +28,7 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-#import "PreSniffSDKEnums.h"
+#import "PRESEnums.h"
 
 @interface PRESHelper : NSObject
 

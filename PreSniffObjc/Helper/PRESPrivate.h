@@ -32,8 +32,8 @@
 #import <Foundation/Foundation.h>
 #import "PRESLogger.h"
 
-#ifndef HockeySDK_PreSniffSDKPrivate_h
-#define HockeySDK_PreSniffSDKPrivate_h
+#ifndef HockeySDK_PRESPrivate_h
+#define HockeySDK_PRESPrivate_h
 
 #define PRESHOCKEY_NAME @"HockeySDK"
 #define PRESHOCKEY_IDENTIFIER @"net.hockeyapp.sdk.ios"
@@ -102,4 +102,4 @@ NSString *PRESHockeyMD5(NSString *str);
 
 #endif
 
-#endif /* HockeySDK_PreSniffSDKPrivate_h */
+#endif /* HockeySDK_PRESPrivate_h */

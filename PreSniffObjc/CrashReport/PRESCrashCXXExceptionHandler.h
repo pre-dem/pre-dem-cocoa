@@ -27,7 +27,7 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "PreSniffSDKNullability.h"
+#import "PRESNullability.h"
 
 typedef struct {
     const void * __nullable exception;

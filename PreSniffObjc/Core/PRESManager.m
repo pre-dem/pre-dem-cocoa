@@ -28,7 +28,7 @@
  */
 
 #import "PreSniffObjc.h"
-#import "PreSniffSDKPrivate.h"
+#import "PRESPrivate.h"
 #import "PRESBaseManagerPrivate.h"
 
 #import "PRESHelper.h"
@@ -52,14 +52,14 @@ typedef struct {
 #import "PRESCategoryContainer.h"
 #import "PRESURLProtocol.h"
 
-@interface PreSniffManager ()
+@interface PRESManager ()
 
 - (BOOL)shouldUseLiveIdentifier;
 
 @end
 
 
-@implementation PreSniffManager {
+@implementation PRESManager {
     NSString *_appIdentifier;
     NSString *_liveIdentifier;
     
@@ -101,12 +101,12 @@ typedef struct {
 
 #pragma mark - Public Class Methods
 
-+ (PreSniffManager *)sharedPreSniffManager {
-    static PreSniffManager *sharedInstance = nil;
++ (PRESManager *)sharedPRESManager {
+    static PRESManager *sharedInstance = nil;
     static dispatch_once_t pred;
     
     dispatch_once(&pred, ^{
-        sharedInstance = [PreSniffManager alloc];
+        sharedInstance = [PRESManager alloc];
         sharedInstance = [sharedInstance init];
     });
     
@@ -254,10 +254,10 @@ typedef struct {
 }
 
 
-- (void)setDelegate:(id<PreSniffManagerDelegate>)delegate {
+- (void)setDelegate:(id<PRESManagerDelegate>)delegate {
     if (self.appEnvironment != PRESEnvironmentAppStore) {
         if (_startManagerIsInvoked) {
-            PRESHockeyLogError(@"[HockeySDK] ERROR: The `delegate` property has to be set before calling [[PreSniffManager sharedPreSniffManager] startManager] !");
+            PRESHockeyLogError(@"[HockeySDK] ERROR: The `delegate` property has to be set before calling [[PRESManager sharedPRESManager] startManager] !");
         }
     }
     
@@ -445,7 +445,7 @@ typedef struct {
 - (void)validateStartManagerIsInvoked {
     if (_validAppIdentifier && (self.appEnvironment != PRESEnvironmentAppStore)) {
         if (!_startManagerIsInvoked) {
-            PRESHockeyLogError(@"[HockeySDK] ERROR: You did not call [[PreSniffManager sharedPreSniffManager] startManager] to startup the HockeySDK! Please do so after setting up all properties. The SDK is NOT running.");
+            PRESHockeyLogError(@"[HockeySDK] ERROR: You did not call [[PRESManager sharedPRESManager] startManager] to startup the HockeySDK! Please do so after setting up all properties. The SDK is NOT running.");
         }
     }
 }
@@ -470,7 +470,7 @@ typedef struct {
 - (BOOL)shouldUseLiveIdentifier {
     BOOL delegateResult = NO;
     if ([_delegate respondsToSelector:@selector(shouldUseLiveIdentifierForHockeyManager:)]) {
-        delegateResult = [(NSObject <PreSniffManagerDelegate>*)_delegate shouldUseLiveIdentifierForHockeyManager:self];
+        delegateResult = [(NSObject <PRESManagerDelegate>*)_delegate shouldUseLiveIdentifierForHockeyManager:self];
     }
     
     return (delegateResult) || (_appEnvironment == PRESEnvironmentAppStore);

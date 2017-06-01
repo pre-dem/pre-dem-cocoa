@@ -3,7 +3,7 @@
 #import "PRESTelemetryContext.h"
 #import "PRESMetricsManagerPrivate.h"
 #import "PRESHelper.h"
-#import "PreSniffSDKPrivate.h"
+#import "PRESPrivate.h"
 #import "PRESChannel.h"
 #import "PRESEventData.h"
 #import "PRESSession.h"

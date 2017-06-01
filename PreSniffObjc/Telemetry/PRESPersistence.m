@@ -1,7 +1,7 @@
 #import "PreSniffObjc.h"
 #import "PRESPersistence.h"
 #import "PRESPersistencePrivate.h"
-#import "PreSniffSDKPrivate.h"
+#import "PRESPrivate.h"
 #import "PRESHelper.h"
 
 NSString *const PRESPersistenceSuccessNotification = @"PRESHockeyPersistenceSuccessNotification";

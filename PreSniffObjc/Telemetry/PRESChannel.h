@@ -5,7 +5,7 @@
 @class PRESTelemetryContext;
 @class PRESPersistence;
 
-#import "PreSniffSDKNullability.h"
+#import "PRESNullability.h"
 NS_ASSUME_NONNULL_BEGIN
 
 FOUNDATION_EXPORT char *PRESSafeJsonEventsString;

@@ -31,7 +31,7 @@
 #import <SystemConfiguration/SystemConfiguration.h>
 #import <UIKit/UIKit.h>
 
-#import "PreSniffSDKPrivate.h"
+#import "PRESPrivate.h"
 #import "PRESHelper.h"
 #import "PRESNetworkClient.h"
 
@@ -623,9 +623,9 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
         userID = userIdFromKeychain;
     }
     
-    if ([[PreSniffManager sharedPreSniffManager].delegate respondsToSelector:@selector(userIDForHockeyManager:componentManager:)]) {
-        userID = [[PreSniffManager sharedPreSniffManager].delegate
-                  userIDForHockeyManager:[PreSniffManager sharedPreSniffManager]
+    if ([[PRESManager sharedPRESManager].delegate respondsToSelector:@selector(userIDForHockeyManager:componentManager:)]) {
+        userID = [[PRESManager sharedPRESManager].delegate
+                  userIDForHockeyManager:[PRESManager sharedPRESManager]
                   componentManager:self];
     }
     
@@ -641,9 +641,9 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
     // first check the global keychain storage
     NSString *username = [self stringValueFromKeychainForKey:kPRESHockeyMetaUserName] ?: @"";
     
-    if ([[PreSniffManager sharedPreSniffManager].delegate respondsToSelector:@selector(userNameForHockeyManager:componentManager:)]) {
-        username = [[PreSniffManager sharedPreSniffManager].delegate
-                    userNameForHockeyManager:[PreSniffManager sharedPreSniffManager]
+    if ([[PRESManager sharedPRESManager].delegate respondsToSelector:@selector(userNameForHockeyManager:componentManager:)]) {
+        username = [[PRESManager sharedPRESManager].delegate
+                    userNameForHockeyManager:[PRESManager sharedPRESManager]
                     componentManager:self] ?: @"";
     }
     
@@ -659,9 +659,9 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
     // first check the global keychain storage
     NSString *useremail = [self stringValueFromKeychainForKey:kPRESHockeyMetaUserEmail] ?: @"";
     
-    if ([[PreSniffManager sharedPreSniffManager].delegate respondsToSelector:@selector(userEmailForHockeyManager:componentManager:)]) {
-        useremail = [[PreSniffManager sharedPreSniffManager].delegate
-                     userEmailForHockeyManager:[PreSniffManager sharedPreSniffManager]
+    if ([[PRESManager sharedPRESManager].delegate respondsToSelector:@selector(userEmailForHockeyManager:componentManager:)]) {
+        useremail = [[PRESManager sharedPRESManager].delegate
+                     userEmailForHockeyManager:[PRESManager sharedPRESManager]
                      componentManager:self] ?: @"";
     }
     
@@ -690,7 +690,7 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
 }
 
 - (void)configDefaultCrashCallback {
-    PRESMetricsManager *metricsManager = [PreSniffManager sharedPreSniffManager].metricsManager;
+    PRESMetricsManager *metricsManager = [PRESManager sharedPRESManager].metricsManager;
     PRESPersistence *persistence = metricsManager.persistence;
     PRESSaveEventsFilePath = strdup([persistence fileURLForType:PRESPersistenceTypeTelemetry].UTF8String);
 }

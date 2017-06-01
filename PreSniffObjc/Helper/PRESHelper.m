@@ -30,7 +30,7 @@
 #import "PRESHelper.h"
 #import "PRESKeychainUtils.h"
 #import "PreSniffObjc.h"
-#import "PreSniffSDKPrivate.h"
+#import "PRESPrivate.h"
 #import "PRESVersion.h"
 #if !defined (HOCKEYSDK_CONFIGURATION_ReleaseCrashOnly) && !defined (HOCKEYSDK_CONFIGURATION_ReleaseCrashOnlyExtensions)
 #import <QuartzCore/QuartzCore.h>
@@ -957,7 +957,7 @@ UIImage *pres_imageWithContentsOfResolutionIndependentFile(NSString *path) {
 
 
 UIImage *pres_imageNamed(NSString *imageName, NSString *bundleName) {
-    NSString *resourcePath = [[NSBundle bundleForClass:[PreSniffManager class]] resourcePath];
+    NSString *resourcePath = [[NSBundle bundleForClass:[PRESManager class]] resourcePath];
     NSString *bundlePath = [resourcePath stringByAppendingPathComponent:bundleName];
     NSString *imagePath = [bundlePath stringByAppendingPathComponent:imageName];
     return pres_imageWithContentsOfResolutionIndependentFile(imagePath);

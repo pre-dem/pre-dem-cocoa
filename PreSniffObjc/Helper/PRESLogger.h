@@ -1,7 +1,7 @@
 // Adapted from 0xced’s post at http://stackoverflow.com/questions/34732814/how-should-i-handle-logs-in-an-objective-c-library/34732815#34732815
 
 #import <Foundation/Foundation.h>
-#import "PreSniffSDKEnums.h"
+#import "PRESEnums.h"
 
 #define PRESHockeyLog(_level, _message) [PRESLogger logMessage:_message level:_level file:__FILE__ function:__PRETTY_FUNCTION__ line:__LINE__]
 

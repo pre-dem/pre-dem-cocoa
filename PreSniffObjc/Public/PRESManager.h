@@ -30,15 +30,15 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-#import "PreSniffSDKEnums.h"
+#import "PRESEnums.h"
 
-@protocol PreSniffManagerDelegate;
+@protocol PRESManagerDelegate;
 
 @class PRESBaseManager;
 @class PRESCrashManager;
 @class PRESMetricsManager;
 
-#import "PreSniffSDKNullability.h"
+#import "PRESNullability.h"
 
 @class PRESNetDiagResult;
 
@@ -46,7 +46,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 typedef void (^PRESNetDiagCompleteHandler)(PRESNetDiagResult* result);
 
-@interface PreSniffManager: NSObject
+@interface PRESManager: NSObject
 
 #pragma mark - Public Methods
 
@@ -55,11 +55,11 @@ typedef void (^PRESNetDiagCompleteHandler)(PRESNetDiagResult* result);
 ///-----------------------------------------------------------------------------
 
 /**
- Returns a shared PreSniffManager object
+ Returns a shared PRESManager object
  
- @return A singleton PreSniffManager instance ready use
+ @return A singleton PRESManager instance ready use
  */
-+ (PreSniffManager *)sharedPreSniffManager;
++ (PRESManager *)sharedPRESManager;
 
 
 /**
@@ -67,7 +67,7 @@ typedef void (^PRESNetDiagCompleteHandler)(PRESNetDiagResult* result);
  
  Initialize the manager with a HockeyApp app identifier.
  
- [[PreSniffManager sharedPreSniffManager]
+ [[PRESManager sharedPRESManager]
  configureWithIdentifier:@"<AppIdentifierFromHockeyApp>"];
  
  @see configureWithIdentifier:delegate:
@@ -82,24 +82,24 @@ typedef void (^PRESNetDiagCompleteHandler)(PRESNetDiagResult* result);
  Initializes the manager with a particular app identifier and delegate
  
  Initialize the manager with a HockeyApp app identifier and assign the class that
- implements the optional protocols `PreSniffManagerDelegate`, `PRESCrashManagerDelegate` or
+ implements the optional protocols `PRESManagerDelegate`, `PRESCrashManagerDelegate` or
  `PRESUpdateManagerDelegate`.
  
- [[PreSniffManager sharedPreSniffManager]
+ [[PRESManager sharedPRESManager]
  configureWithIdentifier:@"<AppIdentifierFromHockeyApp>"
  delegate:nil];
  
  @see configureWithIdentifier:
  @see configureWithBetaIdentifier:liveIdentifier:delegate:
  @see startManager
- @see PreSniffManagerDelegate
+ @see PRESManagerDelegate
  @see PRESCrashManagerDelegate
  @see PRESUpdateManagerDelegate
  @see PRESFeedbackManagerDelegate
  @param appIdentifier The app identifier that should be used.
  @param delegate `nil` or the class implementing the option protocols
  */
-- (void)configureWithIdentifier:(NSString *)appIdentifier delegate:(nullable id<PreSniffManagerDelegate>)delegate;
+- (void)configureWithIdentifier:(NSString *)appIdentifier delegate:(nullable id<PRESManagerDelegate>)delegate;
 
 
 /**
@@ -108,10 +108,10 @@ typedef void (^PRESNetDiagCompleteHandler)(PRESNetDiagResult* result);
  Initialize the manager with different HockeyApp app identifiers for beta and live usage.
  All modules will automatically detect if the app is running in the App Store and use
  the live app identifier for that. In all other cases it will use the beta app identifier.
- And also assign the class that implements the optional protocols `PreSniffManagerDelegate`,
+ And also assign the class that implements the optional protocols `PRESManagerDelegate`,
  `PRESCrashManagerDelegate` or `PRESUpdateManagerDelegate`
  
- [[PreSniffManager sharedPreSniffManager]
+ [[PRESManager sharedPRESManager]
  configureWithBetaIdentifier:@"<AppIdentifierForBetaAppFromHockeyApp>"
  liveIdentifier:@"<AppIdentifierForLiveAppFromHockeyApp>"
  delegate:nil];
@@ -128,7 +128,7 @@ typedef void (^PRESNetDiagCompleteHandler)(PRESNetDiagResult* result);
  @see configureWithIdentifier:
  @see configureWithIdentifier:delegate:
  @see startManager
- @see PreSniffManagerDelegate
+ @see PRESManagerDelegate
  @see PRESCrashManagerDelegate
  @see PRESUpdateManagerDelegate
  @see PRESFeedbackManagerDelegate
@@ -136,7 +136,7 @@ typedef void (^PRESNetDiagCompleteHandler)(PRESNetDiagResult* result);
  @param liveIdentifier The app identifier for the app store configurations.
  @param delegate `nil` or the class implementing the optional protocols
  */
-- (void)configureWithBetaIdentifier:(NSString *)betaIdentifier liveIdentifier:(NSString *)liveIdentifier delegate:(nullable id<PreSniffManagerDelegate>)delegate;
+- (void)configureWithBetaIdentifier:(NSString *)betaIdentifier liveIdentifier:(NSString *)liveIdentifier delegate:(nullable id<PRESManagerDelegate>)delegate;
 
 
 /**
@@ -160,19 +160,19 @@ typedef void (^PRESNetDiagCompleteHandler)(PRESNetDiagResult* result);
 /**
  Set the delegate
  
- Defines the class that implements the optional protocol `PreSniffManagerDelegate`.
+ Defines the class that implements the optional protocol `PRESManagerDelegate`.
  
  The delegate will automatically be propagated to all components. There is no need to set the delegate
  for each component individually.
  
  @warning This property needs to be set before calling `startManager`
  
- @see PreSniffManagerDelegate
+ @see PRESManagerDelegate
  @see PRESCrashManagerDelegate
  @see PRESUpdateManagerDelegate
  @see PRESFeedbackManagerDelegate
  */
-@property (nonatomic, weak, nullable) id<PreSniffManagerDelegate> delegate;
+@property (nonatomic, weak, nullable) id<PRESManagerDelegate> delegate;
 
 
 /**
@@ -190,7 +190,7 @@ typedef void (^PRESNetDiagCompleteHandler)(PRESNetDiagResult* result);
 /**
  Reference to the initialized PRESCrashManager module
  
- Returns the PRESCrashManager instance initialized by PreSniffManager
+ Returns the PRESCrashManager instance initialized by PRESManager
  
  @see configureWithIdentifier:delegate:
  @see configureWithBetaIdentifier:liveIdentifier:delegate:
@@ -219,7 +219,7 @@ typedef void (^PRESNetDiagCompleteHandler)(PRESNetDiagResult* result);
 /**
  Reference to the initialized PRESMetricsManager module
  
- Returns the PRESMetricsManager instance initialized by PreSniffManager
+ Returns the PRESMetricsManager instance initialized by PRESManager
  */
 @property (nonatomic, strong, readonly) PRESMetricsManager *metricsManager;
 
@@ -315,7 +315,7 @@ typedef void (^PRESNetDiagCompleteHandler)(PRESNetDiagResult* result);
  An example of how to do this with NSLogger:
  
  ```
- [[PreSniffManager sharedPreSniffManager] setLogHandler:^(PRESLogMessageProvider messageProvider, PRESLogLevel logLevel, const char *file, const char *function, uint line) {
+ [[PRESManager sharedPRESManager] setLogHandler:^(PRESLogMessageProvider messageProvider, PRESLogLevel logLevel, const char *file, const char *function, uint line) {
  LogMessageRawF(file, (int)line, function, @"HockeySDK", (int)logLevel-1, messageProvider());
  }];
  ```
@@ -323,7 +323,7 @@ typedef void (^PRESNetDiagCompleteHandler)(PRESNetDiagResult* result);
  or with CocoaLumberjack:
  
  ```
- [[PreSniffManager sharedPreSniffManager] setLogHandler:^(PRESLogMessageProvider messageProvider, PRESLogLevel logLevel, const char *file, const char *function, uint line) {
+ [[PRESManager sharedPRESManager] setLogHandler:^(PRESLogMessageProvider messageProvider, PRESLogLevel logLevel, const char *file, const char *function, uint line) {
  [DDLog log:YES message:messageProvider() level:ddLogLevel flag:(DDLogFlag)(1 << (logLevel-1)) context:CocoaLumberjackContext file:file function:function line:line tag:nil];
  }];
  ```
@@ -379,7 +379,7 @@ typedef void (^PRESNetDiagCompleteHandler)(PRESNetDiagResult* result);
  
  @see userName
  @see userEmail
- @see `[PreSniffManagerDelegate userIDForHockeyManager:componentManager:]`
+ @see `[PRESManagerDelegate userIDForHockeyManager:componentManager:]`
  */
 @property (nonatomic, copy, nullable) NSString *userID;
 
@@ -404,7 +404,7 @@ typedef void (^PRESNetDiagCompleteHandler)(PRESNetDiagResult* result);
  
  @see userID
  @see userEmail
- @see `[PreSniffManagerDelegate userNameForHockeyManager:componentManager:]`
+ @see `[PRESManagerDelegate userNameForHockeyManager:componentManager:]`
  */
 @property (nonatomic, copy, nullable) NSString *userName;
 
@@ -429,7 +429,7 @@ typedef void (^PRESNetDiagCompleteHandler)(PRESNetDiagResult* result);
  
  @see userID
  @see userName
- @see [PreSniffManagerDelegate userEmailForHockeyManager:componentManager:]
+ @see [PRESManagerDelegate userEmailForHockeyManager:componentManager:]
  */
 @property (nonatomic, copy, nullable) NSString *userEmail;
 

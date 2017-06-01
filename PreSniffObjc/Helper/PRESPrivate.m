@@ -28,7 +28,7 @@
  */
 
 #import "PreSniffObjc.h"
-#import "PreSniffSDKPrivate.h"
+#import "PRESPrivate.h"
 #include <CommonCrypto/CommonDigest.h>
 
 NSString *const kPRESCrashErrorDomain = @"PRESCrashReporterErrorDomain";
@@ -42,7 +42,7 @@ NSBundle *PRESHockeyBundle(void) {
     static NSBundle *bundle = nil;
     static dispatch_once_t predicate;
     dispatch_once(&predicate, ^{
-        NSString* mainBundlePath = [[NSBundle bundleForClass:[PreSniffManager class]] resourcePath];
+        NSString* mainBundlePath = [[NSBundle bundleForClass:[PRESManager class]] resourcePath];
         NSString* frameworkBundlePath = [mainBundlePath stringByAppendingPathComponent:PRESHOCKEYSDK_BUNDLE];
         bundle = [NSBundle bundleWithPath:frameworkBundlePath];
     });

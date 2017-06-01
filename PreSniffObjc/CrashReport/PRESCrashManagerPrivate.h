@@ -43,10 +43,10 @@
 /**
  Sets the optional `PRESCrashManagerDelegate` delegate.
  
- The delegate is automatically set by using `[PreSniffManager setDelegate:]`. You
+ The delegate is automatically set by using `[PRESManager setDelegate:]`. You
  should not need to set this delegate individually.
  
- @see `[PreSniffManager setDelegate:]`
+ @see `[PRESManager setDelegate:]`
  */
 @property (nonatomic, weak) id delegate;
 

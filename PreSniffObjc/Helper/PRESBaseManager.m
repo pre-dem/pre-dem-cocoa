@@ -27,7 +27,7 @@
  */
 
 #import "PreSniffObjc.h"
-#import "PreSniffSDKPrivate.h"
+#import "PRESPrivate.h"
 
 #import "PRESHelper.h"
 
@@ -195,8 +195,8 @@
 - (UIViewController *)visibleWindowRootViewController {
     UIViewController *parentViewController = nil;
     
-    if ([[PreSniffManager sharedPreSniffManager].delegate respondsToSelector:@selector(viewControllerForHockeyManager:componentManager:)]) {
-        parentViewController = [[PreSniffManager sharedPreSniffManager].delegate viewControllerForHockeyManager:[PreSniffManager sharedPreSniffManager] componentManager:self];
+    if ([[PRESManager sharedPRESManager].delegate respondsToSelector:@selector(viewControllerForHockeyManager:componentManager:)]) {
+        parentViewController = [[PRESManager sharedPRESManager].delegate viewControllerForHockeyManager:[PRESManager sharedPRESManager] componentManager:self];
     }
     
     UIWindow *visibleWindow = [self findVisibleWindow];

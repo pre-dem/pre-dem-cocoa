@@ -28,7 +28,7 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-#import "PreSniffManager.h"
+#import "PRESManager.h"
 
 @class PRESBaseManager;
 @class PRESHockeyBaseViewController;

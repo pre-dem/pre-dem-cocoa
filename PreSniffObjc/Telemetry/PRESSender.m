@@ -2,7 +2,7 @@
 #import "PRESPersistencePrivate.h"
 #import "PRESChannelPrivate.h"
 #import "PRESGZIP.h"
-#import "PreSniffSDKPrivate.h"
+#import "PRESPrivate.h"
 #import "PRESHTTPOperation.h"
 #import "PRESHelper.h"
 
