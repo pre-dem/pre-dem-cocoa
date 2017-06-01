@@ -7,18 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-
-//! Project version number for PreSniffSDK.
-FOUNDATION_EXPORT double PreSniffSDKVersionNumber;
-
-//! Project version string for PreSniffSDK.
-FOUNDATION_EXPORT const unsigned char PreSniffSDKVersionString[];
-
-#if !defined (TARGET_OS_IOS) // Defined starting in iOS 9
-#define TARGET_OS_IOS 1
-#endif
-
-
 #import "PRESEnums.h"
 #import "PRESNullability.h"
 #import "PRESManager.h"
