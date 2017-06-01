@@ -16,5 +16,6 @@
 + (NSString *)getDeviceModel;
 + (NSString *)getDeviceUUID;
 + (NSDictionary*)getObjectData:(id)obj;
++ (NSString *)MD5:(NSString *)mdStr;
 
 @end
