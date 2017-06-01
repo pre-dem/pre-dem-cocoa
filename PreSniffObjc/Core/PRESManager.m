@@ -30,31 +30,21 @@
 #import "PreSniffObjc.h"
 #import "PRESPrivate.h"
 #import "PRESBaseManagerPrivate.h"
-
 #import "PRESHelper.h"
 #import "PRESNetworkClient.h"
 #import "PRESKeychainUtils.h"
 #import "PRESVersion.h"
-
-#include <stdint.h>
 #import "PRESConfigManager.h"
 #import "PRESNetDiag.h"
-
-typedef struct {
-    uint8_t       info_version;
-    const char    hockey_version[16];
-    const char    hockey_build[16];
-} bitstadium_info_t;
-
-
 #import "PRESCrashManagerPrivate.h"
 #import "PRESMetricsManagerPrivate.h"
 #import "PRESCategoryContainer.h"
 #import "PRESURLProtocol.h"
 
 @interface PRESManager ()
-
-- (BOOL)shouldUseLiveIdentifier;
+<
+PRESConfigManagerDelegate
+>
 
 @end
 
@@ -71,31 +61,7 @@ typedef struct {
     
     PRESNetworkClient *_hockeyAppClient;
     
-    PRESConfig *_config;
-}
-
-#pragma mark - Private Class Methods
-
-- (BOOL)checkValidityOfAppIdentifier:(NSString *)identifier {
-    BOOL result = NO;
-    
-    if (identifier) {
-        NSCharacterSet *hexSet = [NSCharacterSet characterSetWithCharactersInString:@"0123456789abcdef"];
-        NSCharacterSet *inStringSet = [NSCharacterSet characterSetWithCharactersInString:identifier];
-        result = ([identifier length] == 32) && ([hexSet isSupersetOfSet:inStringSet]);
-    }
-    
-    return result;
-}
-
-- (void)logInvalidIdentifier:(NSString *)environment {
-    if (self.appEnvironment != PRESEnvironmentAppStore) {
-        if ([environment isEqualToString:@"liveIdentifier"]) {
-            PRESLogWarning(@"[PreSniffObjc] WARNING: The liveIdentifier is invalid! The SDK will be disabled when deployed to the App Store without setting a valid app identifier!");
-        } else {
-            PRESLogError(@"[PreSniffObjc] ERROR: The %@ is invalid! Please use the PreSniff app identifier you find on the apps website on PreSniff! The SDK is disabled!", environment);
-        }
-    }
+    PRESConfigManager *_configManager;
 }
 
 
@@ -106,8 +72,7 @@ typedef struct {
     static dispatch_once_t pred;
     
     dispatch_once(&pred, ^{
-        sharedInstance = [PRESManager alloc];
-        sharedInstance = [sharedInstance init];
+        sharedInstance = [[PRESManager alloc] init];
     });
     
     return sharedInstance;
@@ -130,6 +95,9 @@ typedef struct {
         _liveIdentifier = nil;
         _installString = pres_appAnonID(NO);
         
+        _configManager = [PRESConfigManager sharedInstance];
+        _configManager.delegate = self;
+        
         [self performSelector:@selector(validateStartManagerIsInvoked) withObject:nil afterDelay:0.0f];
     }
     return self;
@@ -142,7 +110,7 @@ typedef struct {
     
     [self initializeModules];
     
-    [self applyConfig:[[PRESConfigManager sharedInstance] getConfigWithAppKey:appIdentifier]];
+    [self applyConfig:[_configManager getConfigWithAppKey:appIdentifier]];
 }
 
 - (void)configureWithIdentifier:(NSString *)appIdentifier delegate:(id)delegate {
@@ -151,7 +119,7 @@ typedef struct {
     
     [self initializeModules];
     
-    [self applyConfig:[[PRESConfigManager sharedInstance] getConfigWithAppKey:appIdentifier]];
+    [self applyConfig:[_configManager getConfigWithAppKey:appIdentifier]];
 }
 
 - (void)configureWithBetaIdentifier:(NSString *)betaIdentifier liveIdentifier:(NSString *)liveIdentifier delegate:(id)delegate {
@@ -172,7 +140,7 @@ typedef struct {
     
     [self initializeModules];
     
-    [self applyConfig:[[PRESConfigManager sharedInstance] getConfigWithAppKey:_appIdentifier]];
+    [self applyConfig:[_configManager getConfigWithAppKey:_appIdentifier]];
 }
 
 
@@ -516,6 +484,34 @@ typedef struct {
 - (void)diagnose:(NSString *)host
         complete:(PRESNetDiagCompleteHandler)complete {
     [PRESNetDiag diagnose:host appKey:_appIdentifier complete:complete];
+}
+
+- (void)configManager:(PRESConfigManager *)manager didReceivedConfig:(PRESConfig *)config {
+    [self applyConfig:config];
+}
+
+#pragma mark - Private Class Methods
+
+- (BOOL)checkValidityOfAppIdentifier:(NSString *)identifier {
+    BOOL result = NO;
+    
+    if (identifier) {
+        NSCharacterSet *hexSet = [NSCharacterSet characterSetWithCharactersInString:@"0123456789abcdef"];
+        NSCharacterSet *inStringSet = [NSCharacterSet characterSetWithCharactersInString:identifier];
+        result = ([identifier length] == 32) && ([hexSet isSupersetOfSet:inStringSet]);
+    }
+    
+    return result;
+}
+
+- (void)logInvalidIdentifier:(NSString *)environment {
+    if (self.appEnvironment != PRESEnvironmentAppStore) {
+        if ([environment isEqualToString:@"liveIdentifier"]) {
+            PRESLogWarning(@"[PreSniffObjc] WARNING: The liveIdentifier is invalid! The SDK will be disabled when deployed to the App Store without setting a valid app identifier!");
+        } else {
+            PRESLogError(@"[PreSniffObjc] ERROR: The %@ is invalid! Please use the PreSniff app identifier you find on the apps website on PreSniff! The SDK is disabled!", environment);
+        }
+    }
 }
 
 @end

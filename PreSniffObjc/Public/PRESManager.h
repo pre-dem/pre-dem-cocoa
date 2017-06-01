@@ -37,11 +37,8 @@
 @class PRESBaseManager;
 @class PRESCrashManager;
 @class PRESMetricsManager;
-@class PRESNetDiagResult;
 
 NS_ASSUME_NONNULL_BEGIN
-
-typedef void (^PRESNetDiagCompleteHandler)(PRESNetDiagResult* result);
 
 @interface PRESManager: NSObject
 

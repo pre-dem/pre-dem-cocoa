@@ -9,6 +9,8 @@
 #ifndef PreSniffObjc_Enums_h
 #define PreSniffObjc_Enums_h
 
+@class PRESNetDiagResult;
+
 /**
  *  PreSniffObjc Log Levels
  */
@@ -34,9 +36,6 @@ typedef NS_ENUM(NSUInteger, PRESLogLevel) {
      */
     PRESLogLevelVerbose = 4
 };
-
-typedef NSString *(^PRESLogMessageProvider)(void);
-typedef void (^PRESLogHandler)(PRESLogMessageProvider messageProvider, PRESLogLevel logLevel, const char *file, const char *function, uint line);
 
 /**
  *  PreSniffObjc App environment
@@ -78,5 +77,11 @@ typedef NS_ENUM (NSInteger, PRESCrashErrorReason) {
      */
     PRESCrashAPIErrorWithStatusCode
 };
+
+typedef void (^PRESNetDiagCompleteHandler)(PRESNetDiagResult* result);
+
+typedef NSString *(^PRESLogMessageProvider)(void);
+
+typedef void (^PRESLogHandler)(PRESLogMessageProvider messageProvider, PRESLogLevel logLevel, const char *file, const char *function, uint line);
 
 #endif /* PreSniffObjc_Enums_h */
