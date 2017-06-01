@@ -129,7 +129,6 @@ typedef struct {
         
         _liveIdentifier = nil;
         _installString = pres_appAnonID(NO);
-        _disableInstallTracking = NO;
         
         [self performSelector:@selector(validateStartManagerIsInvoked) withObject:nil afterDelay:0.0f];
     }
@@ -190,10 +189,6 @@ typedef struct {
     pres_fixBackupAttributeForURL(appSupportURL);
     
     if (![self isSetUpOnMainThread]) return;
-    
-    if ((self.appEnvironment == PRESEnvironmentAppStore) && [self isInstallTrackingDisabled]) {
-        _installString = pres_appAnonID(YES);
-    }
     
     PRESLogDebug(@"INFO: Starting PRESManager");
     _startManagerIsInvoked = YES;

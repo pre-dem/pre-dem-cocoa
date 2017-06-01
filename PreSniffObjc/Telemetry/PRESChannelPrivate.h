@@ -77,17 +77,17 @@ FOUNDATION_EXPORT NSString *const PRESChannelBlockedNotification;
 - (void)appendDictionaryToJsonStream:(NSDictionary *)dictionary;
 
 /**
- *  A C function that serializes a given dictionary to JSON and appends it to a char string
+ *  A C function that serializes a given string to JSON and appends it to a char string
  *
- *  @param dictionary A dictionary which will be serialized to JSON and then appended to the string.
- *  @param string The C string which the dictionary's JSON representation will be appended to.
+ *  @param string A string which will be serialized to JSON and then appended to the string.
+ *  @param jsonStream The C string which the dictionary's JSON representation will be appended to.
  */
 void pres_appendStringToSafeJsonStream(NSString *string, char *__nonnull*__nonnull jsonStream);
 
 /**
  *  Reset PRESSafeJsonEventsString so we can start appending JSON dictionaries.
  *
- *  @param string The string that will be reset.
+ *  @param jsonStream The string that will be reset.
  */
 void pres_resetSafeJsonStream(char *__nonnull*__nonnull jsonStream);
 
