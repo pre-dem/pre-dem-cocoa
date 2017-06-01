@@ -1,6 +1,6 @@
 #import "PRESTelemetryObject.h"
 
-#import "PreSniffSDKNullability.h"
+#import "PRESNullability.h"
 NS_ASSUME_NONNULL_BEGIN
 
 ///Data contract class for type PRESTelemetryData.

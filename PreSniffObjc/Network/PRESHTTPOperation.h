@@ -29,7 +29,7 @@
 #import <Foundation/Foundation.h>
 
 @class PRESHTTPOperation;
-typedef void (^BITNetworkCompletionBlock)(PRESHTTPOperation* operation, NSData* data, NSError* error);
+typedef void (^PRESNetworkCompletionBlock)(PRESHTTPOperation* operation, NSData* data, NSError* error);
 
 @interface PRESHTTPOperation : NSOperation
 
@@ -38,7 +38,7 @@ typedef void (^BITNetworkCompletionBlock)(PRESHTTPOperation* operation, NSData* 
 @property (nonatomic, readonly) NSURLRequest *URLRequest;
 
 //the completion is only called if the operation wasn't cancelled
-- (void) setCompletion:(BITNetworkCompletionBlock) completionBlock;
+- (void) setCompletion:(PRESNetworkCompletionBlock) completionBlock;
 
 @property (nonatomic, readonly) NSHTTPURLResponse *response;
 @property (nonatomic, readonly) NSData *data;

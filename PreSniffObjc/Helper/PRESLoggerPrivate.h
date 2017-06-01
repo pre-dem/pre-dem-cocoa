@@ -1,3 +1,3 @@
 #import "PRESLogger.h"
 
-FOUNDATION_EXPORT BITLogHandler const defaultLogHandler;
+FOUNDATION_EXPORT PRESLogHandler const defaultLogHandler;

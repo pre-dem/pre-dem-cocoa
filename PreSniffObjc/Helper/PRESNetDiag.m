@@ -9,6 +9,7 @@
 #import "PRESNetDiag.h"
 #import "QNNetDiag.h"
 #import "PRESNetDiagResult.h"
+#import "PRESNetDiagResultPrivate.h"
 
 @implementation PRESNetDiag
 

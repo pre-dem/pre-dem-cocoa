@@ -39,25 +39,25 @@
 /**
  * Custom block that handles the alert that prompts the user whether he wants to send crash reports
  */
-typedef void(^BITCustomAlertViewHandler)();
+typedef void(^PRESCustomAlertViewHandler)();
 
 
 /**
  * Crash Manager status
  */
 typedef NS_ENUM(NSUInteger, PRESCrashManagerStatus) {
-  /**
-   *	Crash reporting is disabled
-   */
-  PRESCrashManagerStatusDisabled = 0,
-  /**
-   *	User is asked each time before sending
-   */
-  PRESCrashManagerStatusAlwaysAsk = 1,
-  /**
-   *	Each crash report is send automatically
-   */
-  PRESCrashManagerStatusAutoSend = 2
+    /**
+     *	Crash reporting is disabled
+     */
+    PRESCrashManagerStatusDisabled = 0,
+    /**
+     *	User is asked each time before sending
+     */
+    PRESCrashManagerStatusAlwaysAsk = 1,
+    /**
+     *	Each crash report is send automatically
+     */
+    PRESCrashManagerStatusAutoSend = 2
 };
 
 
@@ -80,13 +80,13 @@ typedef void (*PRESCrashManagerPostCrashSignalCallback)(void *context);
  * @see `[PRESCrashManager setCrashCallbacks:]`
  */
 typedef struct PRESCrashManagerCallbacks {
-  /** An arbitrary user-supplied context value. This value may be NULL. */
-  void *context;
-  
-  /**
-   * The callback used to report caught signal information.
-   */
-  PRESCrashManagerPostCrashSignalCallback handleSignal;
+    /** An arbitrary user-supplied context value. This value may be NULL. */
+    void *context;
+    
+    /**
+     * The callback used to report caught signal information.
+     */
+    PRESCrashManagerPostCrashSignalCallback handleSignal;
 } PRESCrashManagerCallbacks;
 
 
@@ -94,19 +94,19 @@ typedef struct PRESCrashManagerCallbacks {
  * Crash Manager alert user input
  */
 typedef NS_ENUM(NSUInteger, PRESCrashManagerUserInput) {
-  /**
-   *  User chose not to send the crash report
-   */
-  PRESCrashManagerUserInputDontSend = 0,
-  /**
-   *  User wants the crash report to be sent
-   */
-  PRESCrashManagerUserInputSend = 1,
-  /**
-   *  User chose to always send crash reports
-   */
-  PRESCrashManagerUserInputAlwaysSend = 2
-  
+    /**
+     *  User chose not to send the crash report
+     */
+    PRESCrashManagerUserInputDontSend = 0,
+    /**
+     *  User wants the crash report to be sent
+     */
+    PRESCrashManagerUserInputSend = 1,
+    /**
+     *  User chose to always send crash reports
+     */
+    PRESCrashManagerUserInputAlwaysSend = 2
+    
 };
 
 
@@ -115,16 +115,16 @@ typedef NS_ENUM(NSUInteger, PRESCrashManagerUserInput) {
 /**
  The crash reporting module.
  
- This is the HockeySDK module for handling crash reports, including when distributed via the App Store.
+ This is the PreSniffObjc module for handling crash reports, including when distributed via the App Store.
  As a foundation it is using the open source, reliable and async-safe crash reporting framework
  [PLCrashReporter](https://code.google.com/p/plcrashreporter/).
  
  This module works as a wrapper around the underlying crash reporting framework and provides functionality to
  detect new crashes, queues them if networking is not available, present a user interface to approve sending
- the reports to the HockeyApp servers and more.
+ the reports to the PreSniff servers and more.
  
  It also provides options to add additional meta information to each crash report, like `userName`, `userEmail`
- via `PreSniffManagerDelegate` protocol, and additional textual log information via `PRESCrashManagerDelegate`
+ via `PRESManagerDelegate` protocol, and additional textual log information via `PRESCrashManagerDelegate`
  protocol and a way to detect startup crashes so you can adjust your startup process to get these crash reports
  too and delay your app initialization.
  
@@ -169,7 +169,7 @@ typedef NS_ENUM(NSUInteger, PRESCrashManagerUserInput) {
  asking.
  
  The default value is `PRESCrashManagerStatusAlwaysAsk`. The user can switch to
- `PRESCrashManagerStatusAutoSend` by choosing "Always" in the dialog (since 
+ `PRESCrashManagerStatusAutoSend` by choosing "Always" in the dialog (since
  `showAlwaysButton` default is _YES_).
  
  The current value is always stored in User Defaults with the key
@@ -299,7 +299,7 @@ typedef NS_ENUM(NSUInteger, PRESCrashManagerUserInput) {
  
  If If `crashManagerStatus` is set to `PRESCrashManagerStatusAutoSend`, this property
  has no effect, since no alert will be presented.
-
+ 
  Default: _YES_
  
  @see crashManagerStatus
@@ -313,12 +313,12 @@ typedef NS_ENUM(NSUInteger, PRESCrashManagerUserInput) {
 
 /**
  Indicates if the app crash in the previous session
-
+ 
  Use this on startup, to check if the app starts the first time after it crashed
  previously. You can use this also to disable specific events, like asking
  the user to rate your app.
  
- @warning This property only has a correct value, once `[PreSniffManager startManager]` was
+ @warning This property only has a correct value, once `[PRESManager startManager]` was
  invoked!
  
  @see lastSessionCrashDetails
@@ -356,9 +356,9 @@ typedef NS_ENUM(NSUInteger, PRESCrashManagerUserInput) {
  
  @warning Block needs to call the `[PRESCrashManager handleUserInput:withUserProvidedMetaData:]` method!
  
- @warning This needs to be set before calling `[PreSniffManager startManager]`!
+ @warning This needs to be set before calling `[PRESManager startManager]`!
  */
-- (void)setAlertViewHandler:(BITCustomAlertViewHandler)alertViewHandler;
+- (void)setAlertViewHandler:(PRESCustomAlertViewHandler)alertViewHandler;
 
 /**
  * Provides details about the crash that occurred in the last app session
@@ -378,7 +378,7 @@ typedef NS_ENUM(NSUInteger, PRESCrashManagerUserInput) {
  Also the app could have received a low memory warning, but the reason for being killed was
  actually different.
  
- @warning This property only has a correct value, once `[PreSniffManager startManager]` was
+ @warning This property only has a correct value, once `[PRESManager startManager]` was
  invoked!
  
  @see enableAppNotTerminatingCleanlyDetection

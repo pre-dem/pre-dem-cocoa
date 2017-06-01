@@ -46,11 +46,11 @@
 ///-----------------------------------------------------------------------------
 
 /** Return any log string based data the crash report being processed should contain
-
+ 
  @param crashManager The `PRESCrashManager` instance invoking this delegate
  @see attachmentForCrashManager:
- @see PreSniffManagerDelegate userNameForHockeyManager:componentManager:
- @see PreSniffManagerDelegate userEmailForHockeyManager:componentManager:
+ @see PRESManagerDelegate userNameForPRESManager:componentManager:
+ @see PRESManagerDelegate userEmailForPRESManager:componentManager:
  */
 -(NSString *)applicationLogForCrashManager:(PRESCrashManager *)crashManager;
 
@@ -62,20 +62,20 @@
  
  Example implementation:
  
-     - (PRESAttachment *)attachmentForCrashManager:(PRESCrashManager *)crashManager {
-       NSData *data = [NSData dataWithContentsOfURL:@"mydatafile"];
+ - (PRESAttachment *)attachmentForCrashManager:(PRESCrashManager *)crashManager {
+ NSData *data = [NSData dataWithContentsOfURL:@"mydatafile"];
  
-       PRESAttachment *attachment = [[PRESAttachment alloc] initWithFilename:@"myfile.data"
-                                                                  hockeyAttachmentData:data
-                                                                           contentType:@"'application/octet-stream"];
-       return attachment;
-     }
+ PRESAttachment *attachment = [[PRESAttachment alloc] initWithFilename:@"myfile.data"
+ hockeyAttachmentData:data
+ contentType:@"'application/octet-stream"];
+ return attachment;
+ }
  
  @param crashManager The `PRESCrashManager` instance invoking this delegate
  @see PRESAttachment
  @see applicationLogForCrashManager:
- @see PreSniffManagerDelegate userNameForHockeyManager:componentManager:
- @see PreSniffManagerDelegate userEmailForHockeyManager:componentManager:
+ @see PRESManagerDelegate userNameForPRESManager:componentManager:
+ @see PRESManagerDelegate userEmailForPRESManager:componentManager:
  */
 -(PRESAttachment *)attachmentForCrashManager:(PRESCrashManager *)crashManager;
 
@@ -120,8 +120,8 @@
 /** Invoked after sending crash reports failed
  
  @param crashManager The `PRESCrashManager` instance invoking this delegate
- @param error The error returned from the NSURLConnection/NSURLSession call or `kBITCrashErrorDomain`
- with reason of type `BITCrashErrorReason`.
+ @param error The error returned from the NSURLConnection/NSURLSession call or `kPRESCrashErrorDomain`
+ with reason of type `PRESCrashErrorReason`.
  */
 - (void)crashManager:(PRESCrashManager *)crashManager didFailWithError:(NSError *)error;
 

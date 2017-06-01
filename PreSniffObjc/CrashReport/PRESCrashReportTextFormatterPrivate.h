@@ -1,6 +1,6 @@
 //
 //  PRESCrashReportTextFormatterPrivate.h
-//  HockeySDK
+//  PreSniffObjc
 //
 //  Created by Lukas Spieß on 27/01/16.
 //

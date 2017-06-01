@@ -110,7 +110,7 @@
  
  See `[PRESCrashManager enableAppNotTerminatingCleanlyDetection]` for more details about which kind of kills can be detected.
  
- @warning This property only has a correct value, once `[PreSniffManager startManager]` was
+ @warning This property only has a correct value, once `[PRESManager startManager]` was
  invoked! In addition, it is automatically disabled while a debugger session is active!
  
  @see `[PRESCrashManager enableAppNotTerminatingCleanlyDetection]`

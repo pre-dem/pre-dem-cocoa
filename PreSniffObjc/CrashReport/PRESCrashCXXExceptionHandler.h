@@ -27,7 +27,7 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "PreSniffSDKNullability.h"
+#import "PRESNullability.h"
 
 typedef struct {
     const void * __nullable exception;
@@ -38,7 +38,7 @@ typedef struct {
 } PRESCrashUncaughtCXXExceptionInfo;
 
 typedef void (*PRESCrashUncaughtCXXExceptionHandler)(
-    const PRESCrashUncaughtCXXExceptionInfo * __nonnull info
+const PRESCrashUncaughtCXXExceptionInfo * __nonnull info
 );
 
 @interface PRESCrashUncaughtCXXExceptionHandlerManager : NSObject

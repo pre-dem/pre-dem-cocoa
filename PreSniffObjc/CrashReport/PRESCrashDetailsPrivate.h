@@ -26,10 +26,10 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  */
 
-extern NSString *const __attribute__((unused)) kBITCrashKillSignal;
+extern NSString *const __attribute__((unused)) kPRESCrashKillSignal;
 
 @interface PRESCrashDetails () {
-  
+    
 }
 
 - (instancetype)initWithIncidentIdentifier:(NSString *)incidentIdentifier

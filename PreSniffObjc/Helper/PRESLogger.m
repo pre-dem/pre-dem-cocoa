@@ -3,39 +3,39 @@
 
 @implementation PRESLogger
 
-static BITLogLevel _currentLogLevel = BITLogLevelWarning;
-static BITLogHandler currentLogHandler;
+static PRESLogLevel _currentLogLevel = PRESLogLevelWarning;
+static PRESLogHandler currentLogHandler;
 
-BITLogHandler defaultLogHandler = ^(BITLogMessageProvider messageProvider, BITLogLevel logLevel, const char *file, const char *function, uint line) {
-  if (messageProvider) {
-    if (_currentLogLevel < logLevel) {
-      return;
+PRESLogHandler defaultLogHandler = ^(PRESLogMessageProvider messageProvider, PRESLogLevel logLevel, const char *file, const char *function, uint line) {
+    if (messageProvider) {
+        if (_currentLogLevel < logLevel) {
+            return;
+        }
+        NSLog((@"[PreSniffObjc] %s/%d %@"), function, line, messageProvider());
     }
-    NSLog((@"[HockeySDK] %s/%d %@"), function, line, messageProvider());
-  }
 };
 
 
 + (void)initialize {
-  currentLogHandler = defaultLogHandler;
+    currentLogHandler = defaultLogHandler;
 }
 
-+ (BITLogLevel)currentLogLevel {
-  return _currentLogLevel;
++ (PRESLogLevel)currentLogLevel {
+    return _currentLogLevel;
 }
 
-+ (void)setCurrentLogLevel:(BITLogLevel)currentLogLevel {
-  _currentLogLevel = currentLogLevel;
++ (void)setCurrentLogLevel:(PRESLogLevel)currentLogLevel {
+    _currentLogLevel = currentLogLevel;
 }
 
-+ (void)setLogHandler:(BITLogHandler)logHandler {
-  currentLogHandler = logHandler;
++ (void)setLogHandler:(PRESLogHandler)logHandler {
+    currentLogHandler = logHandler;
 }
 
-+ (void)logMessage:(BITLogMessageProvider)messageProvider level:(BITLogLevel)loglevel file:(const char *)file function:(const char *)function line:(uint)line {
-  if (currentLogHandler) {
-    currentLogHandler(messageProvider, loglevel, file, function, line);
-  }
++ (void)logMessage:(PRESLogMessageProvider)messageProvider level:(PRESLogLevel)loglevel file:(const char *)file function:(const char *)function line:(uint)line {
+    if (currentLogHandler) {
+        currentLogHandler(messageProvider, loglevel, file, function, line);
+    }
 }
 
 @end

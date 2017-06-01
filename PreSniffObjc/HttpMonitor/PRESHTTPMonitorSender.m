@@ -7,7 +7,7 @@
 //
 
 #import "PRESHTTPMonitorSender.h"
-#import "PRESDataCompressor.h"
+#import "PRESGZIP.h"
 
 #define PRESSendLogDefaultInterval  10
 #define PRESMaxLogLenth            (1024 * 64)
@@ -336,11 +336,7 @@ NSURLSessionDelegate
             return;
         }
         
-        NSData *dataToSend = [PRESDataCompressor compressData:dataUncompressed error:&err];
-        if (err) {
-            _isSendingData = NO;
-            return;
-        }
+        NSData *dataToSend = [dataUncompressed pres_gzippedData];
         if (!dataToSend || !dataToSend.length) {
             NSLog(@"compressed data is empty");
             _isSendingData = NO;

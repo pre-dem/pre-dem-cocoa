@@ -1,7 +1,3 @@
-#import "PreSniffObjcFeatureConfig.h"
-
-#if HOCKEYSDK_FEATURE_METRICS
-
 #import <Foundation/Foundation.h>
 #import "PRESApplication.h"
 #import "PRESDevice.h"
@@ -11,7 +7,7 @@
 
 @class PRESPersistence;
 
-#import "PreSniffSDKNullability.h"
+#import "PRESNullability.h"
 NS_ASSUME_NONNULL_BEGIN
 
 /**
@@ -102,5 +98,3 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 NS_ASSUME_NONNULL_END
-
-#endif /* HOCKEYSDK_FEATURE_METRICS */

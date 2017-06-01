@@ -10,6 +10,7 @@
 #import "PRESConfig.h"
 
 @class PRESConfigManager;
+
 @protocol PRESConfigManagerDelegate <NSObject>
 
 - (void)configManager:(PRESConfigManager *)manager didReceivedConfig:(PRESConfig *)config;

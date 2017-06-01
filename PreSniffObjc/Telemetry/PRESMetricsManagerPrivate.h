@@ -1,7 +1,3 @@
-#import "PreSniffObjcFeatureConfig.h"
-
-#if HOCKEYSDK_FEATURE_METRICS
-
 #import "PRESMetricsManager.h"
 #import "PRESSessionState.h"
 
@@ -11,7 +7,7 @@
 @class PRESPersistence;
 @class PRESSender;
 
-#import "PreSniffSDKNullability.h"
+#import "PRESNullability.h"
 NS_ASSUME_NONNULL_BEGIN
 
 FOUNDATION_EXPORT NSString *const kPRESApplicationWasLaunched;
@@ -19,7 +15,7 @@ FOUNDATION_EXPORT NSString *const kPRESApplicationWasLaunched;
 @interface PRESMetricsManager()
 
 /**
- *  Create a new PRESMetricsManager instance by passing the channel, the telemetry context, and persistence instance to use 
+ *  Create a new PRESMetricsManager instance by passing the channel, the telemetry context, and persistence instance to use
  for processing metrics. This method can be used for dependency injection.
  */
 - (instancetype)initWithChannel:(PRESChannel *)channel
@@ -121,5 +117,3 @@ FOUNDATION_EXPORT NSString *const kPRESApplicationWasLaunched;
 @end
 
 NS_ASSUME_NONNULL_END
-
-#endif /* HOCKEYSDK_FEATURE_METRICS */

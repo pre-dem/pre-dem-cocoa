@@ -27,13 +27,10 @@
  */
 
 #import "PreSniffObjc.h"
-
-#if HOCKEYSDK_FEATURE_CRASH_REPORTER
-
 #import "PRESCrashDetails.h"
 #import "PRESCrashDetailsPrivate.h"
 
-NSString *const kBITCrashKillSignal = @"SIGKILL";
+NSString *const kPRESCrashKillSignal = @"SIGKILL";
 
 @implementation PRESCrashDetails
 
@@ -50,32 +47,30 @@ NSString *const kBITCrashKillSignal = @"SIGKILL";
                                   appBuild:(NSString *)appBuild
                       appProcessIdentifier:(NSUInteger)appProcessIdentifier
 {
-  if ((self = [super init])) {
-    _incidentIdentifier = incidentIdentifier;
-    _reporterKey = reporterKey;
-    _signal = signal;
-    _exceptionName = exceptionName;
-    _exceptionReason = exceptionReason;
-    _appStartTime = appStartTime;
-    _crashTime = crashTime;
-    _osVersion = osVersion;
-    _osBuild = osBuild;
-    _appVersion = appVersion;
-    _appBuild = appBuild;
-    _appProcessIdentifier = appProcessIdentifier;
-  }
-  return self;
+    if ((self = [super init])) {
+        _incidentIdentifier = incidentIdentifier;
+        _reporterKey = reporterKey;
+        _signal = signal;
+        _exceptionName = exceptionName;
+        _exceptionReason = exceptionReason;
+        _appStartTime = appStartTime;
+        _crashTime = crashTime;
+        _osVersion = osVersion;
+        _osBuild = osBuild;
+        _appVersion = appVersion;
+        _appBuild = appBuild;
+        _appProcessIdentifier = appProcessIdentifier;
+    }
+    return self;
 }
 
 - (BOOL)isAppKill {
-  BOOL result = NO;
-  
-  if (_signal && [[_signal uppercaseString] isEqualToString:kBITCrashKillSignal])
-    result = YES;
-  
-  return result;
+    BOOL result = NO;
+    
+    if (_signal && [[_signal uppercaseString] isEqualToString:kPRESCrashKillSignal])
+        result = YES;
+    
+    return result;
 }
 
 @end
-
-#endif /* HOCKEYSDK_FEATURE_CRASH_REPORTER */

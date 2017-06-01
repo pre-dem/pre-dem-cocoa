@@ -40,7 +40,7 @@ extern NSString * const kPRESNetworkClientBoundary;
 /**
  *	designated initializer
  *
- *	@param	baseURL	the baseURL of the HockeyApp instance
+ *	@param	baseURL	the baseURL of the PreSniff instance
  */
 - (instancetype) initWithBaseURL:(NSURL*) baseURL;
 
@@ -71,7 +71,7 @@ extern NSString * const kPRESNetworkClientBoundary;
  *	@return	operation, which can be queued via enqueueHTTPOperation:
  */
 - (PRESHTTPOperation*) operationWithURLRequest:(NSURLRequest*) request
-                                   completion:(BITNetworkCompletionBlock) completion;
+                                    completion:(PRESNetworkCompletionBlock) completion;
 
 /**
  *	Creates an operation for the given path, and enqueues it
@@ -83,7 +83,7 @@ extern NSString * const kPRESNetworkClientBoundary;
  */
 - (void) getPath:(NSString*) path
       parameters:(NSDictionary *) params
-      completion:(BITNetworkCompletionBlock) completion;
+      completion:(PRESNetworkCompletionBlock) completion;
 
 /**
  *	Creates an operation for the given path, and enqueues it
@@ -95,7 +95,7 @@ extern NSString * const kPRESNetworkClientBoundary;
  */
 - (void) postPath:(NSString*) path
        parameters:(NSDictionary *) params
-       completion:(BITNetworkCompletionBlock) completion;
+       completion:(PRESNetworkCompletionBlock) completion;
 /**
  *	adds the given operation to the internal queue
  *
@@ -120,7 +120,7 @@ extern NSString * const kPRESNetworkClientBoundary;
 
 #pragma mark - Helpers
 /**
- *	create a post body from the given value, key and boundary. This is a convenience call to 
+ *	create a post body from the given value, key and boundary. This is a convenience call to
  *  dataWithPostValue:forKey:contentType:boundary and aimed at NSString-content.
  *
  *	@param	value	-

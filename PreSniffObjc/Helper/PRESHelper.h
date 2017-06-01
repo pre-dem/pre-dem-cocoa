@@ -28,11 +28,11 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-#import "PreSniffSDKEnums.h"
+#import "PRESEnums.h"
 
 @interface PRESHelper : NSObject
 
-FOUNDATION_EXPORT NSString *const kBITExcludeApplicationSupportFromBackup;
+FOUNDATION_EXPORT NSString *const kPRESExcludeApplicationSupportFromBackup;
 
 + (BOOL)isURLSessionSupported;
 
@@ -47,7 +47,7 @@ FOUNDATION_EXPORT NSString *const kBITExcludeApplicationSupportFromBackup;
 NSString *pres_settingsDir(void);
 
 BOOL pres_validateEmail(NSString *email);
-NSString *pres_keychainHockeySDKServiceName(void);
+NSString *pres_keychainPreSniffObjcServiceName(void);
 
 /* Fix bug where Application Support was excluded from backup. */
 void pres_fixBackupAttributeForURL(NSURL *directoryURL);
@@ -55,7 +55,6 @@ void pres_fixBackupAttributeForURL(NSURL *directoryURL);
 NSComparisonResult pres_versionCompare(NSString *stringA, NSString *stringB);
 NSString *pres_mainBundleIdentifier(void);
 NSString *pres_encodeAppIdentifier(NSString *inputString);
-NSString *pres_appIdentifierToGuid(NSString *appIdentifier);
 NSString *pres_appName(NSString *placeHolderString);
 NSString *pres_UUIDPreiOS6(void);
 NSString *pres_UUID(void);
@@ -65,7 +64,7 @@ BOOL pres_isPreiOS8Environment(void);
 BOOL pres_isPreiOS10Environment(void);
 BOOL pres_isAppStoreReceiptSandbox(void);
 BOOL pres_hasEmbeddedMobileProvision(void);
-BITEnvironment pres_currentAppEnvironment(void);
+PRESEnvironment pres_currentAppEnvironment(void);
 BOOL pres_isRunningInAppExtension(void);
 
 /**
@@ -94,7 +93,6 @@ NSString *pres_screenSize(void);
 NSString *pres_sdkVersion(void);
 NSString *pres_appVersion(void);
 
-#if !defined (HOCKEYSDK_CONFIGURATION_ReleaseCrashOnly) && !defined (HOCKEYSDK_CONFIGURATION_ReleaseCrashOnlyExtensions)
 /* AppIcon helper */
 NSString *pres_validAppIconStringFromIcons(NSBundle *resourceBundle, NSArray *icons);
 NSString *pres_validAppIconFilename(NSBundle *bundle, NSBundle *resourceBundle);
@@ -109,5 +107,3 @@ UIImage *pres_imageWithContentsOfResolutionIndependentFile(NSString * path);
 UIImage *pres_imageNamed(NSString *imageName, NSString *bundleName);
 UIImage *pres_screenshot(void);
 UIImage *pres_appIcon(void);
-
-#endif

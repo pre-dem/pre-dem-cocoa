@@ -28,25 +28,22 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-#import "PreSniffManager.h"
+#import "PRESManager.h"
 
 @class PRESBaseManager;
-@class BITHockeyBaseViewController;
+@class PRESBaseViewController;
 
 @interface PRESBaseManager()
 
 @property (nonatomic, strong) NSString *appIdentifier;
 
-@property (nonatomic, assign, readonly) BITEnvironment appEnvironment;
+@property (nonatomic, assign, readonly) PRESEnvironment appEnvironment;
 
-- (instancetype)initWithAppIdentifier:(NSString *)appIdentifier appEnvironment:(BITEnvironment)environment;
+- (instancetype)initWithAppIdentifier:(NSString *)appIdentifier appEnvironment:(PRESEnvironment)environment;
 
 - (void)startManager;
 
-/** Check if the device is running an iOS version previous to iOS 7 */
-- (BOOL)isPreiOS7Environment;
-
-/** 
+/**
  * by default, just logs the message
  *
  * can be overridden by subclasses to do their own error handling,
@@ -66,25 +63,6 @@
 // device / application helpers
 - (NSString *)getDevicePlatform;
 - (NSString *)executableUUID;
-
-#if !defined (HOCKEYSDK_CONFIGURATION_ReleaseCrashOnlyExtensions)
-// UI helpers
-- (UIWindow *)findVisibleWindow;
-- (UINavigationController *)customNavigationControllerWithRootViewController:(UIViewController *)viewController presentationStyle:(UIModalPresentationStyle)presentationStyle;
-
-/**
- *  Present an UIAlertController on the visible root UIViewController.
- *
- *  Uses `visibleWindowRootViewController` to find a controller on which to present the UIAlertController on.
- *  This method is always dispatched on the main queue.
- *
- *  @param alertController The UIAlertController to be presented.
- */
-/* We won't use this for now until we have a more robust solution for displaying UIAlertController
-- (void)showAlertController:(UIViewController *)alertController;
-*/
- - (void)showView:(UIViewController *)viewController;
-#endif
 
 // Date helpers
 - (NSDate *)parseRFC3339Date:(NSString *)dateString;

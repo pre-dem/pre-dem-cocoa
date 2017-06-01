@@ -40,7 +40,7 @@ NSURLSessionDelegate
     [NSURLProtocol setProperty:@YES
                         forKey:@"PRESInternalRequest"
                      inRequest:request];
-
+    
     __weak typeof(self) wSelf = self;
     [[[NSURLSession sessionWithConfiguration:NSURLSessionConfiguration.defaultSessionConfiguration
                                     delegate:self

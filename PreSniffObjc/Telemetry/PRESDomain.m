@@ -16,7 +16,7 @@
 
 ///
 /// Adds all members of this class to a dictionary
-/// @param dictionary to which the members of this class will be added.
+/// @return dictionary to which the members of this class will be added.
 ///
 - (NSDictionary *)serializeToDictionary {
     NSMutableDictionary *dict = [super serializeToDictionary].mutableCopy;
@@ -26,19 +26,19 @@
 #pragma mark - NSCoding
 
 - (instancetype)initWithCoder:(NSCoder *)coder {
-  self = [super initWithCoder:coder];
-  if(self) {
-    _envelopeTypeName = [coder decodeObjectForKey:@"_envelopeTypeName"];
-    _dataTypeName = [coder decodeObjectForKey:@"_dataTypeName"];
-  }
-
-  return self;
+    self = [super initWithCoder:coder];
+    if(self) {
+        _envelopeTypeName = [coder decodeObjectForKey:@"_envelopeTypeName"];
+        _dataTypeName = [coder decodeObjectForKey:@"_dataTypeName"];
+    }
+    
+    return self;
 }
 
 - (void)encodeWithCoder:(NSCoder *)coder {
-  [super encodeWithCoder:coder];
-  [coder encodeObject:_envelopeTypeName forKey:@"_envelopeTypeName"];
-  [coder encodeObject:_dataTypeName forKey:@"_dataTypeName"];
+    [super encodeWithCoder:coder];
+    [coder encodeObject:_envelopeTypeName forKey:@"_envelopeTypeName"];
+    [coder encodeObject:_dataTypeName forKey:@"_dataTypeName"];
 }
 
 

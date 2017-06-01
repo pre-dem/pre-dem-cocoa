@@ -19,11 +19,11 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
-    [[PreSniffManager sharedPreSniffManager] configureWithIdentifier:@"c9f916114a8f4750a02ce74300af909c"];
+    [[PRESManager sharedPRESManager] configureWithIdentifier:@"c9f916114a8f4750a02ce74300af909c"];
     // Do some additional configuration if needed here
-    [[PreSniffManager sharedPreSniffManager] startManager];
-    [PreSniffManager sharedPreSniffManager].disableMetricsManager = NO;
-//    [[PreSniffManager sharedPreSniffManager].authenticator authenticateInstallation];
+    [[PRESManager sharedPRESManager] startManager];
+    [PRESManager sharedPRESManager].disableMetricsManager = NO;
+//    [[PRESManager sharedPRESManager].authenticator authenticateInstallation];
     
     return YES;
 }

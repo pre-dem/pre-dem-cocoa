@@ -1,11 +1,7 @@
-#import "PreSniffObjcFeatureConfig.h"
-
-#if HOCKEYSDK_FEATURE_METRICS
-
 #import <Foundation/Foundation.h>
 #import "PRESBaseManager.h"
 
-#import "PreSniffSDKNullability.h"
+#import "PRESNullability.h"
 NS_ASSUME_NONNULL_BEGIN
 
 /**
@@ -20,8 +16,8 @@ NS_ASSUME_NONNULL_BEGIN
  
  Before starting to track events, ask yourself the questions that you want to get answers to.
  For instance, you might be interested in business, performance/quality or user experience aspects.
- Name your events in a meaningful way and keep in mind that you will use these names 
- when searching for events in the HockeyApp web portal.
+ Name your events in a meaningful way and keep in mind that you will use these names
+ when searching for events in the PreSniff web portal.
  
  It is your reponsibility to not collect personal information as part of the events tracking or get
  prior consent from your users as necessary.
@@ -36,7 +32,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  *  This method allows to track an event that happened in your app.
  *  Remember to choose meaningful event names to have the best experience when diagnosing your app
- *  in the HockeyApp web portal.
+ *  in the PreSniff web portal.
  *
  *  @param eventName The event's name as a string.
  */
@@ -56,5 +52,3 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 NS_ASSUME_NONNULL_END
-
-#endif /* HOCKEYSDK_FEATURE_METRICS */

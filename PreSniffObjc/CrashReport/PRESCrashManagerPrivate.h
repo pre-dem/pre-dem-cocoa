@@ -28,9 +28,6 @@
 
 
 #import "PreSniffObjc.h"
-
-#if HOCKEYSDK_FEATURE_CRASH_REPORTER
-
 #import <CrashReporter/CrashReporter.h>
 
 @class PRESNetworkClient;
@@ -46,10 +43,10 @@
 /**
  Sets the optional `PRESCrashManagerDelegate` delegate.
  
- The delegate is automatically set by using `[PreSniffManager setDelegate:]`. You
+ The delegate is automatically set by using `[PRESManager setDelegate:]`. You
  should not need to set this delegate individually.
  
- @see `[PreSniffManager setDelegate:]`
+ @see `[PRESManager setDelegate:]`
  */
 @property (nonatomic, weak) id delegate;
 
@@ -66,24 +63,11 @@
 
 @property (nonatomic) NSString *lastCrashFilename;
 
-@property (nonatomic, copy, setter = setAlertViewHandler:) BITCustomAlertViewHandler alertViewHandler;
+@property (nonatomic, copy, setter = setAlertViewHandler:) PRESCustomAlertViewHandler alertViewHandler;
 
 @property (nonatomic, strong) NSString *crashesDir;
 
-#if HOCKEYSDK_FEATURE_AUTHENTICATOR
-
-// Only set via BITAuthenticator
-@property (nonatomic, strong) NSString *installationIdentification;
-
-// Only set via BITAuthenticator
-@property (nonatomic) BITAuthenticatorIdentificationType installationIdentificationType;
-
-// Only set via BITAuthenticator
-@property (nonatomic) BOOL installationIdentified;
-
-#endif /* HOCKEYSDK_FEATURE_AUTHENTICATOR */
-
-- (instancetype)initWithAppIdentifier:(NSString *)appIdentifier appEnvironment:(BITEnvironment)environment hockeyAppClient:(PRESNetworkClient *)hockeyAppClient NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithAppIdentifier:(NSString *)appIdentifier appEnvironment:(PRESEnvironment)environment hockeyAppClient:(PRESNetworkClient *)hockeyAppClient NS_DESIGNATED_INITIALIZER;
 
 - (void)cleanCrashReports;
 
@@ -108,6 +92,3 @@
 - (void)leavingAppSafely;
 
 @end
-
-
-#endif /* HOCKEYSDK_FEATURE_CRASH_REPORTER */

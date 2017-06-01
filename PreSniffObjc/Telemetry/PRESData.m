@@ -6,7 +6,7 @@
 
 ///
 /// Adds all members of this class to a dictionary
-/// @param dictionary to which the members of this class will be added.
+/// @return dictionary to which the members of this class will be added.
 ///
 - (NSDictionary *)serializeToDictionary {
     NSMutableDictionary *dict = [super serializeToDictionary].mutableCopy;
@@ -14,7 +14,7 @@
     if ([NSJSONSerialization isValidJSONObject:baseDataDict]) {
         [dict setObject:baseDataDict forKey:@"baseData"];
     } else {
-        BITHockeyLogError(@"[PreSniffSDK] Some of the telemetry data was not NSJSONSerialization compatible and could not be serialized!");
+        PRESLogError(@"[PreSniffSDK] Some of the telemetry data was not NSJSONSerialization compatible and could not be serialized!");
     }
     return dict;
 }
@@ -22,17 +22,17 @@
 #pragma mark - NSCoding
 
 - (instancetype)initWithCoder:(NSCoder *)coder {
-  self = [super initWithCoder:coder];
-  if(self) {
-    _baseData = [coder decodeObjectForKey:@"self.baseData"];
-  }
-
-  return self;
+    self = [super initWithCoder:coder];
+    if(self) {
+        _baseData = [coder decodeObjectForKey:@"self.baseData"];
+    }
+    
+    return self;
 }
 
 - (void)encodeWithCoder:(NSCoder *)coder {
-  [super encodeWithCoder:coder];
-  [coder encodeObject:self.baseData forKey:@"self.baseData"];
+    [super encodeWithCoder:coder];
+    [coder encodeObject:self.baseData forKey:@"self.baseData"];
 }
 
 

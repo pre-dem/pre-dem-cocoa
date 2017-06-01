@@ -1,14 +1,11 @@
 #import <Foundation/Foundation.h>
-#import "PreSniffObjcFeatureConfig.h"
-
-#if HOCKEYSDK_FEATURE_METRICS
 
 @class PRESConfiguration;
 @class PRESTelemetryData;
 @class PRESTelemetryContext;
 @class PRESPersistence;
 
-#import "PreSniffSDKNullability.h"
+#import "PRESNullability.h"
 NS_ASSUME_NONNULL_BEGIN
 
 FOUNDATION_EXPORT char *PRESSafeJsonEventsString;
@@ -40,5 +37,3 @@ FOUNDATION_EXPORT char *PRESSafeJsonEventsString;
 @end
 
 NS_ASSUME_NONNULL_END
-
-#endif /* HOCKEYSDK_FEATURE_METRICS */

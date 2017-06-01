@@ -32,8 +32,7 @@
  Provides support to add binary attachments to crash reports and feedback messages
  
  This is used by `[PRESCrashManagerDelegate attachmentForCrashManager:]`,
- `[BITFeedbackComposeViewController prepareWithItems:]` and
- `[BITFeedbackManager showFeedbackComposeViewWithPreparedItems:]`
+ `[PRESFeedbackComposeViewController prepareWithItems:]`
  */
 @interface PRESAttachment : NSObject<NSCoding>
 
