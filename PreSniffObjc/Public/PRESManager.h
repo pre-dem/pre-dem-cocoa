@@ -141,6 +141,73 @@ typedef void (^PRESNetDiagCompleteHandler)(PRESNetDiagResult* result);
  */
 - (void)startManager;
 
+/**
+ *  diagnose current network environment
+ *
+ *  @param host     the end point you want this diagnose action perform with
+ *  @param complete diagnose result can be retrieved from the block
+ */
+- (void)diagnose:(NSString *)host
+        complete:(PRESNetDiagCompleteHandler)complete;
+
+/**
+ Set a custom block that handles all the log messages that are emitted from the SDK.
+ 
+ You can use this to reroute the messages that would normally be logged by `NSLog();`
+ to your own custom logging framework.
+ 
+ An example of how to do this with NSLogger:
+ 
+ ```
+ [[PRESManager sharedPRESManager] setLogHandler:^(PRESLogMessageProvider messageProvider, PRESLogLevel logLevel, const char *file, const char *function, uint line) {
+ LogMessageRawF(file, (int)line, function, @"PreSniffObjc", (int)logLevel-1, messageProvider());
+ }];
+ ```
+ 
+ or with CocoaLumberjack:
+ 
+ ```
+ [[PRESManager sharedPRESManager] setLogHandler:^(PRESLogMessageProvider messageProvider, PRESLogLevel logLevel, const char *file, const char *function, uint line) {
+ [DDLog log:YES message:messageProvider() level:ddLogLevel flag:(DDLogFlag)(1 << (logLevel-1)) context:CocoaLumberjackContext file:file function:function line:line tag:nil];
+ }];
+ ```
+ 
+ @param logHandler The block of type PRESLogHandler that will process all logged messages.
+ */
+- (void)setLogHandler:(PRESLogHandler)logHandler;
+
+
+///-----------------------------------------------------------------------------
+/// @name Integration test
+///-----------------------------------------------------------------------------
+
+/**
+ Pings the server with the PreSniff app identifiers used for initialization
+ 
+ Call this method once for debugging purposes to test if your SDK setup code
+ reaches the server successfully.
+ 
+ Once invoked, check the apps page on PreSniff for a verification.
+ 
+ If you setup the SDK with a beta and live identifier, a call to both app IDs will be done.
+ 
+ This call is ignored if the app is running in the App Store!.
+ */
+- (void)testIdentifier;
+
+///-----------------------------------------------------------------------------
+/// @name SDK meta data
+///-----------------------------------------------------------------------------
+
+/**
+ Returns the SDK Version (CFBundleShortVersionString).
+ */
+- (NSString *)version;
+
+/**
+ Returns the SDK Build (CFBundleVersion) as a string.
+ */
+- (NSString *)build;
 
 #pragma mark - Public Properties
 
@@ -280,54 +347,6 @@ typedef void (^PRESNetDiagCompleteHandler)(PRESNetDiagResult* result);
  */
 @property (nonatomic, assign) PRESLogLevel logLevel;
 
-/**
- Set a custom block that handles all the log messages that are emitted from the SDK.
- 
- You can use this to reroute the messages that would normally be logged by `NSLog();`
- to your own custom logging framework.
- 
- An example of how to do this with NSLogger:
- 
- ```
- [[PRESManager sharedPRESManager] setLogHandler:^(PRESLogMessageProvider messageProvider, PRESLogLevel logLevel, const char *file, const char *function, uint line) {
- LogMessageRawF(file, (int)line, function, @"PreSniffObjc", (int)logLevel-1, messageProvider());
- }];
- ```
- 
- or with CocoaLumberjack:
- 
- ```
- [[PRESManager sharedPRESManager] setLogHandler:^(PRESLogMessageProvider messageProvider, PRESLogLevel logLevel, const char *file, const char *function, uint line) {
- [DDLog log:YES message:messageProvider() level:ddLogLevel flag:(DDLogFlag)(1 << (logLevel-1)) context:CocoaLumberjackContext file:file function:function line:line tag:nil];
- }];
- ```
- 
- @param logHandler The block of type PRESLogHandler that will process all logged messages.
- */
-- (void)setLogHandler:(PRESLogHandler)logHandler;
-
-
-///-----------------------------------------------------------------------------
-/// @name Integration test
-///-----------------------------------------------------------------------------
-
-/**
- Pings the server with the PreSniff app identifiers used for initialization
- 
- Call this method once for debugging purposes to test if your SDK setup code
- reaches the server successfully.
- 
- Once invoked, check the apps page on PreSniff for a verification.
- 
- If you setup the SDK with a beta and live identifier, a call to both app IDs will be done.
- 
- This call is ignored if the app is running in the App Store!.
- */
-- (void)testIdentifier;
-
-- (void)diagnose:(NSString *)host
-        complete:(PRESNetDiagCompleteHandler)complete;
-
 
 ///-----------------------------------------------------------------------------
 /// @name Additional meta data
@@ -403,21 +422,6 @@ typedef void (^PRESNetDiagCompleteHandler)(PRESNetDiagResult* result);
  @see [PRESManagerDelegate userEmailForPRESManager:componentManager:]
  */
 @property (nonatomic, copy, nullable) NSString *userEmail;
-
-
-///-----------------------------------------------------------------------------
-/// @name SDK meta data
-///-----------------------------------------------------------------------------
-
-/**
- Returns the SDK Version (CFBundleShortVersionString).
- */
-- (NSString *)version;
-
-/**
- Returns the SDK Build (CFBundleVersion) as a string.
- */
-- (NSString *)build;
 
 @end
 

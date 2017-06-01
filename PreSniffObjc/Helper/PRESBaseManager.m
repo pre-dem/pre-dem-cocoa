@@ -53,16 +53,7 @@
 
 - (instancetype)init {
     if ((self = [super init])) {
-        _serverURL = PRES_URL;
-        
-        if ([self isPreiOS7Environment]) {
-            _barStyle = UIBarStyleBlackOpaque;
-            self.navigationBarTintColor = PRES_RGBCOLOR(25, 25, 25);
-        } else {
-            _barStyle = UIBarStyleDefault;
-        }
-        _modalPresentationStyle = UIModalPresentationFormSheet;
-        
+        _serverURL = PRES_URL;        
         NSLocale *enUSPOSIXLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
         _rfc3339Formatter = [[NSDateFormatter alloc] init];
         [_rfc3339Formatter setLocale:enUSPOSIXLocale];
@@ -89,10 +80,6 @@
 
 - (NSString *)encodedAppIdentifier {
     return pres_encodeAppIdentifier(_appIdentifier);
-}
-
-- (BOOL)isPreiOS7Environment {
-    return pres_isPreiOS7Environment();
 }
 
 - (NSString *)getDevicePlatform {
@@ -138,57 +125,6 @@
     }
     
     return @"";
-}
-
-- (UIWindow *)findVisibleWindow {
-    UIWindow *visibleWindow = [UIApplication sharedApplication].keyWindow;
-    
-    if (!(visibleWindow.hidden)) {
-        return visibleWindow;
-    }
-    
-    // if the rootViewController property (available >= iOS 4.0) of the main window is set, we present the modal view controller on top of the rootViewController
-    NSArray *windows = [[UIApplication sharedApplication] windows];
-    for (UIWindow *window in windows) {
-        if (!window.hidden && !visibleWindow) {
-            visibleWindow = window;
-        }
-        if ([UIWindow instancesRespondToSelector:@selector(rootViewController)]) {
-            if (!(window.hidden) && ([window rootViewController])) {
-                visibleWindow = window;
-                PRESLogDebug(@"INFO: UIWindow with rootViewController found: %@", visibleWindow);
-                break;
-            }
-        }
-    }
-    
-    return visibleWindow;
-}
-
-/**
- * Provide a custom UINavigationController with customized appearance settings
- *
- * @param viewController The root viewController
- * @param modalPresentationStyle The modal presentation style
- *
- * @return A UINavigationController
- */
-- (UINavigationController *)customNavigationControllerWithRootViewController:(UIViewController *)viewController presentationStyle:(UIModalPresentationStyle)modalPresentationStyle {
-    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:viewController];
-    navController.navigationBar.barStyle = self.barStyle;
-    if (self.navigationBarTintColor) {
-        navController.navigationBar.tintColor = self.navigationBarTintColor;
-    } else {
-        // in case of iOS 7 we overwrite the tint color on the navigation bar
-        if (![self isPreiOS7Environment]) {
-            if ([UIWindow instancesRespondToSelector:NSSelectorFromString(@"tintColor")]) {
-                [navController.navigationBar setTintColor:PRES_RGBCOLOR(0, 122, 255)];
-            }
-        }
-    }
-    navController.modalPresentationStyle = self.modalPresentationStyle;
-    
-    return navController;
 }
 
 - (BOOL)addStringValueToKeychain:(NSString *)stringValue forKey:(NSString *)key {
