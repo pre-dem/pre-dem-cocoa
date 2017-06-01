@@ -6,8 +6,8 @@
 //
 //
 
-#ifndef PreSniffObjc_HockeyEnums_h
-#define PreSniffObjc_HockeyEnums_h
+#ifndef PreSniffObjc_Enums_h
+#define PreSniffObjc_Enums_h
 
 /**
  *  PreSniffObjc Log Levels
@@ -184,4 +184,4 @@ typedef NS_ENUM(NSInteger, PRESErrorReason) {
     PRESErrorUnknown
 };
 
-#endif /* PreSniffObjc_HockeyEnums_h */
+#endif /* PreSniffObjc_Enums_h */

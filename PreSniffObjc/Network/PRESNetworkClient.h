@@ -40,7 +40,7 @@ extern NSString * const kPRESNetworkClientBoundary;
 /**
  *	designated initializer
  *
- *	@param	baseURL	the baseURL of the HockeyApp instance
+ *	@param	baseURL	the baseURL of the PreSniff instance
  */
 - (instancetype) initWithBaseURL:(NSURL*) baseURL;
 

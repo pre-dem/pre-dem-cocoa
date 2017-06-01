@@ -93,7 +93,7 @@ typedef struct {
         if ([environment isEqualToString:@"liveIdentifier"]) {
             PRESLogWarning(@"[PreSniffObjc] WARNING: The liveIdentifier is invalid! The SDK will be disabled when deployed to the App Store without setting a valid app identifier!");
         } else {
-            PRESLogError(@"[PreSniffObjc] ERROR: The %@ is invalid! Please use the HockeyApp app identifier you find on the apps website on HockeyApp! The SDK is disabled!", environment);
+            PRESLogError(@"[PreSniffObjc] ERROR: The %@ is invalid! Please use the PreSniff app identifier you find on the apps website on PreSniff! The SDK is disabled!", environment);
         }
     }
 }
@@ -195,7 +195,7 @@ typedef struct {
         _installString = pres_appAnonID(YES);
     }
     
-    PRESLogDebug(@"INFO: Starting HockeyManager");
+    PRESLogDebug(@"INFO: Starting PRESManager");
     _startManagerIsInvoked = YES;
     
     // start CrashManager
@@ -469,8 +469,8 @@ typedef struct {
 
 - (BOOL)shouldUseLiveIdentifier {
     BOOL delegateResult = NO;
-    if ([_delegate respondsToSelector:@selector(shouldUseLiveIdentifierForHockeyManager:)]) {
-        delegateResult = [(NSObject <PRESManagerDelegate>*)_delegate shouldUseLiveIdentifierForHockeyManager:self];
+    if ([_delegate respondsToSelector:@selector(shouldUseLiveIdentifierForPRESManager:)]) {
+        delegateResult = [(NSObject <PRESManagerDelegate>*)_delegate shouldUseLiveIdentifierForPRESManager:self];
     }
     
     return (delegateResult) || (_appEnvironment == PRESEnvironmentAppStore);

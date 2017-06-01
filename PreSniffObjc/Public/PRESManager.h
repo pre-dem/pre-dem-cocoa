@@ -62,10 +62,10 @@ typedef void (^PRESNetDiagCompleteHandler)(PRESNetDiagResult* result);
 /**
  Initializes the manager with a particular app identifier
  
- Initialize the manager with a HockeyApp app identifier.
+ Initialize the manager with a PreSniff app identifier.
  
  [[PRESManager sharedPRESManager]
- configureWithIdentifier:@"<AppIdentifierFromHockeyApp>"];
+ configureWithIdentifier:@"<AppIdentifierFromPreSniff>"];
  
  @see configureWithIdentifier:delegate:
  @see configureWithBetaIdentifier:liveIdentifier:delegate:
@@ -78,12 +78,12 @@ typedef void (^PRESNetDiagCompleteHandler)(PRESNetDiagResult* result);
 /**
  Initializes the manager with a particular app identifier and delegate
  
- Initialize the manager with a HockeyApp app identifier and assign the class that
+ Initialize the manager with a PreSniff app identifier and assign the class that
  implements the optional protocols `PRESManagerDelegate`, `PRESCrashManagerDelegate` or
  `PRESUpdateManagerDelegate`.
  
  [[PRESManager sharedPRESManager]
- configureWithIdentifier:@"<AppIdentifierFromHockeyApp>"
+ configureWithIdentifier:@"<AppIdentifierFromPreSniff>"
  delegate:nil];
  
  @see configureWithIdentifier:
@@ -102,18 +102,18 @@ typedef void (^PRESNetDiagCompleteHandler)(PRESNetDiagResult* result);
 /**
  Initializes the manager with an app identifier for beta, one for live usage and delegate
  
- Initialize the manager with different HockeyApp app identifiers for beta and live usage.
+ Initialize the manager with different PreSniff app identifiers for beta and live usage.
  All modules will automatically detect if the app is running in the App Store and use
  the live app identifier for that. In all other cases it will use the beta app identifier.
  And also assign the class that implements the optional protocols `PRESManagerDelegate`,
  `PRESCrashManagerDelegate` or `PRESUpdateManagerDelegate`
  
  [[PRESManager sharedPRESManager]
- configureWithBetaIdentifier:@"<AppIdentifierForBetaAppFromHockeyApp>"
- liveIdentifier:@"<AppIdentifierForLiveAppFromHockeyApp>"
+ configureWithBetaIdentifier:@"<AppIdentifierForBetaAppFromPreSniff>"
+ liveIdentifier:@"<AppIdentifierForLiveAppFromPreSniff>"
  delegate:nil];
  
- We recommend using one app entry on HockeyApp for your beta versions and another one for
+ We recommend using one app entry on PreSniff for your beta versions and another one for
  your live versions. The reason is that you will have way more beta versions than live
  versions, but on the other side get way more crash reports on the live version. Separating
  them into two different app entries makes it easier to work with the data. In addition
@@ -175,7 +175,7 @@ typedef void (^PRESNetDiagCompleteHandler)(PRESNetDiagResult* result);
 /**
  Defines the server URL to send data to or request data from
  
- By default this is set to the HockeyApp servers and there rarely should be a
+ By default this is set to the PreSniff servers and there rarely should be a
  need to modify that.
  Please be aware that the URL for `PRESMetricsManager` needs to be set separately
  as this class uses a different endpoint!
@@ -254,7 +254,7 @@ typedef void (^PRESNetDiagCompleteHandler)(PRESNetDiagResult* result);
  This property can be used to disable or enable specific funtionality
  only when specific conditions are met.
  That could mean for example, to only enable debug UI elements
- when the app has been installed over HockeyApp but not in the AppStore.
+ when the app has been installed over PreSniff but not in the AppStore.
  
  The underlying enum type at the moment only specifies values for the AppStore,
  TestFlight and Other. Other summarizes several different distribution methods
@@ -335,12 +335,12 @@ typedef void (^PRESNetDiagCompleteHandler)(PRESNetDiagResult* result);
 ///-----------------------------------------------------------------------------
 
 /**
- Pings the server with the HockeyApp app identifiers used for initialization
+ Pings the server with the PreSniff app identifiers used for initialization
  
  Call this method once for debugging purposes to test if your SDK setup code
  reaches the server successfully.
  
- Once invoked, check the apps page on HockeyApp for a verification.
+ Once invoked, check the apps page on PreSniff for a verification.
  
  If you setup the SDK with a beta and live identifier, a call to both app IDs will be done.
  
@@ -376,7 +376,7 @@ typedef void (^PRESNetDiagCompleteHandler)(PRESNetDiagResult* result);
  
  @see userName
  @see userEmail
- @see `[PRESManagerDelegate userIDForHockeyManager:componentManager:]`
+ @see `[PRESManagerDelegate userIDForPRESManager:componentManager:]`
  */
 @property (nonatomic, copy, nullable) NSString *userID;
 
@@ -401,7 +401,7 @@ typedef void (^PRESNetDiagCompleteHandler)(PRESNetDiagResult* result);
  
  @see userID
  @see userEmail
- @see `[PRESManagerDelegate userNameForHockeyManager:componentManager:]`
+ @see `[PRESManagerDelegate userNameForPRESManager:componentManager:]`
  */
 @property (nonatomic, copy, nullable) NSString *userName;
 
@@ -426,7 +426,7 @@ typedef void (^PRESNetDiagCompleteHandler)(PRESNetDiagResult* result);
  
  @see userID
  @see userName
- @see [PRESManagerDelegate userEmailForHockeyManager:componentManager:]
+ @see [PRESManagerDelegate userEmailForPRESManager:componentManager:]
  */
 @property (nonatomic, copy, nullable) NSString *userEmail;
 

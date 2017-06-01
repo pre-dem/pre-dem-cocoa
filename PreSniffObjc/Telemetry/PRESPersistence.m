@@ -11,11 +11,11 @@ static NSString *const kPRESMetaData = @"MetaData";
 static NSString *const kPRESFileBaseString = @"hockey-app-bundle-";
 static NSString *const kPRESFileBaseStringMeta = @"metadata";
 
-static NSString *const kPRESDirectory = @"com.microsoft.HockeyApp";
+static NSString *const kPRESDirectory = @"com.microsoft.PreSniff";
 static NSString *const kPRESTelemetryDirectory = @"Telemetry";
 static NSString *const kPRESMetaDataDirectory = @"MetaData";
 
-static char const *kPRESPersistenceQueueString = "com.microsoft.HockeyApp.persistenceQueue";
+static char const *kPRESPersistenceQueueString = "com.microsoft.PreSniff.persistenceQueue";
 static NSUInteger const PRESDefaultFileCount = 50;
 
 @implementation PRESPersistence {

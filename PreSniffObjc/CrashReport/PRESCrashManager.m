@@ -623,9 +623,9 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
         userID = userIdFromKeychain;
     }
     
-    if ([[PRESManager sharedPRESManager].delegate respondsToSelector:@selector(userIDForHockeyManager:componentManager:)]) {
+    if ([[PRESManager sharedPRESManager].delegate respondsToSelector:@selector(userIDForPRESManager:componentManager:)]) {
         userID = [[PRESManager sharedPRESManager].delegate
-                  userIDForHockeyManager:[PRESManager sharedPRESManager]
+                  userIDForPRESManager:[PRESManager sharedPRESManager]
                   componentManager:self];
     }
     
@@ -641,9 +641,9 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
     // first check the global keychain storage
     NSString *username = [self stringValueFromKeychainForKey:kPRESMetaUserName] ?: @"";
     
-    if ([[PRESManager sharedPRESManager].delegate respondsToSelector:@selector(userNameForHockeyManager:componentManager:)]) {
+    if ([[PRESManager sharedPRESManager].delegate respondsToSelector:@selector(userNameForPRESManager:componentManager:)]) {
         username = [[PRESManager sharedPRESManager].delegate
-                    userNameForHockeyManager:[PRESManager sharedPRESManager]
+                    userNameForPRESManager:[PRESManager sharedPRESManager]
                     componentManager:self] ?: @"";
     }
     
@@ -659,9 +659,9 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
     // first check the global keychain storage
     NSString *useremail = [self stringValueFromKeychainForKey:kPRESMetaUserEmail] ?: @"";
     
-    if ([[PRESManager sharedPRESManager].delegate respondsToSelector:@selector(userEmailForHockeyManager:componentManager:)]) {
+    if ([[PRESManager sharedPRESManager].delegate respondsToSelector:@selector(userEmailForPRESManager:componentManager:)]) {
         useremail = [[PRESManager sharedPRESManager].delegate
-                     userEmailForHockeyManager:[PRESManager sharedPRESManager]
+                     userEmailForPRESManager:[PRESManager sharedPRESManager]
                      componentManager:self] ?: @"";
     }
     
@@ -999,9 +999,9 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
         NSUncaughtExceptionHandler *currentHandler = NSGetUncaughtExceptionHandler();
         
         // If the top level error handler differs from our own, then at least another one was added.
-        // This could cause exception crashes not to be reported to HockeyApp. See log message for details.
+        // This could cause exception crashes not to be reported to PreSniff. See log message for details.
         if (self.exceptionHandler != currentHandler) {
-            PRESLogWarning(@"[PreSniffObjc] WARNING: Another exception handler was added. If this invokes any kind exit() after processing the exception, which causes any subsequent error handler not to be invoked, these crashes will NOT be reported to HockeyApp!");
+            PRESLogWarning(@"[PreSniffObjc] WARNING: Another exception handler was added. If this invokes any kind exit() after processing the exception, which causes any subsequent error handler not to be invoked, these crashes will NOT be reported to PreSniff!");
         }
     }
     
@@ -1024,7 +1024,7 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
                 [self.delegate crashManagerWillShowSubmitCrashReportAlert:self];
             }
             
-            NSString *appName = pres_appName(PRESLocalizedString(@"HockeyAppNamePlaceholder"));
+            NSString *appName = pres_appName(PRESLocalizedString(@"PreSniffNamePlaceholder"));
             NSString *alertDescription = [NSString stringWithFormat:PRESLocalizedString(@"CrashDataFoundAnonymousDescription"), appName];
             
             // the crash report is not anonymous any more if username or useremail are not nil
@@ -1595,7 +1595,7 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
             } else if (statusCode >= 200 && statusCode < 400) {
                 [self cleanCrashReportWithFilename:filename];
                 
-                // HockeyApp uses PList XML format
+                // PreSniff uses PList XML format
                 NSMutableDictionary *response = [NSPropertyListSerialization propertyListWithData:responseData
                                                                                           options:NSPropertyListMutableContainersAndLeaves
                                                                                            format:nil

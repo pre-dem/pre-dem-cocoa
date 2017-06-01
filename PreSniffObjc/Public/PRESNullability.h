@@ -6,8 +6,8 @@
 //
 //
 
-#ifndef PreSniffObjc_HockeyNullability_h
-#define PreSniffObjc_HockeyNullability_h
+#ifndef PreSniffObjc_Nullability_h
+#define PreSniffObjc_Nullability_h
 
 // Define nullability fallback for backwards compatibility
 #if !__has_feature(nullability)
@@ -32,4 +32,4 @@
 #define NS_ASSUME_NONNULL_END _Pragma("clang assume_nonnull end")
 #endif
 
-#endif /* PreSniffObjc_HockeyNullability_h */
+#endif /* PreSniffObjc_Nullability_h */
