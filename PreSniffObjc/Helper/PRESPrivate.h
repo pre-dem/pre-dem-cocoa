@@ -35,14 +35,14 @@
 #ifndef PreSniffObjc_PRESPrivate_h
 #define PreSniffObjc_PRESPrivate_h
 
-#define PRESHOCKEY_NAME @"PreSniffObjc"
-#define PRESHOCKEY_IDENTIFIER @"net.hockeyapp.sdk.ios"
-#define PRESHOCKEY_CRASH_SETTINGS @"PRESCrashManager.plist"
-#define PRESHOCKEY_CRASH_ANALYZER @"PRESCrashManager.analyzer"
+#define PRES_NAME @"PreSniffObjc"
+#define PRES_IDENTIFIER @"net.hockeyapp.sdk.ios"
+#define PRES_CRASH_SETTINGS @"PRESCrashManager.plist"
+#define PRES_CRASH_ANALYZER @"PRESCrashManager.analyzer"
 
-#define PRESHOCKEY_FEEDBACK_SETTINGS @"PRESFeedbackManager.plist"
+#define PRES_FEEDBACK_SETTINGS @"PRESFeedbackManager.plist"
 
-#define PRESHOCKEY_USAGE_DATA @"PRESUpdateManager.plist"
+#define PRES_USAGE_DATA @"PRESUpdateManager.plist"
 
 #define kPRESMetaUserName  @"PRESMetaUserName"
 #define kPRESMetaUserEmail @"PRESMetaUserEmail"
@@ -63,10 +63,10 @@
 #define kPRESStoreUpdateLastUUID              @"PRESStoreUpdateLastUUID"
 #define kPRESStoreUpdateIgnoreVersion         @"PRESStoreUpdateIgnoredVersion"
 
-#define PRESHOCKEY_INTEGRATIONFLOW_TIMESTAMP  @"PRESIntegrationFlowStartTimestamp"
+#define PRES_INTEGRATIONFLOW_TIMESTAMP  @"PRESIntegrationFlowStartTimestamp"
 
-#define PRESHOCKEYSDK_BUNDLE @"PreSniffObjcResources.bundle"
-#define PRESHOCKEYSDK_URL @"https://sdk.hockeyapp.net/"
+#define PRES_BUNDLE @"PreSniffObjcResources.bundle"
+#define PRES_URL @"https://sdk.hockeyapp.net/"
 
 #define PRES_RGBCOLOR(r,g,b) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:1]
 

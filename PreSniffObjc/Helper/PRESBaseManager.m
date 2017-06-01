@@ -53,7 +53,7 @@
 
 - (instancetype)init {
     if ((self = [super init])) {
-        _serverURL = PRESHOCKEYSDK_URL;
+        _serverURL = PRES_URL;
         
         if ([self isPreiOS7Environment]) {
             _barStyle = UIBarStyleBlackOpaque;

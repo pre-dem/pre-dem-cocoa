@@ -43,7 +43,7 @@ NSBundle *PRESBundle(void) {
     static dispatch_once_t predicate;
     dispatch_once(&predicate, ^{
         NSString* mainBundlePath = [[NSBundle bundleForClass:[PRESManager class]] resourcePath];
-        NSString* frameworkBundlePath = [mainBundlePath stringByAppendingPathComponent:PRESHOCKEYSDK_BUNDLE];
+        NSString* frameworkBundlePath = [mainBundlePath stringByAppendingPathComponent:PRES_BUNDLE];
         bundle = [NSBundle bundleWithPath:frameworkBundlePath];
     });
     return bundle;

@@ -83,7 +83,7 @@ NSString *pres_settingsDir(void) {
         
         // temporary directory for crashes grabbed from PLCrashReporter
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-        settingsDir = [[paths objectAtIndex:0] stringByAppendingPathComponent:PRESHOCKEY_IDENTIFIER];
+        settingsDir = [[paths objectAtIndex:0] stringByAppendingPathComponent:PRES_IDENTIFIER];
         
         if (![fileManager fileExistsAtPath:settingsDir]) {
             NSDictionary *attributes = [NSDictionary dictionaryWithObject: [NSNumber numberWithUnsignedLong: 0755] forKey: NSFilePosixPermissions];
@@ -818,7 +818,7 @@ UIImage *pres_addGlossToImage(UIImage *inputImage) {
     UIGraphicsBeginImageContextWithOptions(inputImage.size, NO, 0.0);
     
     [inputImage drawAtPoint:CGPointZero];
-    UIImage *iconGradient = pres_imageNamed(@"IconGradient.png", PRESHOCKEYSDK_BUNDLE);
+    UIImage *iconGradient = pres_imageNamed(@"IconGradient.png", PRES_BUNDLE);
     [iconGradient drawInRect:CGRectMake(0, 0, inputImage.size.width, inputImage.size.height) blendMode:kCGBlendModeNormal alpha:0.5];
     
     UIImage *result = UIGraphicsGetImageFromCurrentImageContext();

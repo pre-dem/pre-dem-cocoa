@@ -229,12 +229,12 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
         }
         
         _crashesDir = pres_settingsDir();
-        _settingsFile = [_crashesDir stringByAppendingPathComponent:PRESHOCKEY_CRASH_SETTINGS];
-        _analyzerInProgressFile = [_crashesDir stringByAppendingPathComponent:PRESHOCKEY_CRASH_ANALYZER];
+        _settingsFile = [_crashesDir stringByAppendingPathComponent:PRES_CRASH_SETTINGS];
+        _analyzerInProgressFile = [_crashesDir stringByAppendingPathComponent:PRES_CRASH_ANALYZER];
         
         
         if (!PRESBundle() && !pres_isRunningInAppExtension()) {
-            PRESLogWarning(@"[PreSniffObjc] WARNING: %@ is missing, will send reports automatically!", PRESHOCKEYSDK_BUNDLE);
+            PRESLogWarning(@"[PreSniffObjc] WARNING: %@ is missing, will send reports automatically!", PRES_BUNDLE);
         }
     }
     return self;
@@ -1525,7 +1525,7 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
     NSMutableData *postBody =  [NSMutableData data];
     
     //  [postBody appendData:[[NSString stringWithFormat:@"\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
-    [postBody appendData:[PRESNetworkClient dataWithPostValue:PRESHOCKEY_NAME
+    [postBody appendData:[PRESNetworkClient dataWithPostValue:PRES_NAME
                                                        forKey:@"sdk"
                                                      boundary:boundary]];
     

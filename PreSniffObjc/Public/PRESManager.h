@@ -79,8 +79,7 @@ typedef void (^PRESNetDiagCompleteHandler)(PRESNetDiagResult* result);
  Initializes the manager with a particular app identifier and delegate
  
  Initialize the manager with a PreSniff app identifier and assign the class that
- implements the optional protocols `PRESManagerDelegate`, `PRESCrashManagerDelegate` or
- `PRESUpdateManagerDelegate`.
+ implements the optional protocols `PRESManagerDelegate`, `PRESCrashManagerDelegate`.
  
  [[PRESManager sharedPRESManager]
  configureWithIdentifier:@"<AppIdentifierFromPreSniff>"
@@ -91,8 +90,6 @@ typedef void (^PRESNetDiagCompleteHandler)(PRESNetDiagResult* result);
  @see startManager
  @see PRESManagerDelegate
  @see PRESCrashManagerDelegate
- @see PRESUpdateManagerDelegate
- @see PRESFeedbackManagerDelegate
  @param appIdentifier The app identifier that should be used.
  @param delegate `nil` or the class implementing the option protocols
  */
@@ -106,7 +103,7 @@ typedef void (^PRESNetDiagCompleteHandler)(PRESNetDiagResult* result);
  All modules will automatically detect if the app is running in the App Store and use
  the live app identifier for that. In all other cases it will use the beta app identifier.
  And also assign the class that implements the optional protocols `PRESManagerDelegate`,
- `PRESCrashManagerDelegate` or `PRESUpdateManagerDelegate`
+ `PRESCrashManagerDelegate`
  
  [[PRESManager sharedPRESManager]
  configureWithBetaIdentifier:@"<AppIdentifierForBetaAppFromPreSniff>"
@@ -127,8 +124,6 @@ typedef void (^PRESNetDiagCompleteHandler)(PRESNetDiagResult* result);
  @see startManager
  @see PRESManagerDelegate
  @see PRESCrashManagerDelegate
- @see PRESUpdateManagerDelegate
- @see PRESFeedbackManagerDelegate
  @param betaIdentifier The app identifier for the _non_ app store (beta) configurations
  @param liveIdentifier The app identifier for the app store configurations.
  @param delegate `nil` or the class implementing the optional protocols
@@ -166,8 +161,6 @@ typedef void (^PRESNetDiagCompleteHandler)(PRESNetDiagResult* result);
  
  @see PRESManagerDelegate
  @see PRESCrashManagerDelegate
- @see PRESUpdateManagerDelegate
- @see PRESFeedbackManagerDelegate
  */
 @property (nonatomic, weak, nullable) id<PRESManagerDelegate> delegate;
 
@@ -283,9 +276,6 @@ typedef void (^PRESNetDiagCompleteHandler)(PRESNetDiagResult* result);
  
  This will cause the app to generate a new `installString` value every time the
  app is cold started.
- 
- This property is only considered in App Store Environment, since it would otherwise
- affect the `PRESUpdateManager` and `PRESAuthenticator` functionalities!
  
  @warning This property needs to be set before calling `startManager`
  

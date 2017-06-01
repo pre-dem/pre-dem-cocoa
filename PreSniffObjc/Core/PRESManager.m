@@ -115,7 +115,7 @@ typedef struct {
 
 - (instancetype)init {
     if ((self = [super init])) {
-        _serverURL = PRESHOCKEYSDK_URL;
+        _serverURL = PRES_URL;
         _delegate = nil;
         _managersInitialized = NO;
         
@@ -248,7 +248,7 @@ typedef struct {
         _serverURL = [aServerURL copy];
         
         if (_hockeyAppClient) {
-            _hockeyAppClient.baseURL = [NSURL URLWithString:_serverURL ?: PRESHOCKEYSDK_URL];
+            _hockeyAppClient.baseURL = [NSURL URLWithString:_serverURL ?: PRES_URL];
         }
     }
 }
@@ -365,7 +365,7 @@ typedef struct {
 }
 
 - (NSString *)integrationFlowTimeString {
-    NSString *timeString = [[NSBundle mainBundle] objectForInfoDictionaryKey:PRESHOCKEY_INTEGRATIONFLOW_TIMESTAMP];
+    NSString *timeString = [[NSBundle mainBundle] objectForInfoDictionaryKey:PRES_INTEGRATIONFLOW_TIMESTAMP];
     
     return timeString;
 }
@@ -398,7 +398,7 @@ typedef struct {
     PRESLogDebug(@"INFO: Sending integration workflow ping to %@", integrationPath);
     
     NSDictionary *params = @{@"timestamp": timeString,
-                             @"sdk": PRESHOCKEY_NAME,
+                             @"sdk": PRES_NAME,
                              @"sdk_version": [PRESVersion getSDKVersion],
                              @"bundle_version": [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"]
                              };
