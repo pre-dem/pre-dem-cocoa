@@ -157,12 +157,12 @@ PRESConfigManagerDelegate
     
     if (![self isSetUpOnMainThread]) return;
     
-    PRESLogDebug(@"INFO: Starting PRESManager");
+    PRESLogDebug(@"Starting PRESManager");
     _startManagerIsInvoked = YES;
     
     // start CrashManager
     if (![self isCrashManagerDisabled]) {
-        PRESLogDebug(@"INFO: Start CrashManager");
+        PRESLogDebug(@"Start CrashManager");
         
         [_crashManager startManager];
     }
@@ -174,7 +174,7 @@ PRESConfigManagerDelegate
     
     // start MetricsManager
     if (!self.isMetricsManagerDisabled) {
-        PRESLogDebug(@"INFO: Start MetricsManager");
+        PRESLogDebug(@"Start MetricsManager");
         [_metricsManager startManager];
     }
     
@@ -269,7 +269,7 @@ PRESConfigManagerDelegate
     
     if (!success) {
         NSString *errorDescription = [error description] ?: @"";
-        PRESLogError(@"ERROR: Couldn't %@ key %@ in the keychain. %@", updateType, key, errorDescription);
+        PRESLogError(@"Couldn't %@ key %@ in the keychain. %@", updateType, key, errorDescription);
     }
 }
 
@@ -315,16 +315,16 @@ PRESConfigManagerDelegate
 - (void)logPingMessageForStatusCode:(NSInteger)statusCode {
     switch (statusCode) {
         case 400:
-            PRESLogError(@"ERROR: App ID not found");
+            PRESLogError(@"App ID not found");
             break;
         case 201:
-            PRESLogDebug(@"INFO: Ping accepted.");
+            PRESLogDebug(@"Ping accepted.");
             break;
         case 200:
-            PRESLogDebug(@"INFO: Ping accepted. Server already knows.");
+            PRESLogDebug(@"Ping accepted. Server already knows.");
             break;
         default:
-            PRESLogError(@"ERROR: Unknown error");
+            PRESLogError(@"Unknown error");
             break;
     }
 }
@@ -338,7 +338,7 @@ PRESConfigManagerDelegate
 }
 
 - (BOOL)isSetUpOnMainThread {
-    NSString *errorString = @"ERROR: PreSniffObjc has to be setup on the main thread!";
+    NSString *errorString = @"PreSniffObjc has to be setup on the main thread!";
     
     if (!NSThread.isMainThread) {
         if (self.appEnvironment == PRESEnvironmentAppStore) {
@@ -376,14 +376,14 @@ PRESConfigManagerDelegate
     _startManagerIsInvoked = NO;
     
     if (_validAppIdentifier) {
-        PRESLogDebug(@"INFO: Setup CrashManager");
+        PRESLogDebug(@"Setup CrashManager");
         _crashManager = [[PRESCrashManager alloc] initWithAppIdentifier:_appIdentifier
                                                          appEnvironment:_appEnvironment
                                                         hockeyAppClient:[self hockeyAppClient]];
         _crashManager.delegate = _delegate;
         
         
-        PRESLogDebug(@"INFO: Setup MetricsManager");
+        PRESLogDebug(@"Setup MetricsManager");
         _metricsManager = [[PRESMetricsManager alloc] initWithAppIdentifier:_appIdentifier appEnvironment:_appEnvironment];
         
         _managersInitialized = YES;

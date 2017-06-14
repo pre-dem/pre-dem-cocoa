@@ -911,7 +911,7 @@ NSString *const PRESXamarinStackTraceDelimiter = @"Xamarin Exception Stack:";
         NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"(/Users/[^/]+/)" options:0 error:&error];
         anonymizedProcessPath = [regex stringByReplacingMatchesInString:path options:0 range:NSMakeRange(0, [path length]) withTemplate:@"/Users/USER/"];
         if (error) {
-            PRESLogError(@"ERROR: String replacing failed - %@", error.localizedDescription);
+            PRESLogError(@"String replacing failed - %@", error.localizedDescription);
         }
     }
     else if(([path length] > 0) && (![path containsString:@"Users"])) {

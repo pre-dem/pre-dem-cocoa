@@ -53,7 +53,7 @@ static NSUInteger const PRESDefaultFileCount = 50;
             typeof(self) strongSelf = weakSelf;
             BOOL success = [bundle writeToFile:fileURL atomically:YES];
             if (success) {
-                PRESLogDebug(@"INFO: Wrote bundle to %@", fileURL);
+                PRESLogDebug(@"Wrote bundle to %@", fileURL);
                 [strongSelf sendBundleSavedNotification];
             }
             else {
@@ -100,7 +100,7 @@ static NSUInteger const PRESDefaultFileCount = 50;
     if ([bundle isKindOfClass:NSDictionary.class]) {
         return (NSDictionary *) bundle;
     }
-    PRESLogDebug(@"INFO: The context meta data file could not be loaded.");
+    PRESLogDebug(@"The context meta data file could not be loaded.");
     return [NSDictionary dictionary];
 }
 
@@ -135,11 +135,11 @@ static NSUInteger const PRESDefaultFileCount = 50;
                 PRESLogError(@"Error deleting file at path %@", path);
             }
             else {
-                PRESLogDebug(@"INFO: Successfully deleted file at path %@", path);
+                PRESLogDebug(@"Successfully deleted file at path %@", path);
                 [strongSelf.requestedBundlePaths removeObject:path];
             }
         } else {
-            PRESLogDebug(@"INFO: Empty path, nothing to delete");
+            PRESLogDebug(@"Empty path, nothing to delete");
         }
     });
     
@@ -193,14 +193,14 @@ static NSUInteger const PRESDefaultFileCount = 50;
         
         // Create PreSniffSDK folder if needed
         if (![fileManager createDirectoryAtURL:appURL withIntermediateDirectories:YES attributes:nil error:&error]) {
-            PRESLogError(@"ERROR: %@", error.localizedDescription);
+            PRESLogError(@"%@", error.localizedDescription);
             return;
         }
         
         // Create metadata subfolder
         NSURL *metaDataURL = [appURL URLByAppendingPathComponent:kPRESMetaDataDirectory];
         if (![fileManager createDirectoryAtURL:metaDataURL withIntermediateDirectories:YES attributes:nil error:&error]) {
-            PRESLogError(@"ERROR: %@", error.localizedDescription);
+            PRESLogError(@"%@", error.localizedDescription);
             return;
         }
         
@@ -211,7 +211,7 @@ static NSUInteger const PRESDefaultFileCount = 50;
         //No need to check if the directory already exists.
         NSURL *telemetryURL = [appURL URLByAppendingPathComponent:kPRESTelemetryDirectory];
         if (![fileManager createDirectoryAtURL:telemetryURL withIntermediateDirectories:YES attributes:nil error:&error]) {
-            PRESLogError(@"ERROR: %@", error.localizedDescription);
+            PRESLogError(@"%@", error.localizedDescription);
             return;
         }
         
@@ -219,9 +219,9 @@ static NSUInteger const PRESDefaultFileCount = 50;
         if (![appURL setResourceValue:@YES
                                forKey:NSURLIsExcludedFromBackupKey
                                 error:&error]) {
-            PRESLogError(@"ERROR: Error excluding %@ from backup %@", appURL.lastPathComponent, error.localizedDescription);
+            PRESLogError(@"Error excluding %@ from backup %@", appURL.lastPathComponent, error.localizedDescription);
         } else {
-            PRESLogDebug(@"INFO: Exclude %@ from backup", appURL);
+            PRESLogDebug(@"Exclude %@ from backup", appURL);
         }
         
         _directorySetupComplete = YES;
