@@ -1,3 +1,26 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Demo User Guide](#demo-user-guide)
+  - [http 性能统计](#http-%E6%80%A7%E8%83%BD%E7%BB%9F%E8%AE%A1)
+    - [功能](#%E5%8A%9F%E8%83%BD)
+    - [实现原理](#%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86)
+    - [使用方法](#%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95)
+    - [注意事项](#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9)
+  - [crash 日志收集上报](#crash-%E6%97%A5%E5%BF%97%E6%94%B6%E9%9B%86%E4%B8%8A%E6%8A%A5)
+    - [功能](#%E5%8A%9F%E8%83%BD-1)
+    - [实现原理](#%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86-1)
+    - [使用方法](#%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95-1)
+    - [注意事项](#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9-1)
+  - [网络诊断](#%E7%BD%91%E7%BB%9C%E8%AF%8A%E6%96%AD)
+    - [功能](#%E5%8A%9F%E8%83%BD-2)
+    - [实现原理](#%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86-2)
+    - [使用方法](#%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95-2)
+  - [自定义事件](#%E8%87%AA%E5%AE%9A%E4%B9%89%E4%BA%8B%E4%BB%B6)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # Demo User Guide
 
 ## http 性能统计
