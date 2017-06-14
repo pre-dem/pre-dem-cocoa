@@ -146,7 +146,7 @@ PRESConfigManagerDelegate
 - (void)startManager {
     if (!_validAppIdentifier) return;
     if (_startManagerIsInvoked) {
-        PRESLogWarning(@"[PreSniffObjc] Warning: startManager should only be invoked once! This call is ignored.");
+        PRESLogWarning(@"startManager should only be invoked once! This call is ignored.");
         return;
     }
     
@@ -219,7 +219,7 @@ PRESConfigManagerDelegate
 - (void)setDelegate:(id<PRESManagerDelegate>)delegate {
     if (self.appEnvironment != PRESEnvironmentAppStore) {
         if (_startManagerIsInvoked) {
-            PRESLogError(@"[PreSniffObjc] ERROR: The `delegate` property has to be set before calling [[PRESManager sharedPRESManager] startManager] !");
+            PRESLogError(@"The `delegate` property has to be set before calling [[PRESManager sharedPRESManager] startManager] !");
         }
     }
     
@@ -332,7 +332,7 @@ PRESConfigManagerDelegate
 - (void)validateStartManagerIsInvoked {
     if (_validAppIdentifier && (self.appEnvironment != PRESEnvironmentAppStore)) {
         if (!_startManagerIsInvoked) {
-            PRESLogError(@"[PreSniffObjc] ERROR: You did not call [[PRESManager sharedPRESManager] startManager] to startup the PreSniffObjc! Please do so after setting up all properties. The SDK is NOT running.");
+            PRESLogError(@"You did not call [[PRESManager sharedPRESManager] startManager] to startup the PreSniffObjc! Please do so after setting up all properties. The SDK is NOT running.");
         }
     }
 }
@@ -365,7 +365,7 @@ PRESConfigManagerDelegate
 
 - (void)initializeModules {
     if (_managersInitialized) {
-        PRESLogWarning(@"[PreSniffObjc] Warning: The SDK should only be initialized once! This call is ignored.");
+        PRESLogWarning(@"The SDK should only be initialized once! This call is ignored.");
         return;
     }
     
@@ -424,9 +424,9 @@ PRESConfigManagerDelegate
 - (void)logInvalidIdentifier:(NSString *)environment {
     if (self.appEnvironment != PRESEnvironmentAppStore) {
         if ([environment isEqualToString:@"liveIdentifier"]) {
-            PRESLogWarning(@"[PreSniffObjc] WARNING: The liveIdentifier is invalid! The SDK will be disabled when deployed to the App Store without setting a valid app identifier!");
+            PRESLogWarning(@"The liveIdentifier is invalid! The SDK will be disabled when deployed to the App Store without setting a valid app identifier!");
         } else {
-            PRESLogError(@"[PreSniffObjc] ERROR: The %@ is invalid! Please use the PreSniff app identifier you find on the apps website on PreSniff! The SDK is disabled!", environment);
+            PRESLogError(@"The %@ is invalid! Please use the PreSniff app identifier you find on the apps website on PreSniff! The SDK is disabled!", environment);
         }
     }
 }

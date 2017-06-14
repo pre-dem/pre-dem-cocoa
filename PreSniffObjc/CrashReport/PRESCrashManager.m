@@ -234,7 +234,7 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
         
         
         if (!PRESBundle() && !pres_isRunningInAppExtension()) {
-            PRESLogWarning(@"[PreSniffObjc] WARNING: %@ is missing, will send reports automatically!", PRES_BUNDLE);
+            PRESLogWarning(@"%@ is missing, will send reports automatically!", PRES_BUNDLE);
         }
     }
     return self;
@@ -711,7 +711,7 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
     if (self.appEnvironment != PRESEnvironmentAppStore) {
         
         if ([self isDebuggerAttached]) {
-            PRESLogWarning(@"[PreSniffObjc] WARNING: The debugger is attached. The following crash cannot be detected by the SDK!");
+            PRESLogWarning(@"The debugger is attached. The following crash cannot be detected by the SDK!");
         }
         
         __builtin_trap();
@@ -1001,7 +1001,7 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
         // If the top level error handler differs from our own, then at least another one was added.
         // This could cause exception crashes not to be reported to PreSniff. See log message for details.
         if (self.exceptionHandler != currentHandler) {
-            PRESLogWarning(@"[PreSniffObjc] WARNING: Another exception handler was added. If this invokes any kind exit() after processing the exception, which causes any subsequent error handler not to be invoked, these crashes will NOT be reported to PreSniff!");
+            PRESLogWarning(@"Another exception handler was added. If this invokes any kind exit() after processing the exception, which causes any subsequent error handler not to be invoked, these crashes will NOT be reported to PreSniff!");
         }
     }
     
@@ -1152,7 +1152,7 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
             if (self.appEnvironment != PRESEnvironmentAppStore) {
                 if ([self isDebuggerAttached]) {
                     debuggerIsAttached = YES;
-                    PRESLogWarning(@"[PreSniffObjc] WARNING: Detecting crashes is NOT enabled due to running the app with a debugger attached.");
+                    PRESLogWarning(@"Detecting crashes is NOT enabled due to running the app with a debugger attached.");
                 }
             }
             
@@ -1181,7 +1181,7 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
                 
                 // Enable the Crash Reporter
                 if (![self.plCrashReporter enableCrashReporterAndReturnError: &error])
-                    PRESLogError(@"[PreSniffObjc] ERROR: Could not enable crash reporter: %@", [error localizedDescription]);
+                    PRESLogError(@"Could not enable crash reporter: %@", [error localizedDescription]);
                 
                 // get the new current top level error handler, which should now be the one from PLCrashReporter
                 NSUncaughtExceptionHandler *currentHandler = NSGetUncaughtExceptionHandler();
@@ -1190,10 +1190,10 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
                 if (currentHandler && currentHandler != initialHandler) {
                     self.exceptionHandler = currentHandler;
                     
-                    PRESLogDebug(@"INFO: Exception handler successfully initialized.");
+                    PRESLogDebug(@"Exception handler successfully initialized.");
                 } else {
                     // this should never happen, theoretically only if NSSetUncaugtExceptionHandler() has some internal issues
-                    PRESLogError(@"[PreSniffObjc] ERROR: Exception handler could not be set. Make sure there is no other exception handler set up!");
+                    PRESLogError(@"Exception handler could not be set. Make sure there is no other exception handler set up!");
                 }
                 
                 // Add the C++ uncaught exception handler, which is currently not handled by PLCrashReporter internally
@@ -1220,7 +1220,7 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
             }
             
             if (considerReport) {
-                PRESLogVerbose(@"INFO: App kill detected, creating crash report.");
+                PRESLogVerbose(@"App kill detected, creating crash report.");
                 [self createCrashReportForAppKill];
                 
                 _didCrashInLastSession = YES;
@@ -1240,7 +1240,7 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
     }
     
     [self triggerDelayedProcessing];
-    PRESLogVerbose(@"VERBOSE: CrashManager startManager has finished.");
+    PRESLogVerbose(@"CrashManager startManager has finished.");
 }
 
 /**

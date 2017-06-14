@@ -39,7 +39,7 @@
 
 - (IBAction)diagnoseNetwork:(id)sender {
     [[PRESManager sharedPRESManager] diagnose:@"www.baidu.com" complete:^(PRESNetDiagResult * _Nonnull result) {
-        NSLog(@"%@", result);
+        NSLog(@"new diagnose completed with result:\n %@", result);
     }];
 }
 
