@@ -390,7 +390,7 @@ BOOL pres_isDebuggerAttached(void) {
         name[3] = getpid();
         
         if (sysctl(name, 4, &info, &info_size, NULL, 0) == -1) {
-            PRESLogError(@"[PreSniffObjc] ERROR: Checking for a running debugger via sysctl() failed.");
+            PRESLogError(@"Checking for a running debugger via sysctl() failed.");
             debuggerIsAttached = false;
         }
         

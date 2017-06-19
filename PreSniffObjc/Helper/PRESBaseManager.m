@@ -75,7 +75,7 @@
 #pragma mark - Private
 
 - (void)reportError:(NSError *)error {
-    PRESLogError(@"ERROR: %@", [error localizedDescription]);
+    PRESLogError(@"%@", [error localizedDescription]);
 }
 
 - (NSString *)encodedAppIdentifier {

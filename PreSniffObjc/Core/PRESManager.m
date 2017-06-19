@@ -146,7 +146,7 @@ PRESConfigManagerDelegate
 - (void)startManager {
     if (!_validAppIdentifier) return;
     if (_startManagerIsInvoked) {
-        PRESLogWarning(@"[PreSniffObjc] Warning: startManager should only be invoked once! This call is ignored.");
+        PRESLogWarning(@"startManager should only be invoked once! This call is ignored.");
         return;
     }
     
@@ -157,12 +157,12 @@ PRESConfigManagerDelegate
     
     if (![self isSetUpOnMainThread]) return;
     
-    PRESLogDebug(@"INFO: Starting PRESManager");
+    PRESLogDebug(@"Starting PRESManager");
     _startManagerIsInvoked = YES;
     
     // start CrashManager
     if (![self isCrashManagerDisabled]) {
-        PRESLogDebug(@"INFO: Start CrashManager");
+        PRESLogDebug(@"Start CrashManager");
         
         [_crashManager startManager];
     }
@@ -174,7 +174,7 @@ PRESConfigManagerDelegate
     
     // start MetricsManager
     if (!self.isMetricsManagerDisabled) {
-        PRESLogDebug(@"INFO: Start MetricsManager");
+        PRESLogDebug(@"Start MetricsManager");
         [_metricsManager startManager];
     }
     
@@ -219,7 +219,7 @@ PRESConfigManagerDelegate
 - (void)setDelegate:(id<PRESManagerDelegate>)delegate {
     if (self.appEnvironment != PRESEnvironmentAppStore) {
         if (_startManagerIsInvoked) {
-            PRESLogError(@"[PreSniffObjc] ERROR: The `delegate` property has to be set before calling [[PRESManager sharedPRESManager] startManager] !");
+            PRESLogError(@"The `delegate` property has to be set before calling [[PRESManager sharedPRESManager] startManager] !");
         }
     }
     
@@ -269,7 +269,7 @@ PRESConfigManagerDelegate
     
     if (!success) {
         NSString *errorDescription = [error description] ?: @"";
-        PRESLogError(@"ERROR: Couldn't %@ key %@ in the keychain. %@", updateType, key, errorDescription);
+        PRESLogError(@"Couldn't %@ key %@ in the keychain. %@", updateType, key, errorDescription);
     }
 }
 
@@ -315,16 +315,16 @@ PRESConfigManagerDelegate
 - (void)logPingMessageForStatusCode:(NSInteger)statusCode {
     switch (statusCode) {
         case 400:
-            PRESLogError(@"ERROR: App ID not found");
+            PRESLogError(@"App ID not found");
             break;
         case 201:
-            PRESLogDebug(@"INFO: Ping accepted.");
+            PRESLogDebug(@"Ping accepted.");
             break;
         case 200:
-            PRESLogDebug(@"INFO: Ping accepted. Server already knows.");
+            PRESLogDebug(@"Ping accepted. Server already knows.");
             break;
         default:
-            PRESLogError(@"ERROR: Unknown error");
+            PRESLogError(@"Unknown error");
             break;
     }
 }
@@ -332,13 +332,13 @@ PRESConfigManagerDelegate
 - (void)validateStartManagerIsInvoked {
     if (_validAppIdentifier && (self.appEnvironment != PRESEnvironmentAppStore)) {
         if (!_startManagerIsInvoked) {
-            PRESLogError(@"[PreSniffObjc] ERROR: You did not call [[PRESManager sharedPRESManager] startManager] to startup the PreSniffObjc! Please do so after setting up all properties. The SDK is NOT running.");
+            PRESLogError(@"You did not call [[PRESManager sharedPRESManager] startManager] to startup the PreSniffObjc! Please do so after setting up all properties. The SDK is NOT running.");
         }
     }
 }
 
 - (BOOL)isSetUpOnMainThread {
-    NSString *errorString = @"ERROR: PreSniffObjc has to be setup on the main thread!";
+    NSString *errorString = @"PreSniffObjc has to be setup on the main thread!";
     
     if (!NSThread.isMainThread) {
         if (self.appEnvironment == PRESEnvironmentAppStore) {
@@ -365,7 +365,7 @@ PRESConfigManagerDelegate
 
 - (void)initializeModules {
     if (_managersInitialized) {
-        PRESLogWarning(@"[PreSniffObjc] Warning: The SDK should only be initialized once! This call is ignored.");
+        PRESLogWarning(@"The SDK should only be initialized once! This call is ignored.");
         return;
     }
     
@@ -376,14 +376,14 @@ PRESConfigManagerDelegate
     _startManagerIsInvoked = NO;
     
     if (_validAppIdentifier) {
-        PRESLogDebug(@"INFO: Setup CrashManager");
+        PRESLogDebug(@"Setup CrashManager");
         _crashManager = [[PRESCrashManager alloc] initWithAppIdentifier:_appIdentifier
                                                          appEnvironment:_appEnvironment
                                                         hockeyAppClient:[self hockeyAppClient]];
         _crashManager.delegate = _delegate;
         
         
-        PRESLogDebug(@"INFO: Setup MetricsManager");
+        PRESLogDebug(@"Setup MetricsManager");
         _metricsManager = [[PRESMetricsManager alloc] initWithAppIdentifier:_appIdentifier appEnvironment:_appEnvironment];
         
         _managersInitialized = YES;
@@ -424,9 +424,9 @@ PRESConfigManagerDelegate
 - (void)logInvalidIdentifier:(NSString *)environment {
     if (self.appEnvironment != PRESEnvironmentAppStore) {
         if ([environment isEqualToString:@"liveIdentifier"]) {
-            PRESLogWarning(@"[PreSniffObjc] WARNING: The liveIdentifier is invalid! The SDK will be disabled when deployed to the App Store without setting a valid app identifier!");
+            PRESLogWarning(@"The liveIdentifier is invalid! The SDK will be disabled when deployed to the App Store without setting a valid app identifier!");
         } else {
-            PRESLogError(@"[PreSniffObjc] ERROR: The %@ is invalid! Please use the PreSniff app identifier you find on the apps website on PreSniff! The SDK is disabled!", environment);
+            PRESLogError(@"The %@ is invalid! Please use the PreSniff app identifier you find on the apps website on PreSniff! The SDK is disabled!", environment);
         }
     }
 }

@@ -234,7 +234,7 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
         
         
         if (!PRESBundle() && !pres_isRunningInAppExtension()) {
-            PRESLogWarning(@"[PreSniffObjc] WARNING: %@ is missing, will send reports automatically!", PRES_BUNDLE);
+            PRESLogWarning(@"%@ is missing, will send reports automatically!", PRES_BUNDLE);
         }
     }
     return self;
@@ -279,7 +279,7 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
     if (plist) {
         [plist writeToFile:_settingsFile atomically:YES];
     } else {
-        PRESLogError(@"ERROR: Writing settings. %@", [error description]);
+        PRESLogError(@"Writing settings. %@", [error description]);
     }
 }
 
@@ -306,7 +306,7 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
         if ([rootObj objectForKey:kPRESCrashApprovedReports])
             [_approvedCrashReports setDictionary:[rootObj objectForKey:kPRESCrashApprovedReports]];
     } else {
-        PRESLogError(@"ERROR: Reading crash manager settings.");
+        PRESLogError(@"Reading crash manager settings.");
     }
 }
 
@@ -711,7 +711,7 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
     if (self.appEnvironment != PRESEnvironmentAppStore) {
         
         if ([self isDebuggerAttached]) {
-            PRESLogWarning(@"[PreSniffObjc] WARNING: The debugger is attached. The following crash cannot be detected by the SDK!");
+            PRESLogWarning(@"The debugger is attached. The following crash cannot be detected by the SDK!");
         }
         
         __builtin_trap();
@@ -745,12 +745,12 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
         if (attachment && attachment.hockeyAttachmentData) {
             BOOL success = [self persistAttachment:attachment withFilename:[_crashesDir stringByAppendingPathComponent: filename]];
             if (!success) {
-                PRESLogError(@"ERROR: Persisting the crash attachment failed");
+                PRESLogError(@"Persisting the crash attachment failed");
             } else {
                 PRESLogVerbose(@"VERBOSE: Crash attachment successfully persisted.");
             }
         } else {
-            PRESLogDebug(@"INFO: Crash attachment was nil");
+            PRESLogDebug(@"Crash attachment was nil");
         }
     }
     
@@ -761,10 +761,10 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
     if (plist) {
         BOOL success = [plist writeToFile:[_crashesDir stringByAppendingPathComponent: [filename stringByAppendingPathExtension:@"meta"]] atomically:YES];
         if (!success) {
-            PRESLogError(@"ERROR: Writing crash meta data failed.");
+            PRESLogError(@"Writing crash meta data failed.");
         }
     } else {
-        PRESLogError(@"ERROR: Writing crash meta data failed. %@", error);
+        PRESLogError(@"Writing crash meta data failed. %@", error);
     }
     PRESLogVerbose(@"VERBOSE: Storing crash meta data finished.");
 }
@@ -838,7 +838,7 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
         _lastCrashFilename = cacheFilename;
         
         if (crashData == nil) {
-            PRESLogError(@"ERROR: Could not load crash report: %@", error);
+            PRESLogError(@"Could not load crash report: %@", error);
         } else {
             // get the startup timestamp from the crash report, and the file timestamp to calculate the timeinterval when the crash happened after startup
             BITPLCrashReport *report = [[BITPLCrashReport alloc] initWithData:crashData error:&error];
@@ -948,7 +948,7 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
     }
     
     if ([_crashFiles count] > 0) {
-        PRESLogDebug(@"INFO: %lu pending crash reports found.", (unsigned long)[_crashFiles count]);
+        PRESLogDebug(@"%lu pending crash reports found.", (unsigned long)[_crashFiles count]);
         return YES;
     } else {
         if (_didCrashInLastSession) {
@@ -991,7 +991,7 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
         return;
     }
     
-    PRESLogDebug(@"INFO: Start delayed CrashManager processing");
+    PRESLogDebug(@"Start delayed CrashManager processing");
     
     // was our own exception handler successfully added?
     if (self.exceptionHandler) {
@@ -1001,7 +1001,7 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
         // If the top level error handler differs from our own, then at least another one was added.
         // This could cause exception crashes not to be reported to PreSniff. See log message for details.
         if (self.exceptionHandler != currentHandler) {
-            PRESLogWarning(@"[PreSniffObjc] WARNING: Another exception handler was added. If this invokes any kind exit() after processing the exception, which causes any subsequent error handler not to be invoked, these crashes will NOT be reported to PreSniff!");
+            PRESLogWarning(@"Another exception handler was added. If this invokes any kind exit() after processing the exception, which causes any subsequent error handler not to be invoked, these crashes will NOT be reported to PreSniff!");
         }
     }
     
@@ -1152,7 +1152,7 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
             if (self.appEnvironment != PRESEnvironmentAppStore) {
                 if ([self isDebuggerAttached]) {
                     debuggerIsAttached = YES;
-                    PRESLogWarning(@"[PreSniffObjc] WARNING: Detecting crashes is NOT enabled due to running the app with a debugger attached.");
+                    PRESLogWarning(@"Detecting crashes is NOT enabled due to running the app with a debugger attached.");
                 }
             }
             
@@ -1181,7 +1181,7 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
                 
                 // Enable the Crash Reporter
                 if (![self.plCrashReporter enableCrashReporterAndReturnError: &error])
-                    PRESLogError(@"[PreSniffObjc] ERROR: Could not enable crash reporter: %@", [error localizedDescription]);
+                    PRESLogError(@"Could not enable crash reporter: %@", [error localizedDescription]);
                 
                 // get the new current top level error handler, which should now be the one from PLCrashReporter
                 NSUncaughtExceptionHandler *currentHandler = NSGetUncaughtExceptionHandler();
@@ -1190,10 +1190,10 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
                 if (currentHandler && currentHandler != initialHandler) {
                     self.exceptionHandler = currentHandler;
                     
-                    PRESLogDebug(@"INFO: Exception handler successfully initialized.");
+                    PRESLogDebug(@"Exception handler successfully initialized.");
                 } else {
                     // this should never happen, theoretically only if NSSetUncaugtExceptionHandler() has some internal issues
-                    PRESLogError(@"[PreSniffObjc] ERROR: Exception handler could not be set. Make sure there is no other exception handler set up!");
+                    PRESLogError(@"Exception handler could not be set. Make sure there is no other exception handler set up!");
                 }
                 
                 // Add the C++ uncaught exception handler, which is currently not handled by PLCrashReporter internally
@@ -1220,7 +1220,7 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
             }
             
             if (considerReport) {
-                PRESLogVerbose(@"INFO: App kill detected, creating crash report.");
+                PRESLogVerbose(@"App kill detected, creating crash report.");
                 [self createCrashReportForAppKill];
                 
                 _didCrashInLastSession = YES;
@@ -1240,7 +1240,7 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
     }
     
     [self triggerDelayedProcessing];
-    PRESLogVerbose(@"VERBOSE: CrashManager startManager has finished.");
+    PRESLogVerbose(@"CrashManager startManager has finished.");
 }
 
 /**
@@ -1343,7 +1343,7 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
             [self storeMetaDataForCrashReportFilename:fakeReportFilename];
         }
     } else {
-        PRESLogError(@"ERROR: Writing fake crash report. %@", [error description]);
+        PRESLogError(@"Writing fake crash report. %@", [error description]);
     }
 }
 
@@ -1464,7 +1464,7 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
             description = [NSString stringWithContentsOfFile:[NSString stringWithFormat:@"%@.desc", [_crashesDir stringByAppendingPathComponent: cacheFilename]] encoding:NSUTF8StringEncoding error:&error];
             attachment = [self attachmentForCrashReport:attachmentFilename];
         } else {
-            PRESLogError(@"ERROR: Reading crash meta data. %@", error);
+            PRESLogError(@"Reading crash meta data. %@", error);
         }
         
         if ([applicationLog length] > 0) {
@@ -1492,7 +1492,7 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
                     installString,
                     [description stringByReplacingOccurrencesOfString:@"]]>" withString:@"]]" @"]]><![CDATA[" @">" options:NSLiteralSearch range:NSMakeRange(0,description.length)]];
         
-        PRESLogDebug(@"INFO: Sending crash reports:\n%@", crashXML);
+        PRESLogDebug(@"Sending crash reports:\n%@", crashXML);
         [self sendCrashReportWithFilename:filename xml:crashXML attachment:attachment];
     } else {
         // we cannot do anything with this report, so delete it
@@ -1600,7 +1600,7 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
                                                                                           options:NSPropertyListMutableContainersAndLeaves
                                                                                            format:nil
                                                                                             error:&theError];
-                PRESLogDebug(@"INFO: Received API response: %@", response);
+                PRESLogDebug(@"Received API response: %@", response);
                 
                 if ([self.delegate respondsToSelector:@selector(crashManagerDidFinishSendingCrashReport:)]) {
                     [self.delegate crashManagerDidFinishSendingCrashReport:self];
@@ -1632,7 +1632,7 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
                 [self.delegate crashManager:self didFailWithError:theError];
             }
             
-            PRESLogError(@"ERROR: %@", [theError localizedDescription]);
+            PRESLogError(@"%@", [theError localizedDescription]);
         }
     });
 }
@@ -1696,7 +1696,7 @@ static void uncaught_cxx_exception_handler(const PRESCrashUncaughtCXXExceptionIn
         [self.delegate crashManagerWillSendCrashReport:self];
     }
     
-    PRESLogDebug(@"INFO: Sending crash reports started.");
+    PRESLogDebug(@"Sending crash reports started.");
 }
 
 - (NSTimeInterval)timeintervalCrashInLastSessionOccured {

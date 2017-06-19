@@ -7,6 +7,7 @@
 //
 
 #import "PRESConfigManager.h"
+#import "PRESLogger.h"
 
 #define PRESConfigServerDomain  @"http://localhost:8080"
 
@@ -49,7 +50,7 @@ NSURLSessionDelegate
       completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
           NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
           if (error || httpResponse.statusCode != 200) {
-              NSLog(@"%@", error.localizedDescription);
+              PRESLogError(@"%@", error.localizedDescription);
               dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(30 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                   [self getConfigWithAppKey:appKey];
               });
@@ -61,7 +62,7 @@ NSURLSessionDelegate
                   PRESConfig *config = [PRESConfig configWithDic:dic];
                   [strongSelf.delegate configManager:strongSelf didReceivedConfig:config];
               } else {
-                  NSLog(@"config received from server has a wrong type");
+                  PRESLogError(@"config received from server has a wrong type");
               }
           }
       }]

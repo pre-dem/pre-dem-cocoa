@@ -8,6 +8,7 @@
 
 #import "PRESHTTPMonitorSender.h"
 #import "PRESGZIP.h"
+#import "PRESLogger.h"
 
 #define PRESSendLogDefaultInterval  10
 #define PRESMaxLogLenth            (1024 * 64)
@@ -158,7 +159,7 @@ NSURLSessionDelegate
         [[NSFileManager defaultManager] createDirectoryAtPath:_logDirPath withIntermediateDirectories:NO attributes:nil error:&err];
     }
     if (err) {
-        NSLog(@"log file create error: %@", err);
+        PRESLogError(@"log file create error: %@", err);
         return err;
     }
     exist = [[NSFileManager defaultManager] fileExistsAtPath:_indexFilePath isDirectory:&isDir];
@@ -185,7 +186,7 @@ NSURLSessionDelegate
                           PRESWriteFilePosition: @(_mWriteFilePosition)};
     NSData *indexData = [NSJSONSerialization dataWithJSONObject:dic options:0 error:&err];
     if (err) {
-        NSLog(@"create json for update index file error: %@", err);
+        PRESLogError(@"create json for update index file error: %@", err);
         return err;
     }
     if (!_indexFileHandle) {
@@ -193,7 +194,7 @@ NSURLSessionDelegate
     }
     if (!_indexFileHandle) {
         err = [NSError errorWithDomain:PRESErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: [NSString stringWithFormat:@"create index file handle error for: %@", _indexFilePath]}];
-        NSLog(@"%@", err);
+        PRESLogError(@"%@", err);
         return err;
     }
     
@@ -212,12 +213,12 @@ NSURLSessionDelegate
     if (indexData != nil) {
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:indexData options:0 error:&err];
         if (err) {
-            NSLog(@"error:parse data failed %@", err);
+            PRESLogError(@"error:parse data failed %@", err);
             [_indexFileIOLock unlock];
             return err;
         }
         if (!dic || ![dic respondsToSelector:@selector(objectForKey:)]) {
-            NSLog(@"index file json is not valid dictionary object");
+            PRESLogError(@"index file json is not valid dictionary object");
             [_indexFileIOLock unlock];
             return err;
         }
@@ -250,14 +251,14 @@ NSURLSessionDelegate
         BOOL success = [[NSFileManager defaultManager] createFileAtPath:logPath contents:nil attributes:nil];
         if (!success) {
             err = [NSError errorWithDomain:PRESErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: [NSString stringWithFormat:@"create http monior log file error for: %@", logPath]}];
-            NSLog(@"%@", err);
+            PRESLogError(@"%@", err);
             return err;
         }
     }
     NSFileHandle *logFileHandle = [NSFileHandle fileHandleForUpdatingAtPath:logPath];
     if (!logFileHandle) {
         err = [NSError errorWithDomain:PRESErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey: [NSString stringWithFormat:@"create http monior log file handle error for: %@", logPath]}];
-        NSLog(@"%@", err);
+        PRESLogError(@"%@", err);
         return err;
     }
     [logFileHandle seekToFileOffset:_mWriteFilePosition];
@@ -294,13 +295,13 @@ NSURLSessionDelegate
         NSString *logFilePath = [NSString stringWithFormat:@"%@/log.%u", _logDirPath, _mReadFileIndex];
         exist = [[NSFileManager defaultManager] fileExistsAtPath:logFilePath isDirectory:&isDir];
         if (!exist || isDir) {
-            NSLog(@"log file path not exist");
+            PRESLogError(@"log file path not exist");
             _isSendingData = NO;
             return;
         }
         NSFileHandle *handle = [NSFileHandle fileHandleForUpdatingAtPath:logFilePath];
         if (!handle) {
-            NSLog(@"log file handle generate failed");
+            PRESLogError(@"log file handle generate failed");
             _isSendingData = NO;
             return;
         }
@@ -315,7 +316,7 @@ NSURLSessionDelegate
             if (!dataUncompressed.length) {
                 [[NSFileManager defaultManager] removeItemAtPath:logFilePath error:&err];
                 if (err) {
-                    NSLog(@"remove log file failed: %@", err);
+                    PRESLogError(@"remove log file failed: %@", err);
                 }
                 // 删除失败依然需要将读取的位置切换到下个文件，不管之前的文件了
                 if (_mReadFileIndex == PRESMaxLogIndex) {
@@ -338,7 +339,7 @@ NSURLSessionDelegate
         
         NSData *dataToSend = [dataUncompressed pres_gzippedData];
         if (!dataToSend || !dataToSend.length) {
-            NSLog(@"compressed data is empty");
+            PRESLogError(@"compressed data is empty");
             _isSendingData = NO;
             return;
         }
@@ -363,7 +364,7 @@ NSURLSessionDelegate
         if (_logPathToBeRemoved) {
             [[NSFileManager defaultManager] removeItemAtPath:_logPathToBeRemoved error:&err];
             if (err) {
-                NSLog(@"delete log file failed: %@", err);
+                PRESLogError(@"delete log file failed: %@", err);
             }
             if (_mReadFileIndex == PRESMaxLogIndex) {
                 _mReadFileIndex = 1;
@@ -375,7 +376,7 @@ NSURLSessionDelegate
             _mReadFilePosition = _mWriteFilePosition;
         }
     } else {
-        NSLog(@"log send failure, statusCode: %@, error: %@", [NSHTTPURLResponse localizedStringForStatusCode:((NSHTTPURLResponse *)response).statusCode], err);
+        PRESLogError(@"log send failure, statusCode: %@, error: %@", [NSHTTPURLResponse localizedStringForStatusCode:((NSHTTPURLResponse *)response).statusCode], err);
     }
     [self updateIndexFile];
     _isSendingData = NO;

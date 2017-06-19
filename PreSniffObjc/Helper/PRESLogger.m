@@ -6,12 +6,31 @@
 static PRESLogLevel _currentLogLevel = PRESLogLevelWarning;
 static PRESLogHandler currentLogHandler;
 
+static NSString *levelString(PRESLogLevel logLevel) {
+    switch (logLevel) {
+        case PRESLogLevelNone:
+            return @"None";
+            break;
+        case PRESLogLevelError:
+            return @"Error";
+        case PRESLogLevelWarning:
+            return @"Warning";
+        case PRESLogLevelDebug:
+            return @"Debug";
+        case PRESLogLevelVerbose:
+            return @"Verbose";
+        default:
+            return @"";
+            break;
+    }
+}
+
 PRESLogHandler defaultLogHandler = ^(PRESLogMessageProvider messageProvider, PRESLogLevel logLevel, const char *file, const char *function, uint line) {
     if (messageProvider) {
         if (_currentLogLevel < logLevel) {
             return;
         }
-        NSLog((@"[PreSniffObjc] %s/%d %@"), function, line, messageProvider());
+        NSLog((@"[PreSniffObjc]%@: %s/%d %@"), levelString(logLevel), function, line, messageProvider());
     }
 };
 

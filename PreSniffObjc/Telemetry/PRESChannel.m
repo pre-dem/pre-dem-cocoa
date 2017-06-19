@@ -102,7 +102,7 @@ NS_ASSUME_NONNULL_BEGIN
         
         if (strongSelf.isQueueBusy) {
             // Case 2: Channel is in blocked state: Trigger sender, start timer to check after again after a while and abort operation.
-            PRESLogDebug(@"INFO: The channel is saturated. %@ was dropped.", item.debugDescription);
+            PRESLogDebug(@"The channel is saturated. %@ was dropped.", item.debugDescription);
             if (![strongSelf timerIsRunning]) {
                 [strongSelf startTimer];
             }
@@ -159,7 +159,7 @@ NS_ASSUME_NONNULL_BEGIN
     NSError *error;
     NSData *data = [NSJSONSerialization dataWithJSONObject:dictionary options:(NSJSONWritingOptions)0 error:&error];
     if (!data) {
-        PRESLogError(@"ERROR: JSONSerialization error: %@", error.localizedDescription);
+        PRESLogError(@"JSONSerialization error: %@", error.localizedDescription);
         return @"{}";
     } else {
         return [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
