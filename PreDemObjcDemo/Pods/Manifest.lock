@@ -1,0 +1,22 @@
+PODS:
+  - HappyDNS (0.3.10)
+  - PreDemObjc (1.0.0):
+    - HappyDNS
+    - QNNetDiag
+  - QNNetDiag (0.0.4)
+
+DEPENDENCIES:
+  - PreDemObjc (from `../`)
+
+EXTERNAL SOURCES:
+  PreDemObjc:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  HappyDNS: 06a9fed2796663fd87626dbf02552933265bf059
+  PreDemObjc: 06ca2bea95bae7ba78ff54838f2702b414d453ee
+  QNNetDiag: f38e43c4f89aef14c1cc6b474a41e07bbe8b2820
+
+PODFILE CHECKSUM: 3cfeeea56b219ca54c5b4caf2cc0b81dccb4115c
+
+COCOAPODS: 1.2.1
