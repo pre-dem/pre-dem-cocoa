@@ -97,7 +97,7 @@
 
 #pragma mark - Public Instance Methods (Configuration)
 
-- (void)configureWithAppKey:(NSString *)appKey serviceDomain:(NSString *)serviceDomain {
+- (void)startWithAppKey:(NSString *)appKey serviceDomain:(NSString *)serviceDomain {
     _appIdentifier = [appKey copy];
     
     [self initializeModules];

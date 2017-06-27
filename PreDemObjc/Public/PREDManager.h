@@ -62,12 +62,13 @@ NS_ASSUME_NONNULL_BEGIN
  Initialize the manager with a PreDem app identifier.
  
  [[PREDManager sharedPREDManager]
- configureWithIdentifier:@"<AppIdentifierFromPreDem>"];
+ startWithAppKey:@"<AppIdentifierFromPreDem>"
+ serviceDomain:@"<ServiceDomain>"];
  
  @param appKey The app key that should be used.
  @param serviceDomain The service domain that data will be reported to or requested from.
  */
-- (void)configureWithAppKey:(NSString *)appKey serviceDomain:(NSString *)serviceDomain;
+- (void)startWithAppKey:(NSString *)appKey serviceDomain:(NSString *)serviceDomain;
 
 /**
  *  diagnose current network environment
