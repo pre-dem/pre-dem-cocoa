@@ -30,7 +30,10 @@
 #import "PreDemObjc.h"
 #import <CrashReporter/CrashReporter.h>
 
+#import "PREDCrashManager.h"
+
 @class PREDNetworkClient;
+@class PREDAttachment;
 
 @interface PREDCrashManager () {
 }

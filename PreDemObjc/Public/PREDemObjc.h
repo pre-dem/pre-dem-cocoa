@@ -9,14 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "PREDEnums.h"
 #import "PREDNullability.h"
-#import "PREDManager.h"
-#import "PREDManagerDelegate.h"
-#import "PREDCrashManager.h"
-#import "PREDCrashManagerDelegate.h"
-#import "PREDCrashDetails.h"
-#import "PREDCrashMetaData.h"
 #import "PREDMetricsManager.h"
-#import "PREDAttachment.h"
+#import "PREDManager.h"
 
 // Notification message which PREDManager is listening to, to retry requesting updated from the server.
 // This can be used by app developers to trigger additional points where the PreDemObjc can try sending

@@ -19,11 +19,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
-    [[PREDManager sharedPREDManager] configureWithIdentifier:@"c9f916114a8f4750a02ce74300af909c"];
-    // Do some additional configuration if needed here
-    [[PREDManager sharedPREDManager] startManager];
-    [PREDManager sharedPREDManager].disableMetricsManager = NO;
-//    [[PREDManager sharedPREDManager].authenticator authenticateInstallation];
+    [[PREDManager sharedPREDManager] configureWithAppKey:@"f127c8d8f9ede0f464e80f5f4b46658" serviceDomain:@"http://hriygkee.bq.cloudappl.com"];
     
     return YES;
 }
