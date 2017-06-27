@@ -2,7 +2,7 @@
   "name": "PreDemObjc",
   "version": "1.0.0",
   "summary": "A short description of PreDemObjc.",
-  "homepage": "https://github.com/pre-sniff/pre-sniff-objc",
+  "homepage": "https://github.com/pre-dem/pre-dem-objc",
   "license": "MIT",
   "authors": {
     "cnwangsiyu": "cn.wangsiyu@gmail.com"
@@ -12,7 +12,7 @@
     "osx": "10.10"
   },
   "source": {
-    "git": "https://github.com/pre-sniff/pre-sniff-objc.git",
+    "git": "https://github.com/pre-dem/pre-dem-objc.git",
     "tag": "v1.0.0"
   },
   "source_files": "PreDemObjc/**/*.{h,m,mm}",
