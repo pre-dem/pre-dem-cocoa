@@ -25,7 +25,7 @@
 }
 
 - (IBAction)sendHTTPRequest:(id)sender {
-    NSArray *urls = @[@"http://www.baidu.com", @"https://www.163.com", @"http://www.qq.com", @"https://www.qiniu.com", @"http://www.taobao.com", @"http://www.alipay.com"];
+    NSArray *urls = @[@"http://www.baidu.com", @"https://www.163.com", @"http://www.qq.com", @"https://www.dehenglalala.com", @"http://www.balabalabalatest.com", @"http://www.alipay.com"];
     for (NSString *urlString in urls) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
             NSURL *url = [NSURL URLWithString:urlString];

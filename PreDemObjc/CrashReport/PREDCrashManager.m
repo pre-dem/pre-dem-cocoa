@@ -35,6 +35,10 @@
 #import "PREDHelper.h"
 #import "PREDNetworkClient.h"
 
+#import "PREDManagerPrivate.h"
+#import "PREDManagerDelegate.h"
+#import "PREDCrashMetaData.h"
+#import "PREDCrashDetails.h"
 #import "PREDCrashManager.h"
 #import "PREDCrashManagerPrivate.h"
 #import "PREDBaseManagerPrivate.h"
@@ -45,6 +49,7 @@
 #import "PREDMetricsManagerPrivate.h"
 #import "PREDChannel.h"
 #import "PREDPersistencePrivate.h"
+#import "PREDAttachment.h"
 #include <sys/sysctl.h>
 
 // stores the set of crashreports that have been approved but aren't sent yet
@@ -1561,7 +1566,7 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
 }
 
 - (NSMutableURLRequest *)requestWithBoundary:(NSString *)boundary {
-    NSString *postCrashPath = [NSString stringWithFormat:@"api/2/apps/%@/crashes", self.encodedAppIdentifier];
+    NSString *postCrashPath = [NSString stringWithFormat:@"v1/%@/crashes/i", self.encodedAppIdentifier];
     
     NSMutableURLRequest *request = [self.hockeyAppClient requestWithMethod:@"POST"
                                                                       path:postCrashPath

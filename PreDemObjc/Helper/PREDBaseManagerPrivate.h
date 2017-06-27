@@ -29,6 +29,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import "PREDManager.h"
+#import "PREDBaseManager.h"
 
 @class PREDBaseManager;
 @class PREDBaseViewController;

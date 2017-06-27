@@ -28,6 +28,7 @@
  */
 
 #import "PreDemObjc.h"
+#import "PREDManagerPrivate.h"
 #import "PREDPrivate.h"
 #import "PREDBaseManagerPrivate.h"
 #import "PREDHelper.h"
@@ -39,14 +40,6 @@
 #import "PREDCrashManagerPrivate.h"
 #import "PREDMetricsManagerPrivate.h"
 #import "PREDURLProtocol.h"
-
-@interface PREDManager ()
-<
-PREDConfigManagerDelegate
->
-
-@end
-
 
 @implementation PREDManager {
     NSString *_appIdentifier;
@@ -104,44 +97,17 @@ PREDConfigManagerDelegate
 
 #pragma mark - Public Instance Methods (Configuration)
 
-- (void)configureWithIdentifier:(NSString *)appIdentifier {
-    _appIdentifier = [appIdentifier copy];
+- (void)startWithAppKey:(NSString *)appKey serviceDomain:(NSString *)serviceDomain {
+    _appIdentifier = [appKey copy];
     
     [self initializeModules];
     
-    [self applyConfig:[_configManager getConfigWithAppKey:appIdentifier]];
+    [self applyConfig:[_configManager getConfigWithAppKey:appKey]];
+    
+    [self setServerURL:serviceDomain];
+    
+    [self startManager];
 }
-
-- (void)configureWithIdentifier:(NSString *)appIdentifier delegate:(id)delegate {
-    _delegate = delegate;
-    _appIdentifier = [appIdentifier copy];
-    
-    [self initializeModules];
-    
-    [self applyConfig:[_configManager getConfigWithAppKey:appIdentifier]];
-}
-
-- (void)configureWithBetaIdentifier:(NSString *)betaIdentifier liveIdentifier:(NSString *)liveIdentifier delegate:(id)delegate {
-    _delegate = delegate;
-    
-    // check the live identifier now, because otherwise invalid identifier would only be logged when the app is already in the store
-    if (![self checkValidityOfAppIdentifier:liveIdentifier]) {
-        [self logInvalidIdentifier:@"liveIdentifier"];
-        _liveIdentifier = [liveIdentifier copy];
-    }
-    
-    if ([self shouldUseLiveIdentifier]) {
-        _appIdentifier = [liveIdentifier copy];
-    }
-    else {
-        _appIdentifier = [betaIdentifier copy];
-    }
-    
-    [self initializeModules];
-    
-    [self applyConfig:[_configManager getConfigWithAppKey:_appIdentifier]];
-}
-
 
 - (void)startManager {
     if (!_validAppIdentifier) return;
@@ -273,28 +239,6 @@ PREDConfigManagerDelegate
     }
 }
 
-- (void)setUserID:(NSString *)userID {
-    // always set it, since nil value will trigger removal of the keychain entry
-    _userID = userID;
-    
-    [self modifyKeychainUserValue:userID forKey:kPREDMetaUserID];
-}
-
-- (void)setUserName:(NSString *)userName {
-    // always set it, since nil value will trigger removal of the keychain entry
-    _userName = userName;
-    
-    [self modifyKeychainUserValue:userName forKey:kPREDMetaUserName];
-}
-
-- (void)setUserEmail:(NSString *)userEmail {
-    // always set it, since nil value will trigger removal of the keychain entry
-    _userEmail = userEmail;
-    
-    [self modifyKeychainUserValue:userEmail forKey:kPREDMetaUserEmail];
-}
-
-
 - (NSString *)version {
     return [PREDVersion getSDKVersion];
 }
@@ -355,12 +299,13 @@ PREDConfigManagerDelegate
 }
 
 - (BOOL)shouldUseLiveIdentifier {
-    BOOL delegateResult = NO;
-    if ([_delegate respondsToSelector:@selector(shouldUseLiveIdentifierForPREDManager:)]) {
-        delegateResult = [(NSObject <PREDManagerDelegate>*)_delegate shouldUseLiveIdentifierForPREDManager:self];
-    }
-    
-    return (delegateResult) || (_appEnvironment == PREDEnvironmentAppStore);
+//    BOOL delegateResult = NO;
+//    if ([_delegate respondsToSelector:@selector(shouldUseLiveIdentifierForPREDManager:)]) {
+//        delegateResult = [(NSObject <PREDManagerDelegate>*)_delegate shouldUseLiveIdentifierForPREDManager:self];
+//    }
+//    
+//    return (delegateResult) || (_appEnvironment == PREDEnvironmentAppStore);
+    return NO;
 }
 
 - (void)initializeModules {

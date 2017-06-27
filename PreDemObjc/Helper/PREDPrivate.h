@@ -45,7 +45,7 @@
 #define kPREDMetaUserID    @"PREDMetaUserID"
 
 #define PRED_BUNDLE @"PreDemObjcResources.bundle"
-#define PRED_URL @"https://sdk.hockeyapp.net/"
+#define PRED_URL @"http://hriygkee.bq.cloudappl.com"
 
 #define PRED_RGBCOLOR(r,g,b) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:1]
 
