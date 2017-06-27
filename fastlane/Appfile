@@ -1,4 +1,4 @@
-app_identifier "pre-engineering.PreSniffSDKDemo" # The bundle identifier of your app
+app_identifier "pre-engineering.PreDemSDKDemo" # The bundle identifier of your app
 
 team_id "GDFHW66V92" # Developer Portal Team ID
 

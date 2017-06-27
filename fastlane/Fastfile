@@ -16,7 +16,7 @@ fastlane_version "2.28.7"
 desc "Runs all the tests"
 lane :test do
   scan(
-    scheme: "PreSniffObjcDemo",
+    scheme: "PreDemObjcDemo",
     clean: true,
     code_coverage: true
   )
@@ -27,8 +27,8 @@ lane :beta do
   scan
   path = gym(
     export_method:"enterprise",
-    workspace:"PreSniffObjcDemo/PreSniffObjcDemo.xcworkspace",
-    scheme: "PreSniffObjcDemo"
+    workspace:"PreDemObjcDemo/PreDemObjcDemo.xcworkspace",
+    scheme: "PreDemObjcDemo"
     ) # Build your app - more options available
   sh "bundle exec fir publish #{path} -T " + ENV["FIR_TOKEN"]
 end
@@ -37,7 +37,7 @@ desc "Deploy a new version to the App Store"
 lane :release do
   # match(type: "appstore")
   # snapshot
-  gym(scheme: "PreSniffSDKDemo") # Build your app - more options available
+  gym(scheme: "PreDemSDKDemo") # Build your app - more options available
   deliver(force: true)
   # frameit
 end
