@@ -48,13 +48,6 @@ NS_ASSUME_NONNULL_BEGIN
 /// @name Initialization
 ///-----------------------------------------------------------------------------
 
-/**
- Returns a shared PREDManager object
- 
- @return A singleton PREDManager instance ready use
- */
-+ (PREDManager *)sharedPREDManager;
-
 
 /**
  Initializes the manager with a particular app identifier
@@ -68,7 +61,8 @@ NS_ASSUME_NONNULL_BEGIN
  @param appKey The app key that should be used.
  @param serviceDomain The service domain that data will be reported to or requested from.
  */
-- (void)startWithAppKey:(NSString *)appKey serviceDomain:(NSString *)serviceDomain;
++ (void)startWithAppKey:(nonnull NSString *)appKey
+          serviceDomain:(nonnull NSString *)serviceDomain;
 
 /**
  *  diagnose current network environment
@@ -76,8 +70,12 @@ NS_ASSUME_NONNULL_BEGIN
  *  @param host     the end point you want this diagnose action perform with
  *  @param complete diagnose result can be retrieved from the block
  */
-- (void)diagnose:(NSString *)host
-        complete:(PREDNetDiagCompleteHandler)complete;
++ (void)diagnose:(nonnull NSString *)host
+        complete:(nonnull PREDNetDiagCompleteHandler)complete;
+
++ (void)trackEventWithName:(nonnull NSString *)eventName
+                     event:(nonnull NSDictionary*)event;
+
 
 ///-----------------------------------------------------------------------------
 /// @name SDK meta data
@@ -86,12 +84,12 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Returns the SDK Version (CFBundleShortVersionString).
  */
-- (NSString *)version;
++ (NSString *)version;
 
 /**
  Returns the SDK Build (CFBundleVersion) as a string.
  */
-- (NSString *)build;
++ (NSString *)build;
 
 #pragma mark - Public Properties
 
@@ -99,12 +97,6 @@ NS_ASSUME_NONNULL_BEGIN
 /// @name Modules
 ///-----------------------------------------------------------------------------
 
-/**
- Reference to the initialized PREDMetricsManager module
- 
- Returns the PREDMetricsManager instance initialized by PREDManager
- */
-@property (nonatomic, strong, readonly) PREDMetricsManager *metricsManager;
 
 ///-----------------------------------------------------------------------------
 /// @name Debug Logging
@@ -114,7 +106,7 @@ NS_ASSUME_NONNULL_BEGIN
  This property is used indicate the amount of verboseness and severity for which
  you want to see log messages in the console.
  */
-@property (nonatomic, assign) PREDLogLevel logLevel;
+@property (class, nonatomic, assign) PREDLogLevel logLevel;
 
 @end
 

@@ -157,9 +157,42 @@ PREDConfigManagerDelegate
  
  @param logHandler The block of type PREDLogHandler that will process all logged messages.
  */
-- (void)setLogHandler:(PREDLogHandler _Nullable )logHandler;
++ (void)setLogHandler:(PREDLogHandler _Nullable )logHandler;
+
+/**
+ Initializes the manager with a particular app identifier
+ 
+ Initialize the manager with a PreDem app identifier.
+ 
+ [[PREDManager sharedPREDManager]
+ startWithAppKey:@"<AppIdentifierFromPreDem>"
+ serviceDomain:@"<ServiceDomain>"];
+ 
+ @param appKey The app key that should be used.
+ @param serviceDomain The service domain that data will be reported to or requested from.
+ */
+- (void)startWithAppKey:(NSString *_Nonnull)appKey serviceDomain:(NSString *_Nonnull)serviceDomain;
+
+/**
+ *  diagnose current network environment
+ *
+ *  @param host     the end point you want this diagnose action perform with
+ *  @param complete diagnose result can be retrieved from the block
+ */
+- (void)diagnose:(NSString *_Nonnull)host
+        complete:(PREDNetDiagCompleteHandler _Nonnull )complete;
+
+/**
+ Reference to the initialized PREDMetricsManager module
+ 
+ Returns the PREDMetricsManager instance initialized by PREDManager
+ */
+@property (nonatomic, strong, readonly) PREDMetricsManager * _Nonnull metricsManager;
+
++(PREDManager *_Nonnull)sharedPREDManager;
 
 @end
 
+//extern PREDConfigManager* _Nonnull g_pred_sharedmanager();
 
 #endif /* PREDManagerPrivate_h */

@@ -19,7 +19,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
-    [[PREDManager sharedPREDManager] startWithAppKey:@"f127c8d8f9ede0f464e80f5f4b46658"
+    [PREDManager  startWithAppKey:@"f127c8d8f9ede0f464e80f5f4b46658"
                                        serviceDomain:@"http://hriygkee.bq.cloudappl.com"];
     
     return YES;

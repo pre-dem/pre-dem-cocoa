@@ -70,6 +70,22 @@
     return sharedInstance;
 }
 
++ (void)startWithAppKey:(nonnull NSString *)appKey
+          serviceDomain:(nonnull NSString *)serviceDomain{
+    [[PREDManager sharedPREDManager] startWithAppKey:appKey serviceDomain:serviceDomain];
+}
+
+
++ (void)diagnose:(nonnull NSString *)host
+        complete:(nonnull PREDNetDiagCompleteHandler)complete{
+    [[PREDManager sharedPREDManager] diagnose:host complete:complete];
+}
+
++ (void)trackEventWithName:(nonnull NSString *)eventName
+                     event:(nonnull NSDictionary*)event{
+    
+}
+
 - (instancetype)init {
     if ((self = [super init])) {
         _serverURL = PRED_URL;
@@ -198,15 +214,15 @@
     }
 }
 
-- (PREDLogLevel)logLevel {
++ (PREDLogLevel)logLevel {
     return PREDLogger.currentLogLevel;
 }
 
-- (void)setLogLevel:(PREDLogLevel)logLevel {
++ (void)setLogLevel:(PREDLogLevel)logLevel {
     PREDLogger.currentLogLevel = logLevel;
 }
 
-- (void)setLogHandler:(PREDLogHandler)logHandler {
++ (void)setLogHandler:(PREDLogHandler)logHandler {
     [PREDLogger setLogHandler:logHandler];
 }
 
@@ -239,11 +255,11 @@
     }
 }
 
-- (NSString *)version {
++ (NSString *)version {
     return [PREDVersion getSDKVersion];
 }
 
-- (NSString *)build {
++ (NSString *)build {
     return [PREDVersion getSDKBuild];
 }
 
