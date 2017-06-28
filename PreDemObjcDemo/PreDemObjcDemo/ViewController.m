@@ -38,7 +38,7 @@
 }
 
 - (IBAction)diagnoseNetwork:(id)sender {
-    [[PREDManager sharedPREDManager] diagnose:@"www.baidu.com" complete:^(PREDNetDiagResult * _Nonnull result) {
+    [PREDManager  diagnose:@"www.baidu.com" complete:^(PREDNetDiagResult * _Nonnull result) {
         NSLog(@"new diagnose completed with result:\n %@", result);
     }];
 }
@@ -48,9 +48,7 @@
 }
 
 - (IBAction)diyEvent:(id)sender {
-    PREDMetricsManager *metricsManager = [PREDManager sharedPREDManager].metricsManager;
-    
-    [metricsManager trackEventWithName:@"viewDidLoadEvent" properties:@{@"helloKey": @"worldValue"} measurements:@{@"helloKey": @7}];
+    [PREDManager trackEventWithName:@"viewDidLoadEvent" event:@{@"helloKey": @"worldValue", @"hellonum": @7}];
 }
 
 - (void)didReceiveMemoryWarning {

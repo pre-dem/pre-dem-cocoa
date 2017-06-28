@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "QNNetDiag.h"
-#import "PreDemObjc.h"
+#import "PREDemObjc.h"
 
 @interface PREDNetDiagResult : NSObject
 
