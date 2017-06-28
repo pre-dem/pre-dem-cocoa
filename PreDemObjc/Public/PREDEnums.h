@@ -2,7 +2,6 @@
 //  PREDEnums.h
 //  PreDemObjc
 //
-//  Created by Lukas Spieß on 08/10/15.
 //
 //
 

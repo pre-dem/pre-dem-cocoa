@@ -9,6 +9,8 @@
 #ifndef PREDManagerPrivate_h
 #define PREDManagerPrivate_h
 
+#import <UIKit/UIKit.h>
+
 #import "PREDManager.h"
 #import "PREDConfigManager.h"
 
