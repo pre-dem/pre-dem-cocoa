@@ -233,12 +233,12 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
             [[NSUserDefaults standardUserDefaults] setInteger:_crashManagerStatus forKey:kPREDCrashManagerStatus];
         }
         
-        _crashesDir = pres_settingsDir();
+        _crashesDir = PREDHelper.settingsDir;
         _settingsFile = [_crashesDir stringByAppendingPathComponent:PRED_CRASH_SETTINGS];
         _analyzerInProgressFile = [_crashesDir stringByAppendingPathComponent:PRED_CRASH_ANALYZER];
         
         
-        if (!PREDBundle() && !pres_isRunningInAppExtension()) {
+        if (!PREDBundle() && !PREDHelper.isRunningInAppExtension) {
             PREDLogWarning(@"%@ is missing, will send reports automatically!", PRED_BUNDLE);
         }
     }
@@ -512,7 +512,7 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
                                                                                                    if (!_didLogLowMemoryWarning) {
                                                                                                        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kPREDAppDidReceiveLowMemoryNotification];
                                                                                                        _didLogLowMemoryWarning = YES;
-                                                                                                       if(pres_isPreiOS8Environment()) {
+                                                                                                       if(PREDHelper.isPreiOS8Environment) {
                                                                                                            // calling synchronize in pre-iOS 8 takes longer to sync than in iOS 8+, calling synchronize explicitly.
                                                                                                            [[NSUserDefaults standardUserDefaults] synchronize];
                                                                                                        }
@@ -541,7 +541,7 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
 - (void)leavingAppSafely {
     if (self.isAppNotTerminatingCleanlyDetectionEnabled) {
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kPREDAppWentIntoBackgroundSafely];
-        if(pres_isPreiOS8Environment()) {
+        if(PREDHelper.isPreiOS8Environment) {
             // calling synchronize in pre-iOS 8 takes longer to sync than in iOS 8+, calling synchronize explicitly.
             [[NSUserDefaults standardUserDefaults] synchronize];
         }
@@ -575,7 +575,7 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
                                    ];
             
             [[NSUserDefaults standardUserDefaults] setObject:uuidString forKey:kPREDAppUUIDs];
-            if(pres_isPreiOS8Environment()) {
+            if(PREDHelper.isPreiOS8Environment) {
                 // calling synchronize in pre-iOS 8 takes longer to sync than in iOS 8+, calling synchronize explicitly.
                 [[NSUserDefaults standardUserDefaults] synchronize];
             }
@@ -708,7 +708,7 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
 
 
 - (BOOL)isDebuggerAttached {
-    return pres_isDebuggerAttached();
+    return PREDHelper.isDebuggerAttached;
 }
 
 
@@ -868,7 +868,7 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
                     incidentIdentifier = (NSString *) CFBridgingRelease(CFUUIDCreateString(NULL, report.uuidRef));
                 }
                 
-                NSString *reporterKey = pres_appAnonID(NO) ?: @"";
+                NSString *reporterKey = PREDHelper.appAnonID ?: @"";
                 
                 _lastSessionCrashDetails = [[PREDCrashDetails alloc] initWithIncidentIdentifier:incidentIdentifier
                                                                                     reporterKey:reporterKey
@@ -991,7 +991,7 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
  * - Send pending approved crash reports
  */
 - (void)invokeDelayedProcessing {
-    if (!pres_isRunningInAppExtension() &&
+    if (!PREDHelper.isRunningInAppExtension &&
         [[UIApplication sharedApplication] applicationState] != UIApplicationStateActive) {
         return;
     }
@@ -1020,7 +1020,7 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
             _lastCrashFilename = [notApprovedReportFilename lastPathComponent];
         }
         
-        if (!PREDBundle() || pres_isRunningInAppExtension()) {
+        if (!PREDBundle() || PREDHelper.isRunningInAppExtension) {
             [self approveLatestCrashReport];
             [self sendNextCrashReport];
         } else if (_crashManagerStatus != PREDCrashManagerStatusAutoSend && notApprovedReportFilename) {
@@ -1029,7 +1029,7 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
                 [self.delegate crashManagerWillShowSubmitCrashReportAlert:self];
             }
             
-            NSString *appName = pres_appName(PREDLocalizedString(@"PreDemNamePlaceholder"));
+            NSString *appName = [PREDHelper appName:PREDLocalizedString(@"PreDemNamePlaceholder")];
             NSString *alertDescription = [NSString stringWithFormat:PREDLocalizedString(@"CrashDataFoundAnonymousDescription"), appName];
             
             // the crash report is not anonymous any more if username or useremail are not nil
@@ -1239,7 +1239,7 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
     
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kPREDAppDidReceiveLowMemoryNotification];
     
-    if(pres_isPreiOS8Environment()) {
+    if(PREDHelper.isPreiOS8Environment) {
         // calling synchronize in pre-iOS 8 takes longer to sync than in iOS 8+, calling synchronize explicitly.
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
@@ -1252,8 +1252,8 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
  *  Creates a fake crash report because the app was killed while being in foreground
  */
 - (void)createCrashReportForAppKill {
-    NSString *fakeReportUUID = pres_UUID();
-    NSString *fakeReporterKey = pres_appAnonID(NO) ?: @"???";
+    NSString *fakeReportUUID = PREDHelper.UUID;
+    NSString *fakeReporterKey = PREDHelper.appAnonID ?: @"???";
     
     NSString *fakeReportAppMarketingVersion = [[NSUserDefaults standardUserDefaults] objectForKey:kPREDAppMarketingVersion];
     
@@ -1425,7 +1425,7 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
             return;
         }
         
-        installString = pres_appAnonID(NO) ?: @"";
+        installString = PREDHelper.appAnonID ?: @"";
         
         if (report) {
             if (report.uuidRef != NULL) {

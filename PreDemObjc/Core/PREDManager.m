@@ -100,10 +100,9 @@ static NSString* app_ak(NSString* appKey){
         _disableCrashManager = NO;
         _disableMetricsManager = NO;
         
-        _appEnvironment = pres_currentAppEnvironment();
+        _appEnvironment = PREDHelper.currentAppEnvironment;
         _startManagerIsInvoked = NO;
-        
-        _installString = pres_appAnonID(NO);
+        _installString = PREDHelper.appAnonID;
         
         _configManager = [[PREDConfigManager alloc] init];
         _configManager.delegate = self;
@@ -137,7 +136,7 @@ static NSString* app_ak(NSString* appKey){
     // Fix bug where Application Support directory was encluded from backup
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSURL *appSupportURL = [[fileManager URLsForDirectory:NSApplicationSupportDirectory inDomains:NSUserDomainMask] lastObject];
-    pres_fixBackupAttributeForURL(appSupportURL);
+    [PREDHelper fixBackupAttributeForURL:appSupportURL];
     
     if (![self isSetUpOnMainThread]) return;
     
@@ -152,7 +151,7 @@ static NSString* app_ak(NSString* appKey){
     }
     
     // App Extensions can only use PREDCrashManager, so ignore all others automatically
-    if (pres_isRunningInAppExtension()) {
+    if (PREDHelper.isRunningInAppExtension) {
         return;
     }
     
@@ -236,17 +235,17 @@ static NSString* app_ak(NSString* appKey){
     if (value) {
         success = [PREDKeychainUtils storeUsername:key
                                        andPassword:value
-                                    forServiceName:pres_keychainPreDemObjcServiceName()
+                                    forServiceName:PREDHelper.keychainPreDemObjcServiceName
                                     updateExisting:YES
                                      accessibility:kSecAttrAccessibleAlwaysThisDeviceOnly
                                              error:&error];
     } else {
         updateType = @"delete";
         if ([PREDKeychainUtils getPasswordForUsername:key
-                                       andServiceName:pres_keychainPreDemObjcServiceName()
+                                       andServiceName:PREDHelper.keychainPreDemObjcServiceName
                                                 error:&error]) {
             success = [PREDKeychainUtils deleteItemForUsername:key
-                                                andServiceName:pres_keychainPreDemObjcServiceName()
+                                                andServiceName:PREDHelper.keychainPreDemObjcServiceName
                                                          error:&error];
         }
     }

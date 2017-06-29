@@ -107,7 +107,7 @@ static NSUInteger const PREDDefaultRequestLimit = 10;
 
 - (BOOL)isURLSessionSupported {
     id nsurlsessionClass = NSClassFromString(@"NSURLSessionUploadTask");
-    BOOL isUrlSessionSupported = (nsurlsessionClass && !pres_isRunningInAppExtension());
+    BOOL isUrlSessionSupported = (nsurlsessionClass && !PREDHelper.isRunningInAppExtension);
     return isUrlSessionSupported;
 }
 

@@ -79,7 +79,7 @@
 }
 
 - (NSString *)encodedAppIdentifier {
-    return pres_encodeAppIdentifier(_appIdentifier);
+    return [PREDHelper encodeAppIdentifier:_appIdentifier];
 }
 
 - (NSString *)getDevicePlatform {
@@ -134,7 +134,7 @@
     NSError *error = nil;
     return [PREDKeychainUtils storeUsername:key
                                 andPassword:stringValue
-                             forServiceName:pres_keychainPreDemObjcServiceName()
+                             forServiceName:PREDHelper.keychainPreDemObjcServiceName
                              updateExisting:YES
                                       error:&error];
 }
@@ -146,7 +146,7 @@
     NSError *error = nil;
     return [PREDKeychainUtils storeUsername:key
                                 andPassword:stringValue
-                             forServiceName:pres_keychainPreDemObjcServiceName()
+                             forServiceName:PREDHelper.keychainPreDemObjcServiceName
                              updateExisting:YES
                               accessibility:kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly
                                       error:&error];
@@ -158,14 +158,14 @@
     
     NSError *error = nil;
     return [PREDKeychainUtils getPasswordForUsername:key
-                                      andServiceName:pres_keychainPreDemObjcServiceName()
+                                      andServiceName:PREDHelper.keychainPreDemObjcServiceName
                                                error:&error];
 }
 
 - (BOOL)removeKeyFromKeychain:(NSString *)key {
     NSError *error = nil;
     return [PREDKeychainUtils deleteItemForUsername:key
-                                     andServiceName:pres_keychainPreDemObjcServiceName()
+                                     andServiceName:PREDHelper.keychainPreDemObjcServiceName
                                               error:&error];
 }
 

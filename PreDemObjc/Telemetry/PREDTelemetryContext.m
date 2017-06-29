@@ -30,21 +30,21 @@ static char *const PREDContextOperationsQueue = "net.hockeyapp.telemetryContextQ
         _persistence = persistence;
         _appIdentifier = appIdentifier;
         PREDDevice *deviceContext = [PREDDevice new];
-        deviceContext.model = pres_devicePlatform();
-        deviceContext.type = pres_deviceType();
-        deviceContext.osVersion = pres_osVersionBuild();
-        deviceContext.os = pres_osName();
-        deviceContext.deviceId = pres_appAnonID(NO);
-        deviceContext.locale = pres_deviceLocale();
-        deviceContext.language = pres_deviceLanguage();
-        deviceContext.screenResolution = pres_screenSize();
+        deviceContext.model = PREDHelper.devicePlatform;
+        deviceContext.type = PREDHelper.deviceType;
+        deviceContext.osVersion = PREDHelper.osVersionBuild;
+        deviceContext.os = PREDHelper.osName;
+        deviceContext.deviceId = PREDHelper.appAnonID;
+        deviceContext.locale = PREDHelper.deviceLocale;
+        deviceContext.language = PREDHelper.deviceLanguage;
+        deviceContext.screenResolution = PREDHelper.screenSize;
         deviceContext.oemName = @"Apple";
         
         PREDInternal *internalContext = [PREDInternal new];
-        internalContext.sdkVersion = pres_sdkVersion();
+        internalContext.sdkVersion = PREDHelper.sdkVersion;
         
         PREDApplication *applicationContext = [PREDApplication new];
-        applicationContext.version = pres_appVersion();
+        applicationContext.version = PREDHelper.appVersion;
         
         PREDUser *userContext = [self loadUser];
         if (!userContext) {
@@ -73,7 +73,7 @@ static char *const PREDContextOperationsQueue = "net.hockeyapp.telemetryContextQ
 - (PREDUser *)newUser {
     return ({
         PREDUser *user = [PREDUser new];
-        user.userId = pres_appAnonID(NO);
+        user.userId = PREDHelper.appAnonID;
         user;
     });
 }
