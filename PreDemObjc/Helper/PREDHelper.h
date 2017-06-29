@@ -58,12 +58,18 @@ FOUNDATION_EXPORT NSString *const kPREDExcludeApplicationSupportFromBackup;
 @property(class, readonly) NSString *sdkVersion;
 @property(class, readonly) NSString *appVersion;
 @property(class, readonly) NSString *appAnonID;
+@property(class, readonly) NSString *appName;
+@property(class, readonly) NSString *appBundleId;
+@property(class, readonly) NSString *osVersion;
+@property(class, readonly) NSString *deviceModel;
 
 + (void)fixBackupAttributeForURL:(NSURL *)directoryURL;
 + (NSString *)encodeAppIdentifier:(NSString *)inputString;
 + (NSString *)appName:(NSString *)placeHolderString;
 + (NSString *)URLEncodedString:(NSString *)inputString;
-+ (NSString *)base64String:(NSData *)data length:(unsigned long)length;
 + (NSString *)utcDateString:(NSDate *)date;
++ (NSDictionary*)getObjectData:(id)obj;
++ (NSString *)MD5:(NSString *)mdStr;
+
 
 @end
