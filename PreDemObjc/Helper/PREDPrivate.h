@@ -51,7 +51,6 @@
 
 NSBundle *PREDBundle(void);
 NSString *PREDLocalizedString(NSString *stringToken);
-NSString *PREDMD5(NSString *str);
 
 #ifndef __IPHONE_8_0
 #define __IPHONE_8_0     80000

@@ -67,10 +67,6 @@
 
 #pragma mark - Private
 
-- (void)reportError:(NSError *)error {
-    PREDLogError(@"%@", [error localizedDescription]);
-}
-
 - (NSString *)encodedAppIdentifier {
     return [PREDHelper encodeAppIdentifier:_appIdentifier];
 }

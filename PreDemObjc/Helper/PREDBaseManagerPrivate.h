@@ -44,16 +44,6 @@
 
 - (void)startManager;
 
-/**
- * by default, just logs the message
- *
- * can be overridden by subclasses to do their own error handling,
- * e.g. to show UI
- *
- * @param error NSError
- */
-- (void)reportError:(NSError *)error;
-
 /** url encoded version of the appIdentifier
  
  where appIdentifier is either the value this object was initialized with,
