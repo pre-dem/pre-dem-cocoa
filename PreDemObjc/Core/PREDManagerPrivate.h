@@ -193,6 +193,8 @@ PREDConfigManagerDelegate
 
 +(PREDManager *_Nonnull)sharedPREDManager;
 
+-(nonnull NSString*) baseUrl;
+
 @end
 
 //extern PREDConfigManager* _Nonnull g_pred_sharedmanager();

@@ -9,15 +9,14 @@
 #import "PREDHTTPMonitorSender.h"
 #import "PREDGZIP.h"
 #import "PREDLogger.h"
+#import "PREDManagerPrivate.h"
 
 #define PREDSendLogDefaultInterval  10
 #define PREDMaxLogLenth            (1024 * 64)
 #define PREDMaxLogIndex             100
 #define PREDSendTimeOut             10
 
-#define PREDErrorDomain             @"error.sdk.presniff"
-#define PREDHTTPMonitorDomain       @"http://localhost:8080"
-#define PREDHTTPMonitorReportPath   @"/v1/http_monitor"
+#define PREDErrorDomain             @"error.sdk.predem"
 #define PREDReadFileIndexKey        @"read_file_index"
 #define PREDReadFilePositionKey     @"read_file_position"
 #define PREDWriteFileIndexKey       @"write_file_index"
@@ -344,7 +343,7 @@ NSURLSessionDelegate
             return;
         }
         
-        NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", PREDHTTPMonitorDomain, PREDHTTPMonitorReportPath]]];
+        NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@http-stats/i", [[PREDManager sharedPREDManager] baseUrl ]]]];
         request.HTTPMethod = @"POST";
         request.timeoutInterval = PREDSendTimeOut;
         request.HTTPBody = dataToSend;
