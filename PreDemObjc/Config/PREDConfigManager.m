@@ -8,8 +8,7 @@
 
 #import "PREDConfigManager.h"
 #import "PREDLogger.h"
-
-#define PREDConfigServerDomain  @"http://localhost:8080"
+#import "PREDManagerPrivate.h"
 
 @interface PREDConfigManager ()
 <
@@ -31,13 +30,13 @@ NSURLSessionDelegate
 
 - (PREDConfig *)getConfigWithAppKey:(NSString *)appKey {
     PREDConfig *defaultConfig;
-    NSDictionary *dic = [NSUserDefaults.standardUserDefaults objectForKey:@"presniff_app_config"];
+    NSDictionary *dic = [NSUserDefaults.standardUserDefaults objectForKey:@"predem_app_config"];
     if (dic && [dic respondsToSelector:@selector(objectForKey:)]) {
         defaultConfig = [PREDConfig configWithDic:dic];
     } else {
         defaultConfig = PREDConfig.defaultConfig;
     }
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/app_config?appkey=%@", PREDConfigServerDomain, appKey]]];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@app-config/i", [[PREDManager sharedPREDManager]baseUrl]]]];
     [NSURLProtocol setProperty:@YES
                         forKey:@"PREDInternalRequest"
                      inRequest:request];
@@ -58,7 +57,7 @@ NSURLSessionDelegate
               __strong typeof(wSelf) strongSelf = wSelf;
               NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
               if ([dic respondsToSelector:@selector(objectForKey:)]) {
-                  [NSUserDefaults.standardUserDefaults setObject:dic forKey:@"presniff_app_config"];
+                  [NSUserDefaults.standardUserDefaults setObject:dic forKey:@"predem_app_config"];
                   PREDConfig *config = [PREDConfig configWithDic:dic];
                   [strongSelf.delegate configManager:strongSelf didReceivedConfig:config];
               } else {

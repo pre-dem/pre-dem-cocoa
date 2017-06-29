@@ -41,9 +41,12 @@
 #import "PREDMetricsManagerPrivate.h"
 #import "PREDURLProtocol.h"
 
+static NSString* app_ak(NSString* appKey){
+    return [appKey substringToIndex:8];
+}
+
 @implementation PREDManager {
-    NSString *_appIdentifier;
-    NSString *_liveIdentifier;
+    NSString *_appKey;
     
     BOOL _validAppIdentifier;
     
@@ -100,7 +103,6 @@
         _appEnvironment = pres_currentAppEnvironment();
         _startManagerIsInvoked = NO;
         
-        _liveIdentifier = nil;
         _installString = pres_appAnonID(NO);
         
         _configManager = [PREDConfigManager sharedInstance];
@@ -114,7 +116,7 @@
 #pragma mark - Public Instance Methods (Configuration)
 
 - (void)startWithAppKey:(NSString *)appKey serviceDomain:(NSString *)serviceDomain {
-    _appIdentifier = [appKey copy];
+    _appKey = [appKey copy];
     
     [self initializeModules];
     
@@ -330,7 +332,7 @@
         return;
     }
     
-    _validAppIdentifier = [self checkValidityOfAppIdentifier:_appIdentifier];
+    _validAppIdentifier = [self checkValidityOfAppIdentifier:_appKey];
     
     if (![self isSetUpOnMainThread]) return;
     
@@ -338,14 +340,14 @@
     
     if (_validAppIdentifier) {
         PREDLogDebug(@"Setup CrashManager");
-        _crashManager = [[PREDCrashManager alloc] initWithAppIdentifier:_appIdentifier
+        _crashManager = [[PREDCrashManager alloc] initWithAppIdentifier:app_ak(_appKey)
                                                          appEnvironment:_appEnvironment
                                                         hockeyAppClient:[self hockeyAppClient]];
         _crashManager.delegate = _delegate;
         
         
         PREDLogDebug(@"Setup MetricsManager");
-        _metricsManager = [[PREDMetricsManager alloc] initWithAppIdentifier:_appIdentifier appEnvironment:_appEnvironment];
+        _metricsManager = [[PREDMetricsManager alloc] initWithAppIdentifier:app_ak(_appKey) appEnvironment:_appEnvironment];
         
         _managersInitialized = YES;
     } else {
@@ -361,7 +363,7 @@
 
 - (void)diagnose:(NSString *)host
         complete:(PREDNetDiagCompleteHandler)complete {
-    [PREDNetDiag diagnose:host appKey:_appIdentifier complete:complete];
+    [PREDNetDiag diagnose:host appKey:app_ak(_appKey) complete:complete];
 }
 
 - (void)configManager:(PREDConfigManager *)manager didReceivedConfig:(PREDConfig *)config {
@@ -376,7 +378,7 @@
     if (identifier) {
         NSCharacterSet *hexSet = [NSCharacterSet characterSetWithCharactersInString:@"0123456789abcdef"];
         NSCharacterSet *inStringSet = [NSCharacterSet characterSetWithCharactersInString:identifier];
-        result = ([identifier length] == 32) && ([hexSet isSupersetOfSet:inStringSet]);
+        result = [hexSet isSupersetOfSet:inStringSet];
     }
     
     return result;
@@ -390,6 +392,10 @@
             PREDLogError(@"The %@ is invalid! Please use the PreDem app identifier you find on the apps website on PreDem! The SDK is disabled!", environment);
         }
     }
+}
+
+-(nonnull NSString*) baseUrl{
+    return [NSString stringWithFormat:@"http://%@/v1/%@/", _serverURL, app_ak(_appKey)];
 }
 
 @end

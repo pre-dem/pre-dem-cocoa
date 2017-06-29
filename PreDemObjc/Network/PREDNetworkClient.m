@@ -26,6 +26,7 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  */
 #import "PREDNetworkClient.h"
+#import "PREDManagerPrivate.h"
 
 NSString * const kPREDNetworkClientBoundary = @"----FOO";
 
@@ -52,7 +53,8 @@ NSString * const kPREDNetworkClientBoundary = @"----FOO";
     NSParameterAssert(params == nil || [method isEqualToString:@"POST"] || [method isEqualToString:@"GET"]);
     path = path ? : @"";
     
-    NSURL *endpoint = [self.baseURL URLByAppendingPathComponent:path];
+    NSString* url =  [NSString stringWithFormat:@"%@%@", [[PREDManager sharedPREDManager] baseUrl], path];
+    NSURL *endpoint = [NSURL URLWithString:url];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:endpoint];
     request.HTTPMethod = method;
     [NSURLProtocol setProperty:@YES

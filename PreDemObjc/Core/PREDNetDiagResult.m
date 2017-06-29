@@ -8,12 +8,11 @@
 
 #import "PREDNetDiagResult.h"
 #import "PREDUtilities.h"
+#import "PREDManagerPrivate.h"
 
 #define PREDTotalResultNeeded   5
 #define PREDSendRetryInterval   10
 #define PREDSendMaxRetryTimes   5
-#define PREDNetDiagDomain       @"http://localhost:8080"
-#define PREDNetDiagPath         @"/v1/net_diag"
 
 @interface PREDNetDiagResult ()
 
@@ -113,7 +112,7 @@
 }
 
 - (void)sendReport:(NSString *)appKey {
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@/%@", PREDNetDiagDomain, PREDNetDiagPath, appKey]]];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@net-diags/i", [[PREDManager sharedPREDManager] baseUrl]]]];
     request.HTTPMethod = @"POST";
     NSError *err;
     request.HTTPBody = [NSJSONSerialization dataWithJSONObject:[self toDic] options:0 error:&err];

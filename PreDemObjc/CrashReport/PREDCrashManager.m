@@ -1566,7 +1566,7 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
 }
 
 - (NSMutableURLRequest *)requestWithBoundary:(NSString *)boundary {
-    NSString *postCrashPath = [NSString stringWithFormat:@"v1/%@/crashes/i", self.encodedAppIdentifier];
+    NSString *postCrashPath = @"crashes/i";
     
     NSMutableURLRequest *request = [self.hockeyAppClient requestWithMethod:@"POST"
                                                                       path:postCrashPath
