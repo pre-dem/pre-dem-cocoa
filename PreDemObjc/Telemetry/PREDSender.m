@@ -84,7 +84,7 @@ static NSUInteger const PREDDefaultRequestLimit = 10;
 
 - (void)sendData:(nonnull NSData *)data withFilePath:(nonnull NSString *)filePath {
     if (data && data.length > 0) {
-        NSData *gzippedData = [data pres_gzippedData];
+        NSData *gzippedData = [data gzippedData];
         NSURLRequest *request = [self requestForData:gzippedData];
         
         [self sendRequest:request filePath:filePath];

@@ -336,7 +336,7 @@ NSURLSessionDelegate
             return;
         }
         
-        NSData *dataToSend = [dataUncompressed pres_gzippedData];
+        NSData *dataToSend = [dataUncompressed gzippedData];
         if (!dataToSend || !dataToSend.length) {
             PREDLogError(@"compressed data is empty");
             _isSendingData = NO;

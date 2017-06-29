@@ -37,9 +37,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface NSData (PREDGZIP)
 
-- (nullable NSData *)pres_gzippedDataWithCompressionLevel:(float)level;
-- (nullable NSData *)pres_gzippedData;
-- (nullable NSData *)pres_gunzippedData;
+- (nullable NSData *)gzippedDataWithCompressionLevel:(float)level;
+- (nullable NSData *)gzippedData;
+- (nullable NSData *)gunzippedData;
 
 @end
 

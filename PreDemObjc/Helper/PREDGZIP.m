@@ -39,7 +39,7 @@ static const NSUInteger ChunkSize = 16384;
 
 @implementation NSData (PREDGZIP)
 
-- (NSData *)pres_gzippedDataWithCompressionLevel:(float)level
+- (NSData *)gzippedDataWithCompressionLevel:(float)level
 {
     if ([self length])
     {
@@ -74,12 +74,12 @@ static const NSUInteger ChunkSize = 16384;
     return nil;
 }
 
-- (NSData *)pres_gzippedData
+- (NSData *)gzippedData
 {
-    return [self pres_gzippedDataWithCompressionLevel:-1.0f];
+    return [self gzippedDataWithCompressionLevel:-1.0f];
 }
 
-- (NSData *)pres_gunzippedData
+- (NSData *)gunzippedData
 {
     if ([self length])
     {
