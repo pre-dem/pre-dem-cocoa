@@ -328,7 +328,7 @@ NSString *const kPREDExcludeApplicationSupportFromBackup = @"kPREDExcludeApplica
 }
 
 + (NSString *)sdkVersion {
-    return [NSString stringWithFormat:@"ios:%@", [PREDVersion getSDKVersion]];
+    return [NSString stringWithFormat:@"%@", [PREDVersion getSDKVersion]];
 }
 
 + (NSString *)appVersion {
