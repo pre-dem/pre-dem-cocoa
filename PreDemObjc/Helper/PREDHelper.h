@@ -48,7 +48,6 @@ FOUNDATION_EXPORT NSString *const kPREDExcludeApplicationSupportFromBackup;
 @property(class, readonly) PREDEnvironment currentAppEnvironment;
 @property(class, readonly) BOOL isRunningInAppExtension;
 @property(class, readonly) BOOL isDebuggerAttached;
-@property(class, readonly) NSString *devicePlatform;
 @property(class, readonly) NSString *deviceType;
 @property(class, readonly) NSString *osVersionBuild;
 @property(class, readonly) NSString *osName;
@@ -62,6 +61,7 @@ FOUNDATION_EXPORT NSString *const kPREDExcludeApplicationSupportFromBackup;
 @property(class, readonly) NSString *appBundleId;
 @property(class, readonly) NSString *osVersion;
 @property(class, readonly) NSString *deviceModel;
+@property(class, readonly) NSString *executableUUID;
 
 + (void)fixBackupAttributeForURL:(NSURL *)directoryURL;
 + (NSString *)encodeAppIdentifier:(NSString *)inputString;
@@ -70,6 +70,5 @@ FOUNDATION_EXPORT NSString *const kPREDExcludeApplicationSupportFromBackup;
 + (NSString *)utcDateString:(NSDate *)date;
 + (NSDictionary*)getObjectData:(id)obj;
 + (NSString *)MD5:(NSString *)mdStr;
-
 
 @end

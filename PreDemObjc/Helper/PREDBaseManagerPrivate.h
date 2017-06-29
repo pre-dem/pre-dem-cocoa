@@ -61,13 +61,6 @@
  */
 - (NSString *)encodedAppIdentifier;
 
-// device / application helpers
-- (NSString *)getDevicePlatform;
-- (NSString *)executableUUID;
-
-// Date helpers
-- (NSDate *)parseRFC3339Date:(NSString *)dateString;
-
 // keychain helpers
 - (BOOL)addStringValueToKeychain:(NSString *)stringValue forKey:(NSString *)key;
 - (BOOL)addStringValueToKeychainForThisDeviceOnly:(NSString *)stringValue forKey:(NSString *)key;

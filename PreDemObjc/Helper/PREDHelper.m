@@ -36,6 +36,8 @@
 #import <sys/sysctl.h>
 #import <objc/runtime.h>
 #import <CommonCrypto/CommonDigest.h>
+#import <mach-o/dyld.h>
+#import <mach-o/loader.h>
 
 static NSString *const kPREDUtcDateFormatter = @"utcDateFormatter";
 NSString *const kPREDExcludeApplicationSupportFromBackup = @"kPREDExcludeApplicationSupportFromBackup";
@@ -249,19 +251,6 @@ NSString *const kPREDExcludeApplicationSupportFromBackup = @"kPREDExcludeApplica
     return debuggerIsAttached;
 }
 
-+ (NSString *)devicePlatform {
-    
-    size_t size;
-    sysctlbyname("hw.machine", NULL, &size, NULL, 0);
-    char *answer = (char*)malloc(size);
-    if (answer == NULL)
-    return @"";
-    sysctlbyname("hw.machine", answer, &size, NULL, 0);
-    NSString *platform = [NSString stringWithCString:answer encoding: NSUTF8StringEncoding];
-    free(answer);
-    return platform;
-}
-
 + (NSString *)deviceType {
     
     UIUserInterfaceIdiom idiom = [UIDevice currentDevice].userInterfaceIdiom;
@@ -406,6 +395,39 @@ NSString *const kPREDExcludeApplicationSupportFromBackup = @"kPREDExcludeApplica
     NSString *platform = [NSString stringWithCString:answer encoding: NSUTF8StringEncoding];
     free(answer);
     return platform;
+}
+
++ (NSString *)executableUUID {
+    const struct mach_header *executableHeader = NULL;
+    for (uint32_t i = 0; i < _dyld_image_count(); i++) {
+        const struct mach_header *header = _dyld_get_image_header(i);
+        if (header->filetype == MH_EXECUTE) {
+            executableHeader = header;
+            break;
+        }
+    }
+    
+    if (!executableHeader)
+    return @"";
+    
+    BOOL is64bit = executableHeader->magic == MH_MAGIC_64 || executableHeader->magic == MH_CIGAM_64;
+    uintptr_t cursor = (uintptr_t)executableHeader + (is64bit ? sizeof(struct mach_header_64) : sizeof(struct mach_header));
+    const struct segment_command *segmentCommand = NULL;
+    for (uint32_t i = 0; i < executableHeader->ncmds; i++, cursor += segmentCommand->cmdsize) {
+        segmentCommand = (struct segment_command *)cursor;
+        if (segmentCommand->cmd == LC_UUID) {
+            const struct uuid_command *uuidCommand = (const struct uuid_command *)segmentCommand;
+            const uint8_t *uuid = uuidCommand->uuid;
+            return [[NSString stringWithFormat:@"%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X",
+                     uuid[0], uuid[1], uuid[2], uuid[3],
+                     uuid[4], uuid[5], uuid[6], uuid[7],
+                     uuid[8], uuid[9], uuid[10], uuid[11],
+                     uuid[12], uuid[13], uuid[14], uuid[15]]
+                    lowercaseString];
+        }
+    }
+    
+    return @"";
 }
 
 + (void)fixBackupAttributeForURL:(NSURL *)directoryURL {

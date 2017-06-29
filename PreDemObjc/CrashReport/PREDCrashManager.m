@@ -571,7 +571,7 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
             
             NSString *uuidString =[NSString stringWithFormat:@"<uuid type=\"app\" arch=\"%@\">%@</uuid>",
                                    [self deviceArchitecture],
-                                   [self executableUUID]
+                                   PREDHelper.executableUUID
                                    ];
             
             [[NSUserDefaults standardUserDefaults] setObject:uuidString forKey:kPREDAppUUIDs];
@@ -1270,7 +1270,7 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
     }
     
     NSString *fakeReportAppBundleIdentifier = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleIdentifier"];
-    NSString *fakeReportDeviceModel = [self getDevicePlatform] ?: @"Unknown";
+    NSString *fakeReportDeviceModel = PREDHelper.deviceModel ?: @"Unknown";
     NSString *fakeReportAppUUIDs = [[NSUserDefaults standardUserDefaults] objectForKey:kPREDAppUUIDs] ?: @"";
     
     NSString *fakeSignalName = kPREDCrashKillSignal;
@@ -1437,7 +1437,7 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
             appBundleMarketingVersion = report.applicationInfo.applicationMarketingVersion ?: @"";
             appBundleVersion = report.applicationInfo.applicationVersion;
             osVersion = report.systemInfo.operatingSystemVersion;
-            deviceModel = [self getDevicePlatform];
+            deviceModel = PREDHelper.deviceModel;
             appBinaryUUIDs = [self extractAppUUIDs:report];
             if ([report.applicationInfo.applicationVersion compare:[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"]] == NSOrderedSame) {
                 _crashIdenticalCurrentVersion = YES;
