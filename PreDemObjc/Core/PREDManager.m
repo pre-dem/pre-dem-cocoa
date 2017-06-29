@@ -42,7 +42,7 @@
 #import "PREDURLProtocol.h"
 
 static NSString* app_ak(NSString* appKey){
-    return [appKey substringToIndex:20];
+    return [appKey substringToIndex:8];
 }
 
 @implementation PREDManager {
@@ -378,7 +378,7 @@ static NSString* app_ak(NSString* appKey){
     if (identifier) {
         NSCharacterSet *hexSet = [NSCharacterSet characterSetWithCharactersInString:@"0123456789abcdef"];
         NSCharacterSet *inStringSet = [NSCharacterSet characterSetWithCharactersInString:identifier];
-        result = ([identifier length] == 32) && ([hexSet isSupersetOfSet:inStringSet]);
+        result = [hexSet isSupersetOfSet:inStringSet];
     }
     
     return result;
