@@ -91,7 +91,6 @@ static NSString* app_ak(NSString* appKey){
 
 - (instancetype)init {
     if ((self = [super init])) {
-        _serverURL = PRED_URL;
         _delegate = nil;
         _managersInitialized = NO;
         
@@ -117,11 +116,11 @@ static NSString* app_ak(NSString* appKey){
 - (void)startWithAppKey:(NSString *)appKey serviceDomain:(NSString *)serviceDomain {
     _appKey = [appKey copy];
     
+    [self setServerURL:serviceDomain];
+    
     [self initializeModules];
     
     [self applyConfig:[_configManager getConfigWithAppKey:appKey]];
-    
-    [self setServerURL:serviceDomain];
     
     [self startManager];
 }
@@ -184,16 +183,18 @@ static NSString* app_ak(NSString* appKey){
 }
 
 - (void)setServerURL:(NSString *)aServerURL {
-    // ensure url ends with a trailing slash
-    if (![aServerURL hasSuffix:@"/"]) {
-        aServerURL = [NSString stringWithFormat:@"%@/", aServerURL];
+    if (!aServerURL) {
+        aServerURL = PRED_DEFAULT_URL;
+    }
+    if (![aServerURL hasPrefix:@"http://"] && ![aServerURL hasPrefix:@"https://"]) {
+        aServerURL = [NSString stringWithFormat:@"http://%@", aServerURL];
     }
     
     if (_serverURL != aServerURL) {
         _serverURL = [aServerURL copy];
         
         if (_hockeyAppClient) {
-            _hockeyAppClient.baseURL = [NSURL URLWithString:_serverURL ?: PRED_URL];
+            _hockeyAppClient.baseURL = [NSURL URLWithString:_serverURL];
         }
     }
 }
@@ -394,7 +395,7 @@ static NSString* app_ak(NSString* appKey){
 }
 
 -(nonnull NSString*) baseUrl{
-    return [NSString stringWithFormat:@"http://%@/v1/%@/", _serverURL, app_ak(_appKey)];
+    return [NSString stringWithFormat:@"%@/v1/%@/", _serverURL, app_ak(_appKey)];
 }
 
 @end

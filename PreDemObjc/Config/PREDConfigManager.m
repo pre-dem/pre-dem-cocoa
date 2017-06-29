@@ -11,6 +11,8 @@
 #import "PREDManagerPrivate.h"
 #import "PREDHelper.h"
 
+#define PREDConfigRetryInterval 300
+
 @interface PREDConfigManager ()
 <
 NSURLSessionDelegate
@@ -46,16 +48,18 @@ NSURLSessionDelegate
     }
     
     NSDictionary *info = @{
-                           @"appName": PREDHelper.appName,
-                           @"appBundleId": PREDHelper.appBundleId,
-                           @"appVersion": PREDHelper.appVersion,
-                           @"deviceId": PREDHelper.appAnonID,
-                           @"sdkVersion": PREDHelper.sdkVersion,
-                           @"deviceModel": PREDHelper.deviceModel,
-                           @"osName": PREDHelper.osName,
-                           @"osVersion": PREDHelper.osVersion
+                           @"app_name": PREDHelper.appName,
+                           @"app_bundle_id": PREDHelper.appBundleId,
+                           @"app_version": PREDHelper.appVersion,
+                           @"device_id": PREDHelper.appAnonID,
+                           @"sdk_version": PREDHelper.sdkVersion,
+                           @"device_model": PREDHelper.deviceModel,
+                           @"os_name": PREDHelper.osName,
+                           @"os_version": PREDHelper.osVersion
                            };
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@app-config/i", [[PREDManager sharedPREDManager]baseUrl]]]];    request.HTTPMethod = @"POST";
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@app-config/i", [[PREDManager sharedPREDManager] baseUrl]]]];
+    request.HTTPMethod = @"POST";
+    [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     NSError *err;
     request.HTTPBody = [NSJSONSerialization dataWithJSONObject:info options:0 error:&err];
     if (err) {
@@ -74,7 +78,7 @@ NSURLSessionDelegate
           NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
           if (error || httpResponse.statusCode != 200) {
               PREDLogError(@"%@", error.localizedDescription);
-              dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(30 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+              dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(PREDConfigRetryInterval * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                   [self getConfigWithAppKey:appKey];
               });
           } else {

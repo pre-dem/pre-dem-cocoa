@@ -51,7 +51,7 @@
 
 - (instancetype)init {
     if ((self = [super init])) {
-        _serverURL = PRED_URL;
+        _serverURL = PRED_DEFAULT_URL;
     }
     return self;
 }
