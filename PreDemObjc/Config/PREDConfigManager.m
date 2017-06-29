@@ -11,8 +11,6 @@
 #import "PREDManagerPrivate.h"
 #import "PREDHelper.h"
 
-#define PREDConfigServerDomain  @"http://localhost:8080"
-
 @interface PREDConfigManager ()
 <
 NSURLSessionDelegate
