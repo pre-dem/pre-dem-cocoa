@@ -75,49 +75,6 @@
     return [PREDHelper encodeAppIdentifier:_appIdentifier];
 }
 
-- (BOOL)addStringValueToKeychain:(NSString *)stringValue forKey:(NSString *)key {
-    if (!key || !stringValue)
-        return NO;
-    
-    NSError *error = nil;
-    return [PREDKeychainUtils storeUsername:key
-                                andPassword:stringValue
-                             forServiceName:PREDHelper.keychainPreDemObjcServiceName
-                             updateExisting:YES
-                                      error:&error];
-}
-
-- (BOOL)addStringValueToKeychainForThisDeviceOnly:(NSString *)stringValue forKey:(NSString *)key {
-    if (!key || !stringValue)
-        return NO;
-    
-    NSError *error = nil;
-    return [PREDKeychainUtils storeUsername:key
-                                andPassword:stringValue
-                             forServiceName:PREDHelper.keychainPreDemObjcServiceName
-                             updateExisting:YES
-                              accessibility:kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly
-                                      error:&error];
-}
-
-- (NSString *)stringValueFromKeychainForKey:(NSString *)key {
-    if (!key)
-        return nil;
-    
-    NSError *error = nil;
-    return [PREDKeychainUtils getPasswordForUsername:key
-                                      andServiceName:PREDHelper.keychainPreDemObjcServiceName
-                                               error:&error];
-}
-
-- (BOOL)removeKeyFromKeychain:(NSString *)key {
-    NSError *error = nil;
-    return [PREDKeychainUtils deleteItemForUsername:key
-                                     andServiceName:PREDHelper.keychainPreDemObjcServiceName
-                                              error:&error];
-}
-
-
 #pragma mark - Manager Control
 
 - (void)startManager {

@@ -332,9 +332,9 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
     [_fileManager removeItemAtPath:[filename stringByAppendingString:@".desc"] error:&error];
     
     NSString *cacheFilename = [filename lastPathComponent];
-    [self removeKeyFromKeychain:[NSString stringWithFormat:@"%@.%@", cacheFilename, kPREDCrashMetaUserName]];
-    [self removeKeyFromKeychain:[NSString stringWithFormat:@"%@.%@", cacheFilename, kPREDCrashMetaUserEmail]];
-    [self removeKeyFromKeychain:[NSString stringWithFormat:@"%@.%@", cacheFilename, kPREDCrashMetaUserID]];
+    [PREDHelper removeKeyFromKeychain:[NSString stringWithFormat:@"%@.%@", cacheFilename, kPREDCrashMetaUserName]];
+    [PREDHelper removeKeyFromKeychain:[NSString stringWithFormat:@"%@.%@", cacheFilename, kPREDCrashMetaUserEmail]];
+    [PREDHelper removeKeyFromKeychain:[NSString stringWithFormat:@"%@.%@", cacheFilename, kPREDCrashMetaUserID]];
     
     [_crashFiles removeObject:filename];
     [_approvedCrashReports removeObjectForKey:filename];
@@ -374,16 +374,16 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
     }
     
     if (userProvidedMetaData.userName && [userProvidedMetaData.userName length] > 0) {
-        [self addStringValueToKeychain:userProvidedMetaData.userName forKey:[NSString stringWithFormat:@"%@.%@", _lastCrashFilename, kPREDCrashMetaUserName]];
+        [PREDHelper addStringValueToKeychain:userProvidedMetaData.userName forKey:[NSString stringWithFormat:@"%@.%@", _lastCrashFilename, kPREDCrashMetaUserName]];
         
     }
     
     if (userProvidedMetaData.userEmail && [userProvidedMetaData.userEmail length] > 0) {
-        [self addStringValueToKeychain:userProvidedMetaData.userEmail forKey:[NSString stringWithFormat:@"%@.%@", _lastCrashFilename, kPREDCrashMetaUserEmail]];
+        [PREDHelper addStringValueToKeychain:userProvidedMetaData.userEmail forKey:[NSString stringWithFormat:@"%@.%@", _lastCrashFilename, kPREDCrashMetaUserEmail]];
     }
     
     if (userProvidedMetaData.userID && [userProvidedMetaData.userID length] > 0) {
-        [self addStringValueToKeychain:userProvidedMetaData.userID forKey:[NSString stringWithFormat:@"%@.%@", _lastCrashFilename, kPREDCrashMetaUserID]];
+        [PREDHelper addStringValueToKeychain:userProvidedMetaData.userID forKey:[NSString stringWithFormat:@"%@.%@", _lastCrashFilename, kPREDCrashMetaUserID]];
         
     }
 }
@@ -623,7 +623,7 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
     NSString *userID;
     
     // first check the global keychain storage
-    NSString *userIdFromKeychain = [self stringValueFromKeychainForKey:kPREDMetaUserID];
+    NSString *userIdFromKeychain = [PREDHelper stringValueFromKeychainForKey:kPREDMetaUserID];
     if (userIdFromKeychain) {
         userID = userIdFromKeychain;
     }
@@ -644,7 +644,7 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
  */
 - (NSString *)userNameForCrashReport {
     // first check the global keychain storage
-    NSString *username = [self stringValueFromKeychainForKey:kPREDMetaUserName] ?: @"";
+    NSString *username = [PREDHelper stringValueFromKeychainForKey:kPREDMetaUserName] ?: @"";
     
     if ([[PREDManager sharedPREDManager].delegate respondsToSelector:@selector(userNameForPREDManager:componentManager:)]) {
         username = [[PREDManager sharedPREDManager].delegate
@@ -662,7 +662,7 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
  */
 - (NSString *)userEmailForCrashReport {
     // first check the global keychain storage
-    NSString *useremail = [self stringValueFromKeychainForKey:kPREDMetaUserEmail] ?: @"";
+    NSString *useremail = [PREDHelper stringValueFromKeychainForKey:kPREDMetaUserEmail] ?: @"";
     
     if ([[PREDManager sharedPREDManager].delegate respondsToSelector:@selector(userEmailForPREDManager:componentManager:)]) {
         useremail = [[PREDManager sharedPREDManager].delegate
@@ -734,9 +734,9 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
     NSMutableDictionary *metaDict = [NSMutableDictionary dictionaryWithCapacity:4];
     NSString *applicationLog = @"";
     
-    [self addStringValueToKeychain:[self userNameForCrashReport] forKey:[NSString stringWithFormat:@"%@.%@", filename, kPREDCrashMetaUserName]];
-    [self addStringValueToKeychain:[self userEmailForCrashReport] forKey:[NSString stringWithFormat:@"%@.%@", filename, kPREDCrashMetaUserEmail]];
-    [self addStringValueToKeychain:[self userIDForCrashReport] forKey:[NSString stringWithFormat:@"%@.%@", filename, kPREDCrashMetaUserID]];
+    [PREDHelper addStringValueToKeychain:[self userNameForCrashReport] forKey:[NSString stringWithFormat:@"%@.%@", filename, kPREDCrashMetaUserName]];
+    [PREDHelper addStringValueToKeychain:[self userEmailForCrashReport] forKey:[NSString stringWithFormat:@"%@.%@", filename, kPREDCrashMetaUserEmail]];
+    [PREDHelper addStringValueToKeychain:[self userIDForCrashReport] forKey:[NSString stringWithFormat:@"%@.%@", filename, kPREDCrashMetaUserID]];
     
     if ([self.delegate respondsToSelector:@selector(applicationLogForCrashManager:)]) {
         applicationLog = [self.delegate applicationLogForCrashManager:self] ?: @"";
@@ -1462,9 +1462,9 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
                                                       format:&format
                                                       error:&error];
             
-            username = [self stringValueFromKeychainForKey:[NSString stringWithFormat:@"%@.%@", attachmentFilename.lastPathComponent, kPREDCrashMetaUserName]] ?: @"";
-            useremail = [self stringValueFromKeychainForKey:[NSString stringWithFormat:@"%@.%@", attachmentFilename.lastPathComponent, kPREDCrashMetaUserEmail]] ?: @"";
-            userid = [self stringValueFromKeychainForKey:[NSString stringWithFormat:@"%@.%@", attachmentFilename.lastPathComponent, kPREDCrashMetaUserID]] ?: @"";
+            username = [PREDHelper stringValueFromKeychainForKey:[NSString stringWithFormat:@"%@.%@", attachmentFilename.lastPathComponent, kPREDCrashMetaUserName]] ?: @"";
+            useremail = [PREDHelper stringValueFromKeychainForKey:[NSString stringWithFormat:@"%@.%@", attachmentFilename.lastPathComponent, kPREDCrashMetaUserEmail]] ?: @"";
+            userid = [PREDHelper stringValueFromKeychainForKey:[NSString stringWithFormat:@"%@.%@", attachmentFilename.lastPathComponent, kPREDCrashMetaUserID]] ?: @"";
             applicationLog = [metaDict objectForKey:kPREDCrashMetaApplicationLog] ?: @"";
             description = [NSString stringWithContentsOfFile:[NSString stringWithFormat:@"%@.desc", [_crashesDir stringByAppendingPathComponent: cacheFilename]] encoding:NSUTF8StringEncoding error:&error];
             attachment = [self attachmentForCrashReport:attachmentFilename];

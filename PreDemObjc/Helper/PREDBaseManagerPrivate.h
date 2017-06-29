@@ -62,9 +62,5 @@
 - (NSString *)encodedAppIdentifier;
 
 // keychain helpers
-- (BOOL)addStringValueToKeychain:(NSString *)stringValue forKey:(NSString *)key;
-- (BOOL)addStringValueToKeychainForThisDeviceOnly:(NSString *)stringValue forKey:(NSString *)key;
-- (NSString *)stringValueFromKeychainForKey:(NSString *)key;
-- (BOOL)removeKeyFromKeychain:(NSString *)key;
 
 @end
