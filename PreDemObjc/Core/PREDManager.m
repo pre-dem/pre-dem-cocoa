@@ -105,7 +105,7 @@ static NSString* app_ak(NSString* appKey){
         
         _installString = pres_appAnonID(NO);
         
-        _configManager = [PREDConfigManager sharedInstance];
+        _configManager = [[PREDConfigManager alloc] init];
         _configManager.delegate = self;
         
         [self performSelector:@selector(validateStartManagerIsInvoked) withObject:nil afterDelay:0.0f];

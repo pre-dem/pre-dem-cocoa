@@ -15,20 +15,27 @@
 NSURLSessionDelegate
 >
 
+@property (nonatomic, strong) NSDate *lastReportTime;
+@property (nonatomic, copy) NSString *appKey;
+
 @end
 
-@implementation PREDConfigManager
+@implementation PREDConfigManager {
+}
 
-+ (instancetype)sharedInstance {
-    static PREDConfigManager *config;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        config = [[PREDConfigManager alloc] init];
-    });
-    return config;
+- (instancetype)init {
+    if (self = [super init]) {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
+    }
+    return self;
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (PREDConfig *)getConfigWithAppKey:(NSString *)appKey {
+    self.appKey = appKey;
     PREDConfig *defaultConfig;
     NSDictionary *dic = [NSUserDefaults.standardUserDefaults objectForKey:@"predem_app_config"];
     if (dic && [dic respondsToSelector:@selector(objectForKey:)]) {
@@ -55,6 +62,7 @@ NSURLSessionDelegate
               });
           } else {
               __strong typeof(wSelf) strongSelf = wSelf;
+              strongSelf.lastReportTime = [NSDate date];
               NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
               if ([dic respondsToSelector:@selector(objectForKey:)]) {
                   [NSUserDefaults.standardUserDefaults setObject:dic forKey:@"predem_app_config"];
@@ -67,6 +75,12 @@ NSURLSessionDelegate
       }]
      resume];
     return defaultConfig;
+}
+
+- (void)didBecomeActive:(NSNotification *)note {
+    if (self.lastReportTime && [[NSDate date] timeIntervalSinceDate:self.lastReportTime] >= 60 * 60 * 24) {
+        [self getConfigWithAppKey:self.appKey];
+    }
 }
 
 @end
