@@ -225,9 +225,11 @@ NSURLSessionDelegate
         _mReadFilePosition = (unsigned int)[[dic objectForKey:PREDReadFilePositionKey] unsignedIntegerValue];
         _mWriteFileIndex = (unsigned int)[[dic objectForKey:PREDWriteFileIndexKey] unsignedIntegerValue];
         _mWriteFilePosition = (unsigned int)[[dic objectForKey:PREDWriteFilePosition] unsignedIntegerValue];
+    } else {
+        err = [NSError errorWithDomain:@"com.predem" code:-1 userInfo:@{NSLocalizedDescriptionKey: @"index file not exist"}];
     }
     [_indexFileIOLock unlock];
-    return nil;
+    return err;
 }
 
 - (NSError *)writeData:(NSData *)dataToWrite {
