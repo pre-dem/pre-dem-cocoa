@@ -63,7 +63,7 @@ NSURLSessionDelegate
     NSError *err;
     request.HTTPBody = [NSJSONSerialization dataWithJSONObject:info options:0 error:&err];
     if (err) {
-        NSLog(@"sys info can not be jsonized");
+        PREDLogError(@"sys info can not be jsonized");
     }
     [NSURLProtocol setProperty:@YES
                         forKey:@"PREDInternalRequest"

@@ -331,15 +331,18 @@ NSString *const kPREDExcludeApplicationSupportFromBackup = @"kPREDExcludeApplica
     return [NSString stringWithFormat:@"%@", [PREDVersion getSDKVersion]];
 }
 
++ (NSString *)sdkBuild {
+    return [NSString stringWithFormat:@"%@", [PREDVersion getSDKBuild]];
+}
+
 + (NSString *)appVersion {
-    NSString *build = [[NSBundle mainBundle] infoDictionary][@"CFBundleVersion"];
     NSString *version = [[NSBundle mainBundle] infoDictionary][@"CFBundleShortVersionString"];
-    
-    if(version){
-        return [NSString stringWithFormat:@"%@ (%@)", version, build];
-    }else{
-        return build;
-    }
+    return version;
+}
+
++ (NSString *)appBuild {
+    NSString *build = [[NSBundle mainBundle] infoDictionary][@"CFBundleVersion"];
+    return build;
 }
 
 + (NSString *)appAnonID {
