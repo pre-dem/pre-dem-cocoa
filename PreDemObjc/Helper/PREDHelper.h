@@ -34,76 +34,47 @@
 
 FOUNDATION_EXPORT NSString *const kPREDExcludeApplicationSupportFromBackup;
 
-+ (BOOL)isURLSessionSupported;
+@property(class, readonly) BOOL isURLSessionSupported;
+@property(class, readonly) NSString *settingsDir;
+@property(class, readonly) NSString *keychainPreDemObjcServiceName;
+@property(class, readonly) NSString *mainBundleIdentifier;
+@property(class, readonly) NSString *UUIDPreiOS6;
+@property(class, readonly) NSString *UUID;
+@property(class, readonly) BOOL isPreiOS7Environment;
+@property(class, readonly) BOOL isPreiOS8Environment;
+@property(class, readonly) BOOL isPreiOS10Environment;
+@property(class, readonly) BOOL isAppStoreReceiptSandbox;
+@property(class, readonly) BOOL hasEmbeddedMobileProvision;
+@property(class, readonly) PREDEnvironment currentAppEnvironment;
+@property(class, readonly) BOOL isRunningInAppExtension;
+@property(class, readonly) BOOL isDebuggerAttached;
+@property(class, readonly) NSString *deviceType;
+@property(class, readonly) NSString *osVersionBuild;
+@property(class, readonly) NSString *osPlatform;
+@property(class, readonly) NSString *deviceLocale;
+@property(class, readonly) NSString *deviceLanguage;
+@property(class, readonly) NSString *screenSize;
+@property(class, readonly) NSString *sdkVersion;
+@property(class, readonly) NSString *sdkBuild;
+@property(class, readonly) NSString *appVersion;
+@property(class, readonly) NSString *appBuild;
+@property(class, readonly) NSString *appAnonID;
+@property(class, readonly) NSString *appName;
+@property(class, readonly) NSString *appBundleId;
+@property(class, readonly) NSString *osVersion;
+@property(class, readonly) NSString *deviceModel;
+@property(class, readonly) NSString *executableUUID;
 
-/*
- * Checks if the privacy description for iOS 10+ has been set in info plist.
- * @return YES for < iOS 10. YES/NO in iOS 10+ if NSPhotoLibraryUsageDescription is present in the app's Info.plist.
- */
-+ (BOOL)isPhotoAccessPossible;
++ (void)fixBackupAttributeForURL:(NSURL *)directoryURL;
++ (NSString *)encodeAppIdentifier:(NSString *)inputString;
++ (NSString *)appName:(NSString *)placeHolderString;
++ (NSString *)URLEncodedString:(NSString *)inputString;
++ (NSString *)utcDateString:(NSDate *)date;
++ (NSDictionary*)getObjectData:(id)obj;
++ (NSString *)MD5:(NSString *)mdStr;
++ (BOOL)addStringValueToKeychain:(NSString *)stringValue forKey:(NSString *)key;
++ (BOOL)addStringValueToKeychainForThisDeviceOnly:(NSString *)stringValue forKey:(NSString *)key;
++ (NSString *)stringValueFromKeychainForKey:(NSString *)key;
++ (BOOL)removeKeyFromKeychain:(NSString *)key;
 
 @end
-
-NSString *pres_settingsDir(void);
-
-BOOL pres_validateEmail(NSString *email);
-NSString *pres_keychainPreDemObjcServiceName(void);
-
-/* Fix bug where Application Support was excluded from backup. */
-void pres_fixBackupAttributeForURL(NSURL *directoryURL);
-
-NSComparisonResult pres_versionCompare(NSString *stringA, NSString *stringB);
-NSString *pres_mainBundleIdentifier(void);
-NSString *pres_encodeAppIdentifier(NSString *inputString);
-NSString *pres_appName(NSString *placeHolderString);
-NSString *pres_UUIDPreiOS6(void);
-NSString *pres_UUID(void);
-NSString *pres_appAnonID(BOOL forceNewAnonID);
-BOOL pres_isPreiOS7Environment(void);
-BOOL pres_isPreiOS8Environment(void);
-BOOL pres_isPreiOS10Environment(void);
-BOOL pres_isAppStoreReceiptSandbox(void);
-BOOL pres_hasEmbeddedMobileProvision(void);
-PREDEnvironment pres_currentAppEnvironment(void);
-BOOL pres_isRunningInAppExtension(void);
-
-/**
- * Check if the debugger is attached
- *
- * Taken from https://github.com/plausiblelabs/plcrashreporter/blob/2dd862ce049e6f43feb355308dfc710f3af54c4d/Source/Crash%20Demo/main.m#L96
- *
- * @return `YES` if the debugger is attached to the current process, `NO` otherwise
- */
-BOOL pres_isDebuggerAttached(void);
-
-/* NSString helpers */
-NSString *pres_URLEncodedString(NSString *inputString);
-NSString *pres_base64String(NSData * data, unsigned long length);
-
-/* Context helpers */
-NSString *pres_utcDateString(NSDate *date);
-NSString *pres_devicePlatform(void);
-NSString *pres_devicePlatform(void);
-NSString *pres_deviceType(void);
-NSString *pres_osVersionBuild(void);
-NSString *pres_osName(void);
-NSString *pres_deviceLocale(void);
-NSString *pres_deviceLanguage(void);
-NSString *pres_screenSize(void);
-NSString *pres_sdkVersion(void);
-NSString *pres_appVersion(void);
-
-/* AppIcon helper */
-NSString *pres_validAppIconStringFromIcons(NSBundle *resourceBundle, NSArray *icons);
-NSString *pres_validAppIconFilename(NSBundle *bundle, NSBundle *resourceBundle);
-
-/* UIImage helpers */
-UIImage *pres_roundedCornerImage(UIImage *inputImage, NSInteger cornerSize, NSInteger borderSize);
-UIImage *pres_imageToFitSize(UIImage *inputImage, CGSize fitSize, BOOL honorScaleFactor);
-UIImage *pres_reflectedImageWithHeight(UIImage *inputImage, NSUInteger height, float fromAlpha, float toAlpha);
-
-UIImage *pres_newWithContentsOfResolutionIndependentFile(NSString * path);
-UIImage *pres_imageWithContentsOfResolutionIndependentFile(NSString * path);
-UIImage *pres_imageNamed(NSString *imageName, NSString *bundleName);
-UIImage *pres_screenshot(void);
-UIImage *pres_appIcon(void);

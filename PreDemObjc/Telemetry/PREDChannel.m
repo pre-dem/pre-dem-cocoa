@@ -34,7 +34,7 @@ NS_ASSUME_NONNULL_BEGIN
     if (self = [super init]) {
         pres_resetSafeJsonStream(&PREDSafeJsonEventsString);
         _dataItemCount = 0;
-        if (pres_isDebuggerAttached()) {
+        if (PREDHelper.isDebuggerAttached) {
             _maxBatchSize = PREDDebugMaxBatchSize;
             _batchInterval = PREDDebugBatchInterval;
         } else {
@@ -143,7 +143,7 @@ NS_ASSUME_NONNULL_BEGIN
     data.baseType = telemetryData.dataTypeName;
     
     PREDEnvelope *envelope = [PREDEnvelope new];
-    envelope.time = pres_utcDateString([NSDate date]);
+    envelope.time = [PREDHelper utcDateString:[NSDate date]];
     envelope.iKey = _telemetryContext.appIdentifier;
     
     envelope.tags = _telemetryContext.contextDictionary;

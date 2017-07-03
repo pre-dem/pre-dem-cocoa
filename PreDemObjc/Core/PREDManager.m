@@ -91,7 +91,6 @@ static NSString* app_ak(NSString* appKey){
 
 - (instancetype)init {
     if ((self = [super init])) {
-        _serverURL = PRED_URL;
         _delegate = nil;
         _managersInitialized = NO;
         
@@ -100,12 +99,11 @@ static NSString* app_ak(NSString* appKey){
         _disableCrashManager = NO;
         _disableMetricsManager = NO;
         
-        _appEnvironment = pres_currentAppEnvironment();
+        _appEnvironment = PREDHelper.currentAppEnvironment;
         _startManagerIsInvoked = NO;
+        _installString = PREDHelper.appAnonID;
         
-        _installString = pres_appAnonID(NO);
-        
-        _configManager = [PREDConfigManager sharedInstance];
+        _configManager = [[PREDConfigManager alloc] init];
         _configManager.delegate = self;
         
         [self performSelector:@selector(validateStartManagerIsInvoked) withObject:nil afterDelay:0.0f];
@@ -118,11 +116,11 @@ static NSString* app_ak(NSString* appKey){
 - (void)startWithAppKey:(NSString *)appKey serviceDomain:(NSString *)serviceDomain {
     _appKey = [appKey copy];
     
+    [self setServerURL:serviceDomain];
+    
     [self initializeModules];
     
     [self applyConfig:[_configManager getConfigWithAppKey:appKey]];
-    
-    [self setServerURL:serviceDomain];
     
     [self startManager];
 }
@@ -137,7 +135,7 @@ static NSString* app_ak(NSString* appKey){
     // Fix bug where Application Support directory was encluded from backup
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSURL *appSupportURL = [[fileManager URLsForDirectory:NSApplicationSupportDirectory inDomains:NSUserDomainMask] lastObject];
-    pres_fixBackupAttributeForURL(appSupportURL);
+    [PREDHelper fixBackupAttributeForURL:appSupportURL];
     
     if (![self isSetUpOnMainThread]) return;
     
@@ -152,7 +150,7 @@ static NSString* app_ak(NSString* appKey){
     }
     
     // App Extensions can only use PREDCrashManager, so ignore all others automatically
-    if (pres_isRunningInAppExtension()) {
+    if (PREDHelper.isRunningInAppExtension) {
         return;
     }
     
@@ -185,16 +183,18 @@ static NSString* app_ak(NSString* appKey){
 }
 
 - (void)setServerURL:(NSString *)aServerURL {
-    // ensure url ends with a trailing slash
-    if (![aServerURL hasSuffix:@"/"]) {
-        aServerURL = [NSString stringWithFormat:@"%@/", aServerURL];
+    if (!aServerURL) {
+        aServerURL = PRED_DEFAULT_URL;
+    }
+    if (![aServerURL hasPrefix:@"http://"] && ![aServerURL hasPrefix:@"https://"]) {
+        aServerURL = [NSString stringWithFormat:@"http://%@", aServerURL];
     }
     
     if (_serverURL != aServerURL) {
         _serverURL = [aServerURL copy];
         
         if (_hockeyAppClient) {
-            _hockeyAppClient.baseURL = [NSURL URLWithString:_serverURL ?: PRED_URL];
+            _hockeyAppClient.baseURL = [NSURL URLWithString:_serverURL];
         }
     }
 }
@@ -236,17 +236,17 @@ static NSString* app_ak(NSString* appKey){
     if (value) {
         success = [PREDKeychainUtils storeUsername:key
                                        andPassword:value
-                                    forServiceName:pres_keychainPreDemObjcServiceName()
+                                    forServiceName:PREDHelper.keychainPreDemObjcServiceName
                                     updateExisting:YES
                                      accessibility:kSecAttrAccessibleAlwaysThisDeviceOnly
                                              error:&error];
     } else {
         updateType = @"delete";
         if ([PREDKeychainUtils getPasswordForUsername:key
-                                       andServiceName:pres_keychainPreDemObjcServiceName()
+                                       andServiceName:PREDHelper.keychainPreDemObjcServiceName
                                                 error:&error]) {
             success = [PREDKeychainUtils deleteItemForUsername:key
-                                                andServiceName:pres_keychainPreDemObjcServiceName()
+                                                andServiceName:PREDHelper.keychainPreDemObjcServiceName
                                                          error:&error];
         }
     }
@@ -395,7 +395,7 @@ static NSString* app_ak(NSString* appKey){
 }
 
 -(nonnull NSString*) baseUrl{
-    return [NSString stringWithFormat:@"http://%@/v1/%@/", _serverURL, app_ak(_appKey)];
+    return [NSString stringWithFormat:@"%@/v1/%@/", _serverURL, app_ak(_appKey)];
 }
 
 @end

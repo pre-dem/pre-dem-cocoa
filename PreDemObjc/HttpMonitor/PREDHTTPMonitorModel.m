@@ -7,7 +7,7 @@
 //
 
 #import "PREDHTTPMonitorModel.h"
-#import "PREDUtilities.h"
+#import "PREDHelper.h"
 #import <objc/runtime.h>
 
 @implementation PREDHTTPMonitorModel
@@ -15,11 +15,11 @@
 - (instancetype)init {
     if (self = [super init]) {
         self.platform = 1;
-        self.appName = [PREDUtilities getAppName];
-        self.appBundleId = [PREDUtilities getAppBundleId];
-        self.osVersion = [PREDUtilities getOsVersion];
-        self.deviceModel = [PREDUtilities getDeviceModel];
-        self.deviceUUID = [PREDUtilities getDeviceUUID];
+        self.appName = PREDHelper.appName;
+        self.appBundleId = PREDHelper.appBundleId;
+        self.osVersion = PREDHelper.osVersion;
+        self.deviceModel = PREDHelper.deviceModel;
+        self.deviceUUID = PREDHelper.appAnonID;
     }
     return self;
 }

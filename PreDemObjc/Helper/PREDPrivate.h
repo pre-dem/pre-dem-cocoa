@@ -45,13 +45,12 @@
 #define kPREDMetaUserID    @"PREDMetaUserID"
 
 #define PRED_BUNDLE @"PreDemObjcResources.bundle"
-#define PRED_URL @"http://hriygkee.bq.cloudappl.com"
+#define PRED_DEFAULT_URL @"http://hriygkee.bq.cloudappl.com"
 
 #define PRED_RGBCOLOR(r,g,b) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:1]
 
 NSBundle *PREDBundle(void);
 NSString *PREDLocalizedString(NSString *stringToken);
-NSString *PREDMD5(NSString *str);
 
 #ifndef __IPHONE_8_0
 #define __IPHONE_8_0     80000

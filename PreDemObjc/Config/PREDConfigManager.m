@@ -9,26 +9,36 @@
 #import "PREDConfigManager.h"
 #import "PREDLogger.h"
 #import "PREDManagerPrivate.h"
+#import "PREDHelper.h"
+
+#define PREDConfigRetryInterval 300
 
 @interface PREDConfigManager ()
 <
 NSURLSessionDelegate
 >
 
+@property (nonatomic, strong) NSDate *lastReportTime;
+@property (nonatomic, copy) NSString *appKey;
+
 @end
 
-@implementation PREDConfigManager
+@implementation PREDConfigManager {
+}
 
-+ (instancetype)sharedInstance {
-    static PREDConfigManager *config;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        config = [[PREDConfigManager alloc] init];
-    });
-    return config;
+- (instancetype)init {
+    if (self = [super init]) {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
+    }
+    return self;
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (PREDConfig *)getConfigWithAppKey:(NSString *)appKey {
+    self.appKey = appKey;
     PREDConfig *defaultConfig;
     NSDictionary *dic = [NSUserDefaults.standardUserDefaults objectForKey:@"predem_app_config"];
     if (dic && [dic respondsToSelector:@selector(objectForKey:)]) {
@@ -36,7 +46,26 @@ NSURLSessionDelegate
     } else {
         defaultConfig = PREDConfig.defaultConfig;
     }
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@app-config/i", [[PREDManager sharedPREDManager]baseUrl]]]];
+    
+    NSDictionary *info = @{
+                           @"app_bundle_id": PREDHelper.appBundleId,
+                           @"app_name": PREDHelper.appName,
+                           @"app_version": PREDHelper.appVersion,
+                           @"device_model": PREDHelper.deviceModel,
+                           @"os_platform": PREDHelper.osPlatform,
+                           @"os_version": PREDHelper.osVersion,
+                           @"sdk_version": PREDHelper.sdkVersion,
+                           @"sdk_id": PREDHelper.appAnonID,
+                           @"device_id": @""
+                           };
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@app-config/i", [[PREDManager sharedPREDManager] baseUrl]]]];
+    request.HTTPMethod = @"POST";
+    [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    NSError *err;
+    request.HTTPBody = [NSJSONSerialization dataWithJSONObject:info options:0 error:&err];
+    if (err) {
+        PREDLogError(@"sys info can not be jsonized");
+    }
     [NSURLProtocol setProperty:@YES
                         forKey:@"PREDInternalRequest"
                      inRequest:request];
@@ -50,11 +79,12 @@ NSURLSessionDelegate
           NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
           if (error || httpResponse.statusCode != 200) {
               PREDLogError(@"%@", error.localizedDescription);
-              dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(30 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+              dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(PREDConfigRetryInterval * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                   [self getConfigWithAppKey:appKey];
               });
           } else {
               __strong typeof(wSelf) strongSelf = wSelf;
+              strongSelf.lastReportTime = [NSDate date];
               NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
               if ([dic respondsToSelector:@selector(objectForKey:)]) {
                   [NSUserDefaults.standardUserDefaults setObject:dic forKey:@"predem_app_config"];
@@ -67,6 +97,12 @@ NSURLSessionDelegate
       }]
      resume];
     return defaultConfig;
+}
+
+- (void)didBecomeActive:(NSNotification *)note {
+    if (self.lastReportTime && [[NSDate date] timeIntervalSinceDate:self.lastReportTime] >= 60 * 60 * 24) {
+        [self getConfigWithAppKey:self.appKey];
+    }
 }
 
 @end

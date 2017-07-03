@@ -21,8 +21,6 @@
 
 @property(nonatomic, weak) id<PREDConfigManagerDelegate> delegate;
 
-+ (instancetype)sharedInstance;
-
 - (PREDConfig *)getConfigWithAppKey:(NSString *)appKey;
 
 @end

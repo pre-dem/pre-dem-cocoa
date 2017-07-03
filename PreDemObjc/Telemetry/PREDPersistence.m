@@ -168,7 +168,7 @@ static NSUInteger const PREDDefaultFileCount = 50;
             break;
         };
         default: {
-            NSString *uuid = pres_UUID();
+            NSString *uuid = PREDHelper.UUID;
             fileName = [NSString stringWithFormat:@"%@%@", kPREDFileBaseString, uuid];
             filePath = [self.appPreDemSDKDirectoryPath stringByAppendingPathComponent:kPREDTelemetryDirectory];
             break;

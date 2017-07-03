@@ -7,8 +7,8 @@
 //
 
 #import "PREDNetDiagResult.h"
-#import "PREDUtilities.h"
 #import "PREDManagerPrivate.h"
+#import "PREDHelper.h"
 
 #define PREDTotalResultNeeded   5
 #define PREDSendRetryInterval   10
@@ -91,7 +91,7 @@
 }
 
 - (NSDictionary *)toDic {
-    return [PREDUtilities getObjectData:self];
+    return [PREDHelper getObjectData:self];
 }
 
 - (void)checkAndSend {
@@ -108,7 +108,7 @@
 }
 
 - (void)generateResultID {
-    self.result_id = [PREDUtilities MD5:[NSString stringWithFormat:@"%f%@%@%@", [[NSDate date] timeIntervalSince1970], self.ping_ip, self.tr_content, self.dns_records]];
+    self.result_id = [PREDHelper MD5:[NSString stringWithFormat:@"%f%@%@%@", [[NSDate date] timeIntervalSince1970], self.ping_ip, self.tr_content, self.dns_records]];
 }
 
 - (void)sendReport:(NSString *)appKey {

@@ -84,7 +84,7 @@ static NSUInteger const PREDDefaultRequestLimit = 10;
 
 - (void)sendData:(nonnull NSData *)data withFilePath:(nonnull NSString *)filePath {
     if (data && data.length > 0) {
-        NSData *gzippedData = [data pres_gzippedData];
+        NSData *gzippedData = [data gzippedData];
         NSURLRequest *request = [self requestForData:gzippedData];
         
         [self sendRequest:request filePath:filePath];
@@ -107,7 +107,7 @@ static NSUInteger const PREDDefaultRequestLimit = 10;
 
 - (BOOL)isURLSessionSupported {
     id nsurlsessionClass = NSClassFromString(@"NSURLSessionUploadTask");
-    BOOL isUrlSessionSupported = (nsurlsessionClass && !pres_isRunningInAppExtension());
+    BOOL isUrlSessionSupported = (nsurlsessionClass && !PREDHelper.isRunningInAppExtension);
     return isUrlSessionSupported;
 }
 

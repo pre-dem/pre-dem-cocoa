@@ -63,7 +63,7 @@ static NSString *const PREDMetricsURLPathString = @"v2/track";
 - (void)startManager {
     self.sender = [[PREDSender alloc] initWithPersistence:self.persistence serverURL:[NSURL URLWithString:self.serverURL]];
     [self.sender sendSavedDataAsync];
-    [self startNewSessionWithId:pres_UUID()];
+    [self startNewSessionWithId:PREDHelper.UUID];
     [self registerObservers];
 }
 
@@ -115,7 +115,7 @@ static NSString *const PREDMetricsURLPathString = @"v2/track";
 
 - (void)updateDidEnterBackgroundTime {
     [self.userDefaults setDouble:[[NSDate date] timeIntervalSince1970] forKey:kPREDApplicationDidEnterBackgroundTime];
-    if(pres_isPreiOS8Environment()) {
+    if(PREDHelper.isPreiOS8Environment) {
         // calling synchronize in pre-iOS 8 takes longer to sync than in iOS 8+, calling synchronize explicitly.
         [self.userDefaults synchronize];
     }
@@ -127,14 +127,14 @@ static NSString *const PREDMetricsURLPathString = @"v2/track";
     if(appDidEnterBackgroundTime < 0) {
         appDidEnterBackgroundTime = 0;
         [self.userDefaults setDouble:0 forKey:kPREDApplicationDidEnterBackgroundTime];
-        if(pres_isPreiOS8Environment()) {
+        if(PREDHelper.isPreiOS8Environment) {
             // calling synchronize in pre-iOS 8 takes longer to sync than in iOS 8+, calling synchronize explicitly.
             [self.userDefaults synchronize];
         }
     }
     double timeSinceLastBackground = [[NSDate date] timeIntervalSince1970] - appDidEnterBackgroundTime;
     if (timeSinceLastBackground > self.appBackgroundTimeBeforeSessionExpires) {
-        [self startNewSessionWithId:pres_UUID()];
+        [self startNewSessionWithId:PREDHelper.UUID];
     }
 }
 
@@ -154,7 +154,7 @@ static NSString *const PREDMetricsURLPathString = @"v2/track";
     if (![self.userDefaults boolForKey:kPREDApplicationWasLaunched]) {
         session.isFirst = @"true";
         [self.userDefaults setBool:YES forKey:kPREDApplicationWasLaunched];
-        if(pres_isPreiOS8Environment()) {
+        if(PREDHelper.isPreiOS8Environment) {
             // calling synchronize in pre-iOS 8 takes longer to sync than in iOS 8+, calling synchronize explicitly.
             [self.userDefaults synchronize];
         }
