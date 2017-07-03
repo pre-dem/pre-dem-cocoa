@@ -17,7 +17,7 @@
  * included in all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
- * EXPREDS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
  * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
  * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
  * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
@@ -83,7 +83,7 @@
  * Marks a definition as deprecated only for for external clients, allowing
  * uses of it internal fo the framework.
  */
-#define PLCR_EXTERNAL_DEPRECATED
+#  define PLCR_EXTERNAL_DEPRECATED
 
 /**
  * @internal
@@ -102,10 +102,13 @@
  * definition not being marked deprecated.
  */
 #  define PLCR_EXTERNAL_DEPRECATED_NOWARN_POP() PLCR_PRAGMA_CLANG("clang diagnostic pop")
+
 #else
+
 #  define PLCR_EXTERNAL_DEPRECATED PLCR_DEPRECATED
 #  define PLCR_EXTERNAL_DEPRECATED_NOWARN_PUSH()
 #  define PLCR_EXTERNAL_DEPRECATED_NOWARN_PUSH()
+
 #endif /* PLCR_PRIVATE */
 
 #ifdef PLCR_PRIVATE

@@ -62,7 +62,7 @@
 
 @property (nonatomic, strong) NSFileManager *fileManager;
 
-@property (nonatomic, strong) BITPLCrashReporter *plCrashReporter;
+@property (nonatomic, strong) PREPLCrashReporter *plCrashReporter;
 
 @property (nonatomic) NSString *lastCrashFilename;
 

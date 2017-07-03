@@ -415,7 +415,7 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
  *
  *	@return XML structure with the app specific UUIDs
  */
-- (NSString *) extractAppUUIDs:(BITPLCrashReport *)report {
+- (NSString *) extractAppUUIDs:(PREPLCrashReport *)report {
     NSMutableString *uuidString = [NSMutableString string];
     NSArray *uuidArray = [PREDCrashReportTextFormatter arrayOfAppUUIDsForCrashReport:report];
     
@@ -822,7 +822,7 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
             PREDLogError(@"Could not load crash report: %@", error);
         } else {
             // get the startup timestamp from the crash report, and the file timestamp to calculate the timeinterval when the crash happened after startup
-            BITPLCrashReport *report = [[BITPLCrashReport alloc] initWithData:crashData error:&error];
+            PREPLCrashReport *report = [[PREPLCrashReport alloc] initWithData:crashData error:&error];
             
             if (report == nil) {
                 PREDLogWarning(@"WARNING: Could not parse crash report");
@@ -1114,9 +1114,9 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
                 symbolicationStrategy = PLCrashReporterSymbolicationStrategyAll;
             }
             
-            BITPLCrashReporterConfig *config = [[BITPLCrashReporterConfig alloc] initWithSignalHandlerType: signalHandlerType
+            PREPLCrashReporterConfig *config = [[PREPLCrashReporterConfig alloc] initWithSignalHandlerType: signalHandlerType
                                                                                      symbolicationStrategy: symbolicationStrategy];
-            self.plCrashReporter = [[BITPLCrashReporter alloc] initWithConfiguration: config];
+            self.plCrashReporter = [[PREPLCrashReporter alloc] initWithConfiguration: config];
             
             // Check if we previously crashed
             if ([self.plCrashReporter hasPendingCrashReport]) {
@@ -1350,7 +1350,7 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
     NSData *crashData = [NSData dataWithContentsOfFile:filename];
     
     if ([crashData length] > 0) {
-        BITPLCrashReport *report = nil;
+        PREPLCrashReport *report = nil;
         NSString *crashUUID = @"";
         NSString *installString = nil;
         NSString *crashLogString = nil;
@@ -1388,7 +1388,7 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
             }
             
         } else {
-            report = [[BITPLCrashReport alloc] initWithData:crashData error:&error];
+            report = [[PREPLCrashReport alloc] initWithData:crashData error:&error];
         }
         
         if (report == nil && crashLogString == nil) {
