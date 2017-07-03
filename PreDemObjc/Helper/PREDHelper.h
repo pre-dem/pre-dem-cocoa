@@ -50,7 +50,7 @@ FOUNDATION_EXPORT NSString *const kPREDExcludeApplicationSupportFromBackup;
 @property(class, readonly) BOOL isDebuggerAttached;
 @property(class, readonly) NSString *deviceType;
 @property(class, readonly) NSString *osVersionBuild;
-@property(class, readonly) NSString *osName;
+@property(class, readonly) NSString *osPlatform;
 @property(class, readonly) NSString *deviceLocale;
 @property(class, readonly) NSString *deviceLanguage;
 @property(class, readonly) NSString *screenSize;

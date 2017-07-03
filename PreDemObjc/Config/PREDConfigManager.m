@@ -48,14 +48,15 @@ NSURLSessionDelegate
     }
     
     NSDictionary *info = @{
-                           @"app_name": PREDHelper.appName,
                            @"app_bundle_id": PREDHelper.appBundleId,
+                           @"app_name": PREDHelper.appName,
                            @"app_version": PREDHelper.appVersion,
-                           @"device_id": PREDHelper.appAnonID,
-                           @"sdk_version": PREDHelper.sdkVersion,
                            @"device_model": PREDHelper.deviceModel,
-                           @"os_name": PREDHelper.osName,
-                           @"os_version": PREDHelper.osVersion
+                           @"os_platform": PREDHelper.osPlatform,
+                           @"os_version": PREDHelper.osVersion,
+                           @"sdk_version": PREDHelper.sdkVersion,
+                           @"sdk_id": PREDHelper.appAnonID,
+                           @"device_id": @""
                            };
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@app-config/i", [[PREDManager sharedPREDManager] baseUrl]]]];
     request.HTTPMethod = @"POST";

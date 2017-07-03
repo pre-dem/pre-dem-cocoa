@@ -308,7 +308,7 @@ NSString *const kPREDExcludeApplicationSupportFromBackup = @"kPREDExcludeApplica
     return [NSString stringWithFormat:@"%@ (%@)", osVersion, osBuild];
 }
 
-+ (NSString *)osName {
++ (NSString *)osPlatform {
     return [[UIDevice currentDevice] systemName];
 }
 
