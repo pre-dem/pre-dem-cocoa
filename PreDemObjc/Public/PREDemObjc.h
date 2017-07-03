@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "PREDEnums.h"
 #import "PREDNullability.h"
-#import "PREDMetricsManager.h"
 #import "PREDManager.h"
 
 // Notification message which PREDManager is listening to, to retry requesting updated from the server.

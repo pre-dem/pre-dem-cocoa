@@ -38,7 +38,6 @@
 #import "PREDConfigManager.h"
 #import "PREDNetDiag.h"
 #import "PREDCrashManagerPrivate.h"
-#import "PREDMetricsManagerPrivate.h"
 #import "PREDURLProtocol.h"
 
 static NSString* app_ak(NSString* appKey){
@@ -97,7 +96,6 @@ static NSString* app_ak(NSString* appKey){
         _hockeyAppClient = nil;
         
         _disableCrashManager = NO;
-        _disableMetricsManager = NO;
         
         _appEnvironment = PREDHelper.currentAppEnvironment;
         _startManagerIsInvoked = NO;
@@ -154,23 +152,10 @@ static NSString* app_ak(NSString* appKey){
         return;
     }
     
-    // start MetricsManager
-    if (!self.isMetricsManagerDisabled) {
-        PREDLogDebug(@"Start MetricsManager");
-        [_metricsManager startManager];
-    }
     
     if (!self.isHttpMonitorDisabled) {
         [PREDURLProtocol enableHTTPDem];
     }
-}
-
-- (void)setDisableMetricsManager:(BOOL)disableMetricsManager {
-    if (_metricsManager) {
-        _metricsManager.disabled = disableMetricsManager;
-    }
-    _disableMetricsManager = disableMetricsManager;
-    
 }
 
 - (void)setDisableHttpMonitor:(BOOL)disableHttpMonitor {
@@ -344,11 +329,6 @@ static NSString* app_ak(NSString* appKey){
                                                          appEnvironment:_appEnvironment
                                                         hockeyAppClient:[self hockeyAppClient]];
         _crashManager.delegate = _delegate;
-        
-        
-        PREDLogDebug(@"Setup MetricsManager");
-        _metricsManager = [[PREDMetricsManager alloc] initWithAppIdentifier:app_ak(_appKey) appEnvironment:_appEnvironment];
-        
         _managersInitialized = YES;
     } else {
         [self logInvalidIdentifier:@"app identifier"];
@@ -357,7 +337,6 @@ static NSString* app_ak(NSString* appKey){
 
 - (void)applyConfig:(PREDConfig *)config {
     self.disableCrashManager = !config.crashReportEnabled;
-    self.disableMetricsManager = !config.telemetryEnabled;
     self.disableHttpMonitor = !config.httpMonitorEnabled;
 }
 
