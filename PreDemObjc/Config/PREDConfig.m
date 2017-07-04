@@ -14,7 +14,6 @@
     PREDConfig *config = [PREDConfig new];
     config.httpMonitorEnabled = YES;
     config.crashReportEnabled = YES;
-    config.telemetryEnabled = YES;
     return config;
 }
 
@@ -22,7 +21,6 @@
     PREDConfig *config = [PREDConfig new];
     config.httpMonitorEnabled = [[dic objectForKey:@"http_monitor_enabled"] boolValue];
     config.crashReportEnabled = [[dic objectForKey:@"crash_report_enabled"] boolValue];
-    config.telemetryEnabled = [[dic objectForKey:@"telemetry_enabled"] boolValue];
     return config;
 }
 

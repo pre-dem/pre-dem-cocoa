@@ -1,4 +1,3 @@
-#import "PREDMetricsManager.h"
 #import "PREDSessionState.h"
 
 @class PREDChannel;

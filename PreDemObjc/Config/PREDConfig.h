@@ -13,7 +13,6 @@
 @property(nonatomic, strong, class, readonly) PREDConfig *defaultConfig;
 @property(nonatomic, assign) BOOL httpMonitorEnabled;
 @property(nonatomic, assign) BOOL crashReportEnabled;
-@property(nonatomic, assign) BOOL telemetryEnabled;
 
 + (instancetype)configWithDic:(NSDictionary *)dic;
 
