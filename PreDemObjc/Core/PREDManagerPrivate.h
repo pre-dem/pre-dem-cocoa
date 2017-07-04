@@ -113,19 +113,6 @@ PREDConfigManagerDelegate
 @property (nonatomic, getter = isCrashManagerDisabled) BOOL disableCrashManager;
 
 /**
- Flag the determines whether the PREDMetricsManager should be disabled
- 
- If this flag is enabled, then sending metrics data such as sessions and users
- will be turned off!
- 
- Please note that the PREDMetricsManager instance will be initialized anyway!
- 
- *Default*: _NO_
- @see metricsManager
- */
-@property (nonatomic, getter = isMetricsManagerDisabled) BOOL disableMetricsManager;
-
-/**
  Flag the determines whether the HttpMonitor should be disabled
  
  If this flag is enabled, then sending HttpMonitor data
@@ -183,13 +170,6 @@ PREDConfigManagerDelegate
  */
 - (void)diagnose:(NSString *_Nonnull)host
         complete:(PREDNetDiagCompleteHandler _Nonnull )complete;
-
-/**
- Reference to the initialized PREDMetricsManager module
- 
- Returns the PREDMetricsManager instance initialized by PREDManager
- */
-@property (nonatomic, strong, readonly) PREDMetricsManager * _Nonnull metricsManager;
 
 +(PREDManager *_Nonnull)sharedPREDManager;
 

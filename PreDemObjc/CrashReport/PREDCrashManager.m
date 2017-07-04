@@ -46,9 +46,6 @@
 #import "PREDCrashDetailsPrivate.h"
 #import "PREDCrashCXXExceptionHandler.h"
 #import "PREDVersion.h"
-#import "PREDMetricsManagerPrivate.h"
-#import "PREDChannel.h"
-#import "PREDPersistencePrivate.h"
 #import "PREDAttachment.h"
 #include <sys/sysctl.h>
 
@@ -94,22 +91,7 @@ static PREDCrashManagerCallbacks bitCrashCallbacks = {
 static void pres_save_events_callback(siginfo_t *info, ucontext_t *uap, void *context) {
     
     // Do not flush metrics queue if queue is empty (metrics module disabled) to not freeze the app
-    if (!PREDSafeJsonEventsString) {
-        return;
-    }
-    
-    // Try to get a file descriptor with our pre-filled path
-    int fd = open(PREDSaveEventsFilePath, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-    if (fd < 0) {
-        return;
-    }
-    
-    size_t len = strlen(PREDSafeJsonEventsString);
-    if (len > 0) {
-        // Simply write the whole string to disk
-        write(fd, PREDSafeJsonEventsString, len);
-    }
-    close(fd);
+    return;
 }
 
 // Proxy implementation for PLCrashReporter to keep our interface stable while this can change
@@ -694,12 +676,6 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
     plCrashCallbacks.context = callbacks->context;
 }
 
-- (void)configDefaultCrashCallback {
-    PREDMetricsManager *metricsManager = [PREDManager sharedPREDManager].metricsManager;
-    PREDPersistence *persistence = metricsManager.persistence;
-    PREDSaveEventsFilePath = strdup([persistence fileURLForType:PREDPersistenceTypeTelemetry].UTF8String);
-}
-
 #pragma mark - Public
 
 - (void)setAlertViewHandler:(PREDCustomAlertViewHandler)alertViewHandler{
@@ -1180,7 +1156,6 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
                 // can't break this
                 NSError *error = NULL;
                 
-                [self configDefaultCrashCallback];
                 // Set plCrashReporter callback which contains our default callback and potentially user defined callbacks
                 [self.plCrashReporter setCrashCallbacks:&plCrashCallbacks];
                 

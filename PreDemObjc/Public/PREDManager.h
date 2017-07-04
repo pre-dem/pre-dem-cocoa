@@ -6,7 +6,6 @@
 
 @class PREDBaseManager;
 @class PREDCrashManager;
-@class PREDMetricsManager;
 
 NS_ASSUME_NONNULL_BEGIN
 
