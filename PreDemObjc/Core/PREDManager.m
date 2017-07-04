@@ -40,7 +40,7 @@
 #import "PREDCrashManagerPrivate.h"
 #import "PREDURLProtocol.h"
 
-static NSString* app_ak(NSString* appKey){
+static NSString* app_id(NSString* appKey){
     return [appKey substringToIndex:8];
 }
 
@@ -85,7 +85,26 @@ static NSString* app_ak(NSString* appKey){
 
 + (void)trackEventWithName:(nonnull NSString *)eventName
                      event:(nonnull NSDictionary*)event{
+    if (event == nil || eventName == nil) {
+        return;
+    }
     
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@events/%@", [[PREDManager sharedPREDManager] baseUrl], eventName]]];
+    request.HTTPMethod = @"POST";
+    [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    NSError *err;
+    request.HTTPBody = [NSJSONSerialization dataWithJSONObject:event options:0 error:&err];
+    if (err) {
+        PREDLogError(@"sys info can not be jsonized");
+    }
+    [NSURLProtocol setProperty:@YES
+                        forKey:@"PREDInternalRequest"
+                     inRequest:request];
+    
+    NSURLSession* session = [NSURLSession sessionWithConfiguration:NSURLSessionConfiguration.defaultSessionConfiguration];
+    NSURLSessionTask *task = [session dataTaskWithRequest:request
+                                        completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) { NSLog(@"%@", [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil]); }];
+    [task resume];
 }
 
 - (instancetype)init {
@@ -325,10 +344,11 @@ static NSString* app_ak(NSString* appKey){
     
     if (_validAppIdentifier) {
         PREDLogDebug(@"Setup CrashManager");
-        _crashManager = [[PREDCrashManager alloc] initWithAppIdentifier:app_ak(_appKey)
+        _crashManager = [[PREDCrashManager alloc] initWithAppIdentifier:app_id(_appKey)
                                                          appEnvironment:_appEnvironment
                                                         hockeyAppClient:[self hockeyAppClient]];
         _crashManager.delegate = _delegate;
+
         _managersInitialized = YES;
     } else {
         [self logInvalidIdentifier:@"app identifier"];
@@ -342,7 +362,7 @@ static NSString* app_ak(NSString* appKey){
 
 - (void)diagnose:(NSString *)host
         complete:(PREDNetDiagCompleteHandler)complete {
-    [PREDNetDiag diagnose:host appKey:app_ak(_appKey) complete:complete];
+    [PREDNetDiag diagnose:host appKey:app_id(_appKey) complete:complete];
 }
 
 - (void)configManager:(PREDConfigManager *)manager didReceivedConfig:(PREDConfig *)config {
@@ -374,7 +394,7 @@ static NSString* app_ak(NSString* appKey){
 }
 
 -(nonnull NSString*) baseUrl{
-    return [NSString stringWithFormat:@"%@/v1/%@/", _serverURL, app_ak(_appKey)];
+    return [NSString stringWithFormat:@"%@/v1/%@/", _serverURL, app_id(_appKey)];
 }
 
 @end
