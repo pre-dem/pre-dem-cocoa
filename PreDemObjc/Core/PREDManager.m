@@ -45,8 +45,6 @@ static NSString* app_id(NSString* appKey){
 @implementation PREDManager {
     NSString *_appKey;
     
-    BOOL _validAppIdentifier;
-    
     BOOL _startManagerIsInvoked;
     
     BOOL _managersInitialized;
@@ -139,7 +137,6 @@ static NSString* app_id(NSString* appKey){
 }
 
 - (void)startManager {
-    if (!_validAppIdentifier) return;
     if (_startManagerIsInvoked) {
         PREDLogWarning(@"startManager should only be invoked once! This call is ignored.");
         return;
@@ -275,7 +272,7 @@ static NSString* app_id(NSString* appKey){
 }
 
 - (void)validateStartManagerIsInvoked {
-    if (_validAppIdentifier && (self.appEnvironment != PREDEnvironmentAppStore)) {
+    if (self.appEnvironment != PREDEnvironmentAppStore) {
         if (!_startManagerIsInvoked) {
             PREDLogError(@"You did not call [[PREDManager sharedPREDManager] startManager] to startup the PreDemObjc! Please do so after setting up all properties. The SDK is NOT running.");
         }
@@ -299,37 +296,22 @@ static NSString* app_id(NSString* appKey){
     return YES;
 }
 
-- (BOOL)shouldUseLiveIdentifier {
-//    BOOL delegateResult = NO;
-//    if ([_delegate respondsToSelector:@selector(shouldUseLiveIdentifierForPREDManager:)]) {
-//        delegateResult = [(NSObject <PREDManagerDelegate>*)_delegate shouldUseLiveIdentifierForPREDManager:self];
-//    }
-//    
-//    return (delegateResult) || (_appEnvironment == PREDEnvironmentAppStore);
-    return NO;
-}
-
 - (void)initializeModules {
     if (_managersInitialized) {
         PREDLogWarning(@"The SDK should only be initialized once! This call is ignored.");
         return;
     }
     
-    _validAppIdentifier = [self checkValidityOfAppIdentifier:_appKey];
     
     if (![self isSetUpOnMainThread]) return;
     
     _startManagerIsInvoked = NO;
     
-    if (_validAppIdentifier) {
-        PREDLogDebug(@"Setup CrashManager");
-        _crashManager = [[PREDCrashManager alloc] initWithAppIdentifier:app_id(_appKey)
-                                                         appEnvironment:_appEnvironment
-                                                        hockeyAppClient:[self hockeyAppClient]];
-        _managersInitialized = YES;
-    } else {
-        [self logInvalidIdentifier:@"app identifier"];
-    }
+    PREDLogDebug(@"Setup CrashManager");
+    _crashManager = [[PREDCrashManager alloc] initWithAppIdentifier:app_id(_appKey)
+                                                     appEnvironment:_appEnvironment
+                                                    hockeyAppClient:[self hockeyAppClient]];
+    _managersInitialized = YES;
 }
 
 - (void)applyConfig:(PREDConfig *)config {
@@ -347,28 +329,6 @@ static NSString* app_id(NSString* appKey){
 }
 
 #pragma mark - Private Class Methods
-
-- (BOOL)checkValidityOfAppIdentifier:(NSString *)identifier {
-    BOOL result = NO;
-    
-    if (identifier) {
-        NSCharacterSet *hexSet = [NSCharacterSet characterSetWithCharactersInString:@"0123456789abcdef"];
-        NSCharacterSet *inStringSet = [NSCharacterSet characterSetWithCharactersInString:identifier];
-        result = [hexSet isSupersetOfSet:inStringSet];
-    }
-    
-    return result;
-}
-
-- (void)logInvalidIdentifier:(NSString *)environment {
-    if (self.appEnvironment != PREDEnvironmentAppStore) {
-        if ([environment isEqualToString:@"liveIdentifier"]) {
-            PREDLogWarning(@"The liveIdentifier is invalid! The SDK will be disabled when deployed to the App Store without setting a valid app identifier!");
-        } else {
-            PREDLogError(@"The %@ is invalid! Please use the PreDem app identifier you find on the apps website on PreDem! The SDK is disabled!", environment);
-        }
-    }
-}
 
 -(nonnull NSString*) baseUrl{
     return [NSString stringWithFormat:@"%@/v1/%@/", _serverURL, app_id(_appKey)];
