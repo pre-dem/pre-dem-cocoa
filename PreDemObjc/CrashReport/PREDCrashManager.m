@@ -44,13 +44,6 @@
 // stores the set of crashreports that have been approved but aren't sent yet
 #define kPREDCrashApprovedReports @"PreDemObjcCrashApprovedReports"
 
-// keys for meta information associated to each crash
-#define kPREDCrashMetaUserName @"PREDCrashMetaUserName"
-#define kPREDCrashMetaUserEmail @"PREDCrashMetaUserEmail"
-#define kPREDCrashMetaUserID @"PREDCrashMetaUserID"
-#define kPREDCrashMetaApplicationLog @"PREDCrashMetaApplicationLog"
-#define kPREDCrashMetaAttachment @"PREDCrashMetaAttachment"
-
 // internal keys
 static NSString *const KPREDAttachmentDictIndex = @"index";
 static NSString *const KPREDAttachmentDictAttachment = @"attachment";
@@ -304,11 +297,6 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
     [_fileManager removeItemAtPath:[filename stringByAppendingString:@".data"] error:&error];
     [_fileManager removeItemAtPath:[filename stringByAppendingString:@".meta"] error:&error];
     [_fileManager removeItemAtPath:[filename stringByAppendingString:@".desc"] error:&error];
-    
-    NSString *cacheFilename = [filename lastPathComponent];
-    [PREDHelper removeKeyFromKeychain:[NSString stringWithFormat:@"%@.%@", cacheFilename, kPREDCrashMetaUserName]];
-    [PREDHelper removeKeyFromKeychain:[NSString stringWithFormat:@"%@.%@", cacheFilename, kPREDCrashMetaUserEmail]];
-    [PREDHelper removeKeyFromKeychain:[NSString stringWithFormat:@"%@.%@", cacheFilename, kPREDCrashMetaUserID]];
     
     [_crashFiles removeObject:filename];
     [_approvedCrashReports removeObjectForKey:filename];
@@ -1045,7 +1033,6 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
     
     // we start sending always with the oldest pending one
     NSString *filename = [_crashFiles objectAtIndex:0];
-    NSString *attachmentFilename = filename;
     NSString *cacheFilename = [filename lastPathComponent];
     NSData *crashData = [NSData dataWithContentsOfFile:filename];
     
@@ -1060,7 +1047,6 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
         NSString *osVersion = nil;
         NSString *deviceModel = nil;
         NSString *appBinaryUUIDs = nil;
-        NSString *metaFilename = nil;
         
         NSPropertyListFormat format;
         
@@ -1079,9 +1065,6 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
             appBinaryUUIDs = [fakeReportDict objectForKey:kPREDFakeCrashAppBinaryUUID];
             deviceModel = [fakeReportDict objectForKey:kPREDFakeCrashDeviceModel];
             osVersion = [fakeReportDict objectForKey:kPREDFakeCrashOSVersion];
-            
-            metaFilename = [cacheFilename stringByReplacingOccurrencesOfString:@".fake" withString:@".meta"];
-            attachmentFilename = [attachmentFilename stringByReplacingOccurrencesOfString:@".fake" withString:@""];
             
             if ([appBundleVersion compare:[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"]] == NSOrderedSame) {
                 _crashIdenticalCurrentVersion = YES;
@@ -1106,7 +1089,6 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
             if (report.uuidRef != NULL) {
                 crashUUID = (NSString *) CFBridgingRelease(CFUUIDCreateString(NULL, report.uuidRef));
             }
-            metaFilename = [cacheFilename stringByAppendingPathExtension:@"meta"];
             crashLogString = [PREDCrashReportTextFormatter stringValueForCrashReport:report crashReporterKey:installString];
             appBundleIdentifier = report.applicationInfo.applicationIdentifier;
             appBundleMarketingVersion = report.applicationInfo.applicationMarketingVersion ?: @"";
@@ -1123,38 +1105,7 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
             _crashIdenticalCurrentVersion = YES;
         }
         
-        NSString *username = @"";
-        NSString *useremail = @"";
-        NSString *userid = @"";
-        NSString *applicationLog = @"";
-        NSString *description = @"";
-        
-        NSData *plist = [NSData dataWithContentsOfFile:[_crashesDir stringByAppendingPathComponent:metaFilename]];
-        if (plist) {
-            NSDictionary *metaDict = (NSDictionary *)[NSPropertyListSerialization
-                                                      propertyListWithData:plist
-                                                      options:NSPropertyListMutableContainersAndLeaves
-                                                      format:&format
-                                                      error:&error];
-            
-            username = [PREDHelper stringValueFromKeychainForKey:[NSString stringWithFormat:@"%@.%@", attachmentFilename.lastPathComponent, kPREDCrashMetaUserName]] ?: @"";
-            useremail = [PREDHelper stringValueFromKeychainForKey:[NSString stringWithFormat:@"%@.%@", attachmentFilename.lastPathComponent, kPREDCrashMetaUserEmail]] ?: @"";
-            userid = [PREDHelper stringValueFromKeychainForKey:[NSString stringWithFormat:@"%@.%@", attachmentFilename.lastPathComponent, kPREDCrashMetaUserID]] ?: @"";
-            applicationLog = [metaDict objectForKey:kPREDCrashMetaApplicationLog] ?: @"";
-            description = [NSString stringWithContentsOfFile:[NSString stringWithFormat:@"%@.desc", [_crashesDir stringByAppendingPathComponent: cacheFilename]] encoding:NSUTF8StringEncoding error:&error];
-        } else {
-            PREDLogError(@"Reading crash meta data. %@", error);
-        }
-        
-        if ([applicationLog length] > 0) {
-            if ([description length] > 0) {
-                description = [NSString stringWithFormat:@"%@\n\nLog:\n%@", description, applicationLog];
-            } else {
-                description = [NSString stringWithFormat:@"Log:\n%@", applicationLog];
-            }
-        }
-        
-        crashXML = [NSString stringWithFormat:@"<crashes><crash><applicationname><![CDATA[%@]]></applicationname><uuids>%@</uuids><bundleidentifier>%@</bundleidentifier><systemversion>%@</systemversion><platform>%@</platform><senderversion>%@</senderversion><versionstring>%@</versionstring><version>%@</version><uuid>%@</uuid><log><![CDATA[%@]]></log><userid>%@</userid><username>%@</username><contact>%@</contact><installstring>%@</installstring><description><![CDATA[%@]]></description></crash></crashes>",
+        crashXML = [NSString stringWithFormat:@"<crashes><crash><applicationname><![CDATA[%@]]></applicationname><uuids>%@</uuids><bundleidentifier>%@</bundleidentifier><systemversion>%@</systemversion><platform>%@</platform><senderversion>%@</senderversion><versionstring>%@</versionstring><version>%@</version><uuid>%@</uuid><log><![CDATA[%@]]></log><installstring>%@</installstring></crash></crashes>",
                     [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleExecutable"],
                     appBinaryUUIDs,
                     appBundleIdentifier,
@@ -1165,11 +1116,7 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
                     appBundleVersion,
                     crashUUID,
                     [crashLogString stringByReplacingOccurrencesOfString:@"]]>" withString:@"]]" @"]]><![CDATA[" @">" options:NSLiteralSearch range:NSMakeRange(0,crashLogString.length)],
-                    userid,
-                    username,
-                    useremail,
-                    installString,
-                    [description stringByReplacingOccurrencesOfString:@"]]>" withString:@"]]" @"]]><![CDATA[" @">" options:NSLiteralSearch range:NSMakeRange(0,description.length)]];
+                    installString];
         
         PREDLogDebug(@"Sending crash reports:\n%@", crashXML);
         [self sendCrashReportWithFilename:filename xml:crashXML];
