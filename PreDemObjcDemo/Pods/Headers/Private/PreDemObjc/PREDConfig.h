@@ -1,1 +1,1 @@
-../../../../../PreDemObjc/Public/PREDConfig.h
+../../../../../PreDemObjc/Config/PREDConfig.h

@@ -9,6 +9,7 @@
 #import "PREDEnums.h"
 #import "PREDNullability.h"
 #import "PREDManager.h"
+#import "PREDNetDiagResult.h"
 
 // Notification message which PREDManager is listening to, to retry requesting updated from the server.
 // This can be used by app developers to trigger additional points where the PreDemObjc can try sending

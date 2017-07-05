@@ -2,10 +2,7 @@
 #import "PREDNullability.h"
 #import "PREDEnums.h"
 
-@protocol PREDManagerDelegate;
-
 @class PREDBaseManager;
-@class PREDCrashManager;
 
 NS_ASSUME_NONNULL_BEGIN
 

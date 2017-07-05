@@ -11,6 +11,7 @@
 
 #import "PREDManager.h"
 #import "PREDConfigManager.h"
+#import "PREDCrashManager.h"
 
 @interface PREDManager ()
 <
@@ -49,21 +50,6 @@ PREDConfigManagerDelegate
  the `[UIDevice identifierForVendor]`!
  */
 @property (nonatomic, readonly) NSString * _Nullable installString;
-
-/**
- Set the delegate
- 
- Defines the class that implements the optional protocol `PREDManagerDelegate`.
- 
- The delegate will automatically be propagated to all components. There is no need to set the delegate
- for each component individually.
- 
- @warning This property needs to be set before calling `startManager`
- 
- @see PREDManagerDelegate
- @see PREDCrashManagerDelegate
- */
-@property (nonatomic, weak, nullable) id<PREDManagerDelegate> delegate;
 
 /**
  Defines the server URL to send data to or request data from

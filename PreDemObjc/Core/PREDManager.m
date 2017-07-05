@@ -109,7 +109,6 @@ static NSString* app_id(NSString* appKey){
 
 - (instancetype)init {
     if ((self = [super init])) {
-        _delegate = nil;
         _managersInitialized = NO;
         
         _hockeyAppClient = nil;
@@ -199,23 +198,6 @@ static NSString* app_id(NSString* appKey){
         
         if (_hockeyAppClient) {
             _hockeyAppClient.baseURL = [NSURL URLWithString:_serverURL];
-        }
-    }
-}
-
-
-- (void)setDelegate:(id<PREDManagerDelegate>)delegate {
-    if (self.appEnvironment != PREDEnvironmentAppStore) {
-        if (_startManagerIsInvoked) {
-            PREDLogError(@"The `delegate` property has to be set before calling [[PREDManager sharedPREDManager] startManager] !");
-        }
-    }
-    
-    if (_delegate != delegate) {
-        _delegate = delegate;
-        
-        if (_crashManager) {
-            _crashManager.delegate = _delegate;
         }
     }
 }
@@ -347,8 +329,6 @@ static NSString* app_id(NSString* appKey){
         _crashManager = [[PREDCrashManager alloc] initWithAppIdentifier:app_id(_appKey)
                                                          appEnvironment:_appEnvironment
                                                         hockeyAppClient:[self hockeyAppClient]];
-        _crashManager.delegate = _delegate;
-
         _managersInitialized = YES;
     } else {
         [self logInvalidIdentifier:@"app identifier"];
