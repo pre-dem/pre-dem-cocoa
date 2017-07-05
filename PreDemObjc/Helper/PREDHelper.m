@@ -395,6 +395,33 @@ NSString *const kPREDExcludeApplicationSupportFromBackup = @"kPREDExcludeApplica
     return @"";
 }
 
++ (NSBundle *)bundle {
+    static NSBundle *bundle = nil;
+    static dispatch_once_t predicate;
+    dispatch_once(&predicate, ^{
+        NSString* mainBundlePath = [[NSBundle bundleForClass:[PREDManager class]] resourcePath];
+        NSString* frameworkBundlePath = [mainBundlePath stringByAppendingPathComponent:PRED_BUNDLE];
+        bundle = [NSBundle bundleWithPath:frameworkBundlePath];
+    });
+    return bundle;
+}
+
++ (NSString *)localizedString:(NSString *)stringToken {
+    if (!stringToken) return @"";
+    
+    NSString *appSpecificLocalizationString = NSLocalizedString(stringToken, @"");
+    if (appSpecificLocalizationString && ![stringToken isEqualToString:appSpecificLocalizationString]) {
+        return appSpecificLocalizationString;
+    } else if (self.bundle) {
+        NSString *bundleSpecificLocalizationString = NSLocalizedStringFromTableInBundle(stringToken, @"PreDemObjc", self.bundle, @"");
+        if (bundleSpecificLocalizationString)
+            return bundleSpecificLocalizationString;
+        return stringToken;
+    } else {
+        return stringToken;
+    }
+}
+
 + (void)fixBackupAttributeForURL:(NSURL *)directoryURL {
     BOOL shouldExcludeAppSupportDirFromBackup = [[NSUserDefaults standardUserDefaults] boolForKey:kPREDExcludeApplicationSupportFromBackup];
     if (shouldExcludeAppSupportDirFromBackup) {

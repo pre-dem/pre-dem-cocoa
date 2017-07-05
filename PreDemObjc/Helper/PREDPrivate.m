@@ -27,9 +27,7 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#import "PreDemObjc.h"
 #import "PREDPrivate.h"
-#include <CommonCrypto/CommonDigest.h>
 
 NSString *const kPREDCrashErrorDomain = @"PREDCrashReporterErrorDomain";
 NSString *const kPREDUpdateErrorDomain = @"PREDUpdaterErrorDomain";
@@ -38,29 +36,3 @@ NSString *const kPREDErrorDomain = @"PREDErrorDomain";
 NSString *const kPREDAuthenticatorErrorDomain = @"PREDAuthenticatorErrorDomain";
 
 // Load the framework bundle.
-NSBundle *PREDBundle(void) {
-    static NSBundle *bundle = nil;
-    static dispatch_once_t predicate;
-    dispatch_once(&predicate, ^{
-        NSString* mainBundlePath = [[NSBundle bundleForClass:[PREDManager class]] resourcePath];
-        NSString* frameworkBundlePath = [mainBundlePath stringByAppendingPathComponent:PRED_BUNDLE];
-        bundle = [NSBundle bundleWithPath:frameworkBundlePath];
-    });
-    return bundle;
-}
-
-NSString *PREDLocalizedString(NSString *stringToken) {
-    if (!stringToken) return @"";
-    
-    NSString *appSpecificLocalizationString = NSLocalizedString(stringToken, @"");
-    if (appSpecificLocalizationString && ![stringToken isEqualToString:appSpecificLocalizationString]) {
-        return appSpecificLocalizationString;
-    } else if (PREDBundle()) {
-        NSString *bundleSpecificLocalizationString = NSLocalizedStringFromTableInBundle(stringToken, @"PreDemObjc", PREDBundle(), @"");
-        if (bundleSpecificLocalizationString)
-            return bundleSpecificLocalizationString;
-        return stringToken;
-    } else {
-        return stringToken;
-    }
-}

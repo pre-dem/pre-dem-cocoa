@@ -39,20 +39,8 @@
 #define PRED_IDENTIFIER @"net.hockeyapp.sdk.ios"
 #define PRED_CRASH_SETTINGS @"PREDCrashManager.plist"
 #define PRED_CRASH_ANALYZER @"PREDCrashManager.analyzer"
-
-#define kPREDMetaUserName  @"PREDMetaUserName"
-#define kPREDMetaUserEmail @"PREDMetaUserEmail"
-#define kPREDMetaUserID    @"PREDMetaUserID"
-
 #define PRED_BUNDLE @"PreDemObjcResources.bundle"
 #define PRED_DEFAULT_URL @"http://hriygkee.bq.cloudappl.com"
-
-NSBundle *PREDBundle(void);
-NSString *PREDLocalizedString(NSString *stringToken);
-
-#ifndef __IPHONE_8_0
-#define __IPHONE_8_0     80000
-#endif
 
 #ifndef TARGET_OS_SIMULATOR
 
