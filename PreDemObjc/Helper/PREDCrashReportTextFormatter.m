@@ -31,8 +31,8 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#import "PreDemObjc.h"
-#import "PREDPrivate.h"
+#import "PREDLogger.h"
+#import "PREDCrashReportTextFormatter.h"
 #import <CrashReporter/CrashReporter.h>
 
 #import <mach-o/dyld.h>
@@ -47,7 +47,6 @@
 #define SEL_NAME_SECT "__cstring"
 #endif
 
-#import "PREDCrashReportTextFormatter.h"
 
 /*
  * XXX: The ARM64 CPU type, and ARM_V7S and ARM_V8 Mach-O CPU subtypes are not

@@ -45,11 +45,8 @@
 #define kPREDCrashApprovedReports @"PreDemObjcCrashApprovedReports"
 
 // internal keys
-static NSString *const KPREDAttachmentDictIndex = @"index";
-static NSString *const KPREDAttachmentDictAttachment = @"attachment";
 
 static NSString *const kPREDCrashManagerStatus = @"PREDCrashManagerStatus";
-
 static NSString *const kPREDAppWentIntoBackgroundSafely = @"PREDAppWentIntoBackgroundSafely";
 static NSString *const kPREDAppDidReceiveLowMemoryNotification = @"PREDAppDidReceiveLowMemoryNotification";
 static NSString *const kPREDAppMarketingVersion = @"PREDAppMarketingVersion";
@@ -57,7 +54,6 @@ static NSString *const kPREDAppVersion = @"PREDAppVersion";
 static NSString *const kPREDAppOSVersion = @"PREDAppOSVersion";
 static NSString *const kPREDAppOSBuild = @"PREDAppOSBuild";
 static NSString *const kPREDAppUUIDs = @"PREDAppUUIDs";
-
 static NSString *const kPREDFakeCrashUUID = @"PREDFakeCrashUUID";
 static NSString *const kPREDFakeCrashAppMarketingVersion = @"PREDFakeCrashAppMarketingVersion";
 static NSString *const kPREDFakeCrashAppVersion = @"PREDFakeCrashAppVersion";
@@ -99,7 +95,9 @@ static PLCrashReporterCallbacks plCrashCallbacks = {
 // This code provides us access to the C++ exception message, including a correct stack trace.
 //
 @interface PREDCrashCXXExceptionWrapperException : NSException
+
 - (instancetype)initWithCXXExceptionInfo:(const PREDCrashUncaughtCXXExceptionInfo *)info;
+
 @end
 
 @implementation PREDCrashCXXExceptionWrapperException {
@@ -1010,7 +1008,7 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
     [rootObj setObject:fakeReportDeviceModel forKey:kPREDFakeCrashDeviceModel];
     [rootObj setObject:fakeReportAppUUIDs forKey:kPREDFakeCrashAppBinaryUUID];
     [rootObj setObject:fakeReportString forKey:kPREDFakeCrashReport];
-        
+    
     NSData *plist = [NSPropertyListSerialization dataWithPropertyList:(id)rootObj
                                                                format:NSPropertyListBinaryFormat_v1_0
                                                               options:0
