@@ -77,7 +77,6 @@ static NSString *const kPREDFakeCrashOSVersion = @"PREDFakeCrashOSVersion";
 static NSString *const kPREDFakeCrashDeviceModel = @"PREDFakeCrashDeviceModel";
 static NSString *const kPREDFakeCrashAppBinaryUUID = @"PREDFakeCrashAppBinaryUUID";
 static NSString *const kPREDFakeCrashReport = @"PREDFakeCrashAppString";
-static char const *PREDSaveEventsFilePath;
 
 static PREDCrashManagerCallbacks bitCrashCallbacks = {
     .context = NULL,
