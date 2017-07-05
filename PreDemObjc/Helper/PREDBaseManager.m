@@ -44,9 +44,7 @@
 #define __IPHONE_6_1     60100
 #endif
 
-@implementation PREDBaseManager {
-    UINavigationController *_navController;
-}
+@implementation PREDBaseManager
 
 
 - (instancetype)init {

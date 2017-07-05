@@ -27,7 +27,6 @@
  */
 
 #import <Foundation/Foundation.h>
-#import <UIKit/UIKit.h>
 #import "PREDEnums.h"
 
 @interface PREDHelper : NSObject
@@ -53,7 +52,6 @@ FOUNDATION_EXPORT NSString *const kPREDExcludeApplicationSupportFromBackup;
 @property(class, readonly) NSString *osPlatform;
 @property(class, readonly) NSString *deviceLocale;
 @property(class, readonly) NSString *deviceLanguage;
-@property(class, readonly) NSString *screenSize;
 @property(class, readonly) NSString *sdkVersion;
 @property(class, readonly) NSString *sdkBuild;
 @property(class, readonly) NSString *appVersion;

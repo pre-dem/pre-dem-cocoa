@@ -321,12 +321,6 @@ NSString *const kPREDExcludeApplicationSupportFromBackup = @"kPREDExcludeApplica
     return [[NSBundle mainBundle] preferredLocalizations][0];
 }
 
-+ (NSString *)screenSize {
-    CGFloat scale = [UIScreen mainScreen].scale;
-    CGSize screenSize = [UIScreen mainScreen].bounds.size;
-    return [NSString stringWithFormat:@"%dx%d",(int)(screenSize.height * scale), (int)(screenSize.width * scale)];
-}
-
 + (NSString *)sdkVersion {
     return [NSString stringWithFormat:@"%@", [PREDVersion getSDKVersion]];
 }

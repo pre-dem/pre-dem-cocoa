@@ -29,14 +29,12 @@
  */
 
 #import <SystemConfiguration/SystemConfiguration.h>
-#import <UIKit/UIKit.h>
 
 #import "PREDPrivate.h"
 #import "PREDHelper.h"
 #import "PREDNetworkClient.h"
 
 #import "PREDManagerPrivate.h"
-#import "PREDManagerDelegate.h"
 #import "PREDCrashDetails.h"
 #import "PREDCrashManager.h"
 #import "PREDCrashManagerPrivate.h"
@@ -572,65 +570,6 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
     return osBuild;
 }
 
-/**
- *	 Get the userID from the delegate which should be stored with the crash report
- *
- *	@return The userID value
- */
-- (NSString *)userIDForCrashReport {
-    NSString *userID;
-    
-    // first check the global keychain storage
-    NSString *userIdFromKeychain = [PREDHelper stringValueFromKeychainForKey:kPREDMetaUserID];
-    if (userIdFromKeychain) {
-        userID = userIdFromKeychain;
-    }
-    
-    if ([[PREDManager sharedPREDManager].delegate respondsToSelector:@selector(userIDForPREDManager:componentManager:)]) {
-        userID = [[PREDManager sharedPREDManager].delegate
-                  userIDForPREDManager:[PREDManager sharedPREDManager]
-                  componentManager:self];
-    }
-    
-    return userID  ?: @"";
-}
-
-/**
- *	 Get the userName from the delegate which should be stored with the crash report
- *
- *	@return The userName value
- */
-- (NSString *)userNameForCrashReport {
-    // first check the global keychain storage
-    NSString *username = [PREDHelper stringValueFromKeychainForKey:kPREDMetaUserName] ?: @"";
-    
-    if ([[PREDManager sharedPREDManager].delegate respondsToSelector:@selector(userNameForPREDManager:componentManager:)]) {
-        username = [[PREDManager sharedPREDManager].delegate
-                    userNameForPREDManager:[PREDManager sharedPREDManager]
-                    componentManager:self] ?: @"";
-    }
-    
-    return username;
-}
-
-/**
- *	 Get the userEmail from the delegate which should be stored with the crash report
- *
- *	@return The userEmail value
- */
-- (NSString *)userEmailForCrashReport {
-    // first check the global keychain storage
-    NSString *useremail = [PREDHelper stringValueFromKeychainForKey:kPREDMetaUserEmail] ?: @"";
-    
-    if ([[PREDManager sharedPREDManager].delegate respondsToSelector:@selector(userEmailForPREDManager:componentManager:)]) {
-        useremail = [[PREDManager sharedPREDManager].delegate
-                     userEmailForPREDManager:[PREDManager sharedPREDManager]
-                     componentManager:self] ?: @"";
-    }
-    
-    return useremail;
-}
-
 #pragma mark - CrashCallbacks
 
 /**
@@ -684,13 +623,6 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
     PREDLogVerbose(@"VERBOSE: Storing meta data for crash report with filename %@", filename);
     NSError *error = NULL;
     NSMutableDictionary *metaDict = [NSMutableDictionary dictionaryWithCapacity:4];
-    NSString *applicationLog = @"";
-    
-    [PREDHelper addStringValueToKeychain:[self userNameForCrashReport] forKey:[NSString stringWithFormat:@"%@.%@", filename, kPREDCrashMetaUserName]];
-    [PREDHelper addStringValueToKeychain:[self userEmailForCrashReport] forKey:[NSString stringWithFormat:@"%@.%@", filename, kPREDCrashMetaUserEmail]];
-    [PREDHelper addStringValueToKeychain:[self userIDForCrashReport] forKey:[NSString stringWithFormat:@"%@.%@", filename, kPREDCrashMetaUserID]];
-    
-    [metaDict setObject:applicationLog forKey:kPREDCrashMetaApplicationLog];
     
     NSData *plist = [NSPropertyListSerialization dataWithPropertyList:(id)metaDict
                                                                format:NSPropertyListBinaryFormat_v1_0
@@ -917,63 +849,10 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
             NSString *alertDescription = [NSString stringWithFormat:PREDLocalizedString(@"CrashDataFoundAnonymousDescription"), appName];
             
             // the crash report is not anonymous any more if username or useremail are not nil
-            NSString *userid = [self userIDForCrashReport];
-            NSString *username = [self userNameForCrashReport];
-            NSString *useremail = [self userEmailForCrashReport];
-            
-            if ((userid && [userid length] > 0) ||
-                (username && [username length] > 0) ||
-                (useremail && [useremail length] > 0)) {
-                alertDescription = [NSString stringWithFormat:PREDLocalizedString(@"CrashDataFoundDescription"), appName];
-            }
             
             if (_alertViewHandler) {
                 _alertViewHandler();
             } else {
-                /* We won't use this for now until we have a more robust solution for displaying UIAlertController
-                 // requires iOS 8
-                 id uialertcontrollerClass = NSClassFromString(@"UIAlertController");
-                 if (uialertcontrollerClass) {
-                 __weak typeof(self) weakSelf = self;
-                 
-                 UIAlertController *alertController = [UIAlertController alertControllerWithTitle:[NSString stringWithFormat:PREDLocalizedString(@"CrashDataFoundTitle"), appName]
-                 message:alertDescription
-                 preferredStyle:UIAlertControllerStyleAlert];
-                 
-                 
-                 UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:PREDLocalizedString(@"CrashDontSendReport")
-                 style:UIAlertActionStyleCancel
-                 handler:^(UIAlertAction * action) {
-                 typeof(self) strongSelf = weakSelf;
-                 
-                 [strongSelf handleUserInput:PREDCrashManagerUserInputDontSend withUserProvidedMetaData:nil];
-                 }];
-                 
-                 [alertController addAction:cancelAction];
-                 
-                 UIAlertAction *sendAction = [UIAlertAction actionWithTitle:PREDLocalizedString(@"CrashSendReport")
-                 style:UIAlertActionStyleDefault
-                 handler:^(UIAlertAction * action) {
-                 typeof(self) strongSelf = weakSelf;
-                 [strongSelf handleUserInput:PREDCrashManagerUserInputSend withUserProvidedMetaData:nil];
-                 }];
-                 
-                 [alertController addAction:sendAction];
-                 
-                 if (self.shouldShowAlwaysButton) {
-                 UIAlertAction *alwaysSendAction = [UIAlertAction actionWithTitle:PREDLocalizedString(@"CrashSendReportAlways")
-                 style:UIAlertActionStyleDefault
-                 handler:^(UIAlertAction * action) {
-                 typeof(self) strongSelf = weakSelf;
-                 [strongSelf handleUserInput:PREDCrashManagerUserInputAlwaysSend withUserProvidedMetaData:nil];
-                 }];
-                 
-                 [alertController addAction:alwaysSendAction];
-                 }
-                 
-                 [self showAlertController:alertController];
-                 } else {
-                 */
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
                 UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:PREDLocalizedString(@"CrashDataFoundTitle"), appName]

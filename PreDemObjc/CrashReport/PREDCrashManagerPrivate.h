@@ -29,7 +29,6 @@
 
 #import "PreDemObjc.h"
 #import <CrashReporter/CrashReporter.h>
-
 #import "PREDCrashManager.h"
 
 @class PREDNetworkClient;
@@ -73,10 +72,6 @@
 - (instancetype)initWithAppIdentifier:(NSString *)appIdentifier appEnvironment:(PREDEnvironment)environment hockeyAppClient:(PREDNetworkClient *)hockeyAppClient NS_DESIGNATED_INITIALIZER;
 
 - (void)cleanCrashReports;
-
-- (NSString *)userIDForCrashReport;
-- (NSString *)userEmailForCrashReport;
-- (NSString *)userNameForCrashReport;
 
 - (void)handleCrashReport;
 - (BOOL)hasPendingCrashReport;

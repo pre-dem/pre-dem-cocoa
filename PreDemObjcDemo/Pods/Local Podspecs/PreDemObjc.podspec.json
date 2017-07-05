@@ -29,8 +29,7 @@
     "QuartzCore",
     "QuickLook",
     "Security",
-    "SystemConfiguration",
-    "UIKit"
+    "SystemConfiguration"
   ],
   "libraries": [
     "c++",
