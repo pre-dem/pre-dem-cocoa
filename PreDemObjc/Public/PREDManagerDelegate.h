@@ -27,7 +27,6 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "PREDCrashManagerDelegate.h"
 
 @class PREDManager;
 @class PREDBaseManager;
@@ -39,8 +38,7 @@
 
 @protocol PREDManagerDelegate
 <
-NSObject,
-PREDCrashManagerDelegate
+NSObject
 >
 
 @optional

@@ -37,7 +37,6 @@
 
 #import "PREDManagerPrivate.h"
 #import "PREDManagerDelegate.h"
-#import "PREDCrashMetaData.h"
 #import "PREDCrashDetails.h"
 #import "PREDCrashManager.h"
 #import "PREDCrashManagerPrivate.h"
@@ -345,29 +344,6 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
     [archiver finishEncoding];
     
     return [data writeToFile:attachmentFilename atomically:YES];
-}
-
-- (void)persistUserProvidedMetaData:(PREDCrashMetaData *)userProvidedMetaData {
-    if (!userProvidedMetaData) return;
-    
-    if (userProvidedMetaData.userProvidedDescription && [userProvidedMetaData.userProvidedDescription length] > 0) {
-        NSError *error;
-        [userProvidedMetaData.userProvidedDescription writeToFile:[NSString stringWithFormat:@"%@.desc", [_crashesDir stringByAppendingPathComponent: _lastCrashFilename]] atomically:YES encoding:NSUTF8StringEncoding error:&error];
-    }
-    
-    if (userProvidedMetaData.userName && [userProvidedMetaData.userName length] > 0) {
-        [PREDHelper addStringValueToKeychain:userProvidedMetaData.userName forKey:[NSString stringWithFormat:@"%@.%@", _lastCrashFilename, kPREDCrashMetaUserName]];
-        
-    }
-    
-    if (userProvidedMetaData.userEmail && [userProvidedMetaData.userEmail length] > 0) {
-        [PREDHelper addStringValueToKeychain:userProvidedMetaData.userEmail forKey:[NSString stringWithFormat:@"%@.%@", _lastCrashFilename, kPREDCrashMetaUserEmail]];
-    }
-    
-    if (userProvidedMetaData.userID && [userProvidedMetaData.userID length] > 0) {
-        [PREDHelper addStringValueToKeychain:userProvidedMetaData.userID forKey:[NSString stringWithFormat:@"%@.%@", _lastCrashFilename, kPREDCrashMetaUserID]];
-        
-    }
 }
 
 /**
@@ -714,26 +690,7 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
     [PREDHelper addStringValueToKeychain:[self userEmailForCrashReport] forKey:[NSString stringWithFormat:@"%@.%@", filename, kPREDCrashMetaUserEmail]];
     [PREDHelper addStringValueToKeychain:[self userIDForCrashReport] forKey:[NSString stringWithFormat:@"%@.%@", filename, kPREDCrashMetaUserID]];
     
-    if ([self.delegate respondsToSelector:@selector(applicationLogForCrashManager:)]) {
-        applicationLog = [self.delegate applicationLogForCrashManager:self] ?: @"";
-    }
     [metaDict setObject:applicationLog forKey:kPREDCrashMetaApplicationLog];
-    
-    if ([self.delegate respondsToSelector:@selector(attachmentForCrashManager:)]) {
-        PREDLogVerbose(@"VERBOSE: Processing attachment for crash report with filename %@", filename);
-        PREDAttachment *attachment = [self.delegate attachmentForCrashManager:self];
-        
-        if (attachment && attachment.hockeyAttachmentData) {
-            BOOL success = [self persistAttachment:attachment withFilename:[_crashesDir stringByAppendingPathComponent: filename]];
-            if (!success) {
-                PREDLogError(@"Persisting the crash attachment failed");
-            } else {
-                PREDLogVerbose(@"VERBOSE: Crash attachment successfully persisted.");
-            }
-        } else {
-            PREDLogDebug(@"Crash attachment was nil");
-        }
-    }
     
     NSData *plist = [NSPropertyListSerialization dataWithPropertyList:(id)metaDict
                                                                format:NSPropertyListBinaryFormat_v1_0
@@ -748,47 +705,6 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
         PREDLogError(@"Writing crash meta data failed. %@", error);
     }
     PREDLogVerbose(@"VERBOSE: Storing crash meta data finished.");
-}
-
-- (BOOL)handleUserInput:(PREDCrashManagerUserInput)userInput withUserProvidedMetaData:(PREDCrashMetaData *)userProvidedMetaData {
-    switch (userInput) {
-        case PREDCrashManagerUserInputDontSend:
-            if ([self.delegate respondsToSelector:@selector(crashManagerWillCancelSendingCrashReport:)]) {
-                [self.delegate crashManagerWillCancelSendingCrashReport:self];
-            }
-            
-            if (_lastCrashFilename)
-                [self cleanCrashReportWithFilename:[_crashesDir stringByAppendingPathComponent: _lastCrashFilename]];
-            
-            return YES;
-            
-        case PREDCrashManagerUserInputSend:
-            if (userProvidedMetaData)
-                [self persistUserProvidedMetaData:userProvidedMetaData];
-            
-            [self approveLatestCrashReport];
-            [self sendNextCrashReport];
-            return YES;
-            
-        case PREDCrashManagerUserInputAlwaysSend:
-            _crashManagerStatus = PREDCrashManagerStatusAutoSend;
-            [[NSUserDefaults standardUserDefaults] setInteger:_crashManagerStatus forKey:kPREDCrashManagerStatus];
-            
-            if ([self.delegate respondsToSelector:@selector(crashManagerWillSendCrashReportsAlways:)]) {
-                [self.delegate crashManagerWillSendCrashReportsAlways:self];
-            }
-            
-            if (userProvidedMetaData)
-                [self persistUserProvidedMetaData:userProvidedMetaData];
-            
-            [self approveLatestCrashReport];
-            [self sendNextCrashReport];
-            return YES;
-            
-        default:
-            return NO;
-    }
-    
 }
 
 #pragma mark - PLCrashReporter
@@ -933,10 +849,6 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
         return YES;
     } else {
         if (_didCrashInLastSession) {
-            if ([self.delegate respondsToSelector:@selector(crashManagerWillCancelSendingCrashReport:)]) {
-                [self.delegate crashManagerWillCancelSendingCrashReport:self];
-            }
-            
             _didCrashInLastSession = NO;
         }
         
@@ -1000,10 +912,6 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
             [self approveLatestCrashReport];
             [self sendNextCrashReport];
         } else if (_crashManagerStatus != PREDCrashManagerStatusAutoSend && notApprovedReportFilename) {
-            
-            if ([self.delegate respondsToSelector:@selector(crashManagerWillShowSubmitCrashReportAlert:)]) {
-                [self.delegate crashManagerWillShowSubmitCrashReportAlert:self];
-            }
             
             NSString *appName = [PREDHelper appName:PREDLocalizedString(@"PreDemNamePlaceholder")];
             NSString *alertDescription = [NSString stringWithFormat:PREDLocalizedString(@"CrashDataFoundAnonymousDescription"), appName];
@@ -1194,10 +1102,6 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
         
         if (!didAppSwitchToBackgroundSafely) {
             BOOL considerReport = YES;
-            
-            if ([self.delegate respondsToSelector:@selector(considerAppNotTerminatedCleanlyReportForCrashManager:)]) {
-                considerReport = [self.delegate considerAppNotTerminatedCleanlyReportForCrashManager:self];
-            }
             
             if (considerReport) {
                 PREDLogVerbose(@"App kill detected, creating crash report.");
@@ -1480,23 +1384,6 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
     }
 }
 
-#pragma mark - UIAlertView Delegate
-
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
-    switch (buttonIndex) {
-        case 0:
-            [self handleUserInput:PREDCrashManagerUserInputDontSend withUserProvidedMetaData:nil];
-            break;
-        case 1:
-            [self handleUserInput:PREDCrashManagerUserInputSend withUserProvidedMetaData:nil];
-            break;
-        case 2:
-            [self handleUserInput:PREDCrashManagerUserInputAlwaysSend withUserProvidedMetaData:nil];
-            break;
-    }
-}
 #pragma clang diagnostic pop
 
 #pragma mark - Networking
@@ -1582,10 +1469,6 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
                                                                                             error:&theError];
                 PREDLogDebug(@"Received API response: %@", response);
                 
-                if ([self.delegate respondsToSelector:@selector(crashManagerDidFinishSendingCrashReport:)]) {
-                    [self.delegate crashManagerDidFinishSendingCrashReport:self];
-                }
-                
                 // only if sending the crash report went successfully, continue with the next one (if there are more)
                 [self sendNextCrashReport];
             } else if (statusCode == 400) {
@@ -1608,10 +1491,6 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
         }
         
         if (theError) {
-            if ([self.delegate respondsToSelector:@selector(crashManager:didFailWithError:)]) {
-                [self.delegate crashManager:self didFailWithError:theError];
-            }
-            
             PREDLogError(@"%@", [theError localizedDescription]);
         }
     });
@@ -1670,10 +1549,6 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
                                         }];
         
         [self.hockeyAppClient enqeueHTTPOperation:operation];
-    }
-    
-    if ([self.delegate respondsToSelector:@selector(crashManagerWillSendCrashReport:)]) {
-        [self.delegate crashManagerWillSendCrashReport:self];
     }
     
     PREDLogDebug(@"Sending crash reports started.");

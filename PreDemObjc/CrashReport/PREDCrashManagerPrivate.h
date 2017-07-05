@@ -82,7 +82,6 @@
 - (BOOL)hasPendingCrashReport;
 - (NSString *)firstNotApprovedCrashReport;
 
-- (void)persistUserProvidedMetaData:(PREDCrashMetaData *)userProvidedMetaData;
 - (BOOL)persistAttachment:(PREDAttachment *)attachment withFilename:(NSString *)filename;
 
 - (PREDAttachment *)attachmentForCrashReport:(NSString *)filename;

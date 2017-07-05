@@ -33,8 +33,6 @@
 #import "PREDBaseManager.h"
 
 @class PREDCrashDetails;
-@class PREDCrashMetaData;
-
 
 /**
  * Custom block that handles the alert that prompts the user whether he wants to send crash reports
@@ -324,19 +322,6 @@ typedef NS_ENUM(NSUInteger, PREDCrashManagerUserInput) {
  @see lastSessionCrashDetails
  */
 @property (nonatomic, readonly) BOOL didCrashInLastSession;
-
-/**
- Provides an interface to pass user input from a custom alert to a crash report
- 
- @param userInput Defines the users action wether to send, always send, or not to send the crash report.
- @param userProvidedMetaData The content of this optional PREDCrashMetaData instance will be attached to the crash report and allows to ask the user for e.g. additional comments or info.
- 
- @return Returns YES if the input is a valid option and successfully triggered further processing of the crash report
- 
- @see PREDCrashManagerUserInput
- @see PREDCrashMetaData
- */
-- (BOOL)handleUserInput:(PREDCrashManagerUserInput)userInput withUserProvidedMetaData:(PREDCrashMetaData *)userProvidedMetaData;
 
 /**
  Lets you set a custom block which handles showing a custom UI and asking the user
