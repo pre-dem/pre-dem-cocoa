@@ -26,23 +26,42 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  */
 
-extern NSString *const __attribute__((unused)) kPREDCrashKillSignal;
+#import <Foundation/Foundation.h>
 
-@interface PREDCrashDetails () {
-    
-}
 
-- (instancetype)initWithIncidentIdentifier:(NSString *)incidentIdentifier
-                               reporterKey:(NSString *)reporterKey
-                                    signal:(NSString *)signal
-                             exceptionName:(NSString *)exceptionName
-                           exceptionReason:(NSString *)exceptionReason
-                              appStartTime:(NSDate *)appStartTime
-                                 crashTime:(NSDate *)crashTime
-                                 osVersion:(NSString *)osVersion
-                                   osBuild:(NSString *)osBuild
-                                appVersion:(NSString *)appVersion
-                                  appBuild:(NSString *)appBuild
-                      appProcessIdentifier:(NSUInteger)appProcessIdentifier;
+/**
+ The internal superclass for all component managers
+ 
+ */
+
+@interface PREDBaseManager : NSObject
+
+///-----------------------------------------------------------------------------
+/// @name Modules
+///-----------------------------------------------------------------------------
+
+
+/**
+ Defines the server URL to send data to or request data from
+ 
+ By default this is set to the PreDem servers and there rarely should be a
+ need to modify that.
+ */
+@property (nonatomic, copy) NSString *serverURL;
+
+@property (nonatomic, strong) NSString *appIdentifier;
+
+@property (nonatomic, assign, readonly) PREDEnvironment appEnvironment;
+
+- (instancetype)initWithAppIdentifier:(NSString *)appIdentifier appEnvironment:(PREDEnvironment)environment;
+
+- (void)startManager;
+
+/** url encoded version of the appIdentifier
+ 
+ where appIdentifier is either the value this object was initialized with,
+ or the main bundles CFBundleIdentifier if appIdentifier is nil
+ */
+- (NSString *)encodedAppIdentifier;
 
 @end

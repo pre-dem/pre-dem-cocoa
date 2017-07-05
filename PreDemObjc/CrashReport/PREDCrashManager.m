@@ -35,11 +35,9 @@
 #import "PREDNetworkClient.h"
 
 #import "PREDManagerPrivate.h"
-#import "PREDCrashDetails.h"
 #import "PREDCrashManager.h"
 #import "PREDCrashManagerPrivate.h"
 #import "PREDCrashReportTextFormatter.h"
-#import "PREDCrashDetailsPrivate.h"
 #import "PREDCrashCXXExceptionHandler.h"
 #import "PREDVersion.h"
 #include <sys/sysctl.h>
@@ -76,6 +74,7 @@ static NSString *const kPREDFakeCrashOSVersion = @"PREDFakeCrashOSVersion";
 static NSString *const kPREDFakeCrashDeviceModel = @"PREDFakeCrashDeviceModel";
 static NSString *const kPREDFakeCrashAppBinaryUUID = @"PREDFakeCrashAppBinaryUUID";
 static NSString *const kPREDFakeCrashReport = @"PREDFakeCrashAppString";
+static NSString *const kPREDCrashKillSignal = @"SIGKILL";
 
 static PREDCrashManagerCallbacks bitCrashCallbacks = {
     .context = NULL,
@@ -689,22 +688,6 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
                     incidentIdentifier = (NSString *) CFBridgingRelease(CFUUIDCreateString(NULL, report.uuidRef));
                 }
                 
-                NSString *reporterKey = PREDHelper.appAnonID ?: @"";
-                
-                _lastSessionCrashDetails = [[PREDCrashDetails alloc] initWithIncidentIdentifier:incidentIdentifier
-                                                                                    reporterKey:reporterKey
-                                                                                         signal:report.signalInfo.name
-                                                                                  exceptionName:report.exceptionInfo.exceptionName
-                                                                                exceptionReason:report.exceptionInfo.exceptionReason
-                                                                                   appStartTime:appStartTime
-                                                                                      crashTime:appCrashTime
-                                                                                      osVersion:report.systemInfo.operatingSystemVersion
-                                                                                        osBuild:report.systemInfo.operatingSystemBuild
-                                                                                     appVersion:report.applicationInfo.applicationMarketingVersion
-                                                                                       appBuild:report.applicationInfo.applicationVersion
-                                                                           appProcessIdentifier:report.processInfo.processID
-                                            ];
-                
                 // fetch and store the meta data after setting _lastSessionCrashDetails, so the property can be used in the protocol methods
                 [self storeMetaDataForCrashReportFilename:cacheFilename];
             }
@@ -1079,21 +1062,7 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
     [rootObj setObject:fakeReportDeviceModel forKey:kPREDFakeCrashDeviceModel];
     [rootObj setObject:fakeReportAppUUIDs forKey:kPREDFakeCrashAppBinaryUUID];
     [rootObj setObject:fakeReportString forKey:kPREDFakeCrashReport];
-    
-    _lastSessionCrashDetails = [[PREDCrashDetails alloc] initWithIncidentIdentifier:fakeReportUUID
-                                                                        reporterKey:fakeReporterKey
-                                                                             signal:fakeSignalName
-                                                                      exceptionName:nil
-                                                                    exceptionReason:nil
-                                                                       appStartTime:nil
-                                                                          crashTime:nil
-                                                                          osVersion:fakeReportOSVersion
-                                                                            osBuild:fakeReportOSBuild
-                                                                         appVersion:fakeReportAppMarketingVersion
-                                                                           appBuild:fakeReportAppVersion
-                                                               appProcessIdentifier:[[NSProcessInfo processInfo] processIdentifier]
-                                ];
-    
+        
     NSData *plist = [NSPropertyListSerialization dataWithPropertyList:(id)rootObj
                                                                format:NSPropertyListBinaryFormat_v1_0
                                                               options:0
