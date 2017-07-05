@@ -56,7 +56,6 @@ FOUNDATION_EXPORT NSString *const kPREDExcludeApplicationSupportFromBackup;
 @property(class, readonly) NSString *sdkBuild;
 @property(class, readonly) NSString *appVersion;
 @property(class, readonly) NSString *appBuild;
-@property(class, readonly) NSString *appAnonID;
 @property(class, readonly) NSString *appName;
 @property(class, readonly) NSString *appBundleId;
 @property(class, readonly) NSString *osVersion;
@@ -70,9 +69,5 @@ FOUNDATION_EXPORT NSString *const kPREDExcludeApplicationSupportFromBackup;
 + (NSString *)utcDateString:(NSDate *)date;
 + (NSDictionary*)getObjectData:(id)obj;
 + (NSString *)MD5:(NSString *)mdStr;
-+ (BOOL)addStringValueToKeychain:(NSString *)stringValue forKey:(NSString *)key;
-+ (BOOL)addStringValueToKeychainForThisDeviceOnly:(NSString *)stringValue forKey:(NSString *)key;
-+ (NSString *)stringValueFromKeychainForKey:(NSString *)key;
-+ (BOOL)removeKeyFromKeychain:(NSString *)key;
 
 @end

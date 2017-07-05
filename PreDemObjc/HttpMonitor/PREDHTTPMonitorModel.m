@@ -19,7 +19,7 @@
         self.appBundleId = PREDHelper.appBundleId;
         self.osVersion = PREDHelper.osVersion;
         self.deviceModel = PREDHelper.deviceModel;
-        self.deviceUUID = PREDHelper.appAnonID;
+        self.deviceUUID = PREDHelper.UUID;
     }
     return self;
 }

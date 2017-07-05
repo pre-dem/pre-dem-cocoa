@@ -55,7 +55,7 @@ NSURLSessionDelegate
                            @"os_platform": PREDHelper.osPlatform,
                            @"os_version": PREDHelper.osVersion,
                            @"sdk_version": PREDHelper.sdkVersion,
-                           @"sdk_id": PREDHelper.appAnonID,
+                           @"sdk_id": PREDHelper.UUID,
                            @"device_id": @""
                            };
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@app-config/i", [[PREDManager sharedPREDManager] baseUrl]]]];

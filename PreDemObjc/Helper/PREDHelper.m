@@ -28,7 +28,6 @@
 
 
 #import "PREDHelper.h"
-#import "PREDKeychainUtils.h"
 #import "PreDemObjc.h"
 #import "PREDPrivate.h"
 #import "PREDVersion.h"
@@ -339,37 +338,6 @@ NSString *const kPREDExcludeApplicationSupportFromBackup = @"kPREDExcludeApplica
     return build;
 }
 
-+ (NSString *)appAnonID {
-    static NSString *appAnonID = nil;
-    static dispatch_once_t predAppAnonID;
-    __block NSError *error = nil;
-    NSString *appAnonIDKey = @"appAnonID";
-    
-    dispatch_once(&predAppAnonID, ^{
-        // first check if we already have an install string in the keychain
-        appAnonID = [PREDKeychainUtils getPasswordForUsername:appAnonIDKey andServiceName:self.keychainPreDemObjcServiceName error:&error];
-        
-        if (!appAnonID) {
-            appAnonID = self.UUID;
-            // store this UUID in the keychain (on this device only) so we can be sure to always have the same ID upon app startups
-            if (appAnonID) {
-                // add to keychain in a background thread, since we got reports that storing to the keychain may take several seconds sometimes and cause the app to be killed
-                // and we don't care about the result anyway
-                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
-                    [PREDKeychainUtils storeUsername:appAnonIDKey
-                                         andPassword:appAnonID
-                                      forServiceName:self.keychainPreDemObjcServiceName
-                                      updateExisting:YES
-                                       accessibility:kSecAttrAccessibleAlwaysThisDeviceOnly
-                                               error:&error];
-                });
-            }
-        }
-    });
-    
-    return appAnonID;
-}
-
 + (NSString *)appName {
     return [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleExecutable"];
 }
@@ -600,49 +568,6 @@ NSString *base64String(NSData * data, unsigned long length) {
     [hash appendFormat:@"%02X", result[i]];
     return [hash lowercaseString];
 }
-
-+ (BOOL)addStringValueToKeychain:(NSString *)stringValue forKey:(NSString *)key {
-    if (!key || !stringValue)
-    return NO;
-    
-    NSError *error = nil;
-    return [PREDKeychainUtils storeUsername:key
-                                andPassword:stringValue
-                             forServiceName:PREDHelper.keychainPreDemObjcServiceName
-                             updateExisting:YES
-                                      error:&error];
-}
-
-+ (BOOL)addStringValueToKeychainForThisDeviceOnly:(NSString *)stringValue forKey:(NSString *)key {
-    if (!key || !stringValue)
-    return NO;
-    
-    NSError *error = nil;
-    return [PREDKeychainUtils storeUsername:key
-                                andPassword:stringValue
-                             forServiceName:PREDHelper.keychainPreDemObjcServiceName
-                             updateExisting:YES
-                              accessibility:kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly
-                                      error:&error];
-}
-
-+ (NSString *)stringValueFromKeychainForKey:(NSString *)key {
-    if (!key)
-    return nil;
-    
-    NSError *error = nil;
-    return [PREDKeychainUtils getPasswordForUsername:key
-                                      andServiceName:PREDHelper.keychainPreDemObjcServiceName
-                                               error:&error];
-}
-
-+ (BOOL)removeKeyFromKeychain:(NSString *)key {
-    NSError *error = nil;
-    return [PREDKeychainUtils deleteItemForUsername:key
-                                     andServiceName:PREDHelper.keychainPreDemObjcServiceName
-                                              error:&error];
-}
-
 
 @end
 

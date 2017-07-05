@@ -931,7 +931,7 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
  */
 - (void)createCrashReportForAppKill {
     NSString *fakeReportUUID = PREDHelper.UUID;
-    NSString *fakeReporterKey = PREDHelper.appAnonID ?: @"???";
+    NSString *fakeReporterKey = PREDHelper.UUID ?: @"???";
     
     NSString *fakeReportAppMarketingVersion = [[NSUserDefaults standardUserDefaults] objectForKey:kPREDAppMarketingVersion];
     
@@ -1083,7 +1083,7 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
             return;
         }
         
-        installString = PREDHelper.appAnonID ?: @"";
+        installString = PREDHelper.UUID ?: @"";
         
         if (report) {
             if (report.uuidRef != NULL) {

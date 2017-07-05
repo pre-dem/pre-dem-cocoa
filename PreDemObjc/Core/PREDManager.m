@@ -32,7 +32,6 @@
 #import "PREDPrivate.h"
 #import "PREDHelper.h"
 #import "PREDNetworkClient.h"
-#import "PREDKeychainUtils.h"
 #import "PREDVersion.h"
 #import "PREDConfigManager.h"
 #import "PREDNetDiag.h"
@@ -206,35 +205,6 @@ static NSString* app_id(NSString* appKey){
 
 + (void)setLogHandler:(PREDLogHandler)logHandler {
     [PREDLogger setLogHandler:logHandler];
-}
-
-- (void)modifyKeychainUserValue:(NSString *)value forKey:(NSString *)key {
-    NSError *error = nil;
-    BOOL success = YES;
-    NSString *updateType = @"update";
-    
-    if (value) {
-        success = [PREDKeychainUtils storeUsername:key
-                                       andPassword:value
-                                    forServiceName:PREDHelper.keychainPreDemObjcServiceName
-                                    updateExisting:YES
-                                     accessibility:kSecAttrAccessibleAlwaysThisDeviceOnly
-                                             error:&error];
-    } else {
-        updateType = @"delete";
-        if ([PREDKeychainUtils getPasswordForUsername:key
-                                       andServiceName:PREDHelper.keychainPreDemObjcServiceName
-                                                error:&error]) {
-            success = [PREDKeychainUtils deleteItemForUsername:key
-                                                andServiceName:PREDHelper.keychainPreDemObjcServiceName
-                                                         error:&error];
-        }
-    }
-    
-    if (!success) {
-        NSString *errorDescription = [error description] ?: @"";
-        PREDLogError(@"Couldn't %@ key %@ in the keychain. %@", updateType, key, errorDescription);
-    }
 }
 
 + (NSString *)version {
