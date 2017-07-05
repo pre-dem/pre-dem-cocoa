@@ -29,10 +29,11 @@
  */
 
 #import <Foundation/Foundation.h>
-
+#import <CrashReporter/CrashReporter.h>
 #import "PREDBaseManager.h"
 
-@class PREDCrashDetails;
+@class PREDNetworkClient;
+
 
 /**
  * Custom block that handles the alert that prompts the user whether he wants to send crash reports
@@ -342,11 +343,6 @@ typedef NS_ENUM(NSUInteger, PREDCrashManagerUserInput) {
  */
 - (void)setAlertViewHandler:(PREDCustomAlertViewHandler)alertViewHandler;
 
-/**
- * Provides details about the crash that occurred in the last app session
- */
-@property (nonatomic, readonly) PREDCrashDetails *lastSessionCrashDetails;
-
 
 /**
  Indicates if the app did receive a low memory warning in the last session
@@ -419,5 +415,51 @@ typedef NS_ENUM(NSUInteger, PREDCrashManagerUserInput) {
  * If the SDK detects an App Store environment, it will _NOT_ cause the app to crash!
  */
 - (void)generateTestCrash;
+
+///-----------------------------------------------------------------------------
+/// @name Delegate
+///-----------------------------------------------------------------------------
+
+/**
+ Sets the optional `PREDCrashManagerDelegate` delegate.
+ 
+ The delegate is automatically set by using `[PREDManager setDelegate:]`. You
+ should not need to set this delegate individually.
+ 
+ @see `[PREDManager setDelegate:]`
+ */
+@property (nonatomic, weak) id delegate;
+
+/**
+ * must be set
+ */
+@property (nonatomic, strong) PREDNetworkClient *hockeyAppClient;
+
+@property (nonatomic) NSUncaughtExceptionHandler *exceptionHandler;
+
+@property (nonatomic, strong) NSFileManager *fileManager;
+
+@property (nonatomic, strong) PREPLCrashReporter *plCrashReporter;
+
+@property (nonatomic) NSString *lastCrashFilename;
+
+@property (nonatomic, copy, setter = setAlertViewHandler:) PREDCustomAlertViewHandler alertViewHandler;
+
+@property (nonatomic, strong) NSString *crashesDir;
+
+- (instancetype)initWithAppIdentifier:(NSString *)appIdentifier appEnvironment:(PREDEnvironment)environment hockeyAppClient:(PREDNetworkClient *)hockeyAppClient NS_DESIGNATED_INITIALIZER;
+
+- (void)cleanCrashReports;
+
+- (void)handleCrashReport;
+- (BOOL)hasPendingCrashReport;
+- (NSString *)firstNotApprovedCrashReport;
+
+- (void)invokeDelayedProcessing;
+- (void)sendNextCrashReport;
+
+- (void)setLastCrashFilename:(NSString *)lastCrashFilename;
+
+- (void)leavingAppSafely;
 
 @end

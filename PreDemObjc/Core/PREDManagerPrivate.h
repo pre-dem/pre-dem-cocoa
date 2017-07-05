@@ -38,19 +38,6 @@ PREDConfigManagerDelegate
  */
 @property (nonatomic, readonly) PREDEnvironment appEnvironment;
 
-
-/**
- Returns the app installation specific anonymous UUID
- 
- The value returned by this method is unique and persisted per app installation
- in the keychain.  It is also being used in crash reports as `CrashReporter Key`
- and internally when sending crash reports and feedback messages.
- 
- This is not identical to the `[ASIdentifierManager advertisingIdentifier]` or
- the `[UIDevice identifierForVendor]`!
- */
-@property (nonatomic, readonly) NSString * _Nullable installString;
-
 /**
  Defines the server URL to send data to or request data from
  
@@ -131,29 +118,6 @@ PREDConfigManagerDelegate
  @param logHandler The block of type PREDLogHandler that will process all logged messages.
  */
 + (void)setLogHandler:(PREDLogHandler _Nullable )logHandler;
-
-/**
- Initializes the manager with a particular app identifier
- 
- Initialize the manager with a PreDem app identifier.
- 
- [[PREDManager sharedPREDManager]
- startWithAppKey:@"<AppIdentifierFromPreDem>"
- serviceDomain:@"<ServiceDomain>"];
- 
- @param appKey The app key that should be used.
- @param serviceDomain The service domain that data will be reported to or requested from.
- */
-- (void)startWithAppKey:(NSString *_Nonnull)appKey serviceDomain:(NSString *_Nonnull)serviceDomain;
-
-/**
- *  diagnose current network environment
- *
- *  @param host     the end point you want this diagnose action perform with
- *  @param complete diagnose result can be retrieved from the block
- */
-- (void)diagnose:(NSString *_Nonnull)host
-        complete:(PREDNetDiagCompleteHandler _Nonnull )complete;
 
 +(PREDManager *_Nonnull)sharedPREDManager;
 

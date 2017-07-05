@@ -29,14 +29,13 @@
  */
 
 #import <SystemConfiguration/SystemConfiguration.h>
-
+#import "PREDemObjc.h"
 #import "PREDPrivate.h"
 #import "PREDHelper.h"
 #import "PREDNetworkClient.h"
 
 #import "PREDManagerPrivate.h"
 #import "PREDCrashManager.h"
-#import "PREDCrashManagerPrivate.h"
 #import "PREDCrashReportTextFormatter.h"
 #import "PREDCrashCXXExceptionHandler.h"
 #import "PREDVersion.h"
@@ -326,53 +325,6 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
     for (NSUInteger i=0; i < [_crashFiles count]; i++) {
         [self cleanCrashReportWithFilename:[_crashFiles objectAtIndex:i]];
     }
-}
-
-- (BOOL)persistAttachment:(PREDAttachment *)attachment withFilename:(NSString *)filename {
-    NSString *attachmentFilename = [filename stringByAppendingString:@".data"];
-    NSMutableData *data = [[NSMutableData alloc] init];
-    NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
-    
-    [archiver encodeObject:attachment forKey:kPREDCrashMetaAttachment];
-    
-    [archiver finishEncoding];
-    
-    return [data writeToFile:attachmentFilename atomically:YES];
-}
-
-/**
- *  Read the attachment data from the stored file
- *
- *  @param filename The crash report file path
- *
- *  @return an PREDAttachment instance or nil
- */
-- (PREDAttachment *)attachmentForCrashReport:(NSString *)filename {
-    NSString *attachmentFilename = [filename stringByAppendingString:@".data"];
-    
-    if (![_fileManager fileExistsAtPath:attachmentFilename])
-        return nil;
-    
-    
-    NSData *codedData = [[NSData alloc] initWithContentsOfFile:attachmentFilename];
-    if (!codedData)
-        return nil;
-    
-    NSKeyedUnarchiver *unarchiver = nil;
-    
-    @try {
-        unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:codedData];
-    }
-    @catch (NSException *exception) {
-        return nil;
-    }
-    
-    if ([unarchiver containsValueForKey:kPREDCrashMetaAttachment]) {
-        PREDAttachment *attachment = [unarchiver decodeObjectForKey:kPREDCrashMetaAttachment];
-        return attachment;
-    }
-    
-    return nil;
 }
 
 /**
@@ -1090,7 +1042,6 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
         return;
     
     NSString *crashXML = nil;
-    PREDAttachment *attachment = nil;
     
     // we start sending always with the oldest pending one
     NSString *filename = [_crashFiles objectAtIndex:0];
@@ -1191,7 +1142,6 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
             userid = [PREDHelper stringValueFromKeychainForKey:[NSString stringWithFormat:@"%@.%@", attachmentFilename.lastPathComponent, kPREDCrashMetaUserID]] ?: @"";
             applicationLog = [metaDict objectForKey:kPREDCrashMetaApplicationLog] ?: @"";
             description = [NSString stringWithContentsOfFile:[NSString stringWithFormat:@"%@.desc", [_crashesDir stringByAppendingPathComponent: cacheFilename]] encoding:NSUTF8StringEncoding error:&error];
-            attachment = [self attachmentForCrashReport:attachmentFilename];
         } else {
             PREDLogError(@"Reading crash meta data. %@", error);
         }
@@ -1222,7 +1172,7 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
                     [description stringByReplacingOccurrencesOfString:@"]]>" withString:@"]]" @"]]><![CDATA[" @">" options:NSLiteralSearch range:NSMakeRange(0,description.length)]];
         
         PREDLogDebug(@"Sending crash reports:\n%@", crashXML);
-        [self sendCrashReportWithFilename:filename xml:crashXML attachment:attachment];
+        [self sendCrashReportWithFilename:filename xml:crashXML];
     } else {
         // we cannot do anything with this report, so delete it
         [self cleanCrashReportWithFilename:filename];
@@ -1233,7 +1183,7 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
 
 #pragma mark - Networking
 
-- (NSData *)postBodyWithXML:(NSString *)xml attachment:(PREDAttachment *)attachment boundary:(NSString *)boundary {
+- (NSData *)postBodyWithXML:(NSString *)xml boundary:(NSString *)boundary {
     NSMutableData *postBody =  [NSMutableData data];
     
     //  [postBody appendData:[[NSString stringWithFormat:@"\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
@@ -1336,7 +1286,7 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
  *
  *	@param	xml	The XML data that needs to be send to the server
  */
-- (void)sendCrashReportWithFilename:(NSString *)filename xml:(NSString*)xml attachment:(PREDAttachment *)attachment {
+- (void)sendCrashReportWithFilename:(NSString *)filename xml:(NSString*)xml {
     BOOL sendingWithURLSession = NO;
     
     if ([PREDHelper isURLSessionSupported]) {
@@ -1344,7 +1294,7 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
         __block NSURLSession *session = [NSURLSession sessionWithConfiguration:sessionConfiguration];
         
         NSURLRequest *request = [self requestWithBoundary:kPREDNetworkClientBoundary];
-        NSData *data = [self postBodyWithXML:xml attachment:attachment boundary:kPREDNetworkClientBoundary];
+        NSData *data = [self postBodyWithXML:xml boundary:kPREDNetworkClientBoundary];
         
         if (request && data) {
             __weak typeof (self) weakSelf = self;
@@ -1368,7 +1318,7 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
     if (!sendingWithURLSession) {
         NSMutableURLRequest *request = [self requestWithBoundary:kPREDNetworkClientBoundary];
         
-        NSData *postBody = [self postBodyWithXML:xml attachment:attachment boundary:kPREDNetworkClientBoundary];
+        NSData *postBody = [self postBodyWithXML:xml boundary:kPREDNetworkClientBoundary];
         [request setHTTPBody:postBody];
         
         __weak typeof (self) weakSelf = self;

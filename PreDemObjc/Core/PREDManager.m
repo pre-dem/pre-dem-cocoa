@@ -36,7 +36,6 @@
 #import "PREDVersion.h"
 #import "PREDConfigManager.h"
 #import "PREDNetDiag.h"
-#import "PREDCrashManagerPrivate.h"
 #import "PREDURLProtocol.h"
 
 static NSString* app_id(NSString* appKey){
@@ -116,7 +115,6 @@ static NSString* app_id(NSString* appKey){
         
         _appEnvironment = PREDHelper.currentAppEnvironment;
         _startManagerIsInvoked = NO;
-        _installString = PREDHelper.appAnonID;
         
         _configManager = [[PREDConfigManager alloc] init];
         _configManager.delegate = self;
