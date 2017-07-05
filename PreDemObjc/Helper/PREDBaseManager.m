@@ -32,7 +32,6 @@
 #import "PREDHelper.h"
 
 #import "PREDBaseManager.h"
-#import "PREDBaseManagerPrivate.h"
 
 #import "PREDKeychainUtils.h"
 

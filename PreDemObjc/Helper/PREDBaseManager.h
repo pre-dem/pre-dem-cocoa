@@ -49,5 +49,19 @@
  */
 @property (nonatomic, copy) NSString *serverURL;
 
+@property (nonatomic, strong) NSString *appIdentifier;
+
+@property (nonatomic, assign, readonly) PREDEnvironment appEnvironment;
+
+- (instancetype)initWithAppIdentifier:(NSString *)appIdentifier appEnvironment:(PREDEnvironment)environment;
+
+- (void)startManager;
+
+/** url encoded version of the appIdentifier
+ 
+ where appIdentifier is either the value this object was initialized with,
+ or the main bundles CFBundleIdentifier if appIdentifier is nil
+ */
+- (NSString *)encodedAppIdentifier;
 
 @end

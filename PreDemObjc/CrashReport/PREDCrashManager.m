@@ -38,7 +38,6 @@
 #import "PREDCrashDetails.h"
 #import "PREDCrashManager.h"
 #import "PREDCrashManagerPrivate.h"
-#import "PREDBaseManagerPrivate.h"
 #import "PREDCrashReportTextFormatter.h"
 #import "PREDCrashDetailsPrivate.h"
 #import "PREDCrashCXXExceptionHandler.h"

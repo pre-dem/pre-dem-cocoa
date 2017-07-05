@@ -30,7 +30,6 @@
 #import "PreDemObjc.h"
 #import "PREDManagerPrivate.h"
 #import "PREDPrivate.h"
-#import "PREDBaseManagerPrivate.h"
 #import "PREDHelper.h"
 #import "PREDNetworkClient.h"
 #import "PREDKeychainUtils.h"
