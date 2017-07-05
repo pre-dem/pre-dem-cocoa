@@ -164,7 +164,10 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
 }
 
 - (instancetype)initWithAppIdentifier:(NSString *)appIdentifier appEnvironment:(PREDEnvironment)environment hockeyAppClient:(PREDNetworkClient *)hockeyAppClient {
-    if ((self = [super initWithAppIdentifier:appIdentifier appEnvironment:environment])) {
+    if ((self = [super init])) {
+        _serverURL = PRED_DEFAULT_URL;
+        _appIdentifier = appIdentifier;
+        _appEnvironment = environment;
         _delegate = nil;
         _isSetup = NO;
         
@@ -212,9 +215,12 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
     return self;
 }
 
-
 - (void) dealloc {
     [self unregisterObservers];
+}
+
+- (NSString *)encodedAppIdentifier {
+    return [PREDHelper encodeAppIdentifier:_appIdentifier];
 }
 
 
@@ -225,9 +231,11 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
 }
 
 - (void)setServerURL:(NSString *)serverURL {
-    if ([serverURL isEqualToString:super.serverURL]) { return; }
+    if ([serverURL isEqualToString:self.serverURL]) {
+        return;
+    }
     
-    super.serverURL = serverURL;
+    self.serverURL = serverURL;
     self.hockeyAppClient = [[PREDNetworkClient alloc] initWithBaseURL:[NSURL URLWithString:serverURL]];
 }
 

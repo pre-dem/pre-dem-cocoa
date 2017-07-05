@@ -1,1 +1,1 @@
-../../../../../PreDemObjc/Helper/PREDBaseManager.h
+../../../../../PreDemObjc/Core/PREDBaseManager.h

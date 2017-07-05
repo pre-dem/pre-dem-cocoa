@@ -34,7 +34,6 @@ PREDLogHandler defaultLogHandler = ^(PREDLogMessageProvider messageProvider, PRE
     }
 };
 
-
 + (void)initialize {
     currentLogHandler = defaultLogHandler;
 }

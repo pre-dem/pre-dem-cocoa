@@ -30,7 +30,6 @@
 
 #import <Foundation/Foundation.h>
 #import <CrashReporter/CrashReporter.h>
-#import "PREDBaseManager.h"
 
 @class PREDNetworkClient;
 
@@ -151,7 +150,7 @@ typedef NS_ENUM(NSUInteger, PREDCrashManagerUserInput) {
  @warning If you start the app with the Xcode debugger attached, detecting crashes will _NOT_ be enabled!
  */
 
-@interface PREDCrashManager : PREDBaseManager
+@interface PREDCrashManager : NSObject
 
 
 ///-----------------------------------------------------------------------------
@@ -416,6 +415,8 @@ typedef NS_ENUM(NSUInteger, PREDCrashManagerUserInput) {
  */
 - (void)generateTestCrash;
 
+- (void)startManager;
+
 ///-----------------------------------------------------------------------------
 /// @name Delegate
 ///-----------------------------------------------------------------------------
@@ -446,6 +447,12 @@ typedef NS_ENUM(NSUInteger, PREDCrashManagerUserInput) {
 @property (nonatomic, copy, setter = setAlertViewHandler:) PREDCustomAlertViewHandler alertViewHandler;
 
 @property (nonatomic, strong) NSString *crashesDir;
+
+@property (nonatomic, copy) NSString *serverURL;
+
+@property (nonatomic, strong) NSString *appIdentifier;
+
+@property (nonatomic, assign, readonly) PREDEnvironment appEnvironment;
 
 - (instancetype)initWithAppIdentifier:(NSString *)appIdentifier appEnvironment:(PREDEnvironment)environment hockeyAppClient:(PREDNetworkClient *)hockeyAppClient NS_DESIGNATED_INITIALIZER;
 
