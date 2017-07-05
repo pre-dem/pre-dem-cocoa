@@ -35,12 +35,6 @@
 
 
 /**
- * Custom block that handles the alert that prompts the user whether he wants to send crash reports
- */
-typedef void(^PREDCustomAlertViewHandler)();
-
-
-/**
  * Crash Manager status
  */
 typedef NS_ENUM(NSUInteger, PREDCrashManagerStatus) {
@@ -320,28 +314,6 @@ typedef NS_ENUM(NSUInteger, PREDCrashManagerUserInput) {
  */
 @property (nonatomic, readonly) BOOL didCrashInLastSession;
 
-/**
- Lets you set a custom block which handles showing a custom UI and asking the user
- whether he wants to send the crash report.
- 
- This replaces the default alert the SDK would show!
- 
- You can use this to present any kind of user interface which asks the user for additional information,
- e.g. what they did in the app before the app crashed.
- 
- In addition to this you should always ask your users if they agree to send crash reports, send them
- always or not and return the result when calling `handleUserInput:withUserProvidedCrashDescription`.
- 
- @param alertViewHandler A block that is responsible for loading, presenting and and dismissing your custom user interface which prompts the user if he wants to send crash reports. The block is also responsible for triggering further processing of the crash reports.
- 
- @warning This is not available when compiled for Watch OS!
- 
- @warning Block needs to call the `[PREDCrashManager handleUserInput:withUserProvidedMetaData:]` method!
- 
- @warning This needs to be set before calling `[PREDManager startManager]`!
- */
-- (void)setAlertViewHandler:(PREDCustomAlertViewHandler)alertViewHandler;
-
 
 /**
  Indicates if the app did receive a low memory warning in the last session
@@ -385,51 +357,9 @@ typedef NS_ENUM(NSUInteger, PREDCrashManagerUserInput) {
 @property (nonatomic, readonly) NSTimeInterval timeIntervalCrashInLastSessionOccurred;
 
 
-///-----------------------------------------------------------------------------
-/// @name Helper
-///-----------------------------------------------------------------------------
-
-/**
- *  Detect if a debugger is attached to the app process
- *
- *  This is only invoked once on app startup and can not detect if the debugger is being
- *  attached during runtime!
- *
- *  @return BOOL if the debugger is attached on app startup
- */
-- (BOOL)isDebuggerAttached;
-
-
-/**
- * Lets the app crash for easy testing of the SDK
- *
- * The best way to use this is to trigger the crash with a button action.
- *
- * Make sure not to let the app crash in `applicationDidFinishLaunching` or any other
- * startup method! Since otherwise the app would crash before the SDK could process it.
- *
- * Note that our SDK provides support for handling crashes that happen early on startup.
- * Check the documentation for more information on how to use this.
- *
- * If the SDK detects an App Store environment, it will _NOT_ cause the app to crash!
- */
-- (void)generateTestCrash;
+- (instancetype)initWithAppIdentifier:(NSString *)appIdentifier appEnvironment:(PREDEnvironment)environment hockeyAppClient:(PREDNetworkClient *)hockeyAppClient;
 
 - (void)startManager;
-
-///-----------------------------------------------------------------------------
-/// @name Delegate
-///-----------------------------------------------------------------------------
-
-/**
- Sets the optional `PREDCrashManagerDelegate` delegate.
- 
- The delegate is automatically set by using `[PREDManager setDelegate:]`. You
- should not need to set this delegate individually.
- 
- @see `[PREDManager setDelegate:]`
- */
-@property (nonatomic, weak) id delegate;
 
 /**
  * must be set
@@ -444,8 +374,6 @@ typedef NS_ENUM(NSUInteger, PREDCrashManagerUserInput) {
 
 @property (nonatomic) NSString *lastCrashFilename;
 
-@property (nonatomic, copy, setter = setAlertViewHandler:) PREDCustomAlertViewHandler alertViewHandler;
-
 @property (nonatomic, strong) NSString *crashesDir;
 
 @property (nonatomic, copy) NSString *serverURL;
@@ -453,20 +381,5 @@ typedef NS_ENUM(NSUInteger, PREDCrashManagerUserInput) {
 @property (nonatomic, strong) NSString *appIdentifier;
 
 @property (nonatomic, assign, readonly) PREDEnvironment appEnvironment;
-
-- (instancetype)initWithAppIdentifier:(NSString *)appIdentifier appEnvironment:(PREDEnvironment)environment hockeyAppClient:(PREDNetworkClient *)hockeyAppClient;
-
-- (void)cleanCrashReports;
-
-- (void)handleCrashReport;
-- (BOOL)hasPendingCrashReport;
-- (NSString *)firstNotApprovedCrashReport;
-
-- (void)invokeDelayedProcessing;
-- (void)sendNextCrashReport;
-
-- (void)setLastCrashFilename:(NSString *)lastCrashFilename;
-
-- (void)leavingAppSafely;
 
 @end

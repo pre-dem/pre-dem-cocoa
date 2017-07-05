@@ -166,13 +166,11 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
         _serverURL = PRED_DEFAULT_URL;
         _appIdentifier = appIdentifier;
         _appEnvironment = environment;
-        _delegate = nil;
         _isSetup = NO;
         
         _hockeyAppClient = hockeyAppClient;
         
         _showAlwaysButton = YES;
-        _alertViewHandler = nil;
         
         _plCrashReporter = nil;
         _exceptionHandler = nil;
@@ -535,25 +533,8 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
 
 #pragma mark - Public
 
-- (void)setAlertViewHandler:(PREDCustomAlertViewHandler)alertViewHandler{
-    _alertViewHandler = alertViewHandler;
-}
-
-
 - (BOOL)isDebuggerAttached {
     return PREDHelper.isDebuggerAttached;
-}
-
-
-- (void)generateTestCrash {
-    if (self.appEnvironment != PREDEnvironmentAppStore) {
-        
-        if ([self isDebuggerAttached]) {
-            PREDLogWarning(@"The debugger is attached. The following crash cannot be detected by the SDK!");
-        }
-        
-        __builtin_trap();
-    }
 }
 
 /**
@@ -769,33 +750,7 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
         if (!PREDBundle() || PREDHelper.isRunningInAppExtension) {
             [self approveLatestCrashReport];
             [self sendNextCrashReport];
-        } else if (_crashManagerStatus != PREDCrashManagerStatusAutoSend && notApprovedReportFilename) {
-            
-            NSString *appName = [PREDHelper appName:PREDLocalizedString(@"PreDemNamePlaceholder")];
-            NSString *alertDescription = [NSString stringWithFormat:PREDLocalizedString(@"CrashDataFoundAnonymousDescription"), appName];
-            
-            // the crash report is not anonymous any more if username or useremail are not nil
-            
-            if (_alertViewHandler) {
-                _alertViewHandler();
-            } else {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:PREDLocalizedString(@"CrashDataFoundTitle"), appName]
-                                                                    message:alertDescription
-                                                                   delegate:self
-                                                          cancelButtonTitle:PREDLocalizedString(@"CrashDontSendReport")
-                                                          otherButtonTitles:PREDLocalizedString(@"CrashSendReport"), nil];
-                
-                if (self.shouldShowAlwaysButton) {
-                    [alertView addButtonWithTitle:PREDLocalizedString(@"CrashSendReportAlways")];
-                }
-                
-                [alertView show];
-#pragma clang diagnostic pop
-                /*}*/
-            }
-        } else {
+        } else if (_crashManagerStatus == PREDCrashManagerStatusAutoSend || !notApprovedReportFilename) {
             [self approveLatestCrashReport];
             [self sendNextCrashReport];
         }
