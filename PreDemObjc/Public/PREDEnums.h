@@ -8,7 +8,7 @@
 #ifndef PreDemObjc_Enums_h
 #define PreDemObjc_Enums_h
 
-@class PREDNetDiagResult;
+#import "PREDNetDiagResult.h"
 
 /**
  *  PreDemObjc Log Levels

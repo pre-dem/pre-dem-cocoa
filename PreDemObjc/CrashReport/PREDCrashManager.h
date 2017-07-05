@@ -107,9 +107,6 @@ typedef NS_ENUM(NSUInteger, PREDCrashManagerUserInput) {
     
 };
 
-
-@protocol PREDCrashManagerDelegate;
-
 /**
  The crash reporting module.
  

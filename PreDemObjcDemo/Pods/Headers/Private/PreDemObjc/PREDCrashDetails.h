@@ -1,1 +1,1 @@
-../../../../../PreDemObjc/Public/PREDCrashDetails.h
+../../../../../PreDemObjc/CrashReport/PREDCrashDetails.h

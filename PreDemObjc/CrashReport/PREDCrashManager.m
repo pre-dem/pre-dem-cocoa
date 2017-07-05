@@ -43,7 +43,6 @@
 #import "PREDCrashDetailsPrivate.h"
 #import "PREDCrashCXXExceptionHandler.h"
 #import "PREDVersion.h"
-#import "PREDAttachment.h"
 #include <sys/sysctl.h>
 
 // stores the set of crashreports that have been approved but aren't sent yet
@@ -1288,18 +1287,6 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
                                                   contentType:@"text/xml"
                                                      boundary:boundary
                                                      filename:@"crash.xml"]];
-    
-    if (attachment && attachment.hockeyAttachmentData) {
-        NSString *attachmentFilename = attachment.filename;
-        if (!attachmentFilename) {
-            attachmentFilename = @"Attachment_0";
-        }
-        [postBody appendData:[PREDNetworkClient dataWithPostValue:attachment.hockeyAttachmentData
-                                                           forKey:@"attachment0"
-                                                      contentType:attachment.contentType
-                                                         boundary:boundary
-                                                         filename:attachmentFilename]];
-    }
     
     [postBody appendData:[[NSString stringWithFormat:@"\r\n--%@--\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
     
