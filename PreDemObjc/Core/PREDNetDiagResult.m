@@ -1,8 +1,9 @@
 //
 //  PREDNetDiagResult.m
-//  Pods
+//  PreDemObjc
 //
 //  Created by WangSiyu on 25/05/2017.
+//  Copyright © 2017 pre-engineering. All rights reserved.
 //
 
 #import "PREDNetDiagResult.h"

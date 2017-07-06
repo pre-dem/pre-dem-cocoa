@@ -1,8 +1,9 @@
 //
 //  PREDManagerPrivate.h
-//  Pods
+//  PreDemObjc
 //
 //  Created by Troy on 2017/6/27.
+//  Copyright © 2017 pre-engineering. All rights reserved.
 //
 
 #ifndef PREDManagerPrivate_h
