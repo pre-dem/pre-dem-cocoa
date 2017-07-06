@@ -8,17 +8,14 @@
 
 #import "PREDHTTPOperation.h"
 
-@interface PREDHTTPOperation()<NSURLConnectionDelegate>
-@end
-
 @implementation PREDHTTPOperation {
     NSURLRequest *_URLRequest;
-    NSURLConnection *_connection;
-    NSMutableData *_data;
-    
-    BOOL _isExecuting;
-    BOOL _isFinished;
+    NSURLSessionDataTask *_task;
 }
+
+@synthesize data = _data;
+@synthesize executing = _isExecuting;
+@synthesize finished = _isFinished;
 
 
 + (instancetype)operationWithRequest:(NSURLRequest *)urlRequest {
@@ -28,26 +25,16 @@
 }
 
 #pragma mark - NSOperation overrides
-- (BOOL)isConcurrent {
+- (BOOL)isAsynchronous {
     return YES;
 }
 
 - (void)cancel {
-    [_connection cancel];
+    [_task cancel];
     [super cancel];
 }
 
-- (void) start {
-    if(self.isCancelled) {
-        [self finish];
-        return;
-    }
-    
-    if (![[NSThread currentThread] isMainThread]) {
-        [self performSelector:@selector(start) onThread:NSThread.mainThread withObject:nil waitUntilDone:NO];
-        return;
-    }
-    
+- (void)start {
     if(self.isCancelled) {
         [self finish];
         return;
@@ -57,12 +44,15 @@
     _isExecuting = YES;
     [self didChangeValueForKey:@"isExecuting"];
     
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-    _connection = [[NSURLConnection alloc] initWithRequest:_URLRequest
-                                                  delegate:self
-                                          startImmediately:YES];
-#pragma clang diagnostic pop
+    _task = [[NSURLSession sharedSession] dataTaskWithRequest:_URLRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        _response = (NSHTTPURLResponse *)response;
+        if (error) {
+            _error = error;
+        } else {
+            _data = data;
+        }
+        [self finish];
+    }];
 }
 
 - (void) finish {
@@ -74,32 +64,7 @@
     [self didChangeValueForKey:@"isFinished"];
 }
 
-#pragma mark - NSURLConnectionDelegate
--(void)connection:(NSURLConnection*)connection didReceiveResponse:(NSURLResponse*)response {
-    _data = [[NSMutableData alloc] init];
-    _response = (id)response;
-}
-
--(void)connection:(NSURLConnection*)connection didReceiveData:(NSData*)data {
-    [_data appendData:data];
-}
-
--(void)connection:(NSURLConnection*)connection didFailWithError:(NSError*)error {
-    //FINISHED and failed
-    _error = error;
-    _data = nil;
-    
-    [self finish];
-}
-
--(void)connectionDidFinishLoading:(NSURLConnection*)connection {
-    [self finish];
-}
-
 #pragma mark - Public interface
-- (NSData *)data {
-    return _data;
-}
 
 - (void)setCompletion:(PREDNetworkCompletionBlock)completion {
     if(!completion) {
