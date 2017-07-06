@@ -1,1 +1,1 @@
-../../../../../PreDemObjc/Helper/PREDNetDiagResultPrivate.h
+../../../../../PreDemObjc/Core/PREDNetDiagResultPrivate.h
