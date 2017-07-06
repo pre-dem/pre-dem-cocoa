@@ -39,8 +39,7 @@ static void runLoopObserverCallBack(CFRunLoopObserverRef observer, CFRunLoopActi
     _observer = NULL;
 }
 
-- (void)registerObserver
-{
+- (void)registerObserver {
     CFRunLoopObserverContext context = {0,(__bridge void*)self,NULL,NULL};
     _observer = CFRunLoopObserverCreate(kCFAllocatorDefault,
                                         kCFRunLoopAllActivities,
@@ -55,14 +54,11 @@ static void runLoopObserverCallBack(CFRunLoopObserverRef observer, CFRunLoopActi
     
     // 在子线程监控时长
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
-        while (YES)
-        {
+        while (YES) {
             // 假定连续5次超时50ms认为卡顿(当然也包含了单次超时250ms)
             long st = dispatch_semaphore_wait(_semaphore, dispatch_time(DISPATCH_TIME_NOW, 50*NSEC_PER_MSEC));
-            if (st != 0)
-            {
-                if (_activity==kCFRunLoopBeforeSources || _activity==kCFRunLoopAfterWaiting)
-                {
+            if (st != 0) {
+                if (_activity==kCFRunLoopBeforeSources || _activity==kCFRunLoopAfterWaiting) {
                     if (++_countTime < 5)
                         continue;
                     [self logStack];
@@ -80,7 +76,7 @@ static void runLoopObserverCallBack(CFRunLoopObserverRef observer, CFRunLoopActi
     char **strs = backtrace_symbols(callstack, frames);
     int i;
     _backtrace = [NSMutableArray arrayWithCapacity:frames];
-    for ( i = 0 ; i < frames ; i++ ){
+    for ( i = 0 ; i < frames ; i++ ) {
         [_backtrace addObject:[NSString stringWithUTF8String:strs[i]]];
     }
     free(strs);
