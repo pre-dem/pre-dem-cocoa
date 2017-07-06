@@ -95,8 +95,6 @@ static NSString* app_id(NSString* appKey){
         
         _configManager = [[PREDConfigManager alloc] init];
         _configManager.delegate = self;
-        
-        [self performSelector:@selector(validateStartManagerIsInvoked) withObject:nil afterDelay:0.0f];
     }
     return self;
 }
