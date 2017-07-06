@@ -4,7 +4,6 @@
 //
 //  Created by WangSiyu on 01/06/2017.
 //
-//
 
 #import "PREDNetDiagResult.h"
 

@@ -4,7 +4,6 @@
 //
 //  Created by WangSiyu on 25/05/2017.
 //
-//
 
 #import "PREDNetDiagResult.h"
 #import "PREDManagerPrivate.h"

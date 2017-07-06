@@ -2,8 +2,8 @@
 //  PREDNetDiag.m
 //  Pods
 //
-//  Created by WangSiyu on 24/05/2017.
-//
+//  Created by WangSiyu on 21/02/2017.
+//  Copyright © 2017 pre-engineering. All rights reserved.
 //
 
 #import "PREDNetDiag.h"
