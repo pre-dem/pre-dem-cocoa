@@ -170,29 +170,6 @@ NSString *const kPREDExcludeApplicationSupportFromBackup = @"kPREDExcludeApplica
     return hasEmbeddedMobileProvision;
 }
 
-+ (PREDEnvironment)currentAppEnvironment {
-#if TARGET_OS_SIMULATOR
-    return PREDEnvironmentOther;
-#else
-    
-    // MobilePovision profiles are a clear indicator for Ad-Hoc distribution
-    if (hasEmbeddedMobileProvision()) {
-        return PREDEnvironmentOther;
-    }
-    
-    // TestFlight is only supported from iOS 8 onwards, so at this point we have to be in the AppStore
-    if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1) {
-        return PREDEnvironmentAppStore;
-    }
-    
-    if (isAppStoreReceiptSandbox()) {
-        return PREDEnvironmentTestFlight;
-    }
-    
-    return PREDEnvironmentAppStore;
-#endif
-}
-
 + (BOOL)isRunningInAppExtension {
     static BOOL isRunningInAppExtension = NO;
     static dispatch_once_t checkAppExtension;

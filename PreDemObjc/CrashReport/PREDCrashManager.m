@@ -139,11 +139,10 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
     id _networkDidBecomeReachableObserver;
 }
 
-- (instancetype)initWithAppIdentifier:(NSString *)appIdentifier appEnvironment:(PREDEnvironment)environment hockeyAppClient:(PREDNetworkClient *)hockeyAppClient {
+- (instancetype)initWithAppIdentifier:(NSString *)appIdentifier hockeyAppClient:(PREDNetworkClient *)hockeyAppClient {
     if ((self = [super init])) {
         _serverURL = PRED_DEFAULT_URL;
         _appIdentifier = appIdentifier;
-        _appEnvironment = environment;
         _isSetup = NO;
         
         _hockeyAppClient = hockeyAppClient;
@@ -776,11 +775,9 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
             // We only check for this if we are not in the App Store environment
             
             BOOL debuggerIsAttached = NO;
-            if (self.appEnvironment != PREDEnvironmentAppStore) {
-                if ([self isDebuggerAttached]) {
-                    debuggerIsAttached = YES;
-                    PREDLogWarning(@"Detecting crashes is NOT enabled due to running the app with a debugger attached.");
-                }
+            if ([self isDebuggerAttached]) {
+                debuggerIsAttached = YES;
+                PREDLogWarning(@"Detecting crashes is NOT enabled due to running the app with a debugger attached.");
             }
             
             if (!debuggerIsAttached) {

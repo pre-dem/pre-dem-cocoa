@@ -64,9 +64,7 @@ typedef NS_ENUM(NSUInteger, PREDCrashManagerUserInput) {
 
 @property (nonatomic, strong) NSString *appIdentifier;
 
-@property (nonatomic, assign, readonly) PREDEnvironment appEnvironment;
-
-- (instancetype)initWithAppIdentifier:(NSString *)appIdentifier appEnvironment:(PREDEnvironment)environment hockeyAppClient:(PREDNetworkClient *)hockeyAppClient;
+- (instancetype)initWithAppIdentifier:(NSString *)appIdentifier hockeyAppClient:(PREDNetworkClient *)hockeyAppClient;
 
 - (void)startManager;
 

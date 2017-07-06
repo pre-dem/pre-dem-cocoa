@@ -24,7 +24,6 @@ FOUNDATION_EXPORT NSString *const kPREDExcludeApplicationSupportFromBackup;
 @property(class, readonly) BOOL isPreiOS10Environment;
 @property(class, readonly) BOOL isAppStoreReceiptSandbox;
 @property(class, readonly) BOOL hasEmbeddedMobileProvision;
-@property(class, readonly) PREDEnvironment currentAppEnvironment;
 @property(class, readonly) BOOL isRunningInAppExtension;
 @property(class, readonly) BOOL isDebuggerAttached;
 @property(class, readonly) NSString *deviceType;

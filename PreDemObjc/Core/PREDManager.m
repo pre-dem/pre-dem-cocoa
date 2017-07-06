@@ -48,13 +48,13 @@ static NSString* app_id(NSString* appKey){
 
 + (void)startWithAppKey:(nonnull NSString *)appKey
           serviceDomain:(nonnull NSString *)serviceDomain{
-    [[PREDManager sharedPREDManager] startWithAppKey:appKey serviceDomain:serviceDomain];
+    [[self sharedPREDManager] startWithAppKey:appKey serviceDomain:serviceDomain];
 }
 
 
 + (void)diagnose:(nonnull NSString *)host
         complete:(nonnull PREDNetDiagCompleteHandler)complete{
-    [[PREDManager sharedPREDManager] diagnose:host complete:complete];
+    [[self sharedPREDManager] diagnose:host complete:complete];
 }
 
 + (void)trackEventWithName:(nonnull NSString *)eventName
@@ -63,7 +63,7 @@ static NSString* app_id(NSString* appKey){
         return;
     }
     
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@events/%@", [[PREDManager sharedPREDManager] baseUrl], eventName]]];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@events/%@", [[self sharedPREDManager] baseUrl], eventName]]];
     request.HTTPMethod = @"POST";
     [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     NSError *err;
@@ -81,6 +81,8 @@ static NSString* app_id(NSString* appKey){
     [task resume];
 }
 
+#pragma mark - Private Instance Methods
+
 - (instancetype)init {
     if ((self = [super init])) {
         _managersInitialized = NO;
@@ -89,7 +91,6 @@ static NSString* app_id(NSString* appKey){
         
         _disableCrashManager = NO;
         
-        _appEnvironment = PREDHelper.currentAppEnvironment;
         _startManagerIsInvoked = NO;
         
         _configManager = [[PREDConfigManager alloc] init];
@@ -100,7 +101,6 @@ static NSString* app_id(NSString* appKey){
     return self;
 }
 
-#pragma mark - Public Instance Methods (Configuration)
 
 - (void)startWithAppKey:(NSString *)appKey serviceDomain:(NSString *)serviceDomain {
     _appKey = [appKey copy];
@@ -220,25 +220,12 @@ static NSString* app_id(NSString* appKey){
     }
 }
 
-- (void)validateStartManagerIsInvoked {
-    if (self.appEnvironment != PREDEnvironmentAppStore) {
-        if (!_startManagerIsInvoked) {
-            PREDLogError(@"You did not call [[PREDManager sharedPREDManager] startManager] to startup the PreDemObjc! Please do so after setting up all properties. The SDK is NOT running.");
-        }
-    }
-}
-
 - (BOOL)isSetUpOnMainThread {
     NSString *errorString = @"PreDemObjc has to be setup on the main thread!";
     
     if (!NSThread.isMainThread) {
-        if (self.appEnvironment == PREDEnvironmentAppStore) {
-            PREDLogError(@"%@", errorString);
-        } else {
-            PREDLogError(@"%@", errorString);
-            NSAssert(NSThread.isMainThread, errorString);
-        }
-        
+        PREDLogError(@"%@", errorString);
+        NSAssert(NSThread.isMainThread, errorString);
         return NO;
     }
     
@@ -257,9 +244,9 @@ static NSString* app_id(NSString* appKey){
     _startManagerIsInvoked = NO;
     
     PREDLogDebug(@"Setup CrashManager");
-    _crashManager = [[PREDCrashManager alloc] initWithAppIdentifier:app_id(_appKey)
-                                                     appEnvironment:_appEnvironment
-                                                    hockeyAppClient:[self hockeyAppClient]];
+    _crashManager = [[PREDCrashManager alloc]
+                     initWithAppIdentifier:app_id(_appKey)
+                     hockeyAppClient:[self hockeyAppClient]];
     _managersInitialized = YES;
 }
 

@@ -38,25 +38,6 @@ typedef NS_ENUM(NSUInteger, PREDLogLevel) {
 };
 
 /**
- *  PreDemObjc App environment
- */
-typedef NS_ENUM(NSInteger, PREDEnvironment) {
-    /**
-     *  App has been downloaded from the AppStore
-     */
-    PREDEnvironmentAppStore = 0,
-    /**
-     *  App has been downloaded from TestFlight
-     */
-    PREDEnvironmentTestFlight = 1,
-    /**
-     *  App has been installed by some other mechanism.
-     *  This could be Ad-Hoc, Enterprise, etc.
-     */
-    PREDEnvironmentOther = 99
-};
-
-/**
  *  PreDemObjc Crash Reporter error domain
  */
 typedef NS_ENUM (NSInteger, PREDCrashErrorReason) {

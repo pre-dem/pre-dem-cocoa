@@ -18,8 +18,6 @@
 PREDConfigManagerDelegate
 >
 
-@property (nonatomic, readonly) PREDEnvironment appEnvironment;
-
 @property (nonatomic, strong) NSString * _Nullable serverURL;
 
 @property (nonatomic, strong, readonly) PREDCrashManager * _Nullable crashManager;
