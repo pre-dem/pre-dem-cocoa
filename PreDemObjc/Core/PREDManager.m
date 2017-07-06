@@ -27,7 +27,7 @@ static NSString* app_id(NSString* appKey){
     
     BOOL _managersInitialized;
     
-    PREDNetworkClient *_hockeyAppClient;
+    PREDNetworkClient *_networkClient;
     
     PREDConfigManager *_configManager;
 }
@@ -87,7 +87,7 @@ static NSString* app_id(NSString* appKey){
     if ((self = [super init])) {
         _managersInitialized = NO;
         
-        _hockeyAppClient = nil;
+        _networkClient = nil;
         
         _disableCrashManager = NO;
         
@@ -166,8 +166,8 @@ static NSString* app_id(NSString* appKey){
     if (_serverURL != aServerURL) {
         _serverURL = [aServerURL copy];
         
-        if (_hockeyAppClient) {
-            _hockeyAppClient.baseURL = [NSURL URLWithString:_serverURL];
+        if (_networkClient) {
+            _networkClient.baseURL = [NSURL URLWithString:_serverURL];
         }
     }
 }
@@ -194,28 +194,11 @@ static NSString* app_id(NSString* appKey){
 
 #pragma mark - Private Instance Methods
 
-- (PREDNetworkClient *)hockeyAppClient {
-    if (!_hockeyAppClient) {
-        _hockeyAppClient = [[PREDNetworkClient alloc] initWithBaseURL:[NSURL URLWithString:self.serverURL]];
+- (PREDNetworkClient *)networkClient {
+    if (!_networkClient) {
+        _networkClient = [[PREDNetworkClient alloc] initWithBaseURL:[NSURL URLWithString:self.serverURL]];
     }
-    return _hockeyAppClient;
-}
-
-- (void)logPingMessageForStatusCode:(NSInteger)statusCode {
-    switch (statusCode) {
-        case 400:
-            PREDLogError(@"App ID not found");
-            break;
-        case 201:
-            PREDLogDebug(@"Ping accepted.");
-            break;
-        case 200:
-            PREDLogDebug(@"Ping accepted. Server already knows.");
-            break;
-        default:
-            PREDLogError(@"Unknown error");
-            break;
-    }
+    return _networkClient;
 }
 
 - (BOOL)isSetUpOnMainThread {
@@ -244,7 +227,7 @@ static NSString* app_id(NSString* appKey){
     PREDLogDebug(@"Setup CrashManager");
     _crashManager = [[PREDCrashManager alloc]
                      initWithAppIdentifier:app_id(_appKey)
-                     hockeyAppClient:[self hockeyAppClient]];
+                     networkClient:[self networkClient]];
     _managersInitialized = YES;
 }
 

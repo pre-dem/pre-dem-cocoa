@@ -139,13 +139,13 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
     id _networkDidBecomeReachableObserver;
 }
 
-- (instancetype)initWithAppIdentifier:(NSString *)appIdentifier hockeyAppClient:(PREDNetworkClient *)hockeyAppClient {
+- (instancetype)initWithAppIdentifier:(NSString *)appIdentifier networkClient:(PREDNetworkClient *)networkClient {
     if ((self = [super init])) {
         _serverURL = PRED_DEFAULT_URL;
         _appIdentifier = appIdentifier;
         _isSetup = NO;
         
-        _hockeyAppClient = hockeyAppClient;
+        _networkClient = networkClient;
         
         _showAlwaysButton = YES;
         
@@ -209,7 +209,7 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
     }
     
     self.serverURL = serverURL;
-    self.hockeyAppClient = [[PREDNetworkClient alloc] initWithBaseURL:[NSURL URLWithString:serverURL]];
+    self.networkClient = [[PREDNetworkClient alloc] initWithBaseURL:[NSURL URLWithString:serverURL]];
 }
 
 #pragma mark - Private
@@ -1096,7 +1096,7 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
 - (NSMutableURLRequest *)requestWithBoundary:(NSString *)boundary {
     NSString *postCrashPath = @"crashes/i";
     
-    NSMutableURLRequest *request = [self.hockeyAppClient requestWithMethod:@"POST"
+    NSMutableURLRequest *request = [self.networkClient requestWithMethod:@"POST"
                                                                       path:postCrashPath
                                                                 parameters:nil];
     
@@ -1205,7 +1205,7 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
         [request setHTTPBody:postBody];
         
         __weak typeof (self) weakSelf = self;
-        PREDHTTPOperation *operation = [self.hockeyAppClient
+        PREDHTTPOperation *operation = [self.networkClient
                                         operationWithURLRequest:request
                                         completion:^(PREDHTTPOperation *operation, NSData* responseData, NSError *error) {
                                             typeof (self) strongSelf = weakSelf;
@@ -1214,7 +1214,7 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
                                             [strongSelf processUploadResultWithFilename:filename responseData:responseData statusCode:statusCode error:error];
                                         }];
         
-        [self.hockeyAppClient enqeueHTTPOperation:operation];
+        [self.networkClient enqeueHTTPOperation:operation];
     }
     
     PREDLogDebug(@"Sending crash reports started.");

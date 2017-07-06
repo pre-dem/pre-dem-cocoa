@@ -48,7 +48,7 @@ typedef NS_ENUM(NSUInteger, PREDCrashManagerUserInput) {
 
 @property (nonatomic, readonly) NSTimeInterval timeIntervalCrashInLastSessionOccurred;
 
-@property (nonatomic, strong) PREDNetworkClient *hockeyAppClient;
+@property (nonatomic, strong) PREDNetworkClient *networkClient;
 
 @property (nonatomic) NSUncaughtExceptionHandler *exceptionHandler;
 
@@ -64,7 +64,7 @@ typedef NS_ENUM(NSUInteger, PREDCrashManagerUserInput) {
 
 @property (nonatomic, strong) NSString *appIdentifier;
 
-- (instancetype)initWithAppIdentifier:(NSString *)appIdentifier hockeyAppClient:(PREDNetworkClient *)hockeyAppClient;
+- (instancetype)initWithAppIdentifier:(NSString *)appIdentifier networkClient:(PREDNetworkClient *)networkClient;
 
 - (void)startManager;
 
