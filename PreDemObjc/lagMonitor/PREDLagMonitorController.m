@@ -17,6 +17,7 @@
     CFRunLoopActivity _activity;
     NSInteger _countTime;
     PREPLCrashReporter *_reporter;
+    PREPLCrashReport *_lastReport;
 }
 
 static void runLoopObserverCallBack(CFRunLoopObserverRef observer, CFRunLoopActivity activity, void *info) {
@@ -86,12 +87,17 @@ static void runLoopObserverCallBack(CFRunLoopObserverRef observer, CFRunLoopActi
     if (err) {
         return;
     }
+    
     PREPLCrashReport *report = [[PREPLCrashReport alloc] initWithData:data error:&err];
     if (err) {
         return;
     }
     NSString *crashLog = [PREDCrashReportTextFormatter stringValueForCrashReport:report crashReporterKey:PREDHelper.appName];
-    NSLog(@"%@", crashLog);
+    if ([PREDCrashReportTextFormatter isReport:report euivalentWith:_lastReport]) {
+        return;
+    }
+    _lastReport = report;
+    [[crashLog dataUsingEncoding:NSUTF8StringEncoding] writeToURL:[NSURL URLWithString:@"crash.log" relativeToURL:[NSFileManager defaultManager].temporaryDirectory] atomically:YES];
 }
 
 @end

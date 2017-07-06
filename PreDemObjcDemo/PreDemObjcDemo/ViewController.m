@@ -51,6 +51,10 @@
     [PREDManager trackEventWithName:@"viewDidLoadEvent" event:@{@"helloKey": @"worldValue", @"hellonum": @7}];
 }
 
+- (IBAction)blockMainThread:(id)sender {
+    sleep(1);
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

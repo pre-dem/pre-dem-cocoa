@@ -1,8 +1,27 @@
 PODS:
+  - AFNetworking (3.1.0):
+    - AFNetworking/NSURLSession (= 3.1.0)
+    - AFNetworking/Reachability (= 3.1.0)
+    - AFNetworking/Security (= 3.1.0)
+    - AFNetworking/Serialization (= 3.1.0)
+    - AFNetworking/UIKit (= 3.1.0)
+  - AFNetworking/NSURLSession (3.1.0):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/Reachability (3.1.0)
+  - AFNetworking/Security (3.1.0)
+  - AFNetworking/Serialization (3.1.0)
+  - AFNetworking/UIKit (3.1.0):
+    - AFNetworking/NSURLSession
   - HappyDNS (0.3.10)
   - PreDemObjc (1.0.0):
     - HappyDNS
+    - Qiniu
     - QNNetDiag
+  - Qiniu (7.1.5):
+    - AFNetworking (~> 3)
+    - HappyDNS (~> 0.3)
   - QNNetDiag (0.0.4)
 
 DEPENDENCIES:
@@ -13,8 +32,10 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
+  AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
   HappyDNS: 06a9fed2796663fd87626dbf02552933265bf059
-  PreDemObjc: 424d67af29ef7534edd2ee4476ba58ec4196d267
+  PreDemObjc: ba188b1d2e5cfdbd18541c054c5e5c10e092ff2b
+  Qiniu: 77a3dba411556a383d72d17e842345a9d4c83252
   QNNetDiag: f38e43c4f89aef14c1cc6b474a41e07bbe8b2820
 
 PODFILE CHECKSUM: 3cfeeea56b219ca54c5b4caf2cc0b81dccb4115c

@@ -594,6 +594,246 @@ NSString *const PREDXamarinStackTraceDelimiter = @"Xamarin Exception Stack:";
     return text;
 }
 
++ (NSString *)getStack:(PLCrashReport *)report {
+    NSMutableString* text = [NSMutableString string];
+    PREPLCrashReportThreadInfo *crashed_thread = nil;
+    boolean_t lp64 = true; // quiesce GCC uninitialized value warning
+    NSString *codeType = nil;
+    {
+        /* Attempt to derive the code type from the binary images */
+        for (PREPLCrashReportBinaryImageInfo *image in report.images) {
+            /* Skip images with no specified type */
+            if (image.codeType == nil)
+                continue;
+            
+            /* Skip unknown encodings */
+            if (image.codeType.typeEncoding != PLCrashReportProcessorTypeEncodingMach)
+                continue;
+            
+            switch (image.codeType.type) {
+                case CPU_TYPE_ARM:
+                    codeType = @"ARM";
+                    lp64 = false;
+                    break;
+                    
+                case CPU_TYPE_ARM64:
+                    codeType = @"ARM-64";
+                    lp64 = true;
+                    break;
+                    
+                case CPU_TYPE_X86:
+                    codeType = @"X86";
+                    lp64 = false;
+                    break;
+                    
+                case CPU_TYPE_X86_64:
+                    codeType = @"X86-64";
+                    lp64 = true;
+                    break;
+                    
+                case CPU_TYPE_POWERPC:
+                    codeType = @"PPC";
+                    lp64 = false;
+                    break;
+                    
+                default:
+                    // Do nothing, handled below.
+                    break;
+            }
+            
+            /* Stop immediately if code type was discovered */
+            if (codeType != nil)
+                break;
+        }
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+        /* If we were unable to determine the code type, fall back on the legacy architecture value. */
+        if (codeType == nil) {
+            switch (report.systemInfo.architecture) {
+                case PLCrashReportArchitectureARMv6:
+                case PLCrashReportArchitectureARMv7:
+                    codeType = @"ARM";
+                    lp64 = false;
+                    break;
+                case PLCrashReportArchitectureX86_32:
+                    codeType = @"X86";
+                    lp64 = false;
+                    break;
+                case PLCrashReportArchitectureX86_64:
+                    codeType = @"X86-64";
+                    lp64 = true;
+                    break;
+                case PLCrashReportArchitecturePPC:
+                    codeType = @"PPC";
+                    lp64 = false;
+                    break;
+                default:
+                    codeType = [NSString stringWithFormat: @"Unknown (%d)", report.systemInfo.architecture];
+                    lp64 = true;
+                    break;
+            }
+        }
+#pragma GCC diagnostic pop
+    }
+    
+    NSString *xamarinTrace;
+    NSString *exceptionReason;
+    
+    /* System info */
+    {
+        NSString *osBuild = @"???";
+        if (report.systemInfo.operatingSystemBuild != nil)
+            osBuild = report.systemInfo.operatingSystemBuild;
+        if (report.hasExceptionInfo) {
+            exceptionReason = report.exceptionInfo.exceptionReason;
+            NSInteger xamarinTracePosition = [exceptionReason rangeOfString:PREDXamarinStackTraceDelimiter].location;
+            if (xamarinTracePosition != NSNotFound) {
+                xamarinTrace = [exceptionReason substringFromIndex:xamarinTracePosition];
+                xamarinTrace = [xamarinTrace stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+                xamarinTrace = [xamarinTrace stringByReplacingOccurrencesOfString:@"<---\n\n--->" withString:@"<---\n--->"];
+                exceptionReason = [exceptionReason substringToIndex:xamarinTracePosition];
+                exceptionReason = [exceptionReason stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+            }
+        }
+    }
+
+    
+    for (PREPLCrashReportThreadInfo *thread in report.threads) {
+        if (thread.crashed) {
+            crashed_thread = thread;
+            break;
+        }
+    }
+    
+    /* Uncaught Exception */
+    if (report.hasExceptionInfo) {
+        [text appendFormat: @"Application Specific Information:\n"];
+        [text appendFormat: @"*** Terminating app due to uncaught exception '%@', reason: '%@'\n",
+         report.exceptionInfo.exceptionName, exceptionReason];
+        [text appendString: @"\n"];
+        
+        /* Xamarin Exception */
+        if (xamarinTrace) {
+            [text appendFormat:@"%@\n", xamarinTrace];
+            [text appendString: @"\n"];
+        }
+        
+    } else if (crashed_thread != nil) {
+        // try to find the selector in case this was a crash in obj_msgSend
+        // we search this whether the crash happened in obj_msgSend or not since we don't have the symbol!
+        
+        NSString *foundSelector = nil;
+        
+        // search the registers value for the current arch
+#if TARGET_OS_SIMULATOR
+        if (lp64) {
+            foundSelector = [[self class] selectorForRegisterWithName:@"rsi" ofThread:crashed_thread report:report];
+            if (foundSelector == NULL)
+                foundSelector = [[self class] selectorForRegisterWithName:@"rdx" ofThread:crashed_thread report:report];
+        } else {
+            foundSelector = [[self class] selectorForRegisterWithName:@"ecx" ofThread:crashed_thread report:report];
+        }
+#else
+        if (lp64) {
+            foundSelector = [[self class] selectorForRegisterWithName:@"x1" ofThread:crashed_thread report:report];
+        } else {
+            foundSelector = [[self class] selectorForRegisterWithName:@"r1" ofThread:crashed_thread report:report];
+            if (foundSelector == NULL)
+                foundSelector = [[self class] selectorForRegisterWithName:@"r2" ofThread:crashed_thread report:report];
+        }
+#endif
+        
+        if (foundSelector) {
+            [text appendFormat: @"Application Specific Information:\n"];
+            [text appendFormat: @"Selector name found in current argument registers: %@\n", foundSelector];
+            [text appendString: @"\n"];
+        }
+    }
+    
+    /* If an exception stack trace is available, output an Apple-compatible backtrace. */
+    if (report.exceptionInfo != nil && report.exceptionInfo.stackFrames != nil && [report.exceptionInfo.stackFrames count] > 0) {
+        PREPLCrashReportExceptionInfo *exception = report.exceptionInfo;
+        
+        /* Create the header. */
+        [text appendString: @"Last Exception Backtrace:\n"];
+        
+        /* Write out the frames. In raw reports, Apple writes this out as a simple list of PCs. In the minimally
+         * post-processed report, Apple writes this out as full frame entries. We use the latter format. */
+        for (NSUInteger frame_idx = 0; frame_idx < [exception.stackFrames count]; frame_idx++) {
+            PREPLCrashReportStackFrameInfo *frameInfo = exception.stackFrames[frame_idx];
+            [text appendString: [[self class] pres_formatStackFrame: frameInfo frameIndex: frame_idx report: report lp64: lp64]];
+        }
+        [text appendString: @"\n"];
+    }
+    
+    /* Threads */
+    NSInteger maxThreadNum = 0;
+    for (PREPLCrashReportThreadInfo *thread in report.threads) {
+        if (thread.crashed) {
+            [text appendFormat: @"Thread %ld Crashed:\n", (long) thread.threadNumber];
+        } else {
+            [text appendFormat: @"Thread %ld:\n", (long) thread.threadNumber];
+        }
+        for (NSUInteger frame_idx = 0; frame_idx < [thread.stackFrames count]; frame_idx++) {
+            PREPLCrashReportStackFrameInfo *frameInfo = thread.stackFrames[frame_idx];
+            [text appendString:[[self class] pres_formatStackFrame:frameInfo frameIndex:frame_idx report:report lp64:lp64]];
+        }
+        [text appendString: @"\n"];
+        
+        /* Track the highest thread number */
+        maxThreadNum = MAX(maxThreadNum, thread.threadNumber);
+    }
+    
+    /* Registers */
+    if (crashed_thread != nil) {
+        [text appendFormat: @"Thread %ld crashed with %@ Thread State:\n", (long) crashed_thread.threadNumber, codeType];
+        
+        int regColumn = 0;
+        for (PREPLCrashReportRegisterInfo *reg in crashed_thread.registers) {
+            NSString *reg_fmt;
+            
+            /* Use 32-bit or 64-bit fixed width format for the register values */
+            if (lp64)
+                reg_fmt = @"%6s: 0x%016" PRIx64 " ";
+            else
+                reg_fmt = @"%6s: 0x%08" PRIx64 " ";
+            
+            /* Remap register names to match Apple's crash reports */
+            NSString *regName = reg.registerName;
+            if (report.machineInfo != nil && report.machineInfo.processorInfo.typeEncoding == PLCrashReportProcessorTypeEncodingMach) {
+                PREPLCrashReportProcessorInfo *pinfo = report.machineInfo.processorInfo;
+                cpu_type_t arch_type = (cpu_type_t)(pinfo.type & ~CPU_ARCH_MASK);
+                
+                /* Apple uses 'ip' rather than 'r12' on ARM */
+                if (arch_type == CPU_TYPE_ARM && [regName isEqual: @"r12"]) {
+                    regName = @"ip";
+                }
+            }
+            [text appendFormat: reg_fmt, [regName UTF8String], reg.registerValue];
+            
+            regColumn++;
+            if (regColumn == 4) {
+                [text appendString: @"\n"];
+                regColumn = 0;
+            }
+        }
+        
+        if (regColumn != 0)
+            [text appendString: @"\n"];
+        
+        [text appendString: @"\n"];
+    }
+    return text;
+}
+
++ (BOOL)isReport:(PLCrashReport *)report euivalentWith:(PLCrashReport *)otherReport {
+    if ([[self getStack:report] isEqualToString:[self getStack:otherReport]]) {
+        return YES;
+    } else {
+        return NO;
+    }
+}
+
 /**
  *  Return the selector string of a given register name
  *
