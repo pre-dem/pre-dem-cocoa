@@ -118,15 +118,13 @@ static NSString* app_id(NSString* appKey){
         return;
     }
     
+    PREDLogDebug(@"Starting PREDManager");
+    _startManagerIsInvoked = YES;
+    
     // Fix bug where Application Support directory was encluded from backup
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSURL *appSupportURL = [[fileManager URLsForDirectory:NSApplicationSupportDirectory inDomains:NSUserDomainMask] lastObject];
     [PREDHelper fixBackupAttributeForURL:appSupportURL];
-    
-    if (![self isSetUpOnMainThread]) return;
-    
-    PREDLogDebug(@"Starting PREDManager");
-    _startManagerIsInvoked = YES;
     
     // start CrashManager
     if (![self isCrashManagerDisabled]) {
@@ -201,26 +199,11 @@ static NSString* app_id(NSString* appKey){
     return _networkClient;
 }
 
-- (BOOL)isSetUpOnMainThread {
-    NSString *errorString = @"PreDemObjc has to be setup on the main thread!";
-    
-    if (!NSThread.isMainThread) {
-        PREDLogError(@"%@", errorString);
-        NSAssert(NSThread.isMainThread, errorString);
-        return NO;
-    }
-    
-    return YES;
-}
-
 - (void)initializeModules {
     if (_managersInitialized) {
         PREDLogWarning(@"The SDK should only be initialized once! This call is ignored.");
         return;
     }
-    
-    
-    if (![self isSetUpOnMainThread]) return;
     
     _startManagerIsInvoked = NO;
     
