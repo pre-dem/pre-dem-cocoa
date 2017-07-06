@@ -8,62 +8,66 @@
 
 /* Begin PBXBuildFile section */
 		004B6F0F5F775E8F61C96DB6F2225BFF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA0855423F0ACF29B280FE335CBD39AC /* Foundation.framework */; };
-		0D100A1EF7C0DE423FF0641390AAD86E /* PREDCrashManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 83B7C80A0697650E36337A5E26A6D589 /* PREDCrashManager.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		04FFE9F292B91DAFAB8E7049EC72798F /* PREDHTTPMonitorModel.h in Headers */ = {isa = PBXBuildFile; fileRef = FC3D4EB35BB3E5B65D43405649BE7CDA /* PREDHTTPMonitorModel.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		05987F58D86E163C5E93D327C5DB5870 /* PREDURLProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 9CD0CB88565DA15ABA9F5B9A8E947021 /* PREDURLProtocol.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		0E1FC7034499272A3A47D1A2897C4431 /* HappyDNS-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 60FBE065560E666943112D7CB51E8937 /* HappyDNS-dummy.m */; };
+		0E6426180DD2985CD441981ECFCD1449 /* PREDGZIP.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A8A5AB94C363D1EC5C8660BE32EB029 /* PREDGZIP.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		0FE28D2C04EAE56136D7ED8D5C07D887 /* QNNHttp.m in Sources */ = {isa = PBXBuildFile; fileRef = DFAB65EBB1643F765111A25721457D1C /* QNNHttp.m */; };
-		11369D1FE367ADF8EB22F8494D49D3FC /* PREDemObjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 0C66B9ADFDA487F512DE66DA51B510AA /* PREDemObjc.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		11CEFF7DAECE05D6C28C994474FA1A69 /* PREDVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = 215AFA65CD7DA1ADA5C61523D73FA677 /* PREDVersion.m */; };
+		11B6012455ECDC872A2256F4C9466326 /* PREDNetworkClient.h in Headers */ = {isa = PBXBuildFile; fileRef = EABF05979AA585FA2EC2CE126E303381 /* PREDNetworkClient.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		11CEFF7DAECE05D6C28C994474FA1A69 /* PREDVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = B3CD2004C9B3A3A6C3D640178BA1DBC7 /* PREDVersion.m */; };
 		14BC75069F3F45FC1CA038EFB405EC0C /* QNNUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = EDC9105E0A6B3B83BF86C63861C94B57 /* QNNUtil.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		18AA8CF57B22EEF738DD9FE8A0B4E6E8 /* QNDnspodEnterprise.h in Headers */ = {isa = PBXBuildFile; fileRef = CD354BAEFB4715231FAA06E4CC5A72BC /* QNDnspodEnterprise.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		19E24DCA0A59B7C4415DB59797027028 /* PREDNetDiag.m in Sources */ = {isa = PBXBuildFile; fileRef = 88063A86F0EC99F4C60334BC5A66AAC7 /* PREDNetDiag.m */; };
+		19E24DCA0A59B7C4415DB59797027028 /* PREDNetDiag.m in Sources */ = {isa = PBXBuildFile; fileRef = 6406C316778148770759637B986ED63D /* PREDNetDiag.m */; };
 		1A26E9AF362BF9B564190A8766A306B5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA0855423F0ACF29B280FE335CBD39AC /* Foundation.framework */; };
 		1A9E04A691FEE928C4F68BBCC4ED543C /* QNIpModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D4C4D1238E71B25BFB0BE9327F97FAE /* QNIpModel.m */; };
 		1B6A8D6DE5D5837C2830B5C9CF6397C3 /* QNResolvUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = 4DEBB0D90EB1D25C1EAE3F581EAF158C /* QNResolvUtil.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1BC573CC29875324E5CC9BF4EEC62171 /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F91A1E9A55FDDAFFEAED987235A7F3F7 /* Photos.framework */; };
-		1BE2501E407224CC41E26AB5A530B58A /* PREDBaseManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 4450356A29F6B2384693998AB4C39D5C /* PREDBaseManager.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		1E4462A46744292FCA9937FCCA71001B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 86508197EDC225DA91EFA4732B877716 /* Security.framework */; };
+		2165D41C8011FAF2AA1738B18A62AFBA /* PREDConfigManager.h in Headers */ = {isa = PBXBuildFile; fileRef = B9D47D04FCE628AC335361839ACB44DF /* PREDConfigManager.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		24507FBF22F60E694038ED944396975E /* QNHosts.m in Sources */ = {isa = PBXBuildFile; fileRef = 38FE71762E8BD962DE25DAD34DF52E9C /* QNHosts.m */; };
-		25B658A8DFCA5366576D91B9DF7CF245 /* PREDLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 97891C8024B0EE435996F94474282045 /* PREDLogger.m */; };
-		2620BDA1676372BEEB6B751BFD77D713 /* PREDCrashReportTextFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FEF45FC4F73B63B0D11A35367D6A900 /* PREDCrashReportTextFormatter.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		25B658A8DFCA5366576D91B9DF7CF245 /* PREDLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = D83E30EE33FE3B1C93419BD5BB68ECB9 /* PREDLogger.m */; };
 		2661B7B06BEDD3DB5C3A24B8AD2D791E /* QNNetworkInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 022628AA1CE653C5FFC9B90715F1D3E8 /* QNNetworkInfo.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2AADB3311487455C19BD6F052DF83478 /* PREDConfigManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A2CB196FB87F77F654303BDD91F5286 /* PREDConfigManager.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		29F5E56DE0097AF63130EF21C4B9F0A5 /* PREDLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = FCF29865802D98CA5794E27F432BD79A /* PREDLogger.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		2CEABC7E7BBD06F9ACBE6E7A64499538 /* PREDManagerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = D8AE9C4997C5078168D7752CF4B8187B /* PREDManagerPrivate.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		2EFDF6183E239C691474BBEDBB80D5A7 /* QNHijackingDetectWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 10C8DF2AA23EBCE716694B60A856BB8E /* QNHijackingDetectWrapper.m */; };
+		2F3FE75EB7531516FF18A93DC6579D1C /* PREDVersion.h in Headers */ = {isa = PBXBuildFile; fileRef = 287F3F5532D2A22A0C20F42465C6C7F8 /* PREDVersion.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		301EB187A472BCE55850E7A62183F225 /* QNDnsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D6B9A8022EDA87E0912E4D246C3D535 /* QNDnsManager.m */; };
-		3507ADA9D9BC153484B0D375C4B32B25 /* PREDCrashManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1D3D356A5053764E1C83786F1F58FC /* PREDCrashManager.m */; };
+		3507ADA9D9BC153484B0D375C4B32B25 /* PREDCrashManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A0D6013622A83C5E598B26A667A6824E /* PREDCrashManager.m */; };
 		3521DEBB57138EB72DA16E5EB1DDBEF7 /* QNTxtResolver.m in Sources */ = {isa = PBXBuildFile; fileRef = 497B268005287BC60826306863575245 /* QNTxtResolver.m */; };
 		385127F314DABEA738F334D1434CD778 /* QNDomain.m in Sources */ = {isa = PBXBuildFile; fileRef = D844BE2926F8949CE1B7239DBE1331AA /* QNDomain.m */; };
 		386CE76D6770E0BCEB4D79FBA34A247C /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2F2CA1DF339EDFAD0A88E4466DEB367 /* MobileCoreServices.framework */; };
-		38D35895154F6B2E612BD70984C7AAD1 /* PREDPrivate.m in Sources */ = {isa = PBXBuildFile; fileRef = 64934FD394B06930DACF0791EC6721C2 /* PREDPrivate.m */; };
-		3A9FB5BF19ABFA38D542D416ADF877E8 /* PREDHTTPOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = EE65B3F301700ECF370E6E635D76F860 /* PREDHTTPOperation.m */; };
+		38D35895154F6B2E612BD70984C7AAD1 /* PREDPrivate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EDF466E261EDAFA1CC2F5AD1B26CDC9 /* PREDPrivate.m */; };
+		3A9FB5BF19ABFA38D542D416ADF877E8 /* PREDHTTPOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 80D641F91247826D33DE00C6051389FD /* PREDHTTPOperation.m */; };
 		3C4CD1193F68D7B282BE470BF6703EA4 /* QNDnspodFree.h in Headers */ = {isa = PBXBuildFile; fileRef = 90B118C7E8C6E0D612B6436963433D0C /* QNDnspodFree.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3FB3583EA6613DC56A906CDBFEC0C87E /* PREDManagerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = FF4A75E5A42BC275738EE764A76C095D /* PREDManagerPrivate.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		43154A167A23579D4A78676065E004C9 /* PREDURLSessionSwizzler.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B8E22A510ABFAC1276A5BCC5C9C1623 /* PREDURLSessionSwizzler.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		44DD52D993CFB640BA6841DF34440D58 /* PREDHTTPMonitorSender.h in Headers */ = {isa = PBXBuildFile; fileRef = 2ABEC06F6A4F5D7C154CCE96153E800D /* PREDHTTPMonitorSender.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		4590DDE6CAADCCFEDB2D835980C8E2DB /* QNNTcpPing.h in Headers */ = {isa = PBXBuildFile; fileRef = 89B91B89662ADFFC42C3662127CFC21E /* QNNTcpPing.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		46BC435AC6C6160E44BABA7E1911B6F6 /* QNNProtocols.h in Headers */ = {isa = PBXBuildFile; fileRef = D7E19DE6698CDEAE1745AB7384D43B5D /* QNNProtocols.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		496870FF021CAF11DA01F18B9013D8E4 /* PREDNetDiagResultPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = A675CEB429066459FCE203163FE5C375 /* PREDNetDiagResultPrivate.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		4A46E06DDA060221FC30A35532E1A652 /* QNRefresher.m in Sources */ = {isa = PBXBuildFile; fileRef = AD800A41903F3698B916A0ECBBC1BF49 /* QNRefresher.m */; };
 		4B291861DF24BEB8B9437DEA2DB3C227 /* QNNetDiag.h in Headers */ = {isa = PBXBuildFile; fileRef = F40BA1178B8D04345EAC63805A54926F /* QNNetDiag.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4BC454318312FDB0C66BD8FF1B8762BE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA0855423F0ACF29B280FE335CBD39AC /* Foundation.framework */; };
 		4C677E4AB86EB05E46BD2EACDAF80114 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49E2330D69477B428F696D30E1A7F08E /* CoreText.framework */; };
-		4F7746264E4379EA1E480B6CDB82204E /* PREDCrashCXXExceptionHandler.mm in Sources */ = {isa = PBXBuildFile; fileRef = CFE3089CEDF26AE06A3966E3BB39968A /* PREDCrashCXXExceptionHandler.mm */; };
-		54583E04C8C3EC671CD9629A2A9404E0 /* PREDCrashReportTextFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 95FDF0481ACBEE30C6C9AFEA9FB91C8E /* PREDCrashReportTextFormatter.m */; };
+		4F7746264E4379EA1E480B6CDB82204E /* PREDCrashCXXExceptionHandler.mm in Sources */ = {isa = PBXBuildFile; fileRef = C8CD5EC51E38CE439041C6CFD2A1AE3B /* PREDCrashCXXExceptionHandler.mm */; };
+		5215C438D6894E9CDE38B95B103D11C8 /* PREDNetDiag.h in Headers */ = {isa = PBXBuildFile; fileRef = 1F6D9403F0F04CEB0DA4D02B8B7B295A /* PREDNetDiag.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		54583E04C8C3EC671CD9629A2A9404E0 /* PREDCrashReportTextFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 270874D77A62E23B13207EC340086174 /* PREDCrashReportTextFormatter.m */; };
 		570C29855F0CB8069B92C17A486388A7 /* QNNTcpPing.m in Sources */ = {isa = PBXBuildFile; fileRef = 86C64B6CDCA279479B4C2FD21BD6E02A /* QNNTcpPing.m */; };
 		58068DA99DE4FC706A1C5B0E8D6B726E /* QNNExternalIp.m in Sources */ = {isa = PBXBuildFile; fileRef = 937C4F87AF265E7BD558EB7EBEE8D85E /* QNNExternalIp.m */; };
 		58E8BAAF6EEFA00F6562BDB60920D35A /* HappyDNS.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E86788BFB3ECF96200BC3ED2533D003 /* HappyDNS.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5B262C0B551336224F4C3403BB034D2A /* QNNNslookup.m in Sources */ = {isa = PBXBuildFile; fileRef = 28DFE6804CC024AE27B8B59180E564CA /* QNNNslookup.m */; };
+		5B39193BA934D7E0ACEE0366BAC56FC8 /* PREDNetDiagResult.h in Headers */ = {isa = PBXBuildFile; fileRef = 5EA9801AFDAB51DE6BEF82672E31B9D5 /* PREDNetDiagResult.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DDAE4E1F2F040514519EA6E390A3A8B /* QNNTraceRoute.h in Headers */ = {isa = PBXBuildFile; fileRef = E80864A8A214BC6941407FD8BE457F87 /* QNNTraceRoute.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		635C94B0DA2545BC3B7F12A6741F2E48 /* PREDHTTPMonitorModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D4D89A9D364FA66F1976EC86B2A4B0AA /* PREDHTTPMonitorModel.m */; };
+		635C94B0DA2545BC3B7F12A6741F2E48 /* PREDHTTPMonitorModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 85EEF243F7F78A9DFC5698D28C434587 /* PREDHTTPMonitorModel.m */; };
 		64B9DAD618C95F346A4B28A4E0A49208 /* QNDnsManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 46630DF1C04EB5F1728F4ABDDCF25A0D /* QNDnsManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		67172E52729092E1307C33057FA5C90F /* PREDHTTPMonitorSender.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A347C6293CCC0E963E212AAC1BF8A69 /* PREDHTTPMonitorSender.m */; };
+		669A5867FF30C6635DE72A58FFD337C3 /* PREDCrashCXXExceptionHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = 77E2B2E1CB99409506E287B31FF8585F /* PREDCrashCXXExceptionHandler.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		67172E52729092E1307C33057FA5C90F /* PREDHTTPMonitorSender.m in Sources */ = {isa = PBXBuildFile; fileRef = 69CEB0E9150ED2503409149D748D280A /* PREDHTTPMonitorSender.m */; };
 		680C274C15EDC2B96E05AB0E02B70E3F /* QNResolverDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 3DD6C3FFC6B3422FC10BB06441CF7358 /* QNResolverDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		6A7649E94AB4352FB6354AF582744C20 /* PREDConfigManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BF0D9DF46BCAB1E1A2BCC6CC48CF31B0 /* PREDConfigManager.m */; };
-		6CC8B596A978E96C49A15CABDD8E41E4 /* PREDNetDiagResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 06A8161ACD89FC08BEA01D97E50F237E /* PREDNetDiagResult.m */; };
+		6A7649E94AB4352FB6354AF582744C20 /* PREDConfigManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 812101B102DBC3BD5659517508CCCAC5 /* PREDConfigManager.m */; };
+		6CC8B596A978E96C49A15CABDD8E41E4 /* PREDNetDiagResult.m in Sources */ = {isa = PBXBuildFile; fileRef = ECF31AAD0EF61EF00A64655461DEE222 /* PREDNetDiagResult.m */; };
+		6D4570EE7DBFFAF7C8FAA7614A853522 /* PREDNetDiagResultPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 9E0521EE10F0F8DFF0253814AC82368B /* PREDNetDiagResultPrivate.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		6DCBFCCAAD2697AD794748CA8F4A5A4C /* QNRefresher.h in Headers */ = {isa = PBXBuildFile; fileRef = BB907BEB7524A2ECFCA9FB16C8BD94E0 /* QNRefresher.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		720054BA594D3EF0CEAA5C816B46032F /* PREDURLSessionSwizzler.m in Sources */ = {isa = PBXBuildFile; fileRef = 118520C361D56C130296CB1BBBF7F494 /* PREDURLSessionSwizzler.m */; };
+		6F866E7BBDBDDBF37DDEF8C632602A83 /* PREDURLSessionSwizzler.h in Headers */ = {isa = PBXBuildFile; fileRef = F1BD34142D49B93C9D52C81AFA829DB0 /* PREDURLSessionSwizzler.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		6FD5109E5EDE62DFAAAF8C26682C1B31 /* PREDHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 96A411E272787FE3D7BF742517E40D31 /* PREDHelper.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		70D1973BD833983C08BFA97E021428D5 /* PREDPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 6B617932FABBB54661C26BEE2CC5FF0E /* PREDPrivate.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		720054BA594D3EF0CEAA5C816B46032F /* PREDURLSessionSwizzler.m in Sources */ = {isa = PBXBuildFile; fileRef = B850DA04CC91AC238734536649C5021A /* PREDURLSessionSwizzler.m */; };
 		7278E87A961822A1C0BEB7641083E258 /* QNNExternalIp.h in Headers */ = {isa = PBXBuildFile; fileRef = CB4880D6F9FC3FDC906B1D13A2435A36 /* QNNExternalIp.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		730BB83F7DB9027489DD9A878F0F5F95 /* PREDURLProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 8A1617D1C57014D00D931F475009301F /* PREDURLProtocol.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		73970F4A793EA2D411CFA99E984394D2 /* PREDNetworkClient.h in Headers */ = {isa = PBXBuildFile; fileRef = ACEEED40EFC4153797AA85EB46BCDEBE /* PREDNetworkClient.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		78D592AE7B0FA2F25FB42874884C3270 /* QNNHttp.h in Headers */ = {isa = PBXBuildFile; fileRef = 7813C7378AE6A833B0B1DC9F42DA3936 /* QNNHttp.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		798E326F39E3DAE981CB07BA853F9462 /* QNNTraceRoute.m in Sources */ = {isa = PBXBuildFile; fileRef = E1630CE5D6B74928EB1995823CE57B20 /* QNNTraceRoute.m */; };
 		7B0B4760B9968016ACFB5499DF46C57A /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81A18185FDF7E97924988570ED8EB736 /* CoreTelephony.framework */; };
@@ -71,41 +75,36 @@
 		7CE8200CD393AE26964A85318DCAB2D2 /* QNIpModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 524E32FEB3CDA2B4C597506CB48F743D /* QNIpModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7DCE263ACE831C4628D7FB5CCD3418F8 /* QNDnspodFree.m in Sources */ = {isa = PBXBuildFile; fileRef = 179C025F1206DFA8022927AB62A43A85 /* QNDnspodFree.m */; };
 		7FD927F3BBB8599084C81EE3CD3E6FE7 /* QNAssessment.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AC7BD3372161AFC95DBB4DD4E1C1DC7 /* QNAssessment.m */; };
-		7FFAB8399CF0B62C4B4F2519B7F33862 /* PREDNetworkClient.m in Sources */ = {isa = PBXBuildFile; fileRef = A25808DCBC989C6D1492AC2E76ACF10D /* PREDNetworkClient.m */; };
+		7FFAB8399CF0B62C4B4F2519B7F33862 /* PREDNetworkClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 28CB0BFAB8D3B10FD67706F936736331 /* PREDNetworkClient.m */; };
 		8165016227F7A41956BDDB2E2C4B0E1B /* QNGetAddrInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A55EAA9D403740F8550D533819D2C3A /* QNGetAddrInfo.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		84492716B0B008D595F99CA9C4E94C42 /* QNLruCache.m in Sources */ = {isa = PBXBuildFile; fileRef = C8982D2499CF2E27D66C83ECFB4BE256 /* QNLruCache.m */; };
-		849B6005F8DB3E4FDE1BA84AFB8FB5EA /* PREDConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 3597E418A9CB0CC6BF1A147A85B6A641 /* PREDConfig.m */; };
-		85EC52D9AC6620434FDC5DD7FB7BE14F /* PREDURLProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 88BAC41CE16835C10FC05C66C7423693 /* PREDURLProtocol.m */; };
-		8751D65ADB5D500ADB7581508E558C8B /* PREDManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A4864AE8B2A843E125C586A270CA4F69 /* PREDManager.m */; };
+		849B6005F8DB3E4FDE1BA84AFB8FB5EA /* PREDConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F9277159FEA5A03BAAA6BE61661B89A /* PREDConfig.m */; };
+		85B492B6BDD9E87B8A2922892FDE0E6E /* PREDemObjc.h in Headers */ = {isa = PBXBuildFile; fileRef = 79036B796738E92356CD029FA6CC018E /* PREDemObjc.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		85EC52D9AC6620434FDC5DD7FB7BE14F /* PREDURLProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 83667DC0E65EDC926E03C16C6B8E5F3C /* PREDURLProtocol.m */; };
+		8751D65ADB5D500ADB7581508E558C8B /* PREDManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D8B1F2DCC66F7CCD475D008082EBAFB /* PREDManager.m */; };
 		877FAEB088F661066BD4D4B56EC48520 /* QNResolvUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 836C4D574F52F12F0D08A1288470E85F /* QNResolvUtil.m */; };
-		8B63D2F22300E38614427BBF763BD163 /* PREDNetDiag.h in Headers */ = {isa = PBXBuildFile; fileRef = 27FDA5D3B63CE03D0D954AE889654817 /* PREDNetDiag.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		8B6598A1BE6DF6E2CDAAEA922EEC5046 /* QNNetDiag-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = DCD331977D020A0D44EE49A0BEC4130E /* QNNetDiag-dummy.m */; };
 		8D02E32F1A2206072CD61473160C7AE3 /* QNLruCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 93D085849BF53EEF0FBFE8999426BDFF /* QNLruCache.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		8E4689A87797AF0F734FCF2DF817F8A4 /* PREDConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = BB132A3294F637902EE3188C4225A87C /* PREDConfig.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		8F1A86546C0F7411A5610C57BB04C425 /* PREDGZIP.m in Sources */ = {isa = PBXBuildFile; fileRef = D141773D7E20D5819B03AFAB294B2BD3 /* PREDGZIP.m */; };
-		9100ADF4CEB411D50CB989E89288047A /* PREDHTTPOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = A821E3E27BF4FD40742071627B6BCC3B /* PREDHTTPOperation.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		8F18DFC28F087A76F853345B132A7F23 /* PREDConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = C5460DA6A2EC8B17D102ACD6E9378B83 /* PREDConfig.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		8F1A86546C0F7411A5610C57BB04C425 /* PREDGZIP.m in Sources */ = {isa = PBXBuildFile; fileRef = 6ABF12FECA4981676299AFD7E694786F /* PREDGZIP.m */; };
+		8F2A8B98767F84AE89CA059D1DA123BE /* PREDHTTPMonitorSender.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D2F57303197547EF38399C0517F27A5 /* PREDHTTPMonitorSender.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		91D1E8AC0DE1EE59C64F863B3123F1AF /* QNHex.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C1AD38E1C691A0D62029B158434EBCB /* QNHex.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		92AAAD7E93B2E43C1F9E413332BD6029 /* QNRecord.h in Headers */ = {isa = PBXBuildFile; fileRef = EE19B8282EAF098483D99CCBE1C65B1C /* QNRecord.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		93A3BDA65643BA9EDBE18BCBECB908B9 /* QNDes.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E2EE689472AC4017B435C0FEE45029B /* QNDes.m */; };
-		960C47041354FAADB2F39F88873E0F2A /* PREDNullability.h in Headers */ = {isa = PBXBuildFile; fileRef = 5CB4C5F4EBC82FD9C03233A425D75C55 /* PREDNullability.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		96DA7DE2FC1336C9B9192A17E4CC5470 /* QNDomain.h in Headers */ = {isa = PBXBuildFile; fileRef = 00C01BB1ABF059C8160299D54B3C5230 /* QNDomain.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		987401EECB28181AF250576A748C0E74 /* PREDVersion.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AD8D5EA1A319E8035FDDB27B256B1FB /* PREDVersion.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		9D49D12914C3E458B9297995FFC08EC7 /* QNDnspodEnterprise.m in Sources */ = {isa = PBXBuildFile; fileRef = F9E8B07B5913D96E2CED015FD850AC86 /* QNDnspodEnterprise.m */; };
 		9F8F821D01CC882A5A5D97CF00C21D08 /* QNNPing.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AECDC3373AFF3F8B4B4C510FB4F9132 /* QNNPing.m */; };
-		A16E9186174477AC860C293B2A1478A6 /* PREDEnums.h in Headers */ = {isa = PBXBuildFile; fileRef = 10C441DA7BF045D737CCD357116DB7E3 /* PREDEnums.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		A46E9568DFB3CDB2E29B46433D3068C2 /* PREDManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 708B87E0BFA4166A519A773537F28C12 /* PREDManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A19CBFA3C8BEE5A1458646FD61A180EA /* PREDHTTPOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = ECA53A5D6C401318D3ED2E0EDFFD1A8D /* PREDHTTPOperation.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		A4A3F9EE5C168CF945A31C9E73081479 /* QNTxtResolver.h in Headers */ = {isa = PBXBuildFile; fileRef = FF2764BBD78B55EDED7864EF95539902 /* QNTxtResolver.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A56811E150C1CE824BF997592126321B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7847C846E212AA9AC1360C7F4857AD9E /* CoreGraphics.framework */; };
-		A7BFF0E25EF33B36DF5469F60CDC2735 /* PREDNetDiagResult.h in Headers */ = {isa = PBXBuildFile; fileRef = 6CE573014CBA811D10CD7A9DF2CB5B46 /* PREDNetDiagResult.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		A804DDB619C9B0C0929C259B8760DCF9 /* PREDHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A08D9E44C3E86AB73ED4A7DCFCB9B8C /* PREDHelper.m */; };
-		A82BF9A3A999A88501D7A18E1727DFDA /* PREDCrashCXXExceptionHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = BF728E62E31C4CF948B38EFAC8958583 /* PREDCrashCXXExceptionHandler.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		A804DDB619C9B0C0929C259B8760DCF9 /* PREDHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 67DC6A060207AE5DC9856047E625B9BA /* PREDHelper.m */; };
 		A92780724D0BC15259FB0B8D4E0BC3F5 /* QNGetAddrInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B779176E5F6407EB512CDFB7FB368B8 /* QNGetAddrInfo.m */; };
 		A9B9FA7EDE46D3051D312274350B4256 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DA707BC160CE789617CB3A652BA14D8 /* QuartzCore.framework */; };
-		AE3835A2A7DED7A38265980FB63BCA99 /* PREDLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = D3B05E78068C6A5AF93A562BA8538EC3 /* PREDLogger.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		AA10F1A0063A4D09FB2EE1536EA0D3FD /* PREDEnums.h in Headers */ = {isa = PBXBuildFile; fileRef = 0879A3EF716E6D5E6FC585B51DD3D410 /* PREDEnums.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B1828B87A163B2CF45CD50E48AB651A1 /* QNAssessment.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A5E2EA90F1D3853DE240D11C04D5382 /* QNAssessment.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B5578E3A5A6CEA1AE5EB6B556DA411B3 /* Version.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2197EA6CC87458A8C062E7E8FC6E5D90 /* Version.plist */; };
 		BAAA3EB5C1DFD167D576751DB76F0AC1 /* QNNRtmp.m in Sources */ = {isa = PBXBuildFile; fileRef = 857872D381A29AFBD0461F149ACCA340 /* QNNRtmp.m */; };
-		BFFCDD389060D98E8D1C04365ACE0DDB /* PREDHTTPMonitorModel.h in Headers */ = {isa = PBXBuildFile; fileRef = E9AC313EC7C0595309007B4165C22E69 /* PREDHTTPMonitorModel.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		BCD19D32672EAD7993717B566C7049D9 /* PREDNullability.h in Headers */ = {isa = PBXBuildFile; fileRef = F15AAC2D4FA8BFBA8D1487C277F4C5E5 /* PREDNullability.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C0DF6E84D83C0DBCF465456EACDE80A7 /* QNHijackingDetectWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = F31D6781F3104DCEF85D1089FE793A60 /* QNHijackingDetectWrapper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C15E14312F2246E5428F18C53001D835 /* QNHosts.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E5D0B0277DC207206A054E7D06B33A5 /* QNHosts.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C17F9D5B3550CFF36F45DF72B828BB91 /* QNNQue.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C71C70BCDAAF906D79CE46202DE1BFB /* QNNQue.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -114,8 +113,6 @@
 		CA99F2473117608180165019C84892D1 /* Pods-PreDemObjcDemo-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = D60664D3C1F41DFD7DC8C900C5560FA2 /* Pods-PreDemObjcDemo-dummy.m */; };
 		D134AE56CA7F3AED4FCACDCD66DA11F6 /* QNNUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 040DD31AEC7FF40A9A1EC2D2F53D0B33 /* QNNUtil.m */; };
 		D2424C6B649C3158B1CE0057794A1A69 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA0855423F0ACF29B280FE335CBD39AC /* Foundation.framework */; };
-		D26F0445A7CF4A59BC2D9D72940722F3 /* PREDHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = F3B60F3A6F8AA31B736BD9E2F3BD8FE1 /* PREDHelper.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		D771710246A02B27FCFDAC6291A03869 /* PREDPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = F32A75DA6F05EDFFB91C8AD382E2B248 /* PREDPrivate.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		D874FEEF6904647AEFB3725E541D6A2A /* QNRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9CEB6D11905AC619B33E1E93163FA9 /* QNRecord.m */; };
 		D8E4C4FEA3F7FEFF3EB7E6E83AED9503 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA212BCA3E85C7FFFED4A727F56313F9 /* SystemConfiguration.framework */; };
 		DA6258555F1B3804DE5E1E67313133C0 /* QNDes.h in Headers */ = {isa = PBXBuildFile; fileRef = 29E3BE2599E6CAA243A2D1EBABA4FF01 /* QNDes.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -125,8 +122,10 @@
 		EA3D3EE3C970D4A75C59DCFC2D21E343 /* QNNNslookup.h in Headers */ = {isa = PBXBuildFile; fileRef = 06BBB9FDF231195DA183302C19A6B6FF /* QNNNslookup.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EB041DBAAB4ABDBCEC2D938F8AAB930A /* PreDemObjc-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F42252BA8228CED6C598812DC61A868 /* PreDemObjc-dummy.m */; };
 		EB703BC57EDCC645DCD0228F23E5CFF5 /* QNIP.m in Sources */ = {isa = PBXBuildFile; fileRef = 015F191D56E6EFEAC947FA0814CA00DC /* QNIP.m */; };
+		ED50457B7818E3CA0C271C1E3169E13F /* PREDCrashManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 57DACF3F29CC7075DA603D8FFEC39F92 /* PREDCrashManager.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		EDBC10E35E3B416CA8AB5864C17B98D0 /* PREDManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 7757C2080E0B8635EA8FD21BF82A4165 /* PREDManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EF6C91C40AB56BA2494D5F08795B1CA5 /* QNIP.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C980CB2219317D13ABC7B11A416563C /* QNIP.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		F5A4D9E2ADB3073D9BF80E4E93430EA2 /* PREDGZIP.h in Headers */ = {isa = PBXBuildFile; fileRef = 16C62FBEECAE44CCE0917DBA0B870B18 /* PREDGZIP.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		F3B6E1426E2E3F9F512F30EF2623667E /* PREDCrashReportTextFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = B83275699503D7D96181550478C0C337 /* PREDCrashReportTextFormatter.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		F63F37DF0CE9FA292CD9A91D4E125837 /* QuickLook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0340D81A44F496E86CF2C978757A7FE5 /* QuickLook.framework */; };
 		F6B8B07922802DEBFA0D474BC5202D49 /* QNHex.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FD0B2DE1F6AB7425AD97255C9282BE7 /* QNHex.m */; };
 		FFF6C125B3FF0167E252B7C474B79813 /* QNNPing.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F8C872386B20193101D86BFCF761C0A /* QNNPing.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -183,81 +182,81 @@
 		022628AA1CE653C5FFC9B90715F1D3E8 /* QNNetworkInfo.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = QNNetworkInfo.h; path = HappyDNS/Common/QNNetworkInfo.h; sourceTree = "<group>"; };
 		0340D81A44F496E86CF2C978757A7FE5 /* QuickLook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickLook.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/QuickLook.framework; sourceTree = DEVELOPER_DIR; };
 		040DD31AEC7FF40A9A1EC2D2F53D0B33 /* QNNUtil.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = QNNUtil.m; path = NetDiag/QNNUtil.m; sourceTree = "<group>"; };
-		06A8161ACD89FC08BEA01D97E50F237E /* PREDNetDiagResult.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDNetDiagResult.m; sourceTree = "<group>"; };
 		06BBB9FDF231195DA183302C19A6B6FF /* QNNNslookup.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = QNNNslookup.h; path = NetDiag/QNNNslookup.h; sourceTree = "<group>"; };
-		0A2CB196FB87F77F654303BDD91F5286 /* PREDConfigManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDConfigManager.h; sourceTree = "<group>"; };
-		0C66B9ADFDA487F512DE66DA51B510AA /* PREDemObjc.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDemObjc.h; sourceTree = "<group>"; };
+		0879A3EF716E6D5E6FC585B51DD3D410 /* PREDEnums.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDEnums.h; sourceTree = "<group>"; };
 		0FD0B2DE1F6AB7425AD97255C9282BE7 /* QNHex.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = QNHex.m; path = HappyDNS/Util/QNHex.m; sourceTree = "<group>"; };
-		10C441DA7BF045D737CCD357116DB7E3 /* PREDEnums.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDEnums.h; sourceTree = "<group>"; };
 		10C8DF2AA23EBCE716694B60A856BB8E /* QNHijackingDetectWrapper.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = QNHijackingDetectWrapper.m; path = HappyDNS/Local/QNHijackingDetectWrapper.m; sourceTree = "<group>"; };
-		118520C361D56C130296CB1BBBF7F494 /* PREDURLSessionSwizzler.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDURLSessionSwizzler.m; sourceTree = "<group>"; };
-		16C62FBEECAE44CCE0917DBA0B870B18 /* PREDGZIP.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDGZIP.h; sourceTree = "<group>"; };
 		179C025F1206DFA8022927AB62A43A85 /* QNDnspodFree.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = QNDnspodFree.m; path = HappyDNS/Http/QNDnspodFree.m; sourceTree = "<group>"; };
 		17D7FFF74716541C98DAE36AF62F31DB /* PreDemObjc.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = PreDemObjc.xcconfig; sourceTree = "<group>"; };
 		1933AE12CDA85EA2B5E36D31A49B87F7 /* libPreDemObjc.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = libPreDemObjc.a; path = libPreDemObjc.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A5E2EA90F1D3853DE240D11C04D5382 /* QNAssessment.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = QNAssessment.h; path = HappyDNS/Assessment/QNAssessment.h; sourceTree = "<group>"; };
+		1A8A5AB94C363D1EC5C8660BE32EB029 /* PREDGZIP.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDGZIP.h; sourceTree = "<group>"; };
+		1D2F57303197547EF38399C0517F27A5 /* PREDHTTPMonitorSender.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDHTTPMonitorSender.h; sourceTree = "<group>"; };
+		1F6D9403F0F04CEB0DA4D02B8B7B295A /* PREDNetDiag.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDNetDiag.h; sourceTree = "<group>"; };
 		20F6CB3D4B15EF7C4A1A33B5B9E6AC90 /* PREDResources.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = PREDResources.bundle; path = PREDResources.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
-		215AFA65CD7DA1ADA5C61523D73FA677 /* PREDVersion.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDVersion.m; sourceTree = "<group>"; };
 		2197EA6CC87458A8C062E7E8FC6E5D90 /* Version.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Version.plist; sourceTree = "<group>"; };
-		27FDA5D3B63CE03D0D954AE889654817 /* PREDNetDiag.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDNetDiag.h; sourceTree = "<group>"; };
+		270874D77A62E23B13207EC340086174 /* PREDCrashReportTextFormatter.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDCrashReportTextFormatter.m; sourceTree = "<group>"; };
+		287F3F5532D2A22A0C20F42465C6C7F8 /* PREDVersion.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDVersion.h; sourceTree = "<group>"; };
+		28CB0BFAB8D3B10FD67706F936736331 /* PREDNetworkClient.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDNetworkClient.m; sourceTree = "<group>"; };
 		28DFE6804CC024AE27B8B59180E564CA /* QNNNslookup.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = QNNNslookup.m; path = NetDiag/QNNNslookup.m; sourceTree = "<group>"; };
 		29E3BE2599E6CAA243A2D1EBABA4FF01 /* QNDes.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = QNDes.h; path = HappyDNS/Util/QNDes.h; sourceTree = "<group>"; };
 		2A55EAA9D403740F8550D533819D2C3A /* QNGetAddrInfo.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = QNGetAddrInfo.h; path = HappyDNS/Util/QNGetAddrInfo.h; sourceTree = "<group>"; };
-		2ABEC06F6A4F5D7C154CCE96153E800D /* PREDHTTPMonitorSender.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDHTTPMonitorSender.h; sourceTree = "<group>"; };
 		2AECDC3373AFF3F8B4B4C510FB4F9132 /* QNNPing.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = QNNPing.m; path = NetDiag/QNNPing.m; sourceTree = "<group>"; };
 		2C1AD38E1C691A0D62029B158434EBCB /* QNHex.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = QNHex.h; path = HappyDNS/Util/QNHex.h; sourceTree = "<group>"; };
 		2E2EE689472AC4017B435C0FEE45029B /* QNDes.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = QNDes.m; path = HappyDNS/Util/QNDes.m; sourceTree = "<group>"; };
 		2E5D0B0277DC207206A054E7D06B33A5 /* QNHosts.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = QNHosts.h; path = HappyDNS/Local/QNHosts.h; sourceTree = "<group>"; };
+		2EDF466E261EDAFA1CC2F5AD1B26CDC9 /* PREDPrivate.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDPrivate.m; sourceTree = "<group>"; };
 		3173D6BFDF4F768B8D73EC5476BF2019 /* Pods-PreDemObjcDemo-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-PreDemObjcDemo-resources.sh"; sourceTree = "<group>"; };
 		3393B26BF73C6CFD81000619B220FFFA /* HappyDNS-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "HappyDNS-prefix.pch"; sourceTree = "<group>"; };
-		3597E418A9CB0CC6BF1A147A85B6A641 /* PREDConfig.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDConfig.m; sourceTree = "<group>"; };
 		38FE71762E8BD962DE25DAD34DF52E9C /* QNHosts.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = QNHosts.m; path = HappyDNS/Local/QNHosts.m; sourceTree = "<group>"; };
 		3B779176E5F6407EB512CDFB7FB368B8 /* QNGetAddrInfo.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = QNGetAddrInfo.m; path = HappyDNS/Util/QNGetAddrInfo.m; sourceTree = "<group>"; };
 		3D4C4D1238E71B25BFB0BE9327F97FAE /* QNIpModel.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = QNIpModel.m; path = HappyDNS/Assessment/QNIpModel.m; sourceTree = "<group>"; };
 		3D6B9A8022EDA87E0912E4D246C3D535 /* QNDnsManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = QNDnsManager.m; path = HappyDNS/Common/QNDnsManager.m; sourceTree = "<group>"; };
 		3DA707BC160CE789617CB3A652BA14D8 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
 		3DD6C3FFC6B3422FC10BB06441CF7358 /* QNResolverDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = QNResolverDelegate.h; path = HappyDNS/Common/QNResolverDelegate.h; sourceTree = "<group>"; };
-		4450356A29F6B2384693998AB4C39D5C /* PREDBaseManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDBaseManager.h; sourceTree = "<group>"; };
 		46630DF1C04EB5F1728F4ABDDCF25A0D /* QNDnsManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = QNDnsManager.h; path = HappyDNS/Common/QNDnsManager.h; sourceTree = "<group>"; };
 		497B268005287BC60826306863575245 /* QNTxtResolver.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = QNTxtResolver.m; path = HappyDNS/Local/QNTxtResolver.m; sourceTree = "<group>"; };
 		49E2330D69477B428F696D30E1A7F08E /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/CoreText.framework; sourceTree = DEVELOPER_DIR; };
 		4C980CB2219317D13ABC7B11A416563C /* QNIP.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = QNIP.h; path = HappyDNS/Util/QNIP.h; sourceTree = "<group>"; };
 		4DEBB0D90EB1D25C1EAE3F581EAF158C /* QNResolvUtil.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = QNResolvUtil.h; path = HappyDNS/Local/QNResolvUtil.h; sourceTree = "<group>"; };
-		4F1D3D356A5053764E1C83786F1F58FC /* PREDCrashManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDCrashManager.m; sourceTree = "<group>"; };
 		4F42252BA8228CED6C598812DC61A868 /* PreDemObjc-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "PreDemObjc-dummy.m"; sourceTree = "<group>"; };
-		4FEF45FC4F73B63B0D11A35367D6A900 /* PREDCrashReportTextFormatter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDCrashReportTextFormatter.h; sourceTree = "<group>"; };
 		524E32FEB3CDA2B4C597506CB48F743D /* QNIpModel.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = QNIpModel.h; path = HappyDNS/Assessment/QNIpModel.h; sourceTree = "<group>"; };
-		5B8E22A510ABFAC1276A5BCC5C9C1623 /* PREDURLSessionSwizzler.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDURLSessionSwizzler.h; sourceTree = "<group>"; };
-		5CB4C5F4EBC82FD9C03233A425D75C55 /* PREDNullability.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDNullability.h; sourceTree = "<group>"; };
+		57DACF3F29CC7075DA603D8FFEC39F92 /* PREDCrashManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDCrashManager.h; sourceTree = "<group>"; };
 		5D7F19F192D1CDDAB683AD21117C4325 /* QNNetworkInfo.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = QNNetworkInfo.m; path = HappyDNS/Common/QNNetworkInfo.m; sourceTree = "<group>"; };
 		5E86788BFB3ECF96200BC3ED2533D003 /* HappyDNS.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = HappyDNS.h; path = HappyDNS/HappyDNS.h; sourceTree = "<group>"; };
+		5EA9801AFDAB51DE6BEF82672E31B9D5 /* PREDNetDiagResult.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDNetDiagResult.h; sourceTree = "<group>"; };
 		5EFE78F75DAB30AF9682BA5DA347899A /* ResourceBundle-PREDResources-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "ResourceBundle-PREDResources-Info.plist"; sourceTree = "<group>"; };
 		60FBE065560E666943112D7CB51E8937 /* HappyDNS-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "HappyDNS-dummy.m"; sourceTree = "<group>"; };
-		64934FD394B06930DACF0791EC6721C2 /* PREDPrivate.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDPrivate.m; sourceTree = "<group>"; };
+		6406C316778148770759637B986ED63D /* PREDNetDiag.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDNetDiag.m; sourceTree = "<group>"; };
+		67DC6A060207AE5DC9856047E625B9BA /* PREDHelper.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDHelper.m; sourceTree = "<group>"; };
 		68558B62FC0DB4020D7488D757EC00F7 /* libQNNetDiag.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = libQNNetDiag.a; path = libQNNetDiag.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		69CEB0E9150ED2503409149D748D280A /* PREDHTTPMonitorSender.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDHTTPMonitorSender.m; sourceTree = "<group>"; };
+		6ABF12FECA4981676299AFD7E694786F /* PREDGZIP.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDGZIP.m; sourceTree = "<group>"; };
+		6B617932FABBB54661C26BEE2CC5FF0E /* PREDPrivate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDPrivate.h; sourceTree = "<group>"; };
 		6C71C70BCDAAF906D79CE46202DE1BFB /* QNNQue.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = QNNQue.h; path = NetDiag/QNNQue.h; sourceTree = "<group>"; };
-		6CE573014CBA811D10CD7A9DF2CB5B46 /* PREDNetDiagResult.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDNetDiagResult.h; sourceTree = "<group>"; };
 		6D65AB03CF4F5D9F0AC5EC6FD974131A /* QNResolver.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = QNResolver.h; path = HappyDNS/Local/QNResolver.h; sourceTree = "<group>"; };
-		708B87E0BFA4166A519A773537F28C12 /* PREDManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDManager.h; sourceTree = "<group>"; };
+		6F9277159FEA5A03BAAA6BE61661B89A /* PREDConfig.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDConfig.m; sourceTree = "<group>"; };
 		74AFB28253391A2E1A40DDD57ACBAEFA /* QNNRtmp.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = QNNRtmp.h; path = NetDiag/QNNRtmp.h; sourceTree = "<group>"; };
+		7757C2080E0B8635EA8FD21BF82A4165 /* PREDManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDManager.h; sourceTree = "<group>"; };
+		77E2B2E1CB99409506E287B31FF8585F /* PREDCrashCXXExceptionHandler.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDCrashCXXExceptionHandler.h; sourceTree = "<group>"; };
 		7813C7378AE6A833B0B1DC9F42DA3936 /* QNNHttp.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = QNNHttp.h; path = NetDiag/QNNHttp.h; sourceTree = "<group>"; };
 		7847C846E212AA9AC1360C7F4857AD9E /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
+		79036B796738E92356CD029FA6CC018E /* PREDemObjc.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDemObjc.h; sourceTree = "<group>"; };
 		7C44CDA4F74A44579547A9F19DC00536 /* QNResolver.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = QNResolver.m; path = HappyDNS/Local/QNResolver.m; sourceTree = "<group>"; };
 		7D0161BFF889EDE17FD89FDAAD010295 /* Pods-PreDemObjcDemo-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-PreDemObjcDemo-acknowledgements.plist"; sourceTree = "<group>"; };
+		80D641F91247826D33DE00C6051389FD /* PREDHTTPOperation.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDHTTPOperation.m; sourceTree = "<group>"; };
+		812101B102DBC3BD5659517508CCCAC5 /* PREDConfigManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDConfigManager.m; sourceTree = "<group>"; };
 		81A18185FDF7E97924988570ED8EB736 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/CoreTelephony.framework; sourceTree = DEVELOPER_DIR; };
+		83667DC0E65EDC926E03C16C6B8E5F3C /* PREDURLProtocol.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDURLProtocol.m; sourceTree = "<group>"; };
 		836C4D574F52F12F0D08A1288470E85F /* QNResolvUtil.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = QNResolvUtil.m; path = HappyDNS/Local/QNResolvUtil.m; sourceTree = "<group>"; };
-		83B7C80A0697650E36337A5E26A6D589 /* PREDCrashManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDCrashManager.h; sourceTree = "<group>"; };
 		840D4D238A9ED1D4A75027AC96A5773A /* QNNQue.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = QNNQue.m; path = NetDiag/QNNQue.m; sourceTree = "<group>"; };
 		857872D381A29AFBD0461F149ACCA340 /* QNNRtmp.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = QNNRtmp.m; path = NetDiag/QNNRtmp.m; sourceTree = "<group>"; };
+		85EEF243F7F78A9DFC5698D28C434587 /* PREDHTTPMonitorModel.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDHTTPMonitorModel.m; sourceTree = "<group>"; };
 		86508197EDC225DA91EFA4732B877716 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
 		86C64B6CDCA279479B4C2FD21BD6E02A /* QNNTcpPing.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = QNNTcpPing.m; path = NetDiag/QNNTcpPing.m; sourceTree = "<group>"; };
-		88063A86F0EC99F4C60334BC5A66AAC7 /* PREDNetDiag.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDNetDiag.m; sourceTree = "<group>"; };
-		88BAC41CE16835C10FC05C66C7423693 /* PREDURLProtocol.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDURLProtocol.m; sourceTree = "<group>"; };
 		89B91B89662ADFFC42C3662127CFC21E /* QNNTcpPing.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = QNNTcpPing.h; path = NetDiag/QNNTcpPing.h; sourceTree = "<group>"; };
-		8A08D9E44C3E86AB73ED4A7DCFCB9B8C /* PREDHelper.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDHelper.m; sourceTree = "<group>"; };
-		8A1617D1C57014D00D931F475009301F /* PREDURLProtocol.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDURLProtocol.h; sourceTree = "<group>"; };
-		8A347C6293CCC0E963E212AAC1BF8A69 /* PREDHTTPMonitorSender.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDHTTPMonitorSender.m; sourceTree = "<group>"; };
 		8C9CEB6D11905AC619B33E1E93163FA9 /* QNRecord.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = QNRecord.m; path = HappyDNS/Common/QNRecord.m; sourceTree = "<group>"; };
+		8D8B1F2DCC66F7CCD475D008082EBAFB /* PREDManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDManager.m; sourceTree = "<group>"; };
 		8E70517838BA8E86B92AE77A0DEE7592 /* libHappyDNS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = libHappyDNS.a; path = libHappyDNS.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F8C872386B20193101D86BFCF761C0A /* QNNPing.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = QNNPing.h; path = NetDiag/QNNPing.h; sourceTree = "<group>"; };
 		90B118C7E8C6E0D612B6436963433D0C /* QNDnspodFree.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = QNDnspodFree.h; path = HappyDNS/Http/QNDnspodFree.h; sourceTree = "<group>"; };
@@ -265,59 +264,58 @@
 		937C4F87AF265E7BD558EB7EBEE8D85E /* QNNExternalIp.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = QNNExternalIp.m; path = NetDiag/QNNExternalIp.m; sourceTree = "<group>"; };
 		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		93D085849BF53EEF0FBFE8999426BDFF /* QNLruCache.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = QNLruCache.h; path = HappyDNS/Common/QNLruCache.h; sourceTree = "<group>"; };
-		95FDF0481ACBEE30C6C9AFEA9FB91C8E /* PREDCrashReportTextFormatter.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDCrashReportTextFormatter.m; sourceTree = "<group>"; };
-		97891C8024B0EE435996F94474282045 /* PREDLogger.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDLogger.m; sourceTree = "<group>"; };
+		96A411E272787FE3D7BF742517E40D31 /* PREDHelper.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDHelper.h; sourceTree = "<group>"; };
 		9AC7BD3372161AFC95DBB4DD4E1C1DC7 /* QNAssessment.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = QNAssessment.m; path = HappyDNS/Assessment/QNAssessment.m; sourceTree = "<group>"; };
-		9AD8D5EA1A319E8035FDDB27B256B1FB /* PREDVersion.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDVersion.h; sourceTree = "<group>"; };
-		A25808DCBC989C6D1492AC2E76ACF10D /* PREDNetworkClient.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDNetworkClient.m; sourceTree = "<group>"; };
-		A4864AE8B2A843E125C586A270CA4F69 /* PREDManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDManager.m; sourceTree = "<group>"; };
-		A675CEB429066459FCE203163FE5C375 /* PREDNetDiagResultPrivate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDNetDiagResultPrivate.h; sourceTree = "<group>"; };
-		A821E3E27BF4FD40742071627B6BCC3B /* PREDHTTPOperation.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDHTTPOperation.h; sourceTree = "<group>"; };
+		9CD0CB88565DA15ABA9F5B9A8E947021 /* PREDURLProtocol.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDURLProtocol.h; sourceTree = "<group>"; };
+		9E0521EE10F0F8DFF0253814AC82368B /* PREDNetDiagResultPrivate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDNetDiagResultPrivate.h; sourceTree = "<group>"; };
+		A0D6013622A83C5E598B26A667A6824E /* PREDCrashManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDCrashManager.m; sourceTree = "<group>"; };
 		A94B54E51AADEDB43FB7CAFFEF68468A /* PreDemObjc-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "PreDemObjc-prefix.pch"; sourceTree = "<group>"; };
 		AC4FE361E63ADE194741EE7F86CA80EF /* Pods-PreDemObjcDemo-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-PreDemObjcDemo-frameworks.sh"; sourceTree = "<group>"; };
-		ACEEED40EFC4153797AA85EB46BCDEBE /* PREDNetworkClient.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDNetworkClient.h; sourceTree = "<group>"; };
 		AD800A41903F3698B916A0ECBBC1BF49 /* QNRefresher.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = QNRefresher.m; path = HappyDNS/QNRefresher.m; sourceTree = "<group>"; };
+		B3CD2004C9B3A3A6C3D640178BA1DBC7 /* PREDVersion.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDVersion.m; sourceTree = "<group>"; };
+		B83275699503D7D96181550478C0C337 /* PREDCrashReportTextFormatter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDCrashReportTextFormatter.h; sourceTree = "<group>"; };
+		B850DA04CC91AC238734536649C5021A /* PREDURLSessionSwizzler.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDURLSessionSwizzler.m; sourceTree = "<group>"; };
 		B8791242F4D7529249493F53D8AC5113 /* Pods-PreDemObjcDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-PreDemObjcDemo.release.xcconfig"; sourceTree = "<group>"; };
+		B9D47D04FCE628AC335361839ACB44DF /* PREDConfigManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDConfigManager.h; sourceTree = "<group>"; };
 		BA212BCA3E85C7FFFED4A727F56313F9 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/SystemConfiguration.framework; sourceTree = DEVELOPER_DIR; };
-		BB132A3294F637902EE3188C4225A87C /* PREDConfig.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDConfig.h; sourceTree = "<group>"; };
 		BB907BEB7524A2ECFCA9FB16C8BD94E0 /* QNRefresher.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = QNRefresher.h; path = HappyDNS/QNRefresher.h; sourceTree = "<group>"; };
 		BC088BB76A75E1FFE99A5BA24A6F4DDF /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/AssetsLibrary.framework; sourceTree = DEVELOPER_DIR; };
-		BF0D9DF46BCAB1E1A2BCC6CC48CF31B0 /* PREDConfigManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDConfigManager.m; sourceTree = "<group>"; };
-		BF728E62E31C4CF948B38EFAC8958583 /* PREDCrashCXXExceptionHandler.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDCrashCXXExceptionHandler.h; sourceTree = "<group>"; };
+		C5460DA6A2EC8B17D102ACD6E9378B83 /* PREDConfig.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDConfig.h; sourceTree = "<group>"; };
 		C827199BFD26C2EE9F09F44D02A30170 /* QNNetDiag.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = QNNetDiag.xcconfig; sourceTree = "<group>"; };
 		C8982D2499CF2E27D66C83ECFB4BE256 /* QNLruCache.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = QNLruCache.m; path = HappyDNS/Common/QNLruCache.m; sourceTree = "<group>"; };
+		C8CD5EC51E38CE439041C6CFD2A1AE3B /* PREDCrashCXXExceptionHandler.mm */ = {isa = PBXFileReference; includeInIndex = 1; path = PREDCrashCXXExceptionHandler.mm; sourceTree = "<group>"; };
 		C98FA1AA933B321F94EBC5A2D5AD1ADC /* Pods-PreDemObjcDemo-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-PreDemObjcDemo-acknowledgements.markdown"; sourceTree = "<group>"; };
 		CB4880D6F9FC3FDC906B1D13A2435A36 /* QNNExternalIp.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = QNNExternalIp.h; path = NetDiag/QNNExternalIp.h; sourceTree = "<group>"; };
 		CD354BAEFB4715231FAA06E4CC5A72BC /* QNDnspodEnterprise.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = QNDnspodEnterprise.h; path = HappyDNS/Http/QNDnspodEnterprise.h; sourceTree = "<group>"; };
-		CFE3089CEDF26AE06A3966E3BB39968A /* PREDCrashCXXExceptionHandler.mm */ = {isa = PBXFileReference; includeInIndex = 1; path = PREDCrashCXXExceptionHandler.mm; sourceTree = "<group>"; };
-		D141773D7E20D5819B03AFAB294B2BD3 /* PREDGZIP.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDGZIP.m; sourceTree = "<group>"; };
 		D21C02205A43CA0AD54B6FE0C140E27A /* CrashReporter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CrashReporter.framework; path = Vendor/CrashReporter.framework; sourceTree = "<group>"; };
 		D22FE389D0AD9BD86BFA67D296137612 /* QNNetDiag-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "QNNetDiag-prefix.pch"; sourceTree = "<group>"; };
 		D2A7380AF7A7BD7377D8F022D6A0130F /* libPods-PreDemObjcDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "libPods-PreDemObjcDemo.a"; path = "libPods-PreDemObjcDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2F2CA1DF339EDFAD0A88E4466DEB367 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/MobileCoreServices.framework; sourceTree = DEVELOPER_DIR; };
-		D3B05E78068C6A5AF93A562BA8538EC3 /* PREDLogger.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDLogger.h; sourceTree = "<group>"; };
-		D4D89A9D364FA66F1976EC86B2A4B0AA /* PREDHTTPMonitorModel.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDHTTPMonitorModel.m; sourceTree = "<group>"; };
 		D60664D3C1F41DFD7DC8C900C5560FA2 /* Pods-PreDemObjcDemo-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-PreDemObjcDemo-dummy.m"; sourceTree = "<group>"; };
 		D7E19DE6698CDEAE1745AB7384D43B5D /* QNNProtocols.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = QNNProtocols.h; path = NetDiag/QNNProtocols.h; sourceTree = "<group>"; };
+		D83E30EE33FE3B1C93419BD5BB68ECB9 /* PREDLogger.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDLogger.m; sourceTree = "<group>"; };
 		D844BE2926F8949CE1B7239DBE1331AA /* QNDomain.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = QNDomain.m; path = HappyDNS/Common/QNDomain.m; sourceTree = "<group>"; };
+		D8AE9C4997C5078168D7752CF4B8187B /* PREDManagerPrivate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDManagerPrivate.h; sourceTree = "<group>"; };
 		DA0855423F0ACF29B280FE335CBD39AC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		DCD331977D020A0D44EE49A0BEC4130E /* QNNetDiag-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "QNNetDiag-dummy.m"; sourceTree = "<group>"; };
 		DFAB65EBB1643F765111A25721457D1C /* QNNHttp.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = QNNHttp.m; path = NetDiag/QNNHttp.m; sourceTree = "<group>"; };
 		E1630CE5D6B74928EB1995823CE57B20 /* QNNTraceRoute.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = QNNTraceRoute.m; path = NetDiag/QNNTraceRoute.m; sourceTree = "<group>"; };
 		E80864A8A214BC6941407FD8BE457F87 /* QNNTraceRoute.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = QNNTraceRoute.h; path = NetDiag/QNNTraceRoute.h; sourceTree = "<group>"; };
-		E9AC313EC7C0595309007B4165C22E69 /* PREDHTTPMonitorModel.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDHTTPMonitorModel.h; sourceTree = "<group>"; };
+		EABF05979AA585FA2EC2CE126E303381 /* PREDNetworkClient.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDNetworkClient.h; sourceTree = "<group>"; };
+		ECA53A5D6C401318D3ED2E0EDFFD1A8D /* PREDHTTPOperation.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDHTTPOperation.h; sourceTree = "<group>"; };
+		ECF31AAD0EF61EF00A64655461DEE222 /* PREDNetDiagResult.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDNetDiagResult.m; sourceTree = "<group>"; };
 		EDC9105E0A6B3B83BF86C63861C94B57 /* QNNUtil.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = QNNUtil.h; path = NetDiag/QNNUtil.h; sourceTree = "<group>"; };
 		EE19B8282EAF098483D99CCBE1C65B1C /* QNRecord.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = QNRecord.h; path = HappyDNS/Common/QNRecord.h; sourceTree = "<group>"; };
-		EE65B3F301700ECF370E6E635D76F860 /* PREDHTTPOperation.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDHTTPOperation.m; sourceTree = "<group>"; };
+		F15AAC2D4FA8BFBA8D1487C277F4C5E5 /* PREDNullability.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDNullability.h; sourceTree = "<group>"; };
+		F1BD34142D49B93C9D52C81AFA829DB0 /* PREDURLSessionSwizzler.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDURLSessionSwizzler.h; sourceTree = "<group>"; };
 		F31D6781F3104DCEF85D1089FE793A60 /* QNHijackingDetectWrapper.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = QNHijackingDetectWrapper.h; path = HappyDNS/Local/QNHijackingDetectWrapper.h; sourceTree = "<group>"; };
-		F32A75DA6F05EDFFB91C8AD382E2B248 /* PREDPrivate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDPrivate.h; sourceTree = "<group>"; };
-		F3B60F3A6F8AA31B736BD9E2F3BD8FE1 /* PREDHelper.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDHelper.h; sourceTree = "<group>"; };
 		F40BA1178B8D04345EAC63805A54926F /* QNNetDiag.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = QNNetDiag.h; path = NetDiag/QNNetDiag.h; sourceTree = "<group>"; };
 		F91A1E9A55FDDAFFEAED987235A7F3F7 /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/Photos.framework; sourceTree = DEVELOPER_DIR; };
 		F9E8B07B5913D96E2CED015FD850AC86 /* QNDnspodEnterprise.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = QNDnspodEnterprise.m; path = HappyDNS/Http/QNDnspodEnterprise.m; sourceTree = "<group>"; };
 		FBCD36331086080972B4A697B8F56745 /* Pods-PreDemObjcDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-PreDemObjcDemo.debug.xcconfig"; sourceTree = "<group>"; };
+		FC3D4EB35BB3E5B65D43405649BE7CDA /* PREDHTTPMonitorModel.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDHTTPMonitorModel.h; sourceTree = "<group>"; };
+		FCF29865802D98CA5794E27F432BD79A /* PREDLogger.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDLogger.h; sourceTree = "<group>"; };
 		FF2764BBD78B55EDED7864EF95539902 /* QNTxtResolver.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = QNTxtResolver.h; path = HappyDNS/Local/QNTxtResolver.h; sourceTree = "<group>"; };
-		FF4A75E5A42BC275738EE764A76C095D /* PREDManagerPrivate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDManagerPrivate.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -409,6 +407,17 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		0F9399DFD7C3D3CBB16EA94678292D6B /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				8D8B1F2DCC66F7CCD475D008082EBAFB /* PREDManager.m */,
+				D8AE9C4997C5078168D7752CF4B8187B /* PREDManagerPrivate.h */,
+				ECF31AAD0EF61EF00A64655461DEE222 /* PREDNetDiagResult.m */,
+			);
+			name = Core;
+			path = Core;
+			sourceTree = "<group>";
+		};
 		143635F4F3DF1AF922AAE434C2310859 /* iOS */ = {
 			isa = PBXGroup;
 			children = (
@@ -425,6 +434,21 @@
 				BA212BCA3E85C7FFFED4A727F56313F9 /* SystemConfiguration.framework */,
 			);
 			name = iOS;
+			sourceTree = "<group>";
+		};
+		1A9B14AA0DA2288843EC55D649B3A4FE /* PreDemObjc */ = {
+			isa = PBXGroup;
+			children = (
+				881C572F9682E64ED3F86B5D02381234 /* Config */,
+				0F9399DFD7C3D3CBB16EA94678292D6B /* Core */,
+				9AEA7353DCEF1735E5EE8FEE6F0C72C0 /* CrashReport */,
+				A1BD465E76AFF6648F05CC73A62162A3 /* Helper */,
+				87C889909E4315B896A7836C9FC4484D /* HttpMonitor */,
+				D7B59B38E946687D1BD4F98F1A0C826D /* Network */,
+				F05B5B16D44A2A190A359C6E8A692724 /* Public */,
+			);
+			name = PreDemObjc;
+			path = PreDemObjc;
 			sourceTree = "<group>";
 		};
 		1D4618EEAA32E612CE837A22A5F8C6BA /* Resources */ = {
@@ -523,29 +547,6 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
-		6D00B68D6AFA6B4194FA3FB0DD5E97AA /* Helper */ = {
-			isa = PBXGroup;
-			children = (
-				4FEF45FC4F73B63B0D11A35367D6A900 /* PREDCrashReportTextFormatter.h */,
-				95FDF0481ACBEE30C6C9AFEA9FB91C8E /* PREDCrashReportTextFormatter.m */,
-				16C62FBEECAE44CCE0917DBA0B870B18 /* PREDGZIP.h */,
-				D141773D7E20D5819B03AFAB294B2BD3 /* PREDGZIP.m */,
-				F3B60F3A6F8AA31B736BD9E2F3BD8FE1 /* PREDHelper.h */,
-				8A08D9E44C3E86AB73ED4A7DCFCB9B8C /* PREDHelper.m */,
-				D3B05E78068C6A5AF93A562BA8538EC3 /* PREDLogger.h */,
-				97891C8024B0EE435996F94474282045 /* PREDLogger.m */,
-				27FDA5D3B63CE03D0D954AE889654817 /* PREDNetDiag.h */,
-				88063A86F0EC99F4C60334BC5A66AAC7 /* PREDNetDiag.m */,
-				A675CEB429066459FCE203163FE5C375 /* PREDNetDiagResultPrivate.h */,
-				F32A75DA6F05EDFFB91C8AD382E2B248 /* PREDPrivate.h */,
-				64934FD394B06930DACF0791EC6721C2 /* PREDPrivate.m */,
-				9AD8D5EA1A319E8035FDDB27B256B1FB /* PREDVersion.h */,
-				215AFA65CD7DA1ADA5C61523D73FA677 /* PREDVersion.m */,
-			);
-			name = Helper;
-			path = Helper;
-			sourceTree = "<group>";
-		};
 		7DB346D0F39D3F0E887471402A8071AB = {
 			isa = PBXGroup;
 			children = (
@@ -558,41 +559,67 @@
 			);
 			sourceTree = "<group>";
 		};
-		90A275892AA6EDA7CCAE52FC6717A027 /* CrashReport */ = {
+		87C889909E4315B896A7836C9FC4484D /* HttpMonitor */ = {
 			isa = PBXGroup;
 			children = (
-				BF728E62E31C4CF948B38EFAC8958583 /* PREDCrashCXXExceptionHandler.h */,
-				CFE3089CEDF26AE06A3966E3BB39968A /* PREDCrashCXXExceptionHandler.mm */,
-				83B7C80A0697650E36337A5E26A6D589 /* PREDCrashManager.h */,
-				4F1D3D356A5053764E1C83786F1F58FC /* PREDCrashManager.m */,
+				FC3D4EB35BB3E5B65D43405649BE7CDA /* PREDHTTPMonitorModel.h */,
+				85EEF243F7F78A9DFC5698D28C434587 /* PREDHTTPMonitorModel.m */,
+				1D2F57303197547EF38399C0517F27A5 /* PREDHTTPMonitorSender.h */,
+				69CEB0E9150ED2503409149D748D280A /* PREDHTTPMonitorSender.m */,
+				9CD0CB88565DA15ABA9F5B9A8E947021 /* PREDURLProtocol.h */,
+				83667DC0E65EDC926E03C16C6B8E5F3C /* PREDURLProtocol.m */,
+				F1BD34142D49B93C9D52C81AFA829DB0 /* PREDURLSessionSwizzler.h */,
+				B850DA04CC91AC238734536649C5021A /* PREDURLSessionSwizzler.m */,
+			);
+			name = HttpMonitor;
+			path = HttpMonitor;
+			sourceTree = "<group>";
+		};
+		881C572F9682E64ED3F86B5D02381234 /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				C5460DA6A2EC8B17D102ACD6E9378B83 /* PREDConfig.h */,
+				6F9277159FEA5A03BAAA6BE61661B89A /* PREDConfig.m */,
+				B9D47D04FCE628AC335361839ACB44DF /* PREDConfigManager.h */,
+				812101B102DBC3BD5659517508CCCAC5 /* PREDConfigManager.m */,
+			);
+			name = Config;
+			path = Config;
+			sourceTree = "<group>";
+		};
+		9AEA7353DCEF1735E5EE8FEE6F0C72C0 /* CrashReport */ = {
+			isa = PBXGroup;
+			children = (
+				77E2B2E1CB99409506E287B31FF8585F /* PREDCrashCXXExceptionHandler.h */,
+				C8CD5EC51E38CE439041C6CFD2A1AE3B /* PREDCrashCXXExceptionHandler.mm */,
+				57DACF3F29CC7075DA603D8FFEC39F92 /* PREDCrashManager.h */,
+				A0D6013622A83C5E598B26A667A6824E /* PREDCrashManager.m */,
 			);
 			name = CrashReport;
 			path = CrashReport;
 			sourceTree = "<group>";
 		};
-		92EFD23C475B218330A004F07A319127 /* Public */ = {
+		A1BD465E76AFF6648F05CC73A62162A3 /* Helper */ = {
 			isa = PBXGroup;
 			children = (
-				0C66B9ADFDA487F512DE66DA51B510AA /* PREDemObjc.h */,
-				10C441DA7BF045D737CCD357116DB7E3 /* PREDEnums.h */,
-				708B87E0BFA4166A519A773537F28C12 /* PREDManager.h */,
-				6CE573014CBA811D10CD7A9DF2CB5B46 /* PREDNetDiagResult.h */,
-				5CB4C5F4EBC82FD9C03233A425D75C55 /* PREDNullability.h */,
+				B83275699503D7D96181550478C0C337 /* PREDCrashReportTextFormatter.h */,
+				270874D77A62E23B13207EC340086174 /* PREDCrashReportTextFormatter.m */,
+				1A8A5AB94C363D1EC5C8660BE32EB029 /* PREDGZIP.h */,
+				6ABF12FECA4981676299AFD7E694786F /* PREDGZIP.m */,
+				96A411E272787FE3D7BF742517E40D31 /* PREDHelper.h */,
+				67DC6A060207AE5DC9856047E625B9BA /* PREDHelper.m */,
+				FCF29865802D98CA5794E27F432BD79A /* PREDLogger.h */,
+				D83E30EE33FE3B1C93419BD5BB68ECB9 /* PREDLogger.m */,
+				1F6D9403F0F04CEB0DA4D02B8B7B295A /* PREDNetDiag.h */,
+				6406C316778148770759637B986ED63D /* PREDNetDiag.m */,
+				9E0521EE10F0F8DFF0253814AC82368B /* PREDNetDiagResultPrivate.h */,
+				6B617932FABBB54661C26BEE2CC5FF0E /* PREDPrivate.h */,
+				2EDF466E261EDAFA1CC2F5AD1B26CDC9 /* PREDPrivate.m */,
+				287F3F5532D2A22A0C20F42465C6C7F8 /* PREDVersion.h */,
+				B3CD2004C9B3A3A6C3D640178BA1DBC7 /* PREDVersion.m */,
 			);
-			name = Public;
-			path = Public;
-			sourceTree = "<group>";
-		};
-		9B6CDBA7DC4C7425978A3B787847D190 /* Core */ = {
-			isa = PBXGroup;
-			children = (
-				4450356A29F6B2384693998AB4C39D5C /* PREDBaseManager.h */,
-				A4864AE8B2A843E125C586A270CA4F69 /* PREDManager.m */,
-				FF4A75E5A42BC275738EE764A76C095D /* PREDManagerPrivate.h */,
-				06A8161ACD89FC08BEA01D97E50F237E /* PREDNetDiagResult.m */,
-			);
-			name = Core;
-			path = Core;
+			name = Helper;
+			path = Helper;
 			sourceTree = "<group>";
 		};
 		A5089AA7254AEC96954284659EE4C44A /* HappyDNS */ = {
@@ -648,7 +675,7 @@
 			isa = PBXGroup;
 			children = (
 				06FDCD3CA724CEE533F2AE8BB8B02552 /* Frameworks */,
-				B48C7C64BCC1BC34FF78A3C50BD08796 /* PreDemObjc */,
+				1A9B14AA0DA2288843EC55D649B3A4FE /* PreDemObjc */,
 				6883461C1DBEB80E606F7D4E5FE3EEA2 /* Resources */,
 				47084AF5E9DDD1D40A02FB629B2A7CB0 /* Support Files */,
 			);
@@ -656,47 +683,16 @@
 			path = ../..;
 			sourceTree = "<group>";
 		};
-		B48C7C64BCC1BC34FF78A3C50BD08796 /* PreDemObjc */ = {
+		D7B59B38E946687D1BD4F98F1A0C826D /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				F344AD0F14B9E1E5529A3F62DA29353B /* Config */,
-				9B6CDBA7DC4C7425978A3B787847D190 /* Core */,
-				90A275892AA6EDA7CCAE52FC6717A027 /* CrashReport */,
-				6D00B68D6AFA6B4194FA3FB0DD5E97AA /* Helper */,
-				DBAC77BD9C0CAA3AFD99DAFED755A275 /* HttpMonitor */,
-				D642AD9B2AB018E2466551F46B403B6E /* Network */,
-				92EFD23C475B218330A004F07A319127 /* Public */,
-			);
-			name = PreDemObjc;
-			path = PreDemObjc;
-			sourceTree = "<group>";
-		};
-		D642AD9B2AB018E2466551F46B403B6E /* Network */ = {
-			isa = PBXGroup;
-			children = (
-				A821E3E27BF4FD40742071627B6BCC3B /* PREDHTTPOperation.h */,
-				EE65B3F301700ECF370E6E635D76F860 /* PREDHTTPOperation.m */,
-				ACEEED40EFC4153797AA85EB46BCDEBE /* PREDNetworkClient.h */,
-				A25808DCBC989C6D1492AC2E76ACF10D /* PREDNetworkClient.m */,
+				ECA53A5D6C401318D3ED2E0EDFFD1A8D /* PREDHTTPOperation.h */,
+				80D641F91247826D33DE00C6051389FD /* PREDHTTPOperation.m */,
+				EABF05979AA585FA2EC2CE126E303381 /* PREDNetworkClient.h */,
+				28CB0BFAB8D3B10FD67706F936736331 /* PREDNetworkClient.m */,
 			);
 			name = Network;
 			path = Network;
-			sourceTree = "<group>";
-		};
-		DBAC77BD9C0CAA3AFD99DAFED755A275 /* HttpMonitor */ = {
-			isa = PBXGroup;
-			children = (
-				E9AC313EC7C0595309007B4165C22E69 /* PREDHTTPMonitorModel.h */,
-				D4D89A9D364FA66F1976EC86B2A4B0AA /* PREDHTTPMonitorModel.m */,
-				2ABEC06F6A4F5D7C154CCE96153E800D /* PREDHTTPMonitorSender.h */,
-				8A347C6293CCC0E963E212AAC1BF8A69 /* PREDHTTPMonitorSender.m */,
-				8A1617D1C57014D00D931F475009301F /* PREDURLProtocol.h */,
-				88BAC41CE16835C10FC05C66C7423693 /* PREDURLProtocol.m */,
-				5B8E22A510ABFAC1276A5BCC5C9C1623 /* PREDURLSessionSwizzler.h */,
-				118520C361D56C130296CB1BBBF7F494 /* PREDURLSessionSwizzler.m */,
-			);
-			name = HttpMonitor;
-			path = HttpMonitor;
 			sourceTree = "<group>";
 		};
 		DD5C59B0186A7A776943D5EEF9111956 /* Targets Support Files */ = {
@@ -724,16 +720,17 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		F344AD0F14B9E1E5529A3F62DA29353B /* Config */ = {
+		F05B5B16D44A2A190A359C6E8A692724 /* Public */ = {
 			isa = PBXGroup;
 			children = (
-				BB132A3294F637902EE3188C4225A87C /* PREDConfig.h */,
-				3597E418A9CB0CC6BF1A147A85B6A641 /* PREDConfig.m */,
-				0A2CB196FB87F77F654303BDD91F5286 /* PREDConfigManager.h */,
-				BF0D9DF46BCAB1E1A2BCC6CC48CF31B0 /* PREDConfigManager.m */,
+				79036B796738E92356CD029FA6CC018E /* PREDemObjc.h */,
+				0879A3EF716E6D5E6FC585B51DD3D410 /* PREDEnums.h */,
+				7757C2080E0B8635EA8FD21BF82A4165 /* PREDManager.h */,
+				5EA9801AFDAB51DE6BEF82672E31B9D5 /* PREDNetDiagResult.h */,
+				F15AAC2D4FA8BFBA8D1487C277F4C5E5 /* PREDNullability.h */,
 			);
-			name = Config;
-			path = Config;
+			name = Public;
+			path = Public;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -754,6 +751,37 @@
 				4590DDE6CAADCCFEDB2D835980C8E2DB /* QNNTcpPing.h in Headers */,
 				5DDAE4E1F2F040514519EA6E390A3A8B /* QNNTraceRoute.h in Headers */,
 				14BC75069F3F45FC1CA038EFB405EC0C /* QNNUtil.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4CAE66F44E541D1F865C0E316B9E8909 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8F18DFC28F087A76F853345B132A7F23 /* PREDConfig.h in Headers */,
+				2165D41C8011FAF2AA1738B18A62AFBA /* PREDConfigManager.h in Headers */,
+				669A5867FF30C6635DE72A58FFD337C3 /* PREDCrashCXXExceptionHandler.h in Headers */,
+				ED50457B7818E3CA0C271C1E3169E13F /* PREDCrashManager.h in Headers */,
+				F3B6E1426E2E3F9F512F30EF2623667E /* PREDCrashReportTextFormatter.h in Headers */,
+				85B492B6BDD9E87B8A2922892FDE0E6E /* PREDemObjc.h in Headers */,
+				AA10F1A0063A4D09FB2EE1536EA0D3FD /* PREDEnums.h in Headers */,
+				0E6426180DD2985CD441981ECFCD1449 /* PREDGZIP.h in Headers */,
+				6FD5109E5EDE62DFAAAF8C26682C1B31 /* PREDHelper.h in Headers */,
+				04FFE9F292B91DAFAB8E7049EC72798F /* PREDHTTPMonitorModel.h in Headers */,
+				8F2A8B98767F84AE89CA059D1DA123BE /* PREDHTTPMonitorSender.h in Headers */,
+				A19CBFA3C8BEE5A1458646FD61A180EA /* PREDHTTPOperation.h in Headers */,
+				29F5E56DE0097AF63130EF21C4B9F0A5 /* PREDLogger.h in Headers */,
+				EDBC10E35E3B416CA8AB5864C17B98D0 /* PREDManager.h in Headers */,
+				2CEABC7E7BBD06F9ACBE6E7A64499538 /* PREDManagerPrivate.h in Headers */,
+				5215C438D6894E9CDE38B95B103D11C8 /* PREDNetDiag.h in Headers */,
+				5B39193BA934D7E0ACEE0366BAC56FC8 /* PREDNetDiagResult.h in Headers */,
+				6D4570EE7DBFFAF7C8FAA7614A853522 /* PREDNetDiagResultPrivate.h in Headers */,
+				11B6012455ECDC872A2256F4C9466326 /* PREDNetworkClient.h in Headers */,
+				BCD19D32672EAD7993717B566C7049D9 /* PREDNullability.h in Headers */,
+				70D1973BD833983C08BFA97E021428D5 /* PREDPrivate.h in Headers */,
+				05987F58D86E163C5E93D327C5DB5870 /* PREDURLProtocol.h in Headers */,
+				6F866E7BBDBDDBF37DDEF8C632602A83 /* PREDURLSessionSwizzler.h in Headers */,
+				2F3FE75EB7531516FF18A93DC6579D1C /* PREDVersion.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -785,38 +813,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F1975FDD3C637285252661CA6F3E8582 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				1BE2501E407224CC41E26AB5A530B58A /* PREDBaseManager.h in Headers */,
-				8E4689A87797AF0F734FCF2DF817F8A4 /* PREDConfig.h in Headers */,
-				2AADB3311487455C19BD6F052DF83478 /* PREDConfigManager.h in Headers */,
-				A82BF9A3A999A88501D7A18E1727DFDA /* PREDCrashCXXExceptionHandler.h in Headers */,
-				0D100A1EF7C0DE423FF0641390AAD86E /* PREDCrashManager.h in Headers */,
-				2620BDA1676372BEEB6B751BFD77D713 /* PREDCrashReportTextFormatter.h in Headers */,
-				11369D1FE367ADF8EB22F8494D49D3FC /* PREDemObjc.h in Headers */,
-				A16E9186174477AC860C293B2A1478A6 /* PREDEnums.h in Headers */,
-				F5A4D9E2ADB3073D9BF80E4E93430EA2 /* PREDGZIP.h in Headers */,
-				D26F0445A7CF4A59BC2D9D72940722F3 /* PREDHelper.h in Headers */,
-				BFFCDD389060D98E8D1C04365ACE0DDB /* PREDHTTPMonitorModel.h in Headers */,
-				44DD52D993CFB640BA6841DF34440D58 /* PREDHTTPMonitorSender.h in Headers */,
-				9100ADF4CEB411D50CB989E89288047A /* PREDHTTPOperation.h in Headers */,
-				AE3835A2A7DED7A38265980FB63BCA99 /* PREDLogger.h in Headers */,
-				A46E9568DFB3CDB2E29B46433D3068C2 /* PREDManager.h in Headers */,
-				3FB3583EA6613DC56A906CDBFEC0C87E /* PREDManagerPrivate.h in Headers */,
-				8B63D2F22300E38614427BBF763BD163 /* PREDNetDiag.h in Headers */,
-				A7BFF0E25EF33B36DF5469F60CDC2735 /* PREDNetDiagResult.h in Headers */,
-				496870FF021CAF11DA01F18B9013D8E4 /* PREDNetDiagResultPrivate.h in Headers */,
-				73970F4A793EA2D411CFA99E984394D2 /* PREDNetworkClient.h in Headers */,
-				960C47041354FAADB2F39F88873E0F2A /* PREDNullability.h in Headers */,
-				D771710246A02B27FCFDAC6291A03869 /* PREDPrivate.h in Headers */,
-				730BB83F7DB9027489DD9A878F0F5F95 /* PREDURLProtocol.h in Headers */,
-				43154A167A23579D4A78676065E004C9 /* PREDURLSessionSwizzler.h in Headers */,
-				987401EECB28181AF250576A748C0E74 /* PREDVersion.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
@@ -826,7 +822,7 @@
 			buildPhases = (
 				AC19C19DD921E3251270FC261FBAE79C /* Sources */,
 				189FD91C96362C483E19184C2E9904B7 /* Frameworks */,
-				F1975FDD3C637285252661CA6F3E8582 /* Headers */,
+				4CAE66F44E541D1F865C0E316B9E8909 /* Headers */,
 			);
 			buildRules = (
 			);
