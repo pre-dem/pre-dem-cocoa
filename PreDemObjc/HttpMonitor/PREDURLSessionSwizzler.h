@@ -12,7 +12,6 @@
 
 @property (nonatomic, assign) BOOL isSwizzle;
 
-+ (PREDURLSessionSwizzler *)defaultSwizzler;
 - (void)load;
 - (void)unload;
 

@@ -35,17 +35,6 @@ static NSString* app_id(NSString* appKey){
 
 #pragma mark - Public Class Methods
 
-+ (PREDManager *)sharedPREDManager {
-    static PREDManager *sharedInstance = nil;
-    static dispatch_once_t pred;
-    
-    dispatch_once(&pred, ^{
-        sharedInstance = [[PREDManager alloc] init];
-    });
-    
-    return sharedInstance;
-}
-
 + (void)startWithAppKey:(nonnull NSString *)appKey
           serviceDomain:(nonnull NSString *)serviceDomain{
     [[self sharedPREDManager] startWithAppKey:appKey serviceDomain:serviceDomain];
@@ -81,7 +70,42 @@ static NSString* app_id(NSString* appKey){
     [task resume];
 }
 
-#pragma mark - Private Instance Methods
++ (PREDLogLevel)logLevel {
+    return PREDLogger.currentLogLevel;
+}
+
++ (void)setLogLevel:(PREDLogLevel)logLevel {
+    PREDLogger.currentLogLevel = logLevel;
+}
+
++ (void)setLogHandler:(PREDLogHandler)logHandler {
+    [PREDLogger setLogHandler:logHandler];
+}
+
++ (NSString *)version {
+    return [PREDVersion getSDKVersion];
+}
+
++ (NSString *)build {
+    return [PREDVersion getSDKBuild];
+}
+
+#pragma mark - Private Methods
+
++ (PREDManager *)sharedPREDManager {
+    static PREDManager *sharedInstance = nil;
+    static dispatch_once_t pred;
+    
+    dispatch_once(&pred, ^{
+        sharedInstance = [[PREDManager alloc] init];
+    });
+    
+    return sharedInstance;
+}
+
+-(NSString *_Nonnull) baseUrl{
+    return [NSString stringWithFormat:@"%@/v1/%@/", _serverURL, app_id(_appKey)];
+}
 
 - (instancetype)init {
     if ((self = [super init])) {
@@ -121,11 +145,6 @@ static NSString* app_id(NSString* appKey){
     PREDLogDebug(@"Starting PREDManager");
     _startManagerIsInvoked = YES;
     
-    // Fix bug where Application Support directory was encluded from backup
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSURL *appSupportURL = [[fileManager URLsForDirectory:NSApplicationSupportDirectory inDomains:NSUserDomainMask] lastObject];
-    [PREDHelper fixBackupAttributeForURL:appSupportURL];
-    
     // start CrashManager
     if (![self isCrashManagerDisabled]) {
         PREDLogDebug(@"Start CrashManager");
@@ -133,23 +152,22 @@ static NSString* app_id(NSString* appKey){
         [_crashManager startManager];
     }
     
-    // App Extensions can only use PREDCrashManager, so ignore all others automatically
-    if (PREDHelper.isRunningInAppExtension) {
-        return;
-    }
-    
-    
     if (!self.isHttpMonitorDisabled) {
-        [PREDURLProtocol enableHTTPDem];
+        [_httpManager enableHTTPDem];
     }
+}
+
+#warning todo
+- (void)setDisableCrashManager:(BOOL)disableCrashManager {
+    
 }
 
 - (void)setDisableHttpMonitor:(BOOL)disableHttpMonitor {
     _disableHttpMonitor = disableHttpMonitor;
     if (disableHttpMonitor) {
-        [PREDURLProtocol disableHTTPDem];
+        [_httpManager disableHTTPDem];
     } else {
-        [PREDURLProtocol enableHTTPDem];
+        [_httpManager enableHTTPDem];
     }
 }
 
@@ -170,28 +188,6 @@ static NSString* app_id(NSString* appKey){
     }
 }
 
-+ (PREDLogLevel)logLevel {
-    return PREDLogger.currentLogLevel;
-}
-
-+ (void)setLogLevel:(PREDLogLevel)logLevel {
-    PREDLogger.currentLogLevel = logLevel;
-}
-
-+ (void)setLogHandler:(PREDLogHandler)logHandler {
-    [PREDLogger setLogHandler:logHandler];
-}
-
-+ (NSString *)version {
-    return [PREDVersion getSDKVersion];
-}
-
-+ (NSString *)build {
-    return [PREDVersion getSDKBuild];
-}
-
-#pragma mark - Private Instance Methods
-
 - (PREDNetworkClient *)networkClient {
     if (!_networkClient) {
         _networkClient = [[PREDNetworkClient alloc] initWithBaseURL:[NSURL URLWithString:self.serverURL]];
@@ -211,6 +207,7 @@ static NSString* app_id(NSString* appKey){
     _crashManager = [[PREDCrashManager alloc]
                      initWithAppIdentifier:app_id(_appKey)
                      networkClient:[self networkClient]];
+    _httpManager = [[PREDURLProtocol alloc] init];
     _managersInitialized = YES;
 }
 
@@ -226,12 +223,6 @@ static NSString* app_id(NSString* appKey){
 
 - (void)configManager:(PREDConfigManager *)manager didReceivedConfig:(PREDConfig *)config {
     [self applyConfig:config];
-}
-
-#pragma mark - Private Class Methods
-
--(nonnull NSString*) baseUrl{
-    return [NSString stringWithFormat:@"%@/v1/%@/", _serverURL, app_id(_appKey)];
 }
 
 @end

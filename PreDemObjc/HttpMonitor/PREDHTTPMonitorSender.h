@@ -13,8 +13,6 @@
 
 @property (nonatomic, assign, getter=isEnabled) BOOL enable;
 
-+ (instancetype)sharedSender;
-
 - (void)addModel:(PREDHTTPMonitorModel *)model;
 
 @end

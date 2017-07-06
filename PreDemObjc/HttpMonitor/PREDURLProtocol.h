@@ -10,7 +10,7 @@
 
 @interface PREDURLProtocol : NSURLProtocol
 
-+ (void)enableHTTPDem;
-+ (void)disableHTTPDem;
+- (void)enableHTTPDem;
+- (void)disableHTTPDem;
 
 @end

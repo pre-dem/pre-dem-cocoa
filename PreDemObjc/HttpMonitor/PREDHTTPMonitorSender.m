@@ -50,15 +50,6 @@ NSURLSessionDelegate
 
 @implementation PREDHTTPMonitorSender
 
-+ (instancetype)sharedSender {
-    static PREDHTTPMonitorSender *object = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        object = [[PREDHTTPMonitorSender alloc] init];
-    });
-    return object;
-}
-
 - (instancetype)init {
     if (self = [super init]) {
         _logDirPath = [NSString stringWithFormat:@"%@Presniff_SDK_Log", [[[[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] objectAtIndex:0] absoluteString] substringFromIndex:7]];

@@ -12,16 +12,6 @@
 
 @implementation PREDURLSessionSwizzler
 
-+ (PREDURLSessionSwizzler *)defaultSwizzler {
-    static PREDURLSessionSwizzler *staticSwizzler;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        staticSwizzler = [[PREDURLSessionSwizzler alloc] init];
-    });
-    
-    return staticSwizzler;
-}
-
 - (instancetype)init
 {
     self = [super init];

@@ -19,6 +19,8 @@
 NSURLSessionDataDelegate
 >
 
+@property (nonatomic, strong) PREDURLSessionSwizzler *swizzler;
+@property (nonatomic, strong) PREDHTTPMonitorSender *sender;
 @property (nonatomic, strong) NSURLSessionDataTask *task;
 @property (nonatomic, strong) NSURLResponse *response;
 @property (nonatomic, strong) PREDHTTPMonitorModel *HTTPMonitorModel;
@@ -29,24 +31,32 @@ NSURLSessionDataDelegate
 
 @synthesize HTTPMonitorModel;
 
-+ (void)enableHTTPDem {
-    // 可拦截 [NSURLSession defaultSession] 以及 UIWebView 相关的请求
-    [NSURLProtocol registerClass:self];
-    
-    // 拦截自定义生成的 NSURLSession 的请求
-    if (![[PREDURLSessionSwizzler defaultSwizzler] isSwizzle]) {
-        [[PREDURLSessionSwizzler defaultSwizzler] load];
+- (instancetype)init {
+    if (self = [super init]) {
+        _swizzler = [[PREDURLSessionSwizzler alloc] init];
+        _sender = [[PREDHTTPMonitorSender alloc] init];
     }
-    
-    [PREDHTTPMonitorSender sharedSender].enable = YES;
+    return self;
 }
 
-+ (void)disableHTTPDem {
-    [NSURLProtocol unregisterClass:self];
-    if ([[PREDURLSessionSwizzler defaultSwizzler] isSwizzle]) {
-        [[PREDURLSessionSwizzler defaultSwizzler] unload];
+- (void)enableHTTPDem {
+    // 可拦截 [NSURLSession defaultSession] 以及 UIWebView 相关的请求
+    [NSURLProtocol registerClass:self.class];
+    
+    // 拦截自定义生成的 NSURLSession 的请求
+    if (![_swizzler isSwizzle]) {
+        [_swizzler load];
     }
-    [PREDHTTPMonitorSender sharedSender].enable = NO;
+    
+    _sender.enable = YES;
+}
+
+- (void)disableHTTPDem {
+    [NSURLProtocol unregisterClass:self.class];
+    if ([_swizzler isSwizzle]) {
+        [_swizzler unload];
+    }
+    _sender.enable = NO;
 }
 
 + (BOOL)canInitWithRequest:(NSURLRequest *)request {
@@ -138,7 +148,7 @@ NSURLSessionDataDelegate
     } else {
         [self.client URLProtocolDidFinishLoading:self];
     }
-    [[PREDHTTPMonitorSender sharedSender] addModel:HTTPMonitorModel];
+    [_sender addModel:HTTPMonitorModel];
 }
 
 - (void)URLSession:(NSURLSession *)session didBecomeInvalidWithError:(NSError *)error {

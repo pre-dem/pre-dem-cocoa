@@ -43,7 +43,6 @@ FOUNDATION_EXPORT NSString *const kPREDExcludeApplicationSupportFromBackup;
 @property(class, readonly) NSBundle *bundle;
 
 + (NSString *)localizedString:(NSString *)stringToken;
-+ (void)fixBackupAttributeForURL:(NSURL *)directoryURL;
 + (NSString *)encodeAppIdentifier:(NSString *)inputString;
 + (NSString *)appName:(NSString *)placeHolderString;
 + (NSString *)URLEncodedString:(NSString *)inputString;

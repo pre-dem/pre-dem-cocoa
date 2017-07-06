@@ -379,23 +379,6 @@ NSString *const kPREDExcludeApplicationSupportFromBackup = @"kPREDExcludeApplica
     }
 }
 
-+ (void)fixBackupAttributeForURL:(NSURL *)directoryURL {
-    BOOL shouldExcludeAppSupportDirFromBackup = [[NSUserDefaults standardUserDefaults] boolForKey:kPREDExcludeApplicationSupportFromBackup];
-    if (shouldExcludeAppSupportDirFromBackup) {
-        return;
-    }
-    
-    if (directoryURL) {
-        NSError *getResourceError = nil;
-        NSNumber *appSupportDirExcludedValue;
-        
-        if ([directoryURL getResourceValue:&appSupportDirExcludedValue forKey:NSURLIsExcludedFromBackupKey error:&getResourceError] && appSupportDirExcludedValue) {
-            NSError *setResourceError = nil;
-            [directoryURL setResourceValue:@NO forKey:NSURLIsExcludedFromBackupKey error:&setResourceError];
-        }
-    }
-}
-
 + (NSString *)encodeAppIdentifier:(NSString *)inputString {
     return (inputString ? [self URLEncodedString:inputString] : [self URLEncodedString:self.mainBundleIdentifier]);
 }
