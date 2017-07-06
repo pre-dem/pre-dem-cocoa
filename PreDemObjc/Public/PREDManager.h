@@ -10,8 +10,6 @@
 #import "PREDNullability.h"
 #import "PREDEnums.h"
 
-@class PREDBaseManager;
-
 NS_ASSUME_NONNULL_BEGIN
 
 @interface PREDManager: NSObject

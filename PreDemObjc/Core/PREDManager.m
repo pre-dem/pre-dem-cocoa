@@ -15,6 +15,8 @@
 #import "PREDConfigManager.h"
 #import "PREDNetDiag.h"
 #import "PREDURLProtocol.h"
+#import "PREDCrashManager.h"
+#import "PREDLagMonitorController.h"
 
 static NSString* app_id(NSString* appKey){
     return [appKey substringToIndex:8];
@@ -30,6 +32,12 @@ static NSString* app_id(NSString* appKey){
     PREDNetworkClient *_networkClient;
     
     PREDConfigManager *_configManager;
+    
+    PREDURLProtocol *_httpManager;
+    
+    PREDCrashManager *_crashManager;
+    
+    PREDLagMonitorController *_lagManager;
 }
 
 
@@ -114,11 +122,10 @@ static NSString* app_id(NSString* appKey){
         _networkClient = nil;
         
         _disableCrashManager = NO;
+        _disableHttpMonitor = NO;
+        _disableLagMonitor = NO;
         
         _startManagerIsInvoked = NO;
-        
-        _configManager = [[PREDConfigManager alloc] init];
-        _configManager.delegate = self;
     }
     return self;
 }
@@ -147,13 +154,21 @@ static NSString* app_id(NSString* appKey){
     
     // start CrashManager
     if (![self isCrashManagerDisabled]) {
-        PREDLogDebug(@"Start CrashManager");
+        PREDLogDebug(@"Starting CrashManager");
         
         [_crashManager startManager];
     }
     
     if (!self.isHttpMonitorDisabled) {
+        PREDLogDebug(@"Starting HttpManager");
+
         [_httpManager enableHTTPDem];
+    }
+    
+    if (!self.isLagMonitorDisabled) {
+        PREDLogDebug(@"Starting LagManager");
+        
+        [_lagManager startMonitor];
     }
 }
 
@@ -168,6 +183,15 @@ static NSString* app_id(NSString* appKey){
         [_httpManager disableHTTPDem];
     } else {
         [_httpManager enableHTTPDem];
+    }
+}
+
+- (void)setDisableLagMonitor:(BOOL)disableLagMonitor {
+    _disableLagMonitor = disableLagMonitor;
+    if (disableLagMonitor) {
+        [_lagManager endMonitor];
+    } else {
+        [_lagManager startMonitor];
     }
 }
 
@@ -208,6 +232,10 @@ static NSString* app_id(NSString* appKey){
                      initWithAppIdentifier:app_id(_appKey)
                      networkClient:[self networkClient]];
     _httpManager = [[PREDURLProtocol alloc] init];
+    _configManager = [[PREDConfigManager alloc] init];
+    _configManager.delegate = self;
+    _lagManager = [[PREDLagMonitorController alloc] init];
+    
     _managersInitialized = YES;
 }
 

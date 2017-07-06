@@ -38,8 +38,7 @@ typedef NS_ENUM (NSInteger, PREDBinaryImageType) {
 };
 
 
-@interface PREDCrashReportTextFormatter : NSObject {
-}
+@interface PREDCrashReportTextFormatter : NSObject
 
 + (NSString *)stringValueForCrashReport:(PLCrashReport *)report crashReporterKey:(NSString *)crashReporterKey;
 + (NSArray *)arrayOfAppUUIDsForCrashReport:(PLCrashReport *)report;

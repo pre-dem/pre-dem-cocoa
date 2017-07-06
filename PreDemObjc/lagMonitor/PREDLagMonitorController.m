@@ -7,15 +7,16 @@
 //
 
 #import "PREDLagMonitorController.h"
-#import <libkern/OSAtomic.h>
-#import <execinfo.h>
+#import <CrashReporter/CrashReporter.h>
+#import "PREDCrashReportTextFormatter.h"
+#import "PREDHelper.h"
 
 @implementation PREDLagMonitorController {
     CFRunLoopObserverRef _observer;
     dispatch_semaphore_t _semaphore;
     CFRunLoopActivity _activity;
     NSInteger _countTime;
-    NSMutableArray *_backtrace;
+    PREPLCrashReporter *_reporter;
 }
 
 static void runLoopObserverCallBack(CFRunLoopObserverRef observer, CFRunLoopActivity activity, void *info) {
@@ -26,7 +27,17 @@ static void runLoopObserverCallBack(CFRunLoopObserverRef observer, CFRunLoopActi
     dispatch_semaphore_signal(semaphore);
 }
 
+- (instancetype)init {
+    if (self = [super init]) {
+        _reporter = [[PREPLCrashReporter alloc] initWithConfiguration:[PREPLCrashReporterConfig defaultConfiguration]];
+    }
+    return self;
+}
+
 - (void) startMonitor {
+    if (_observer) {
+        return;
+    }
     [self registerObserver];
 }
 
@@ -61,8 +72,7 @@ static void runLoopObserverCallBack(CFRunLoopObserverRef observer, CFRunLoopActi
                 if (_activity==kCFRunLoopBeforeSources || _activity==kCFRunLoopAfterWaiting) {
                     if (++_countTime < 5)
                         continue;
-                    [self logStack];
-                    NSLog(@"something lag");
+                    [self sendLagStack];
                 }
             }
             _countTime = 0;
@@ -70,16 +80,18 @@ static void runLoopObserverCallBack(CFRunLoopObserverRef observer, CFRunLoopActi
     });
 }
 
-- (void)logStack {
-    void* callstack[128];
-    int frames = backtrace(callstack, 128);
-    char **strs = backtrace_symbols(callstack, frames);
-    int i;
-    _backtrace = [NSMutableArray arrayWithCapacity:frames];
-    for ( i = 0 ; i < frames ; i++ ) {
-        [_backtrace addObject:[NSString stringWithUTF8String:strs[i]]];
+- (void)sendLagStack {
+    NSError *err;
+    NSData *data = [_reporter generateLiveReportAndReturnError:&err];
+    if (err) {
+        return;
     }
-    free(strs);
+    PREPLCrashReport *report = [[PREPLCrashReport alloc] initWithData:data error:&err];
+    if (err) {
+        return;
+    }
+    NSString *crashLog = [PREDCrashReportTextFormatter stringValueForCrashReport:report crashReporterKey:PREDHelper.appName];
+    NSLog(@"%@", crashLog);
 }
 
 @end
