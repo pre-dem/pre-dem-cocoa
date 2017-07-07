@@ -234,7 +234,7 @@ static NSString* app_id(NSString* appKey){
     _httpManager = [[PREDURLProtocol alloc] init];
     _configManager = [[PREDConfigManager alloc] init];
     _configManager.delegate = self;
-    _lagManager = [[PREDLagMonitorController alloc] init];
+    _lagManager = [[PREDLagMonitorController alloc] initWithAppId:app_id(_appKey) networkClient:[self networkClient]];
     
     _managersInitialized = YES;
 }

@@ -53,6 +53,7 @@
         }
         [self finish];
     }];
+    [_task resume];
 }
 
 - (void) finish {
