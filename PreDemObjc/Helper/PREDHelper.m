@@ -89,26 +89,6 @@ NSString *const kPREDExcludeApplicationSupportFromBackup = @"kPREDExcludeApplica
     return resultUUID;
 }
 
-+ (BOOL)isPreiOS7Environment {
-    static BOOL isPreiOS7Environment = YES;
-    static dispatch_once_t checkOS;
-    
-    dispatch_once(&checkOS, ^{
-        // NSFoundationVersionNumber_iOS_6_1 = 993.00
-        // We hardcode this, so compiling with iOS 6 is possible while still being able to detect the correct environment
-        
-        // runtime check according to
-        // https://developer.apple.com/library/prerelease/ios/documentation/UserExperience/Conceptual/TransitionGuide/SupportingEarlieriOS.html
-        if (floor(NSFoundationVersionNumber) <= 993.00) {
-            isPreiOS7Environment = YES;
-        } else {
-            isPreiOS7Environment = NO;
-        }
-    });
-    
-    return isPreiOS7Environment;
-}
-
 + (BOOL)isPreiOS8Environment {
     static BOOL isPreiOS8Environment = YES;
     static dispatch_once_t checkOS8;
@@ -119,7 +99,7 @@ NSString *const kPREDExcludeApplicationSupportFromBackup = @"kPREDExcludeApplica
         
         // runtime check according to
         // https://developer.apple.com/library/prerelease/ios/documentation/UserExperience/Conceptual/TransitionGuide/SupportingEarlieriOS.html
-        if (floor(NSFoundationVersionNumber) <= 1047.25) {
+        if (floor(NSFoundationVersionNumber) < NSFoundationVersionNumber_iOS_8_0) {
             isPreiOS8Environment = YES;
         } else {
             isPreiOS8Environment = NO;
@@ -128,27 +108,6 @@ NSString *const kPREDExcludeApplicationSupportFromBackup = @"kPREDExcludeApplica
     
     return isPreiOS8Environment;
 }
-
-+ (BOOL)isPreiOS10Environment {
-    static BOOL isPreOS10Environment = YES;
-    static dispatch_once_t checkOS10;
-    
-    dispatch_once(&checkOS10, ^{
-        // NSFoundationVersionNumber_iOS_9_MAX = 1299
-        // We hardcode this, so compiling with iOS 7 is possible while still being able to detect the correct environment
-        
-        // runtime check according to
-        // https://developer.apple.com/library/prerelease/ios/documentation/UserExperience/Conceptual/TransitionGuide/SupportingEarlieriOS.html
-        if (floor(NSFoundationVersionNumber) <= 1299.00) {
-            isPreOS10Environment = YES;
-        } else {
-            isPreOS10Environment = NO;
-        }
-    });
-    
-    return isPreOS10Environment;
-}
-
 
 + (BOOL)isAppStoreReceiptSandbox {
 #if TARGET_OS_SIMULATOR
@@ -400,43 +359,6 @@ NSString *base64String(NSData * data, unsigned long length) {
 }
 
 #pragma mark Context helpers
-
-// Return ISO 8601 string representation of the date
-+ (NSString *)utcDateString:(NSDate *)date{
-    static NSDateFormatter *dateFormatter;
-    
-    // NSDateFormatter is not thread-safe prior to iOS 7
-    if (self.isPreiOS7Environment) {
-        NSMutableDictionary *threadDictionary = [NSThread currentThread].threadDictionary;
-        dateFormatter = threadDictionary[kPREDUtcDateFormatter];
-        
-        if (!dateFormatter) {
-            dateFormatter = [NSDateFormatter new];
-            NSLocale *enUSPOSIXLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
-            dateFormatter.locale = enUSPOSIXLocale;
-            dateFormatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
-            dateFormatter.timeZone = [NSTimeZone timeZoneForSecondsFromGMT:0];
-            threadDictionary[kPREDUtcDateFormatter] = dateFormatter;
-        }
-        
-        NSString *dateString = [dateFormatter stringFromDate:date];
-        
-        return dateString;
-    }
-    
-    static dispatch_once_t dateFormatterToken;
-    dispatch_once(&dateFormatterToken, ^{
-        NSLocale *enUSPOSIXLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
-        dateFormatter = [NSDateFormatter new];
-        dateFormatter.locale = enUSPOSIXLocale;
-        dateFormatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
-        dateFormatter.timeZone = [NSTimeZone timeZoneForSecondsFromGMT:0];
-    });
-    
-    NSString *dateString = [dateFormatter stringFromDate:date];
-    
-    return dateString;
-}
 
 + (NSDictionary*)getObjectData:(id)obj {
     

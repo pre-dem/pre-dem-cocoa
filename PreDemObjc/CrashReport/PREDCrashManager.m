@@ -26,45 +26,8 @@
 
 static NSString *const kPREDAppWentIntoBackgroundSafely = @"PREDAppWentIntoBackgroundSafely";
 static NSString *const kPREDAppDidReceiveLowMemoryNotification = @"PREDAppDidReceiveLowMemoryNotification";
-static NSString *const kPREDAppMarketingVersion = @"PREDAppMarketingVersion";
-static NSString *const kPREDAppVersion = @"PREDAppVersion";
-static NSString *const kPREDAppOSVersion = @"PREDAppOSVersion";
-static NSString *const kPREDAppOSBuild = @"PREDAppOSBuild";
-static NSString *const kPREDAppUUIDs = @"PREDAppUUIDs";
-static NSString *const kPREDFakeCrashUUID = @"PREDFakeCrashUUID";
-static NSString *const kPREDFakeCrashAppMarketingVersion = @"PREDFakeCrashAppMarketingVersion";
-static NSString *const kPREDFakeCrashAppVersion = @"PREDFakeCrashAppVersion";
-static NSString *const kPREDFakeCrashAppBundleIdentifier = @"PREDFakeCrashAppBundleIdentifier";
-static NSString *const kPREDFakeCrashOSVersion = @"PREDFakeCrashOSVersion";
-static NSString *const kPREDFakeCrashDeviceModel = @"PREDFakeCrashDeviceModel";
-static NSString *const kPREDFakeCrashAppBinaryUUID = @"PREDFakeCrashAppBinaryUUID";
 static NSString *const kPREDFakeCrashReport = @"PREDFakeCrashAppString";
 static NSString *const kPREDCrashKillSignal = @"SIGKILL";
-
-static PREDCrashManagerCallbacks bitCrashCallbacks = {
-    .context = NULL,
-    .handleSignal = NULL
-};
-
-static void pres_save_events_callback(siginfo_t *info, ucontext_t *uap, void *context) {
-    
-    // Do not flush metrics queue if queue is empty (metrics module disabled) to not freeze the app
-    return;
-}
-
-// Proxy implementation for PLCrashReporter to keep our interface stable while this can change
-static void plcr_post_crash_callback (siginfo_t *info, ucontext_t *uap, void *context) {
-    pres_save_events_callback(info, uap, context);
-    if (bitCrashCallbacks.handleSignal != NULL) {
-        bitCrashCallbacks.handleSignal(context);
-    }
-}
-
-static PLCrashReporterCallbacks plCrashCallbacks = {
-    .version = 0,
-    .context = NULL,
-    .handleSignal = plcr_post_crash_callback
-};
 
 // Temporary class until PLCR catches up
 // We trick PLCR with an Objective-C exception.
@@ -123,8 +86,6 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
     NSString       *_analyzerInProgressFile;
     NSFileManager  *_fileManager;
     
-    BOOL _crashIdenticalCurrentVersion;
-    
     BOOL _sendingInProgress;
     BOOL _isSetup;
     
@@ -144,7 +105,6 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
         _networkClient = networkClient;
         _plCrashReporter = nil;
         _exceptionHandler = nil;
-        _crashIdenticalCurrentVersion = YES;
         _didCrashInLastSession = NO;
         _didLogLowMemoryWarning = NO;
         _approvedCrashReports = [[NSMutableDictionary alloc] init];
@@ -380,81 +340,12 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
         static dispatch_once_t predAppData;
         
         dispatch_once(&predAppData, ^{
-            id marketingVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
-            if (marketingVersion && [marketingVersion isKindOfClass:[NSString class]])
-                [[NSUserDefaults standardUserDefaults] setObject:marketingVersion forKey:kPREDAppMarketingVersion];
-            
-            id bundleVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"];
-            if (bundleVersion && [bundleVersion isKindOfClass:[NSString class]])
-                [[NSUserDefaults standardUserDefaults] setObject:bundleVersion forKey:kPREDAppVersion];
-            
-            [[NSUserDefaults standardUserDefaults] setObject:[[UIDevice currentDevice] systemVersion] forKey:kPREDAppOSVersion];
-            [[NSUserDefaults standardUserDefaults] setObject:[self osBuild] forKey:kPREDAppOSBuild];
-            
-            NSString *uuidString =[NSString stringWithFormat:@"<uuid type=\"app\" arch=\"%@\">%@</uuid>",
-                                   [self deviceArchitecture],
-                                   PREDHelper.executableUUID
-                                   ];
-            
-            [[NSUserDefaults standardUserDefaults] setObject:uuidString forKey:kPREDAppUUIDs];
             if(PREDHelper.isPreiOS8Environment) {
                 // calling synchronize in pre-iOS 8 takes longer to sync than in iOS 8+, calling synchronize explicitly.
                 [[NSUserDefaults standardUserDefaults] synchronize];
             }
         });
     }
-}
-
-- (NSString *)deviceArchitecture {
-    NSString *archName = @"???";
-    
-    size_t size;
-    cpu_type_t type;
-    cpu_subtype_t subtype;
-    size = sizeof(type);
-    if (sysctlbyname("hw.cputype", &type, &size, NULL, 0))
-        return archName;
-    
-    size = sizeof(subtype);
-    if (sysctlbyname("hw.cpusubtype", &subtype, &size, NULL, 0))
-        return archName;
-    
-    archName = [PREDCrashReportTextFormatter pres_archNameFromCPUType:type subType:subtype] ?: @"???";
-    
-    return archName;
-}
-
-- (NSString *)osBuild {
-    size_t size;
-    sysctlbyname("kern.osversion", NULL, &size, NULL, 0);
-    char *answer = (char*)malloc(size);
-    if (answer == NULL)
-        return nil;
-    sysctlbyname("kern.osversion", answer, &size, NULL, 0);
-    NSString *osBuild = [NSString stringWithCString:answer encoding: NSUTF8StringEncoding];
-    free(answer);
-    return osBuild;
-}
-
-#pragma mark - CrashCallbacks
-
-/**
- *  Set the callback for PLCrashReporter
- *
- *  @param callbacks PREDCrashManagerCallbacks instance
- */
-- (void)setCrashCallbacks:(PREDCrashManagerCallbacks *)callbacks {
-    if (!callbacks) return;
-    if (_isSetup) {
-        PREDLogWarning(@"WARNING: CrashCallbacks need to be configured before calling startManager!");
-    }
-    
-    // set our proxy callback struct
-    bitCrashCallbacks.context = callbacks->context;
-    bitCrashCallbacks.handleSignal = callbacks->handleSignal;
-    
-    // set the PLCrashReporterCallbacks struct
-    plCrashCallbacks.context = callbacks->context;
 }
 
 #pragma mark - Public
@@ -729,12 +620,10 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
                 // can't break this
                 NSError *error = NULL;
                 
-                // Set plCrashReporter callback which contains our default callback and potentially user defined callbacks
-                [self.plCrashReporter setCrashCallbacks:&plCrashCallbacks];
-                
                 // Enable the Crash Reporter
-                if (![self.plCrashReporter enableCrashReporterAndReturnError: &error])
+                if (![self.plCrashReporter enableCrashReporterAndReturnError: &error]) {
                     PREDLogError(@"Could not enable crash reporter: %@", [error localizedDescription]);
+                }
                 
                 // get the new current top level error handler, which should now be the one from PLCrashReporter
                 NSUncaughtExceptionHandler *currentHandler = NSGetUncaughtExceptionHandler();
@@ -766,14 +655,9 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
             didAppSwitchToBackgroundSafely = [[NSUserDefaults standardUserDefaults] boolForKey:kPREDAppWentIntoBackgroundSafely];
         
         if (!didAppSwitchToBackgroundSafely) {
-            BOOL considerReport = YES;
-            
-            if (considerReport) {
-                PREDLogVerbose(@"App kill detected, creating crash report.");
-                [self createCrashReportForAppKill];
-                
-                _didCrashInLastSession = YES;
-            }
+            PREDLogVerbose(@"App kill detected, creating crash report.");
+            [self createCrashReportForAppKill];
+            _didCrashInLastSession = YES;
         }
     }
     if ([[UIApplication sharedApplication] applicationState] == UIApplicationStateActive) {
@@ -796,26 +680,11 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
  *  Creates a fake crash report because the app was killed while being in foreground
  */
 - (void)createCrashReportForAppKill {
-    NSString *fakeReportUUID = PREDHelper.UUID;
+    NSString *fakeReportUUID = PREDHelper.UUID ?: @"???";
     NSString *fakeReporterKey = PREDHelper.UUID ?: @"???";
     
-    NSString *fakeReportAppMarketingVersion = [[NSUserDefaults standardUserDefaults] objectForKey:kPREDAppMarketingVersion];
-    
-    NSString *fakeReportAppVersion = [[NSUserDefaults standardUserDefaults] objectForKey:kPREDAppVersion];
-    if (!fakeReportAppVersion)
-        return;
-    
-    NSString *fakeReportOSVersion = [[NSUserDefaults standardUserDefaults] objectForKey:kPREDAppOSVersion] ?: [[UIDevice currentDevice] systemVersion];
-    
-    NSString *fakeReportOSVersionString = fakeReportOSVersion;
-    NSString *fakeReportOSBuild = [[NSUserDefaults standardUserDefaults] objectForKey:kPREDAppOSBuild] ?: [self osBuild];
-    if (fakeReportOSBuild) {
-        fakeReportOSVersionString = [NSString stringWithFormat:@"%@ (%@)", fakeReportOSVersion, fakeReportOSBuild];
-    }
-    
-    NSString *fakeReportAppBundleIdentifier = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleIdentifier"];
+    NSString *fakeReportAppBundleIdentifier = PREDHelper.appBundleId;
     NSString *fakeReportDeviceModel = PREDHelper.deviceModel ?: @"Unknown";
-    NSString *fakeReportAppUUIDs = [[NSUserDefaults standardUserDefaults] objectForKey:kPREDAppUUIDs] ?: @"";
     
     NSString *fakeSignalName = kPREDCrashKillSignal;
     
@@ -826,7 +695,7 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
     [fakeReportString appendFormat:@"Hardware Model:      %@\n", fakeReportDeviceModel];
     [fakeReportString appendFormat:@"Identifier:      %@\n", fakeReportAppBundleIdentifier];
     
-    NSString *fakeReportAppVersionString = fakeReportAppMarketingVersion ? [NSString stringWithFormat:@"%@ (%@)", fakeReportAppMarketingVersion, fakeReportAppVersion] : fakeReportAppVersion;
+    NSString *fakeReportAppVersionString = [NSString stringWithFormat:@"%@ (%@)", PREDHelper.appVersion, PREDHelper.appBuild];
     
     [fakeReportString appendFormat:@"Version:         %@\n", fakeReportAppVersionString];
     [fakeReportString appendString:@"Code Type:       ARM\n"];
@@ -841,7 +710,7 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
     
     // we use the current date, since we don't know when the kill actually happened
     [fakeReportString appendFormat:@"Date/Time:       %@\n", fakeCrashTimestamp];
-    [fakeReportString appendFormat:@"OS Version:      %@\n", fakeReportOSVersionString];
+    [fakeReportString appendFormat:@"OS Version:      %@\n", PREDHelper.osVersion];
     [fakeReportString appendString:@"Report Version:  104\n"];
     [fakeReportString appendString:@"\n"];
     [fakeReportString appendFormat:@"Exception Type:  %@\n", fakeSignalName];
@@ -859,14 +728,6 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
     NSError *error = nil;
     
     NSMutableDictionary *rootObj = [NSMutableDictionary dictionaryWithCapacity:2];
-    [rootObj setObject:fakeReportUUID forKey:kPREDFakeCrashUUID];
-    if (fakeReportAppMarketingVersion)
-        [rootObj setObject:fakeReportAppMarketingVersion forKey:kPREDFakeCrashAppMarketingVersion];
-    [rootObj setObject:fakeReportAppVersion forKey:kPREDFakeCrashAppVersion];
-    [rootObj setObject:fakeReportAppBundleIdentifier forKey:kPREDFakeCrashAppBundleIdentifier];
-    [rootObj setObject:fakeReportOSVersion forKey:kPREDFakeCrashOSVersion];
-    [rootObj setObject:fakeReportDeviceModel forKey:kPREDFakeCrashDeviceModel];
-    [rootObj setObject:fakeReportAppUUIDs forKey:kPREDFakeCrashAppBinaryUUID];
     [rootObj setObject:fakeReportString forKey:kPREDFakeCrashReport];
     
     NSData *plist = [NSPropertyListSerialization dataWithPropertyList:(id)rootObj
@@ -889,9 +750,7 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
  */
 - (void)sendNextCrashReport {
     NSError *error = NULL;
-    
-    _crashIdenticalCurrentVersion = NO;
-    
+        
     if ([_crashFiles count] == 0)
         return;
     
@@ -924,18 +783,13 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
                                                             error:&error];
             
             crashLogString = [fakeReportDict objectForKey:kPREDFakeCrashReport];
-            crashUUID = [fakeReportDict objectForKey:kPREDFakeCrashUUID];
-            appBundleIdentifier = [fakeReportDict objectForKey:kPREDFakeCrashAppBundleIdentifier];
-            appBundleMarketingVersion = [fakeReportDict objectForKey:kPREDFakeCrashAppMarketingVersion] ?: @"";
-            appBundleVersion = [fakeReportDict objectForKey:kPREDFakeCrashAppVersion];
-            appBinaryUUIDs = [fakeReportDict objectForKey:kPREDFakeCrashAppBinaryUUID];
-            deviceModel = [fakeReportDict objectForKey:kPREDFakeCrashDeviceModel];
-            osVersion = [fakeReportDict objectForKey:kPREDFakeCrashOSVersion];
-            
-            if ([appBundleVersion compare:[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"]] == NSOrderedSame) {
-                _crashIdenticalCurrentVersion = YES;
-            }
-            
+            crashUUID = PREDHelper.UUID;
+            appBundleIdentifier = PREDHelper.appBundleId;
+            appBundleMarketingVersion = PREDHelper.appVersion;
+            appBundleVersion = PREDHelper.appBuild;
+            appBinaryUUIDs = PREDHelper.UUID;
+            deviceModel = PREDHelper.deviceModel;
+            osVersion = PREDHelper.osVersion;
         } else {
             report = [[PREPLCrashReport alloc] initWithData:crashData error:&error];
         }
@@ -962,13 +816,6 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
             osVersion = report.systemInfo.operatingSystemVersion;
             deviceModel = PREDHelper.deviceModel;
             appBinaryUUIDs = [self extractAppUUIDs:report];
-            if ([report.applicationInfo.applicationVersion compare:[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"]] == NSOrderedSame) {
-                _crashIdenticalCurrentVersion = YES;
-            }
-        }
-        
-        if ([report.applicationInfo.applicationVersion compare:[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"]] == NSOrderedSame) {
-            _crashIdenticalCurrentVersion = YES;
         }
         
         crashXML = [NSString stringWithFormat:@"<crashes><crash><applicationname><![CDATA[%@]]></applicationname><uuids>%@</uuids><bundleidentifier>%@</bundleidentifier><systemversion>%@</systemversion><platform>%@</platform><senderversion>%@</senderversion><versionstring>%@</versionstring><version>%@</version><uuid>%@</uuid><log><![CDATA[%@]]></log><installstring>%@</installstring></crash></crashes>",
@@ -1027,8 +874,8 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
     NSString *postCrashPath = @"crashes/i";
     
     NSMutableURLRequest *request = [self.networkClient requestWithMethod:@"POST"
-                                                                      path:postCrashPath
-                                                                parameters:nil];
+                                                                    path:postCrashPath
+                                                              parameters:nil];
     
     [request setCachePolicy: NSURLRequestReloadIgnoringLocalCacheData];
     [request setValue:@"PreDemObjc/iOS" forHTTPHeaderField:@"User-Agent"];

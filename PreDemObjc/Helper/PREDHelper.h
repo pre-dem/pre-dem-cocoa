@@ -19,9 +19,7 @@ FOUNDATION_EXPORT NSString *const kPREDExcludeApplicationSupportFromBackup;
 @property(class, readonly) NSString *mainBundleIdentifier;
 @property(class, readonly) NSString *UUIDPreiOS6;
 @property(class, readonly) NSString *UUID;
-@property(class, readonly) BOOL isPreiOS7Environment;
 @property(class, readonly) BOOL isPreiOS8Environment;
-@property(class, readonly) BOOL isPreiOS10Environment;
 @property(class, readonly) BOOL isAppStoreReceiptSandbox;
 @property(class, readonly) BOOL hasEmbeddedMobileProvision;
 @property(class, readonly) BOOL isRunningInAppExtension;
@@ -44,7 +42,6 @@ FOUNDATION_EXPORT NSString *const kPREDExcludeApplicationSupportFromBackup;
 + (NSString *)encodeAppIdentifier:(NSString *)inputString;
 + (NSString *)appName:(NSString *)placeHolderString;
 + (NSString *)URLEncodedString:(NSString *)inputString;
-+ (NSString *)utcDateString:(NSDate *)date;
 + (NSDictionary*)getObjectData:(id)obj;
 + (NSString *)MD5:(NSString *)mdStr;
 

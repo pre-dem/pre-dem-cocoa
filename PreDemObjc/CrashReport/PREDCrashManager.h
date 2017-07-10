@@ -17,13 +17,6 @@ typedef NS_ENUM(NSUInteger, PREDCrashManagerStatus) {
     PREDCrashManagerStatusAutoSend = 2
 };
 
-typedef void (*PREDCrashManagerPostCrashSignalCallback)(void *context);
-
-typedef struct PREDCrashManagerCallbacks {
-    void *context;
-    PREDCrashManagerPostCrashSignalCallback handleSignal;
-} PREDCrashManagerCallbacks;
-
 typedef NS_ENUM(NSUInteger, PREDCrashManagerUserInput) {
     PREDCrashManagerUserInputDontSend = 0,
     PREDCrashManagerUserInputSend = 1,
@@ -57,7 +50,5 @@ typedef NS_ENUM(NSUInteger, PREDCrashManagerUserInput) {
 - (instancetype)initWithAppIdentifier:(NSString *)appIdentifier networkClient:(PREDNetworkClient *)networkClient;
 
 - (void)startManager;
-
-- (void)setCrashCallbacks: (PREDCrashManagerCallbacks *) callbacks;
 
 @end
