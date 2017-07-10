@@ -7,7 +7,7 @@
 //
 
 #import "PREDNetworkClient.h"
-#import "PREDManagerPrivate.h"
+#import "PREDLogger.h"
 
 NSString * const kPREDNetworkClientBoundary = @"----FOO";
 
@@ -34,7 +34,7 @@ NSString * const kPREDNetworkClientBoundary = @"----FOO";
     NSParameterAssert(params == nil || [method isEqualToString:@"POST"] || [method isEqualToString:@"GET"]);
     path = path ? : @"";
     
-    NSString* url =  [NSString stringWithFormat:@"%@%@", [[PREDManager sharedPREDManager] baseUrl], path];
+    NSString* url =  [NSString stringWithFormat:@"%@%@", _baseURL, path];
     NSURL *endpoint = [NSURL URLWithString:url];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:endpoint];
     request.HTTPMethod = method;
@@ -52,18 +52,10 @@ NSString * const kPREDNetworkClientBoundary = @"----FOO";
                                              [self.class queryStringFromParameters:params withEncoding:NSUTF8StringEncoding]]];
             [request setURL:endpoint];
         } else {
-            //TODO: this is crap. Boundary must be the same as the one in appendData
-            //unify this!
-            NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@", kPREDNetworkClientBoundary];
-            [request setValue:contentType forHTTPHeaderField:@"Content-type"];
-            
-            NSMutableData *postBody = [NSMutableData data];
-            [params enumerateKeysAndObjectsUsingBlock:^(NSString *key, NSString *value, BOOL *stop) {
-                [postBody appendData:[[self class] dataWithPostValue:value forKey:key boundary:kPREDNetworkClientBoundary]];
-            }];
-            
-            [postBody appendData:[[NSString stringWithFormat:@"--%@--\r\n", kPREDNetworkClientBoundary] dataUsingEncoding:NSUTF8StringEncoding]];
-            
+            [request setValue:@"application/json" forHTTPHeaderField:@"Content-type"];
+            NSError *err;
+            NSData *postBody;
+            postBody = [NSJSONSerialization dataWithJSONObject:params options:0 error:&err];
             [request setHTTPBody:postBody];
         }
     }
