@@ -11,16 +11,12 @@
 #import "PREDPrivate.h"
 #import "PREDHelper.h"
 #import "PREDNetworkClient.h"
-
 #import "PREDManagerPrivate.h"
 #import "PREDCrashManager.h"
 #import "PREDCrashReportTextFormatter.h"
 #import "PREDCrashCXXExceptionHandler.h"
 #import "PREDVersion.h"
 #include <sys/sysctl.h>
-
-// stores the set of crashreports that have been approved but aren't sent yet
-#define kPREDCrashApprovedReports @"PreDemObjcCrashApprovedReports"
 
 // internal keys
 
@@ -78,12 +74,7 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
 
 
 @implementation PREDCrashManager {
-    NSMutableDictionary *_approvedCrashReports;
-    
     NSMutableArray *_crashFiles;
-    NSString       *_lastCrashFilename;
-    NSString       *_settingsFile;
-    NSString       *_analyzerInProgressFile;
     NSFileManager  *_fileManager;
     
     BOOL _sendingInProgress;
@@ -107,12 +98,9 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
         _exceptionHandler = nil;
         _didCrashInLastSession = NO;
         _didLogLowMemoryWarning = NO;
-        _approvedCrashReports = [[NSMutableDictionary alloc] init];
         _fileManager = [[NSFileManager alloc] init];
         _crashFiles = [[NSMutableArray alloc] init];
         _crashesDir = PREDHelper.settingsDir;
-        _settingsFile = [_crashesDir stringByAppendingPathComponent:PRED_CRASH_SETTINGS];
-        _analyzerInProgressFile = [_crashesDir stringByAppendingPathComponent:PRED_CRASH_ANALYZER];
     }
     return self;
 }
@@ -121,56 +109,115 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
     [self unregisterObservers];
 }
 
-#pragma mark - Private
+#pragma mark - Public
 
 /**
- * Save all settings
- *
- * This saves the list of approved crash reports
+ *	 Main startup sequence initializing PLCrashReporter if it wasn't disabled
  */
-- (void)saveSettings {
-    NSError *error = nil;
+- (void)startManager {
+    [self registerObservers];
     
-    NSMutableDictionary *rootObj = [NSMutableDictionary dictionaryWithCapacity:2];
-    if (_approvedCrashReports && [_approvedCrashReports count] > 0) {
-        [rootObj setObject:_approvedCrashReports forKey:kPREDCrashApprovedReports];
+    if (!_isSetup) {
+        static dispatch_once_t plcrPredicate;
+        dispatch_once(&plcrPredicate, ^{
+            /* Configure our reporter */
+            
+            PLCrashReporterSignalHandlerType signalHandlerType = PLCrashReporterSignalHandlerTypeBSD;
+            
+            PLCrashReporterSymbolicationStrategy symbolicationStrategy = PLCrashReporterSymbolicationStrategyNone;
+            if (self.isOnDeviceSymbolicationEnabled) {
+                symbolicationStrategy = PLCrashReporterSymbolicationStrategyAll;
+            }
+            
+            PREPLCrashReporterConfig *config = [[PREPLCrashReporterConfig alloc] initWithSignalHandlerType: signalHandlerType
+                                                                                     symbolicationStrategy: symbolicationStrategy];
+            self.plCrashReporter = [[PREPLCrashReporter alloc] initWithConfiguration: config];
+            
+            // Check if we previously crashed
+            if ([self.plCrashReporter hasPendingCrashReport]) {
+                _didCrashInLastSession = YES;
+                [self handleCrashReport];
+            }
+            
+            
+            if (PREDHelper.isDebuggerAttached) {
+                PREDLogWarning(@"Detecting crashes is NOT enabled due to running the app with a debugger attached.");
+            } else {
+                // Multiple exception handlers can be set, but we can only query the top level error handler (uncaught exception handler).
+                //
+                // To check if PLCrashReporter's error handler is successfully added, we compare the top
+                // level one that is set before and the one after PLCrashReporter sets up its own.
+                //
+                // With delayed processing we can then check if another error handler was set up afterwards
+                // and can show a debug warning log message, that the dev has to make sure the "newer" error handler
+                // doesn't exit the process itself, because then all subsequent handlers would never be invoked.
+                //
+                // Note: ANY error handler setup BEFORE PreDemObjc initialization will not be processed!
+                
+                // get the current top level error handler
+                NSUncaughtExceptionHandler *initialHandler = NSGetUncaughtExceptionHandler();
+                
+                // PLCrashReporter may only be initialized once. So make sure the developer
+                // can't break this
+                NSError *error = NULL;
+                
+                // Enable the Crash Reporter
+                if (![self.plCrashReporter enableCrashReporterAndReturnError: &error]) {
+                    PREDLogError(@"Could not enable crash reporter: %@", [error localizedDescription]);
+                }
+                
+                // get the new current top level error handler, which should now be the one from PLCrashReporter
+                NSUncaughtExceptionHandler *currentHandler = NSGetUncaughtExceptionHandler();
+                
+                // do we have a new top level error handler? then we were successful
+                if (currentHandler && currentHandler != initialHandler) {
+                    self.exceptionHandler = currentHandler;
+                    
+                    PREDLogDebug(@"Exception handler successfully initialized.");
+                } else {
+                    // this should never happen, theoretically only if NSSetUncaugtExceptionHandler() has some internal issues
+                    PREDLogError(@"Exception handler could not be set. Make sure there is no other exception handler set up!");
+                }
+                
+                // Add the C++ uncaught exception handler, which is currently not handled by PLCrashReporter internally
+                [PREDCrashUncaughtCXXExceptionHandlerManager addCXXExceptionHandler:uncaught_cxx_exception_handler];
+            }
+            _isSetup = YES;
+        });
     }
     
-    NSData *plist = [NSPropertyListSerialization dataWithPropertyList:(id)rootObj format:NSPropertyListBinaryFormat_v1_0 options:0 error:&error];
+    if ([[NSUserDefaults standardUserDefaults] valueForKey:kPREDAppDidReceiveLowMemoryNotification])
+        _didReceiveMemoryWarningInLastSession = [[NSUserDefaults standardUserDefaults] boolForKey:kPREDAppDidReceiveLowMemoryNotification];
     
-    if (plist) {
-        [plist writeToFile:_settingsFile atomically:YES];
-    } else {
-        PREDLogError(@"Writing settings. %@", [error description]);
-    }
-}
-
-/**
- * Load all settings
- *
- * This contains the list of approved crash reports
- */
-- (void)loadSettings {
-    NSError *error = nil;
-    NSPropertyListFormat format;
-    
-    if (![_fileManager fileExistsAtPath:_settingsFile])
-        return;
-    
-    NSData *plist = [NSData dataWithContentsOfFile:_settingsFile];
-    if (plist) {
-        NSDictionary *rootObj = (NSDictionary *)[NSPropertyListSerialization
-                                                 propertyListWithData:plist
-                                                 options:NSPropertyListMutableContainersAndLeaves
-                                                 format:&format
-                                                 error:&error];
+    if (!_didCrashInLastSession && self.isAppNotTerminatingCleanlyDetectionEnabled) {
+        BOOL didAppSwitchToBackgroundSafely = YES;
         
-        if ([rootObj objectForKey:kPREDCrashApprovedReports])
-            [_approvedCrashReports setDictionary:[rootObj objectForKey:kPREDCrashApprovedReports]];
-    } else {
-        PREDLogError(@"Reading crash manager settings.");
+        if ([[NSUserDefaults standardUserDefaults] valueForKey:kPREDAppWentIntoBackgroundSafely])
+            didAppSwitchToBackgroundSafely = [[NSUserDefaults standardUserDefaults] boolForKey:kPREDAppWentIntoBackgroundSafely];
+        
+        if (!didAppSwitchToBackgroundSafely) {
+            PREDLogVerbose(@"App kill detected, creating crash report.");
+            [self createCrashReportForAppKill];
+            _didCrashInLastSession = YES;
+        }
     }
+    if ([[UIApplication sharedApplication] applicationState] == UIApplicationStateActive) {
+        [self appEnteredForeground];
+    }
+    [self appEnteredForeground];
+    
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kPREDAppDidReceiveLowMemoryNotification];
+    
+    if(PREDHelper.isPreiOS8Environment) {
+        // calling synchronize in pre-iOS 8 takes longer to sync than in iOS 8+, calling synchronize explicitly.
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
+    
+    [self triggerDelayedProcessing];
+    PREDLogVerbose(@"CrashManager startManager has finished.");
 }
+
+#pragma mark - Private
 
 
 /**
@@ -184,52 +231,7 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
     NSError *error = NULL;
     
     [_fileManager removeItemAtPath:filename error:&error];
-    [_fileManager removeItemAtPath:[filename stringByAppendingString:@".data"] error:&error];
-    [_fileManager removeItemAtPath:[filename stringByAppendingString:@".meta"] error:&error];
-    [_fileManager removeItemAtPath:[filename stringByAppendingString:@".desc"] error:&error];
-    
     [_crashFiles removeObject:filename];
-    [_approvedCrashReports removeObjectForKey:filename];
-    
-    [self saveSettings];
-}
-
-/**
- *	 Remove all crash reports and stored meta data for each from the file system and keychain
- *
- * This is currently only used as a helper method for tests
- */
-- (void)cleanCrashReports {
-    for (NSUInteger i=0; i < [_crashFiles count]; i++) {
-        [self cleanCrashReportWithFilename:[_crashFiles objectAtIndex:i]];
-    }
-}
-
-/**
- *	 Extract all app specific UUIDs from the crash reports
- *
- * This allows us to send the UUIDs in the XML construct to the server, so the server does not need to parse the crash report for this data.
- * The app specific UUIDs help to identify which dSYMs are needed to symbolicate this crash report.
- *
- *	@param	report The crash report from PLCrashReporter
- *
- *	@return XML structure with the app specific UUIDs
- */
-- (NSString *) extractAppUUIDs:(PREPLCrashReport *)report {
-    NSMutableString *uuidString = [NSMutableString string];
-    NSArray *uuidArray = [PREDCrashReportTextFormatter arrayOfAppUUIDsForCrashReport:report];
-    
-    for (NSDictionary *element in uuidArray) {
-        if ([element objectForKey:kPREDBinaryImageKeyType] && [element objectForKey:kPREDBinaryImageKeyArch] && [element objectForKey:kPREDBinaryImageKeyUUID]) {
-            [uuidString appendFormat:@"<uuid type=\"%@\" arch=\"%@\">%@</uuid>",
-             [element objectForKey:kPREDBinaryImageKeyType],
-             [element objectForKey:kPREDBinaryImageKeyArch],
-             [element objectForKey:kPREDBinaryImageKeyUUID]
-             ];
-        }
-    }
-    
-    return uuidString;
 }
 
 - (void) registerObservers {
@@ -332,7 +334,7 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
 
 - (void)appEnteredForeground {
     // we disable kill detection while the debugger is running, since we'd get only false positives if the app is terminated by the user using the debugger
-    if (self.isDebuggerAttached) {
+    if (PREDHelper.isDebuggerAttached) {
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kPREDAppWentIntoBackgroundSafely];
     } else if (self.isAppNotTerminatingCleanlyDetectionEnabled) {
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kPREDAppWentIntoBackgroundSafely];
@@ -348,43 +350,11 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
     }
 }
 
-#pragma mark - Public
-
-- (BOOL)isDebuggerAttached {
-    return PREDHelper.isDebuggerAttached;
-}
-
-/**
- *  Write a meta file for a new crash report
- *
- *  @param filename the crash reports temp filename
- */
-- (void)storeMetaDataForCrashReportFilename:(NSString *)filename {
-    PREDLogVerbose(@"VERBOSE: Storing meta data for crash report with filename %@", filename);
-    NSError *error = NULL;
-    NSMutableDictionary *metaDict = [NSMutableDictionary dictionaryWithCapacity:4];
-    
-    NSData *plist = [NSPropertyListSerialization dataWithPropertyList:(id)metaDict
-                                                               format:NSPropertyListBinaryFormat_v1_0
-                                                              options:0
-                                                                error:&error];
-    if (plist) {
-        BOOL success = [plist writeToFile:[_crashesDir stringByAppendingPathComponent: [filename stringByAppendingPathExtension:@"meta"]] atomically:YES];
-        if (!success) {
-            PREDLogError(@"Writing crash meta data failed.");
-        }
-    } else {
-        PREDLogError(@"Writing crash meta data failed. %@", error);
-    }
-    PREDLogVerbose(@"VERBOSE: Storing crash meta data finished.");
-}
-
 #pragma mark - PLCrashReporter
 
 /**
  *	 Process new crash reports provided by PLCrashReporter
  *
- * Parse the new crash report and gather additional meta data from the app which will be stored along the crash report
  */
 - (void) handleCrashReport {
     PREDLogVerbose(@"VERBOSE: Handling crash report");
@@ -392,81 +362,40 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
     
     if (!self.plCrashReporter) return;
     
-    // check if the next call ran successfully the last time
-    if (![_fileManager fileExistsAtPath:_analyzerInProgressFile]) {
-        // mark the start of the routine
-        [_fileManager createFileAtPath:_analyzerInProgressFile contents:nil attributes:nil];
-        PREDLogVerbose(@"VERBOSE: AnalyzerInProgress file created");
+    PREDLogVerbose(@"VERBOSE: AnalyzerInProgress file created");
+    
+    // Try loading the crash report
+    NSData *crashData = [[NSData alloc] initWithData:[self.plCrashReporter loadPendingCrashReportDataAndReturnError: &error]];
+    
+    NSString *cacheFilename = [NSString stringWithFormat: @"%.0f", [NSDate timeIntervalSinceReferenceDate]];
+    
+    if (crashData == nil) {
+        PREDLogError(@"Could not load crash report: %@", error);
+    } else {
+        // get the startup timestamp from the crash report, and the file timestamp to calculate the timeinterval when the crash happened after startup
+        PREPLCrashReport *report = [[PREPLCrashReport alloc] initWithData:crashData error:&error];
         
-        [self saveSettings];
-        
-        // Try loading the crash report
-        NSData *crashData = [[NSData alloc] initWithData:[self.plCrashReporter loadPendingCrashReportDataAndReturnError: &error]];
-        
-        NSString *cacheFilename = [NSString stringWithFormat: @"%.0f", [NSDate timeIntervalSinceReferenceDate]];
-        _lastCrashFilename = cacheFilename;
-        
-        if (crashData == nil) {
-            PREDLogError(@"Could not load crash report: %@", error);
+        if (report == nil) {
+            PREDLogWarning(@"WARNING: Could not parse crash report");
         } else {
-            // get the startup timestamp from the crash report, and the file timestamp to calculate the timeinterval when the crash happened after startup
-            PREPLCrashReport *report = [[PREPLCrashReport alloc] initWithData:crashData error:&error];
+            NSDate *appStartTime = nil;
+            NSDate *appCrashTime = nil;
+            if ([report.processInfo respondsToSelector:@selector(processStartTime)]) {
+                if (report.systemInfo.timestamp && report.processInfo.processStartTime) {
+                    appStartTime = report.processInfo.processStartTime;
+                    appCrashTime =report.systemInfo.timestamp;
+                }
+            }
             
-            if (report == nil) {
-                PREDLogWarning(@"WARNING: Could not parse crash report");
-            } else {
-                NSDate *appStartTime = nil;
-                NSDate *appCrashTime = nil;
-                if ([report.processInfo respondsToSelector:@selector(processStartTime)]) {
-                    if (report.systemInfo.timestamp && report.processInfo.processStartTime) {
-                        appStartTime = report.processInfo.processStartTime;
-                        appCrashTime =report.systemInfo.timestamp;
-                    }
-                }
-                
-                [crashData writeToFile:[_crashesDir stringByAppendingPathComponent: cacheFilename] atomically:YES];
-                
-                NSString *incidentIdentifier = @"???";
-                if (report.uuidRef != NULL) {
-                    incidentIdentifier = (NSString *) CFBridgingRelease(CFUUIDCreateString(NULL, report.uuidRef));
-                }
-                
-                // fetch and store the meta data after setting _lastSessionCrashDetails, so the property can be used in the protocol methods
-                [self storeMetaDataForCrashReportFilename:cacheFilename];
+            [crashData writeToFile:[_crashesDir stringByAppendingPathComponent: cacheFilename] atomically:YES];
+            
+            NSString *incidentIdentifier = @"???";
+            if (report.uuidRef != NULL) {
+                incidentIdentifier = (NSString *) CFBridgingRelease(CFUUIDCreateString(NULL, report.uuidRef));
             }
         }
-    } else {
-        PREDLogWarning(@"WARNING: AnalyzerInProgress file found, handling crash report skipped");
     }
-    
-    // Purge the report
-    // mark the end of the routine
-    if ([_fileManager fileExistsAtPath:_analyzerInProgressFile]) {
-        [_fileManager removeItemAtPath:_analyzerInProgressFile error:&error];
-    }
-    
-    [self saveSettings];
-    
     [self.plCrashReporter purgePendingCrashReport];
-}
-
-/**
- Get the filename of the first not approved crash report
- 
- @return NSString Filename of the first found not approved crash report
- */
-- (NSString *)firstNotApprovedCrashReport {
-    if ((!_approvedCrashReports || [_approvedCrashReports count] == 0) && [_crashFiles count] > 0) {
-        return [_crashFiles objectAtIndex:0];
-    }
-    
-    for (NSUInteger i=0; i < [_crashFiles count]; i++) {
-        NSString *filename = [_crashFiles objectAtIndex:i];
-        
-        if (![_approvedCrashReports objectForKey:filename]) return filename;
-    }
-    
-    return nil;
 }
 
 /**
@@ -487,11 +416,7 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
             if ([[fileAttributes objectForKey:NSFileType] isEqualToString:NSFileTypeRegular] &&
                 [[fileAttributes objectForKey:NSFileSize] intValue] > 0 &&
                 ![file hasSuffix:@".DS_Store"] &&
-                ![file hasSuffix:@".analyzer"] &&
-                ![file hasSuffix:@".plist"] &&
-                ![file hasSuffix:@".data"] &&
-                ![file hasSuffix:@".meta"] &&
-                ![file hasSuffix:@".desc"]) {
+                ![file hasSuffix:@".plist"]) {
                 [_crashFiles addObject:filePath];
             }
         }
@@ -511,12 +436,6 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
 
 
 #pragma mark - Crash Report Processing
-
-// store the latest crash report as user approved, so if it fails it will retry automatically
-- (void)approveLatestCrashReport {
-    [_approvedCrashReports setObject:[NSNumber numberWithBool:YES] forKey:[_crashesDir stringByAppendingPathComponent: _lastCrashFilename]];
-    [self saveSettings];
-}
 
 - (void)triggerDelayedProcessing {
     PREDLogVerbose(@"VERBOSE: Triggering delayed crash processing.");
@@ -553,129 +472,9 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
     
     if (!_sendingInProgress && [self hasPendingCrashReport]) {
         _sendingInProgress = YES;
-        
-        NSString *notApprovedReportFilename = [self firstNotApprovedCrashReport];
-        
-        // this can happen in case there is a non approved crash report but it didn't happen in the previous app session
-        if (notApprovedReportFilename && !_lastCrashFilename) {
-            _lastCrashFilename = [notApprovedReportFilename lastPathComponent];
-        }
-        
-        if (!notApprovedReportFilename) {
-            [self approveLatestCrashReport];
-            [self sendNextCrashReport];
-        }
+        [self sendNextCrashReport];
     }
 }
-
-/**
- *	 Main startup sequence initializing PLCrashReporter if it wasn't disabled
- */
-- (void)startManager {
-    [self registerObservers];
-    
-    [self loadSettings];
-    
-    if (!_isSetup) {
-        static dispatch_once_t plcrPredicate;
-        dispatch_once(&plcrPredicate, ^{
-            /* Configure our reporter */
-            
-            PLCrashReporterSignalHandlerType signalHandlerType = PLCrashReporterSignalHandlerTypeBSD;
-            
-            PLCrashReporterSymbolicationStrategy symbolicationStrategy = PLCrashReporterSymbolicationStrategyNone;
-            if (self.isOnDeviceSymbolicationEnabled) {
-                symbolicationStrategy = PLCrashReporterSymbolicationStrategyAll;
-            }
-            
-            PREPLCrashReporterConfig *config = [[PREPLCrashReporterConfig alloc] initWithSignalHandlerType: signalHandlerType
-                                                                                     symbolicationStrategy: symbolicationStrategy];
-            self.plCrashReporter = [[PREPLCrashReporter alloc] initWithConfiguration: config];
-            
-            // Check if we previously crashed
-            if ([self.plCrashReporter hasPendingCrashReport]) {
-                _didCrashInLastSession = YES;
-                [self handleCrashReport];
-            }
-            
-            
-            if ([self isDebuggerAttached]) {
-                PREDLogWarning(@"Detecting crashes is NOT enabled due to running the app with a debugger attached.");
-            } else {
-                // Multiple exception handlers can be set, but we can only query the top level error handler (uncaught exception handler).
-                //
-                // To check if PLCrashReporter's error handler is successfully added, we compare the top
-                // level one that is set before and the one after PLCrashReporter sets up its own.
-                //
-                // With delayed processing we can then check if another error handler was set up afterwards
-                // and can show a debug warning log message, that the dev has to make sure the "newer" error handler
-                // doesn't exit the process itself, because then all subsequent handlers would never be invoked.
-                //
-                // Note: ANY error handler setup BEFORE PreDemObjc initialization will not be processed!
-                
-                // get the current top level error handler
-                NSUncaughtExceptionHandler *initialHandler = NSGetUncaughtExceptionHandler();
-                
-                // PLCrashReporter may only be initialized once. So make sure the developer
-                // can't break this
-                NSError *error = NULL;
-                
-                // Enable the Crash Reporter
-                if (![self.plCrashReporter enableCrashReporterAndReturnError: &error]) {
-                    PREDLogError(@"Could not enable crash reporter: %@", [error localizedDescription]);
-                }
-                
-                // get the new current top level error handler, which should now be the one from PLCrashReporter
-                NSUncaughtExceptionHandler *currentHandler = NSGetUncaughtExceptionHandler();
-                
-                // do we have a new top level error handler? then we were successful
-                if (currentHandler && currentHandler != initialHandler) {
-                    self.exceptionHandler = currentHandler;
-                    
-                    PREDLogDebug(@"Exception handler successfully initialized.");
-                } else {
-                    // this should never happen, theoretically only if NSSetUncaugtExceptionHandler() has some internal issues
-                    PREDLogError(@"Exception handler could not be set. Make sure there is no other exception handler set up!");
-                }
-                
-                // Add the C++ uncaught exception handler, which is currently not handled by PLCrashReporter internally
-                [PREDCrashUncaughtCXXExceptionHandlerManager addCXXExceptionHandler:uncaught_cxx_exception_handler];
-            }
-            _isSetup = YES;
-        });
-    }
-    
-    if ([[NSUserDefaults standardUserDefaults] valueForKey:kPREDAppDidReceiveLowMemoryNotification])
-        _didReceiveMemoryWarningInLastSession = [[NSUserDefaults standardUserDefaults] boolForKey:kPREDAppDidReceiveLowMemoryNotification];
-    
-    if (!_didCrashInLastSession && self.isAppNotTerminatingCleanlyDetectionEnabled) {
-        BOOL didAppSwitchToBackgroundSafely = YES;
-        
-        if ([[NSUserDefaults standardUserDefaults] valueForKey:kPREDAppWentIntoBackgroundSafely])
-            didAppSwitchToBackgroundSafely = [[NSUserDefaults standardUserDefaults] boolForKey:kPREDAppWentIntoBackgroundSafely];
-        
-        if (!didAppSwitchToBackgroundSafely) {
-            PREDLogVerbose(@"App kill detected, creating crash report.");
-            [self createCrashReportForAppKill];
-            _didCrashInLastSession = YES;
-        }
-    }
-    if ([[UIApplication sharedApplication] applicationState] == UIApplicationStateActive) {
-        [self appEnteredForeground];
-    }
-    [self appEnteredForeground];
-    
-    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kPREDAppDidReceiveLowMemoryNotification];
-    
-    if(PREDHelper.isPreiOS8Environment) {
-        // calling synchronize in pre-iOS 8 takes longer to sync than in iOS 8+, calling synchronize explicitly.
-        [[NSUserDefaults standardUserDefaults] synchronize];
-    }
-    
-    [self triggerDelayedProcessing];
-    PREDLogVerbose(@"CrashManager startManager has finished.");
-}
-
 /**
  *  Creates a fake crash report because the app was killed while being in foreground
  */
@@ -734,12 +533,8 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
                                                                format:NSPropertyListBinaryFormat_v1_0
                                                               options:0
                                                                 error:&error];
-    if (plist) {
-        if ([plist writeToFile:[_crashesDir stringByAppendingPathComponent:[fakeReportFilename stringByAppendingPathExtension:@"fake"]] atomically:YES]) {
-            [self storeMetaDataForCrashReportFilename:fakeReportFilename];
-        }
-    } else {
-        PREDLogError(@"Writing fake crash report. %@", [error description]);
+    if (!plist || ![plist writeToFile:[_crashesDir stringByAppendingPathComponent:[fakeReportFilename stringByAppendingPathExtension:@"fake"]] atomically:YES]) {
+        PREDLogError(@"Writing fake crash report error: %@", error ?: @"unknown");
     }
 }
 
@@ -750,7 +545,7 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
  */
 - (void)sendNextCrashReport {
     NSError *error = NULL;
-        
+    
     if ([_crashFiles count] == 0)
         return;
     
@@ -815,7 +610,7 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
             appBundleVersion = report.applicationInfo.applicationVersion;
             osVersion = report.systemInfo.operatingSystemVersion;
             deviceModel = PREDHelper.deviceModel;
-            appBinaryUUIDs = [self extractAppUUIDs:report];
+            appBinaryUUIDs = [PREDCrashReportTextFormatter extractAppUUIDs:report];
         }
         
         crashXML = [NSString stringWithFormat:@"<crashes><crash><applicationname><![CDATA[%@]]></applicationname><uuids>%@</uuids><bundleidentifier>%@</bundleidentifier><systemversion>%@</systemversion><platform>%@</platform><senderversion>%@</senderversion><versionstring>%@</versionstring><version>%@</version><uuid>%@</uuid><log><![CDATA[%@]]></log><installstring>%@</installstring></crash></crashes>",
@@ -847,7 +642,7 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
     NSMutableData *postBody =  [NSMutableData data];
     
     //  [postBody appendData:[[NSString stringWithFormat:@"\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
-    [postBody appendData:[PREDNetworkClient dataWithPostValue:PRED_NAME
+    [postBody appendData:[PREDNetworkClient dataWithPostValue:PREDHelper.appName
                                                        forKey:@"sdk"
                                                      boundary:boundary]];
     

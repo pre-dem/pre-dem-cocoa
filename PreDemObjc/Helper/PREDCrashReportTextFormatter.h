@@ -7,9 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
-@class PLCrashReport;
-
+#import <CrashReporter/CrashReporter.h>
 
 // Dictionary keys for array elements returned by arrayOfAppUUIDsForCrashReport:
 #ifndef kPREDBinaryImageKeyUUID
@@ -45,5 +43,6 @@ typedef NS_ENUM (NSInteger, PREDBinaryImageType) {
 + (NSArray *)arrayOfAppUUIDsForCrashReport:(PLCrashReport *)report;
 + (NSString *)pres_archNameFromCPUType:(uint64_t)cpuType subType:(uint64_t)subType;
 + (PREDBinaryImageType)pres_imageTypeForImagePath:(NSString *)imagePath processPath:(NSString *)processPath;
++ (NSString *) extractAppUUIDs:(PREPLCrashReport *)report;
 
 @end

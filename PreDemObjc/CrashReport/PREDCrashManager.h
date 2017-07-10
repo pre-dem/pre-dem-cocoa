@@ -43,8 +43,6 @@ typedef NS_ENUM(NSUInteger, PREDCrashManagerUserInput) {
 
 @property (nonatomic, strong) PREPLCrashReporter *plCrashReporter;
 
-@property (nonatomic) NSString *lastCrashFilename;
-
 @property (nonatomic, strong) NSString *crashesDir;
 
 - (instancetype)initWithAppIdentifier:(NSString *)appIdentifier networkClient:(PREDNetworkClient *)networkClient;

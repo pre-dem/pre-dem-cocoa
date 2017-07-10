@@ -12,11 +12,8 @@
 #ifndef PreDemObjc_PREDPrivate_h
 #define PreDemObjc_PREDPrivate_h
 
-#define PRED_NAME @"PreDemObjc"
 #define PRED_IDENTIFIER @"net.predem.sdk.ios"
 #define PRED_CRASH_SETTINGS @"PREDCrashManager.plist"
-#define PRED_CRASH_ANALYZER @"PREDCrashManager.analyzer"
-#define PRED_BUNDLE @"PreDemObjcResources.bundle"
 #define PRED_DEFAULT_URL @"http://hriygkee.bq.cloudappl.com"
 
 #ifndef TARGET_OS_SIMULATOR

@@ -1134,4 +1134,31 @@ NSString *const PREDXamarinStackTraceDelimiter = @"Xamarin Exception Stack:";
     return anonymizedProcessPath;
 }
 
+/**
+ *	 Extract all app specific UUIDs from the crash reports
+ *
+ * This allows us to send the UUIDs in the XML construct to the server, so the server does not need to parse the crash report for this data.
+ * The app specific UUIDs help to identify which dSYMs are needed to symbolicate this crash report.
+ *
+ *	@param	report The crash report from PLCrashReporter
+ *
+ *	@return XML structure with the app specific UUIDs
+ */
++ (NSString *) extractAppUUIDs:(PREPLCrashReport *)report {
+    NSMutableString *uuidString = [NSMutableString string];
+    NSArray *uuidArray = [self arrayOfAppUUIDsForCrashReport:report];
+    
+    for (NSDictionary *element in uuidArray) {
+        if ([element objectForKey:kPREDBinaryImageKeyType] && [element objectForKey:kPREDBinaryImageKeyArch] && [element objectForKey:kPREDBinaryImageKeyUUID]) {
+            [uuidString appendFormat:@"<uuid type=\"%@\" arch=\"%@\">%@</uuid>",
+             [element objectForKey:kPREDBinaryImageKeyType],
+             [element objectForKey:kPREDBinaryImageKeyArch],
+             [element objectForKey:kPREDBinaryImageKeyUUID]
+             ];
+        }
+    }
+    
+    return uuidString;
+}
+
 @end
