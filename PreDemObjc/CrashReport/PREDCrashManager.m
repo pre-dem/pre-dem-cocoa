@@ -179,11 +179,6 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
         _crashesDir = PREDHelper.settingsDir;
         _settingsFile = [_crashesDir stringByAppendingPathComponent:PRED_CRASH_SETTINGS];
         _analyzerInProgressFile = [_crashesDir stringByAppendingPathComponent:PRED_CRASH_ANALYZER];
-        
-        
-        if (!PREDHelper.bundle && !PREDHelper.isRunningInAppExtension) {
-            PREDLogWarning(@"%@ is missing, will send reports automatically!", PRED_BUNDLE);
-        }
     }
     return self;
 }
@@ -724,10 +719,7 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
             _lastCrashFilename = [notApprovedReportFilename lastPathComponent];
         }
         
-        if (!PREDHelper.bundle || PREDHelper.isRunningInAppExtension) {
-            [self approveLatestCrashReport];
-            [self sendNextCrashReport];
-        } else if (_crashManagerStatus == PREDCrashManagerStatusAutoSend || !notApprovedReportFilename) {
+        if (_crashManagerStatus == PREDCrashManagerStatusAutoSend || !notApprovedReportFilename) {
             [self approveLatestCrashReport];
             [self sendNextCrashReport];
         }

@@ -96,7 +96,6 @@ NSString * const kPREDNetworkClientBoundary = @"----FOO";
     return postBody;
 }
 
-
 + (NSString *) queryStringFromParameters:(NSDictionary *) params withEncoding:(NSStringEncoding) encoding {
     NSMutableString *queryString = [NSMutableString new];
     [params enumerateKeysAndObjectsUsingBlock:^(NSString* key, NSString* value, BOOL *stop) {
