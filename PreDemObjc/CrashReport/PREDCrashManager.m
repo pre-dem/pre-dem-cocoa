@@ -204,7 +204,6 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
     if ([[UIApplication sharedApplication] applicationState] == UIApplicationStateActive) {
         [self appEnteredForeground];
     }
-    [self appEnteredForeground];
     
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kPREDAppDidReceiveLowMemoryNotification];
     
@@ -378,21 +377,7 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
         if (report == nil) {
             PREDLogWarning(@"WARNING: Could not parse crash report");
         } else {
-            NSDate *appStartTime = nil;
-            NSDate *appCrashTime = nil;
-            if ([report.processInfo respondsToSelector:@selector(processStartTime)]) {
-                if (report.systemInfo.timestamp && report.processInfo.processStartTime) {
-                    appStartTime = report.processInfo.processStartTime;
-                    appCrashTime =report.systemInfo.timestamp;
-                }
-            }
-            
             [crashData writeToFile:[_crashesDir stringByAppendingPathComponent: cacheFilename] atomically:YES];
-            
-            NSString *incidentIdentifier = @"???";
-            if (report.uuidRef != NULL) {
-                incidentIdentifier = (NSString *) CFBridgingRelease(CFUUIDCreateString(NULL, report.uuidRef));
-            }
         }
     }
     [self.plCrashReporter purgePendingCrashReport];
