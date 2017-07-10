@@ -31,10 +31,10 @@ NSURLSessionDataDelegate
 
 @synthesize HTTPMonitorModel;
 
-- (instancetype)init {
+- (instancetype)initWithNetworkClient:(PREDNetworkClient *)client {
     if (self = [super init]) {
         _swizzler = [[PREDURLSessionSwizzler alloc] init];
-        _sender = [[PREDHTTPMonitorSender alloc] init];
+        _sender = [[PREDHTTPMonitorSender alloc] initWithNetworkClient:client];
     }
     return self;
 }

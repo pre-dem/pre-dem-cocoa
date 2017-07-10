@@ -41,7 +41,6 @@ FOUNDATION_EXPORT NSString *const kPREDExcludeApplicationSupportFromBackup;
 @property(class, readonly) NSString *deviceModel;
 @property(class, readonly) NSString *executableUUID;
 
-+ (NSString *)localizedString:(NSString *)stringToken;
 + (NSString *)encodeAppIdentifier:(NSString *)inputString;
 + (NSString *)appName:(NSString *)placeHolderString;
 + (NSString *)URLEncodedString:(NSString *)inputString;

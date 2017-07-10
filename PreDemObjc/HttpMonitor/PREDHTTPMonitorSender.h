@@ -8,10 +8,13 @@
 
 #import <Foundation/Foundation.h>
 #import "PREDHTTPMonitorModel.h"
+#import "PREDNetworkClient.h"
 
 @interface PREDHTTPMonitorSender : NSObject
 
 @property (nonatomic, assign, getter=isEnabled) BOOL enable;
+
+- (instancetype)initWithNetworkClient:(PREDNetworkClient *)client;
 
 - (void)addModel:(PREDHTTPMonitorModel *)model;
 

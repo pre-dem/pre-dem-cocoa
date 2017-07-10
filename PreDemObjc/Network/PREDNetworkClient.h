@@ -35,6 +35,11 @@ extern NSString * const kPREDNetworkClientBoundary;
        parameters:(NSDictionary *) params
        completion:(PREDNetworkCompletionBlock) completion;
 
+- (void) postPath:(NSString*) path
+             data:(NSData *) data
+          headers:(NSDictionary *)headers
+       completion:(PREDNetworkCompletionBlock) completion;
+
 - (void) enqeueHTTPOperation:(PREDHTTPOperation *) operation;
 
 - (NSUInteger) cancelOperationsWithPath:(NSString*) path

@@ -122,6 +122,30 @@ NSString * const kPREDNetworkClientBoundary = @"----FOO";
     [self enqeueHTTPOperation:op];
 }
 
+- (void) postPath:(NSString*) path
+             data:(NSData *) data
+          headers:(NSDictionary *)headers
+       completion:(PREDNetworkCompletionBlock) completion {
+    NSString* url =  [NSString stringWithFormat:@"%@%@", _baseURL, path];
+    NSURL *endpoint = [NSURL URLWithString:url];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:endpoint];
+    request.HTTPMethod = @"POST";
+    [NSURLProtocol setProperty:@YES
+                        forKey:@"PREDInternalRequest"
+                     inRequest:request];
+    if (headers) {
+        [headers enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+            NSAssert([key isKindOfClass:[NSString class]], @"headers can only be string-string pairs");
+            NSAssert([obj isKindOfClass:[NSString class]], @"headers can only be string-string pairs");
+            [request setValue:obj forHTTPHeaderField:key];
+        }];
+    }
+    [request setHTTPBody:data];
+    PREDHTTPOperation *op = [self operationWithURLRequest:request
+                                               completion:completion];
+    [self enqeueHTTPOperation:op];
+}
+
 - (void) enqeueHTTPOperation:(PREDHTTPOperation *) operation {
     [self.operationQueue addOperation:operation];
 }

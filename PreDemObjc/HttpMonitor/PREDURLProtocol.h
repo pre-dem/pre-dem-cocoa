@@ -7,9 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "PREDNetworkClient.h"
 
 @interface PREDURLProtocol : NSURLProtocol
 
+- (instancetype)initWithNetworkClient:(PREDNetworkClient *)client;
 - (void)enableHTTPDem;
 - (void)disableHTTPDem;
 

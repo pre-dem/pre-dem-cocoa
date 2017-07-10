@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "PREDConfig.h"
+#import "PREDNetworkClient.h"
 
 @class PREDConfigManager;
 
@@ -20,6 +21,8 @@
 @interface PREDConfigManager : NSObject
 
 @property(nonatomic, weak) id<PREDConfigManagerDelegate> delegate;
+
+- (instancetype)initWithNetClient:(PREDNetworkClient *)client;
 
 - (PREDConfig *)getConfigWithAppKey:(NSString *)appKey;
 

@@ -28,9 +28,7 @@ static NSString* app_id(NSString* appKey){
     BOOL _startManagerIsInvoked;
     
     BOOL _managersInitialized;
-    
-    PREDNetworkClient *_networkClient;
-    
+        
     PREDConfigManager *_configManager;
     
     PREDURLProtocol *_httpManager;
@@ -60,22 +58,9 @@ static NSString* app_id(NSString* appKey){
         return;
     }
     
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@events/%@", [[self sharedPREDManager] baseUrl], eventName]]];
-    request.HTTPMethod = @"POST";
-    [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    NSError *err;
-    request.HTTPBody = [NSJSONSerialization dataWithJSONObject:event options:0 error:&err];
-    if (err) {
-        PREDLogError(@"sys info can not be jsonized");
-    }
-    [NSURLProtocol setProperty:@YES
-                        forKey:@"PREDInternalRequest"
-                     inRequest:request];
-    
-    NSURLSession* session = [NSURLSession sessionWithConfiguration:NSURLSessionConfiguration.defaultSessionConfiguration];
-    NSURLSessionTask *task = [session dataTaskWithRequest:request
-                                        completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) { NSLog(@"%@", [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil]); }];
-    [task resume];
+    [[self sharedPREDManager].networkClient postPath:[NSString stringWithFormat:@"events/%@", eventName] parameters:event completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
+        NSLog(@"%@", [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil]);
+    }];
 }
 
 + (PREDLogLevel)logLevel {
@@ -111,10 +96,6 @@ static NSString* app_id(NSString* appKey){
     return sharedInstance;
 }
 
--(NSString *_Nonnull) baseUrl{
-    return [NSString stringWithFormat:@"%@/v1/%@/", _serverURL, app_id(_appKey)];
-}
-
 - (instancetype)init {
     if ((self = [super init])) {
         _managersInitialized = NO;
@@ -134,7 +115,7 @@ static NSString* app_id(NSString* appKey){
 - (void)startWithAppKey:(NSString *)appKey serviceDomain:(NSString *)serviceDomain {
     _appKey = [appKey copy];
     
-    [self setServerURL:serviceDomain];
+    [self initNetworkClient:serviceDomain];
     
     [self initializeModules];
     
@@ -195,7 +176,7 @@ static NSString* app_id(NSString* appKey){
     }
 }
 
-- (void)setServerURL:(NSString *)aServerURL {
+- (void)initNetworkClient:(NSString *)aServerURL {
     if (!aServerURL) {
         aServerURL = PRED_DEFAULT_URL;
     }
@@ -203,20 +184,9 @@ static NSString* app_id(NSString* appKey){
         aServerURL = [NSString stringWithFormat:@"http://%@", aServerURL];
     }
     
-    if (_serverURL != aServerURL) {
-        _serverURL = [aServerURL copy];
-        
-        if (_networkClient) {
-            _networkClient.baseURL = [NSURL URLWithString:_serverURL];
-        }
-    }
-}
-
-- (PREDNetworkClient *)networkClient {
-    if (!_networkClient) {
-        _networkClient = [[PREDNetworkClient alloc] initWithBaseURL:[NSURL URLWithString:self.serverURL]];
-    }
-    return _networkClient;
+    aServerURL = [NSString stringWithFormat:@"%@/v1/%@/", aServerURL, app_id(_appKey)];
+    
+    _networkClient = [[PREDNetworkClient alloc] initWithBaseURL:[NSURL URLWithString:aServerURL]];
 }
 
 - (void)initializeModules {
@@ -246,7 +216,7 @@ static NSString* app_id(NSString* appKey){
 
 - (void)diagnose:(NSString *)host
         complete:(PREDNetDiagCompleteHandler)complete {
-    [PREDNetDiag diagnose:host appKey:app_id(_appKey) complete:complete];
+    [PREDNetDiag diagnose:host appKey:app_id(_appKey) netClient:_networkClient complete:complete];
 }
 
 - (void)configManager:(PREDConfigManager *)manager didReceivedConfig:(PREDConfig *)config {

@@ -11,6 +11,7 @@
 
 #import "PREDManager.h"
 #import "PREDConfigManager.h"
+#import "PREDNetworkClient.h"
 
 @interface PREDManager ()
 <
@@ -19,16 +20,13 @@ PREDConfigManagerDelegate
 
 + (PREDManager *_Nonnull)sharedPREDManager;
 
-
-@property (nonatomic, strong) NSString * _Nullable serverURL;
+@property (nonatomic, strong, nonnull) PREDNetworkClient *networkClient;
 
 @property (nonatomic, getter = isCrashManagerDisabled) BOOL disableCrashManager;
 
 @property (nonatomic, getter = isHttpMonitorDisabled) BOOL disableHttpMonitor;
 
 @property (nonatomic, getter = isLagMonitorDisabled) BOOL disableLagMonitor;
-
-- (NSString *_Nonnull) baseUrl;
 
 @end
 

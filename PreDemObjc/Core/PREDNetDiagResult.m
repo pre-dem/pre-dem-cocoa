@@ -21,18 +21,20 @@
 @property (nonatomic, strong) NSLock *lock;
 @property (nonatomic, copy) PREDNetDiagCompleteHandler complete;
 @property (nonatomic, strong) NSString *appKey;
+@property (nonatomic, strong) PREDNetworkClient *client;
 
 @end
 
 @implementation PREDNetDiagResult
 
-- (instancetype)initWithAppKey:(NSString *)appKey complete:(PREDNetDiagCompleteHandler)complete {
+- (instancetype)initWithAppKey:(NSString *)appKey complete:(PREDNetDiagCompleteHandler)complete netClient:(PREDNetworkClient *)client {
     if (self = [super init]) {
         self.completedCount = 0;
         self.retryTimes = 0;
         self.lock = [NSLock new];
         self.complete = complete;
         self.appKey = appKey;
+        self.client = client;
     }
     return self;
 }
@@ -112,26 +114,14 @@
 }
 
 - (void)sendReport:(NSString *)appKey {
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@net-diags/i", [[PREDManager sharedPREDManager] baseUrl]]]];
-    request.HTTPMethod = @"POST";
-    NSError *err;
-    request.HTTPBody = [NSJSONSerialization dataWithJSONObject:[self toDic] options:0 error:&err];
-    if (err) {
-        return;
-    }
-    [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [NSURLProtocol setProperty:@YES
-                        forKey:@"PREDInternalRequest"
-                     inRequest:request];
-    [[[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-        if ((error || httpResponse.statusCode != 200) && self.retryTimes < PREDSendMaxRetryTimes) {
+    [_client postPath:@"net-diags/i" parameters:[self toDic] completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
+        if ((error || operation.response.statusCode != 200) && self.retryTimes < PREDSendMaxRetryTimes) {
             self.retryTimes ++;
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(PREDSendRetryInterval * NSEC_PER_SEC)), dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
                 [self sendReport:appKey];
             });
         }
-    }] resume];
+    }];
 }
 
 @end
