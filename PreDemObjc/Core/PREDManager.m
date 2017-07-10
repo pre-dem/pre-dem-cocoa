@@ -99,13 +99,10 @@ static NSString* app_id(NSString* appKey){
 - (instancetype)init {
     if ((self = [super init])) {
         _managersInitialized = NO;
-        
         _networkClient = nil;
-        
-        _disableCrashManager = NO;
-        _disableHttpMonitor = NO;
-        _disableLagMonitor = NO;
-        
+        _enableCrashManager = YES;
+        _enableHttpMonitor = YES;
+        _enableLagMonitor = YES;
         _startManagerIsInvoked = NO;
     }
     return self;
@@ -134,19 +131,19 @@ static NSString* app_id(NSString* appKey){
     _startManagerIsInvoked = YES;
     
     // start CrashManager
-    if (![self isCrashManagerDisabled]) {
+    if (self.isCrashManagerEnabled) {
         PREDLogDebug(@"Starting CrashManager");
         
         [_crashManager startManager];
     }
     
-    if (!self.isHttpMonitorDisabled) {
+    if (self.isHttpMonitorEnabled) {
         PREDLogDebug(@"Starting HttpManager");
 
         [_httpManager enableHTTPDem];
     }
     
-    if (!self.isLagMonitorDisabled) {
+    if (self.isLagMonitorEnabled) {
         PREDLogDebug(@"Starting LagManager");
         
         [_lagManager startMonitor];
@@ -154,25 +151,26 @@ static NSString* app_id(NSString* appKey){
 }
 
 #warning todo
-- (void)setDisableCrashManager:(BOOL)disableCrashManager {
-    
+- (void)setEnableCrashManager:(BOOL)enableCrashManager {
+    _enableCrashManager = enableCrashManager;
+
 }
 
-- (void)setDisableHttpMonitor:(BOOL)disableHttpMonitor {
-    _disableHttpMonitor = disableHttpMonitor;
-    if (disableHttpMonitor) {
-        [_httpManager disableHTTPDem];
-    } else {
+- (void)setEnableHttpMonitor:(BOOL)enableHttpMonitor {
+    _enableHttpMonitor = enableHttpMonitor;
+    if (enableHttpMonitor) {
         [_httpManager enableHTTPDem];
+    } else {
+        [_httpManager disableHTTPDem];
     }
 }
 
-- (void)setDisableLagMonitor:(BOOL)disableLagMonitor {
-    _disableLagMonitor = disableLagMonitor;
-    if (disableLagMonitor) {
-        [_lagManager endMonitor];
-    } else {
+- (void)setEnableLagMonitor:(BOOL)enableLagMonitor {
+    _enableLagMonitor = enableLagMonitor;
+    if (enableLagMonitor) {
         [_lagManager startMonitor];
+    } else {
+        [_lagManager endMonitor];
     }
 }
 
@@ -197,21 +195,21 @@ static NSString* app_id(NSString* appKey){
     
     _startManagerIsInvoked = NO;
     
-    PREDLogDebug(@"Setup CrashManager");
     _crashManager = [[PREDCrashManager alloc]
                      initWithAppIdentifier:app_id(_appKey)
-                     networkClient:[self networkClient]];
-    _httpManager = [[PREDURLProtocol alloc] init];
-    _configManager = [[PREDConfigManager alloc] init];
+                     networkClient:_networkClient];
+    _httpManager = [[PREDURLProtocol alloc] initWithNetworkClient:_networkClient];
+    _configManager = [[PREDConfigManager alloc] initWithNetClient:_networkClient];
     _configManager.delegate = self;
-    _lagManager = [[PREDLagMonitorController alloc] initWithAppId:app_id(_appKey) networkClient:[self networkClient]];
-    
+    _lagManager = [[PREDLagMonitorController alloc] initWithAppId:app_id(_appKey) networkClient:_networkClient];
     _managersInitialized = YES;
 }
 
 - (void)applyConfig:(PREDConfig *)config {
-    self.disableCrashManager = !config.crashReportEnabled;
-    self.disableHttpMonitor = !config.httpMonitorEnabled;
+    self.enableCrashManager = config.crashReportEnabled;
+    self.enableHttpMonitor = config.httpMonitorEnabled;
+    self.enableLagMonitor = config.lagMonitorEnabled;
+    _crashManager.enableOnDeviceSymbolication = config.onDeviceSymbolicationEnabled;
 }
 
 - (void)diagnose:(NSString *)host

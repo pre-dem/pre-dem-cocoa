@@ -22,11 +22,11 @@ PREDConfigManagerDelegate
 
 @property (nonatomic, strong, nonnull) PREDNetworkClient *networkClient;
 
-@property (nonatomic, getter = isCrashManagerDisabled) BOOL disableCrashManager;
+@property (nonatomic, getter = isCrashManagerEnabled) BOOL enableCrashManager;
 
-@property (nonatomic, getter = isHttpMonitorDisabled) BOOL disableHttpMonitor;
+@property (nonatomic, getter = isHttpMonitorEnabled) BOOL enableHttpMonitor;
 
-@property (nonatomic, getter = isLagMonitorDisabled) BOOL disableLagMonitor;
+@property (nonatomic, getter = isLagMonitorEnabled) BOOL enableLagMonitor;
 
 @end
 

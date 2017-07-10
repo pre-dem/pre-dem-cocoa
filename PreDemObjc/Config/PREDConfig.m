@@ -15,6 +15,7 @@
     config.httpMonitorEnabled = YES;
     config.crashReportEnabled = YES;
     config.lagMonitorEnabled = YES;
+    config.onDeviceSymbolicationEnabled = YES;
     return config;
 }
 
@@ -23,6 +24,8 @@
     config.httpMonitorEnabled = [[dic objectForKey:@"http_monitor_enabled"] boolValue];
     config.crashReportEnabled = [[dic objectForKey:@"crash_report_enabled"] boolValue];
     config.lagMonitorEnabled = [[dic objectForKey:@"lag_monitor_enabled"] boolValue];
+    config.onDeviceSymbolicationEnabled = [[dic objectForKey:@"on_device_symbolication_enabled"] boolValue];
+
     return config;
 }
 

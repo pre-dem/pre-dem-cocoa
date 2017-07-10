@@ -46,14 +46,18 @@ static void runLoopObserverCallBack(CFRunLoopObserverRef observer, CFRunLoopActi
     return self;
 }
 
-- (void) startMonitor {
+- (void)dealloc {
+    [self endMonitor];
+}
+
+- (void)startMonitor {
     if (_observer) {
         return;
     }
     [self registerObserver];
 }
 
-- (void) endMonitor {
+- (void)endMonitor {
     if (!_observer) {
         return;
     }

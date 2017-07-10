@@ -32,21 +32,15 @@ typedef NS_ENUM(NSUInteger, PREDCrashManagerUserInput) {
 
 @interface PREDCrashManager : NSObject
 
-@property (nonatomic, assign) PREDCrashManagerStatus crashManagerStatus;
-
-@property (nonatomic, assign, getter=isMachExceptionHandlerEnabled) BOOL enableMachExceptionHandler;
-
 @property (nonatomic, assign, getter=isOnDeviceSymbolicationEnabled) BOOL enableOnDeviceSymbolication;
 
 @property (nonatomic, assign, getter = isAppNotTerminatingCleanlyDetectionEnabled) BOOL enableAppNotTerminatingCleanlyDetection;
 
-@property (nonatomic, assign, getter=shouldShowAlwaysButton) BOOL showAlwaysButton;
 
 @property (nonatomic, readonly) BOOL didCrashInLastSession;
 
 @property (nonatomic, readonly) BOOL didReceiveMemoryWarningInLastSession;
 
-@property (nonatomic, readonly) NSTimeInterval timeIntervalCrashInLastSessionOccurred;
 
 @property (nonatomic, strong) PREDNetworkClient *networkClient;
 
@@ -59,10 +53,6 @@ typedef NS_ENUM(NSUInteger, PREDCrashManagerUserInput) {
 @property (nonatomic) NSString *lastCrashFilename;
 
 @property (nonatomic, strong) NSString *crashesDir;
-
-@property (nonatomic, copy) NSString *serverURL;
-
-@property (nonatomic, strong) NSString *appIdentifier;
 
 - (instancetype)initWithAppIdentifier:(NSString *)appIdentifier networkClient:(PREDNetworkClient *)networkClient;
 

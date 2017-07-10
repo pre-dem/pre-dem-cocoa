@@ -39,7 +39,14 @@ NSURLSessionDataDelegate
     return self;
 }
 
+- (void)dealloc {
+    [self disableHTTPDem];
+}
+
 - (void)enableHTTPDem {
+    if (_sender.enable) {
+        return;
+    }
     // 可拦截 [NSURLSession defaultSession] 以及 UIWebView 相关的请求
     [NSURLProtocol registerClass:self.class];
     
@@ -52,6 +59,9 @@ NSURLSessionDataDelegate
 }
 
 - (void)disableHTTPDem {
+    if (!_sender.enable) {
+        return;
+    }
     [NSURLProtocol unregisterClass:self.class];
     if ([_swizzler isSwizzle]) {
         [_swizzler unload];

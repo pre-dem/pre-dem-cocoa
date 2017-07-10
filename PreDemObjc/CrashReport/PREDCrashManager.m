@@ -24,7 +24,6 @@
 
 // internal keys
 
-static NSString *const kPREDCrashManagerStatus = @"PREDCrashManagerStatus";
 static NSString *const kPREDAppWentIntoBackgroundSafely = @"PREDAppWentIntoBackgroundSafely";
 static NSString *const kPREDAppDidReceiveLowMemoryNotification = @"PREDAppDidReceiveLowMemoryNotification";
 static NSString *const kPREDAppMarketingVersion = @"PREDAppMarketingVersion";
@@ -141,41 +140,16 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
 
 - (instancetype)initWithAppIdentifier:(NSString *)appIdentifier networkClient:(PREDNetworkClient *)networkClient {
     if ((self = [super init])) {
-        _serverURL = PRED_DEFAULT_URL;
-        _appIdentifier = appIdentifier;
         _isSetup = NO;
-        
         _networkClient = networkClient;
-        
-        _showAlwaysButton = YES;
-        
         _plCrashReporter = nil;
         _exceptionHandler = nil;
-        
         _crashIdenticalCurrentVersion = YES;
-        
         _didCrashInLastSession = NO;
-        _timeIntervalCrashInLastSessionOccurred = -1;
         _didLogLowMemoryWarning = NO;
-        
         _approvedCrashReports = [[NSMutableDictionary alloc] init];
-        
         _fileManager = [[NSFileManager alloc] init];
         _crashFiles = [[NSMutableArray alloc] init];
-        
-        _crashManagerStatus = PREDCrashManagerStatusAutoSend;
-        
-        if ([[NSUserDefaults standardUserDefaults] stringForKey:kPREDCrashManagerStatus]) {
-            _crashManagerStatus = (PREDCrashManagerStatus)[[NSUserDefaults standardUserDefaults] integerForKey:kPREDCrashManagerStatus];
-        } else {
-            // migrate previous setting if available
-            if ([[NSUserDefaults standardUserDefaults] boolForKey:@"PREDCrashAutomaticallySendReports"]) {
-                _crashManagerStatus = PREDCrashManagerStatusAutoSend;
-                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"PREDCrashAutomaticallySendReports"];
-            }
-            [[NSUserDefaults standardUserDefaults] setInteger:_crashManagerStatus forKey:kPREDCrashManagerStatus];
-        }
-        
         _crashesDir = PREDHelper.settingsDir;
         _settingsFile = [_crashesDir stringByAppendingPathComponent:PRED_CRASH_SETTINGS];
         _analyzerInProgressFile = [_crashesDir stringByAppendingPathComponent:PRED_CRASH_ANALYZER];
@@ -185,26 +159,6 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
 
 - (void) dealloc {
     [self unregisterObservers];
-}
-
-- (NSString *)encodedAppIdentifier {
-    return [PREDHelper encodeAppIdentifier:_appIdentifier];
-}
-
-
-- (void)setCrashManagerStatus:(PREDCrashManagerStatus)crashManagerStatus {
-    _crashManagerStatus = crashManagerStatus;
-    
-    [[NSUserDefaults standardUserDefaults] setInteger:crashManagerStatus forKey:kPREDCrashManagerStatus];
-}
-
-- (void)setServerURL:(NSString *)serverURL {
-    if ([serverURL isEqualToString:self.serverURL]) {
-        return;
-    }
-    
-    self.serverURL = serverURL;
-    self.networkClient = [[PREDNetworkClient alloc] initWithBaseURL:[NSURL URLWithString:serverURL]];
 }
 
 #pragma mark - Private
@@ -576,7 +530,6 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
                     if (report.systemInfo.timestamp && report.processInfo.processStartTime) {
                         appStartTime = report.processInfo.processStartTime;
                         appCrashTime =report.systemInfo.timestamp;
-                        _timeIntervalCrashInLastSessionOccurred = [report.systemInfo.timestamp timeIntervalSinceDate:report.processInfo.processStartTime];
                     }
                 }
                 
@@ -631,8 +584,6 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
  *	@return	`YES` if there is at least one new crash report found, `NO` otherwise
  */
 - (BOOL)hasPendingCrashReport {
-    if (_crashManagerStatus == PREDCrashManagerStatusDisabled) return NO;
-    
     if ([self.fileManager fileExistsAtPath:_crashesDir]) {
         NSError *error = NULL;
         
@@ -719,7 +670,7 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
             _lastCrashFilename = [notApprovedReportFilename lastPathComponent];
         }
         
-        if (_crashManagerStatus == PREDCrashManagerStatusAutoSend || !notApprovedReportFilename) {
+        if (!notApprovedReportFilename) {
             [self approveLatestCrashReport];
             [self sendNextCrashReport];
         }
@@ -730,8 +681,6 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
  *	 Main startup sequence initializing PLCrashReporter if it wasn't disabled
  */
 - (void)startManager {
-    if (_crashManagerStatus == PREDCrashManagerStatusDisabled) return;
-    
     [self registerObservers];
     
     [self loadSettings];
@@ -742,9 +691,6 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
             /* Configure our reporter */
             
             PLCrashReporterSignalHandlerType signalHandlerType = PLCrashReporterSignalHandlerTypeBSD;
-            if (self.isMachExceptionHandlerEnabled) {
-                signalHandlerType = PLCrashReporterSignalHandlerTypeMach;
-            }
             
             PLCrashReporterSymbolicationStrategy symbolicationStrategy = PLCrashReporterSymbolicationStrategyNone;
             if (self.isOnDeviceSymbolicationEnabled) {
@@ -761,18 +707,10 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
                 [self handleCrashReport];
             }
             
-            // The actual signal and mach handlers are only registered when invoking `enableCrashReporterAndReturnError`
-            // So it is safe enough to only disable the following part when a debugger is attached no matter which
-            // signal handler type is set
-            // We only check for this if we are not in the App Store environment
             
-            BOOL debuggerIsAttached = NO;
             if ([self isDebuggerAttached]) {
-                debuggerIsAttached = YES;
                 PREDLogWarning(@"Detecting crashes is NOT enabled due to running the app with a debugger attached.");
-            }
-            
-            if (!debuggerIsAttached) {
+            } else {
                 // Multiple exception handlers can be set, but we can only query the top level error handler (uncaught exception handler).
                 //
                 // To check if PLCrashReporter's error handler is successfully added, we compare the top
@@ -1210,10 +1148,6 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
     }
     
     PREDLogDebug(@"Sending crash reports started.");
-}
-
-- (NSTimeInterval)timeintervalCrashInLastSessionOccured {
-    return self.timeIntervalCrashInLastSessionOccurred;
 }
 
 @end

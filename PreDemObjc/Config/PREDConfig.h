@@ -14,6 +14,7 @@
 @property(nonatomic, assign) BOOL httpMonitorEnabled;
 @property(nonatomic, assign) BOOL crashReportEnabled;
 @property(nonatomic, assign) BOOL lagMonitorEnabled;
+@property(nonatomic, assign) BOOL onDeviceSymbolicationEnabled;
 
 + (instancetype)configWithDic:(NSDictionary *)dic;
 

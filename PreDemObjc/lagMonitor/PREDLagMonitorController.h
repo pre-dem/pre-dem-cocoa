@@ -13,7 +13,7 @@
 
 - (instancetype)initWithAppId:(NSString *)appId networkClient:(PREDNetworkClient *)networkClient;
 
-- (void) startMonitor;
-- (void) endMonitor;
+- (void)startMonitor;
+- (void)endMonitor;
 
 @end
