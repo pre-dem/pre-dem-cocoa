@@ -342,12 +342,13 @@ NSURLSessionDelegate
                                   @"Content-Encoding": @"gzip",
                                   };
         [_client postPath:@"http-stats/i" data:dataToSend headers:headers completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
-            NSError *err;
-            if (!error && operation.response.statusCode == 201) {
+            if (error || operation.response.statusCode >= 400) {
+                PREDLogError(@"log send failure, statusCode: %@, error: %@", [NSHTTPURLResponse localizedStringForStatusCode:operation.response.statusCode], err);
+            } else {
                 if (_logPathToBeRemoved) {
-                    [[NSFileManager defaultManager] removeItemAtPath:_logPathToBeRemoved error:&err];
-                    if (err) {
-                        PREDLogError(@"delete log file failed: %@", err);
+                    [[NSFileManager defaultManager] removeItemAtPath:_logPathToBeRemoved error:&error];
+                    if (error) {
+                        PREDLogError(@"delete log file failed: %@", error);
                     }
                     if (_mReadFileIndex == PREDMaxLogIndex) {
                         _mReadFileIndex = 1;
@@ -358,8 +359,6 @@ NSURLSessionDelegate
                 } else {
                     _mReadFilePosition = _mWriteFilePosition;
                 }
-            } else {
-                PREDLogError(@"log send failure, statusCode: %@, error: %@", [NSHTTPURLResponse localizedStringForStatusCode:operation.response.statusCode], err);
             }
             [self updateIndexFile];
             _isSendingData = NO;

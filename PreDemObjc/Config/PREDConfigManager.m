@@ -11,8 +11,6 @@
 #import "PREDManagerPrivate.h"
 #import "PREDHelper.h"
 
-#define PREDConfigRetryInterval 300
-
 @interface PREDConfigManager ()
 
 @property (nonatomic, strong) NSDate *lastReportTime;
@@ -60,11 +58,8 @@
     __weak typeof(self) wSelf = self;
     [_client postPath:@"app-config/i" parameters:info completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
         __strong typeof(wSelf) strongSelf = wSelf;
-        if (error || operation.response.statusCode != 200) {
-            PREDLogError(@"%@", error.localizedDescription);
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(PREDConfigRetryInterval * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [strongSelf getConfigWithAppKey:appKey];
-            });
+        if (error || operation.response.statusCode >= 400) {
+            PREDLogError(@"get config failed: %@, status code: %d", error?:@"unknown", operation.response.statusCode);
         } else {
             strongSelf.lastReportTime = [NSDate date];
             NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];

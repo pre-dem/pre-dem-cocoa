@@ -9,6 +9,9 @@
 #import "PREDNetworkClient.h"
 #import "PREDLogger.h"
 
+#define PREDNetMaxRetryTimes    5
+#define PREDNetRetryInterval    30
+
 NSString * const kPREDNetworkClientBoundary = @"----FOO";
 
 @implementation PREDNetworkClient
@@ -109,16 +112,43 @@ NSString * const kPREDNetworkClientBoundary = @"----FOO";
 }
 
 - (void)getPath:(NSString *)path parameters:(NSDictionary *)params completion:(PREDNetworkCompletionBlock)completion {
+    [self getPath:path parameters:params completion:completion retried:0];
+}
+- (void)getPath:(NSString *)path parameters:(NSDictionary *)params completion:(PREDNetworkCompletionBlock)completion retried:(NSInteger)retried {
     NSURLRequest *request = [self requestWithMethod:@"GET" path:path parameters:params];
+    __weak typeof(self) wSelf = self;
     PREDHTTPOperation *op = [self operationWithURLRequest:request
-                                               completion:completion];
+                                               completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
+                                                   if ((error || operation.response.statusCode >= 400) && retried < PREDNetMaxRetryTimes) {
+                                                       dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(PREDNetRetryInterval * NSEC_PER_SEC)), dispatch_get_global_queue(0, DISPATCH_QUEUE_PRIORITY_BACKGROUND), ^{
+                                                           __strong typeof(wSelf) strongSelf = wSelf;
+                                                           [strongSelf getPath:path parameters:params completion:completion retried:retried + 1];
+                                                       });
+                                                   } else {
+                                                       completion(operation, data, error);
+                                                   }
+                                               }];
     [self enqeueHTTPOperation:op];
 }
 
 - (void)postPath:(NSString *)path parameters:(NSDictionary *)params completion:(PREDNetworkCompletionBlock)completion {
+    [self postPath:path parameters:params completion:completion retried:0];
+}
+
+- (void)postPath:(NSString *)path parameters:(NSDictionary *)params completion:(PREDNetworkCompletionBlock)completion retried:(NSInteger)retried {
     NSURLRequest *request = [self requestWithMethod:@"POST" path:path parameters:params];
+    __weak typeof(self) wSelf = self;
     PREDHTTPOperation *op = [self operationWithURLRequest:request
-                                               completion:completion];
+                                               completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
+                                                   if (error && retried < PREDNetMaxRetryTimes) {
+                                                       dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(PREDNetRetryInterval * NSEC_PER_SEC)), dispatch_get_global_queue(0, DISPATCH_QUEUE_PRIORITY_BACKGROUND), ^{
+                                                           __strong typeof(wSelf) strongSelf = wSelf;
+                                                           [strongSelf postPath:path parameters:params completion:completion retried:retried + 1];
+                                                       });
+                                                   } else {
+                                                       completion(operation, data, error);
+                                                   }
+                                               }];
     [self enqeueHTTPOperation:op];
 }
 
@@ -126,6 +156,14 @@ NSString * const kPREDNetworkClientBoundary = @"----FOO";
              data:(NSData *) data
           headers:(NSDictionary *)headers
        completion:(PREDNetworkCompletionBlock) completion {
+    [self postPath:path data:data headers:headers completion:completion retried:0];
+}
+
+- (void) postPath:(NSString*) path
+             data:(NSData *) data
+          headers:(NSDictionary *)headers
+       completion:(PREDNetworkCompletionBlock) completion
+          retried:(NSInteger)retried {
     NSString* url =  [NSString stringWithFormat:@"%@%@", _baseURL, path];
     NSURL *endpoint = [NSURL URLWithString:url];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:endpoint];
@@ -141,8 +179,18 @@ NSString * const kPREDNetworkClientBoundary = @"----FOO";
         }];
     }
     [request setHTTPBody:data];
+    __weak typeof(self) wSelf = self;
     PREDHTTPOperation *op = [self operationWithURLRequest:request
-                                               completion:completion];
+                                               completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
+                                                   if (error && retried < PREDNetMaxRetryTimes) {
+                                                       dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(PREDNetRetryInterval * NSEC_PER_SEC)), dispatch_get_global_queue(0, DISPATCH_QUEUE_PRIORITY_BACKGROUND), ^{
+                                                           __strong typeof(wSelf) strongSelf = wSelf;
+                                                           [strongSelf postPath:path data:data headers:headers completion:completion];
+                                                       });
+                                                   } else {
+                                                       completion(operation, data, error);
+                                                   }
+                                               }];
     [self enqeueHTTPOperation:op];
 }
 

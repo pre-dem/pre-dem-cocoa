@@ -123,7 +123,7 @@ static void runLoopObserverCallBack(CFRunLoopObserverRef observer, CFRunLoopActi
         __strong typeof(wSelf) strongSelf = wSelf;
         if (!error) {
             NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
-            if (!error && dic && [dic respondsToSelector:@selector(valueForKey:)] && [dic valueForKey:@"token"]) {
+            if (!error && operation.response.statusCode < 400 && dic && [dic respondsToSelector:@selector(valueForKey:)] && [dic valueForKey:@"token"]) {
                 NSString *key = [NSString stringWithFormat:@"i/%@/%@", strongSelf->_appId, md5];
                 [strongSelf->_uploadManager
                  putData:[crashLog dataUsingEncoding:NSUTF8StringEncoding]
@@ -132,7 +132,7 @@ static void runLoopObserverCallBack(CFRunLoopObserverRef observer, CFRunLoopActi
                  complete:^(QNResponseInfo *info, NSString *key, NSDictionary *resp) {
                      __strong typeof(wSelf) strongSelf = wSelf;
                      if (resp) {
-                         [strongSelf sendMetaInfoWithKey:key crashUUID:(NSString *) CFBridgingRelease(CFUUIDCreateString(NULL, report.uuidRef)) retryTimes:0];
+                         [strongSelf sendMetaInfoWithKey:key crashUUID:(NSString *) CFBridgingRelease(CFUUIDCreateString(NULL, report.uuidRef))];
                      } else if (retryTimes < LagReportUploadMaxTimes) {
                          PREDLogWarning(@"upload log fail: %@, retry after: %d seconds", error, LagReportUploadMaxTimes);
                          dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(LagReportUploadRetryInterval * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -149,12 +149,6 @@ static void runLoopObserverCallBack(CFRunLoopObserverRef observer, CFRunLoopActi
                 PREDLogError(@"get upload token fail: %@, drop report", error);
                 return;
             }
-        } else if (retryTimes < LagReportUploadMaxTimes) {
-            PREDLogWarning(@"get upload token fail: %@, retry after: %d seconds", error, LagReportUploadMaxTimes);
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(LagReportUploadRetryInterval * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [strongSelf uploadCrashLog:report retryTimes:retryTimes+1];
-                return;
-            });
         } else {
             PREDLogError(@"get upload token fail: %@, drop report", error);
             return;
@@ -162,7 +156,7 @@ static void runLoopObserverCallBack(CFRunLoopObserverRef observer, CFRunLoopActi
     }];
 }
 
-- (void)sendMetaInfoWithKey:(NSString *)key crashUUID:(NSString *)crashUUID retryTimes:(NSUInteger)retryTimes {
+- (void)sendMetaInfoWithKey:(NSString *)key crashUUID:(NSString *)crashUUID {
     NSDictionary *info = @{
                            @"app_bundle_id": PREDHelper.appBundleId,
                            @"app_name": PREDHelper.appName,
@@ -176,20 +170,11 @@ static void runLoopObserverCallBack(CFRunLoopObserverRef observer, CFRunLoopActi
                            @"crash_uuid": crashUUID,
                            @"crash_log_key": key,
                            };
-    __weak typeof(self) wSelf = self;
     [_networkClient postPath:@"lag-monitor/i" parameters:info completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
-        __strong typeof(wSelf) strongSelf = wSelf;
-        if (!error) {
-            PREDLogDebug(@"upload lag report succeed");
-        } else if (retryTimes < LagReportUploadMaxTimes) {
-            PREDLogWarning(@"upload lag metadata fail: %@, retry after: %d seconds", error, LagReportUploadMaxTimes);
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(LagReportUploadRetryInterval * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [strongSelf sendMetaInfoWithKey:key crashUUID:crashUUID retryTimes:retryTimes+1];
-                return;
-            });
+        if (error || operation.response.statusCode >= 400) {
+            PREDLogError(@"upload lag metadata fail: %@ code: %d, drop report", error?:@"unknown", operation.response.statusCode);
         } else {
-            PREDLogError(@"upload lag metadata fail: %@, drop report", error);
-            return;
+            PREDLogDebug(@"upload lag report succeed");
         }
     }];
 }
