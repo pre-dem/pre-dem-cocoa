@@ -19,10 +19,12 @@ PODS:
     - HappyDNS
     - Qiniu
     - QNNetDiag
+    - Reachability
   - Qiniu (7.1.5):
     - AFNetworking (~> 3)
     - HappyDNS (~> 0.3)
   - QNNetDiag (0.0.4)
+  - Reachability (3.2)
 
 DEPENDENCIES:
   - PreDemObjc (from `../`)
@@ -34,9 +36,10 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
   HappyDNS: 06a9fed2796663fd87626dbf02552933265bf059
-  PreDemObjc: ba188b1d2e5cfdbd18541c054c5e5c10e092ff2b
+  PreDemObjc: 4e0aa90fc7b9d449863e16a0fef80cd8d49d81df
   Qiniu: 77a3dba411556a383d72d17e842345a9d4c83252
   QNNetDiag: f38e43c4f89aef14c1cc6b474a41e07bbe8b2820
+  Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
 
 PODFILE CHECKSUM: 3cfeeea56b219ca54c5b4caf2cc0b81dccb4115c
 

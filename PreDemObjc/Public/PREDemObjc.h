@@ -11,12 +11,6 @@
 #import "PREDManager.h"
 #import "PREDNetDiagResult.h"
 
-// Notification message which PREDManager is listening to, to retry requesting updated from the server.
-// This can be used by app developers to trigger additional points where the PreDemObjc can try sending
-// pending crash reports or feedback messages.
-// By default the SDK retries sending pending data only when the app becomes active.
-#define PREDNetworkDidBecomeReachableNotification @"PREDNetworkDidBecomeReachable"
-
 extern NSString *const __attribute__((unused)) kPREDCrashErrorDomain;
 extern NSString *const __attribute__((unused)) kPREDUpdateErrorDomain;
 extern NSString *const __attribute__((unused)) kPREDFeedbackErrorDomain;

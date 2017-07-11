@@ -17,6 +17,7 @@
 #import "PREDURLProtocol.h"
 #import "PREDCrashManager.h"
 #import "PREDLagMonitorController.h"
+#import "Reachability.h"
 
 static NSString* app_id(NSString* appKey){
     return [appKey substringToIndex:8];
@@ -36,6 +37,8 @@ static NSString* app_id(NSString* appKey){
     PREDCrashManager *_crashManager;
     
     PREDLagMonitorController *_lagManager;
+    
+    Reachability *_reachability;
 }
 
 
@@ -104,6 +107,8 @@ static NSString* app_id(NSString* appKey){
         _enableHttpMonitor = YES;
         _enableLagMonitor = YES;
         _startManagerIsInvoked = NO;
+        _reachability = [Reachability reachabilityForInternetConnection];
+
     }
     return self;
 }
@@ -129,6 +134,8 @@ static NSString* app_id(NSString* appKey){
     
     PREDLogDebug(@"Starting PREDManager");
     _startManagerIsInvoked = YES;
+    
+    [_reachability startNotifier];
     
     // start CrashManager
     if (self.isCrashManagerEnabled) {

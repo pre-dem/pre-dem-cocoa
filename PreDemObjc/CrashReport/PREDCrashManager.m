@@ -11,11 +11,10 @@
 #import "PREDPrivate.h"
 #import "PREDHelper.h"
 #import "PREDNetworkClient.h"
-#import "PREDManagerPrivate.h"
 #import "PREDCrashManager.h"
 #import "PREDCrashReportTextFormatter.h"
 #import "PREDCrashCXXExceptionHandler.h"
-#import "PREDVersion.h"
+#import "Reachability.h"
 #include <sys/sysctl.h>
 
 // internal keys
@@ -247,7 +246,7 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
     }
     
     if(nil == _networkDidBecomeReachableObserver) {
-        _networkDidBecomeReachableObserver = [[NSNotificationCenter defaultCenter] addObserverForName:PREDNetworkDidBecomeReachableNotification
+        _networkDidBecomeReachableObserver = [[NSNotificationCenter defaultCenter] addObserverForName:kReachabilityChangedNotification
                                                                                                object:nil
                                                                                                 queue:NSOperationQueue.mainQueue
                                                                                            usingBlock:^(NSNotification *note) {
