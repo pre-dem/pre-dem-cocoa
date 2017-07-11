@@ -222,6 +222,10 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
     PREDLogVerbose(@"CrashManager startManager has finished.");
 }
 
+- (void)stopManager {
+    [self unregisterObservers];
+}
+
 #pragma mark - Private
 
 

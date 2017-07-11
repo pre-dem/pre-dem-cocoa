@@ -49,4 +49,6 @@ typedef NS_ENUM(NSUInteger, PREDCrashManagerUserInput) {
 
 - (void)startManager;
 
+- (void)stopManager;
+
 @end

@@ -157,13 +157,22 @@ static NSString* app_id(NSString* appKey){
     }
 }
 
-#warning todo
 - (void)setEnableCrashManager:(BOOL)enableCrashManager {
+    if (_enableCrashManager == enableCrashManager) {
+        return;
+    }
     _enableCrashManager = enableCrashManager;
-
+    if (enableCrashManager) {
+        [_crashManager startManager];
+    } else {
+        [_crashManager stopManager];
+    }
 }
 
 - (void)setEnableHttpMonitor:(BOOL)enableHttpMonitor {
+    if (_enableHttpMonitor == enableHttpMonitor) {
+        return;
+    }
     _enableHttpMonitor = enableHttpMonitor;
     if (enableHttpMonitor) {
         [_httpManager enableHTTPDem];
@@ -173,6 +182,9 @@ static NSString* app_id(NSString* appKey){
 }
 
 - (void)setEnableLagMonitor:(BOOL)enableLagMonitor {
+    if (_enableLagMonitor == enableLagMonitor) {
+        return;
+    }
     _enableLagMonitor = enableLagMonitor;
     if (enableLagMonitor) {
         [_lagManager startMonitor];
