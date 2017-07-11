@@ -534,7 +534,7 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
     if ([crashData length] > 0) {
         PREPLCrashReport *report = nil;
         NSString *crashLogString = nil;
-        NSString *crashUUID = PREDHelper.UUID;
+        NSString *reportUUID = PREDHelper.UUID;
         NSString *appBinaryUUIDs = PREDHelper.UUID;
         
         if ([[cacheFilename pathExtension] isEqualToString:@"fake"]) {
@@ -543,7 +543,7 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
             report = [[PREPLCrashReport alloc] initWithData:crashData error:&error];
             appBinaryUUIDs = [PREDCrashReportTextFormatter extractAppUUIDs:report]?:appBinaryUUIDs;
             if (report.uuidRef != NULL) {
-                crashUUID = (NSString *) CFBridgingRelease(CFUUIDCreateString(NULL, report.uuidRef));
+                reportUUID = (NSString *) CFBridgingRelease(CFUUIDCreateString(NULL, report.uuidRef));
             }
             crashLogString = [PREDCrashReportTextFormatter stringValueForCrashReport:report crashReporterKey:PREDHelper.UUID];
         }
@@ -576,8 +576,8 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
                                                @"sdk_version": PREDHelper.sdkVersion,
                                                @"sdk_id": PREDHelper.UUID,
                                                @"device_id": @"",
-                                               @"crash_uuid": crashUUID,
-                                               @"crash_log": key,
+                                               @"report_uuid": reportUUID,
+                                               @"crash_log_key": key,
                                                @"app_binary_uuids": appBinaryUUIDs,
                                                };
                     [strongSelf uploadCrashLog:crashLogString WithKey:key token:token crashDic:crashDic retryTimes:0];

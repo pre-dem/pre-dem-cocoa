@@ -132,7 +132,7 @@ static void runLoopObserverCallBack(CFRunLoopObserverRef observer, CFRunLoopActi
                  complete:^(QNResponseInfo *info, NSString *key, NSDictionary *resp) {
                      __strong typeof(wSelf) strongSelf = wSelf;
                      if (resp) {
-                         [strongSelf sendMetaInfoWithKey:key crashUUID:(NSString *) CFBridgingRelease(CFUUIDCreateString(NULL, report.uuidRef))];
+                         [strongSelf sendMetaInfoWithKey:key reportUUID:(NSString *) CFBridgingRelease(CFUUIDCreateString(NULL, report.uuidRef))];
                      } else if (retryTimes < LagReportUploadMaxTimes) {
                          PREDLogWarning(@"upload log fail: %@, retry after: %d seconds", info.error, LagReportUploadMaxTimes);
                          dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(LagReportUploadRetryInterval * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -156,7 +156,7 @@ static void runLoopObserverCallBack(CFRunLoopObserverRef observer, CFRunLoopActi
     }];
 }
 
-- (void)sendMetaInfoWithKey:(NSString *)key crashUUID:(NSString *)crashUUID {
+- (void)sendMetaInfoWithKey:(NSString *)key reportUUID:(NSString *)reportUUID {
     NSDictionary *info = @{
                            @"app_bundle_id": PREDHelper.appBundleId,
                            @"app_name": PREDHelper.appName,
@@ -167,7 +167,7 @@ static void runLoopObserverCallBack(CFRunLoopObserverRef observer, CFRunLoopActi
                            @"sdk_version": PREDHelper.sdkVersion,
                            @"sdk_id": PREDHelper.UUID,
                            @"device_id": @"",
-                           @"crash_uuid": crashUUID,
+                           @"report_uuid": reportUUID,
                            @"crash_log_key": key,
                            };
     [_networkClient postPath:@"lag-monitor/i" parameters:info completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
