@@ -118,22 +118,25 @@ static void runLoopObserverCallBack(CFRunLoopObserverRef observer, CFRunLoopActi
     NSString *crashLog = [PREDCrashReportTextFormatter stringValueForCrashReport:report crashReporterKey:PREDHelper.appName];
     NSString *md5 = [PREDHelper MD5:crashLog];
     NSDictionary *param = @{@"md5": md5};
+    __weak typeof(self) wSelf = self;
     [_networkClient getPath:@"lag-report-token/i" parameters:param completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
+        __strong typeof(wSelf) strongSelf = wSelf;
         if (!error) {
             NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
             if (!error && dic && [dic respondsToSelector:@selector(valueForKey:)] && [dic valueForKey:@"token"]) {
-                NSString *key = [NSString stringWithFormat:@"i/%@/%@", _appId, md5];
-                [_uploadManager
+                NSString *key = [NSString stringWithFormat:@"i/%@/%@", strongSelf->_appId, md5];
+                [strongSelf->_uploadManager
                  putData:[crashLog dataUsingEncoding:NSUTF8StringEncoding]
                  key:key
                  token:[dic valueForKey:@"token"]
                  complete:^(QNResponseInfo *info, NSString *key, NSDictionary *resp) {
+                     __strong typeof(wSelf) strongSelf = wSelf;
                      if (resp) {
-                         [self sendMetaInfoWithKey:key crashUUID:(NSString *) CFBridgingRelease(CFUUIDCreateString(NULL, report.uuidRef)) retryTimes:0];
+                         [strongSelf sendMetaInfoWithKey:key crashUUID:(NSString *) CFBridgingRelease(CFUUIDCreateString(NULL, report.uuidRef)) retryTimes:0];
                      } else if (retryTimes < LagReportUploadMaxTimes) {
                          PREDLogWarning(@"upload log fail: %@, retry after: %d seconds", error, LagReportUploadMaxTimes);
                          dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(LagReportUploadRetryInterval * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                             [self uploadCrashLog:report retryTimes:retryTimes+1];
+                             [strongSelf uploadCrashLog:report retryTimes:retryTimes+1];
                              return;
                          });
                      } else {
@@ -149,7 +152,7 @@ static void runLoopObserverCallBack(CFRunLoopObserverRef observer, CFRunLoopActi
         } else if (retryTimes < LagReportUploadMaxTimes) {
             PREDLogWarning(@"get upload token fail: %@, retry after: %d seconds", error, LagReportUploadMaxTimes);
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(LagReportUploadRetryInterval * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [self uploadCrashLog:report retryTimes:retryTimes+1];
+                [strongSelf uploadCrashLog:report retryTimes:retryTimes+1];
                 return;
             });
         } else {
@@ -173,13 +176,15 @@ static void runLoopObserverCallBack(CFRunLoopObserverRef observer, CFRunLoopActi
                            @"crash_uuid": crashUUID,
                            @"crash_log_key": key,
                            };
+    __weak typeof(self) wSelf = self;
     [_networkClient postPath:@"lag-monitor/i" parameters:info completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
+        __strong typeof(wSelf) strongSelf = wSelf;
         if (!error) {
             PREDLogDebug(@"upload lag report succeed");
         } else if (retryTimes < LagReportUploadMaxTimes) {
             PREDLogWarning(@"upload lag metadata fail: %@, retry after: %d seconds", error, LagReportUploadMaxTimes);
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(LagReportUploadRetryInterval * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [self sendMetaInfoWithKey:key crashUUID:crashUUID retryTimes:retryTimes+1];
+                [strongSelf sendMetaInfoWithKey:key crashUUID:crashUUID retryTimes:retryTimes+1];
                 return;
             });
         } else {

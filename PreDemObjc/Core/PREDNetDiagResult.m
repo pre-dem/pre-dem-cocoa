@@ -114,11 +114,13 @@
 }
 
 - (void)sendReport:(NSString *)appKey {
+    __weak typeof(self) wSelf = self;
     [_client postPath:@"net-diags/i" parameters:[self toDic] completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
-        if ((error || operation.response.statusCode != 200) && self.retryTimes < PREDSendMaxRetryTimes) {
-            self.retryTimes ++;
+        __strong typeof(wSelf) strongSelf = wSelf;
+        if ((error || operation.response.statusCode != 200) && strongSelf.retryTimes < PREDSendMaxRetryTimes) {
+            strongSelf.retryTimes ++;
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(PREDSendRetryInterval * NSEC_PER_SEC)), dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
-                [self sendReport:appKey];
+                [strongSelf sendReport:appKey];
             });
         }
     }];
