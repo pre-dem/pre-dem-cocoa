@@ -361,24 +361,14 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
     
     if (!self.plCrashReporter) return;
     
-    PREDLogVerbose(@"VERBOSE: AnalyzerInProgress file created");
-    
     // Try loading the crash report
     NSData *crashData = [[NSData alloc] initWithData:[self.plCrashReporter loadPendingCrashReportDataAndReturnError: &error]];
-    
-    NSString *cacheFilename = [NSString stringWithFormat: @"%.0f", [NSDate timeIntervalSinceReferenceDate]];
     
     if (crashData == nil) {
         PREDLogError(@"Could not load crash report: %@", error);
     } else {
-        // get the startup timestamp from the crash report, and the file timestamp to calculate the timeinterval when the crash happened after startup
-        PREPLCrashReport *report = [[PREPLCrashReport alloc] initWithData:crashData error:&error];
-        
-        if (report == nil) {
-            PREDLogWarning(@"WARNING: Could not parse crash report");
-        } else {
-            [crashData writeToFile:[_crashesDir stringByAppendingPathComponent: cacheFilename] atomically:YES];
-        }
+        NSString *cacheFilename = [NSString stringWithFormat: @"%.0f", [NSDate timeIntervalSinceReferenceDate]];
+        [crashData writeToFile:[_crashesDir stringByAppendingPathComponent: cacheFilename] atomically:YES];
     }
     [self.plCrashReporter purgePendingCrashReport];
 }
@@ -511,20 +501,12 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
     
     NSError *error = nil;
     
-    NSMutableDictionary *rootObj = [NSMutableDictionary dictionaryWithCapacity:2];
-    [rootObj setObject:fakeReportString forKey:kPREDFakeCrashReport];
-    
-    NSData *plist = [NSPropertyListSerialization dataWithPropertyList:(id)rootObj
-                                                               format:NSPropertyListBinaryFormat_v1_0
-                                                              options:0
-                                                                error:&error];
-    if (!plist || ![plist writeToFile:[_crashesDir stringByAppendingPathComponent:[fakeReportFilename stringByAppendingPathExtension:@"fake"]] atomically:YES]) {
+    if (![[fakeReportString dataUsingEncoding:NSUTF8StringEncoding] writeToFile:[_crashesDir stringByAppendingPathComponent:[fakeReportFilename stringByAppendingPathExtension:@"fake"]] options:NSDataWritingAtomic error:&error]) {
         PREDLogError(@"Writing fake crash report error: %@", error ?: @"unknown");
     }
 }
 
 /**
- *	 Send all approved crash reports
  *
  * Gathers all collected data and constructs the XML structure and starts the sending process
  */
@@ -543,35 +525,19 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
     
     if ([crashData length] > 0) {
         PREPLCrashReport *report = nil;
-        NSString *crashUUID = @"";
-        NSString *installString = nil;
         NSString *crashLogString = nil;
-        NSString *appBundleIdentifier = nil;
-        NSString *appBundleMarketingVersion = nil;
-        NSString *appBundleVersion = nil;
-        NSString *osVersion = nil;
-        NSString *deviceModel = nil;
-        NSString *appBinaryUUIDs = nil;
-        
-        NSPropertyListFormat format;
+        NSString *crashUUID = PREDHelper.UUID;
+        NSString *appBinaryUUIDs = PREDHelper.UUID;
         
         if ([[cacheFilename pathExtension] isEqualToString:@"fake"]) {
-            NSDictionary *fakeReportDict = (NSDictionary *)[NSPropertyListSerialization
-                                                            propertyListWithData:crashData
-                                                            options:NSPropertyListMutableContainersAndLeaves
-                                                            format:&format
-                                                            error:&error];
-            
-            crashLogString = [fakeReportDict objectForKey:kPREDFakeCrashReport];
-            crashUUID = PREDHelper.UUID;
-            appBundleIdentifier = PREDHelper.appBundleId;
-            appBundleMarketingVersion = PREDHelper.appVersion;
-            appBundleVersion = PREDHelper.appBuild;
-            appBinaryUUIDs = PREDHelper.UUID;
-            deviceModel = PREDHelper.deviceModel;
-            osVersion = PREDHelper.osVersion;
+            crashLogString = [[NSString alloc] initWithData:crashData encoding:NSUTF8StringEncoding];
         } else {
             report = [[PREPLCrashReport alloc] initWithData:crashData error:&error];
+            appBinaryUUIDs = [PREDCrashReportTextFormatter extractAppUUIDs:report]?:appBinaryUUIDs;
+            if (report.uuidRef != NULL) {
+                crashUUID = (NSString *) CFBridgingRelease(CFUUIDCreateString(NULL, report.uuidRef));
+            }
+            crashLogString = [PREDCrashReportTextFormatter stringValueForCrashReport:report crashReporterKey:PREDHelper.UUID];
         }
         
         if (report == nil && crashLogString == nil) {
@@ -583,88 +549,31 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
             return;
         }
         
-        installString = PREDHelper.UUID ?: @"";
-        
-        if (report) {
-            if (report.uuidRef != NULL) {
-                crashUUID = (NSString *) CFBridgingRelease(CFUUIDCreateString(NULL, report.uuidRef));
-            }
-            crashLogString = [PREDCrashReportTextFormatter stringValueForCrashReport:report crashReporterKey:installString];
-            appBundleIdentifier = report.applicationInfo.applicationIdentifier;
-            appBundleMarketingVersion = report.applicationInfo.applicationMarketingVersion ?: @"";
-            appBundleVersion = report.applicationInfo.applicationVersion;
-            osVersion = report.systemInfo.operatingSystemVersion;
-            deviceModel = PREDHelper.deviceModel;
-            appBinaryUUIDs = [PREDCrashReportTextFormatter extractAppUUIDs:report];
-        }
-        
-        crashXML = [NSString stringWithFormat:@"<crashes><crash><applicationname><![CDATA[%@]]></applicationname><uuids>%@</uuids><bundleidentifier>%@</bundleidentifier><systemversion>%@</systemversion><platform>%@</platform><senderversion>%@</senderversion><versionstring>%@</versionstring><version>%@</version><uuid>%@</uuid><log><![CDATA[%@]]></log><installstring>%@</installstring></crash></crashes>",
-                    [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleExecutable"],
-                    appBinaryUUIDs,
-                    appBundleIdentifier,
-                    osVersion,
-                    deviceModel,
-                    [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"],
-                    appBundleMarketingVersion,
-                    appBundleVersion,
-                    crashUUID,
-                    [crashLogString stringByReplacingOccurrencesOfString:@"]]>" withString:@"]]" @"]]><![CDATA[" @">" options:NSLiteralSearch range:NSMakeRange(0,crashLogString.length)],
-                    installString];
+        NSDictionary *crashDic = @{
+                                   @"app_bundle_id": PREDHelper.appBundleId,
+                                   @"app_name": PREDHelper.appName,
+                                   @"app_version": PREDHelper.appVersion,
+                                   @"device_model": PREDHelper.deviceModel,
+                                   @"os_platform": PREDHelper.osPlatform,
+                                   @"os_version": PREDHelper.osVersion,
+                                   @"sdk_version": PREDHelper.sdkVersion,
+                                   @"sdk_id": PREDHelper.UUID,
+                                   @"device_id": @"",
+                                   @"crash_uuid": crashUUID,
+                                   @"crash_log": crashLogString,
+                                   @"app_binary_uuids": appBinaryUUIDs,
+                                   };
         
         PREDLogDebug(@"Sending crash reports:\n%@", crashXML);
-        [self sendCrashReportWithFilename:filename xml:crashXML];
+        __weak typeof(self) wSelf = self;
+        [_networkClient postPath:@"crashes/i" parameters:crashDic completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
+            typeof (wSelf) strongSelf = wSelf;
+            [strongSelf processUploadResultWithFilename:filename responseData:data statusCode:operation.response.statusCode error:error];
+        }];
     } else {
         // we cannot do anything with this report, so delete it
         [self cleanCrashReportWithFilename:filename];
     }
-}
-
-#pragma clang diagnostic pop
-
-#pragma mark - Networking
-
-- (NSData *)postBodyWithXML:(NSString *)xml boundary:(NSString *)boundary {
-    NSMutableData *postBody =  [NSMutableData data];
-    
-    //  [postBody appendData:[[NSString stringWithFormat:@"\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
-    [postBody appendData:[PREDNetworkClient dataWithPostValue:PREDHelper.appName
-                                                       forKey:@"sdk"
-                                                     boundary:boundary]];
-    
-    [postBody appendData:[PREDNetworkClient dataWithPostValue:[PREDVersion getSDKVersion]
-                                                       forKey:@"sdk_version"
-                                                     boundary:boundary]];
-    
-    [postBody appendData:[PREDNetworkClient dataWithPostValue:@"no"
-                                                       forKey:@"feedbackEnabled"
-                                                     boundary:boundary]];
-    
-    [postBody appendData:[PREDNetworkClient dataWithPostValue:[xml dataUsingEncoding:NSUTF8StringEncoding]
-                                                       forKey:@"xml"
-                                                  contentType:@"text/xml"
-                                                     boundary:boundary
-                                                     filename:@"crash.xml"]];
-    
-    [postBody appendData:[[NSString stringWithFormat:@"\r\n--%@--\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-    
-    return postBody;
-}
-
-- (NSMutableURLRequest *)requestWithBoundary:(NSString *)boundary {
-    NSString *postCrashPath = @"crashes/i";
-    
-    NSMutableURLRequest *request = [self.networkClient requestWithMethod:@"POST"
-                                                                    path:postCrashPath
-                                                              parameters:nil];
-    
-    [request setCachePolicy: NSURLRequestReloadIgnoringLocalCacheData];
-    [request setValue:@"PreDemObjc/iOS" forHTTPHeaderField:@"User-Agent"];
-    [request setValue:@"gzip" forHTTPHeaderField:@"Accept-Encoding"];
-    
-    NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@", boundary];
-    [request setValue:contentType forHTTPHeaderField:@"Content-type"];
-    
-    return request;
 }
 
 // process upload response
@@ -717,64 +626,6 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
             PREDLogError(@"%@", [theError localizedDescription]);
         }
     });
-}
-
-/**
- *	 Send the XML data to the server
- *
- * Wraps the XML structure into a POST body and starts sending the data asynchronously
- *
- *	@param	xml	The XML data that needs to be send to the server
- */
-- (void)sendCrashReportWithFilename:(NSString *)filename xml:(NSString*)xml {
-    BOOL sendingWithURLSession = NO;
-    
-    if ([PREDHelper isURLSessionSupported]) {
-        NSURLSessionConfiguration *sessionConfiguration = [NSURLSessionConfiguration defaultSessionConfiguration];
-        __block NSURLSession *session = [NSURLSession sessionWithConfiguration:sessionConfiguration];
-        
-        NSURLRequest *request = [self requestWithBoundary:kPREDNetworkClientBoundary];
-        NSData *data = [self postBodyWithXML:xml boundary:kPREDNetworkClientBoundary];
-        
-        if (request && data) {
-            __weak typeof (self) weakSelf = self;
-            NSURLSessionUploadTask *uploadTask = [session uploadTaskWithRequest:request
-                                                                       fromData:data
-                                                              completionHandler:^(NSData *responseData, NSURLResponse *response, NSError *error) {
-                                                                  typeof (self) strongSelf = weakSelf;
-                                                                  
-                                                                  [session finishTasksAndInvalidate];
-                                                                  
-                                                                  NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*) response;
-                                                                  NSInteger statusCode = [httpResponse statusCode];
-                                                                  [strongSelf processUploadResultWithFilename:filename responseData:responseData statusCode:statusCode error:error];
-                                                              }];
-            
-            [uploadTask resume];
-            sendingWithURLSession = YES;
-        }
-    }
-    
-    if (!sendingWithURLSession) {
-        NSMutableURLRequest *request = [self requestWithBoundary:kPREDNetworkClientBoundary];
-        
-        NSData *postBody = [self postBodyWithXML:xml boundary:kPREDNetworkClientBoundary];
-        [request setHTTPBody:postBody];
-        
-        __weak typeof (self) weakSelf = self;
-        PREDHTTPOperation *operation = [self.networkClient
-                                        operationWithURLRequest:request
-                                        completion:^(PREDHTTPOperation *operation, NSData* responseData, NSError *error) {
-                                            typeof (self) strongSelf = weakSelf;
-                                            
-                                            NSInteger statusCode = [operation.response statusCode];
-                                            [strongSelf processUploadResultWithFilename:filename responseData:responseData statusCode:statusCode error:error];
-                                        }];
-        
-        [self.networkClient enqeueHTTPOperation:operation];
-    }
-    
-    PREDLogDebug(@"Sending crash reports started.");
 }
 
 @end
