@@ -16,6 +16,10 @@
 #import "PREDCrashCXXExceptionHandler.h"
 #import "Reachability.h"
 #include <sys/sysctl.h>
+#import "QiniuSDK.h"
+
+#define CrashReportUploadRetryInterval        100
+#define CrashReportUploadMaxTimes             5
 
 // internal keys
 
@@ -75,6 +79,8 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
 @implementation PREDCrashManager {
     NSMutableArray *_crashFiles;
     NSFileManager  *_fileManager;
+    NSString *_appId;
+    QNUploadManager *_uploadManager;
     
     BOOL _sendingInProgress;
     BOOL _isSetup;
@@ -100,6 +106,7 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
         _fileManager = [[NSFileManager alloc] init];
         _crashFiles = [[NSMutableArray alloc] init];
         _crashesDir = PREDHelper.settingsDir;
+        _uploadManager = [[QNUploadManager alloc] init];
     }
     return self;
 }
@@ -515,8 +522,6 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
     if ([_crashFiles count] == 0)
         return;
     
-    NSString *crashXML = nil;
-    
     // we start sending always with the oldest pending one
     NSString *filename = [_crashFiles objectAtIndex:0];
     NSString *cacheFilename = [filename lastPathComponent];
@@ -547,32 +552,73 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
             // the next crash will be automatically send on the next app start/becoming active event
             return;
         }
-        
-        NSDictionary *crashDic = @{
-                                   @"app_bundle_id": PREDHelper.appBundleId,
-                                   @"app_name": PREDHelper.appName,
-                                   @"app_version": PREDHelper.appVersion,
-                                   @"device_model": PREDHelper.deviceModel,
-                                   @"os_platform": PREDHelper.osPlatform,
-                                   @"os_version": PREDHelper.osVersion,
-                                   @"sdk_version": PREDHelper.sdkVersion,
-                                   @"sdk_id": PREDHelper.UUID,
-                                   @"device_id": @"",
-                                   @"crash_uuid": crashUUID,
-                                   @"crash_log": crashLogString,
-                                   @"app_binary_uuids": appBinaryUUIDs,
-                                   };
-        
-        PREDLogDebug(@"Sending crash reports:\n%@", crashXML);
+        NSString *md5 = [PREDHelper MD5:crashLogString];
+        NSDictionary *param = @{@"md5": md5};
         __weak typeof(self) wSelf = self;
-        [_networkClient postPath:@"crashes/i" parameters:crashDic completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
-            typeof (wSelf) strongSelf = wSelf;
-            [strongSelf processUploadResultWithFilename:filename responseData:data statusCode:operation.response.statusCode error:error];
+        [_networkClient getPath:@"crash-report-token/i" parameters:param completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
+            __strong typeof(wSelf) strongSelf = wSelf;
+            if (!error) {
+                NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+                if (!error && operation.response.statusCode < 400 && dic && [dic respondsToSelector:@selector(valueForKey:)] && [dic valueForKey:@"token"]) {
+                    NSString *key = [NSString stringWithFormat:@"i/%@/%@", strongSelf->_appId, md5];
+                    NSString *token = [dic valueForKey:@"token"];
+                    NSDictionary *crashDic = @{
+                                               @"app_bundle_id": PREDHelper.appBundleId,
+                                               @"app_name": PREDHelper.appName,
+                                               @"app_version": PREDHelper.appVersion,
+                                               @"device_model": PREDHelper.deviceModel,
+                                               @"os_platform": PREDHelper.osPlatform,
+                                               @"os_version": PREDHelper.osVersion,
+                                               @"sdk_version": PREDHelper.sdkVersion,
+                                               @"sdk_id": PREDHelper.UUID,
+                                               @"device_id": @"",
+                                               @"crash_uuid": crashUUID,
+                                               @"crash_log": key,
+                                               @"app_binary_uuids": appBinaryUUIDs,
+                                               };
+                    [strongSelf uploadCrashLog:crashLogString WithKey:key token:token crashDic:crashDic retryTimes:0];
+                } else {
+                    PREDLogError(@"get upload token fail: %@, drop report", error);
+                    return;
+                }
+            } else {
+                PREDLogError(@"get upload token fail: %@, drop report", error);
+                return;
+            }
         }];
+        
     } else {
         // we cannot do anything with this report, so delete it
         [self cleanCrashReportWithFilename:filename];
     }
+}
+
+- (void)uploadCrashLog:(NSString *)crashLog WithKey:(NSString *)key token:(NSString *)token crashDic:(NSDictionary *)crashDic retryTimes:(NSInteger)retryTimes {
+    __weak typeof(self) wSelf = self;
+    [_uploadManager
+     putData:[crashLog dataUsingEncoding:NSUTF8StringEncoding]
+     key:key
+     token: token
+     complete:^(QNResponseInfo *info, NSString *key, NSDictionary *resp) {
+         __strong typeof(wSelf) strongSelf = wSelf;
+         if (resp) {
+             PREDLogDebug(@"Sending crash reports");
+             [strongSelf->_networkClient postPath:@"crashes/i" parameters:crashDic completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
+                 __strong typeof (wSelf) strongSelf = wSelf;
+                 [strongSelf processUploadResultWithFilename:[strongSelf->_crashFiles objectAtIndex:0] responseData:data statusCode:operation.response.statusCode error:error];
+             }];
+         } else if (retryTimes < CrashReportUploadMaxTimes) {
+             PREDLogWarning(@"upload log fail: %@, retry after: %d seconds", info.error, CrashReportUploadMaxTimes);
+             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(CrashReportUploadRetryInterval * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                 [strongSelf uploadCrashLog:crashLog WithKey:key token:token crashDic:crashDic retryTimes:retryTimes + 1];
+                 return;
+             });
+         } else {
+             PREDLogError(@"upload log fail: %@, drop report", info.error);
+             return;
+         }
+     }
+     option:nil];
 }
 
 // process upload response
@@ -594,7 +640,6 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
 
         }
     }
-    
     if (error) {
         PREDLogError(@"%@", error);
     }

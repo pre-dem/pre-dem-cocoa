@@ -134,7 +134,7 @@ static void runLoopObserverCallBack(CFRunLoopObserverRef observer, CFRunLoopActi
                      if (resp) {
                          [strongSelf sendMetaInfoWithKey:key crashUUID:(NSString *) CFBridgingRelease(CFUUIDCreateString(NULL, report.uuidRef))];
                      } else if (retryTimes < LagReportUploadMaxTimes) {
-                         PREDLogWarning(@"upload log fail: %@, retry after: %d seconds", error, LagReportUploadMaxTimes);
+                         PREDLogWarning(@"upload log fail: %@, retry after: %d seconds", info.error, LagReportUploadMaxTimes);
                          dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(LagReportUploadRetryInterval * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                              [strongSelf uploadCrashLog:report retryTimes:retryTimes+1];
                              return;
