@@ -2,13 +2,14 @@
 //  PREDEnums.h
 //  PreDemObjc
 //
-//
+//  Created by WangSiyu on 21/02/2017.
+//  Copyright © 2017 pre-engineering. All rights reserved.
 //
 
 #ifndef PreDemObjc_Enums_h
 #define PreDemObjc_Enums_h
 
-@class PREDNetDiagResult;
+#import "PREDNetDiagResult.h"
 
 /**
  *  PreDemObjc Log Levels
@@ -34,25 +35,6 @@ typedef NS_ENUM(NSUInteger, PREDLogLevel) {
      *  Logging will be very chatty
      */
     PREDLogLevelVerbose = 4
-};
-
-/**
- *  PreDemObjc App environment
- */
-typedef NS_ENUM(NSInteger, PREDEnvironment) {
-    /**
-     *  App has been downloaded from the AppStore
-     */
-    PREDEnvironmentAppStore = 0,
-    /**
-     *  App has been downloaded from TestFlight
-     */
-    PREDEnvironmentTestFlight = 1,
-    /**
-     *  App has been installed by some other mechanism.
-     *  This could be Ad-Hoc, Enterprise, etc.
-     */
-    PREDEnvironmentOther = 99
 };
 
 /**

@@ -1,6 +1,6 @@
 //
 //  PREDHTTPMonitorSender.m
-//  PreDemSDK
+//  PreDemObjc
 //
 //  Created by WangSiyu on 28/03/2017.
 //  Copyright © 2017 pre-engineering. All rights reserved.
@@ -14,7 +14,6 @@
 #define PREDSendLogDefaultInterval  10
 #define PREDMaxLogLenth            (1024 * 64)
 #define PREDMaxLogIndex             100
-#define PREDSendTimeOut             10
 
 #define PREDErrorDomain             @"error.sdk.predem"
 #define PREDReadFileIndexKey        @"read_file_index"
@@ -45,22 +44,15 @@ NSURLSessionDelegate
 @property (nonatomic, assign) BOOL              isSendingData;
 @property (nonatomic, strong) NSURLSession      *urlSession;
 @property (nonatomic, strong) NSString          *logPathToBeRemoved;
+@property (nonatomic, strong) PREDNetworkClient *client;
 
 @end
 
 @implementation PREDHTTPMonitorSender
 
-+ (instancetype)sharedSender {
-    static PREDHTTPMonitorSender *object = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        object = [[PREDHTTPMonitorSender alloc] init];
-    });
-    return object;
-}
-
-- (instancetype)init {
+- (instancetype)initWithNetworkClient:(PREDNetworkClient *)client {
     if (self = [super init]) {
+        _client = client;
         _logDirPath = [NSString stringWithFormat:@"%@Presniff_SDK_Log", [[[[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] objectAtIndex:0] absoluteString] substringFromIndex:7]];
         _indexFilePath = [NSString stringWithFormat:@"%@/index.json", _logDirPath];
         _mReadFileIndex = 1;
@@ -345,42 +337,33 @@ NSURLSessionDelegate
             return;
         }
         
-        NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@http-stats/i", [[PREDManager sharedPREDManager] baseUrl ]]]];
-        request.HTTPMethod = @"POST";
-        request.timeoutInterval = PREDSendTimeOut;
-        request.HTTPBody = dataToSend;
-        [request addValue:@"application/x-gzip" forHTTPHeaderField:@"Content-Type"];
-        [request addValue:@"gzip" forHTTPHeaderField:@"Content-Encoding"];
-        [NSURLProtocol setProperty:@YES
-                            forKey:@"PREDInternalRequest"
-                         inRequest:request];
-        [[_urlSession dataTaskWithRequest:request] resume];
-    });
-}
-
-- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error {
-    NSHTTPURLResponse *response = (NSHTTPURLResponse *)task.response;
-    NSError *err;
-    if (!error && response.statusCode == 201) {
-        if (_logPathToBeRemoved) {
-            [[NSFileManager defaultManager] removeItemAtPath:_logPathToBeRemoved error:&err];
-            if (err) {
-                PREDLogError(@"delete log file failed: %@", err);
-            }
-            if (_mReadFileIndex == PREDMaxLogIndex) {
-                _mReadFileIndex = 1;
+        NSDictionary *headers = @{
+                                  @"Content-Type": @"application/x-gzip",
+                                  @"Content-Encoding": @"gzip",
+                                  };
+        [_client postPath:@"http-stats/i" data:dataToSend headers:headers completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
+            if (error || operation.response.statusCode >= 400) {
+                PREDLogError(@"log send failure, statusCode: %@, error: %@", [NSHTTPURLResponse localizedStringForStatusCode:operation.response.statusCode], err);
             } else {
-                _mReadFileIndex ++;
+                if (_logPathToBeRemoved) {
+                    [[NSFileManager defaultManager] removeItemAtPath:_logPathToBeRemoved error:&error];
+                    if (error) {
+                        PREDLogError(@"delete log file failed: %@", error);
+                    }
+                    if (_mReadFileIndex == PREDMaxLogIndex) {
+                        _mReadFileIndex = 1;
+                    } else {
+                        _mReadFileIndex ++;
+                    }
+                    _mReadFilePosition = 0;
+                } else {
+                    _mReadFilePosition = _mWriteFilePosition;
+                }
             }
-            _mReadFilePosition = 0;
-        } else {
-            _mReadFilePosition = _mWriteFilePosition;
-        }
-    } else {
-        PREDLogError(@"log send failure, statusCode: %@, error: %@", [NSHTTPURLResponse localizedStringForStatusCode:((NSHTTPURLResponse *)response).statusCode], err);
-    }
-    [self updateIndexFile];
-    _isSendingData = NO;
+            [self updateIndexFile];
+            _isSendingData = NO;
+        }];
+    });
 }
 
 

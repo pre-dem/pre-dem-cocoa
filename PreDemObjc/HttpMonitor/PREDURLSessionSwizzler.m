@@ -1,6 +1,6 @@
 //
 //  PREDURLSessionSwizzler.m
-//  PreDemSDK
+//  PreDemObjc
 //
 //  Created by WangSiyu on 14/03/2017.
 //  Copyright © 2017 pre-engineering. All rights reserved.
@@ -11,16 +11,6 @@
 #import "PREDURLProtocol.h"
 
 @implementation PREDURLSessionSwizzler
-
-+ (PREDURLSessionSwizzler *)defaultSwizzler {
-    static PREDURLSessionSwizzler *staticSwizzler;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        staticSwizzler = [[PREDURLSessionSwizzler alloc] init];
-    });
-    
-    return staticSwizzler;
-}
 
 - (instancetype)init
 {

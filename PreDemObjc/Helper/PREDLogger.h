@@ -1,4 +1,10 @@
-// Adapted from 0xced’s post at http://stackoverflow.com/questions/34732814/how-should-i-handle-logs-in-an-objective-c-library/34732815#34732815
+//
+//  PREDLogger.h
+//  PreDemObjc
+//
+//  Created by WangSiyu on 21/02/2017.
+//  Copyright © 2017 pre-engineering. All rights reserved.
+//
 
 #import <Foundation/Foundation.h>
 #import "PREDEnums.h"

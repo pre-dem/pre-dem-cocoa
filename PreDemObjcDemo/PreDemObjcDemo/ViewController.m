@@ -1,6 +1,6 @@
 //
 //  ViewController.m
-//  PreDemSDKDemo
+//  PreDemObjcDemo
 //
 //  Created by WangSiyu on 21/02/2017.
 //  Copyright © 2017 pre-engineering. All rights reserved.
@@ -49,6 +49,10 @@
 
 - (IBAction)diyEvent:(id)sender {
     [PREDManager trackEventWithName:@"viewDidLoadEvent" event:@{@"helloKey": @"worldValue", @"hellonum": @7}];
+}
+
+- (IBAction)blockMainThread:(id)sender {
+    sleep(1);
 }
 
 - (void)didReceiveMemoryWarning {

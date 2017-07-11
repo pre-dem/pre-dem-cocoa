@@ -1,6 +1,6 @@
 //
 //  PREDConfig.m
-//  PreDemSDK
+//  PreDemObjc
 //
 //  Created by WangSiyu on 10/05/2017.
 //  Copyright © 2017 pre-engineering. All rights reserved.
@@ -14,6 +14,8 @@
     PREDConfig *config = [PREDConfig new];
     config.httpMonitorEnabled = YES;
     config.crashReportEnabled = YES;
+    config.lagMonitorEnabled = YES;
+    config.onDeviceSymbolicationEnabled = YES;
     return config;
 }
 
@@ -21,6 +23,9 @@
     PREDConfig *config = [PREDConfig new];
     config.httpMonitorEnabled = [[dic objectForKey:@"http_monitor_enabled"] boolValue];
     config.crashReportEnabled = [[dic objectForKey:@"crash_report_enabled"] boolValue];
+    config.lagMonitorEnabled = [[dic objectForKey:@"lag_monitor_enabled"] boolValue];
+    config.onDeviceSymbolicationEnabled = [[dic objectForKey:@"on_device_symbolication_enabled"] boolValue];
+
     return config;
 }
 

@@ -1,6 +1,6 @@
 //
 //  PREDURLSessionSwizzler.h
-//  PreDemSDK
+//  PreDemObjc
 //
 //  Created by WangSiyu on 14/03/2017.
 //  Copyright © 2017 pre-engineering. All rights reserved.
@@ -12,7 +12,6 @@
 
 @property (nonatomic, assign) BOOL isSwizzle;
 
-+ (PREDURLSessionSwizzler *)defaultSwizzler;
 - (void)load;
 - (void)unload;
 

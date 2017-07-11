@@ -1,34 +1,13 @@
-/*
- * Author: Andreas Linde <mail@andreaslinde.de>
- *
- * Copyright (c) 2012-2014 HockeyApp, Bit Stadium GmbH.
- * All rights reserved.
- *
- * Permission is hereby granted, free of charge, to any person
- * obtaining a copy of this software and associated documentation
- * files (the "Software"), to deal in the Software without
- * restriction, including without limitation the rights to use,
- * copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the
- * Software is furnished to do so, subject to the following
- * conditions:
- *
- * The above copyright notice and this permission notice shall be
- * included in all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
- * EXPREDS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
- * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
- * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
- * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
- * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
- * OTHER DEALINGS IN THE SOFTWARE.
- */
+//
+//  PREDHelper.m
+//  PreDemObjc
+//
+//  Created by WangSiyu on 21/02/2017.
+//  Copyright © 2017 pre-engineering. All rights reserved.
+//
 
 
 #import "PREDHelper.h"
-#import "PREDKeychainUtils.h"
 #import "PreDemObjc.h"
 #import "PREDPrivate.h"
 #import "PREDVersion.h"
@@ -110,26 +89,6 @@ NSString *const kPREDExcludeApplicationSupportFromBackup = @"kPREDExcludeApplica
     return resultUUID;
 }
 
-+ (BOOL)isPreiOS7Environment {
-    static BOOL isPreiOS7Environment = YES;
-    static dispatch_once_t checkOS;
-    
-    dispatch_once(&checkOS, ^{
-        // NSFoundationVersionNumber_iOS_6_1 = 993.00
-        // We hardcode this, so compiling with iOS 6 is possible while still being able to detect the correct environment
-        
-        // runtime check according to
-        // https://developer.apple.com/library/prerelease/ios/documentation/UserExperience/Conceptual/TransitionGuide/SupportingEarlieriOS.html
-        if (floor(NSFoundationVersionNumber) <= 993.00) {
-            isPreiOS7Environment = YES;
-        } else {
-            isPreiOS7Environment = NO;
-        }
-    });
-    
-    return isPreiOS7Environment;
-}
-
 + (BOOL)isPreiOS8Environment {
     static BOOL isPreiOS8Environment = YES;
     static dispatch_once_t checkOS8;
@@ -140,7 +99,7 @@ NSString *const kPREDExcludeApplicationSupportFromBackup = @"kPREDExcludeApplica
         
         // runtime check according to
         // https://developer.apple.com/library/prerelease/ios/documentation/UserExperience/Conceptual/TransitionGuide/SupportingEarlieriOS.html
-        if (floor(NSFoundationVersionNumber) <= 1047.25) {
+        if (floor(NSFoundationVersionNumber) < NSFoundationVersionNumber_iOS_8_0) {
             isPreiOS8Environment = YES;
         } else {
             isPreiOS8Environment = NO;
@@ -149,27 +108,6 @@ NSString *const kPREDExcludeApplicationSupportFromBackup = @"kPREDExcludeApplica
     
     return isPreiOS8Environment;
 }
-
-+ (BOOL)isPreiOS10Environment {
-    static BOOL isPreOS10Environment = YES;
-    static dispatch_once_t checkOS10;
-    
-    dispatch_once(&checkOS10, ^{
-        // NSFoundationVersionNumber_iOS_9_MAX = 1299
-        // We hardcode this, so compiling with iOS 7 is possible while still being able to detect the correct environment
-        
-        // runtime check according to
-        // https://developer.apple.com/library/prerelease/ios/documentation/UserExperience/Conceptual/TransitionGuide/SupportingEarlieriOS.html
-        if (floor(NSFoundationVersionNumber) <= 1299.00) {
-            isPreOS10Environment = YES;
-        } else {
-            isPreOS10Environment = NO;
-        }
-    });
-    
-    return isPreOS10Environment;
-}
-
 
 + (BOOL)isAppStoreReceiptSandbox {
 #if TARGET_OS_SIMULATOR
@@ -189,29 +127,6 @@ NSString *const kPREDExcludeApplicationSupportFromBackup = @"kPREDExcludeApplica
 + (BOOL)hasEmbeddedMobileProvision {
     BOOL hasEmbeddedMobileProvision = !![[NSBundle mainBundle] pathForResource:@"embedded" ofType:@"mobileprovision"];
     return hasEmbeddedMobileProvision;
-}
-
-+ (PREDEnvironment)currentAppEnvironment {
-#if TARGET_OS_SIMULATOR
-    return PREDEnvironmentOther;
-#else
-    
-    // MobilePovision profiles are a clear indicator for Ad-Hoc distribution
-    if (hasEmbeddedMobileProvision()) {
-        return PREDEnvironmentOther;
-    }
-    
-    // TestFlight is only supported from iOS 8 onwards, so at this point we have to be in the AppStore
-    if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1) {
-        return PREDEnvironmentAppStore;
-    }
-    
-    if (isAppStoreReceiptSandbox()) {
-        return PREDEnvironmentTestFlight;
-    }
-    
-    return PREDEnvironmentAppStore;
-#endif
 }
 
 + (BOOL)isRunningInAppExtension {
@@ -321,12 +236,6 @@ NSString *const kPREDExcludeApplicationSupportFromBackup = @"kPREDExcludeApplica
     return [[NSBundle mainBundle] preferredLocalizations][0];
 }
 
-+ (NSString *)screenSize {
-    CGFloat scale = [UIScreen mainScreen].scale;
-    CGSize screenSize = [UIScreen mainScreen].bounds.size;
-    return [NSString stringWithFormat:@"%dx%d",(int)(screenSize.height * scale), (int)(screenSize.width * scale)];
-}
-
 + (NSString *)sdkVersion {
     return [NSString stringWithFormat:@"%@", [PREDVersion getSDKVersion]];
 }
@@ -343,37 +252,6 @@ NSString *const kPREDExcludeApplicationSupportFromBackup = @"kPREDExcludeApplica
 + (NSString *)appBuild {
     NSString *build = [[NSBundle mainBundle] infoDictionary][@"CFBundleVersion"];
     return build;
-}
-
-+ (NSString *)appAnonID {
-    static NSString *appAnonID = nil;
-    static dispatch_once_t predAppAnonID;
-    __block NSError *error = nil;
-    NSString *appAnonIDKey = @"appAnonID";
-    
-    dispatch_once(&predAppAnonID, ^{
-        // first check if we already have an install string in the keychain
-        appAnonID = [PREDKeychainUtils getPasswordForUsername:appAnonIDKey andServiceName:self.keychainPreDemObjcServiceName error:&error];
-        
-        if (!appAnonID) {
-            appAnonID = self.UUID;
-            // store this UUID in the keychain (on this device only) so we can be sure to always have the same ID upon app startups
-            if (appAnonID) {
-                // add to keychain in a background thread, since we got reports that storing to the keychain may take several seconds sometimes and cause the app to be killed
-                // and we don't care about the result anyway
-                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
-                    [PREDKeychainUtils storeUsername:appAnonIDKey
-                                         andPassword:appAnonID
-                                      forServiceName:self.keychainPreDemObjcServiceName
-                                      updateExisting:YES
-                                       accessibility:kSecAttrAccessibleAlwaysThisDeviceOnly
-                                               error:&error];
-                });
-            }
-        }
-    });
-    
-    return appAnonID;
 }
 
 + (NSString *)appName {
@@ -433,23 +311,6 @@ NSString *const kPREDExcludeApplicationSupportFromBackup = @"kPREDExcludeApplica
     return @"";
 }
 
-+ (void)fixBackupAttributeForURL:(NSURL *)directoryURL {
-    BOOL shouldExcludeAppSupportDirFromBackup = [[NSUserDefaults standardUserDefaults] boolForKey:kPREDExcludeApplicationSupportFromBackup];
-    if (shouldExcludeAppSupportDirFromBackup) {
-        return;
-    }
-    
-    if (directoryURL) {
-        NSError *getResourceError = nil;
-        NSNumber *appSupportDirExcludedValue;
-        
-        if ([directoryURL getResourceValue:&appSupportDirExcludedValue forKey:NSURLIsExcludedFromBackupKey error:&getResourceError] && appSupportDirExcludedValue) {
-            NSError *setResourceError = nil;
-            [directoryURL setResourceValue:@NO forKey:NSURLIsExcludedFromBackupKey error:&setResourceError];
-        }
-    }
-}
-
 + (NSString *)encodeAppIdentifier:(NSString *)inputString {
     return (inputString ? [self URLEncodedString:inputString] : [self URLEncodedString:self.mainBundleIdentifier]);
 }
@@ -498,43 +359,6 @@ NSString *base64String(NSData * data, unsigned long length) {
 }
 
 #pragma mark Context helpers
-
-// Return ISO 8601 string representation of the date
-+ (NSString *)utcDateString:(NSDate *)date{
-    static NSDateFormatter *dateFormatter;
-    
-    // NSDateFormatter is not thread-safe prior to iOS 7
-    if (self.isPreiOS7Environment) {
-        NSMutableDictionary *threadDictionary = [NSThread currentThread].threadDictionary;
-        dateFormatter = threadDictionary[kPREDUtcDateFormatter];
-        
-        if (!dateFormatter) {
-            dateFormatter = [NSDateFormatter new];
-            NSLocale *enUSPOSIXLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
-            dateFormatter.locale = enUSPOSIXLocale;
-            dateFormatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
-            dateFormatter.timeZone = [NSTimeZone timeZoneForSecondsFromGMT:0];
-            threadDictionary[kPREDUtcDateFormatter] = dateFormatter;
-        }
-        
-        NSString *dateString = [dateFormatter stringFromDate:date];
-        
-        return dateString;
-    }
-    
-    static dispatch_once_t dateFormatterToken;
-    dispatch_once(&dateFormatterToken, ^{
-        NSLocale *enUSPOSIXLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
-        dateFormatter = [NSDateFormatter new];
-        dateFormatter.locale = enUSPOSIXLocale;
-        dateFormatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
-        dateFormatter.timeZone = [NSTimeZone timeZoneForSecondsFromGMT:0];
-    });
-    
-    NSString *dateString = [dateFormatter stringFromDate:date];
-    
-    return dateString;
-}
 
 + (NSDictionary*)getObjectData:(id)obj {
     
@@ -606,49 +430,6 @@ NSString *base64String(NSData * data, unsigned long length) {
     [hash appendFormat:@"%02X", result[i]];
     return [hash lowercaseString];
 }
-
-+ (BOOL)addStringValueToKeychain:(NSString *)stringValue forKey:(NSString *)key {
-    if (!key || !stringValue)
-    return NO;
-    
-    NSError *error = nil;
-    return [PREDKeychainUtils storeUsername:key
-                                andPassword:stringValue
-                             forServiceName:PREDHelper.keychainPreDemObjcServiceName
-                             updateExisting:YES
-                                      error:&error];
-}
-
-+ (BOOL)addStringValueToKeychainForThisDeviceOnly:(NSString *)stringValue forKey:(NSString *)key {
-    if (!key || !stringValue)
-    return NO;
-    
-    NSError *error = nil;
-    return [PREDKeychainUtils storeUsername:key
-                                andPassword:stringValue
-                             forServiceName:PREDHelper.keychainPreDemObjcServiceName
-                             updateExisting:YES
-                              accessibility:kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly
-                                      error:&error];
-}
-
-+ (NSString *)stringValueFromKeychainForKey:(NSString *)key {
-    if (!key)
-    return nil;
-    
-    NSError *error = nil;
-    return [PREDKeychainUtils getPasswordForUsername:key
-                                      andServiceName:PREDHelper.keychainPreDemObjcServiceName
-                                               error:&error];
-}
-
-+ (BOOL)removeKeyFromKeychain:(NSString *)key {
-    NSError *error = nil;
-    return [PREDKeychainUtils deleteItemForUsername:key
-                                     andServiceName:PREDHelper.keychainPreDemObjcServiceName
-                                              error:&error];
-}
-
 
 @end
 

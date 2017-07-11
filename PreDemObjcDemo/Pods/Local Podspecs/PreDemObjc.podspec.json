@@ -29,8 +29,7 @@
     "QuartzCore",
     "QuickLook",
     "Security",
-    "SystemConfiguration",
-    "UIKit"
+    "SystemConfiguration"
   ],
   "libraries": [
     "c++",
@@ -44,6 +43,12 @@
 
     ],
     "QNNetDiag": [
+
+    ],
+    "Qiniu": [
+
+    ],
+    "Reachability": [
 
     ]
   }

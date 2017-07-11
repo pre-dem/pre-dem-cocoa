@@ -1,6 +1,6 @@
 //
 //  PREDHTTPMonitorModel.m
-//  PreDemSDK
+//  PreDemObjc
 //
 //  Created by WangSiyu on 15/03/2017.
 //  Copyright © 2017 pre-engineering. All rights reserved.
@@ -19,7 +19,7 @@
         self.appBundleId = PREDHelper.appBundleId;
         self.osVersion = PREDHelper.osVersion;
         self.deviceModel = PREDHelper.deviceModel;
-        self.deviceUUID = PREDHelper.appAnonID;
+        self.deviceUUID = PREDHelper.UUID;
     }
     return self;
 }

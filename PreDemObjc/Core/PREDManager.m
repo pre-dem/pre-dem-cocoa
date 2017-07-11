@@ -1,44 +1,23 @@
-/*
- * Author: Andreas Linde <mail@andreaslinde.de>
- *         Kent Sutherland
- *
- * Copyright (c) 2012-2014 HockeyApp, Bit Stadium GmbH.
- * All rights reserved.
- *
- * Permission is hereby granted, free of charge, to any person
- * obtaining a copy of this software and associated documentation
- * files (the "Software"), to deal in the Software without
- * restriction, including without limitation the rights to use,
- * copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the
- * Software is furnished to do so, subject to the following
- * conditions:
- *
- * The above copyright notice and this permission notice shall be
- * included in all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
- * EXPREDS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
- * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
- * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
- * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
- * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
- * OTHER DEALINGS IN THE SOFTWARE.
- */
+//
+//  PREDManager.m
+//  PreDemObjc
+//
+//  Created by WangSiyu on 21/02/2017.
+//  Copyright © 2017 pre-engineering. All rights reserved.
+//
 
 #import "PreDemObjc.h"
 #import "PREDManagerPrivate.h"
 #import "PREDPrivate.h"
-#import "PREDBaseManagerPrivate.h"
 #import "PREDHelper.h"
 #import "PREDNetworkClient.h"
-#import "PREDKeychainUtils.h"
 #import "PREDVersion.h"
 #import "PREDConfigManager.h"
 #import "PREDNetDiag.h"
-#import "PREDCrashManagerPrivate.h"
 #import "PREDURLProtocol.h"
+#import "PREDCrashManager.h"
+#import "PREDLagMonitorController.h"
+#import "Reachability.h"
 
 static NSString* app_id(NSString* appKey){
     return [appKey substringToIndex:8];
@@ -47,40 +26,33 @@ static NSString* app_id(NSString* appKey){
 @implementation PREDManager {
     NSString *_appKey;
     
-    BOOL _validAppIdentifier;
-    
     BOOL _startManagerIsInvoked;
     
     BOOL _managersInitialized;
-    
-    PREDNetworkClient *_hockeyAppClient;
-    
+        
     PREDConfigManager *_configManager;
+    
+    PREDURLProtocol *_httpManager;
+    
+    PREDCrashManager *_crashManager;
+    
+    PREDLagMonitorController *_lagManager;
+    
+    Reachability *_reachability;
 }
 
 
 #pragma mark - Public Class Methods
 
-+ (PREDManager *)sharedPREDManager {
-    static PREDManager *sharedInstance = nil;
-    static dispatch_once_t pred;
-    
-    dispatch_once(&pred, ^{
-        sharedInstance = [[PREDManager alloc] init];
-    });
-    
-    return sharedInstance;
-}
-
 + (void)startWithAppKey:(nonnull NSString *)appKey
           serviceDomain:(nonnull NSString *)serviceDomain{
-    [[PREDManager sharedPREDManager] startWithAppKey:appKey serviceDomain:serviceDomain];
+    [[self sharedPREDManager] startWithAppKey:appKey serviceDomain:serviceDomain];
 }
 
 
 + (void)diagnose:(nonnull NSString *)host
         complete:(nonnull PREDNetDiagCompleteHandler)complete{
-    [[PREDManager sharedPREDManager] diagnose:host complete:complete];
+    [[self sharedPREDManager] diagnose:host complete:complete];
 }
 
 + (void)trackEventWithName:(nonnull NSString *)eventName
@@ -89,135 +61,9 @@ static NSString* app_id(NSString* appKey){
         return;
     }
     
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@events/%@", [[PREDManager sharedPREDManager] baseUrl], eventName]]];
-    request.HTTPMethod = @"POST";
-    [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    NSError *err;
-    request.HTTPBody = [NSJSONSerialization dataWithJSONObject:event options:0 error:&err];
-    if (err) {
-        PREDLogError(@"sys info can not be jsonized");
-    }
-    [NSURLProtocol setProperty:@YES
-                        forKey:@"PREDInternalRequest"
-                     inRequest:request];
-    
-    NSURLSession* session = [NSURLSession sessionWithConfiguration:NSURLSessionConfiguration.defaultSessionConfiguration];
-    NSURLSessionTask *task = [session dataTaskWithRequest:request
-                                        completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) { NSLog(@"%@", [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil]); }];
-    [task resume];
-}
-
-- (instancetype)init {
-    if ((self = [super init])) {
-        _delegate = nil;
-        _managersInitialized = NO;
-        
-        _hockeyAppClient = nil;
-        
-        _disableCrashManager = NO;
-        
-        _appEnvironment = PREDHelper.currentAppEnvironment;
-        _startManagerIsInvoked = NO;
-        _installString = PREDHelper.appAnonID;
-        
-        _configManager = [[PREDConfigManager alloc] init];
-        _configManager.delegate = self;
-        
-        [self performSelector:@selector(validateStartManagerIsInvoked) withObject:nil afterDelay:0.0f];
-    }
-    return self;
-}
-
-#pragma mark - Public Instance Methods (Configuration)
-
-- (void)startWithAppKey:(NSString *)appKey serviceDomain:(NSString *)serviceDomain {
-    _appKey = [appKey copy];
-    
-    [self setServerURL:serviceDomain];
-    
-    [self initializeModules];
-    
-    [self applyConfig:[_configManager getConfigWithAppKey:appKey]];
-    
-    [self startManager];
-}
-
-- (void)startManager {
-    if (!_validAppIdentifier) return;
-    if (_startManagerIsInvoked) {
-        PREDLogWarning(@"startManager should only be invoked once! This call is ignored.");
-        return;
-    }
-    
-    // Fix bug where Application Support directory was encluded from backup
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSURL *appSupportURL = [[fileManager URLsForDirectory:NSApplicationSupportDirectory inDomains:NSUserDomainMask] lastObject];
-    [PREDHelper fixBackupAttributeForURL:appSupportURL];
-    
-    if (![self isSetUpOnMainThread]) return;
-    
-    PREDLogDebug(@"Starting PREDManager");
-    _startManagerIsInvoked = YES;
-    
-    // start CrashManager
-    if (![self isCrashManagerDisabled]) {
-        PREDLogDebug(@"Start CrashManager");
-        
-        [_crashManager startManager];
-    }
-    
-    // App Extensions can only use PREDCrashManager, so ignore all others automatically
-    if (PREDHelper.isRunningInAppExtension) {
-        return;
-    }
-    
-    
-    if (!self.isHttpMonitorDisabled) {
-        [PREDURLProtocol enableHTTPDem];
-    }
-}
-
-- (void)setDisableHttpMonitor:(BOOL)disableHttpMonitor {
-    _disableHttpMonitor = disableHttpMonitor;
-    if (disableHttpMonitor) {
-        [PREDURLProtocol disableHTTPDem];
-    } else {
-        [PREDURLProtocol enableHTTPDem];
-    }
-}
-
-- (void)setServerURL:(NSString *)aServerURL {
-    if (!aServerURL) {
-        aServerURL = PRED_DEFAULT_URL;
-    }
-    if (![aServerURL hasPrefix:@"http://"] && ![aServerURL hasPrefix:@"https://"]) {
-        aServerURL = [NSString stringWithFormat:@"http://%@", aServerURL];
-    }
-    
-    if (_serverURL != aServerURL) {
-        _serverURL = [aServerURL copy];
-        
-        if (_hockeyAppClient) {
-            _hockeyAppClient.baseURL = [NSURL URLWithString:_serverURL];
-        }
-    }
-}
-
-
-- (void)setDelegate:(id<PREDManagerDelegate>)delegate {
-    if (self.appEnvironment != PREDEnvironmentAppStore) {
-        if (_startManagerIsInvoked) {
-            PREDLogError(@"The `delegate` property has to be set before calling [[PREDManager sharedPREDManager] startManager] !");
-        }
-    }
-    
-    if (_delegate != delegate) {
-        _delegate = delegate;
-        
-        if (_crashManager) {
-            _crashManager.delegate = _delegate;
-        }
-    }
+    [[self sharedPREDManager].networkClient postPath:[NSString stringWithFormat:@"events/%@", eventName] parameters:event completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
+        NSLog(@"%@", [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil]);
+    }];
 }
 
 + (PREDLogLevel)logLevel {
@@ -232,35 +78,6 @@ static NSString* app_id(NSString* appKey){
     [PREDLogger setLogHandler:logHandler];
 }
 
-- (void)modifyKeychainUserValue:(NSString *)value forKey:(NSString *)key {
-    NSError *error = nil;
-    BOOL success = YES;
-    NSString *updateType = @"update";
-    
-    if (value) {
-        success = [PREDKeychainUtils storeUsername:key
-                                       andPassword:value
-                                    forServiceName:PREDHelper.keychainPreDemObjcServiceName
-                                    updateExisting:YES
-                                     accessibility:kSecAttrAccessibleAlwaysThisDeviceOnly
-                                             error:&error];
-    } else {
-        updateType = @"delete";
-        if ([PREDKeychainUtils getPasswordForUsername:key
-                                       andServiceName:PREDHelper.keychainPreDemObjcServiceName
-                                                error:&error]) {
-            success = [PREDKeychainUtils deleteItemForUsername:key
-                                                andServiceName:PREDHelper.keychainPreDemObjcServiceName
-                                                         error:&error];
-        }
-    }
-    
-    if (!success) {
-        NSString *errorDescription = [error description] ?: @"";
-        PREDLogError(@"Couldn't %@ key %@ in the keychain. %@", updateType, key, errorDescription);
-    }
-}
-
 + (NSString *)version {
     return [PREDVersion getSDKVersion];
 }
@@ -269,65 +86,112 @@ static NSString* app_id(NSString* appKey){
     return [PREDVersion getSDKBuild];
 }
 
-#pragma mark - Private Instance Methods
+#pragma mark - Private Methods
 
-- (PREDNetworkClient *)hockeyAppClient {
-    if (!_hockeyAppClient) {
-        _hockeyAppClient = [[PREDNetworkClient alloc] initWithBaseURL:[NSURL URLWithString:self.serverURL]];
-    }
-    return _hockeyAppClient;
-}
-
-- (void)logPingMessageForStatusCode:(NSInteger)statusCode {
-    switch (statusCode) {
-        case 400:
-            PREDLogError(@"App ID not found");
-            break;
-        case 201:
-            PREDLogDebug(@"Ping accepted.");
-            break;
-        case 200:
-            PREDLogDebug(@"Ping accepted. Server already knows.");
-            break;
-        default:
-            PREDLogError(@"Unknown error");
-            break;
-    }
-}
-
-- (void)validateStartManagerIsInvoked {
-    if (_validAppIdentifier && (self.appEnvironment != PREDEnvironmentAppStore)) {
-        if (!_startManagerIsInvoked) {
-            PREDLogError(@"You did not call [[PREDManager sharedPREDManager] startManager] to startup the PreDemObjc! Please do so after setting up all properties. The SDK is NOT running.");
-        }
-    }
-}
-
-- (BOOL)isSetUpOnMainThread {
-    NSString *errorString = @"PreDemObjc has to be setup on the main thread!";
++ (PREDManager *)sharedPREDManager {
+    static PREDManager *sharedInstance = nil;
+    static dispatch_once_t pred;
     
-    if (!NSThread.isMainThread) {
-        if (self.appEnvironment == PREDEnvironmentAppStore) {
-            PREDLogError(@"%@", errorString);
-        } else {
-            PREDLogError(@"%@", errorString);
-            NSAssert(NSThread.isMainThread, errorString);
-        }
+    dispatch_once(&pred, ^{
+        sharedInstance = [[PREDManager alloc] init];
+    });
+    
+    return sharedInstance;
+}
+
+- (instancetype)init {
+    if ((self = [super init])) {
+        _managersInitialized = NO;
+        _networkClient = nil;
+        _enableCrashManager = YES;
+        _enableHttpMonitor = YES;
+        _enableLagMonitor = YES;
+        _startManagerIsInvoked = NO;
+        _reachability = [Reachability reachabilityForInternetConnection];
+
+    }
+    return self;
+}
+
+
+- (void)startWithAppKey:(NSString *)appKey serviceDomain:(NSString *)serviceDomain {
+    _appKey = [appKey copy];
+    
+    [self initNetworkClient:serviceDomain];
+    
+    [self initializeModules];
+    
+    [self applyConfig:[_configManager getConfigWithAppKey:appKey]];
+    
+    [self startManager];
+}
+
+- (void)startManager {
+    if (_startManagerIsInvoked) {
+        PREDLogWarning(@"startManager should only be invoked once! This call is ignored.");
+        return;
+    }
+    
+    PREDLogDebug(@"Starting PREDManager");
+    _startManagerIsInvoked = YES;
+    
+    [_reachability startNotifier];
+    
+    // start CrashManager
+    if (self.isCrashManagerEnabled) {
+        PREDLogDebug(@"Starting CrashManager");
         
-        return NO;
+        [_crashManager startManager];
     }
     
-    return YES;
+    if (self.isHttpMonitorEnabled) {
+        PREDLogDebug(@"Starting HttpManager");
+
+        [_httpManager enableHTTPDem];
+    }
+    
+    if (self.isLagMonitorEnabled) {
+        PREDLogDebug(@"Starting LagManager");
+        
+        [_lagManager startMonitor];
+    }
 }
 
-- (BOOL)shouldUseLiveIdentifier {
-//    BOOL delegateResult = NO;
-//    if ([_delegate respondsToSelector:@selector(shouldUseLiveIdentifierForPREDManager:)]) {
-//        delegateResult = [(NSObject <PREDManagerDelegate>*)_delegate shouldUseLiveIdentifierForPREDManager:self];
-//    }
-//    
-//    return (delegateResult) || (_appEnvironment == PREDEnvironmentAppStore);
-    return NO;
+#warning todo
+- (void)setEnableCrashManager:(BOOL)enableCrashManager {
+    _enableCrashManager = enableCrashManager;
+
+}
+
+- (void)setEnableHttpMonitor:(BOOL)enableHttpMonitor {
+    _enableHttpMonitor = enableHttpMonitor;
+    if (enableHttpMonitor) {
+        [_httpManager enableHTTPDem];
+    } else {
+        [_httpManager disableHTTPDem];
+    }
+}
+
+- (void)setEnableLagMonitor:(BOOL)enableLagMonitor {
+    _enableLagMonitor = enableLagMonitor;
+    if (enableLagMonitor) {
+        [_lagManager startMonitor];
+    } else {
+        [_lagManager endMonitor];
+    }
+}
+
+- (void)initNetworkClient:(NSString *)aServerURL {
+    if (!aServerURL) {
+        aServerURL = PRED_DEFAULT_URL;
+    }
+    if (![aServerURL hasPrefix:@"http://"] && ![aServerURL hasPrefix:@"https://"]) {
+        aServerURL = [NSString stringWithFormat:@"http://%@", aServerURL];
+    }
+    
+    aServerURL = [NSString stringWithFormat:@"%@/v1/%@/", aServerURL, app_id(_appKey)];
+    
+    _networkClient = [[PREDNetworkClient alloc] initWithBaseURL:[NSURL URLWithString:aServerURL]];
 }
 
 - (void)initializeModules {
@@ -336,65 +200,32 @@ static NSString* app_id(NSString* appKey){
         return;
     }
     
-    _validAppIdentifier = [self checkValidityOfAppIdentifier:_appKey];
-    
-    if (![self isSetUpOnMainThread]) return;
-    
     _startManagerIsInvoked = NO;
     
-    if (_validAppIdentifier) {
-        PREDLogDebug(@"Setup CrashManager");
-        _crashManager = [[PREDCrashManager alloc] initWithAppIdentifier:app_id(_appKey)
-                                                         appEnvironment:_appEnvironment
-                                                        hockeyAppClient:[self hockeyAppClient]];
-        _crashManager.delegate = _delegate;
-
-        _managersInitialized = YES;
-    } else {
-        [self logInvalidIdentifier:@"app identifier"];
-    }
+    _crashManager = [[PREDCrashManager alloc]
+                     initWithAppIdentifier:app_id(_appKey)
+                     networkClient:_networkClient];
+    _httpManager = [[PREDURLProtocol alloc] initWithNetworkClient:_networkClient];
+    _configManager = [[PREDConfigManager alloc] initWithNetClient:_networkClient];
+    _configManager.delegate = self;
+    _lagManager = [[PREDLagMonitorController alloc] initWithAppId:app_id(_appKey) networkClient:_networkClient];
+    _managersInitialized = YES;
 }
 
 - (void)applyConfig:(PREDConfig *)config {
-    self.disableCrashManager = !config.crashReportEnabled;
-    self.disableHttpMonitor = !config.httpMonitorEnabled;
+    self.enableCrashManager = config.crashReportEnabled;
+    self.enableHttpMonitor = config.httpMonitorEnabled;
+    self.enableLagMonitor = config.lagMonitorEnabled;
+    _crashManager.enableOnDeviceSymbolication = config.onDeviceSymbolicationEnabled;
 }
 
 - (void)diagnose:(NSString *)host
         complete:(PREDNetDiagCompleteHandler)complete {
-    [PREDNetDiag diagnose:host appKey:app_id(_appKey) complete:complete];
+    [PREDNetDiag diagnose:host appKey:app_id(_appKey) netClient:_networkClient complete:complete];
 }
 
 - (void)configManager:(PREDConfigManager *)manager didReceivedConfig:(PREDConfig *)config {
     [self applyConfig:config];
-}
-
-#pragma mark - Private Class Methods
-
-- (BOOL)checkValidityOfAppIdentifier:(NSString *)identifier {
-    BOOL result = NO;
-    
-    if (identifier) {
-        NSCharacterSet *hexSet = [NSCharacterSet characterSetWithCharactersInString:@"0123456789abcdef"];
-        NSCharacterSet *inStringSet = [NSCharacterSet characterSetWithCharactersInString:identifier];
-        result = [hexSet isSupersetOfSet:inStringSet];
-    }
-    
-    return result;
-}
-
-- (void)logInvalidIdentifier:(NSString *)environment {
-    if (self.appEnvironment != PREDEnvironmentAppStore) {
-        if ([environment isEqualToString:@"liveIdentifier"]) {
-            PREDLogWarning(@"The liveIdentifier is invalid! The SDK will be disabled when deployed to the App Store without setting a valid app identifier!");
-        } else {
-            PREDLogError(@"The %@ is invalid! Please use the PreDem app identifier you find on the apps website on PreDem! The SDK is disabled!", environment);
-        }
-    }
-}
-
--(nonnull NSString*) baseUrl{
-    return [NSString stringWithFormat:@"%@/v1/%@/", _serverURL, app_id(_appKey)];
 }
 
 @end

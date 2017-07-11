@@ -1,6 +1,6 @@
 //
 //  PREDConfig.h
-//  PreDemSDK
+//  PreDemObjc
 //
 //  Created by WangSiyu on 10/05/2017.
 //  Copyright © 2017 pre-engineering. All rights reserved.
@@ -13,6 +13,8 @@
 @property(nonatomic, strong, class, readonly) PREDConfig *defaultConfig;
 @property(nonatomic, assign) BOOL httpMonitorEnabled;
 @property(nonatomic, assign) BOOL crashReportEnabled;
+@property(nonatomic, assign) BOOL lagMonitorEnabled;
+@property(nonatomic, assign) BOOL onDeviceSymbolicationEnabled;
 
 + (instancetype)configWithDic:(NSDictionary *)dic;
 

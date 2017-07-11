@@ -15,11 +15,13 @@ Pod::Spec.new do |s|
   s.source_files = "PreDemObjc/**/*.{h,m,mm}"
   s.public_header_files = 'PreDemObjc/Public/*.h'
   s.vendored_frameworks = 'Vendor/*.framework'
-  s.frameworks = "AssetsLibrary", "CoreTelephony", "CoreText", "CoreGraphics", "Foundation", "MobileCoreServices", "Photos", "QuartzCore", "QuickLook", "Security", "SystemConfiguration", "UIKit"
+  s.frameworks = "AssetsLibrary", "CoreTelephony", "CoreText", "CoreGraphics", "Foundation", "MobileCoreServices", "Photos", "QuartzCore", "QuickLook", "Security", "SystemConfiguration"
   s.libraries  = "c++", "z"
   s.resource_bundles = { 'PREDResources' => 'PreDemObjc/Resources/*.plist' }
 
   s.dependency "HappyDNS"
   s.dependency "QNNetDiag"
+  s.dependency "Qiniu"
+  s.dependency "Reachability"
 
 end

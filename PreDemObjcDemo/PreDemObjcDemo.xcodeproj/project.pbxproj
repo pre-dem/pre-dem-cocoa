@@ -482,7 +482,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "pre-engineering.PreDemObjcDemo";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "94dd8f06-abaf-4e6d-8685-5dcad3fc907f";
+				PROVISIONING_PROFILE = "b84a9308-4aef-49c6-9639-fad2c3eaf700";
 				PROVISIONING_PROFILE_SPECIFIER = "pre-engineering.PreDemObjcDemo InHouse";
 			};
 			name = Release;
