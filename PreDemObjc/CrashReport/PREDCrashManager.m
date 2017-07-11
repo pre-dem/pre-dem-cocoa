@@ -578,54 +578,27 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
 
 // process upload response
 - (void)processUploadResultWithFilename:(NSString *)filename responseData:(NSData *)responseData statusCode:(NSInteger)statusCode error:(NSError *)error {
-    __block NSError *theError = error;
+    _sendingInProgress = NO;
+    if (!error) {
+        if (statusCode >= 200 && statusCode < 400) {
+            [self cleanCrashReportWithFilename:filename];
+            NSMutableDictionary *response = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:&error];
+            PREDLogDebug(@"Received API response: %@", response);
+            // only if sending the crash report went successfully, continue with the next one (if there are more)
+            [self sendNextCrashReport];
+        } else {
+            error = [NSError errorWithDomain:kPREDCrashErrorDomain
+                                        code:PREDCrashAPIErrorWithStatusCode
+                                    userInfo:@{
+                                               NSLocalizedDescriptionKey: [NSString stringWithFormat:@"Sending failed with status code: %li", (long)statusCode]
+                                               }];
+
+        }
+    }
     
-    dispatch_async(dispatch_get_main_queue(), ^{
-        _sendingInProgress = NO;
-        
-        if (nil == theError) {
-            if (nil == responseData || [responseData length] == 0) {
-                theError = [NSError errorWithDomain:kPREDCrashErrorDomain
-                                               code:PREDCrashAPIReceivedEmptyResponse
-                                           userInfo:@{
-                                                      NSLocalizedDescriptionKey: @"Sending failed with an empty response!"
-                                                      }
-                            ];
-            } else if (statusCode >= 200 && statusCode < 400) {
-                [self cleanCrashReportWithFilename:filename];
-                
-                // PreDem uses PList XML format
-                NSMutableDictionary *response = [NSPropertyListSerialization propertyListWithData:responseData
-                                                                                          options:NSPropertyListMutableContainersAndLeaves
-                                                                                           format:nil
-                                                                                            error:&theError];
-                PREDLogDebug(@"Received API response: %@", response);
-                
-                // only if sending the crash report went successfully, continue with the next one (if there are more)
-                [self sendNextCrashReport];
-            } else if (statusCode == 400) {
-                [self cleanCrashReportWithFilename:filename];
-                
-                theError = [NSError errorWithDomain:kPREDCrashErrorDomain
-                                               code:PREDCrashAPIAppVersionRejected
-                                           userInfo:@{
-                                                      NSLocalizedDescriptionKey: @"The server rejected receiving crash reports for this app version!"
-                                                      }
-                            ];
-            } else {
-                theError = [NSError errorWithDomain:kPREDCrashErrorDomain
-                                               code:PREDCrashAPIErrorWithStatusCode
-                                           userInfo:@{
-                                                      NSLocalizedDescriptionKey: [NSString stringWithFormat:@"Sending failed with status code: %li", (long)statusCode]
-                                                      }
-                            ];
-            }
-        }
-        
-        if (theError) {
-            PREDLogError(@"%@", [theError localizedDescription]);
-        }
-    });
+    if (error) {
+        PREDLogError(@"%@", error);
+    }
 }
 
 @end
