@@ -45,7 +45,7 @@ typedef NS_ENUM(NSUInteger, PREDCrashManagerUserInput) {
 
 @property (nonatomic, strong) NSString *crashesDir;
 
-- (instancetype)initWithAppIdentifier:(NSString *)appIdentifier networkClient:(PREDNetworkClient *)networkClient;
+- (instancetype)initWithAppId:(NSString *)appId networkClient:(PREDNetworkClient *)networkClient;
 
 - (void)startManager;
 

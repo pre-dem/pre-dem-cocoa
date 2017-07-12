@@ -93,8 +93,9 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
     id _appDidReceiveLowMemoryWarningObserver;
 }
 
-- (instancetype)initWithAppIdentifier:(NSString *)appIdentifier networkClient:(PREDNetworkClient *)networkClient {
+- (instancetype)initWithAppId:(NSString *)appId networkClient:(PREDNetworkClient *)networkClient {
     if ((self = [super init])) {
+        _appId = appId;
         _isSetup = NO;
         _networkClient = networkClient;
         _plCrashReporter = nil;
@@ -542,6 +543,7 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
             // the next crash will be automatically send on the next app start/becoming active event
             return;
         }
+        NSLog(@"%@", crashLogString);
         NSString *md5 = [PREDHelper MD5:crashLogString];
         NSDictionary *param = @{@"md5": md5};
         __weak typeof(self) wSelf = self;

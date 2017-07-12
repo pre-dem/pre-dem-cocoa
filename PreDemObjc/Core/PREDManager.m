@@ -208,7 +208,7 @@ static NSString* app_id(NSString* appKey){
     _startManagerIsInvoked = NO;
     
     _crashManager = [[PREDCrashManager alloc]
-                     initWithAppIdentifier:app_id(_appKey)
+                     initWithAppId:app_id(_appKey)
                      networkClient:_networkClient];
     _httpManager = [[PREDURLProtocol alloc] initWithNetworkClient:_networkClient];
     _configManager = [[PREDConfigManager alloc] initWithNetClient:_networkClient];

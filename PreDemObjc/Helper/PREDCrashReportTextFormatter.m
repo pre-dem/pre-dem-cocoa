@@ -1071,7 +1071,7 @@ NSString *const PREDXamarinStackTraceDelimiter = @"Xamarin Exception Stack:";
      * the format used is imageBaseAddress + offsetToIP */
     PREDBinaryImageType imageType = [[self class] pres_imageTypeForImagePath:imageInfo.imageName
                                                                 processPath:report.processInfo.processPath];
-    if (frameInfo.symbolInfo != nil && imageType == PREDBinaryImageTypeOther) {
+    if (frameInfo.symbolInfo != nil && imageType != PREDBinaryImageTypeOther) {
         NSString *symbolName = frameInfo.symbolInfo.symbolName;
         
         /* Apple strips the _ symbol prefix in their reports. Only OS X makes use of an
