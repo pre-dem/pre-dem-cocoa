@@ -11,6 +11,17 @@
 
 @interface PREDNetDiagResult : NSObject
 
+@property (nonatomic, strong) NSString *app_bundle_id;
+@property (nonatomic, strong) NSString *app_name;
+@property (nonatomic, strong) NSString *app_version;
+@property (nonatomic, strong) NSString *device_model;
+@property (nonatomic, strong) NSString *os_platform;
+@property (nonatomic, strong) NSString *os_version;
+@property (nonatomic, strong) NSString *sdk_version;
+@property (nonatomic, strong) NSString *sdk_id;
+@property (nonatomic, strong) NSString *device_id;
+
+
 @property (nonatomic, strong) NSString *result_id;
 
 @property (nonatomic, assign) NSInteger ping_code;

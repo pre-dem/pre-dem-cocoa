@@ -9,32 +9,34 @@
 #import "PREDNetDiagResult.h"
 #import "PREDManagerPrivate.h"
 #import "PREDHelper.h"
+#import "PREDLogger.h"
 
 #define PREDTotalResultNeeded   5
-#define PREDSendRetryInterval   10
-#define PREDSendMaxRetryTimes   5
 
-@interface PREDNetDiagResult ()
-
-@property (nonatomic, assign) NSInteger completedCount;
-@property (nonatomic, assign) NSInteger retryTimes;
-@property (nonatomic, strong) NSLock *lock;
-@property (nonatomic, copy) PREDNetDiagCompleteHandler complete;
-@property (nonatomic, strong) NSString *appKey;
-@property (nonatomic, strong) PREDNetworkClient *client;
-
-@end
-
-@implementation PREDNetDiagResult
+@implementation PREDNetDiagResult {
+    NSInteger _completedCount;
+    NSLock *_lock;
+    PREDNetDiagCompleteHandler _complete;
+    NSString *_appKey;
+    PREDNetworkClient *_client;
+}
 
 - (instancetype)initWithAppKey:(NSString *)appKey complete:(PREDNetDiagCompleteHandler)complete netClient:(PREDNetworkClient *)client {
     if (self = [super init]) {
-        self.completedCount = 0;
-        self.retryTimes = 0;
-        self.lock = [NSLock new];
-        self.complete = complete;
-        self.appKey = appKey;
-        self.client = client;
+        _completedCount = 0;
+        _lock = [NSLock new];
+        _complete = complete;
+        _appKey = appKey;
+        _client = client;
+        self.app_bundle_id = PREDHelper.appBundleId;
+        self.app_name = PREDHelper.appName;
+        self.app_version = PREDHelper.appVersion;
+        self.device_model = PREDHelper.deviceModel;
+        self.os_platform = PREDHelper.osPlatform;
+        self.os_version = PREDHelper.osVersion;
+        self.sdk_version = PREDHelper.sdkVersion;
+        self.sdk_id = PREDHelper.UUID;
+        self.device_id = @"";
     }
     return self;
 }
@@ -97,15 +99,15 @@
 }
 
 - (void)checkAndSend {
-    [self.lock lock];
-    self.completedCount++;
-    if (self.completedCount == PREDTotalResultNeeded) {
-        [self.lock unlock];
+    [_lock lock];
+    _completedCount++;
+    if (_completedCount == PREDTotalResultNeeded) {
+        [_lock unlock];
         [self generateResultID];
-        self.complete(self);
-        [self sendReport:self.appKey];
+        _complete(self);
+        [self sendReport:_appKey];
     } else {
-        [self.lock unlock];
+        [_lock unlock];
     }
 }
 
@@ -114,14 +116,9 @@
 }
 
 - (void)sendReport:(NSString *)appKey {
-    __weak typeof(self) wSelf = self;
     [_client postPath:@"net-diags/i" parameters:[self toDic] completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
-        __strong typeof(wSelf) strongSelf = wSelf;
-        if ((error || operation.response.statusCode != 200) && strongSelf.retryTimes < PREDSendMaxRetryTimes) {
-            strongSelf.retryTimes ++;
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(PREDSendRetryInterval * NSEC_PER_SEC)), dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
-                [strongSelf sendReport:appKey];
-            });
+        if (error || operation.response.statusCode >= 400) {
+            PREDLogError(@"send net diag error: %@, statusCode: %ld", error, (long)operation.response.statusCode);
         }
     }];
 }

@@ -172,7 +172,7 @@ static void runLoopObserverCallBack(CFRunLoopObserverRef observer, CFRunLoopActi
                            };
     [_networkClient postPath:@"lag-monitor/i" parameters:info completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
         if (error || operation.response.statusCode >= 400) {
-            PREDLogError(@"upload lag metadata fail: %@ code: %d, drop report", error?:@"unknown", operation.response.statusCode);
+            PREDLogError(@"upload lag metadata fail: %@ code: %ld, drop report", error?:@"unknown", (long)operation.response.statusCode);
         } else {
             PREDLogDebug(@"upload lag report succeed");
         }
