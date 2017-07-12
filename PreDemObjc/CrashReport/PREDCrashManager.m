@@ -14,7 +14,6 @@
 #import "PREDCrashManager.h"
 #import "PREDCrashReportTextFormatter.h"
 #import "PREDCrashCXXExceptionHandler.h"
-#import "Reachability.h"
 #include <sys/sysctl.h>
 #import "QiniuSDK.h"
 
@@ -92,7 +91,6 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
     id _appDidEnterBackgroundObserver;
     id _appWillEnterForegroundObserver;
     id _appDidReceiveLowMemoryWarningObserver;
-    id _networkDidBecomeReachableObserver;
 }
 
 - (instancetype)initWithAppIdentifier:(NSString *)appIdentifier networkClient:(PREDNetworkClient *)networkClient {
@@ -256,16 +254,6 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
                                                                                     }];
     }
     
-    if(nil == _networkDidBecomeReachableObserver) {
-        _networkDidBecomeReachableObserver = [[NSNotificationCenter defaultCenter] addObserverForName:kReachabilityChangedNotification
-                                                                                               object:nil
-                                                                                                queue:NSOperationQueue.mainQueue
-                                                                                           usingBlock:^(NSNotification *note) {
-                                                                                               typeof(self) strongSelf = weakSelf;
-                                                                                               [strongSelf triggerDelayedProcessing];
-                                                                                           }];
-    }
-    
     if (nil ==  _appWillTerminateObserver) {
         _appWillTerminateObserver = [[NSNotificationCenter defaultCenter] addObserverForName:UIApplicationWillTerminateNotification
                                                                                       object:nil
@@ -320,8 +308,6 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
     [self unregisterObserver:_appDidEnterBackgroundObserver];
     [self unregisterObserver:_appWillEnterForegroundObserver];
     [self unregisterObserver:_appDidReceiveLowMemoryWarningObserver];
-    
-    [self unregisterObserver:_networkDidBecomeReachableObserver];
 }
 
 - (void) unregisterObserver:(id)observer {

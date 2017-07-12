@@ -22,6 +22,5 @@ Pod::Spec.new do |s|
   s.dependency "HappyDNS"
   s.dependency "QNNetDiag"
   s.dependency "Qiniu"
-  s.dependency "Reachability"
 
 end
