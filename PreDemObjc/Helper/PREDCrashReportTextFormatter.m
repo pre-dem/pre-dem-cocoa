@@ -870,49 +870,6 @@ NSString *const PREDXamarinStackTraceDelimiter = @"Xamarin Exception Stack:";
     return nil;
 }
 
-
-/**
- * Returns an array of app UUIDs and their architecture
- * As a dictionary for each element
- *
- * @param report The report to format.
- *
- * @return Returns the formatted result on success, or nil if an error occurs.
- */
-+ (NSArray *)arrayOfAppUUIDsForCrashReport:(PREPLCrashReport *)report {
-    NSMutableArray* appUUIDs = [NSMutableArray array];
-    
-    /* Images. The iPhone crash report format sorts these in ascending order, by the base address */
-    for (PREPLCrashReportBinaryImageInfo *imageInfo in [report.images sortedArrayUsingFunction: pres_binaryImageSort context: nil]) {
-        NSString *uuid;
-        /* Fetch the UUID if it exists */
-        uuid = imageInfo.hasImageUUID ? imageInfo.imageUUID : @"???";
-        
-        /* Determine the architecture string */
-        NSString *archName = [[self class] pres_archNameFromImageInfo:imageInfo];
-        
-        /* Determine if this is the app executable or app specific framework */
-        PREDBinaryImageType imageType = [[self class] pres_imageTypeForImagePath:imageInfo.imageName
-                                                                    processPath:report.processInfo.processPath];
-        if (imageType != PREDBinaryImageTypeOther) {
-            NSString *imageTypeString;
-            
-            if (imageType == PREDBinaryImageTypeAppBinary) {
-                imageTypeString = @"app";
-            } else {
-                imageTypeString = @"framework";
-            }
-            
-            [appUUIDs addObject:@{kPREDBinaryImageKeyUUID: uuid,
-                                  kPREDBinaryImageKeyArch: archName,
-                                  kPREDBinaryImageKeyType: imageTypeString}
-             ];
-        }
-    }
-    
-    return appUUIDs;
-}
-
 /* Determine if in binary image is the app executable or app specific framework */
 + (PREDBinaryImageType)pres_imageTypeForImagePath:(NSString *)imagePath processPath:(NSString *)processPath {
     if (!imagePath || !processPath) {
@@ -1132,33 +1089,6 @@ NSString *const PREDXamarinStackTraceDelimiter = @"Xamarin Exception Stack:";
         return path;
     }
     return anonymizedProcessPath;
-}
-
-/**
- *	 Extract all app specific UUIDs from the crash reports
- *
- * This allows us to send the UUIDs in the XML construct to the server, so the server does not need to parse the crash report for this data.
- * The app specific UUIDs help to identify which dSYMs are needed to symbolicate this crash report.
- *
- *	@param	report The crash report from PLCrashReporter
- *
- *	@return XML structure with the app specific UUIDs
- */
-+ (NSString *) extractAppUUIDs:(PREPLCrashReport *)report {
-    NSMutableString *uuidString = [NSMutableString string];
-    NSArray *uuidArray = [self arrayOfAppUUIDsForCrashReport:report];
-    
-    for (NSDictionary *element in uuidArray) {
-        if ([element objectForKey:kPREDBinaryImageKeyType] && [element objectForKey:kPREDBinaryImageKeyArch] && [element objectForKey:kPREDBinaryImageKeyUUID]) {
-            [uuidString appendFormat:@"<uuid type=\"%@\" arch=\"%@\">%@</uuid>",
-             [element objectForKey:kPREDBinaryImageKeyType],
-             [element objectForKey:kPREDBinaryImageKeyArch],
-             [element objectForKey:kPREDBinaryImageKeyUUID]
-             ];
-        }
-    }
-    
-    return uuidString;
 }
 
 @end

@@ -132,7 +132,7 @@ static void runLoopObserverCallBack(CFRunLoopObserverRef observer, CFRunLoopActi
                  complete:^(QNResponseInfo *info, NSString *key, NSDictionary *resp) {
                      __strong typeof(wSelf) strongSelf = wSelf;
                      if (resp) {
-                         [strongSelf sendMetaInfoWithKey:key reportUUID:(NSString *) CFBridgingRelease(CFUUIDCreateString(NULL, report.uuidRef))];
+                         [strongSelf sendMetaInfoWithKey:key report:report];
                      } else if (retryTimes < LagReportUploadMaxTimes) {
                          PREDLogWarning(@"upload log fail: %@, retry after: %d seconds", info.error, LagReportUploadMaxTimes);
                          dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(LagReportUploadRetryInterval * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -156,7 +156,21 @@ static void runLoopObserverCallBack(CFRunLoopObserverRef observer, CFRunLoopActi
     }];
 }
 
-- (void)sendMetaInfoWithKey:(NSString *)key reportUUID:(NSString *)reportUUID {
+- (void)sendMetaInfoWithKey:(NSString *)key report:(PREPLCrashReport *)report {
+    NSDateFormatter *rfc3339Formatter = [[NSDateFormatter alloc] init];
+    [rfc3339Formatter setDateFormat:@"yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'"];
+    [rfc3339Formatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
+    NSString *startTime = [rfc3339Formatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:0]];
+    NSString *crashTime = [rfc3339Formatter stringFromDate:report.systemInfo.timestamp];
+    if ([report.processInfo respondsToSelector:@selector(processStartTime)]) {
+        if (report.systemInfo.timestamp && report.processInfo.processStartTime) {
+            startTime = [rfc3339Formatter stringFromDate:report.processInfo.processStartTime];
+        }
+    }
+    NSString *reportUUID = PREDHelper.UUID;
+    if (report.uuidRef != NULL) {
+        reportUUID = (NSString *) CFBridgingRelease(CFUUIDCreateString(NULL, report.uuidRef));
+    }
     NSDictionary *info = @{
                            @"app_bundle_id": PREDHelper.appBundleId,
                            @"app_name": PREDHelper.appName,
@@ -164,11 +178,15 @@ static void runLoopObserverCallBack(CFRunLoopObserverRef observer, CFRunLoopActi
                            @"device_model": PREDHelper.deviceModel,
                            @"os_platform": PREDHelper.osPlatform,
                            @"os_version": PREDHelper.osVersion,
+                           @"os_build": PREDHelper.osBuild,
                            @"sdk_version": PREDHelper.sdkVersion,
                            @"sdk_id": PREDHelper.UUID,
                            @"device_id": @"",
                            @"report_uuid": reportUUID,
                            @"crash_log_key": key,
+                           @"manufacturer": @"Apple",
+                           @"start_time": startTime,
+                           @"crash_time": crashTime,
                            };
     [_networkClient postPath:@"lag-monitor/i" parameters:info completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
         if (error || operation.response.statusCode >= 400) {

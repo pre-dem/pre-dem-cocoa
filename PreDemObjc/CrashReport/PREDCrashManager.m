@@ -517,22 +517,30 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
     NSString *filename = [_crashFiles objectAtIndex:0];
     NSString *cacheFilename = [filename lastPathComponent];
     NSData *crashData = [NSData dataWithContentsOfFile:filename];
-    
+    NSDateFormatter *rfc3339Formatter = [[NSDateFormatter alloc] init];
+    [rfc3339Formatter setDateFormat:@"yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'"];
+    [rfc3339Formatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
+    NSString *startTime = [rfc3339Formatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:0]];
+    NSString *crashTime = [rfc3339Formatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:0]];
     if ([crashData length] > 0) {
         PREPLCrashReport *report = nil;
         NSString *crashLogString = nil;
         NSString *reportUUID = PREDHelper.UUID;
-        NSString *appBinaryUUIDs = PREDHelper.UUID;
         
         if ([[cacheFilename pathExtension] isEqualToString:@"fake"]) {
             crashLogString = [[NSString alloc] initWithData:crashData encoding:NSUTF8StringEncoding];
         } else {
             report = [[PREPLCrashReport alloc] initWithData:crashData error:&error];
-            appBinaryUUIDs = [PREDCrashReportTextFormatter extractAppUUIDs:report]?:appBinaryUUIDs;
             if (report.uuidRef != NULL) {
                 reportUUID = (NSString *) CFBridgingRelease(CFUUIDCreateString(NULL, report.uuidRef));
             }
             crashLogString = [PREDCrashReportTextFormatter stringValueForCrashReport:report crashReporterKey:PREDHelper.UUID];
+            crashTime = [rfc3339Formatter stringFromDate:report.systemInfo.timestamp];
+            if ([report.processInfo respondsToSelector:@selector(processStartTime)]) {
+                if (report.systemInfo.timestamp && report.processInfo.processStartTime) {
+                    startTime = [rfc3339Formatter stringFromDate:report.processInfo.processStartTime];
+                }
+            }
         }
         
         if (report == nil && crashLogString == nil) {
@@ -543,7 +551,6 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
             // the next crash will be automatically send on the next app start/becoming active event
             return;
         }
-        NSLog(@"%@", crashLogString);
         NSString *md5 = [PREDHelper MD5:crashLogString];
         NSDictionary *param = @{@"md5": md5};
         __weak typeof(self) wSelf = self;
@@ -561,12 +568,15 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
                                                @"device_model": PREDHelper.deviceModel,
                                                @"os_platform": PREDHelper.osPlatform,
                                                @"os_version": PREDHelper.osVersion,
+                                               @"os_build": PREDHelper.osBuild,
                                                @"sdk_version": PREDHelper.sdkVersion,
                                                @"sdk_id": PREDHelper.UUID,
                                                @"device_id": @"",
                                                @"report_uuid": reportUUID,
                                                @"crash_log_key": key,
-                                               @"app_binary_uuids": appBinaryUUIDs,
+                                               @"manufacturer": @"Apple",
+                                               @"start_time": startTime,
+                                               @"crash_time": crashTime,
                                                };
                     [strongSelf uploadCrashLog:crashLogString WithKey:key token:token crashDic:crashDic retryTimes:0];
                 } else {

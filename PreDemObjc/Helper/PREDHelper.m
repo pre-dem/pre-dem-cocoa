@@ -266,6 +266,18 @@ NSString *const kPREDExcludeApplicationSupportFromBackup = @"kPREDExcludeApplica
     return [[UIDevice currentDevice] systemVersion];
 }
 
++ (NSString *)osBuild {
+    size_t size;
+    sysctlbyname("kern.osversion", NULL, &size, NULL, 0);
+    char *answer = (char*)malloc(size);
+    if (answer == NULL)
+        return nil;
+    sysctlbyname("kern.osversion", answer, &size, NULL, 0);
+    NSString *osBuild = [NSString stringWithCString:answer encoding: NSUTF8StringEncoding];
+    free(answer);
+    return osBuild;
+}
+
 + (NSString *)deviceModel {
     size_t size;
     sysctlbyname("hw.machine", NULL, &size, NULL, 0);
