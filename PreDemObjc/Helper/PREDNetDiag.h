@@ -13,7 +13,6 @@
 @interface PREDNetDiag : NSObject
 
 + (void)diagnose:(NSString *)host
-          appKey:(NSString *)appKey
        netClient:(PREDNetworkClient *)client
         complete:(PREDNetDiagCompleteHandler)complete;
 

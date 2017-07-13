@@ -10,7 +10,7 @@
 
 @interface PREDNetDiagResult ()
 
-- (instancetype)initWithAppKey:(NSString *)appKey complete:(PREDNetDiagCompleteHandler)complete netClient:(PREDNetworkClient *)client;
+- (instancetype)initWithComplete:(PREDNetDiagCompleteHandler)complete netClient:(PREDNetworkClient *)client;
 - (void)gotTcpResult:(QNNTcpPingResult *)r;
 - (void)gotPingResult:(QNNPingResult *)r;
 - (void)gotHttpResult:(QNNHttpResult *)r;

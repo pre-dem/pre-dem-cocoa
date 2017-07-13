@@ -116,7 +116,7 @@ static NSString* app_id(NSString* appKey){
     
     [self initializeModules];
     
-    [self applyConfig:[_configManager getConfigWithAppKey:appKey]];
+    [self applyConfig:[_configManager getConfig]];
     
     [self startManager];
 }
@@ -226,7 +226,7 @@ static NSString* app_id(NSString* appKey){
 
 - (void)diagnose:(NSString *)host
         complete:(PREDNetDiagCompleteHandler)complete {
-    [PREDNetDiag diagnose:host appKey:app_id(_appKey) netClient:_networkClient complete:complete];
+    [PREDNetDiag diagnose:host netClient:_networkClient complete:complete];
 }
 
 - (void)configManager:(PREDConfigManager *)manager didReceivedConfig:(PREDConfig *)config {

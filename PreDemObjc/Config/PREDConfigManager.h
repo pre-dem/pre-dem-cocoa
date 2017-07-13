@@ -24,6 +24,6 @@
 
 - (instancetype)initWithNetClient:(PREDNetworkClient *)client;
 
-- (PREDConfig *)getConfigWithAppKey:(NSString *)appKey;
+- (PREDConfig *)getConfig;
 
 @end

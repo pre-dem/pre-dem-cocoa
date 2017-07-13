@@ -17,16 +17,14 @@
     NSInteger _completedCount;
     NSLock *_lock;
     PREDNetDiagCompleteHandler _complete;
-    NSString *_appKey;
     PREDNetworkClient *_client;
 }
 
-- (instancetype)initWithAppKey:(NSString *)appKey complete:(PREDNetDiagCompleteHandler)complete netClient:(PREDNetworkClient *)client {
+- (instancetype)initWithComplete:(PREDNetDiagCompleteHandler)complete netClient:(PREDNetworkClient *)client {
     if (self = [super init]) {
         _completedCount = 0;
         _lock = [NSLock new];
         _complete = complete;
-        _appKey = appKey;
         _client = client;
         self.app_bundle_id = PREDHelper.appBundleId;
         self.app_name = PREDHelper.appName;
@@ -105,7 +103,7 @@
         [_lock unlock];
         [self generateResultID];
         _complete(self);
-        [self sendReport:_appKey];
+        [self sendReport];
     } else {
         [_lock unlock];
     }
@@ -115,7 +113,7 @@
     self.result_id = [PREDHelper MD5:[NSString stringWithFormat:@"%f%@%@%@", [[NSDate date] timeIntervalSince1970], self.ping_ip, self.tr_content, self.dns_records]];
 }
 
-- (void)sendReport:(NSString *)appKey {
+- (void)sendReport {
     [_client postPath:@"net-diags/i" parameters:[self toDic] completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
         if (error || operation.response.statusCode >= 400) {
             PREDLogError(@"send net diag error: %@, statusCode: %ld", error, (long)operation.response.statusCode);
