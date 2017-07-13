@@ -59,7 +59,7 @@
     [_client postPath:@"app-config/i" parameters:info completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
         __strong typeof(wSelf) strongSelf = wSelf;
         if (error || operation.response.statusCode >= 400) {
-            PREDLogError(@"get config failed: %@, status code: %d", error?:@"unknown", operation.response.statusCode);
+            PREDLogError(@"get config failed: %@, status code: %ld", error?:@"unknown", (long)operation.response.statusCode);
         } else {
             strongSelf.lastReportTime = [NSDate date];
             NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
