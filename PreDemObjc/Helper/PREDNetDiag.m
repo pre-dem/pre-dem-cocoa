@@ -14,10 +14,9 @@
 @implementation PREDNetDiag
 
 + (void)diagnose:(NSString *)host
-          appKey:(NSString *)appKey
        netClient:(PREDNetworkClient *)client
         complete:(PREDNetDiagCompleteHandler)complete {
-    PREDNetDiagResult *result = [[PREDNetDiagResult alloc] initWithAppKey:appKey complete:complete netClient:client];
+    PREDNetDiagResult *result = [[PREDNetDiagResult alloc] initWithComplete:complete netClient:client];
     [QNNPing start:host size:64 output:nil complete:^(QNNPingResult *r) {
         [result gotPingResult:r];
     }];

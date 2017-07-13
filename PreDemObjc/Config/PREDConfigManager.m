@@ -14,7 +14,6 @@
 @interface PREDConfigManager ()
 
 @property (nonatomic, strong) NSDate *lastReportTime;
-@property (nonatomic, copy) NSString *appKey;
 
 @end
 
@@ -34,8 +33,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (PREDConfig *)getConfigWithAppKey:(NSString *)appKey {
-    self.appKey = appKey;
+- (PREDConfig *)getConfig {
     PREDConfig *defaultConfig;
     NSDictionary *dic = [NSUserDefaults.standardUserDefaults objectForKey:@"predem_app_config"];
     if (dic && [dic respondsToSelector:@selector(objectForKey:)]) {
@@ -78,7 +76,7 @@
 
 - (void)didBecomeActive:(NSNotification *)note {
     if (self.lastReportTime && [[NSDate date] timeIntervalSinceDate:self.lastReportTime] >= 60 * 60 * 24) {
-        [self getConfigWithAppKey:self.appKey];
+        [self getConfig];
     }
 }
 
