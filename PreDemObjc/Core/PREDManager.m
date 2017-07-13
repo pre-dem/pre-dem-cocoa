@@ -208,12 +208,11 @@ static NSString* app_id(NSString* appKey){
     _startManagerIsInvoked = NO;
     
     _crashManager = [[PREDCrashManager alloc]
-                     initWithAppId:app_id(_appKey)
-                     networkClient:_networkClient];
+                     initWithNetworkClient:_networkClient];
     _httpManager = [[PREDURLProtocol alloc] initWithNetworkClient:_networkClient];
     _configManager = [[PREDConfigManager alloc] initWithNetClient:_networkClient];
     _configManager.delegate = self;
-    _lagManager = [[PREDLagMonitorController alloc] initWithAppId:app_id(_appKey) networkClient:_networkClient];
+    _lagManager = [[PREDLagMonitorController alloc] initWithNetworkClient:_networkClient];
     _managersInitialized = YES;
 }
 

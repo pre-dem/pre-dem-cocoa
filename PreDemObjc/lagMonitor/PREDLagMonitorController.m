@@ -23,7 +23,6 @@
     NSInteger _countTime;
     PREPLCrashReporter *_reporter;
     PREPLCrashReport *_lastReport;
-    NSString *_appId;
     PREDNetworkClient *_networkClient;
     QNUploadManager *_uploadManager;
 }
@@ -36,10 +35,9 @@ static void runLoopObserverCallBack(CFRunLoopObserverRef observer, CFRunLoopActi
     dispatch_semaphore_signal(semaphore);
 }
 
-- (instancetype)initWithAppId:(NSString *)appId networkClient:(PREDNetworkClient *)networkClient {
+- (instancetype)initWithNetworkClient:(PREDNetworkClient *)networkClient {
     if (self = [super init]) {
         _reporter = [[PREPLCrashReporter alloc] initWithConfiguration:[PREPLCrashReporterConfig defaultConfiguration]];
-        _appId = appId;
         _networkClient = networkClient;
         _uploadManager = [[QNUploadManager alloc] init];
     }
@@ -123,11 +121,10 @@ static void runLoopObserverCallBack(CFRunLoopObserverRef observer, CFRunLoopActi
         __strong typeof(wSelf) strongSelf = wSelf;
         if (!error) {
             NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
-            if (!error && operation.response.statusCode < 400 && dic && [dic respondsToSelector:@selector(valueForKey:)] && [dic valueForKey:@"token"]) {
-                NSString *key = [NSString stringWithFormat:@"i/%@/%@", strongSelf->_appId, md5];
+            if (!error && operation.response.statusCode < 400 && dic && [dic respondsToSelector:@selector(valueForKey:)] && [dic valueForKey:@"key"] && [dic valueForKey:@"token"]) {
                 [strongSelf->_uploadManager
                  putData:[crashLog dataUsingEncoding:NSUTF8StringEncoding]
-                 key:key
+                 key:[dic valueForKey:@"key"]
                  token:[dic valueForKey:@"token"]
                  complete:^(QNResponseInfo *info, NSString *key, NSDictionary *resp) {
                      __strong typeof(wSelf) strongSelf = wSelf;
