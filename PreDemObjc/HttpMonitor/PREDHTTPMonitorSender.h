@@ -12,10 +12,10 @@
 
 @interface PREDHTTPMonitorSender : NSObject
 
-@property (nonatomic, assign, getter=isEnabled) BOOL enable;
+@property (class, nonatomic, assign, getter=isEnabled) BOOL enable;
 
-- (instancetype)initWithNetworkClient:(PREDNetworkClient *)client;
++ (void)setClient:(PREDNetworkClient *)client;
 
-- (void)addModel:(PREDHTTPMonitorModel *)model;
++ (void)addModel:(PREDHTTPMonitorModel *)model;
 
 @end

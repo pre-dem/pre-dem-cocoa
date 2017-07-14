@@ -19,8 +19,6 @@
 NSURLSessionDataDelegate
 >
 
-@property (nonatomic, strong) PREDURLSessionSwizzler *swizzler;
-@property (nonatomic, strong) PREDHTTPMonitorSender *sender;
 @property (nonatomic, strong) NSURLSessionDataTask *task;
 @property (nonatomic, strong) NSURLResponse *response;
 @property (nonatomic, strong) PREDHTTPMonitorModel *HTTPMonitorModel;
@@ -31,42 +29,34 @@ NSURLSessionDataDelegate
 
 @synthesize HTTPMonitorModel;
 
-- (instancetype)initWithNetworkClient:(PREDNetworkClient *)client {
-    if (self = [super init]) {
-        _swizzler = [[PREDURLSessionSwizzler alloc] init];
-        _sender = [[PREDHTTPMonitorSender alloc] initWithNetworkClient:client];
-    }
-    return self;
++ (void)setClient:(PREDNetworkClient *)client {
+    [PREDHTTPMonitorSender setClient:client];
 }
 
-- (void)dealloc {
-    [self disableHTTPDem];
-}
-
-- (void)enableHTTPDem {
-    if (_sender.enable) {
++ (void)enableHTTPDem {
+    if (PREDHTTPMonitorSender.isEnabled) {
         return;
     }
     // 可拦截 [NSURLSession defaultSession] 以及 UIWebView 相关的请求
     [NSURLProtocol registerClass:self.class];
     
     // 拦截自定义生成的 NSURLSession 的请求
-    if (![_swizzler isSwizzle]) {
-        [_swizzler load];
+    if (![PREDURLSessionSwizzler isSwizzle]) {
+        [PREDURLSessionSwizzler load];
     }
     
-    _sender.enable = YES;
+    PREDHTTPMonitorSender.enable = YES;
 }
 
-- (void)disableHTTPDem {
-    if (!_sender.enable) {
++ (void)disableHTTPDem {
+    if (!PREDHTTPMonitorSender.isEnabled) {
         return;
     }
     [NSURLProtocol unregisterClass:self.class];
-    if ([_swizzler isSwizzle]) {
-        [_swizzler unload];
+    if ([PREDURLSessionSwizzler isSwizzle]) {
+        [PREDURLSessionSwizzler unload];
     }
-    _sender.enable = NO;
+    PREDHTTPMonitorSender.enable = NO;
 }
 
 + (BOOL)canInitWithRequest:(NSURLRequest *)request {
@@ -158,7 +148,7 @@ NSURLSessionDataDelegate
     } else {
         [self.client URLProtocolDidFinishLoading:self];
     }
-    [_sender addModel:HTTPMonitorModel];
+    [PREDHTTPMonitorSender addModel:HTTPMonitorModel];
 }
 
 - (void)URLSession:(NSURLSession *)session didBecomeInvalidWithError:(NSError *)error {

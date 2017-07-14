@@ -10,33 +10,33 @@
 #import <objc/runtime.h>
 #import "PREDURLProtocol.h"
 
+static BOOL s_isSwizzle = NO;
+
 @implementation PREDURLSessionSwizzler
 
-- (instancetype)init
-{
-    self = [super init];
-    if (self) {
-        self.isSwizzle = NO;
-    }
-    return self;
++ (void)setIsSwizzle:(BOOL)isSwizzle {
+    s_isSwizzle = isSwizzle;
 }
 
++ (BOOL)isSwizzle {
+    return s_isSwizzle;
+}
 
-- (void)load {
++ (void)load {
     self.isSwizzle=YES;
     Class cls = NSClassFromString(@"__NSCFURLSessionConfiguration") ?: NSClassFromString(@"NSURLSessionConfiguration");
-    [self swizzleSelector:@selector(protocolClasses) fromClass:cls toClass:[self class]];
+    [self swizzleSelector:@selector(protocolClasses) fromClass:cls toClass:self];
     
 }
 
-- (void)unload {
++ (void)unload {
     self.isSwizzle=NO;
     Class cls = NSClassFromString(@"__NSCFURLSessionConfiguration") ?: NSClassFromString(@"NSURLSessionConfiguration");
-    [self swizzleSelector:@selector(protocolClasses) fromClass:cls toClass:[self class]];
+    [self swizzleSelector:@selector(protocolClasses) fromClass:cls toClass:self];
     
 }
 
-- (void)swizzleSelector:(SEL)selector fromClass:(Class)original toClass:(Class)stub {
++ (void)swizzleSelector:(SEL)selector fromClass:(Class)original toClass:(Class)stub {
     Method originalMethod = class_getInstanceMethod(original, selector);
     Method stubMethod = class_getInstanceMethod(stub, selector);
     if (!originalMethod || !stubMethod) {

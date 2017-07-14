@@ -26,6 +26,8 @@ static NSString * wrapString(NSString *st) {
     return ret;
 }
 
+static BOOL enableMonitor;
+
 @interface PREDHTTPMonitorSender ()
 <
 NSURLSessionDelegate
@@ -50,9 +52,21 @@ NSURLSessionDelegate
 
 @implementation PREDHTTPMonitorSender
 
-- (instancetype)initWithNetworkClient:(PREDNetworkClient *)client {
++ (PREDHTTPMonitorSender *)sharedSender {
+    static PREDHTTPMonitorSender *sender;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sender = [[self alloc] init];
+    });
+    return sender;
+}
+
++ (void)setClient:(PREDNetworkClient *)client {
+    [self sharedSender].client = client;
+}
+
+- (instancetype)init {
     if (self = [super init]) {
-        _client = client;
         _logDirPath = [NSString stringWithFormat:@"%@Presniff_SDK_Log", [[[[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] objectAtIndex:0] absoluteString] substringFromIndex:7]];
         _indexFilePath = [NSString stringWithFormat:@"%@/index.json", _logDirPath];
         _mReadFileIndex = 1;
@@ -91,7 +105,7 @@ NSURLSessionDelegate
  }
  ```
  */
-- (void)addModel:(PREDHTTPMonitorModel *)model {
++ (void)addModel:(PREDHTTPMonitorModel *)model {
     NSArray *modelArray = @[
                             @(model.platform),
                             wrapString(model.appName),
@@ -112,22 +126,26 @@ NSURLSessionDelegate
                             @(model.networkErrorCode),
                             wrapString(model.networkErrorMsg)
                             ];
-    [self writeArray:modelArray];
+    [[self sharedSender] writeArray:modelArray];
 }
 
-- (void)setEnable:(BOOL)enable {
-    _enable = enable;
-    if (enable && !_sendTimer) {
-        _sendTimer = [NSTimer timerWithTimeInterval:PREDSendLogDefaultInterval target:self selector:@selector(sendLog) userInfo:nil repeats:YES];
-        [[NSRunLoop mainRunLoop] addTimer: _sendTimer forMode:NSRunLoopCommonModes];
-    } else if (!enable && _sendTimer) {
-        [_sendTimer invalidate];
-        _sendTimer = nil;
++ (void)setEnable:(BOOL)enable {
+    enableMonitor = enable;
+    if (enable && ![self sharedSender]->_sendTimer) {
+        [self sharedSender]->_sendTimer = [NSTimer timerWithTimeInterval:PREDSendLogDefaultInterval target:[self sharedSender] selector:@selector(sendLog) userInfo:nil repeats:YES];
+        [[NSRunLoop mainRunLoop] addTimer: [self sharedSender]->_sendTimer forMode:NSRunLoopCommonModes];
+    } else if (!enable && [self sharedSender]->_sendTimer) {
+        [[self sharedSender]->_sendTimer invalidate];
+        [self sharedSender]->_sendTimer = nil;
     }
 }
 
++ (BOOL)isEnabled {
+    return enableMonitor;
+}
+
 - (NSError *)writeArray:(NSArray *)array {
-    if (!_enable) {
+    if (!enableMonitor) {
         return nil;
     }
     __block NSString *toWrite;
@@ -269,7 +287,7 @@ NSURLSessionDelegate
 }
 
 - (void)sendLog {
-    if (!_enable) {
+    if (!enableMonitor) {
         return;
     }
     if (_isSendingData) {

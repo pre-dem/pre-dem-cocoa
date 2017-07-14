@@ -30,9 +30,7 @@ static NSString* app_id(NSString* appKey){
     BOOL _managersInitialized;
         
     PREDConfigManager *_configManager;
-    
-    PREDURLProtocol *_httpManager;
-    
+        
     PREDCrashManager *_crashManager;
     
     PREDLagMonitorController *_lagManager;
@@ -140,7 +138,7 @@ static NSString* app_id(NSString* appKey){
     if (self.isHttpMonitorEnabled) {
         PREDLogDebug(@"Starting HttpManager");
 
-        [_httpManager enableHTTPDem];
+        [PREDURLProtocol enableHTTPDem];
     }
     
     if (self.isLagMonitorEnabled) {
@@ -168,9 +166,9 @@ static NSString* app_id(NSString* appKey){
     }
     _enableHttpMonitor = enableHttpMonitor;
     if (enableHttpMonitor) {
-        [_httpManager enableHTTPDem];
+        [PREDURLProtocol enableHTTPDem];
     } else {
-        [_httpManager disableHTTPDem];
+        [PREDURLProtocol disableHTTPDem];
     }
 }
 
@@ -209,7 +207,8 @@ static NSString* app_id(NSString* appKey){
     
     _crashManager = [[PREDCrashManager alloc]
                      initWithNetworkClient:_networkClient];
-    _httpManager = [[PREDURLProtocol alloc] initWithNetworkClient:_networkClient];
+    [PREDURLProtocol setClient:_networkClient];
+    
     _configManager = [[PREDConfigManager alloc] initWithNetClient:_networkClient];
     _configManager.delegate = self;
     _lagManager = [[PREDLagMonitorController alloc] initWithNetworkClient:_networkClient];
