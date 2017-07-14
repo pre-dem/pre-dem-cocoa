@@ -11,7 +11,7 @@
 
 @interface PREDLagMonitorController : NSObject
 
-- (instancetype)initWithAppId:(NSString *)appId networkClient:(PREDNetworkClient *)networkClient;
+- (instancetype)initWithNetworkClient:(PREDNetworkClient *)networkClient;
 
 - (void)startMonitor;
 - (void)endMonitor;

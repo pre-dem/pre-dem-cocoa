@@ -78,7 +78,6 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
 @implementation PREDCrashManager {
     NSMutableArray *_crashFiles;
     NSFileManager  *_fileManager;
-    NSString *_appId;
     QNUploadManager *_uploadManager;
     
     BOOL _sendingInProgress;
@@ -93,9 +92,8 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
     id _appDidReceiveLowMemoryWarningObserver;
 }
 
-- (instancetype)initWithAppId:(NSString *)appId networkClient:(PREDNetworkClient *)networkClient {
+- (instancetype)initWithNetworkClient:(PREDNetworkClient *)networkClient {
     if ((self = [super init])) {
-        _appId = appId;
         _isSetup = NO;
         _networkClient = networkClient;
         _plCrashReporter = nil;
@@ -558,8 +556,8 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
             __strong typeof(wSelf) strongSelf = wSelf;
             if (!error) {
                 NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
-                if (!error && operation.response.statusCode < 400 && dic && [dic respondsToSelector:@selector(valueForKey:)] && [dic valueForKey:@"token"]) {
-                    NSString *key = [NSString stringWithFormat:@"i/%@/%@", strongSelf->_appId, md5];
+                if (!error && operation.response.statusCode < 400 && dic && [dic respondsToSelector:@selector(valueForKey:)] && [dic valueForKey:@"key"] && [dic valueForKey:@"token"]) {
+                    NSString *key = [dic valueForKey:@"key"];
                     NSString *token = [dic valueForKey:@"token"];
                     NSDictionary *crashDic = @{
                                                @"app_bundle_id": PREDHelper.appBundleId,
