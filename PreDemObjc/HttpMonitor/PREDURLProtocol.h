@@ -11,8 +11,9 @@
 
 @interface PREDURLProtocol : NSURLProtocol
 
-- (instancetype)initWithNetworkClient:(PREDNetworkClient *)client;
-- (void)enableHTTPDem;
-- (void)disableHTTPDem;
++ (void)setClient:(PREDNetworkClient *)client;
+
++ (void)enableHTTPDem;
++ (void)disableHTTPDem;
 
 @end
