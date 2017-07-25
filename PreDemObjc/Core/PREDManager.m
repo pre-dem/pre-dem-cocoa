@@ -23,8 +23,6 @@ static NSString* app_id(NSString* appKey){
 }
 
 @implementation PREDManager {
-    NSString *_appKey;
-    
     BOOL _startManagerIsInvoked;
     
     BOOL _managersInitialized;
@@ -108,9 +106,7 @@ static NSString* app_id(NSString* appKey){
 
 
 - (void)startWithAppKey:(NSString *)appKey serviceDomain:(NSString *)serviceDomain {
-    _appKey = [appKey copy];
-    
-    [self initNetworkClient:serviceDomain];
+    [self initNetworkClientWithDomain:serviceDomain appKey:appKey];
     
     [self initializeModules];
     
@@ -184,17 +180,17 @@ static NSString* app_id(NSString* appKey){
     }
 }
 
-- (void)initNetworkClient:(NSString *)aServerURL {
-    if (!aServerURL) {
-        aServerURL = PRED_DEFAULT_URL;
+- (void)initNetworkClientWithDomain:(NSString *)domain appKey:(NSString *)appKey {
+    if (!domain) {
+        domain = PRED_DEFAULT_URL;
     }
-    if (![aServerURL hasPrefix:@"http://"] && ![aServerURL hasPrefix:@"https://"]) {
-        aServerURL = [NSString stringWithFormat:@"http://%@", aServerURL];
+    if (![domain hasPrefix:@"http://"] && ![domain hasPrefix:@"https://"]) {
+        domain = [NSString stringWithFormat:@"http://%@", domain];
     }
     
-    aServerURL = [NSString stringWithFormat:@"%@/v1/%@/", aServerURL, app_id(_appKey)];
+    domain = [NSString stringWithFormat:@"%@/v1/%@/", domain, app_id(appKey)];
     
-    _networkClient = [[PREDNetworkClient alloc] initWithBaseURL:[NSURL URLWithString:aServerURL]];
+    _networkClient = [[PREDNetworkClient alloc] initWithBaseURL:[NSURL URLWithString:domain]];
 }
 
 - (void)initializeModules {
