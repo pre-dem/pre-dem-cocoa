@@ -39,6 +39,9 @@ static NSString* app_id(NSString* appKey){
 
 + (void)startWithAppKey:(nonnull NSString *)appKey
           serviceDomain:(nonnull NSString *)serviceDomain{
+    if (![NSThread isMainThread]) {
+        @throw [NSException exceptionWithName:@"InvalidEnvException" reason:@"You must start pre-dem in main thread" userInfo:nil];
+    }
     [[self sharedPREDManager] startWithAppKey:appKey serviceDomain:serviceDomain];
 }
 

@@ -12,8 +12,6 @@
 #define PREDNetMaxRetryTimes    5
 #define PREDNetRetryInterval    30
 
-NSString * const kPREDNetworkClientBoundary = @"----FOO";
-
 @implementation PREDNetworkClient
 - (void)dealloc {
     [self cancelOperationsWithPath:nil method:nil];
@@ -64,31 +62,6 @@ NSString * const kPREDNetworkClientBoundary = @"----FOO";
     }
     
     return request;
-}
-
-+ (NSData *)dataWithPostValue:(NSString *)value forKey:(NSString *)key boundary:(NSString *) boundary {
-    return [self dataWithPostValue:[value dataUsingEncoding:NSUTF8StringEncoding] forKey:key contentType:@"text" boundary:boundary filename:nil];
-}
-
-+ (NSData *)dataWithPostValue:(NSData *)value forKey:(NSString *)key contentType:(NSString *)contentType boundary:(NSString *) boundary filename:(NSString *)filename {
-    NSMutableData *postBody = [NSMutableData data];
-    
-    [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-    
-    // There's certainly a better way to check if we are supposed to send binary data here.
-    if (filename){
-        [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"; filename=\"%@\"\r\n", key, filename] dataUsingEncoding:NSUTF8StringEncoding]];
-        [postBody appendData:[[NSString stringWithFormat:@"Content-Type: %@\r\n", contentType] dataUsingEncoding:NSUTF8StringEncoding]];
-        [postBody appendData:[[NSString stringWithFormat:@"Content-Transfer-Encoding: binary\r\n\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
-    } else {
-        [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n", key] dataUsingEncoding:NSUTF8StringEncoding]];
-        [postBody appendData:[[NSString stringWithFormat:@"Content-Type: %@\r\n\r\n", contentType] dataUsingEncoding:NSUTF8StringEncoding]];
-    }
-    
-    [postBody appendData:value];
-    [postBody appendData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
-    
-    return postBody;
 }
 
 + (NSString *) queryStringFromParameters:(NSDictionary *) params withEncoding:(NSStringEncoding) encoding {
