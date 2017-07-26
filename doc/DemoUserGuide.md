@@ -48,7 +48,7 @@ http 性能参数测量主要通过代理宿主 app 网络请求的方式实现�
 | http://www.taobao.com |
 | http://www.alipay.com |
 
-- [点我查看请求细节](https://bitbucket.org/qiniuapm/pre-sniff-server/src/6076269673e814d9f45c5fd99a745bd8030503b6/doc/HTTPMonitor.md?at=master&fileviewer=file-view-default)
+- [点我查看请求细节](https://bitbucket.org/qiniuapm/pre-dem-server/src/b983daf9a0dd87012c805edf2d2dbd270a6ba908/doc/HTTPMonitor.md?at=master&fileviewer=file-view-default)
 
 ### 注意事项
 
@@ -88,7 +88,19 @@ crash 日志收集上报模块主要通过截获宿主 app crash 时的信号，
 
 点击 Demo 界面中的 `点我诊断一下网络` 按钮触发一次网络诊断，Demo 会在所有诊断完成（需要十余秒到一分钟）之后将诊断结果整理上传，此时可以通过 wireshark 等抓包软件抓取相应数据包以验证相关行为是否正常
 
-- [点我查看请求细节](https://bitbucket.org/qiniuapm/pre-sniff-server/src/6076269673e814d9f45c5fd99a745bd8030503b6/doc/NetDiagnoseAPI.md?at=master&fileviewer=file-view-default)
+- [点我查看请求细节](https://bitbucket.org/qiniuapm/pre-dem-server/src/b983daf9a0dd87012c805edf2d2dbd270a6ba908/doc/NetDiagnoseAPI.md?at=master&fileviewer=file-view-default)
 
 ## 自定义事件
 
+点击 Demo 界面中的 `点我触发一次自定义事件` 按钮，此时 SDK 发送一条自定义事件，此时可以使用 wireshark 等抓包软件抓取相应数据包以验证相关行为是否正常。
+
+- 发送的自定义事件细节
+
+事件名称：`viewDidLoadEvent`
+事件内容:
+```
+{
+    "helloKey": "worldValue",
+    "hellonum": 7,
+}
+```
