@@ -13,9 +13,6 @@
 #define PREDNetRetryInterval    30
 
 @implementation PREDNetworkClient
-- (void)dealloc {
-    [self cancelOperationsWithPath:nil method:nil];
-}
 
 - (instancetype)initWithBaseURL:(NSURL *)baseURL {
     self = [super init];
@@ -26,6 +23,10 @@
         _operationQueue.maxConcurrentOperationCount = 1;
     }
     return self;
+}
+
+- (void)dealloc {
+    [self cancelOperationsWithPath:nil method:nil];
 }
 
 - (void)getPath:(NSString *)path parameters:(NSDictionary *)params completion:(PREDNetworkCompletionBlock)completion {
