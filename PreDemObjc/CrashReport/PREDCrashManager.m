@@ -627,8 +627,6 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
     if (!error) {
         if (statusCode >= 200 && statusCode < 400) {
             [self cleanCrashReportWithFilename:filename];
-            NSMutableDictionary *response = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:&error];
-            PREDLogDebug(@"Received API response: %@", response);
             // only if sending the crash report went successfully, continue with the next one (if there are more)
             [self sendNextCrashReport];
         } else {
