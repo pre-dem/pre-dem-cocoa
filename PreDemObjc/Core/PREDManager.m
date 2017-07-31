@@ -183,17 +183,17 @@ static NSString* app_id(NSString* appKey){
     }
 }
 
-- (void)initNetworkClientWithDomain:(NSString *)domain appKey:(NSString *)appKey {
-    if (!domain) {
-        domain = PRED_DEFAULT_URL;
+- (void)initNetworkClientWithDomain:(NSString *)aServerURL appKey:(NSString *)appKey {
+    if (!aServerURL) {
+        aServerURL = PRED_DEFAULT_DOMAIN;
     }
-    if (![domain hasPrefix:@"http://"] && ![domain hasPrefix:@"https://"]) {
-        domain = [NSString stringWithFormat:@"http://%@", domain];
+    if (![aServerURL hasPrefix:@"http://"] && ![aServerURL hasPrefix:@"https://"]) {
+        aServerURL = [NSString stringWithFormat:@"http://%@", aServerURL];
     }
     
-    domain = [NSString stringWithFormat:@"%@/v1/%@/", domain, app_id(appKey)];
+    aServerURL = [NSString stringWithFormat:@"%@/v1/%@/", aServerURL, app_id(appKey)];
     
-    _networkClient = [[PREDNetworkClient alloc] initWithBaseURL:[NSURL URLWithString:domain]];
+    _networkClient = [[PREDNetworkClient alloc] initWithBaseURL:[NSURL URLWithString:aServerURL]];
 }
 
 - (void)initializeModules {
