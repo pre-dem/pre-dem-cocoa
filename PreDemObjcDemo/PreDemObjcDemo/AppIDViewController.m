@@ -50,8 +50,13 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     [[NSUserDefaults standardUserDefaults] setObject:_textField.text forKey:kPreviousAppId];
+#ifdef DEBUG
     [PREDManager startWithAppKey:_textField.text
                    serviceDomain:@"http://hriygkee.bq.cloudappl.com"];
+#else
+    [PREDManager startWithAppKey:_textField.text
+                   serviceDomain:@"http://jkbkolos.bq.cloudappl.com"];
+#endif
 }
 
 /*
