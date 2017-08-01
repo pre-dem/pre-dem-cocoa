@@ -16,6 +16,7 @@
 		B60231571EC9B7AC005AB798 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B60231551EC9B7AC005AB798 /* LaunchScreen.storyboard */; };
 		B6383AB11ECAA6D400B67A7E /* PreDemObjc.podspec in Resources */ = {isa = PBXBuildFile; fileRef = B6383AB01ECAA6D400B67A7E /* PreDemObjc.podspec */; };
 		B6548F391ECB0C7E0031DD42 /* PreDemObjcDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B6548F381ECB0C7E0031DD42 /* PreDemObjcDemoTests.m */; };
+		B694F1521F3025AB00175FF1 /* AppIDViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B694F1511F3025AB00175FF1 /* AppIDViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,6 +46,8 @@
 		B6548F361ECB0C7E0031DD42 /* PreDemObjcDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PreDemObjcDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6548F381ECB0C7E0031DD42 /* PreDemObjcDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PreDemObjcDemoTests.m; sourceTree = "<group>"; };
 		B6548F3A1ECB0C7E0031DD42 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B694F1501F3025AB00175FF1 /* AppIDViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppIDViewController.h; sourceTree = "<group>"; };
+		B694F1511F3025AB00175FF1 /* AppIDViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppIDViewController.m; sourceTree = "<group>"; };
 		B6AC979A1ECC61C80084F2A3 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		B6CD372B1ECC346F00186D6D /* scripts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = scripts; path = ../scripts; sourceTree = "<group>"; };
 		B6CD372C1ECC348400186D6D /* fastlane */ = {isa = PBXFileReference; lastKnownFileType = folder; name = fastlane; path = ../fastlane; sourceTree = "<group>"; };
@@ -113,6 +116,8 @@
 				B602314B1EC9B7AC005AB798 /* AppDelegate.m */,
 				B602314D1EC9B7AC005AB798 /* ViewController.h */,
 				B602314E1EC9B7AC005AB798 /* ViewController.m */,
+				B694F1501F3025AB00175FF1 /* AppIDViewController.h */,
+				B694F1511F3025AB00175FF1 /* AppIDViewController.m */,
 				B60231501EC9B7AC005AB798 /* Main.storyboard */,
 				B60231531EC9B7AC005AB798 /* Assets.xcassets */,
 				B60231551EC9B7AC005AB798 /* LaunchScreen.storyboard */,
@@ -305,6 +310,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B602314F1EC9B7AC005AB798 /* ViewController.m in Sources */,
+				B694F1521F3025AB00175FF1 /* AppIDViewController.m in Sources */,
 				B602314C1EC9B7AC005AB798 /* AppDelegate.m in Sources */,
 				B60231491EC9B7AC005AB798 /* main.m in Sources */,
 			);
