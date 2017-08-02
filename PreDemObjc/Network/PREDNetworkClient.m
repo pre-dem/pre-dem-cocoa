@@ -45,7 +45,12 @@
 }
 
 - (void)getPath:(NSString *)path parameters:(NSDictionary *)params completion:(PREDNetworkCompletionBlock)completion retried:(NSInteger)retried {
-    NSURLRequest *request = [self requestWithMethod:@"GET" path:path parameters:params];
+    NSError *err;
+    NSURLRequest *request = [self requestWithMethod:@"GET" path:path parameters:params error:&err];
+    if (err) {
+        completion(nil, nil, err);
+        return;
+    }
     __weak typeof(self) wSelf = self;
     PREDHTTPOperation *op = [self operationWithURLRequest:request
                                                completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
@@ -64,7 +69,12 @@
 }
 
 - (void)postPath:(NSString *)path parameters:(NSDictionary *)params completion:(PREDNetworkCompletionBlock)completion retried:(NSInteger)retried {
-    NSURLRequest *request = [self requestWithMethod:@"POST" path:path parameters:params];
+    NSError *err;
+    NSURLRequest *request = [self requestWithMethod:@"POST" path:path parameters:params error:&err];
+    if (err) {
+        completion(nil, nil, err);
+        return;
+    }
     __weak typeof(self) wSelf = self;
     PREDHTTPOperation *op = [self operationWithURLRequest:request
                                                completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
@@ -135,7 +145,7 @@
         BOOL matchedPath = YES;
         if(path) {
             //method is not interesting here, we' just creating it to get the URL
-            NSURL *url = [self requestWithMethod:@"GET" path:path parameters:nil].URL;
+            NSURL *url = [self requestWithMethod:@"GET" path:path parameters:nil error:nil].URL;
             matchedPath = [request.URL isEqual:url];
         }
         
@@ -149,7 +159,8 @@
 
 - (NSMutableURLRequest *) requestWithMethod:(NSString*) method
                                        path:(NSString *) path
-                                 parameters:(NSDictionary *)params {
+                                 parameters:(NSDictionary *)params
+                                      error:(NSError **)err {
     NSParameterAssert(self.baseURL);
     NSParameterAssert(method);
     NSParameterAssert(params == nil || [method isEqualToString:@"POST"] || [method isEqualToString:@"GET"]);
@@ -174,9 +185,11 @@
             [request setURL:endpoint];
         } else {
             [request setValue:@"application/json" forHTTPHeaderField:@"Content-type"];
-            NSError *err;
             NSData *postBody;
-            postBody = [NSJSONSerialization dataWithJSONObject:params options:0 error:&err];
+            postBody = [NSJSONSerialization dataWithJSONObject:params options:0 error:err];
+            if (*err != nil) {
+                return nil;
+            }
             [request setHTTPBody:postBody];
         }
     }
