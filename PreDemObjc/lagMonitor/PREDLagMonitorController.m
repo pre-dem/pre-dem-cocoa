@@ -158,7 +158,7 @@ static void runLoopObserverCallBack(CFRunLoopObserverRef observer, CFRunLoopActi
     [rfc3339Formatter setDateFormat:@"yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'"];
     [rfc3339Formatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
     NSString *startTime = [rfc3339Formatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:0]];
-    NSString *crashTime = [rfc3339Formatter stringFromDate:report.systemInfo.timestamp];
+    NSString *lagTime = [rfc3339Formatter stringFromDate:report.systemInfo.timestamp];
     if ([report.processInfo respondsToSelector:@selector(processStartTime)]) {
         if (report.systemInfo.timestamp && report.processInfo.processStartTime) {
             startTime = [rfc3339Formatter stringFromDate:report.processInfo.processStartTime];
@@ -180,10 +180,10 @@ static void runLoopObserverCallBack(CFRunLoopObserverRef observer, CFRunLoopActi
                            @"sdk_id": PREDHelper.UUID,
                            @"device_id": @"",
                            @"report_uuid": reportUUID,
-                           @"crash_log_key": key,
+                           @"lag_log_key": key,
                            @"manufacturer": @"Apple",
                            @"start_time": startTime,
-                           @"crash_time": crashTime,
+                           @"lag_time": lagTime,
                            };
     [_networkClient postPath:@"lag-monitor/i" parameters:info completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
         if (error || operation.response.statusCode >= 400) {
