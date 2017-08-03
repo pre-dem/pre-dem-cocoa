@@ -40,7 +40,10 @@ NS_ASSUME_NONNULL_BEGIN
         complete:(nonnull PREDNetDiagCompleteHandler)complete;
 
 + (void)trackEventWithName:(nonnull NSString *)eventName
-                     event:(nonnull NSDictionary*)event;
+                     event:(nonnull NSDictionary *)event;
+
++ (void)trackEventsWithName:(nonnull NSString *)eventName
+                     events:(nonnull NSArray<NSDictionary *>*)events;
 
 
 ///-----------------------------------------------------------------------------

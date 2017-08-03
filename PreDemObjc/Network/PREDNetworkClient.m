@@ -33,7 +33,7 @@
     [self getPath:path parameters:params completion:completion retried:0];
 }
 
-- (void)postPath:(NSString *)path parameters:(NSDictionary *)params completion:(PREDNetworkCompletionBlock)completion {
+- (void)postPath:(NSString *)path parameters:(id)params completion:(PREDNetworkCompletionBlock)completion {
     [self postPath:path parameters:params completion:completion retried:0];
 }
 
@@ -70,7 +70,7 @@
     [self enqeueHTTPOperation:op];
 }
 
-- (void)postPath:(NSString *)path parameters:(NSDictionary *)params completion:(PREDNetworkCompletionBlock)completion retried:(NSInteger)retried {
+- (void)postPath:(NSString *)path parameters:(id)params completion:(PREDNetworkCompletionBlock)completion retried:(NSInteger)retried {
     NSError *err;
     NSURLRequest *request = [self requestWithMethod:@"POST" path:path parameters:params error:&err];
     if (err) {
