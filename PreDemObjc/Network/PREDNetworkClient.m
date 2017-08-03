@@ -48,7 +48,9 @@
     NSError *err;
     NSURLRequest *request = [self requestWithMethod:@"GET" path:path parameters:params error:&err];
     if (err) {
-        completion(nil, nil, err);
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            completion(nil, nil, err);
+        });
         return;
     }
     __weak typeof(self) wSelf = self;
@@ -72,7 +74,9 @@
     NSError *err;
     NSURLRequest *request = [self requestWithMethod:@"POST" path:path parameters:params error:&err];
     if (err) {
-        completion(nil, nil, err);
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            completion(nil, nil, err);
+        });
         return;
     }
     __weak typeof(self) wSelf = self;
