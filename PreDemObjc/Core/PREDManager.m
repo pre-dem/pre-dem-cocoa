@@ -26,9 +26,9 @@ static NSString* app_id(NSString* appKey){
     BOOL _startManagerIsInvoked;
     
     BOOL _managersInitialized;
-        
+    
     PREDConfigManager *_configManager;
-        
+    
     PREDCrashManager *_crashManager;
     
     PREDLagMonitorController *_lagManager;
@@ -52,12 +52,22 @@ static NSString* app_id(NSString* appKey){
 }
 
 + (void)trackEventWithName:(nonnull NSString *)eventName
-                     event:(nonnull NSDictionary*)event{
+                     event:(nonnull NSDictionary *)event {
     if (event == nil || eventName == nil) {
         return;
     }
+    [[self sharedPREDManager].networkClient postPath:[NSString stringWithFormat:@"events/%@", eventName] parameters:@[event] completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
+        NSLog(@"%@", [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil]);
+    }];
+}
+
++ (void)trackEventsWithName:(nonnull NSString *)eventName
+                     events:(nonnull NSArray<NSDictionary *>*)events{
+    if (events == nil || events.count == 0 || eventName == nil) {
+        return;
+    }
     
-    [[self sharedPREDManager].networkClient postPath:[NSString stringWithFormat:@"events/%@", eventName] parameters:event completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
+    [[self sharedPREDManager].networkClient postPath:[NSString stringWithFormat:@"events/%@", eventName] parameters:events completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
         NSLog(@"%@", [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil]);
     }];
 }
@@ -136,7 +146,7 @@ static NSString* app_id(NSString* appKey){
     
     if (self.isHttpMonitorEnabled) {
         PREDLogDebug(@"Starting HttpManager");
-
+        
         [PREDURLProtocol enableHTTPDem];
     }
     
