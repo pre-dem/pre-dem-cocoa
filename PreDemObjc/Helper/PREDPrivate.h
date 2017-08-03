@@ -14,7 +14,7 @@
 
 #define PRED_IDENTIFIER @"net.predem.sdk.ios"
 #define PRED_CRASH_SETTINGS @"PREDCrashManager.plist"
-#define PRED_DEFAULT_URL @"http://hriygkee.bq.cloudappl.com"
+#define PRED_DEFAULT_DOMAIN @"http://hriygkee.bq.cloudappl.com"
 
 #ifndef TARGET_OS_SIMULATOR
 

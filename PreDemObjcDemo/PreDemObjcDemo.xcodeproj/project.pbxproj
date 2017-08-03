@@ -17,6 +17,7 @@
 		B6383AB11ECAA6D400B67A7E /* PreDemObjc.podspec in Resources */ = {isa = PBXBuildFile; fileRef = B6383AB01ECAA6D400B67A7E /* PreDemObjc.podspec */; };
 		B6548F391ECB0C7E0031DD42 /* PreDemObjcDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B6548F381ECB0C7E0031DD42 /* PreDemObjcDemoTests.m */; };
 		B694F1521F3025AB00175FF1 /* AppIDViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B694F1511F3025AB00175FF1 /* AppIDViewController.m */; };
+		B6CFBE961F28697700A42B55 /* doc in Resources */ = {isa = PBXBuildFile; fileRef = B6CFBE951F28697700A42B55 /* doc */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,7 @@
 		B6AC979A1ECC61C80084F2A3 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		B6CD372B1ECC346F00186D6D /* scripts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = scripts; path = ../scripts; sourceTree = "<group>"; };
 		B6CD372C1ECC348400186D6D /* fastlane */ = {isa = PBXFileReference; lastKnownFileType = folder; name = fastlane; path = ../fastlane; sourceTree = "<group>"; };
+		B6CFBE951F28697700A42B55 /* doc */ = {isa = PBXFileReference; lastKnownFileType = folder; name = doc; path = ../doc; sourceTree = "<group>"; };
 		BBAB5C53425E36F9ABF19D45 /* libPods-PreDemObjcDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PreDemObjcDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC2DE1862FAA2D9F0AD22B41 /* Pods-PreDemObjcDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PreDemObjcDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-PreDemObjcDemo/Pods-PreDemObjcDemo.release.xcconfig"; sourceTree = "<group>"; };
 		EEA8E066865EF848E9BA43AC /* Pods-PreDemObjcDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PreDemObjcDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PreDemObjcDemo/Pods-PreDemObjcDemo.debug.xcconfig"; sourceTree = "<group>"; };
@@ -90,6 +92,7 @@
 				B6548F311ECB067C0031DD42 /* .gitignore */,
 				B6548F301ECB06710031DD42 /* .travis.yml */,
 				B6383AB01ECAA6D400B67A7E /* PreDemObjc.podspec */,
+				B6CFBE951F28697700A42B55 /* doc */,
 				B6CD372C1ECC348400186D6D /* fastlane */,
 				B6CD372B1ECC346F00186D6D /* scripts */,
 				B60231461EC9B7AC005AB798 /* PreDemObjcDemo */,
@@ -240,6 +243,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B6CFBE961F28697700A42B55 /* doc in Resources */,
 				B60231571EC9B7AC005AB798 /* LaunchScreen.storyboard in Resources */,
 				B60231541EC9B7AC005AB798 /* Assets.xcassets in Resources */,
 				B60231521EC9B7AC005AB798 /* Main.storyboard in Resources */,
@@ -454,6 +458,7 @@
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = GDFHW66V92;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -478,6 +483,7 @@
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				DEVELOPMENT_TEAM = GDFHW66V92;
+				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"${PODS_ROOT}/Headers/Public\"",
