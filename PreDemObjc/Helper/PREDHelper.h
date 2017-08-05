@@ -17,7 +17,6 @@ FOUNDATION_EXPORT NSString *const kPREDExcludeApplicationSupportFromBackup;
 @property(class, readonly) NSString *settingsDir;
 @property(class, readonly) NSString *keychainPreDemObjcServiceName;
 @property(class, readonly) NSString *mainBundleIdentifier;
-@property(class, readonly) NSString *UUIDPreiOS6;
 @property(class, readonly) NSString *UUID;
 @property(class, readonly) BOOL isPreiOS8Environment;
 @property(class, readonly) BOOL isAppStoreReceiptSandbox;
