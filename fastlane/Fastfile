@@ -15,21 +15,12 @@ fastlane_version "2.28.7"
 
 desc "Runs all the tests"
 lane :test do
-  scan(
-    scheme: "PreDemObjcDemo",
-    clean: true,
-    code_coverage: true
-  )
+  scan
 end
 
 desc "Submit a new Beta Build to fir.im"
 lane :beta do
-  scan
-  path = gym(
-    export_method:"enterprise",
-    workspace:"PreDemObjcDemo/PreDemObjcDemo.xcworkspace",
-    scheme: "PreDemObjcDemo"
-    ) # Build your app - more options available
+  path = gym
   sh "bundle exec fir publish #{path} -T " + ENV["FIR_TOKEN"]
 end
 
@@ -37,8 +28,8 @@ desc "Deploy a new version to the App Store"
 lane :release do
   # match(type: "appstore")
   # snapshot
-  gym(scheme: "PreDemObjcDemo") # Build your app - more options available
-  deliver(force: true)
+  # gym
+  # deliver(force: true)
   # frameit
 end
 

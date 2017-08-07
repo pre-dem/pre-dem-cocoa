@@ -2,11 +2,11 @@
 
 bundle install
 
-reg_rc="^v[0-9]+\.[0-9]+\.[0-9]+-rc[0-9]*$"
+reg_alpha="^v[0-9]+\.[0-9]+\.[0-9]+_alpha[0-9]*$"
 reg_release="^v[0-9]+\.[0-9]+\.[0-9]+$"
 
-# rc
-if [[ $TRAVIS_PULL_REQUEST == "false" && $TRAVIS_TAG =~ $reg_rc ]]; then
+# alpha
+if [[ $TRAVIS_PULL_REQUEST == "false" && $TRAVIS_TAG =~ $reg_alpha ]]; then
   bundle exec fastlane beta
   exit $?
 # release

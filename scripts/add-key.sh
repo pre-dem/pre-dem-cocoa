@@ -6,9 +6,6 @@
 #  Created by WangSiyu on 17/05/2017.
 #  Copyright © 2017 pre-engineering. All rights reserved.
 
-reg_rc="^v[0-9]+\.[0-9]+\.[0-9]+-rc[0-9]*$"
-
-if [[ $TRAVIS_PULL_REQUEST == "false" && $TRAVIS_TAG =~ $reg_rc ]]; then
 # Create a custom keychain
 security create-keychain -p travis ios-build.keychain
 
@@ -23,13 +20,11 @@ security unlock-keychain -p travis ios-build.keychain
 security set-keychain-settings -t 3600 -l ~/Library/Keychains/ios-build.keychain
 
 # Add certificates to keychain and allow codesign to access them
-security import ./scripts/certs/apple.cer -k ~/Library/Keychains/ios-build.keychain -T /usr/bin/codesign
-security import ./scripts/certs/dist.cer -k ~/Library/Keychains/ios-build.keychain -T /usr/bin/codesign
-security import ./scripts/certs/dist.p12 -k ~/Library/Keychains/ios-build.keychain -P $KEY_PASSWORD -T /usr/bin/codesign
-
+security import ./encrypt/apple.cer -k ~/Library/Keychains/ios-build.keychain -T /usr/bin/codesign
+security import ./encrypt/dist.cer -k ~/Library/Keychains/ios-build.keychain -T /usr/bin/codesign
+security import ./encrypt/dist.p12 -k ~/Library/Keychains/ios-build.keychain -P $KEY_PASSWORD -T /usr/bin/codesign
 
 # Put the provisioning profile in place
 mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
-cp "./scripts/profile/preengineeringPreDemObjcDemo_InHouse.mobileprovision" ~/Library/MobileDevice/Provisioning\ Profiles/
+cp "./encrypt/preengineeringPreDemObjcDemo_InHouse.mobileprovision" ~/Library/MobileDevice/Provisioning\ Profiles/
 exit $?
-fi
