@@ -5,15 +5,10 @@ env:
   - secure: bO3AZL7z6yWd3+1Rs1nMQQWIwKie4ibJ9ms+KOa9uwnrsQ2RYYzcK6kk3SYErY6QzUPnwafPcjbwJKN0B6GLeZ4sNEV3fwME2pzhRpG7kOL7RP+J8lBk7pUmd1E3xwSwBz1q+qdLq5N+lhi+SndkiXP6AnyD4UWJkWQJPjBSne2/9f/2YE4123M/5AFQBHniiUsqqRsc8WjmP7iNmD3Pil7CJHdPBlsqc1L/uYvzdRatEohmG1GdUAwfbnwldzJljcF514C+hAPTsCkob1hXPWc7sXFLx/atW1C7LglvJn0t0eP6POwdKBzt4UYzZvuGsfF8UrzLXsw1mds+e6PJXuAzqI6kOOgyXxTOcqlvwlHcYf7ad1zikHVZM/+Wx98fWeNUSQ5GwGFFhiMUhSHZUMGiwO6ThdFOjcylpWrD3B5nyqAUCdVrK0mARAhE64GDeLNNLgUB4Y99eCaHaV1KSIWoAzPbjJIapeaaqu0jIKp9PUyfBFyOIJlCpmgaPPvO1SNYCX/hj5g3OSogfrMK5oI1Hdz27xczA+rMRfQ0PE6kzpGGY/8RoGEMIHxmcZ+FPBSFtngwZk8lwEKtPrAQ5pob48H3cdGqEOSWr3CY3jHW4lbntHrymuJfUK1S94r0rqxlDpjGotOt3rIku5wh2ydF/81Cz/a2RWMB39Eczwk=
   - secure: me1Mwpk/mHqTIa23hk1esxlP0nq4Z/P1kf5tP66uhZe/xsHmt7/DPJbvV2lXffiGcmgodcUnxyDCd6DyRZ8q/OH/bItK0MegLFsZpRJ/vAvi0klPpK/LolR/zwJAaSOE5Y7/mudQoP1YGPxTMJNUYhfG6iTgtdGz97nyNCczudImJDeSStzRSlTfm7CEL9tCnTY72OcNdwV0KH2gvzp73u+AVg7RNdS87QM9lj5QPfMKe3WE+uYYDGSYRMtaw4IrEx1yP1BDNW/hh2B8cNgfdvRMcWRyUIR9C6RyGf1zhawH4kFKGDfeo0gAXiIZjr9Kj1TSQDUhOARR1pzNDUv7cyvR5CJ44XHnLNB/aBsATXO/LIoIyc8zMEsFapiyw1zY52ErRbpzUkluuCJuREJtg5egtSQpMl8gDssqxVwgRo07S9JNw6e5ARmjpWo4l/9tgNowylVJ1l6jmxvH3vn+klG2hRrTywWmG8riUjdXJoAvsBGFG0FeaVOmj9ofddYvuhXqQXAz/qX2Si8GqJFMA7dTW49xZCb5ytHUJy5oMzwnqIBV9csfNM9nGrRy9TKkxyqrQlA9BLOBrm3tQWUbXguRYH+I3SGzx3+YolrwtKfkH8x6S8tRjE4SdyytIQVVuDPC/Jsa1aIvw35RyL2W1ZyMlbqJTPOL0rZp/WA33Wk=
 before_install:
-- openssl aes-256-cbc -K $encrypted_78fb310503f8_key -iv $encrypted_78fb310503f8_iv
-  -in encrypt/dist.p12.enc -out encrypt/dist.p12 -d
-- openssl aes-256-cbc -K $encrypted_78fb310503f8_key -iv $encrypted_78fb310503f8_iv
-  -in encrypt/dist.cer.enc -out encrypt/dist.cer -d
-- openssl aes-256-cbc -K $encrypted_78fb310503f8_key -iv $encrypted_78fb310503f8_iv
-  -in encrypt/apple.cer.enc -out encrypt/apple.cer -d
-- openssl aes-256-cbc -K $encrypted_78fb310503f8_key -iv $encrypted_78fb310503f8_iv
-  -in encrypt/preengineeringPreDemObjcDemo_InHouse.mobileprovision.enc -out encrypt/preengineeringPreDemObjcDemo_InHouse.mobileprovision
-  -d
+- openssl aes-256-cbc -K $encrypted_78fb310503f8_key -iv $encrypted_78fb310503f8_iv -in encrypt/dist.p12.enc -out encrypt/dist.p12 -d
+- openssl aes-256-cbc -K $encrypted_78fb310503f8_key -iv $encrypted_78fb310503f8_iv -in encrypt/dist.cer.enc -out encrypt/dist.cer -d
+- openssl aes-256-cbc -K $encrypted_78fb310503f8_key -iv $encrypted_78fb310503f8_iv -in encrypt/apple.cer.enc -out encrypt/apple.cer -d
+- openssl aes-256-cbc -K $encrypted_78fb310503f8_key -iv $encrypted_78fb310503f8_iv -in encrypt/preengineeringPreDemObjcDemo_InHouse.mobileprovision.enc -out encrypt/preengineeringPreDemObjcDemo_InHouse.mobileprovision -d
 script:
 - "./scripts/add-key.sh"
 - "./scripts/travis.sh"
