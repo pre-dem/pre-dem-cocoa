@@ -19,6 +19,13 @@ Pod::Spec.new do |s|
   s.libraries  = "c++", "z"
   s.resource_bundles = { 'PREDResources' => 'PreDemObjc/Resources/*.plist' }
 
+  non_arc_files = ['PreDemObjc/Helper/KeychainItemWrapper.{h,m}']
+  s.exclude_files = non_arc_files
+  s.subspec 'no-arc' do |sna|
+    sna.requires_arc = false
+    sna.source_files = non_arc_files
+  end
+
   s.dependency "HappyDNS"
   s.dependency "QNNetDiag"
   s.dependency "Qiniu"

@@ -17,6 +17,7 @@
 #import <CommonCrypto/CommonDigest.h>
 #import <mach-o/dyld.h>
 #import <mach-o/loader.h>
+#import "KeychainItemWrapper.h"
 
 static NSString *const kPREDUtcDateFormatter = @"utcDateFormatter";
 NSString *const kPREDExcludeApplicationSupportFromBackup = @"kPREDExcludeApplicationSupportFromBackup";
@@ -66,27 +67,31 @@ NSString *const kPREDExcludeApplicationSupportFromBackup = @"kPREDExcludeApplica
     return [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleIdentifier"];
 }
 
-+ (NSString *)UUIDPreiOS6 {
-    // Create a new UUID
-    CFUUIDRef uuidObj = CFUUIDCreate(nil);
-    
-    // Get the string representation of the UUID
-    NSString *resultUUID = (NSString*)CFBridgingRelease(CFUUIDCreateString(nil, uuidObj));
-    CFRelease(uuidObj);
++ (NSString *)UUID {
+    NSString *resultUUID = [self readUUIDFromKeyChain];
+    if (!resultUUID) {
+        resultUUID = [self generateNewUUIDString];
+    }
+    NSLog(@"uuid : %@", resultUUID);
     
     return resultUUID;
 }
 
-+ (NSString *)UUID {
-    NSString *resultUUID = nil;
-    
-    if ([NSUUID class]) {
-        resultUUID = [[NSUUID UUID] UUIDString];
-    } else {
-        resultUUID = self.UUIDPreiOS6;
-    }
-    
-    return resultUUID;
++(NSString *)readUUIDFromKeyChain{
+    KeychainItemWrapper *keychainItemm = [[KeychainItemWrapper alloc] initWithAccount:@"Identfier" service:@"AppName" accessGroup:nil];
+    NSString *UUID = [keychainItemm objectForKey: (__bridge id)kSecAttrGeneric];
+    return UUID;
+}
+
++ (NSString *)generateNewUUIDString {
+    CFUUIDRef uuidRef = CFUUIDCreate(kCFAllocatorDefault);
+    CFStringRef strRef = CFUUIDCreateString(kCFAllocatorDefault , uuidRef);
+    NSString *uuidString = [NSString stringWithString:(__bridge NSString*)strRef];
+    CFRelease(strRef);
+    CFRelease(uuidRef);
+    KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc] initWithAccount:@"Identfier" service:@"AppName" accessGroup:nil];
+    [keychainItem setObject:uuidString forKey:(__bridge id)kSecAttrGeneric];
+    return uuidString;
 }
 
 + (BOOL)isPreiOS8Environment {
@@ -160,7 +165,7 @@ NSString *const kPREDExcludeApplicationSupportFromBackup = @"kPREDExcludeApplica
         }
         
         if (!debuggerIsAttached && (info.kp_proc.p_flag & P_TRACED) != 0)
-        debuggerIsAttached = true;
+            debuggerIsAttached = true;
     });
     
     return debuggerIsAttached;
@@ -283,7 +288,7 @@ NSString *const kPREDExcludeApplicationSupportFromBackup = @"kPREDExcludeApplica
     sysctlbyname("hw.machine", NULL, &size, NULL, 0);
     char *answer = (char*)malloc(size);
     if (answer == NULL)
-    return @"";
+        return @"";
     sysctlbyname("hw.machine", answer, &size, NULL, 0);
     NSString *platform = [NSString stringWithCString:answer encoding: NSUTF8StringEncoding];
     free(answer);
@@ -301,7 +306,7 @@ NSString *const kPREDExcludeApplicationSupportFromBackup = @"kPREDExcludeApplica
     }
     
     if (!executableHeader)
-    return @"";
+        return @"";
     
     BOOL is64bit = executableHeader->magic == MH_MAGIC_64 || executableHeader->magic == MH_CIGAM_64;
     uintptr_t cursor = (uintptr_t)executableHeader + (is64bit ? sizeof(struct mach_header_64) : sizeof(struct mach_header));
@@ -330,11 +335,11 @@ NSString *const kPREDExcludeApplicationSupportFromBackup = @"kPREDExcludeApplica
 + (NSString *)appName:(NSString *)placeHolderString {
     NSString *appName = [[[NSBundle mainBundle] localizedInfoDictionary] objectForKey:@"CFBundleDisplayName"];
     if (!appName)
-    appName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"];
+        appName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"];
     if (!appName)
-    appName = [[[NSBundle mainBundle] localizedInfoDictionary] objectForKey:@"CFBundleName"];
+        appName = [[[NSBundle mainBundle] localizedInfoDictionary] objectForKey:@"CFBundleName"];
     if (!appName)
-    appName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleName"] ?: placeHolderString;
+        appName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleName"] ?: placeHolderString;
     
     return appName;
 }
@@ -439,7 +444,7 @@ NSString *base64String(NSData * data, unsigned long length) {
     CC_MD5(original_str, strlen(original_str), result);
     NSMutableString *hash = [NSMutableString string];
     for (int i = 0; i < CC_MD5_DIGEST_LENGTH; i++)
-    [hash appendFormat:@"%02X", result[i]];
+        [hash appendFormat:@"%02X", result[i]];
     return [hash lowercaseString];
 }
 

@@ -89,6 +89,12 @@ NSURLSessionDataDelegate
         NSTimeInterval dnsStartTime = [[NSDate date] timeIntervalSince1970];
         NSURL *replacedURL = [dns queryAndReplaceWithIP:mutableRequest.URL];
         NSTimeInterval dnsEndTime = [[NSDate date] timeIntervalSince1970];
+        NSError *err;
+        NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"^[0-9]+\.[0-9]+\.[0-9]+" options:0 error:&err];
+        NSInteger number = [regex numberOfMatchesInString:replacedURL.host options:0 range:NSMakeRange(0, [replacedURL.host length])];
+        if (number == 0) {
+            return mutableRequest;
+        }
         [NSURLProtocol setProperty:@((dnsEndTime - dnsStartTime)*1000)
                             forKey:@"PREDDNSTime"
                          inRequest:mutableRequest];
