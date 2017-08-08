@@ -470,8 +470,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "pre-engineering.PreDemObjcDemo";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "83bf3bd8-0f5e-4321-8521-72153b790a6c";
-				PROVISIONING_PROFILE_SPECIFIER = "Wildcard(new)";
+				PROVISIONING_PROFILE = "f50d2f3a-bbab-469d-8da2-f946d2bcc496";
+				PROVISIONING_PROFILE_SPECIFIER = Wildcard_Enterprise;
 			};
 			name = Debug;
 		};
