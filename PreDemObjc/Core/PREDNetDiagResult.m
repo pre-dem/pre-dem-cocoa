@@ -10,6 +10,7 @@
 #import "PREDManagerPrivate.h"
 #import "PREDHelper.h"
 #import "PREDLogger.h"
+#import "QNNetDiag.h"
 
 #define PREDTotalResultNeeded   5
 
