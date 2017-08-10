@@ -16,6 +16,13 @@
 + (void)diagnose:(NSString *)host
        netClient:(PREDNetworkClient *)client
         complete:(PREDNetDiagCompleteHandler)complete {
+    NSString *httpHost;
+    if ([host hasPrefix:@"http://"] || [host hasPrefix:@"https://"]) {
+        httpHost = host;
+        host = [[host componentsSeparatedByString:@"//"] lastObject];
+    } else {
+        httpHost = [NSString stringWithFormat:@"http://%@", host];
+    }
     PREDNetDiagResult *result = [[PREDNetDiagResult alloc] initWithComplete:complete netClient:client];
     [QNNPing start:host size:64 output:nil complete:^(QNNPingResult *r) {
         [result gotPingResult:r];
@@ -29,7 +36,7 @@
     [QNNNslookup start:host output:nil complete:^(NSArray *r) {
         [result gotNsLookupResult:r];
     }];
-    [QNNHttp start:host output:nil complete:^(QNNHttpResult *r) {
+    [QNNHttp start:httpHost output:nil complete:^(QNNHttpResult *r) {
         [result gotHttpResult:r];
     }];
 }

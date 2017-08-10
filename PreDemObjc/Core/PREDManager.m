@@ -57,7 +57,7 @@ static NSString* app_id(NSString* appKey){
         return;
     }
     [[self sharedPREDManager].networkClient postPath:[NSString stringWithFormat:@"events/%@", eventName] parameters:@[event] completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
-        NSLog(@"%@", [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil]);
+        PREDLogDebug(@"%@", [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil]);
     }];
 }
 
@@ -68,7 +68,7 @@ static NSString* app_id(NSString* appKey){
     }
     
     [[self sharedPREDManager].networkClient postPath:[NSString stringWithFormat:@"events/%@", eventName] parameters:events completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
-        NSLog(@"%@", [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil]);
+        PREDLogDebug(@"%@", [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil]);
     }];
 }
 

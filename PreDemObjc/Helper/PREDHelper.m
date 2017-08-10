@@ -71,9 +71,7 @@ NSString *const kPREDExcludeApplicationSupportFromBackup = @"kPREDExcludeApplica
     NSString *resultUUID = [self readUUIDFromKeyChain];
     if (!resultUUID) {
         resultUUID = [self generateNewUUIDString];
-    }
-    NSLog(@"uuid : %@", resultUUID);
-    
+    }    
     return resultUUID;
 }
 
