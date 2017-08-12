@@ -27,7 +27,7 @@ PODS:
   - Qiniu (7.1.6):
     - AFNetworking (~> 3)
     - HappyDNS (~> 0.3)
-  - QNNetDiag (0.0.4)
+  - QNNetDiag (0.0.6)
 
 DEPENDENCIES:
   - PreDemObjc (from `../`)
@@ -41,7 +41,7 @@ SPEC CHECKSUMS:
   HappyDNS: 06a9fed2796663fd87626dbf02552933265bf059
   PreDemObjc: f310a95b26b437c91721f3c361d7ad9374554928
   Qiniu: 8af94ce9b1611ed5f4350883e41d4a62cabad491
-  QNNetDiag: f38e43c4f89aef14c1cc6b474a41e07bbe8b2820
+  QNNetDiag: 6f7bbafa34c1b020e51d440f25044fe5ee10145d
 
 PODFILE CHECKSUM: 3cfeeea56b219ca54c5b4caf2cc0b81dccb4115c
 
