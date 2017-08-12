@@ -8,8 +8,7 @@
     "cnwangsiyu": "cn.wangsiyu@gmail.com"
   },
   "platforms": {
-    "ios": "8.0",
-    "osx": "10.10"
+    "ios": "8.0"
   },
   "source": {
     "git": "https://github.com/pre-dem/pre-dem-objc.git",
