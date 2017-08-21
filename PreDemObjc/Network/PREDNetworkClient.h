@@ -13,6 +13,8 @@
 
 @property (nonatomic, strong) NSURL *baseURL;
 
+@property (nonatomic, strong) NSString *tag;
+
 @property (nonatomic, strong) NSOperationQueue *operationQueue;
 
 - (instancetype) initWithBaseURL:(NSURL*) baseURL;

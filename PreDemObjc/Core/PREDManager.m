@@ -80,6 +80,14 @@ static NSString* app_id(NSString* appKey){
     PREDLogger.currentLogLevel = logLevel;
 }
 
++ (NSString *)tag {
+    return [self sharedPREDManager].networkClient.tag;
+}
+
++ (void)setTag:(NSString *)tag {
+    [self sharedPREDManager].networkClient.tag = tag;
+}
+
 + (void)setLogHandler:(PREDLogHandler)logHandler {
     [PREDLogger setLogHandler:logHandler];
 }

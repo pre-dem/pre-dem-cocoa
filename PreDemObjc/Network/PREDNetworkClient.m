@@ -100,7 +100,12 @@
           headers:(NSDictionary *)headers
        completion:(PREDNetworkCompletionBlock) completion
           retried:(NSInteger)retried {
-    NSString* url =  [NSString stringWithFormat:@"%@%@", _baseURL, path];
+    NSString* url;
+    if (self.tag) {
+        url = [NSString stringWithFormat:@"%@%@?tag=%@", _baseURL, path, self.tag];
+    } else {
+        url = [NSString stringWithFormat:@"%@%@", _baseURL, path];
+    }
     NSURL *endpoint = [NSURL URLWithString:url];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:endpoint];
     request.HTTPMethod = @"POST";
