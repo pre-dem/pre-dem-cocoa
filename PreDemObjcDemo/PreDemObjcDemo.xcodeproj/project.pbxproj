@@ -301,7 +301,7 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-PreDemObjcDemo/Pods-PreDemObjcDemo-resources.sh",
-				"$PODS_CONFIGURATION_BUILD_DIR/PreDemObjc/PREDResources.bundle",
+				$PODS_CONFIGURATION_BUILD_DIR/PreDemObjc/PREDResources.bundle,
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
