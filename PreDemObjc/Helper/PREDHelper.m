@@ -332,7 +332,11 @@ __strong static NSString *_tag;
 }
 
 + (NSString *)tag {
-    return _tag.copy;
+    if (_tag) {
+        return _tag.copy;
+    } else {
+        return @"";
+    }
 }
 
 + (NSString *)encodeAppIdentifier:(NSString *)inputString {
