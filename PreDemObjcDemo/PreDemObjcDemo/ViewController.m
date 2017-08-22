@@ -20,8 +20,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
-    self.versionLable.text = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
+    self.versionLable.text = PREDManager.version;
 }
 
 - (IBAction)sendHTTPRequest:(id)sender {
