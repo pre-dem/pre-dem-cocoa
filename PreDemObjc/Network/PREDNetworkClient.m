@@ -101,11 +101,7 @@
        completion:(PREDNetworkCompletionBlock) completion
           retried:(NSInteger)retried {
     NSString* url;
-    if (self.tag) {
-        url = [NSString stringWithFormat:@"%@%@?tag=%@", _baseURL, path, self.tag];
-    } else {
-        url = [NSString stringWithFormat:@"%@%@", _baseURL, path];
-    }
+    url = [NSString stringWithFormat:@"%@%@", _baseURL, path];
     NSURL *endpoint = [NSURL URLWithString:url];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:endpoint];
     request.HTTPMethod = @"POST";

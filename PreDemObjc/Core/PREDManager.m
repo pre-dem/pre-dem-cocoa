@@ -81,11 +81,11 @@ static NSString* app_id(NSString* appKey){
 }
 
 + (NSString *)tag {
-    return [self sharedPREDManager].networkClient.tag;
+    return PREDHelper.tag;
 }
 
 + (void)setTag:(NSString *)tag {
-    [self sharedPREDManager].networkClient.tag = tag;
+    PREDHelper.tag = tag;
 }
 
 + (void)setLogHandler:(PREDLogHandler)logHandler {
