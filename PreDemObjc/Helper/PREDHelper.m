@@ -336,7 +336,7 @@ __strong static NSString *_tag = @"";
 }
 
 + (NSString *)tag {
-    return _tag.copy;
+    return _tag;
 }
 
 + (NSString *)encodeAppIdentifier:(NSString *)inputString {
