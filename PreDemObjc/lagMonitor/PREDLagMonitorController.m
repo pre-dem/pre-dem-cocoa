@@ -157,7 +157,7 @@ static void runLoopObserverCallBack(CFRunLoopObserverRef observer, CFRunLoopActi
     NSDateFormatter *rfc3339Formatter = [[NSDateFormatter alloc] init];
     [rfc3339Formatter setDateFormat:@"yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'"];
     [rfc3339Formatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
-    NSString *startTime = [rfc3339Formatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:0]];
+    NSString *startTime = [rfc3339Formatter stringFromDate:[NSDate date]];
     NSString *lagTime = [rfc3339Formatter stringFromDate:report.systemInfo.timestamp];
     if ([report.processInfo respondsToSelector:@selector(processStartTime)]) {
         if (report.systemInfo.timestamp && report.processInfo.processStartTime) {
