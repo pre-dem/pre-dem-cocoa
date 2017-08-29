@@ -9,21 +9,20 @@
 #import <Foundation/Foundation.h>
 #import "PREDDefines.h"
 
-#ifdef LOG_LEVEL_DEF
-    #undef LOG_LEVEL_DEF
-#endif
-#define LOG_LEVEL_DEF       predLogLevel
-
 static const DDLogLevel predLogLevel = DDLogLevelAll;
 
-#define PREDLogError(format, ...)   DDLogError(format, ##__VA_ARGS__)
-#define PREDLogWarn(format, ...)    DDLogWarn(format, ##__VA_ARGS__)
-#define PREDLogInfo(format, ...)    DDLogInfo(format, ##__VA_ARGS__)
-#define PREDLogDebug(format, ...)   DDLogDebug(format, ##__VA_ARGS__)
-#define PREDLogVerbose(format, ...) DDLogVerbose(format, ##__VA_ARGS__)
+#define PREDLogError(frmt, ...)   LOG_MAYBE(NO,                predLogLevel, DDLogFlagError,   0, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
+#define PREDLogWarn(frmt, ...)    LOG_MAYBE(LOG_ASYNC_ENABLED, predLogLevel, DDLogFlagWarning, 0, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
+#define PREDLogInfo(frmt, ...)    LOG_MAYBE(LOG_ASYNC_ENABLED, predLogLevel, DDLogFlagInfo,    0, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
+#define PREDLogDebug(frmt, ...)   LOG_MAYBE(LOG_ASYNC_ENABLED, predLogLevel, DDLogFlagDebug,   0, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
+#define PREDLogVerbose(frmt, ...) LOG_MAYBE(LOG_ASYNC_ENABLED, predLogLevel, DDLogFlagVerbose, 0, nil, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
+
 
 @interface PREDLogger : NSObject
 
 @property(class, nonatomic, assign) DDLogLevel logLevel;
+
++ (void)startCaptureLogWithLevel:(DDLogLevel)logLevel;
++ (void)stopCaptureLog;
 
 @end

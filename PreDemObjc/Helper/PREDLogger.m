@@ -10,6 +10,7 @@
 #import "PreDemObjc.h"
 
 static DDLogLevel _logLevel = DDLogLevelAll;
+static DDFileLogger *_fileLogger;
 
 @implementation PREDLogger
 
@@ -28,6 +29,17 @@ static DDLogLevel _logLevel = DDLogLevelAll;
 
 + (DDLogLevel)logLevel {
     return _logLevel;
+}
+
++ (void)startCaptureLogWithLevel:(DDLogLevel)logLevel {
+    _fileLogger = [[DDFileLogger alloc] init]; // File Logger
+    _fileLogger.rollingFrequency = 60 * 60 * 24; // 24 hour rolling
+    _fileLogger.logFileManager.maximumNumberOfLogFiles = 7;
+    [DDLog addLogger:_fileLogger withLevel:logLevel];
+}
+
++ (void)stopCaptureLog {
+    [DDLog removeLogger:_fileLogger];
 }
 
 @end
