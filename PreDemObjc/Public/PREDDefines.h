@@ -10,31 +10,46 @@
 #define PreDemObjc_Enums_h
 
 #import "PREDNetDiagResult.h"
+#import <CocoaLumberjack/CocoaLumberjack.h>
 
 /**
- *  PreDemObjc Log Levels
+ *  Log levels are used to filter out logs. Used together with flags.
  */
 typedef NS_ENUM(NSUInteger, PREDLogLevel) {
     /**
-     *  Logging is disabled
+     *  No logs
      */
-    PREDLogLevelNone = 0,
+    PREDLogLevelOff = DDLogLevelOff,
+    
     /**
-     *  Only errors will be logged
+     *  Error logs only
      */
-    PREDLogLevelError = 1,
+    PREDLogLevelError = DDLogLevelError,
+    
     /**
-     *  Errors and warnings will be logged
+     *  Error and warning logs
      */
-    PREDLogLevelWarning = 2,
+    PREDLogLevelWarning = DDLogLevelWarning,
+    
     /**
-     *  Debug information will be logged
+     *  Error, warning and info logs
      */
-    PREDLogLevelDebug = 3,
+    PREDLogLevelInfo = DDLogLevelInfo,
+    
     /**
-     *  Logging will be very chatty
+     *  Error, warning, info and debug logs
      */
-    PREDLogLevelVerbose = 4
+    PREDLogLevelDebug = DDLogLevelDebug,
+    
+    /**
+     *  Error, warning, info, debug and verbose logs
+     */
+    PREDLogLevelVerbose = DDLogLevelVerbose,
+    
+    /**
+     *  All logs (1...11111)
+     */
+    PREDLogLevelAll = DDLogLevelAll
 };
 
 typedef void (^PREDNetDiagCompleteHandler)(PREDNetDiagResult* result);

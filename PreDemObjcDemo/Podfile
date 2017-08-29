@@ -3,6 +3,7 @@ use_frameworks!
 
 target 'PreDemObjcDemo' do
   pod 'PreDemObjc', :path => '../'
+  pod 'CocoaLumberjack'
 end
 
 target 'PreDemSwiftDemo' do

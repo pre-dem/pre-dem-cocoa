@@ -9,59 +9,25 @@
 #import "PREDLogger.h"
 #import "PreDemObjc.h"
 
+static DDLogLevel _logLevel = DDLogLevelAll;
+
 @implementation PREDLogger
 
-static PREDLogLevel _currentLogLevel = PREDLogLevelWarning;
-static PREDLogHandler currentLogHandler;
++ (void)load {
+    [DDLog addLogger:[DDTTYLogger sharedInstance] withLevel:_logLevel];
+}
 
-static NSString *levelString(PREDLogLevel logLevel) {
-    switch (logLevel) {
-        case PREDLogLevelNone:
-            return @"None";
-            break;
-        case PREDLogLevelError:
-            return @"Error";
-        case PREDLogLevelWarning:
-            return @"Warning";
-        case PREDLogLevelDebug:
-            return @"Debug";
-        case PREDLogLevelVerbose:
-            return @"Verbose";
-        default:
-            return @"";
-            break;
++ (void)setLogLevel:(DDLogLevel)logLevel {
+    if (_logLevel == logLevel) {
+        return;
     }
+    _logLevel = logLevel;
+    [DDLog removeLogger:[DDTTYLogger sharedInstance]];
+    [DDLog addLogger:[DDTTYLogger sharedInstance] withLevel:_logLevel];
 }
 
-PREDLogHandler defaultLogHandler = ^(PREDLogMessageProvider messageProvider, PREDLogLevel logLevel, const char *file, const char *function, uint line) {
-    if (messageProvider) {
-        if (_currentLogLevel < logLevel) {
-            return;
-        }
-        NSLog((@"[PreDemObjc]%@: %s/%d %@"), levelString(logLevel), function, line, messageProvider());
-    }
-};
-
-+ (void)initialize {
-    currentLogHandler = defaultLogHandler;
-}
-
-+ (PREDLogLevel)currentLogLevel {
-    return _currentLogLevel;
-}
-
-+ (void)setCurrentLogLevel:(PREDLogLevel)currentLogLevel {
-    _currentLogLevel = currentLogLevel;
-}
-
-+ (void)setLogHandler:(PREDLogHandler)logHandler {
-    currentLogHandler = logHandler;
-}
-
-+ (void)logMessage:(PREDLogMessageProvider)messageProvider level:(PREDLogLevel)loglevel file:(const char *)file function:(const char *)function line:(uint)line {
-    if (currentLogHandler) {
-        currentLogHandler(messageProvider, loglevel, file, function, line);
-    }
++ (DDLogLevel)logLevel {
+    return _logLevel;
 }
 
 @end

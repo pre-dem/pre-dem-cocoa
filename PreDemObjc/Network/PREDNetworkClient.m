@@ -66,7 +66,7 @@ static NSString* pred_appendTime(NSString* path){
     PREDHTTPOperation *op = [self operationWithURLRequest:request
                                                completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
                                                    if ((error || operation.response.statusCode >= 400) && retried < PREDNetMaxRetryTimes) {
-                                                       PREDLogWarning(@"%@ request failed for: %@ statusCode: %ld", request.URL.absoluteString, error, (long)operation.response.statusCode);
+                                                       PREDLogWarn(@"%@ request failed for: %@ statusCode: %ld", request.URL.absoluteString, error, (long)operation.response.statusCode);
                                                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(PREDNetRetryInterval * NSEC_PER_SEC)), dispatch_get_global_queue(0, DISPATCH_QUEUE_PRIORITY_BACKGROUND), ^{
                                                            __strong typeof(wSelf) strongSelf = wSelf;
                                                            [strongSelf getPath:path parameters:params completion:completion retried:retried + 1];
@@ -92,7 +92,7 @@ static NSString* pred_appendTime(NSString* path){
     PREDHTTPOperation *op = [self operationWithURLRequest:request
                                                completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
                                                    if (error && retried < PREDNetMaxRetryTimes) {
-                                                       PREDLogWarning(@"%@ request failed for: %@ statusCode: %ld", request.URL.absoluteString, error, (long)operation.response.statusCode);
+                                                       PREDLogWarn(@"%@ request failed for: %@ statusCode: %ld", request.URL.absoluteString, error, (long)operation.response.statusCode);
                                                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(PREDNetRetryInterval * NSEC_PER_SEC)), dispatch_get_global_queue(0, DISPATCH_QUEUE_PRIORITY_BACKGROUND), ^{
                                                            __strong typeof(wSelf) strongSelf = wSelf;
                                                            [strongSelf postPath:path parameters:params completion:completion retried:retried + 1];
@@ -128,7 +128,7 @@ static NSString* pred_appendTime(NSString* path){
     PREDHTTPOperation *op = [self operationWithURLRequest:request
                                                completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
                                                    if (error && retried < PREDNetMaxRetryTimes) {
-                                                       PREDLogWarning(@"%@ request failed for: %@ statusCode: %ld", request.URL.absoluteString, error, (long)operation.response.statusCode);
+                                                       PREDLogWarn(@"%@ request failed for: %@ statusCode: %ld", request.URL.absoluteString, error, (long)operation.response.statusCode);
                                                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(PREDNetRetryInterval * NSEC_PER_SEC)), dispatch_get_global_queue(0, DISPATCH_QUEUE_PRIORITY_BACKGROUND), ^{
                                                            __strong typeof(wSelf) strongSelf = wSelf;
                                                            [strongSelf postPath:path data:data headers:headers completion:completion];

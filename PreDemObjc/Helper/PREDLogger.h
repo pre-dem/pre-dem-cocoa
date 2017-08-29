@@ -9,19 +9,21 @@
 #import <Foundation/Foundation.h>
 #import "PREDDefines.h"
 
-#define PREDLog(_level, _message) [PREDLogger logMessage:_message level:_level file:__FILE__ function:__PRETTY_FUNCTION__ line:__LINE__]
+#ifdef LOG_LEVEL_DEF
+    #undef LOG_LEVEL_DEF
+#endif
+#define LOG_LEVEL_DEF       predLogLevel
 
-#define PREDLogError(format, ...)   PREDLog(PREDLogLevelError,   (^{ return [NSString stringWithFormat:(format), ##__VA_ARGS__]; }))
-#define PREDLogWarning(format, ...) PREDLog(PREDLogLevelWarning, (^{ return [NSString stringWithFormat:(format), ##__VA_ARGS__]; }))
-#define PREDLogDebug(format, ...)   PREDLog(PREDLogLevelDebug,   (^{ return [NSString stringWithFormat:(format), ##__VA_ARGS__]; }))
-#define PREDLogVerbose(format, ...) PREDLog(PREDLogLevelVerbose, (^{ return [NSString stringWithFormat:(format), ##__VA_ARGS__]; }))
+static const DDLogLevel predLogLevel = DDLogLevelAll;
+
+#define PREDLogError(format, ...)   DDLogError(format, ##__VA_ARGS__)
+#define PREDLogWarn(format, ...)    DDLogWarn(format, ##__VA_ARGS__)
+#define PREDLogInfo(format, ...)    DDLogInfo(format, ##__VA_ARGS__)
+#define PREDLogDebug(format, ...)   DDLogDebug(format, ##__VA_ARGS__)
+#define PREDLogVerbose(format, ...) DDLogVerbose(format, ##__VA_ARGS__)
 
 @interface PREDLogger : NSObject
 
-+ (PREDLogLevel)currentLogLevel;
-+ (void)setCurrentLogLevel:(PREDLogLevel)currentLogLevel;
-+ (void)setLogHandler:(PREDLogHandler)logHandler;
-
-+ (void)logMessage:(PREDLogMessageProvider)messageProvider level:(PREDLogLevel)loglevel file:(const char *)file function:(const char *)function line:(uint)line;
+@property(class, nonatomic, assign) DDLogLevel logLevel;
 
 @end

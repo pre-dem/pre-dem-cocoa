@@ -59,45 +59,9 @@
 
 #pragma mark - Public Properties
 
-///-----------------------------------------------------------------------------
-/// @name Debug Logging
-///-----------------------------------------------------------------------------
-
-/**
- This property is used indicate the amount of verboseness and severity for which
- you want to see log messages in the console.
- */
-@property (class, nonatomic, assign) PREDLogLevel logLevel;
-
 /**
  This property is used to identify a specific user, for instance, you can assign user id to tag, so that you can use user id to search reports gathered by the sdk.
  */
 @property (class, nonnull, nonatomic, strong) NSString *tag;
-
-/**
- Set a custom block that handles all the log messages that are emitted from the SDK.
- 
- You can use this to reroute the messages that would normally be logged by `NSLog();`
- to your own custom logging framework.
- 
- An example of how to do this with NSLogger:
- 
- ```
- [[PREDManager sharedPREDManager] setLogHandler:^(PREDLogMessageProvider messageProvider, PREDLogLevel logLevel, const char *file, const char *function, uint line) {
- LogMessageRawF(file, (int)line, function, @"PreDemObjc", (int)logLevel-1, messageProvider());
- }];
- ```
- 
- or with CocoaLumberjack:
- 
- ```
- [[PREDManager sharedPREDManager] setLogHandler:^(PREDLogMessageProvider messageProvider, PREDLogLevel logLevel, const char *file, const char *function, uint line) {
- [DDLog log:YES message:messageProvider() level:ddLogLevel flag:(DDLogFlag)(1 << (logLevel-1)) context:CocoaLumberjackContext file:file function:function line:line tag:nil];
- }];
- ```
- 
- @param logHandler The block of type PREDLogHandler that will process all logged messages.
- */
-+ (void)setLogHandler:(PREDLogHandler _Nullable)logHandler;
 
 @end

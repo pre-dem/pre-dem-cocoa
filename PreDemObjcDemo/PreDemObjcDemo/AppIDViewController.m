@@ -54,7 +54,6 @@
     [PREDManager startWithAppKey:_textField.text
                    serviceDomain:@"http://hriygkee.bq.cloudappl.com"
                            error:nil];
-    PREDManager.logLevel = PREDLogLevelVerbose;
     PREDManager.tag = @"userid_debug";
 #else
     [PREDManager startWithAppKey:_textField.text
