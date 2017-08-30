@@ -35,7 +35,6 @@
         self.os_version = PREDHelper.osVersion;
         self.sdk_version = PREDHelper.sdkVersion;
         self.sdk_id = PREDHelper.UUID;
-        self.device_id = @"";
         self.tag = PREDHelper.tag;
     }
     return self;

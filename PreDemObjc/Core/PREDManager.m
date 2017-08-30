@@ -232,6 +232,7 @@ static NSString* app_id(NSString* appKey){
     _configManager = [[PREDConfigManager alloc] initWithNetClient:_networkClient];
     _configManager.delegate = self;
     _lagManager = [[PREDLagMonitorController alloc] initWithNetworkClient:_networkClient];
+    [PREDLogger setNetworkClient:_networkClient];
     _managersInitialized = YES;
 }
 
