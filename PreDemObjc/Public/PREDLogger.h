@@ -20,9 +20,9 @@ static const DDLogLevel predLogLevel = DDLogLevelAll;
 
 @interface PREDLogger : NSObject
 
-@property(class, nonatomic, assign) DDLogLevel logLevel;
+@property(class, nonatomic, assign) PREDLogLevel logLevel;
 
-+ (void)startCaptureLogWithLevel:(DDLogLevel)logLevel;
++ (void)startCaptureLogWithLevel:(PREDLogLevel)logLevel;
 + (void)stopCaptureLog;
 
 @end

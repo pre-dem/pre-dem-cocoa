@@ -408,7 +408,7 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
 #pragma mark - Crash Report Processing
 
 - (void)triggerDelayedProcessing {
-    PREDLogVerbose(@"VERBOSE: Triggering delayed crash processing.");
+    PREDLogVerbose(@"Triggering delayed crash processing.");
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(invokeDelayedProcessing) object:nil];
     [self performSelector:@selector(invokeDelayedProcessing) withObject:nil afterDelay:0.5];
 }
