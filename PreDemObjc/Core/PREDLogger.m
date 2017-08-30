@@ -16,6 +16,7 @@
 
 static PREDLogLevel _logLevel = PREDLogLevelAll;
 static DDFileLogger *_fileLogger;
+static PREDLogLevel _fileLogLevel = PREDLogLevelOff;
 static PREDNetworkClient *_networkClient;
 static QNUploadManager *_uploadManager;
 static NSDate *_logStartTime;
@@ -78,10 +79,10 @@ static NSDate *_logStartTime;
                                                     @"sdk_version": PREDHelper.sdkVersion,
                                                     @"sdk_id": PREDHelper.UUID,
                                                     @"tag": PREDHelper.tag,
-                                                    @"lag_log_key": key,
                                                     @"manufacturer": @"Apple",
                                                     @"start_time": startTime,
                                                     @"end_time": endTime,
+                                                    @"log_key": key,
                                                     };
                          [_networkClient postPath:@"log-capture/i" parameters:metadata completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
                              if (error || operation.response.statusCode >= 400) {
@@ -136,6 +137,10 @@ static NSDate *_logStartTime;
 }
 
 + (void)startCaptureLogWithLevel:(PREDLogLevel)logLevel {
+    if (_fileLogger && _fileLogLevel == logLevel) {
+        return;
+    }
+    _fileLogLevel = logLevel;
     [self stopCaptureLog];
     PREDLogFileManager *fileManager = [[PREDLogFileManager alloc] init];
     _fileLogger = [[DDFileLogger alloc] initWithLogFileManager:fileManager]; // File Logger
@@ -146,10 +151,8 @@ static NSDate *_logStartTime;
 
 + (void)stopCaptureLog {
     if (_fileLogger) {
-        [_fileLogger rollLogFileWithCompletionBlock:^{
-            [DDLog removeLogger:_fileLogger];
-            _fileLogger = nil;
-        }];
+        [DDLog removeLogger:_fileLogger];
+        _fileLogger = nil;
     }
 }
 
