@@ -71,8 +71,10 @@ static NSString* pred_appendTime(NSString* path){
                                                            __strong typeof(wSelf) strongSelf = wSelf;
                                                            [strongSelf getPath:path parameters:params completion:completion retried:retried + 1];
                                                        });
+                                                   } else if (!error && operation.response.statusCode < 300) {
+                                                       PREDLogDebug(@"request for url %@ succeeded, response data: %@", request.URL.absoluteString, [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);                                                       completion(operation, data, error);
                                                    } else {
-                                                       PREDLogDebug(@"request for url %@ succeeded, response data: %@", request.URL.absoluteString, [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
+                                                       PREDLogDebug(@"request for url %@ faild", request.URL.absoluteString);
                                                        completion(operation, data, error);
                                                    }
                                                }];
@@ -91,14 +93,17 @@ static NSString* pred_appendTime(NSString* path){
     __weak typeof(self) wSelf = self;
     PREDHTTPOperation *op = [self operationWithURLRequest:request
                                                completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
-                                                   if (error && retried < PREDNetMaxRetryTimes) {
+                                                   if ((error || operation.response.statusCode >= 400) && retried < PREDNetMaxRetryTimes) {
                                                        PREDLogWarn(@"%@ request failed for: %@ statusCode: %ld", request.URL.absoluteString, error, (long)operation.response.statusCode);
                                                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(PREDNetRetryInterval * NSEC_PER_SEC)), dispatch_get_global_queue(0, DISPATCH_QUEUE_PRIORITY_BACKGROUND), ^{
                                                            __strong typeof(wSelf) strongSelf = wSelf;
                                                            [strongSelf postPath:path parameters:params completion:completion retried:retried + 1];
                                                        });
-                                                   } else {
+                                                   } else if (!error && operation.response.statusCode < 300) {
                                                        PREDLogDebug(@"request for url %@ succeeded, response data: %@", request.URL.absoluteString, [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);                                                       completion(operation, data, error);
+                                                   } else {
+                                                       PREDLogDebug(@"request for url %@ faild", request.URL.absoluteString);
+                                                       completion(operation, data, error);
                                                    }
                                                }];
     [self enqeueHTTPOperation:op];
@@ -127,14 +132,17 @@ static NSString* pred_appendTime(NSString* path){
     __weak typeof(self) wSelf = self;
     PREDHTTPOperation *op = [self operationWithURLRequest:request
                                                completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
-                                                   if (error && retried < PREDNetMaxRetryTimes) {
+                                                   if ((error || operation.response.statusCode >= 400) && retried < PREDNetMaxRetryTimes) {
                                                        PREDLogWarn(@"%@ request failed for: %@ statusCode: %ld", request.URL.absoluteString, error, (long)operation.response.statusCode);
                                                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(PREDNetRetryInterval * NSEC_PER_SEC)), dispatch_get_global_queue(0, DISPATCH_QUEUE_PRIORITY_BACKGROUND), ^{
                                                            __strong typeof(wSelf) strongSelf = wSelf;
                                                            [strongSelf postPath:path data:data headers:headers completion:completion];
                                                        });
-                                                   } else {
+                                                   } else if (!error && operation.response.statusCode < 300) {
                                                        PREDLogDebug(@"request for url %@ succeeded, response data: %@", request.URL.absoluteString, [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);                                                       completion(operation, data, error);
+                                                   } else {
+                                                       PREDLogDebug(@"request for url %@ faild", request.URL.absoluteString);
+                                                       completion(operation, data, error);
                                                    }
                                                }];
     [self enqeueHTTPOperation:op];
