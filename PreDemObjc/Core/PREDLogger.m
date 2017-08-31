@@ -15,8 +15,8 @@
 #define LogCaptureUploadMaxTimes             5
 
 static PREDLogLevel _logLevel = PREDLogLevelAll;
-static DDFileLogger *_fileLogger;
 static PREDLogLevel _fileLogLevel = PREDLogLevelOff;
+static DDFileLogger *_fileLogger;
 static PREDNetworkClient *_networkClient;
 static QNUploadManager *_uploadManager;
 static NSDate *_logStartTime;

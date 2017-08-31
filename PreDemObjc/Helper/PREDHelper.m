@@ -408,6 +408,7 @@ NSString *base64String(NSData * data, unsigned long length) {
         }
         [dic setObject:value forKey:propName];
     }
+    free(props);
     
     return dic;
 }
