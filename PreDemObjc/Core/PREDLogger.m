@@ -145,6 +145,7 @@ static NSDate *_logStartTime;
     PREDLogFileManager *fileManager = [[PREDLogFileManager alloc] init];
     _fileLogger = [[DDFileLogger alloc] initWithLogFileManager:fileManager]; // File Logger
     _fileLogger.rollingFrequency = 0;
+    _fileLogger.maximumFileSize = 1024 * 512;   // 512 KB
     [DDLog addLogger:_fileLogger withLevel:(DDLogLevel)logLevel];
     _logStartTime = [NSDate date];
 }
