@@ -94,13 +94,11 @@ DDLogFormatter
 }
 
 - (void)didArchiveLogFile:(NSString *)logFilePath {
-    NSLog(@"%s: %@", __PRETTY_FUNCTION__, logFilePath);
     [self uploadLog:logFilePath startTime:[_rfc3339Formatter stringFromDate:_logStartTime] endTime:[_rfc3339Formatter stringFromDate:[NSDate date]] retryTimes:0];
     _logStartTime = [NSDate date];
 }
 
 - (void)didRollAndArchiveLogFile:(NSString *)logFilePath {
-    NSLog(@"%s, %@", __PRETTY_FUNCTION__, logFilePath);
     [self uploadLog:logFilePath startTime:[_rfc3339Formatter stringFromDate:_logStartTime] endTime:[_rfc3339Formatter stringFromDate:[NSDate date]] retryTimes:0];
     _logStartTime = [NSDate date];
 }
