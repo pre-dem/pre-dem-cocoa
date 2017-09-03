@@ -40,6 +40,14 @@ DDLogFormatter
     return formatter;
 }
 
+- (NSString * __nullable)formatLogMessage:(DDLogMessage *)logMessage NS_SWIFT_NAME(format(message:)) {
+    if(logMessage.tag) {
+        return [NSString stringWithFormat:@"[%@](%@): %@", [self flagString:logMessage.flag], logMessage.tag, logMessage.message];
+    } else {
+        return [NSString stringWithFormat:@"[%@]: %@", [self flagString:logMessage.flag], logMessage.message];
+    }
+}
+
 - (NSString *)flagString:(DDLogFlag)flag {
     switch (flag) {
         case DDLogFlagError:
@@ -54,14 +62,6 @@ DDLogFormatter
             return @"Verbose";
         default:
             return @"Unknown";
-    }
-}
-
-- (NSString * __nullable)formatLogMessage:(DDLogMessage *)logMessage NS_SWIFT_NAME(format(message:)) {
-    if(logMessage.tag) {
-        return [NSString stringWithFormat:@"[%@](%@): %@", [self flagString:logMessage.flag], logMessage.tag, logMessage.message];
-    } else {
-        return [NSString stringWithFormat:@"[%@]: %@", [self flagString:logMessage.flag], logMessage.message];
     }
 }
 
