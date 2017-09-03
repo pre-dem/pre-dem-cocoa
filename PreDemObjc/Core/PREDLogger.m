@@ -21,6 +21,52 @@ static PREDNetworkClient *_networkClient;
 static QNUploadManager *_uploadManager;
 static NSDate *_logStartTime;
 
+@interface PREDLogFormatter : NSObject
+<
+DDLogFormatter
+>
++ (instancetype)sharedFormatter;
+
+@end
+
+@implementation PREDLogFormatter
+
++ (instancetype)sharedFormatter {
+    static PREDLogFormatter *formatter;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        formatter = [[PREDLogFormatter alloc] init];
+    });
+    return formatter;
+}
+
+- (NSString *)flagString:(DDLogFlag)flag {
+    switch (flag) {
+        case DDLogFlagError:
+            return @"Error";
+        case DDLogFlagWarning:
+            return @"Warning";
+        case DDLogFlagInfo:
+            return @"Info";
+        case DDLogFlagDebug:
+            return @"Debug";
+        case DDLogFlagVerbose:
+            return @"Verbose";
+        default:
+            return @"Unknown";
+    }
+}
+
+- (NSString * __nullable)formatLogMessage:(DDLogMessage *)logMessage NS_SWIFT_NAME(format(message:)) {
+    if(logMessage.tag) {
+        return [NSString stringWithFormat:@"[%@](%@): %@", [self flagString:logMessage.flag], logMessage.tag, logMessage.message];
+    } else {
+        return [NSString stringWithFormat:@"[%@]: %@", [self flagString:logMessage.flag], logMessage.message];
+    }
+}
+
+@end
+
 @interface PREDLogFileManager : DDLogFileManagerDefault
 
 @property (nonatomic, strong) NSDateFormatter *rfc3339Formatter;
@@ -28,6 +74,15 @@ static NSDate *_logStartTime;
 @end
 
 @implementation PREDLogFileManager
+
++ (instancetype)sharedManager {
+    static PREDLogFileManager *manager;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        manager = [[PREDLogFileManager alloc] init];
+    });
+    return manager;
+}
 
 - (instancetype)init {
     if (self = [super init]) {
@@ -119,6 +174,7 @@ static NSDate *_logStartTime;
 @implementation PREDLogger
 
 + (void)load {
+    [DDTTYLogger sharedInstance].logFormatter = [PREDLogFormatter sharedFormatter];
     [DDLog addLogger:[DDTTYLogger sharedInstance] withLevel:(DDLogLevel)_logLevel];
     _uploadManager = [[QNUploadManager alloc] init];
 }
@@ -142,10 +198,10 @@ static NSDate *_logStartTime;
     }
     _fileLogLevel = logLevel;
     [self stopCaptureLog];
-    PREDLogFileManager *fileManager = [[PREDLogFileManager alloc] init];
-    _fileLogger = [[DDFileLogger alloc] initWithLogFileManager:fileManager]; // File Logger
+    _fileLogger = [[DDFileLogger alloc] initWithLogFileManager:[PREDLogFileManager sharedManager]]; // File Logger
     _fileLogger.rollingFrequency = 0;
     _fileLogger.maximumFileSize = 1024 * 512;   // 512 KB
+    _fileLogger.logFormatter = [PREDLogFormatter sharedFormatter];
     [DDLog addLogger:_fileLogger withLevel:(DDLogLevel)logLevel];
     _logStartTime = [NSDate date];
 }
