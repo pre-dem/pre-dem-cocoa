@@ -6,6 +6,6 @@
 //  Copyright © 2017 pre-engineering. All rights reserved.
 //
 
-#import "PREDEnums.h"
+#import "PREDDefines.h"
 #import "PREDManager.h"
 #import "PREDNetDiagResult.h"

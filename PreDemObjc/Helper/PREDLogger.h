@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "PREDEnums.h"
+#import "PREDDefines.h"
 
 #define PREDLog(_level, _message) [PREDLogger logMessage:_message level:_level file:__FILE__ function:__PRETTY_FUNCTION__ line:__LINE__]
 

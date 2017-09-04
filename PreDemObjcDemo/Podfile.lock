@@ -14,7 +14,7 @@ PODS:
   - AFNetworking/Serialization (3.1.0)
   - AFNetworking/UIKit (3.1.0):
     - AFNetworking/NSURLSession
-  - HappyDNS (0.3.10)
+  - HappyDNS (0.3.12)
   - PreDemObjc (1.0.1):
     - HappyDNS
     - PreDemObjc/no-arc (= 1.0.1)
@@ -38,7 +38,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
-  HappyDNS: 06a9fed2796663fd87626dbf02552933265bf059
+  HappyDNS: 691a3041128055d09866f86e6e9ca90f24da1f18
   PreDemObjc: 7dd829ae9db991ce2a89ed0febfc5e70ebb5da9a
   Qiniu: 8af94ce9b1611ed5f4350883e41d4a62cabad491
   QNNetDiag: 6f7bbafa34c1b020e51d440f25044fe5ee10145d
