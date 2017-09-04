@@ -37,28 +37,6 @@ typedef NS_ENUM(NSUInteger, PREDLogLevel) {
     PREDLogLevelVerbose = 4
 };
 
-/**
- *  PreDemObjc Crash Reporter error domain
- */
-typedef NS_ENUM (NSInteger, PREDCrashErrorReason) {
-    /**
-     *  Unknown error
-     */
-    PREDCrashErrorUnknown,
-    /**
-     *  API Server rejected app version
-     */
-    PREDCrashAPIAppVersionRejected,
-    /**
-     *  API Server returned empty response
-     */
-    PREDCrashAPIReceivedEmptyResponse,
-    /**
-     *  Connection error with status code
-     */
-    PREDCrashAPIErrorWithStatusCode
-};
-
 typedef void (^PREDNetDiagCompleteHandler)(PREDNetDiagResult* result);
 
 typedef NSString *(^PREDLogMessageProvider)(void);

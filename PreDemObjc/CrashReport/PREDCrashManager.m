@@ -8,7 +8,6 @@
 
 #import <SystemConfiguration/SystemConfiguration.h>
 #import "PREDemObjc.h"
-#import "PREDPrivate.h"
 #import "PREDHelper.h"
 #import "PREDNetworkClient.h"
 #import "PREDCrashManager.h"
@@ -16,6 +15,7 @@
 #import "PREDCrashCXXExceptionHandler.h"
 #include <sys/sysctl.h>
 #import "QiniuSDK.h"
+#import "PREDLogger.h"
 
 #define CrashReportUploadRetryInterval        100
 #define CrashReportUploadMaxTimes             5
@@ -631,12 +631,7 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
             // only if sending the crash report went successfully, continue with the next one (if there are more)
             [self sendNextCrashReport];
         } else {
-            error = [NSError errorWithDomain:kPREDCrashErrorDomain
-                                        code:PREDCrashAPIErrorWithStatusCode
-                                    userInfo:@{
-                                               NSLocalizedDescriptionKey: [NSString stringWithFormat:@"Sending failed with status code: %li", (long)statusCode]
-                                               }];
-
+            PREDLogError(@"upload failed with response code: %d", statusCode);
         }
     }
     if (error) {

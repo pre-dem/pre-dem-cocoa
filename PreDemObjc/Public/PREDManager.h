@@ -27,8 +27,9 @@ NS_ASSUME_NONNULL_BEGIN
  @param appKey The app key that should be used.
  @param serviceDomain The service domain that data will be reported to or requested from.
  */
-+ (void)startWithAppKey:(nonnull NSString *)appKey
-          serviceDomain:(nonnull NSString *)serviceDomain;
++ (void)startWithAppKey:(NSString *)appKey
+          serviceDomain:(NSString *)serviceDomain
+                  error:(NSError *_Nullable *_Nullable)error;
 
 /**
  *  diagnose current network environment
@@ -36,14 +37,14 @@ NS_ASSUME_NONNULL_BEGIN
  *  @param host     the end point you want this diagnose action perform with
  *  @param complete diagnose result can be retrieved from the block
  */
-+ (void)diagnose:(nonnull NSString *)host
-        complete:(nonnull PREDNetDiagCompleteHandler)complete;
++ (void)diagnose:(NSString *)host
+        complete:(PREDNetDiagCompleteHandler)complete;
 
-+ (void)trackEventWithName:(nonnull NSString *)eventName
-                     event:(nonnull NSDictionary *)event;
++ (void)trackEventWithName:(NSString *)eventName
+                     event:(NSDictionary *)event;
 
-+ (void)trackEventsWithName:(nonnull NSString *)eventName
-                     events:(nonnull NSArray<NSDictionary *>*)events;
++ (void)trackEventsWithName:(NSString *)eventName
+                     events:(NSArray<NSDictionary *>*)events;
 
 
 ///-----------------------------------------------------------------------------
