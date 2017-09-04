@@ -7,6 +7,5 @@
 //
 
 #import "PREDEnums.h"
-#import "PREDNullability.h"
 #import "PREDManager.h"
 #import "PREDNetDiagResult.h"
