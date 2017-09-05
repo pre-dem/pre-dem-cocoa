@@ -52,12 +52,12 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Returns the SDK Version (CFBundleShortVersionString).
  */
-+ (NSString *_Nullable)version;
++ (NSString *)version;
 
 /**
  Returns the SDK Build (CFBundleVersion) as a string.
  */
-+ (NSString *_Nullable)build;
++ (NSString *)build;
 
 #pragma mark - Public Properties
 
@@ -74,7 +74,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  This property is used to identify a specific user, for instance, you can assign user id to tag, so that you can use user id to search reports gathered by the sdk.
  */
-@property (class, nonatomic, nullable, strong) NSString *tag;
+@property (class, nonatomic, nonnull, strong) NSString *tag;
 
 /**
  Set a custom block that handles all the log messages that are emitted from the SDK.
