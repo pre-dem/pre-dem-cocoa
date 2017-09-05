@@ -10,7 +10,10 @@
 
 @implementation PREDLogFormatter
 
-- (NSString * __nullable)formatLogMessage:(DDLogMessage *)logMessage NS_SWIFT_NAME(format(message:)) {
+- (NSString *)formatLogMessage:(DDLogMessage *)logMessage {
+    if ([self.delegate respondsToSelector:@selector(logFormatter:willFormatMessage:)]) {
+        [self.delegate logFormatter:self willFormatMessage:logMessage];
+    }
     if(logMessage.tag) {
         return [NSString stringWithFormat:@"[%@](%@): %@", [self flagString:logMessage.flag], logMessage.tag, logMessage.message];
     } else {

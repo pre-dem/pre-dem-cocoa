@@ -9,9 +9,19 @@
 #import <Foundation/Foundation.h>
 #import <CocoaLumberjack/CocoaLumberjack.h>
 
+@class PREDLogFormatter;
+
+@protocol PREDLogFormatterDelegate <NSObject>
+
+- (void)logFormatter:(PREDLogFormatter *)logFormatter willFormatMessage:(DDLogMessage *)logMessage;
+
+@end
+
 @interface PREDLogFormatter : NSObject
 <
 DDLogFormatter
 >
+
+@property (nonatomic, weak) id<PREDLogFormatterDelegate> delegate;
 
 @end

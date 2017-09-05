@@ -11,10 +11,12 @@
 
 #import "PREDLogger.h"
 #import "PREDLogFileManager.h"
+#import "PREDLogFormatter.h"
 
 @interface PREDLogger (Private)
 <
-PREDLogFileManagerDelegate
+PREDLogFileManagerDelegate,
+PREDLogFormatterDelegate
 >
 
 @property (class, nonatomic, strong) PREDNetworkClient *networkClient;

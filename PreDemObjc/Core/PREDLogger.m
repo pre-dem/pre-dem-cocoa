@@ -28,6 +28,8 @@
     PREDLogFileManager *_logFileManagers;
     NSDateFormatter *_rfc3339Formatter;
     PREDLogFormatter *_fileLogFormatter;
+    NSUInteger _errorLogCount;
+    NSMutableSet *_logTags;
 }
 
 + (void)load {
@@ -54,6 +56,8 @@
         [_rfc3339Formatter setDateFormat:@"yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'"];
         [_rfc3339Formatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
         _fileLogFormatter = [[PREDLogFormatter alloc] init];
+        _fileLogFormatter.delegate = self;
+        _logTags = [[NSMutableSet alloc] init];
     }
     return self;
 }
@@ -125,11 +129,44 @@
 }
 
 - (void)logFileManager:(PREDLogFileManager *)logFileManager didArchivedLogFile:(NSString *)logFilePath {
-    [self uploadLog:logFilePath startTime:[_rfc3339Formatter stringFromDate:_logStartTime] endTime:[_rfc3339Formatter stringFromDate:[NSDate date]] retryTimes:0];
+    NSMutableDictionary *metadata;
+    @synchronized (self) {
+        metadata = [@{
+                      @"app_bundle_id": PREDHelper.appBundleId,
+                      @"app_name": PREDHelper.appName,
+                      @"app_version": PREDHelper.appVersion,
+                      @"device_model": PREDHelper.deviceModel,
+                      @"os_platform": PREDHelper.osPlatform,
+                      @"os_version": PREDHelper.osVersion,
+                      @"os_build": PREDHelper.osBuild,
+                      @"sdk_version": PREDHelper.sdkVersion,
+                      @"sdk_id": PREDHelper.UUID,
+                      @"tag": PREDHelper.tag,
+                      @"manufacturer": @"Apple",
+                      @"start_time": [_rfc3339Formatter stringFromDate:_logStartTime],
+                      @"end_time": [_rfc3339Formatter stringFromDate:[NSDate date]],
+                      @"log_tags": [self logTagsString] ?: @"",
+                      @"error_count": @(_errorLogCount),
+                      } mutableCopy];
+        [_logTags removeAllObjects];
+        _errorLogCount = 0;
+    }
+    [self uploadLog:logFilePath metadata:metadata retryTimes:0];
     _logStartTime = [NSDate date];
 }
 
-- (void)uploadLog:(NSString *)logFilePath startTime:(NSString *)startTime endTime:(NSString *)endTime retryTimes:(NSUInteger)retryTimes {
+- (void)logFormatter:(PREDLogFormatter *)logFormatter willFormatMessage:(DDLogMessage *)logMessage {
+    @synchronized (self) {
+        if (logMessage.flag == DDLogFlagError) {
+            _errorLogCount++;
+        }
+        if ([logMessage.tag respondsToSelector:@selector(description)]) {
+            [_logTags addObject:[NSString stringWithFormat:@"%@", logMessage.tag]];
+        }
+    }
+}
+
+- (void)uploadLog:(NSString *)logFilePath metadata:(NSMutableDictionary *)metadata retryTimes:(NSUInteger)retryTimes {
     NSError *err;
     NSString *log = [NSString stringWithContentsOfFile:logFilePath encoding:NSUTF8StringEncoding error:&err];
     if (err) {
@@ -147,22 +184,7 @@
                  token:[dic valueForKey:@"token"]
                  complete:^(QNResponseInfo *info, NSString *key, NSDictionary *resp) {
                      if (resp) {
-                         NSDictionary *metadata = @{
-                                                    @"app_bundle_id": PREDHelper.appBundleId,
-                                                    @"app_name": PREDHelper.appName,
-                                                    @"app_version": PREDHelper.appVersion,
-                                                    @"device_model": PREDHelper.deviceModel,
-                                                    @"os_platform": PREDHelper.osPlatform,
-                                                    @"os_version": PREDHelper.osVersion,
-                                                    @"os_build": PREDHelper.osBuild,
-                                                    @"sdk_version": PREDHelper.sdkVersion,
-                                                    @"sdk_id": PREDHelper.UUID,
-                                                    @"tag": PREDHelper.tag,
-                                                    @"manufacturer": @"Apple",
-                                                    @"start_time": startTime,
-                                                    @"end_time": endTime,
-                                                    @"log_key": key,
-                                                    };
+                         metadata[@"log_key"] = key;
                          [_networkClient postPath:@"log-capture/i" parameters:metadata completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
                              if (error || operation.response.statusCode >= 400) {
                                  PREDLogError(@"upload lag metadata fail: %@ code: %ld, drop report", error?:@"unknown", (long)operation.response.statusCode);
@@ -173,7 +195,7 @@
                      } else if (retryTimes < LogCaptureUploadMaxTimes) {
                          PREDLogWarn(@"upload log fail: %@, retry after: %d seconds", info.error, LogCaptureUploadRetryInterval);
                          dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(LogCaptureUploadRetryInterval * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                             [self uploadLog:logFilePath startTime:startTime endTime:endTime retryTimes:retryTimes+1];
+                             [self uploadLog:logFilePath metadata:metadata retryTimes:retryTimes+1];
                              return;
                          });
                      } else {
@@ -191,6 +213,18 @@
             return;
         }
     }];
+}
+
+- (NSString *)logTagsString {
+    __block NSString *result;
+    [_logTags enumerateObjectsUsingBlock:^(NSString* obj, BOOL * stop) {
+        if (!result) {
+            result = obj;
+        } else {
+            result = [NSString stringWithFormat:@"%@\t%@", result, obj];
+        }
+    }];
+    return result;
 }
 
 @end
