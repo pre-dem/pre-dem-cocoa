@@ -18,6 +18,6 @@ extern NSString *const PREDErrorDomain;
 
 @interface PREDError : NSObject
 
-+ (NSError *)GenerateNSError:(PREDErrorCode)code description:(NSString *)description;
-
++ (NSError *)GenerateNSError:(PREDErrorCode)code
+                 description:(NSString *)format, ...;
 @end

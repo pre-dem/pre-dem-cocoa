@@ -19,16 +19,14 @@
 #import "PREDLogger.h"
 #import "PREDError.h"
 
+#define PREDAppIdLength     8
+
 static NSString* app_id(NSString* appKey){
-<<<<<<< HEAD
-    return [appKey substringToIndex:_PRED_APPID_LENGTH];
-=======
-    if (appKey.length >= 8) {
-        return [appKey substringToIndex:8];
+    if (appKey.length >= PREDAppIdLength) {
+        return [appKey substringToIndex:PREDAppIdLength];
     } else {
         return appKey;
     }
->>>>>>> add swift target
 }
 
 @implementation PREDManager {
@@ -218,9 +216,9 @@ static NSString* app_id(NSString* appKey){
         }
         return;
     }
-    if (appKey.length < 8) {
+    if (appKey.length < PREDAppIdLength) {
         if (error) {
-            *error = [PREDError GenerateNSError:kPREDErrorCodeInvalidAppKey description:@"the lenth of your app key must be longer than 8"];
+            *error = [PREDError GenerateNSError:kPREDErrorCodeInvalidAppKey description:@"the length of your app key must be longer than %d", PREDAppIdLength];
         }
         return;
     }
