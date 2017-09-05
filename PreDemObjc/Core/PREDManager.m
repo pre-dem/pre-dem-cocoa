@@ -40,7 +40,7 @@ static NSString* app_id(NSString* appKey){
 
 + (void)startWithAppKey:(NSString *)appKey
           serviceDomain:(NSString *)serviceDomain
-                  error:(NSError *_Nullable *_Nullable)error {
+                  error:(NSError **)error {
     if (![NSThread isMainThread]) {
         @throw [NSException exceptionWithName:@"InvalidEnvException" reason:@"You must start pre-dem in main thread" userInfo:nil];
     }
@@ -48,13 +48,13 @@ static NSString* app_id(NSString* appKey){
 }
 
 
-+ (void)diagnose:(nonnull NSString *)host
-        complete:(nonnull PREDNetDiagCompleteHandler)complete {
++ (void)diagnose:(NSString *)host
+        complete:(PREDNetDiagCompleteHandler)complete {
     [[self sharedPREDManager] diagnose:host complete:complete];
 }
 
-+ (void)trackEventWithName:(nonnull NSString *)eventName
-                     event:(nonnull NSDictionary *)event {
++ (void)trackEventWithName:(NSString *)eventName
+                     event:(NSDictionary *)event {
     if (event == nil || eventName == nil) {
         return;
     }
@@ -63,8 +63,8 @@ static NSString* app_id(NSString* appKey){
     }];
 }
 
-+ (void)trackEventsWithName:(nonnull NSString *)eventName
-                     events:(nonnull NSArray<NSDictionary *>*)events{
++ (void)trackEventsWithName:(NSString *)eventName
+                     events:(NSArray<NSDictionary *>*)events{
     if (events == nil || events.count == 0 || eventName == nil) {
         return;
     }

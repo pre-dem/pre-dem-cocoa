@@ -37,14 +37,13 @@ NS_ASSUME_NONNULL_BEGIN
  *  @param complete diagnose result can be retrieved from the block
  */
 + (void)diagnose:(NSString *)host
-        complete:(PREDNetDiagCompleteHandler)complete;
+        complete:(PREDNetDiagCompleteHandler _Nullable)complete;
 
 + (void)trackEventWithName:(NSString *)eventName
                      event:(NSDictionary *)event;
 
 + (void)trackEventsWithName:(NSString *)eventName
                      events:(NSArray<NSDictionary *>*)events;
-
 
 ///-----------------------------------------------------------------------------
 /// @name SDK meta data
@@ -53,12 +52,12 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Returns the SDK Version (CFBundleShortVersionString).
  */
-+ (NSString *)version;
++ (NSString *_Nullable)version;
 
 /**
  Returns the SDK Build (CFBundleVersion) as a string.
  */
-+ (NSString *)build;
++ (NSString *_Nullable)build;
 
 #pragma mark - Public Properties
 
@@ -75,7 +74,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  This property is used to identify a specific user, for instance, you can assign user id to tag, so that you can use user id to search reports gathered by the sdk.
  */
-@property (class, nonatomic, strong) NSString *tag;
+@property (class, nonatomic, nullable, strong) NSString *tag;
 
 /**
  Set a custom block that handles all the log messages that are emitted from the SDK.
@@ -101,7 +100,7 @@ NS_ASSUME_NONNULL_BEGIN
  
  @param logHandler The block of type PREDLogHandler that will process all logged messages.
  */
-+ (void)setLogHandler:(PREDLogHandler _Nullable )logHandler;
++ (void)setLogHandler:(PREDLogHandler _Nullable)logHandler;
 
 @end
 
