@@ -1,0 +1,6 @@
+framework module PreDemObjc {
+  umbrella header "PreDemObjc-umbrella.h"
+
+  export *
+  module * { export * }
+}

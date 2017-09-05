@@ -20,7 +20,15 @@
 #import "PREDError.h"
 
 static NSString* app_id(NSString* appKey){
+<<<<<<< HEAD
     return [appKey substringToIndex:_PRED_APPID_LENGTH];
+=======
+    if (appKey.length >= 8) {
+        return [appKey substringToIndex:8];
+    } else {
+        return appKey;
+    }
+>>>>>>> add swift target
 }
 
 @implementation PREDManager {
@@ -205,7 +213,16 @@ static NSString* app_id(NSString* appKey){
 
 - (void)initNetworkClientWithDomain:(NSString *)aServerURL appKey:(NSString *)appKey error:(NSError **)error {
     if (!aServerURL.length) {
-        *error = [PREDError GenerateNSError:kPREDErrorCodeInvalidServiceDomain description:@"you must specify server domain"];
+        if (error) {
+            *error = [PREDError GenerateNSError:kPREDErrorCodeInvalidServiceDomain description:@"you must specify server domain"];
+        }
+        return;
+    }
+    if (appKey.length < 8) {
+        if (error) {
+            *error = [PREDError GenerateNSError:kPREDErrorCodeInvalidAppKey description:@"the lenth of your app key must be longer than 8"];
+        }
+        return;
     }
     if (![aServerURL hasPrefix:@"http://"] && ![aServerURL hasPrefix:@"https://"]) {
         aServerURL = [NSString stringWithFormat:@"http://%@", aServerURL];

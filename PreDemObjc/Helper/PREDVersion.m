@@ -15,7 +15,7 @@ static NSString *build;
 @implementation PREDVersion
 
 + (void)load {
-    NSURL *bundleUrl = [[NSBundle mainBundle] URLForResource:@"PREDResources" withExtension:@"bundle"];
+    NSURL *bundleUrl = [[NSBundle bundleForClass:self] URLForResource:@"PREDResources" withExtension:@"bundle"];
     if (!bundleUrl) {
         PREDLogWarning(@"version bundle is not detected");
         return;
