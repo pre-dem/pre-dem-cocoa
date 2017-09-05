@@ -8,17 +8,18 @@
 
 #include <CommonCrypto/CommonCrypto.h>
 
-#import "PRECredential.h"
+#import "PREDCredential.h"
+#import "PREDManagerPrivate.h"
 
-@implementation PRECredential
+@implementation PREDCredential
 
-+(NSString *)authoriztion:(NSString*) data
++(NSString *)authorize:(NSString*) data
                     appKey:(NSString*) key{
-    NSString* realK = [key substringFromIndex:8];
-    return [NSString stringWithFormat:@"DEMv1 %@", [self HmacSha1:data data:realK]];
+    NSString* realK = [key substringFromIndex:_PRED_APPID_LENGTH];
+    return [NSString stringWithFormat:@"DEMv1 %@", [self hmacSha1:data data:realK]];
 }
 
-+(NSString *)HmacSha1:(NSString *)key data:(NSString *)data
++(NSString *)hmacSha1:(NSString *)key data:(NSString *)data
 {
     const char *cKey  = [key cStringUsingEncoding:NSASCIIStringEncoding];
     const char *cData = [data cStringUsingEncoding:NSASCIIStringEncoding];

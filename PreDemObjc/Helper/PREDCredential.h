@@ -8,9 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
-@interface PRECredential : NSObject
+@interface PREDCredential : NSObject
 
-+ (NSString *)authoriztion:(NSString*) data
++ (NSString *)authorize:(NSString*) data
                     appKey:(NSString*) key;
 
 @end

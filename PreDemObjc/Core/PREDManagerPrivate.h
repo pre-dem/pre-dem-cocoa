@@ -13,6 +13,8 @@
 #import "PREDConfigManager.h"
 #import "PREDNetworkClient.h"
 
+#define _PRED_APPID_LENGTH 8
+
 @interface PREDManager ()
 <
 PREDConfigManagerDelegate

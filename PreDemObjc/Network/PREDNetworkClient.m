@@ -8,11 +8,14 @@
 
 #import "PREDNetworkClient.h"
 #import "PREDLogger.h"
-#import "PRECredential.h"
+#import "PREDCredential.h"
 #import "PREDManagerPrivate.h"
 
 #define PREDNetMaxRetryTimes    5
 #define PREDNetRetryInterval    30
+
+static NSString* PRED_HTTPS_PREFIX = @"https://";
+static NSString* PRED_HTTP_PREFIX = @"http://";
 
 static NSString* pred_appendTime(NSString* path){
     return [NSString stringWithFormat:@"%@?t=%lld", path, (int64_t)[[NSDate date] timeIntervalSince1970]];
@@ -179,14 +182,14 @@ static NSString* pred_appendTime(NSString* path){
     
     NSString* url =  [NSString stringWithFormat:@"%@%@", _baseURL, path];
     NSString* domainPath;
-    if ([url hasPrefix:@"https://"]) {
-        domainPath = [url substringFromIndex:8];
-    } else if ([url hasPrefix:@"https://"]){
-        domainPath =  [url substringFromIndex:7];
+    if ([url hasPrefix:PRED_HTTPS_PREFIX]) {
+        domainPath = [url substringFromIndex:[PRED_HTTPS_PREFIX length]];
+    } else if ([url hasPrefix:PRED_HTTP_PREFIX]){
+        domainPath =  [url substringFromIndex:[PRED_HTTP_PREFIX length]];
     } else {
         domainPath = url;
     }
-    NSString* auth = [PRECredential authoriztion:domainPath appKey:[[PREDManager sharedPREDManager] appKey]];
+    NSString* auth = [PREDCredential authorize:domainPath appKey:[[PREDManager sharedPREDManager] appKey]];
     
     NSURL *endpoint = [NSURL URLWithString:url];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:endpoint];
