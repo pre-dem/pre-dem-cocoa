@@ -18,6 +18,7 @@
 #import "PREDLagMonitorController.h"
 #import "PREDLogger.h"
 #import "PREDError.h"
+#import "PREDLoggerPrivate.h"
 
 static NSString* app_id(NSString* appKey){
     if (appKey.length >= PREDAppIdLength) {
