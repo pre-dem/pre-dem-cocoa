@@ -19,8 +19,6 @@
 #import "PREDLogger.h"
 #import "PREDError.h"
 
-#define PREDAppIdLength     8
-
 static NSString* app_id(NSString* appKey){
     if (appKey.length >= PREDAppIdLength) {
         return [appKey substringToIndex:PREDAppIdLength];
