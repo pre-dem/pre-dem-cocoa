@@ -1,15 +1,8 @@
-FRAMEWORK_SEARCH_PATHS = $(inherited) "$PODS_CONFIGURATION_BUILD_DIR/AFNetworking" "$PODS_CONFIGURATION_BUILD_DIR/HappyDNS" "$PODS_CONFIGURATION_BUILD_DIR/PreDemObjc" "$PODS_CONFIGURATION_BUILD_DIR/QNNetDiag" "$PODS_CONFIGURATION_BUILD_DIR/Qiniu"
+FRAMEWORK_SEARCH_PATHS = $(inherited) "$PODS_CONFIGURATION_BUILD_DIR/AFNetworking" "$PODS_CONFIGURATION_BUILD_DIR/CocoaLumberjack" "$PODS_CONFIGURATION_BUILD_DIR/HappyDNS" "$PODS_CONFIGURATION_BUILD_DIR/PreDemObjc" "$PODS_CONFIGURATION_BUILD_DIR/QNNetDiag" "$PODS_CONFIGURATION_BUILD_DIR/Qiniu"
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
-<<<<<<< HEAD
 LD_RUNPATH_SEARCH_PATHS = $(inherited) '@executable_path/Frameworks' '@loader_path/Frameworks'
-OTHER_CFLAGS = $(inherited) -iquote "$PODS_CONFIGURATION_BUILD_DIR/AFNetworking/AFNetworking.framework/Headers" -iquote "$PODS_CONFIGURATION_BUILD_DIR/HappyDNS/HappyDNS.framework/Headers" -iquote "$PODS_CONFIGURATION_BUILD_DIR/PreDemObjc/PreDemObjc.framework/Headers" -iquote "$PODS_CONFIGURATION_BUILD_DIR/QNNetDiag/QNNetDiag.framework/Headers" -iquote "$PODS_CONFIGURATION_BUILD_DIR/Qiniu/Qiniu.framework/Headers"
-OTHER_LDFLAGS = $(inherited) -ObjC -framework "AFNetworking" -framework "HappyDNS" -framework "PreDemObjc" -framework "QNNetDiag" -framework "Qiniu"
-=======
-HEADER_SEARCH_PATHS = $(inherited) "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/AFNetworking" "${PODS_ROOT}/Headers/Public/CocoaLumberjack" "${PODS_ROOT}/Headers/Public/HappyDNS" "${PODS_ROOT}/Headers/Public/PreDemObjc" "${PODS_ROOT}/Headers/Public/QNNetDiag" "${PODS_ROOT}/Headers/Public/Qiniu"
-LIBRARY_SEARCH_PATHS = $(inherited) "$PODS_CONFIGURATION_BUILD_DIR/AFNetworking" "$PODS_CONFIGURATION_BUILD_DIR/CocoaLumberjack" "$PODS_CONFIGURATION_BUILD_DIR/HappyDNS" "$PODS_CONFIGURATION_BUILD_DIR/PreDemObjc" "$PODS_CONFIGURATION_BUILD_DIR/QNNetDiag" "$PODS_CONFIGURATION_BUILD_DIR/Qiniu"
-OTHER_CFLAGS = $(inherited) -isystem "${PODS_ROOT}/Headers/Public" -isystem "${PODS_ROOT}/Headers/Public/AFNetworking" -isystem "${PODS_ROOT}/Headers/Public/CocoaLumberjack" -isystem "${PODS_ROOT}/Headers/Public/HappyDNS" -isystem "${PODS_ROOT}/Headers/Public/PreDemObjc" -isystem "${PODS_ROOT}/Headers/Public/QNNetDiag" -isystem "${PODS_ROOT}/Headers/Public/Qiniu"
-OTHER_LDFLAGS = $(inherited) -ObjC -l"AFNetworking" -l"CocoaLumberjack" -l"HappyDNS" -l"PreDemObjc" -l"QNNetDiag" -l"Qiniu" -l"c++" -l"resolv" -l"z" -framework "AssetsLibrary" -framework "CoreGraphics" -framework "CoreTelephony" -framework "CoreText" -framework "CrashReporter" -framework "Foundation" -framework "MobileCoreServices" -framework "Photos" -framework "QuartzCore" -framework "QuickLook" -framework "Security" -framework "SystemConfiguration"
->>>>>>> use cocoalumberjack to implement logger
+OTHER_CFLAGS = $(inherited) -iquote "$PODS_CONFIGURATION_BUILD_DIR/AFNetworking/AFNetworking.framework/Headers" -iquote "$PODS_CONFIGURATION_BUILD_DIR/CocoaLumberjack/CocoaLumberjack.framework/Headers" -iquote "$PODS_CONFIGURATION_BUILD_DIR/HappyDNS/HappyDNS.framework/Headers" -iquote "$PODS_CONFIGURATION_BUILD_DIR/PreDemObjc/PreDemObjc.framework/Headers" -iquote "$PODS_CONFIGURATION_BUILD_DIR/QNNetDiag/QNNetDiag.framework/Headers" -iquote "$PODS_CONFIGURATION_BUILD_DIR/Qiniu/Qiniu.framework/Headers"
+OTHER_LDFLAGS = $(inherited) -ObjC -framework "AFNetworking" -framework "CocoaLumberjack" -framework "HappyDNS" -framework "PreDemObjc" -framework "QNNetDiag" -framework "Qiniu"
 PODS_BUILD_DIR = $BUILD_DIR
 PODS_CONFIGURATION_BUILD_DIR = $PODS_BUILD_DIR/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)
 PODS_PODFILE_DIR_PATH = ${SRCROOT}/.

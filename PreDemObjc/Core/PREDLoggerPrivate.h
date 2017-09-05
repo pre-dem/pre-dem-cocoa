@@ -10,10 +10,14 @@
 #define PREDLogger_private_h
 
 #import "PREDLogger.h"
+#import "PREDLogFileManager.h"
 
 @interface PREDLogger (Private)
+<
+PREDLogFileManagerDelegate
+>
 
-@property(class, nonatomic, assign) PREDNetworkClient *networkClient;
+@property (class, nonatomic, strong) PREDNetworkClient *networkClient;
 
 @end
 

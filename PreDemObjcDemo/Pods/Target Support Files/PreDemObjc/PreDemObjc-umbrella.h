@@ -12,6 +12,7 @@
 
 #import "PREDDefines.h"
 #import "PREDemObjc.h"
+#import "PREDLogger.h"
 #import "PREDManager.h"
 #import "PREDNetDiagResult.h"
 #import "KeychainItemWrapper.h"
