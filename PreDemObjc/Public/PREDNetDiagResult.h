@@ -8,8 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-NS_ASSUME_NONNULL_BEGIN
-
 @interface PREDNetDiagResult : NSObject
 
 @property (nonatomic, nullable, strong) NSString *app_bundle_id;
@@ -58,5 +56,3 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) NSInteger http_body_size;
 
 @end
-
-NS_ASSUME_NONNULL_END
