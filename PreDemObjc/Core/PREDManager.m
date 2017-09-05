@@ -127,6 +127,7 @@ static NSString* app_id(NSString* appKey){
 
 
 - (void)startWithAppKey:(NSString *)appKey serviceDomain:(NSString *)serviceDomain {
+    _appKey = appKey;
     [self initNetworkClientWithDomain:serviceDomain appKey:appKey];
     
     [self initializeModules];

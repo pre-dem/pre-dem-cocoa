@@ -28,6 +28,8 @@ PREDConfigManagerDelegate
 
 @property (nonatomic, getter = isLagMonitorEnabled) BOOL enableLagMonitor;
 
+@property (readonly, nonatomic, nonnull) NSString* appKey;
+
 @end
 
 #endif /* PREDManagerPrivate_h */

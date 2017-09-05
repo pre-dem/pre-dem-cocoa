@@ -8,6 +8,8 @@
 
 #import "PREDNetworkClient.h"
 #import "PREDLogger.h"
+#import "PRECredential.h"
+#import "PREDManagerPrivate.h"
 
 #define PREDNetMaxRetryTimes    5
 #define PREDNetRetryInterval    30
@@ -172,8 +174,11 @@
     path = path ? : @"";
     
     NSString* url =  [NSString stringWithFormat:@"%@%@", _baseURL, path];
+    NSString* auth = [PRECredential authoriztion:url appKey:[[PREDManager sharedPREDManager] appKey]];
     NSURL *endpoint = [NSURL URLWithString:url];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:endpoint];
+    [request setValue:auth forHTTPHeaderField:@"Authorization"];
+    
     request.HTTPMethod = method;
     [NSURLProtocol setProperty:@YES
                         forKey:@"PREDInternalRequest"
