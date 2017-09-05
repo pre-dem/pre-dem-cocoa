@@ -8,7 +8,6 @@
 
 #import "PreDemObjc.h"
 #import "PREDManagerPrivate.h"
-#import "PREDPrivate.h"
 #import "PREDHelper.h"
 #import "PREDNetworkClient.h"
 #import "PREDVersion.h"
@@ -17,9 +16,15 @@
 #import "PREDURLProtocol.h"
 #import "PREDCrashManager.h"
 #import "PREDLagMonitorController.h"
+#import "PREDLogger.h"
+#import "PREDError.h"
 
 static NSString* app_id(NSString* appKey){
-    return [appKey substringToIndex:_PRED_APPID_LENGTH];
+    if (appKey.length >= PREDAppIdLength) {
+        return [appKey substringToIndex:PREDAppIdLength];
+    } else {
+        return appKey;
+    }
 }
 
 @implementation PREDManager {
@@ -37,22 +42,23 @@ static NSString* app_id(NSString* appKey){
 
 #pragma mark - Public Class Methods
 
-+ (void)startWithAppKey:(nonnull NSString *)appKey
-          serviceDomain:(nonnull NSString *)serviceDomain{
++ (void)startWithAppKey:(NSString *)appKey
+          serviceDomain:(NSString *)serviceDomain
+                  error:(NSError **)error {
     if (![NSThread isMainThread]) {
         @throw [NSException exceptionWithName:@"InvalidEnvException" reason:@"You must start pre-dem in main thread" userInfo:nil];
     }
-    [[self sharedPREDManager] startWithAppKey:appKey serviceDomain:serviceDomain];
+    [[self sharedPREDManager] startWithAppKey:appKey serviceDomain:serviceDomain error:error];
 }
 
 
-+ (void)diagnose:(nonnull NSString *)host
-        complete:(nonnull PREDNetDiagCompleteHandler)complete{
++ (void)diagnose:(NSString *)host
+        complete:(PREDNetDiagCompleteHandler)complete {
     [[self sharedPREDManager] diagnose:host complete:complete];
 }
 
-+ (void)trackEventWithName:(nonnull NSString *)eventName
-                     event:(nonnull NSDictionary *)event {
++ (void)trackEventWithName:(NSString *)eventName
+                     event:(NSDictionary *)event {
     if (event == nil || eventName == nil) {
         return;
     }
@@ -61,8 +67,8 @@ static NSString* app_id(NSString* appKey){
     }];
 }
 
-+ (void)trackEventsWithName:(nonnull NSString *)eventName
-                     events:(nonnull NSArray<NSDictionary *>*)events{
++ (void)trackEventsWithName:(NSString *)eventName
+                     events:(NSArray<NSDictionary *>*)events{
     if (events == nil || events.count == 0 || eventName == nil) {
         return;
     }
@@ -125,10 +131,9 @@ static NSString* app_id(NSString* appKey){
     return self;
 }
 
-
-- (void)startWithAppKey:(NSString *)appKey serviceDomain:(NSString *)serviceDomain {
+- (void)startWithAppKey:(NSString *)appKey serviceDomain:(NSString *)serviceDomain error:(NSError **)error {
     _appKey = appKey;
-    [self initNetworkClientWithDomain:serviceDomain appKey:appKey];
+    [self initNetworkClientWithDomain:serviceDomain appKey:appKey error:error];
     
     [self initializeModules];
     
@@ -202,9 +207,18 @@ static NSString* app_id(NSString* appKey){
     }
 }
 
-- (void)initNetworkClientWithDomain:(NSString *)aServerURL appKey:(NSString *)appKey {
-    if (!aServerURL) {
-        aServerURL = PRED_DEFAULT_DOMAIN;
+- (void)initNetworkClientWithDomain:(NSString *)aServerURL appKey:(NSString *)appKey error:(NSError **)error {
+    if (!aServerURL.length) {
+        if (error) {
+            *error = [PREDError GenerateNSError:kPREDErrorCodeInvalidServiceDomain description:@"you must specify server domain"];
+        }
+        return;
+    }
+    if (appKey.length < PREDAppIdLength) {
+        if (error) {
+            *error = [PREDError GenerateNSError:kPREDErrorCodeInvalidAppKey description:@"the length of your app key must be longer than %d", PREDAppIdLength];
+        }
+        return;
     }
     if (![aServerURL hasPrefix:@"http://"] && ![aServerURL hasPrefix:@"https://"]) {
         aServerURL = [NSString stringWithFormat:@"http://%@", aServerURL];

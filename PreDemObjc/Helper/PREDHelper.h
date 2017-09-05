@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "PREDEnums.h"
+#import "PREDDefines.h"
 
 @interface PREDHelper : NSObject
 

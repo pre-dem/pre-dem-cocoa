@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		62F62D4E8686211147CFAA48 /* libPods-PreDemObjcDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BBAB5C53425E36F9ABF19D45 /* libPods-PreDemObjcDemo.a */; };
+		5BC9043C8931AC56B90A9258 /* Pods_PreDemSwiftDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA9DE848F18E85B4D07C40CD /* Pods_PreDemSwiftDemo.framework */; };
 		B60231491EC9B7AC005AB798 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B60231481EC9B7AC005AB798 /* main.m */; };
 		B602314C1EC9B7AC005AB798 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B602314B1EC9B7AC005AB798 /* AppDelegate.m */; };
 		B602314F1EC9B7AC005AB798 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B602314E1EC9B7AC005AB798 /* ViewController.m */; };
@@ -18,6 +18,12 @@
 		B6548F391ECB0C7E0031DD42 /* PreDemObjcDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B6548F381ECB0C7E0031DD42 /* PreDemObjcDemoTests.m */; };
 		B694F1521F3025AB00175FF1 /* AppIDViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B694F1511F3025AB00175FF1 /* AppIDViewController.m */; };
 		B6CFBE961F28697700A42B55 /* doc in Resources */ = {isa = PBXBuildFile; fileRef = B6CFBE951F28697700A42B55 /* doc */; };
+		B6D9B05F1F5E419E001D893E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6D9B05E1F5E419E001D893E /* AppDelegate.swift */; };
+		B6D9B0611F5E419E001D893E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6D9B0601F5E419E001D893E /* ViewController.swift */; };
+		B6D9B0641F5E419E001D893E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B6D9B0621F5E419E001D893E /* Main.storyboard */; };
+		B6D9B0661F5E419E001D893E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B6D9B0651F5E419E001D893E /* Assets.xcassets */; };
+		B6D9B0691F5E419E001D893E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B6D9B0671F5E419E001D893E /* LaunchScreen.storyboard */; };
+		BA757918E65B8FC141378954 /* Pods_PreDemObjcDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E6504F08203DC0F061B69C3 /* Pods_PreDemObjcDemo.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -31,6 +37,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5627CA5A610BBE9856BD0D35 /* Pods-PreDemSwiftDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PreDemSwiftDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-PreDemSwiftDemo/Pods-PreDemSwiftDemo.release.xcconfig"; sourceTree = "<group>"; };
+		9E6504F08203DC0F061B69C3 /* Pods_PreDemObjcDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PreDemObjcDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B60231441EC9B7AC005AB798 /* PreDemObjcDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PreDemObjcDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B60231481EC9B7AC005AB798 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		B602314A1EC9B7AC005AB798 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -53,8 +61,16 @@
 		B6CD372B1ECC346F00186D6D /* scripts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = scripts; path = ../scripts; sourceTree = "<group>"; };
 		B6CD372C1ECC348400186D6D /* fastlane */ = {isa = PBXFileReference; lastKnownFileType = folder; name = fastlane; path = ../fastlane; sourceTree = "<group>"; };
 		B6CFBE951F28697700A42B55 /* doc */ = {isa = PBXFileReference; lastKnownFileType = folder; name = doc; path = ../doc; sourceTree = "<group>"; };
-		BBAB5C53425E36F9ABF19D45 /* libPods-PreDemObjcDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PreDemObjcDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B6D9B05C1F5E419E001D893E /* PreDemSwiftDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PreDemSwiftDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B6D9B05E1F5E419E001D893E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		B6D9B0601F5E419E001D893E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		B6D9B0631F5E419E001D893E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		B6D9B0651F5E419E001D893E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		B6D9B0681F5E419E001D893E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		B6D9B06A1F5E419E001D893E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CBABF7F8789ACF6993173BFE /* Pods-PreDemSwiftDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PreDemSwiftDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PreDemSwiftDemo/Pods-PreDemSwiftDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		CC2DE1862FAA2D9F0AD22B41 /* Pods-PreDemObjcDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PreDemObjcDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-PreDemObjcDemo/Pods-PreDemObjcDemo.release.xcconfig"; sourceTree = "<group>"; };
+		EA9DE848F18E85B4D07C40CD /* Pods_PreDemSwiftDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PreDemSwiftDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EEA8E066865EF848E9BA43AC /* Pods-PreDemObjcDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PreDemObjcDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PreDemObjcDemo/Pods-PreDemObjcDemo.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -63,7 +79,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				62F62D4E8686211147CFAA48 /* libPods-PreDemObjcDemo.a in Frameworks */,
+				BA757918E65B8FC141378954 /* Pods_PreDemObjcDemo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -74,13 +90,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B6D9B0591F5E419E001D893E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5BC9043C8931AC56B90A9258 /* Pods_PreDemSwiftDemo.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		873953D5F83C737C48720D4A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				BBAB5C53425E36F9ABF19D45 /* libPods-PreDemObjcDemo.a */,
+				EA9DE848F18E85B4D07C40CD /* Pods_PreDemSwiftDemo.framework */,
+				9E6504F08203DC0F061B69C3 /* Pods_PreDemObjcDemo.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -98,6 +123,7 @@
 				B60231461EC9B7AC005AB798 /* PreDemObjcDemo */,
 				D36C4441D13DB5C7BD3AC3A7 /* Pods */,
 				B6548F371ECB0C7E0031DD42 /* PreDemObjcDemoTests */,
+				B6D9B05D1F5E419E001D893E /* PreDemSwiftDemo */,
 				B60231451EC9B7AC005AB798 /* Products */,
 				873953D5F83C737C48720D4A /* Frameworks */,
 			);
@@ -108,6 +134,7 @@
 			children = (
 				B60231441EC9B7AC005AB798 /* PreDemObjcDemo.app */,
 				B6548F361ECB0C7E0031DD42 /* PreDemObjcDemoTests.xctest */,
+				B6D9B05C1F5E419E001D893E /* PreDemSwiftDemo.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -147,11 +174,26 @@
 			path = PreDemObjcDemoTests;
 			sourceTree = "<group>";
 		};
+		B6D9B05D1F5E419E001D893E /* PreDemSwiftDemo */ = {
+			isa = PBXGroup;
+			children = (
+				B6D9B05E1F5E419E001D893E /* AppDelegate.swift */,
+				B6D9B0601F5E419E001D893E /* ViewController.swift */,
+				B6D9B0621F5E419E001D893E /* Main.storyboard */,
+				B6D9B0651F5E419E001D893E /* Assets.xcassets */,
+				B6D9B0671F5E419E001D893E /* LaunchScreen.storyboard */,
+				B6D9B06A1F5E419E001D893E /* Info.plist */,
+			);
+			path = PreDemSwiftDemo;
+			sourceTree = "<group>";
+		};
 		D36C4441D13DB5C7BD3AC3A7 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
 				EEA8E066865EF848E9BA43AC /* Pods-PreDemObjcDemo.debug.xcconfig */,
 				CC2DE1862FAA2D9F0AD22B41 /* Pods-PreDemObjcDemo.release.xcconfig */,
+				CBABF7F8789ACF6993173BFE /* Pods-PreDemSwiftDemo.debug.xcconfig */,
+				5627CA5A610BBE9856BD0D35 /* Pods-PreDemSwiftDemo.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -197,12 +239,33 @@
 			productReference = B6548F361ECB0C7E0031DD42 /* PreDemObjcDemoTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		B6D9B05B1F5E419E001D893E /* PreDemSwiftDemo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B6D9B06D1F5E419F001D893E /* Build configuration list for PBXNativeTarget "PreDemSwiftDemo" */;
+			buildPhases = (
+				8857FA451DA2B097D348473C /* [CP] Check Pods Manifest.lock */,
+				B6D9B0581F5E419E001D893E /* Sources */,
+				B6D9B0591F5E419E001D893E /* Frameworks */,
+				B6D9B05A1F5E419E001D893E /* Resources */,
+				36252BABBE9B87453EF8E88E /* [CP] Embed Pods Frameworks */,
+				F828821824787F88FBFD87B7 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PreDemSwiftDemo;
+			productName = PreDemSwiftDemo;
+			productReference = B6D9B05C1F5E419E001D893E /* PreDemSwiftDemo.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		B602313C1EC9B7AC005AB798 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0830;
 				LastUpgradeCheck = 0830;
 				ORGANIZATIONNAME = "pre-engineering";
 				TargetAttributes = {
@@ -216,6 +279,11 @@
 						DevelopmentTeam = GDFHW66V92;
 						ProvisioningStyle = Automatic;
 						TestTargetID = B60231431EC9B7AC005AB798;
+					};
+					B6D9B05B1F5E419E001D893E = {
+						CreatedOnToolsVersion = 8.3.3;
+						DevelopmentTeam = GDFHW66V92;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -234,6 +302,7 @@
 			targets = (
 				B60231431EC9B7AC005AB798 /* PreDemObjcDemo */,
 				B6548F351ECB0C7E0031DD42 /* PreDemObjcDemoTests */,
+				B6D9B05B1F5E419E001D893E /* PreDemSwiftDemo */,
 			);
 		};
 /* End PBXProject section */
@@ -258,6 +327,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B6D9B05A1F5E419E001D893E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B6D9B0691F5E419E001D893E /* LaunchScreen.storyboard in Resources */,
+				B6D9B0661F5E419E001D893E /* Assets.xcassets in Resources */,
+				B6D9B0641F5E419E001D893E /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
@@ -267,13 +346,68 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-PreDemObjcDemo/Pods-PreDemObjcDemo-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework",
+				"${BUILT_PRODUCTS_DIR}/HappyDNS/HappyDNS.framework",
+				"${BUILT_PRODUCTS_DIR}/PreDemObjc/PreDemObjc.framework",
+				"${BUILT_PRODUCTS_DIR}/QNNetDiag/QNNetDiag.framework",
+				"${BUILT_PRODUCTS_DIR}/Qiniu/Qiniu.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AFNetworking.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HappyDNS.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PreDemObjc.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/QNNetDiag.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Qiniu.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PreDemObjcDemo/Pods-PreDemObjcDemo-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		36252BABBE9B87453EF8E88E /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-PreDemSwiftDemo/Pods-PreDemSwiftDemo-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework",
+				"${BUILT_PRODUCTS_DIR}/HappyDNS/HappyDNS.framework",
+				"${BUILT_PRODUCTS_DIR}/PreDemObjc/PreDemObjc.framework",
+				"${BUILT_PRODUCTS_DIR}/QNNetDiag/QNNetDiag.framework",
+				"${BUILT_PRODUCTS_DIR}/Qiniu/Qiniu.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AFNetworking.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HappyDNS.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PreDemObjc.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/QNNetDiag.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Qiniu.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PreDemSwiftDemo/Pods-PreDemSwiftDemo-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8857FA451DA2B097D348473C /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-PreDemSwiftDemo-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		A053052FF5683A5586CBCA8B /* [CP] Check Pods Manifest.lock */ = {
@@ -301,7 +435,7 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-PreDemObjcDemo/Pods-PreDemObjcDemo-resources.sh",
-				$PODS_CONFIGURATION_BUILD_DIR/PreDemObjc/PREDResources.bundle,
+				"$PODS_CONFIGURATION_BUILD_DIR/PreDemObjc-library/PREDResources.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
@@ -310,6 +444,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PreDemObjcDemo/Pods-PreDemObjcDemo-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F828821824787F88FBFD87B7 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-PreDemSwiftDemo/Pods-PreDemSwiftDemo-resources.sh",
+				"$PODS_CONFIGURATION_BUILD_DIR/PreDemObjc/PREDResources.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PreDemSwiftDemo/Pods-PreDemSwiftDemo-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -331,6 +483,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				B6548F391ECB0C7E0031DD42 /* PreDemObjcDemoTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B6D9B0581F5E419E001D893E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B6D9B0611F5E419E001D893E /* ViewController.swift in Sources */,
+				B6D9B05F1F5E419E001D893E /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -357,6 +518,22 @@
 			isa = PBXVariantGroup;
 			children = (
 				B60231561EC9B7AC005AB798 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		B6D9B0621F5E419E001D893E /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B6D9B0631F5E419E001D893E /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		B6D9B0671F5E419E001D893E /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B6D9B0681F5E419E001D893E /* Base */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -537,6 +714,37 @@
 			};
 			name = Release;
 		};
+		B6D9B06B1F5E419F001D893E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = CBABF7F8789ACF6993173BFE /* Pods-PreDemSwiftDemo.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = GDFHW66V92;
+				INFOPLIST_FILE = PreDemSwiftDemo/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "pre-engineering.PreDemSwiftDemo";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		B6D9B06C1F5E419F001D893E /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5627CA5A610BBE9856BD0D35 /* Pods-PreDemSwiftDemo.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = GDFHW66V92;
+				INFOPLIST_FILE = PreDemSwiftDemo/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "pre-engineering.PreDemSwiftDemo";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -566,6 +774,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		B6D9B06D1F5E419F001D893E /* Build configuration list for PBXNativeTarget "PreDemSwiftDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B6D9B06B1F5E419F001D893E /* Debug */,
+				B6D9B06C1F5E419F001D893E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};

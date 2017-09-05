@@ -7,10 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "PREDNullability.h"
-#import "PREDEnums.h"
-
-NS_ASSUME_NONNULL_BEGIN
+#import "PREDDefines.h"
 
 @interface PREDManager: NSObject
 
@@ -27,8 +24,9 @@ NS_ASSUME_NONNULL_BEGIN
  @param appKey The app key that should be used.
  @param serviceDomain The service domain that data will be reported to or requested from.
  */
-+ (void)startWithAppKey:(nonnull NSString *)appKey
-          serviceDomain:(nonnull NSString *)serviceDomain;
++ (void)startWithAppKey:(NSString *_Nonnull)appKey
+          serviceDomain:(NSString *_Nonnull)serviceDomain
+                  error:(NSError *_Nullable *_Nullable)error;
 
 /**
  *  diagnose current network environment
@@ -36,15 +34,14 @@ NS_ASSUME_NONNULL_BEGIN
  *  @param host     the end point you want this diagnose action perform with
  *  @param complete diagnose result can be retrieved from the block
  */
-+ (void)diagnose:(nonnull NSString *)host
-        complete:(nonnull PREDNetDiagCompleteHandler)complete;
++ (void)diagnose:(NSString *_Nonnull)host
+        complete:(PREDNetDiagCompleteHandler _Nullable)complete;
 
-+ (void)trackEventWithName:(nonnull NSString *)eventName
-                     event:(nonnull NSDictionary *)event;
++ (void)trackEventWithName:(NSString *_Nonnull)eventName
+                     event:(NSDictionary *_Nonnull)event;
 
-+ (void)trackEventsWithName:(nonnull NSString *)eventName
-                     events:(nonnull NSArray<NSDictionary *>*)events;
-
++ (void)trackEventsWithName:(NSString *_Nonnull)eventName
+                     events:(NSArray<NSDictionary *>*_Nonnull)events;
 
 ///-----------------------------------------------------------------------------
 /// @name SDK meta data
@@ -53,12 +50,12 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Returns the SDK Version (CFBundleShortVersionString).
  */
-+ (NSString *)version;
++ (NSString *_Nonnull)version;
 
 /**
  Returns the SDK Build (CFBundleVersion) as a string.
  */
-+ (NSString *)build;
++ (NSString *_Nonnull)build;
 
 #pragma mark - Public Properties
 
@@ -75,7 +72,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  This property is used to identify a specific user, for instance, you can assign user id to tag, so that you can use user id to search reports gathered by the sdk.
  */
-@property (class, nonatomic, strong) NSString *tag;
+@property (class, nonnull, nonatomic, strong) NSString *tag;
 
 /**
  Set a custom block that handles all the log messages that are emitted from the SDK.
@@ -101,8 +98,6 @@ NS_ASSUME_NONNULL_BEGIN
  
  @param logHandler The block of type PREDLogHandler that will process all logged messages.
  */
-+ (void)setLogHandler:(PREDLogHandler _Nullable )logHandler;
++ (void)setLogHandler:(PREDLogHandler _Nullable)logHandler;
 
 @end
-
-NS_ASSUME_NONNULL_END

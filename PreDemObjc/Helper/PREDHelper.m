@@ -9,7 +9,6 @@
 
 #import "PREDHelper.h"
 #import "PreDemObjc.h"
-#import "PREDPrivate.h"
 #import "PREDVersion.h"
 #import <QuartzCore/QuartzCore.h>
 #import <sys/sysctl.h>
@@ -18,6 +17,7 @@
 #import <mach-o/dyld.h>
 #import <mach-o/loader.h>
 #import "KeychainItemWrapper.h"
+#import "PREDLogger.h"
 
 static NSString *const kPREDUtcDateFormatter = @"utcDateFormatter";
 NSString *const kPREDExcludeApplicationSupportFromBackup = @"kPREDExcludeApplicationSupportFromBackup";
@@ -40,7 +40,7 @@ __strong static NSString *_tag = @"";
         
         // temporary directory for crashes grabbed from PLCrashReporter
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-        settingsDir = [[paths objectAtIndex:0] stringByAppendingPathComponent:PRED_IDENTIFIER];
+        settingsDir = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"com.qiniu.predem"];
         
         if (![fileManager fileExistsAtPath:settingsDir]) {
             NSDictionary *attributes = [NSDictionary dictionaryWithObject: [NSNumber numberWithUnsignedLong: 0755] forKey: NSFilePosixPermissions];
