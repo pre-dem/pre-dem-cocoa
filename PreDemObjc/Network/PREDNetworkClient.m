@@ -14,6 +14,10 @@
 #define PREDNetMaxRetryTimes    5
 #define PREDNetRetryInterval    30
 
+static NSString* pred_appendTime(NSString* path){
+    return [NSString stringWithFormat:@"%@?t=%lld", path, (int64_t)[[NSDate date] timeIntervalSince1970]];
+}
+
 @implementation PREDNetworkClient
 
 - (instancetype)initWithBaseURL:(NSURL *)baseURL {
@@ -102,8 +106,7 @@
           headers:(NSDictionary *)headers
        completion:(PREDNetworkCompletionBlock) completion
           retried:(NSInteger)retried {
-    NSString* url;
-    url = [NSString stringWithFormat:@"%@%@", _baseURL, path];
+    NSString* url = [NSString stringWithFormat:@"%@%@", _baseURL, path];
     NSURL *endpoint = [NSURL URLWithString:url];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:endpoint];
     request.HTTPMethod = @"POST";
@@ -172,9 +175,19 @@
     NSParameterAssert(method);
     NSParameterAssert(params == nil || [method isEqualToString:@"POST"] || [method isEqualToString:@"GET"]);
     path = path ? : @"";
+    path = pred_appendTime(path);
     
     NSString* url =  [NSString stringWithFormat:@"%@%@", _baseURL, path];
-    NSString* auth = [PRECredential authoriztion:url appKey:[[PREDManager sharedPREDManager] appKey]];
+    NSString* domainPath;
+    if ([url hasPrefix:@"https://"]) {
+        domainPath = [url substringFromIndex:8];
+    } else if ([url hasPrefix:@"https://"]){
+        domainPath =  [url substringFromIndex:7];
+    } else {
+        domainPath = url;
+    }
+    NSString* auth = [PRECredential authoriztion:domainPath appKey:[[PREDManager sharedPREDManager] appKey]];
+    
     NSURL *endpoint = [NSURL URLWithString:url];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:endpoint];
     [request setValue:auth forHTTPHeaderField:@"Authorization"];
