@@ -13,14 +13,13 @@
 
 @implementation PREDCredential
 
-+(NSString *)authorize:(NSString*) data
-                    appKey:(NSString*) key{
++ (NSString *)authorize:(NSString*) data
+                appKey:(NSString*) key {
     NSString* realK = [key substringFromIndex:PREDAppIdLength];
     return [NSString stringWithFormat:@"DEMv1 %@", [self hmacSha1:data data:realK]];
 }
 
-+(NSString *)hmacSha1:(NSString *)key data:(NSString *)data
-{
++ (NSString *)hmacSha1:(NSString *)key data:(NSString *)data {
     const char *cKey  = [key cStringUsingEncoding:NSASCIIStringEncoding];
     const char *cData = [data cStringUsingEncoding:NSASCIIStringEncoding];
     

@@ -11,6 +11,6 @@
 @interface PREDCredential : NSObject
 
 + (NSString *)authorize:(NSString*) data
-                    appKey:(NSString*) key;
+                 appKey:(NSString*) key;
 
 @end
