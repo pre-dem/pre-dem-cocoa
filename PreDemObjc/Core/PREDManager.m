@@ -19,7 +19,7 @@
 #import "PREDLagMonitorController.h"
 
 static NSString* app_id(NSString* appKey){
-    return [appKey substringToIndex:8];
+    return [appKey substringToIndex:_PRED_APPID_LENGTH];
 }
 
 @implementation PREDManager {
@@ -127,6 +127,7 @@ static NSString* app_id(NSString* appKey){
 
 
 - (void)startWithAppKey:(NSString *)appKey serviceDomain:(NSString *)serviceDomain {
+    _appKey = appKey;
     [self initNetworkClientWithDomain:serviceDomain appKey:appKey];
     
     [self initializeModules];

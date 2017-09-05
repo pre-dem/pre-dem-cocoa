@@ -8,9 +8,18 @@
 
 #import "PREDNetworkClient.h"
 #import "PREDLogger.h"
+#import "PREDCredential.h"
+#import "PREDManagerPrivate.h"
 
 #define PREDNetMaxRetryTimes    5
 #define PREDNetRetryInterval    30
+
+static NSString* PRED_HTTPS_PREFIX = @"https://";
+static NSString* PRED_HTTP_PREFIX = @"http://";
+
+static NSString* pred_appendTime(NSString* path){
+    return [NSString stringWithFormat:@"%@?t=%lld", path, (int64_t)[[NSDate date] timeIntervalSince1970]];
+}
 
 @implementation PREDNetworkClient
 
@@ -100,8 +109,7 @@
           headers:(NSDictionary *)headers
        completion:(PREDNetworkCompletionBlock) completion
           retried:(NSInteger)retried {
-    NSString* url;
-    url = [NSString stringWithFormat:@"%@%@", _baseURL, path];
+    NSString* url = [NSString stringWithFormat:@"%@%@", _baseURL, path];
     NSURL *endpoint = [NSURL URLWithString:url];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:endpoint];
     request.HTTPMethod = @"POST";
@@ -170,10 +178,23 @@
     NSParameterAssert(method);
     NSParameterAssert(params == nil || [method isEqualToString:@"POST"] || [method isEqualToString:@"GET"]);
     path = path ? : @"";
+    path = pred_appendTime(path);
     
     NSString* url =  [NSString stringWithFormat:@"%@%@", _baseURL, path];
+    NSString* domainPath;
+    if ([url hasPrefix:PRED_HTTPS_PREFIX]) {
+        domainPath = [url substringFromIndex:[PRED_HTTPS_PREFIX length]];
+    } else if ([url hasPrefix:PRED_HTTP_PREFIX]){
+        domainPath =  [url substringFromIndex:[PRED_HTTP_PREFIX length]];
+    } else {
+        domainPath = url;
+    }
+    NSString* auth = [PREDCredential authorize:domainPath appKey:[[PREDManager sharedPREDManager] appKey]];
+    
     NSURL *endpoint = [NSURL URLWithString:url];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:endpoint];
+    [request setValue:auth forHTTPHeaderField:@"Authorization"];
+    
     request.HTTPMethod = method;
     [NSURLProtocol setProperty:@YES
                         forKey:@"PREDInternalRequest"
