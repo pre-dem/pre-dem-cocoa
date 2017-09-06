@@ -187,9 +187,9 @@
                          metadata[@"log_key"] = key;
                          [_networkClient postPath:@"log-capture/i" parameters:metadata completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
                              if (error || operation.response.statusCode >= 400) {
-                                 PREDLogError(@"upload lag metadata fail: %@ code: %ld, drop report", error?:@"unknown", (long)operation.response.statusCode);
+                                 PREDLogError(@"upload log metadata fail: %@ code: %ld, drop report", error?:@"unknown", (long)operation.response.statusCode);
                              } else {
-                                 PREDLogDebug(@"upload lag report succeed");
+                                 PREDLogDebug(@"upload log report succeed");
                              }
                          }];
                      } else if (retryTimes < LogCaptureUploadMaxTimes) {
