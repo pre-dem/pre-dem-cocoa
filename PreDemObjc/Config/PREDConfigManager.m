@@ -51,7 +51,6 @@
                            @"os_version": PREDHelper.osVersion,
                            @"sdk_version": PREDHelper.sdkVersion,
                            @"sdk_id": PREDHelper.UUID,
-                           @"device_id": @""
                            };
     __weak typeof(self) wSelf = self;
     [_client postPath:@"app-config/i" parameters:info completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {

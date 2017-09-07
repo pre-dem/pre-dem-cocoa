@@ -49,6 +49,9 @@
     ],
     "Qiniu": [
 
+    ],
+    "CocoaLumberjack": [
+
     ]
   },
   "subspecs": [

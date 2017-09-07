@@ -18,7 +18,6 @@
 @property (nonatomic, nullable, strong) NSString *os_version;
 @property (nonatomic, nullable, strong) NSString *sdk_version;
 @property (nonatomic, nullable, strong) NSString *sdk_id;
-@property (nonatomic, nullable, strong) NSString *device_id;
 @property (nonatomic, nullable, strong) NSString *tag;
 
 @property (nonatomic, nullable, strong) NSString *result_id;

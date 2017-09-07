@@ -9,9 +9,17 @@
 #import "ViewController.h"
 #import <PreDemObjc/PREDemObjc.h>
 
+
 @interface ViewController ()
+<
+UIPickerViewDataSource,
+UIPickerViewDelegate
+>
 
 @property (nonatomic, strong) IBOutlet UILabel *versionLable;
+@property (nonatomic, strong) IBOutlet UIPickerView *logLevelPicker;
+@property (nonatomic, strong) NSArray *logPickerKeys;
+@property (nonatomic, strong) NSArray *logPickerValues;
 
 @end
 
@@ -21,6 +29,27 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     self.versionLable.text = PREDManager.version;
+    self.logLevelPicker.dataSource = self;
+    self.logLevelPicker.delegate = self;
+    self.logPickerKeys = @[
+                               @"不上传 log",
+                               @"PREDLogLevelOff",
+                               @"PREDLogLevelError",
+                               @"PREDLogLevelWarning",
+                               @"PREDLogLevelInfo",
+                               @"PREDLogLevelDebug",
+                               @"PREDLogLevelVerbose",
+                               @"PREDLogLevelAll"
+                               ];
+    self.logPickerValues = @[
+                           @(PREDLogLevelOff),
+                           @(PREDLogLevelError),
+                           @(PREDLogLevelWarning),
+                           @(PREDLogLevelInfo),
+                           @(PREDLogLevelDebug),
+                           @(PREDLogLevelVerbose),
+                           @(PREDLogLevelAll)
+                           ];
 }
 
 - (IBAction)sendHTTPRequest:(id)sender {
@@ -57,6 +86,28 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+// returns the number of 'columns' to display.
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
+    return 1;
+}
+
+// returns the # of rows in each component..
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
+    return self.logPickerKeys.count;
+}
+
+- (nullable NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component __TVOS_PROHIBITED {
+    return self.logPickerKeys[row];
+}
+
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component __TVOS_PROHIBITED; {
+    if (row == 0) {
+        [PREDLogger stopCaptureLog];
+    } else {
+        [PREDLogger startCaptureLogWithLevel:(PREDLogLevel)[self.logPickerValues[row-1] intValue]];
+    }
 }
 
 

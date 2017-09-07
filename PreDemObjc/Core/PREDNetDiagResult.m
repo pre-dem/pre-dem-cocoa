@@ -21,6 +21,10 @@
     PREDNetworkClient *_client;
 }
 
+- (NSString *)description {
+    return [PREDHelper getObjectData:self].description;
+}
+
 - (instancetype)initWithComplete:(PREDNetDiagCompleteHandler)complete netClient:(PREDNetworkClient *)client {
     if (self = [super init]) {
         _completedCount = 0;
@@ -35,7 +39,6 @@
         self.os_version = PREDHelper.osVersion;
         self.sdk_version = PREDHelper.sdkVersion;
         self.sdk_id = PREDHelper.UUID;
-        self.device_id = @"";
         self.tag = PREDHelper.tag;
     }
     return self;

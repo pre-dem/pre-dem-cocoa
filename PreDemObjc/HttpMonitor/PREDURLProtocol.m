@@ -115,6 +115,7 @@ NSURLSessionDataDelegate
     NSURLSession *session = [NSURLSession sessionWithConfiguration:sessionConfig delegate:self delegateQueue:[NSOperationQueue new]];
     self.task = [session dataTaskWithRequest:self.request];
     [self.task resume];
+    [session finishTasksAndInvalidate];
     
     HTTPMonitorModel = [[PREDHTTPMonitorModel alloc] init];
     NSURL *originURL = [NSURLProtocol propertyForKey:@"PREDOriginalURL" inRequest:self.request];
@@ -158,10 +159,6 @@ NSURLSessionDataDelegate
         [self.client URLProtocolDidFinishLoading:self];
     }
     [PREDHTTPMonitorSender addModel:HTTPMonitorModel];
-}
-
-- (void)URLSession:(NSURLSession *)session didBecomeInvalidWithError:(NSError *)error {
-    [self.client URLProtocol:self didFailWithError:error];
 }
 
 @end

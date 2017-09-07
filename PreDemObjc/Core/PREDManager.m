@@ -18,6 +18,7 @@
 #import "PREDLagMonitorController.h"
 #import "PREDLogger.h"
 #import "PREDError.h"
+#import "PREDLoggerPrivate.h"
 
 static NSString* app_id(NSString* appKey){
     if (appKey.length >= PREDAppIdLength) {
@@ -78,24 +79,12 @@ static NSString* app_id(NSString* appKey){
     }];
 }
 
-+ (PREDLogLevel)logLevel {
-    return PREDLogger.currentLogLevel;
-}
-
-+ (void)setLogLevel:(PREDLogLevel)logLevel {
-    PREDLogger.currentLogLevel = logLevel;
-}
-
 + (NSString *)tag {
     return PREDHelper.tag;
 }
 
 + (void)setTag:(NSString *)tag {
     PREDHelper.tag = tag;
-}
-
-+ (void)setLogHandler:(PREDLogHandler)logHandler {
-    [PREDLogger setLogHandler:logHandler];
 }
 
 + (NSString *)version {
@@ -144,7 +133,7 @@ static NSString* app_id(NSString* appKey){
 
 - (void)startManager {
     if (_startManagerIsInvoked) {
-        PREDLogWarning(@"startManager should only be invoked once! This call is ignored.");
+        PREDLogWarn(@"startManager should only be invoked once! This call is ignored.");
         return;
     }
     
@@ -231,7 +220,7 @@ static NSString* app_id(NSString* appKey){
 
 - (void)initializeModules {
     if (_managersInitialized) {
-        PREDLogWarning(@"The SDK should only be initialized once! This call is ignored.");
+        PREDLogWarn(@"The SDK should only be initialized once! This call is ignored.");
         return;
     }
     
@@ -244,6 +233,7 @@ static NSString* app_id(NSString* appKey){
     _configManager = [[PREDConfigManager alloc] initWithNetClient:_networkClient];
     _configManager.delegate = self;
     _lagManager = [[PREDLagMonitorController alloc] initWithNetworkClient:_networkClient];
+    [PREDLogger setNetworkClient:_networkClient];
     _managersInitialized = YES;
 }
 

@@ -131,7 +131,7 @@ static void runLoopObserverCallBack(CFRunLoopObserverRef observer, CFRunLoopActi
                      if (resp) {
                          [strongSelf sendMetaInfoWithKey:key report:report];
                      } else if (retryTimes < LagReportUploadMaxTimes) {
-                         PREDLogWarning(@"upload log fail: %@, retry after: %d seconds", info.error, LagReportUploadMaxTimes);
+                         PREDLogWarn(@"upload log fail: %@, retry after: %d seconds", info.error, LagReportUploadRetryInterval);
                          dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(LagReportUploadRetryInterval * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                              [strongSelf uploadCrashLog:report retryTimes:retryTimes+1];
                              return;
@@ -179,7 +179,6 @@ static void runLoopObserverCallBack(CFRunLoopObserverRef observer, CFRunLoopActi
                            @"sdk_version": PREDHelper.sdkVersion,
                            @"sdk_id": PREDHelper.UUID,
                            @"tag": PREDHelper.tag,
-                           @"device_id": @"",
                            @"report_uuid": reportUUID,
                            @"lag_log_key": key,
                            @"manufacturer": @"Apple",

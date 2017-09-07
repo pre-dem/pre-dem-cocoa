@@ -87,21 +87,21 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UuS-Fo-nh4">
-                                <rect key="frame" x="83.5" y="89" width="153" height="30"/>
+                                <rect key="frame" x="83.5" y="69" width="153" height="30"/>
                                 <state key="normal" title="点我发送一些网络请求"/>
                                 <connections>
                                     <action selector="sendHTTPRequest:" destination="BYZ-38-t0r" eventType="touchUpInside" id="t2m-mv-Qlp"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QPF-qD-pBb">
-                                <rect key="frame" x="93" y="179" width="134" height="30"/>
+                                <rect key="frame" x="93" y="149" width="134" height="30"/>
                                 <state key="normal" title="点我触发一次 crash"/>
                                 <connections>
                                     <action selector="forceCrash:" destination="BYZ-38-t0r" eventType="touchUpInside" id="cy4-MH-C6a"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4XG-nN-BeY">
-                                <rect key="frame" x="75.5" y="449" width="169" height="30"/>
+                                <rect key="frame" x="75.5" y="469" width="169" height="30"/>
                                 <state key="normal" title="点我触发一次自定义事件"/>
                                 <connections>
                                     <action selector="diyEvent:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Sa8-jo-7Md"/>
@@ -114,19 +114,25 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a1F-JE-yhx">
-                                <rect key="frame" x="99" y="359" width="123" height="30"/>
+                                <rect key="frame" x="99" y="309" width="123" height="30"/>
                                 <state key="normal" title="点我诊断一下网络"/>
                                 <connections>
                                     <action selector="diagnoseNetwork:" destination="BYZ-38-t0r" eventType="touchUpInside" id="7Bt-Tz-EPv"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6iu-Ah-PlK">
-                                <rect key="frame" x="91" y="269" width="138" height="30"/>
+                                <rect key="frame" x="91" y="229" width="138" height="30"/>
                                 <state key="normal" title="点我阻塞一次主线程"/>
                                 <connections>
                                     <action selector="blockMainThread:" destination="BYZ-38-t0r" eventType="touchUpInside" id="nne-gY-igF"/>
                                 </connections>
                             </button>
+                            <pickerView contentMode="scaleToFill" showsSelectionIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3fP-OQ-YRc">
+                                <rect key="frame" x="0.0" y="344" width="320" height="120"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="120" id="paW-on-0au"/>
+                                </constraints>
+                            </pickerView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -134,18 +140,21 @@
                             <constraint firstItem="iZc-eD-4Yh" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="2za-lL-bop"/>
                             <constraint firstItem="4XG-nN-BeY" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="4xf-8B-HaY"/>
                             <constraint firstItem="UuS-Fo-nh4" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="DMO-P1-8UZ"/>
-                            <constraint firstItem="a1F-JE-yhx" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="90" id="DTD-N7-zpp"/>
-                            <constraint firstItem="UuS-Fo-nh4" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="-180" id="FJe-Y4-tRn"/>
+                            <constraint firstItem="3fP-OQ-YRc" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="120" id="DS2-Nn-1J1"/>
+                            <constraint firstItem="a1F-JE-yhx" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="40" id="DTD-N7-zpp"/>
+                            <constraint firstItem="UuS-Fo-nh4" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="-200" id="FJe-Y4-tRn"/>
                             <constraint firstItem="QPF-qD-pBb" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="TVN-hD-9f7"/>
                             <constraint firstItem="iZc-eD-4Yh" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="bottom" constant="-20" id="VBF-Vc-jsI"/>
-                            <constraint firstItem="4XG-nN-BeY" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="180" id="XIL-1H-SpZ"/>
-                            <constraint firstItem="QPF-qD-pBb" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="-90" id="tIf-DC-LdN"/>
+                            <constraint firstItem="4XG-nN-BeY" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="200" id="XIL-1H-SpZ"/>
+                            <constraint firstItem="3fP-OQ-YRc" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="cvN-KG-qgS"/>
+                            <constraint firstItem="QPF-qD-pBb" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="-120" id="tIf-DC-LdN"/>
                             <constraint firstItem="a1F-JE-yhx" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="us1-rP-WCR"/>
-                            <constraint firstItem="6iu-Ah-PlK" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="x7b-DV-Yfu"/>
+                            <constraint firstItem="6iu-Ah-PlK" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="-40" id="x7b-DV-Yfu"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="hX5-fa-XYI"/>
                     <connections>
+                        <outlet property="logLevelPicker" destination="3fP-OQ-YRc" id="Kch-83-Ia0"/>
                         <outlet property="versionLable" destination="iZc-eD-4Yh" id="o2K-Er-5BE"/>
                     </connections>
                 </viewController>

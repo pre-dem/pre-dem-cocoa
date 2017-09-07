@@ -144,7 +144,7 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
             
             
             if (PREDHelper.isDebuggerAttached) {
-                PREDLogWarning(@"Detecting crashes is NOT enabled due to running the app with a debugger attached.");
+                PREDLogWarn(@"Detecting crashes is NOT enabled due to running the app with a debugger attached.");
             } else {
                 // Multiple exception handlers can be set, but we can only query the top level error handler (uncaught exception handler).
                 //
@@ -351,7 +351,7 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
  *
  */
 - (void) handleCrashReport {
-    PREDLogVerbose(@"VERBOSE: Handling crash report");
+    PREDLogVerbose(@"Handling crash report");
     NSError *error = NULL;
     
     if (!self.plCrashReporter) return;
@@ -408,7 +408,7 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
 #pragma mark - Crash Report Processing
 
 - (void)triggerDelayedProcessing {
-    PREDLogVerbose(@"VERBOSE: Triggering delayed crash processing.");
+    PREDLogVerbose(@"Triggering delayed crash processing.");
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(invokeDelayedProcessing) object:nil];
     [self performSelector:@selector(invokeDelayedProcessing) withObject:nil afterDelay:0.5];
 }
@@ -436,7 +436,7 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
         // If the top level error handler differs from our own, then at least another one was added.
         // This could cause exception crashes not to be reported to PreDem. See log message for details.
         if (self.exceptionHandler != currentHandler) {
-            PREDLogWarning(@"Another exception handler was added. If this invokes any kind exit() after processing the exception, which causes any subsequent error handler not to be invoked, these crashes will NOT be reported to PreDem!");
+            PREDLogWarn(@"Another exception handler was added. If this invokes any kind exit() after processing the exception, which causes any subsequent error handler not to be invoked, these crashes will NOT be reported to PreDem!");
         }
     }
     
@@ -542,7 +542,7 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
         }
         
         if (report == nil && crashLogString == nil) {
-            PREDLogWarning(@"WARNING: Could not parse crash report");
+            PREDLogWarn(@"WARNING: Could not parse crash report");
             // we cannot do anything with this report, so delete it
             [self cleanCrashReportWithFilename:filename];
             // we don't continue with the next report here, even if there are to prevent calling sendCrashReports from itself again
@@ -569,7 +569,6 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
                                                @"os_build": PREDHelper.osBuild,
                                                @"sdk_version": PREDHelper.sdkVersion,
                                                @"sdk_id": PREDHelper.UUID,
-                                               @"device_id": @"",
                                                @"tag": PREDHelper.tag,
                                                @"report_uuid": reportUUID,
                                                @"crash_log_key": key,
@@ -609,7 +608,7 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
                  [strongSelf processUploadResultWithFilename:[strongSelf->_crashFiles objectAtIndex:0] responseData:data statusCode:operation.response.statusCode error:error];
              }];
          } else if (retryTimes < CrashReportUploadMaxTimes) {
-             PREDLogWarning(@"upload log fail: %@, retry after: %d seconds", info.error, CrashReportUploadMaxTimes);
+             PREDLogWarn(@"upload log fail: %@, retry after: %d seconds", info.error, CrashReportUploadMaxTimes);
              dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(CrashReportUploadRetryInterval * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                  [strongSelf uploadCrashLog:crashLog WithKey:key token:token crashDic:crashDic retryTimes:retryTimes + 1];
                  return;
