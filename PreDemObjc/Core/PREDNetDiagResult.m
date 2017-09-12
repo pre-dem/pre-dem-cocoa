@@ -37,9 +37,11 @@
         self.device_model = PREDHelper.deviceModel;
         self.os_platform = PREDHelper.osPlatform;
         self.os_version = PREDHelper.osVersion;
+        self.os_build = PREDHelper.osBuild;
         self.sdk_version = PREDHelper.sdkVersion;
         self.sdk_id = PREDHelper.UUID;
         self.tag = PREDHelper.tag;
+        self.manufacturer = @"Apple";
     }
     return self;
 }

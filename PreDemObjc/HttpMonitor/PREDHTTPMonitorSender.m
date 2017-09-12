@@ -107,25 +107,30 @@ NSURLSessionDelegate
  */
 + (void)addModel:(PREDHTTPMonitorModel *)model {
     NSArray *modelArray = @[
-                            @(model.platform),
-                            wrapString(model.appName),
-                            wrapString(model.appBundleId),
-                            wrapString(model.osVersion),
-                            wrapString(model.deviceModel),
-                            wrapString(model.deviceUUID),
+                            wrapString(model.app_bundle_id),
+                            wrapString(model.app_name),
+                            wrapString(model.app_version),
+                            wrapString(model.device_model),
+                            wrapString(model.os_platform),
+                            wrapString(model.os_version),
+                            wrapString(model.os_build),
+                            wrapString(model.sdk_version),
+                            wrapString(model.sdk_id),
+                            wrapString(@""), // device id
                             wrapString(model.tag),
+                            wrapString(model.manufacturer),
                             wrapString(model.domain),
                             wrapString(model.path),
                             wrapString(model.method),
-                            wrapString(model.hostIP),
-                            @(model.statusCode),
-                            @(model.startTimestamp),
-                            @(model.responseTimeStamp),
-                            @(model.endTimestamp),
-                            @(model.DNSTime),
-                            @(model.dataLength),
-                            @(model.networkErrorCode),
-                            wrapString(model.networkErrorMsg)
+                            wrapString(model.host_ip),
+                            @(model.status_code),
+                            @(model.start_timestamp),
+                            @(model.response_time_stamp),
+                            @(model.end_timestamp),
+                            @(model.dns_time),
+                            @(model.data_length),
+                            @(model.network_error_code),
+                            wrapString(model.network_error_msg)
                             ];
     [[self sharedSender] writeArray:modelArray];
 }

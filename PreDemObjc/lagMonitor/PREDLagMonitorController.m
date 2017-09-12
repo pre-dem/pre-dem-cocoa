@@ -179,11 +179,11 @@ static void runLoopObserverCallBack(CFRunLoopObserverRef observer, CFRunLoopActi
                            @"sdk_version": PREDHelper.sdkVersion,
                            @"sdk_id": PREDHelper.UUID,
                            @"tag": PREDHelper.tag,
-                           @"report_uuid": reportUUID,
-                           @"lag_log_key": key,
                            @"manufacturer": @"Apple",
+                           @"report_uuid": reportUUID,
                            @"start_time": startTime,
                            @"lag_time": lagTime,
+                           @"lag_log_key": key,
                            };
     [_networkClient postPath:@"lag-monitor/i" parameters:info completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
         if (error || operation.response.statusCode >= 400) {
