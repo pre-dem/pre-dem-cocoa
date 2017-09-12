@@ -570,9 +570,9 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
                                                @"sdk_version": PREDHelper.sdkVersion,
                                                @"sdk_id": PREDHelper.UUID,
                                                @"tag": PREDHelper.tag,
+                                               @"manufacturer": @"Apple",
                                                @"report_uuid": reportUUID,
                                                @"crash_log_key": key,
-                                               @"manufacturer": @"Apple",
                                                @"start_time": startTime,
                                                @"crash_time": crashTime,
                                                };

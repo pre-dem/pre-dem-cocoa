@@ -14,13 +14,16 @@
 
 - (instancetype)init {
     if (self = [super init]) {
-        self.platform = 1;
-        self.appName = PREDHelper.appName;
-        self.appBundleId = PREDHelper.appBundleId;
-        self.osVersion = PREDHelper.osVersion;
-        self.deviceModel = PREDHelper.deviceModel;
-        self.deviceUUID = PREDHelper.UUID;
+        self.app_bundle_id = PREDHelper.appBundleId;
+        self.app_name = PREDHelper.appName;
+        self.app_version = PREDHelper.appVersion;
+        self.device_model = PREDHelper.deviceModel;
+        self.os_platform = PREDHelper.osPlatform;
+        self.os_build = PREDHelper.osBuild;
+        self.sdk_version = PREDHelper.sdkVersion;
+        self.sdk_id = PREDHelper.UUID;
         self.tag = PREDHelper.tag;
+        self.manufacturer = @"Apple";
     }
     return self;
 }
