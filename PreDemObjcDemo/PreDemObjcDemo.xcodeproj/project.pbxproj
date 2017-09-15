@@ -457,7 +457,7 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-PreDemSwiftDemo/Pods-PreDemSwiftDemo-resources.sh",
-				"$PODS_CONFIGURATION_BUILD_DIR/PreDemObjc/PREDResources.bundle",
+				$PODS_CONFIGURATION_BUILD_DIR/PreDemObjc/PREDResources.bundle,
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
@@ -632,6 +632,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -786,6 +787,7 @@
 				B6D9B06C1F5E419F001D893E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

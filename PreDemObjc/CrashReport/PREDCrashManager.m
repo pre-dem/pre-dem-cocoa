@@ -17,8 +17,9 @@
 #import "QiniuSDK.h"
 #import "PREDLogger.h"
 
-#define CrashReportUploadRetryInterval        100
-#define CrashReportUploadMaxTimes             5
+#define PREDCrashReportUploadRetryInterval  100
+#define PREDCrashReportUploadMaxTimes       5
+#define PREDMillisecondPerSecond            1000
 
 // internal keys
 
@@ -515,11 +516,7 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
     NSString *filename = [_crashFiles objectAtIndex:0];
     NSString *cacheFilename = [filename lastPathComponent];
     NSData *crashData = [NSData dataWithContentsOfFile:filename];
-    NSDateFormatter *rfc3339Formatter = [[NSDateFormatter alloc] init];
-    [rfc3339Formatter setDateFormat:@"yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'"];
-    [rfc3339Formatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
-    NSString *startTime = [rfc3339Formatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:0]];
-    NSString *crashTime = [rfc3339Formatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:0]];
+    unsigned long startTime, crashTime = 0;
     if ([crashData length] > 0) {
         PREPLCrashReport *report = nil;
         NSString *crashLogString = nil;
@@ -533,10 +530,10 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
                 reportUUID = (NSString *) CFBridgingRelease(CFUUIDCreateString(NULL, report.uuidRef));
             }
             crashLogString = [PREDCrashReportTextFormatter stringValueForCrashReport:report crashReporterKey:PREDHelper.UUID];
-            crashTime = [rfc3339Formatter stringFromDate:report.systemInfo.timestamp];
+            crashTime = [report.systemInfo.timestamp timeIntervalSince1970] * PREDMillisecondPerSecond;
             if ([report.processInfo respondsToSelector:@selector(processStartTime)]) {
                 if (report.systemInfo.timestamp && report.processInfo.processStartTime) {
-                    startTime = [rfc3339Formatter stringFromDate:report.processInfo.processStartTime];
+                    startTime = [report.processInfo.processStartTime timeIntervalSince1970] * PREDMillisecondPerSecond;
                 }
             }
         }
@@ -573,8 +570,8 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
                                                @"manufacturer": @"Apple",
                                                @"report_uuid": reportUUID,
                                                @"crash_log_key": key,
-                                               @"start_time": startTime,
-                                               @"crash_time": crashTime,
+                                               @"start_time": @(startTime),
+                                               @"crash_time": @(crashTime),
                                                };
                     [strongSelf uploadCrashLog:crashLogString WithKey:key token:token crashDic:crashDic retryTimes:0];
                 } else {
@@ -607,9 +604,9 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
                  __strong typeof (wSelf) strongSelf = wSelf;
                  [strongSelf processUploadResultWithFilename:[strongSelf->_crashFiles objectAtIndex:0] responseData:data statusCode:operation.response.statusCode error:error];
              }];
-         } else if (retryTimes < CrashReportUploadMaxTimes) {
-             PREDLogWarn(@"upload log fail: %@, retry after: %d seconds", info.error, CrashReportUploadMaxTimes);
-             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(CrashReportUploadRetryInterval * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+         } else if (retryTimes < PREDCrashReportUploadMaxTimes) {
+             PREDLogWarn(@"upload log fail: %@, retry after: %d seconds", info.error, PREDCrashReportUploadMaxTimes);
+             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(PREDCrashReportUploadRetryInterval * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                  [strongSelf uploadCrashLog:crashLog WithKey:key token:token crashDic:crashDic retryTimes:retryTimes + 1];
                  return;
              });
