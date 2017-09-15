@@ -58,26 +58,32 @@ ${value0}\t${value1}\t${value2}\t${value3}\n
 
 * 上报数据结构
 ```
-{
-	AppId             string // app id
-	Platform          int64  // 上报的客户端类型，1: iOS, 2: Android
-	AppName           string // 宿主 App 的名字。
-	AppBundleId       string // 宿主 App 的唯一标识号(包名)
-	OsVersion         string // 系统版本号
-	DeviceModel       string // 设备型号
-	DeviceUUID        string // 设备唯一识别号
-	Domain            string // 请求的 Domain Name
-	Path              string // 请求的 Path
-	Method            string // 请求使用的 HTTP 方法，如 POST 等
-	HostIP            string // 实际发生请求的主机 IP 地址
-	StatusCode        int64  // 服务器返回的 HTTP 状态码
-	StartTimestamp    uint64 // 请求开始时间戳，单位是 Unix ms
-	ResponseTimeStamp uint64 // 服务器返回 Response 的时间戳，单位是 Unix ms
-	EndTimestamp      uint64 // 请求结束时间戳，单位是 Unix ms
-	DnsTime           uint64 // 请求的 DNS 解析时间, 单位是 ms
-	DataLength        uint64 // 请求返回的 data 的总长度，单位是 byte
-	NetworkErrorCode  int64  // 请求发生网络错误时的错误码
-	NetworkErrorMsg   string // 请求发生网络错误时的错误信息
+{	
+	AppId             string `json:"app_id"`
+	AppBundleId       string `json:"app_bundle_id"`
+	AppName           string `json:"app_name"`
+	AppVersion        string `json:"app_version"`
+	DeviceModel       string `json:"device_model"`
+	OsPlatform        string `json:"os_platform"`
+	OsVersion         string `json:"os_version"`
+	OsBuild           string `json:"os_build"`
+	SdkVersion        string `json:"sdk_version"`
+	SdkId             string `json:"sdk_id"`
+	DeviceId          string `json:"device_id"`
+	Tag               string `json:"tag"`
+	Manufacturer      string `json:"manufacturer"`
+	Domain            string `json:"domain"` // 请求的 Domain Name
+	Path              string `json:"path"` // 请求的 Path
+	Method            string `json:"method"` // 请求使用的 HTTP 方法，如 POST
+	HostIP            string `json:"host_ip"` // 实际发生请求的主机 IP 地址
+	StatusCode        int64  `json:"status_code"` // 服务器返回的 HTTP 状态码
+	StartTimestamp    uint64 `json:"start_timestamp"` // 请求开始时间戳，单位是 Unix ms
+	ResponseTimeStamp uint64 `json:"response_time_stamp"` // 服务器返回 Response 的时间戳，
+	EndTimestamp      uint64 `json:"end_timestamp"` // 请求结束时间戳，单位是 Unix ms
+	DnsTime           uint64 `json:"dns_time"` // 请求的 DNS 解析时间, 单位是 ms
+	DataLength        uint64 `json:"data_length"` // 请求返回的 data 的总长度，单位是 
+	NetworkErrorCode  int64  `json:"network_error_code"` // 请求发生网络错误时的错误码
+	NetworkErrorMsg   string `json:"network_error_msg"` // 请求发生网络错误时的错误信息
 }
 ```
 

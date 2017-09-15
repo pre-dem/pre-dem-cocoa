@@ -64,11 +64,14 @@ Body:
 	SdkVersion   string `json:"sdk_version"`
 	SdkId        string `json:"sdk_id"`
 	DeviceId     string `json:"device_id"`
+	Tag          string `json:"tag"`
+	Manufacturer string `json:"manufacturer"`
 	ReportUUID   string `json:"report_uuid"`
 	CrashLogKey  string `json:"crash_log_key"`
-	Manufacturer string `json:"manufacturer"`
-	StartTime    string `json:"start_time"`
-	CrashTime    string `json:"crash_time"`
+	StartTime    uint64 `json:"start_time"`
+	CrashTime    uint64 `json:"crash_time"`
+	Mode         string `json:"mode"`
+	Message      string `json:"message"`
 }
 ```
 

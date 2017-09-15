@@ -13,8 +13,9 @@
 #import <Qiniu/QiniuSDK.h>
 #import "PREDLogger.h"
 
-#define LagReportUploadRetryInterval        100
-#define LagReportUploadMaxTimes             5
+#define PREDLagReportUploadRetryInterval        100
+#define PREDLagReportUploadMaxTimes             5
+#define PREDMillisecondPerSecond                1000
 
 @implementation PREDLagMonitorController {
     CFRunLoopObserverRef _observer;
@@ -133,9 +134,9 @@ static void runLoopObserverCallBack(CFRunLoopObserverRef observer, CFRunLoopActi
                      __strong typeof(wSelf) strongSelf = wSelf;
                      if (resp) {
                          [strongSelf sendMetaInfoWithKey:key report:report];
-                     } else if (retryTimes < LagReportUploadMaxTimes) {
-                         PREDLogWarn(@"upload log fail: %@, retry after: %d seconds", info.error, LagReportUploadRetryInterval);
-                         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(LagReportUploadRetryInterval * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                     } else if (retryTimes < PREDLagReportUploadMaxTimes) {
+                         PREDLogWarn(@"upload log fail: %@, retry after: %d seconds", info.error, PREDLagReportUploadRetryInterval);
+                         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(PREDLagReportUploadRetryInterval * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                              [strongSelf uploadCrashLog:report retryTimes:retryTimes+1];
                              return;
                          });
@@ -157,14 +158,11 @@ static void runLoopObserverCallBack(CFRunLoopObserverRef observer, CFRunLoopActi
 }
 
 - (void)sendMetaInfoWithKey:(NSString *)key report:(PREPLCrashReport *)report {
-    NSDateFormatter *rfc3339Formatter = [[NSDateFormatter alloc] init];
-    [rfc3339Formatter setDateFormat:@"yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'"];
-    [rfc3339Formatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
-    NSString *startTime = [rfc3339Formatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:0]];
-    NSString *lagTime = [rfc3339Formatter stringFromDate:report.systemInfo.timestamp];
+    unsigned long startTime = 0;
+    unsigned long lagTime = [report.systemInfo.timestamp timeIntervalSince1970] * PREDMillisecondPerSecond;
     if ([report.processInfo respondsToSelector:@selector(processStartTime)]) {
         if (report.systemInfo.timestamp && report.processInfo.processStartTime) {
-            startTime = [rfc3339Formatter stringFromDate:report.processInfo.processStartTime];
+            startTime = [report.processInfo.processStartTime timeIntervalSince1970] * PREDMillisecondPerSecond;
         }
     }
     NSString *reportUUID = PREDHelper.UUID;
@@ -184,8 +182,8 @@ static void runLoopObserverCallBack(CFRunLoopObserverRef observer, CFRunLoopActi
                            @"tag": PREDHelper.tag,
                            @"manufacturer": @"Apple",
                            @"report_uuid": reportUUID,
-                           @"start_time": startTime,
-                           @"lag_time": lagTime,
+                           @"start_time": @(startTime),
+                           @"lag_time": @(lagTime),
                            @"lag_log_key": key,
                            };
     [_networkClient postPath:@"lag-monitor/i" parameters:info completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {

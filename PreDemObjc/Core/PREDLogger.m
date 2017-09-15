@@ -17,6 +17,7 @@
 #define LogCaptureUploadRetryInterval   100
 #define LogCaptureUploadMaxTimes        5
 #define DefaltTtyLogLevel               DDLogLevelAll
+#define PREDMillisecondPerSecond        1000
 
 @implementation PREDLogger {
     PREDLogLevel _ttyLogLevel;
@@ -26,7 +27,6 @@
     QNUploadManager *_uploadManager;
     NSDate *_logStartTime;
     PREDLogFileManager *_logFileManagers;
-    NSDateFormatter *_rfc3339Formatter;
     PREDLogFormatter *_fileLogFormatter;
     NSUInteger _errorLogCount;
     NSMutableSet *_logTags;
@@ -52,9 +52,6 @@
         _uploadManager = [[QNUploadManager alloc] init];
         _logFileManagers = [[PREDLogFileManager alloc] init];
         _logFileManagers.delegate = self;
-        _rfc3339Formatter = [[NSDateFormatter alloc] init];
-        [_rfc3339Formatter setDateFormat:@"yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'"];
-        [_rfc3339Formatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
         _fileLogFormatter = [[PREDLogFormatter alloc] init];
         _fileLogFormatter.delegate = self;
         _logTags = [[NSMutableSet alloc] init];
@@ -143,8 +140,8 @@
                       @"sdk_id": PREDHelper.UUID,
                       @"tag": PREDHelper.tag,
                       @"manufacturer": @"Apple",
-                      @"start_time": [_rfc3339Formatter stringFromDate:_logStartTime],
-                      @"end_time": [_rfc3339Formatter stringFromDate:[NSDate date]],
+                      @"start_time": @((unsigned long)([_logStartTime timeIntervalSince1970] * PREDMillisecondPerSecond)),
+                      @"end_time": @((unsigned long)([[NSDate date] timeIntervalSince1970] * PREDMillisecondPerSecond)),
                       @"log_tags": [self logTagsString] ?: @"",
                       @"error_count": @(_errorLogCount),
                       } mutableCopy];
