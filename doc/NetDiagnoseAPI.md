@@ -20,9 +20,12 @@ Content-Type: application/json
 	DeviceModel   string  `json:"device_model"`
 	OsPlatform    string  `json:"os_platform"`
 	OsVersion     string  `json:"os_version"`
+	OsBuild       string  `json:"os_build"`
 	SdkVersion    string  `json:"sdk_version"`
 	SdkId         string  `json:"sdk_id"`
 	DeviceId      string  `json:"device_id"`
+	Tag           string  `json:"tag"`
+	Manufacturer  string  `json:"manufacturer"`
 	ResultID      string  `json:"result_id"`
 	PingCode      int     `json:"ping_code"`
 	PingIp        string  `json:"ping_ip"`
