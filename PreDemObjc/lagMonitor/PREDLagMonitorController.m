@@ -37,7 +37,10 @@ static void runLoopObserverCallBack(CFRunLoopObserverRef observer, CFRunLoopActi
 
 - (instancetype)initWithNetworkClient:(PREDNetworkClient *)networkClient {
     if (self = [super init]) {
-        _reporter = [[PREPLCrashReporter alloc] initWithConfiguration:[PREPLCrashReporterConfig defaultConfiguration]];
+        PLCrashReporterSignalHandlerType signalHandlerType = PLCrashReporterSignalHandlerTypeBSD;
+        PREPLCrashReporterConfig *config = [[PREPLCrashReporterConfig alloc] initWithSignalHandlerType: signalHandlerType
+                                                                                 symbolicationStrategy: PLCrashReporterSymbolicationStrategyAll];
+        _reporter = [[PREPLCrashReporter alloc] initWithConfiguration:config];
         _networkClient = networkClient;
         _uploadManager = [[QNUploadManager alloc] init];
     }
