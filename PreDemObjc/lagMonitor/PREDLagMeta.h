@@ -1,0 +1,22 @@
+//
+//  PREDLagMeta.h
+//  Pods
+//
+//  Created by 王思宇 on 18/09/2017.
+//
+//
+
+#import <Foundation/Foundation.h>
+#import "PREDBaseModel.h"
+
+@interface PREDLagMeta : PREDBaseModel
+
+@property (nonatomic, strong) NSString *report_uuid;
+@property (nonatomic, strong) NSString *lag_log_key;
+@property (nonatomic, assign) unsigned long start_time;
+@property (nonatomic, assign) unsigned long lag_time;
+
+- (instancetype)initWithData:(NSData *)crashData
+                       error:(NSError **)error;
+
+@end

@@ -38,6 +38,8 @@ static NSString* app_id(NSString* appKey){
     PREDCrashManager *_crashManager;
     
     PREDLagMonitorController *_lagManager;
+    
+    PREDChannel *_channel;
 }
 
 
@@ -58,26 +60,26 @@ static NSString* app_id(NSString* appKey){
     [[self sharedPREDManager] diagnose:host complete:complete];
 }
 
-+ (void)trackEventWithName:(NSString *)eventName
-                     event:(NSDictionary *)event {
-    if (event == nil || eventName == nil) {
-        return;
-    }
-    [[self sharedPREDManager].networkClient postPath:[NSString stringWithFormat:@"events/%@", eventName] parameters:@[event] completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
-        PREDLogDebug(@"%@", [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil]);
-    }];
-}
-
-+ (void)trackEventsWithName:(NSString *)eventName
-                     events:(NSArray<NSDictionary *>*)events{
-    if (events == nil || events.count == 0 || eventName == nil) {
-        return;
-    }
-    
-    [[self sharedPREDManager].networkClient postPath:[NSString stringWithFormat:@"events/%@", eventName] parameters:events completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
-        PREDLogDebug(@"%@", [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil]);
-    }];
-}
+//+ (void)trackEventWithName:(NSString *)eventName
+//                     event:(NSDictionary *)event {
+//    if (event == nil || eventName == nil) {
+//        return;
+//    }
+//    [[self sharedPREDManager].networkClient postPath:[NSString stringWithFormat:@"events/%@", eventName] parameters:@[event] completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
+//        PREDLogDebug(@"%@", [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil]);
+//    }];
+//}
+//
+//+ (void)trackEventsWithName:(NSString *)eventName
+//                     events:(NSArray<NSDictionary *>*)events{
+//    if (events == nil || events.count == 0 || eventName == nil) {
+//        return;
+//    }
+//    
+//    [[self sharedPREDManager].networkClient postPath:[NSString stringWithFormat:@"events/%@", eventName] parameters:events completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
+//        PREDLogDebug(@"%@", [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil]);
+//    }];
+//}
 
 + (NSString *)tag {
     return PREDHelper.tag;
@@ -111,7 +113,6 @@ static NSString* app_id(NSString* appKey){
 - (instancetype)init {
     if ((self = [super init])) {
         _managersInitialized = NO;
-        _networkClient = nil;
         _enableCrashManager = YES;
         _enableHttpMonitor = YES;
         _enableLagMonitor = YES;
@@ -122,7 +123,7 @@ static NSString* app_id(NSString* appKey){
 
 - (void)startWithAppKey:(NSString *)appKey serviceDomain:(NSString *)serviceDomain error:(NSError **)error {
     _appKey = appKey;
-    [self initNetworkClientWithDomain:serviceDomain appKey:appKey error:error];
+    [self initSendChannelWithDomain:serviceDomain appKey:appKey error:error];
     
     [self initializeModules];
     
@@ -196,7 +197,7 @@ static NSString* app_id(NSString* appKey){
     }
 }
 
-- (void)initNetworkClientWithDomain:(NSString *)aServerURL appKey:(NSString *)appKey error:(NSError **)error {
+- (void)initSendChannelWithDomain:(NSString *)aServerURL appKey:(NSString *)appKey error:(NSError **)error {
     if (!aServerURL.length) {
         if (error) {
             *error = [PREDError GenerateNSError:kPREDErrorCodeInvalidServiceDomain description:@"you must specify server domain"];
@@ -215,7 +216,7 @@ static NSString* app_id(NSString* appKey){
     
     aServerURL = [NSString stringWithFormat:@"%@/v1/%@/", aServerURL, app_id(appKey)];
     
-    _networkClient = [[PREDNetworkClient alloc] initWithBaseURL:[NSURL URLWithString:aServerURL]];
+    _channel = [[PREDChannel alloc] initWithBaseUrl:[NSURL URLWithString:aServerURL]];
 }
 
 - (void)initializeModules {
@@ -227,26 +228,26 @@ static NSString* app_id(NSString* appKey){
     _startManagerIsInvoked = NO;
     
     _crashManager = [[PREDCrashManager alloc]
-                     initWithNetworkClient:_networkClient];
-    [PREDURLProtocol setClient:_networkClient];
+                     initWithChannel:_channel];
+//    [PREDURLProtocol setClient:_networkClient];
     
-    _configManager = [[PREDConfigManager alloc] initWithNetClient:_networkClient];
+//    _configManager = [[PREDConfigManager alloc] initWithNetClient:_networkClient];
     _configManager.delegate = self;
-    _lagManager = [[PREDLagMonitorController alloc] initWithNetworkClient:_networkClient];
-    [PREDLogger setNetworkClient:_networkClient];
+    _lagManager = [[PREDLagMonitorController alloc] initWithChannel:_channel];
+    [PREDLogger setChannel:_channel];
     _managersInitialized = YES;
 }
 
 - (void)applyConfig:(PREDConfig *)config {
-    self.enableCrashManager = config.crashReportEnabled;
-    self.enableHttpMonitor = config.httpMonitorEnabled;
-    self.enableLagMonitor = config.lagMonitorEnabled;
-    _crashManager.enableOnDeviceSymbolication = config.onDeviceSymbolicationEnabled;
+//    self.enableCrashManager = config.crashReportEnabled;
+//    self.enableHttpMonitor = config.httpMonitorEnabled;
+//    self.enableLagMonitor = config.lagMonitorEnabled;
+//    _crashManager.enableOnDeviceSymbolication = config.onDeviceSymbolicationEnabled;
 }
 
 - (void)diagnose:(NSString *)host
         complete:(PREDNetDiagCompleteHandler)complete {
-    [PREDNetDiag diagnose:host netClient:_networkClient complete:complete];
+//    [PREDNetDiag diagnose:host netClient:_networkClient complete:complete];
 }
 
 - (void)configManager:(PREDConfigManager *)manager didReceivedConfig:(PREDConfig *)config {

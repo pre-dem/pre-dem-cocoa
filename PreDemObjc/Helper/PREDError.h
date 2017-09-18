@@ -12,6 +12,7 @@ typedef NS_ENUM(NSInteger, PREDErrorCode) {
     kPREDErrorCodeUnknown = -1,
     kPREDErrorCodeInvalidServiceDomain = 100,
     kPREDErrorCodeInvalidAppKey = 101,
+    kPREDErrorCodeInvalidJsonObject = 102,
 };
 
 extern NSString *const PREDErrorDomain;

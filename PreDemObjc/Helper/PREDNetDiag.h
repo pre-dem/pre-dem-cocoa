@@ -8,12 +8,12 @@
 
 #import <Foundation/Foundation.h>
 #import "PreDemObjc.h"
-#import "PREDNetworkClient.h"
+#import "PREDChannel.h"
 
 @interface PREDNetDiag : NSObject
 
 + (void)diagnose:(NSString *)host
-       netClient:(PREDNetworkClient *)client
+         channel:(PREDChannel *)channel
         complete:(PREDNetDiagCompleteHandler)complete;
 
 @end

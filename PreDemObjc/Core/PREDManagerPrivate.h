@@ -22,8 +22,6 @@ PREDConfigManagerDelegate
 
 + (PREDManager *_Nonnull)sharedPREDManager;
 
-@property (nonatomic, strong, nonnull) PREDNetworkClient *networkClient;
-
 @property (nonatomic, getter = isCrashManagerEnabled) BOOL enableCrashManager;
 
 @property (nonatomic, getter = isHttpMonitorEnabled) BOOL enableHttpMonitor;

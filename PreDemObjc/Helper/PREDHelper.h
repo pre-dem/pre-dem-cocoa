@@ -11,8 +11,6 @@
 
 @interface PREDHelper : NSObject
 
-FOUNDATION_EXPORT NSString *const kPREDExcludeApplicationSupportFromBackup;
-
 @property(class, readonly) BOOL isURLSessionSupported;
 @property(class, readonly) NSString *settingsDir;
 @property(class, readonly) NSString *keychainPreDemObjcServiceName;
@@ -37,13 +35,17 @@ FOUNDATION_EXPORT NSString *const kPREDExcludeApplicationSupportFromBackup;
 @property(class, readonly) NSString *osVersion;
 @property(class, readonly) NSString *osBuild;
 @property(class, readonly) NSString *deviceModel;
-@property(class, readonly) NSString *executableUUID;
+
+
 @property(class, strong) NSString *tag;
+@property(class, readonly) NSString *sdkDirectory;
+@property(class, readonly) NSString *cacheDirectory;
 
 + (NSString *)encodeAppIdentifier:(NSString *)inputString;
 + (NSString *)appName:(NSString *)placeHolderString;
 + (NSString *)URLEncodedString:(NSString *)inputString;
 + (NSDictionary*)getObjectData:(id)obj;
 + (NSString *)MD5:(NSString *)mdStr;
++ (NSString *)MD5ForData:(NSData *)data;
 
 @end
