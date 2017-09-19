@@ -229,8 +229,7 @@ static NSString* app_id(NSString* appKey){
     
     _crashManager = [[PREDCrashManager alloc]
                      initWithChannel:_channel];
-//    [PREDURLProtocol setClient:_networkClient];
-    
+    [PREDURLProtocol setChannel:_channel];
 //    _configManager = [[PREDConfigManager alloc] initWithNetClient:_networkClient];
     _configManager.delegate = self;
     _lagManager = [[PREDLagMonitorController alloc] initWithChannel:_channel];

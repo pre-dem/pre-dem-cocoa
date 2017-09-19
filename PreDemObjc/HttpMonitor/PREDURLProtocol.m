@@ -10,9 +10,10 @@
 #import <HappyDNS/HappyDNS.h>
 #import "PREDURLSessionSwizzler.h"
 #import "PREDHTTPMonitorModel.h"
-#import "PREDHTTPMonitorSender.h"
 
 #define DNSPodsHost @"119.29.29.29"
+
+static PREDChannel *_channel;
 
 @interface PREDURLProtocol ()
 <
@@ -29,14 +30,11 @@ NSURLSessionDataDelegate
 
 @synthesize HTTPMonitorModel;
 
-+ (void)setClient:(PREDNetworkClient *)client {
-    [PREDHTTPMonitorSender setClient:client];
++ (void)setChannel:(PREDChannel *)channel {
+    _channel = channel;
 }
 
 + (void)enableHTTPDem {
-    if (PREDHTTPMonitorSender.isEnabled) {
-        return;
-    }
     // 可拦截 [NSURLSession defaultSession] 以及 UIWebView 相关的请求
     [NSURLProtocol registerClass:self.class];
     
@@ -44,19 +42,13 @@ NSURLSessionDataDelegate
     if (![PREDURLSessionSwizzler isSwizzle]) {
         [PREDURLSessionSwizzler load];
     }
-    
-    PREDHTTPMonitorSender.enable = YES;
 }
 
 + (void)disableHTTPDem {
-    if (!PREDHTTPMonitorSender.isEnabled) {
-        return;
-    }
     [NSURLProtocol unregisterClass:self.class];
     if ([PREDURLSessionSwizzler isSwizzle]) {
         [PREDURLSessionSwizzler unload];
     }
-    PREDHTTPMonitorSender.enable = NO;
 }
 
 + (BOOL)canInitWithRequest:(NSURLRequest *)request {
@@ -158,7 +150,7 @@ NSURLSessionDataDelegate
     } else {
         [self.client URLProtocolDidFinishLoading:self];
     }
-    [PREDHTTPMonitorSender addModel:HTTPMonitorModel];
+    [_channel sinkHttpMonitorModel:HTTPMonitorModel];
 }
 
 @end
