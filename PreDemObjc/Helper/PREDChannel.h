@@ -12,6 +12,7 @@
 #import "PREDLagMeta.h"
 #import "PREDLogMeta.h"
 #import "PREDNetDiagResult.h"
+#import "PREDAppInfo.h"
 
 @interface PREDChannel : NSObject
 
@@ -23,5 +24,6 @@
 - (void)sinkCrashMeta:(PREDCrashMeta *)crashMeta;
 - (void)sinkLagMeta:(PREDLagMeta *)lagMeta;
 - (void)sinkLogMeta:(PREDLogMeta *)logMeta;
+- (void)sinkAppInfo:(PREDAppInfo *)appinfo;
 
 @end

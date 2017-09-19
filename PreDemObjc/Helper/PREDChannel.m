@@ -61,4 +61,9 @@
     [_persistence persistLogMeta:logMeta];
 }
 
+- (void)sinkAppInfo:(PREDAppInfo *)appinfo {
+    [_persistence persistAppInfo:appinfo];
+}
+
+
 @end

@@ -10,6 +10,7 @@
 #import "PREDHelper.h"
 #import "PREDLogger.h"
 #import "QiniuSDK.h"
+#import "PREDConfigManager.h"
 
 @implementation PREDSender {
     PREDPersistence *_persistence;
@@ -37,6 +38,24 @@
     [self sendLogData];
     [self sendHttpMonitor];
     [self sendNetDiag];
+}
+
+- (void)sendAppInfo {
+    NSString *filePath = [_persistence nextAppInfoPath];
+    NSMutableDictionary *meta = [_persistence parseFile:filePath];
+    [_networkClient postPath:@"app-config/i" parameters:meta completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
+        if (error) {
+            PREDLogError(@"get config failed: %@", error);
+        } else {
+            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+            if ([dic respondsToSelector:@selector(objectForKey:)]) {
+                [[NSNotificationCenter defaultCenter] postNotificationName:kPREDConfigRefreshedNotification object:self userInfo:@{kPREDConfigRefreshedNotificationConfigKey: dic}];
+            } else {
+                PREDLogError(@"config received from server has a wrong type");
+            }
+        }
+    }];
+    
 }
 
 - (void)sendCrashData {

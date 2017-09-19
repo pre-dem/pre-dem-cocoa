@@ -40,6 +40,8 @@ static NSString* app_id(NSString* appKey){
     PREDLagMonitorController *_lagManager;
     
     PREDChannel *_channel;
+    
+    PREDNetworkClient *_networkClient;
 }
 
 
@@ -130,6 +132,8 @@ static NSString* app_id(NSString* appKey){
     [self applyConfig:[_configManager getConfig]];
     
     [self startManager];
+    
+    [self registerObservers];
 }
 
 - (void)startManager {
@@ -230,26 +234,31 @@ static NSString* app_id(NSString* appKey){
     _crashManager = [[PREDCrashManager alloc]
                      initWithChannel:_channel];
     [PREDURLProtocol setChannel:_channel];
-//    _configManager = [[PREDConfigManager alloc] initWithNetClient:_networkClient];
-    _configManager.delegate = self;
+    _configManager = [[PREDConfigManager alloc] initWithChannel:_channel];
     _lagManager = [[PREDLagMonitorController alloc] initWithChannel:_channel];
     [PREDLogger setChannel:_channel];
     _managersInitialized = YES;
 }
 
 - (void)applyConfig:(PREDConfig *)config {
-//    self.enableCrashManager = config.crashReportEnabled;
-//    self.enableHttpMonitor = config.httpMonitorEnabled;
-//    self.enableLagMonitor = config.lagMonitorEnabled;
-//    _crashManager.enableOnDeviceSymbolication = config.onDeviceSymbolicationEnabled;
+    self.enableCrashManager = config.crashReportEnabled;
+    self.enableHttpMonitor = config.httpMonitorEnabled;
+    self.enableLagMonitor = config.lagMonitorEnabled;
+    _crashManager.enableOnDeviceSymbolication = config.onDeviceSymbolicationEnabled;
 }
 
 - (void)diagnose:(NSString *)host
         complete:(PREDNetDiagCompleteHandler)complete {
-//    [PREDNetDiag diagnose:host netClient:_networkClient complete:complete];
+    [PREDNetDiag diagnose:host channel:_channel complete:complete];
 }
 
-- (void)configManager:(PREDConfigManager *)manager didReceivedConfig:(PREDConfig *)config {
+- (void)registerObservers {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(configRefreshed:) name:kPREDConfigRefreshedNotification object:nil];
+}
+
+- (void)configRefreshed:(NSNotification *)noty {
+    NSDictionary *dic = noty.userInfo[kPREDConfigRefreshedNotificationConfigKey];
+    PREDConfig *config = [PREDConfig configWithDic:dic];
     [self applyConfig:config];
 }
 

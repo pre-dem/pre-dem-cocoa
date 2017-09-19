@@ -16,9 +16,6 @@
 #define PREDAppIdLength     8
 
 @interface PREDManager ()
-<
-PREDConfigManagerDelegate
->
 
 + (PREDManager *_Nonnull)sharedPREDManager;
 

@@ -14,6 +14,7 @@
 NSString *kPREDDataPersistedNotification = @"com.qiniu.predem.persist";
 
 @implementation PREDPersistence {
+    NSString *_appInfoDir;
     NSString *_crashDir;
     NSString *_lagDir;
     NSString *_logDir;
@@ -25,6 +26,7 @@ NSString *kPREDDataPersistedNotification = @"com.qiniu.predem.persist";
 - (instancetype)init {
     if (self = [super init]) {
         _fileManager = [NSFileManager defaultManager];
+        _appInfoDir = [NSString stringWithFormat:@"%@/%@", PREDHelper.cacheDirectory, @"appInfo"];
         _crashDir = [NSString stringWithFormat:@"%@/%@", PREDHelper.cacheDirectory, @"crash"];
         _lagDir = [NSString stringWithFormat:@"%@/%@", PREDHelper.cacheDirectory, @"lag"];
         _logDir = [NSString stringWithFormat:@"%@/%@", PREDHelper.cacheDirectory, @"log"];
@@ -32,6 +34,10 @@ NSString *kPREDDataPersistedNotification = @"com.qiniu.predem.persist";
         _netDir = [NSString stringWithFormat:@"%@/%@", PREDHelper.cacheDirectory, @"net"];
 
         NSError *error;
+        [_fileManager createDirectoryAtPath:_appInfoDir withIntermediateDirectories:YES attributes:nil error:&error];
+        if (error) {
+            PREDLogError(@"create dir %@ failed", _crashDir);
+        }
         [_fileManager createDirectoryAtPath:_crashDir withIntermediateDirectories:YES attributes:nil error:&error];
         if (error) {
             PREDLogError(@"create dir %@ failed", _crashDir);
@@ -54,6 +60,22 @@ NSString *kPREDDataPersistedNotification = @"com.qiniu.predem.persist";
         }
     }
     return self;
+}
+
+- (void)persistAppInfo:(PREDAppInfo *)appInfo {
+    NSError *error;
+    NSData *data = [appInfo toJsonWithError:&error];
+    if (error) {
+        PREDLogError(@"jsonize app info error: %@", error);
+        return;
+    }
+    NSString *fileName = [NSString stringWithFormat:@"%f", [[NSDate date] timeIntervalSince1970]];
+    BOOL success = [data writeToFile:[NSString stringWithFormat:@"%@/%@", _appInfoDir, fileName] atomically:NO];
+    if (!success) {
+        PREDLogError(@"write app info to file %@ failed", fileName);
+    } else {
+        [[NSNotificationCenter defaultCenter] postNotificationName:kPREDDataPersistedNotification object:nil];
+    }
 }
 
 - (void)persistCrashMeta:(PREDCrashMeta *)crashMeta {
@@ -134,6 +156,15 @@ NSString *kPREDDataPersistedNotification = @"com.qiniu.predem.persist";
         PREDLogError(@"write net diag to file %@ failed", fileName);
     } else {
         [[NSNotificationCenter defaultCenter] postNotificationName:kPREDDataPersistedNotification object:nil];
+    }
+}
+
+- (NSString *)nextAppInfoPath {
+    NSArray *files = [_fileManager enumeratorAtPath:_appInfoDir].allObjects;
+    if (files.count == 0) {
+        return nil;
+    } else {
+        return [NSString stringWithFormat:@"%@/%@", _appInfoDir, files[0]];
     }
 }
 
