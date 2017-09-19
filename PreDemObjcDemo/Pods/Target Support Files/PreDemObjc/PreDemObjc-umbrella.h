@@ -10,6 +10,7 @@
 #endif
 #endif
 
+#import "PREDBaseModel.h"
 #import "PREDDefines.h"
 #import "PREDemObjc.h"
 #import "PREDLogger.h"

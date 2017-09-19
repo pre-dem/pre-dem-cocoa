@@ -11,8 +11,8 @@
 @implementation PREDLogMeta
 
 - (instancetype)initWithLogKey:(NSString *)logKey
-                     startTime:(unsigned long)startTime
-                       endTime:(unsigned long)endTime
+                     startTime:(uint64_t)startTime
+                       endTime:(uint64_t)endTime
                        logTags:(NSString *)logTags
                     errorCount:(unsigned long)errorCount{
     if (self = [super init]) {

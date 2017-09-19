@@ -18,6 +18,5 @@
 - (void)gotHttpResult:(QNNHttpResult *)r;
 - (void)gotTrResult:(QNNTraceRouteResult *)r;
 - (void)gotNsLookupResult:(NSArray<QNNRecord *> *) r;
-- (NSDictionary *)toDic;
 
 @end

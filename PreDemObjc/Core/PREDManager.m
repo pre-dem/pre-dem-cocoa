@@ -125,6 +125,8 @@ static NSString* app_id(NSString* appKey){
 
 - (void)startWithAppKey:(NSString *)appKey serviceDomain:(NSString *)serviceDomain error:(NSError **)error {
     _appKey = appKey;
+    [self registerObservers];
+
     [self initSendChannelWithDomain:serviceDomain appKey:appKey error:error];
     
     [self initializeModules];
@@ -132,8 +134,6 @@ static NSString* app_id(NSString* appKey){
     [self applyConfig:[_configManager getConfig]];
     
     [self startManager];
-    
-    [self registerObservers];
 }
 
 - (void)startManager {
