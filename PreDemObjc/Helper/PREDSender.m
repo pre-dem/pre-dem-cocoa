@@ -28,7 +28,7 @@
     return self;
 }
 
-- (void)sendSavedData {
+- (void)sendAllSavedData {
     [self sendCrashData];
     [self sendLagData];
     [self sendLogData];
