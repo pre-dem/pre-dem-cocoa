@@ -28,6 +28,7 @@
 - (NSString *)nextLagMetaPath;
 - (NSString *)nextLogMetaPath;
 - (NSString *)nextHttpMonitorPath;
+- (NSArray *)allHttpMonitorPaths;
 - (NSString *)nextNetDiagPath;
 
 - (NSMutableDictionary *)getStoredMeta:(NSString *)filePath error:(NSError **)error;

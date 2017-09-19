@@ -167,6 +167,8 @@ static NSString* app_id(NSString* appKey){
         
         [_lagManager startMonitor];
     }
+    
+    [_sender sendAllSavedData];
 }
 
 - (void)setEnableCrashManager:(BOOL)enableCrashManager {

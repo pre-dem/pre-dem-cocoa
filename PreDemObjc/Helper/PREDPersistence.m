@@ -190,6 +190,10 @@
     }
 }
 
+- (NSArray *)allHttpMonitorPath {
+    return [_fileManager enumeratorAtPath:_httpDir].allObjects;
+}
+
 - (NSString *)nextNetDiagPath {
     NSArray *files = [_fileManager enumeratorAtPath:_netDir].allObjects;
     if (files.count == 0) {

@@ -14,4 +14,6 @@
 
 - (instancetype)initWithPersistence:(PREDPersistence *)persistence baseUrl:(NSURL *)baseUrl;
 
+- (void)sendAllSavedData;
+
 @end
