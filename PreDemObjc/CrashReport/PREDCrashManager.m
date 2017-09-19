@@ -516,7 +516,7 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
     NSString *filename = [_crashFiles objectAtIndex:0];
     NSString *cacheFilename = [filename lastPathComponent];
     NSData *crashData = [NSData dataWithContentsOfFile:filename];
-    unsigned long startTime, crashTime = 0;
+    u_int64_t startTime = 0, crashTime = 0;
     if ([crashData length] > 0) {
         PREPLCrashReport *report = nil;
         NSString *crashLogString = nil;
