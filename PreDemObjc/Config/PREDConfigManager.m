@@ -23,12 +23,12 @@ NSString *kPREDConfigRefreshedNotificationConfigKey = @"com.qiniu.predem.config"
 @end
 
 @implementation PREDConfigManager {
-    PREDChannel *_channel;
+    PREDPersistence *_persistence;
 }
 
-- (instancetype)initWithChannel:(PREDChannel *)channel {
+- (instancetype)initWithPersistence:(PREDPersistence *)persistence {
     if (self = [super init]) {
-        _channel = channel;
+        _persistence = persistence;
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(configRefreshed:) name:kPREDConfigRefreshedNotificationConfigKey object:nil];
     }
@@ -49,7 +49,7 @@ NSString *kPREDConfigRefreshedNotificationConfigKey = @"com.qiniu.predem.config"
     }
     
     PREDAppInfo *info = [[PREDAppInfo alloc] init];
-    [_channel sinkAppInfo:info];
+    [_persistence persistAppInfo:info];
     return defaultConfig;
 }
 

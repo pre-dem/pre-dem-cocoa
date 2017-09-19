@@ -14,6 +14,7 @@
 #import "PREDLogFileManager.h"
 #import "PREDLoggerPrivate.h"
 #import "PREDLogMeta.h"
+#import "PREDPersistence.h"
 
 #define DefaltTtyLogLevel               DDLogLevelAll
 #define PREDMillisecondPerSecond        1000
@@ -22,7 +23,7 @@
     PREDLogLevel _ttyLogLevel;
     PREDLogLevel _fileLogLevel;
     DDFileLogger *_fileLogger;
-    PREDChannel *_channel;
+    PREDPersistence *_persistence;
     QNUploadManager *_uploadManager;
     NSDate *_logStartTime;
     PREDLogFileManager *_logFileManagers;
@@ -108,20 +109,20 @@
     }
 }
 
-+ (void)setChannel:(PREDChannel *)channel {
-    [PREDLogger sharedLogger].channel = channel;
++ (void)setPersistence:(PREDPersistence *)persistence {
+    [PREDLogger sharedLogger].persistence = persistence;
 }
 
-- (void)setChannel:(PREDChannel *)channel {
-    _channel = channel;
++ (PREDPersistence *)persistence {
+    return [PREDLogger sharedLogger].persistence;
 }
 
-+ (PREDChannel *)channel {
-    return [PREDLogger sharedLogger].channel;
+- (void)setPersistence:(PREDPersistence *)persistence {
+    _persistence = persistence;
 }
 
-- (PREDChannel *)channel {
-    return _channel;
+- (PREDPersistence *)persistence {
+    return _persistence;
 }
 
 - (void)logFileManager:(PREDLogFileManager *)logFileManager didArchivedLogFile:(NSString *)logFilePath {
@@ -131,7 +132,7 @@
         [_logTags removeAllObjects];
         _errorLogCount = 0;
     }
-    [_channel sinkLogMeta:meta];
+    [_persistence persistLogMeta:meta];
     _logStartTime = [NSDate date];
 }
 

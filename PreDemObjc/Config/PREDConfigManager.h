@@ -8,14 +8,14 @@
 
 #import <Foundation/Foundation.h>
 #import "PREDConfig.h"
-#import "PREDChannel.h"
+#import "PREDPersistence.h"
 
 extern NSString *kPREDConfigRefreshedNotification;
 extern NSString *kPREDConfigRefreshedNotificationConfigKey;
 
 @interface PREDConfigManager : NSObject
 
-- (instancetype)initWithChannel:(PREDChannel *)channel;
+- (instancetype)initWithPersistence:(PREDPersistence *)persistence;
 
 - (PREDConfig *)getConfig;
 

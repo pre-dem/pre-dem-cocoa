@@ -7,11 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "PREDChannel.h"
+#import "PREDPersistence.h"
 
 @interface PREDURLProtocol : NSURLProtocol
 
-+ (void)setChannel:(PREDChannel *)channel;
++ (void)setPersistence:(PREDPersistence *)persistence;
 
 + (void)enableHTTPDem;
 + (void)disableHTTPDem;

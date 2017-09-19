@@ -14,16 +14,14 @@
 #import "PREDNetDiagResult.h"
 #import "PREDAppInfo.h"
 
-extern NSString *kPREDDataPersistedNotification;
-
 @interface PREDPersistence : NSObject
 
 - (void)persistAppInfo:(PREDAppInfo *)appInfo;
 - (void)persistCrashMeta:(PREDCrashMeta *)crashMeta;
 - (void)persistLagMeta:(PREDLagMeta *)lagMeta;
 - (void)persistLogMeta:(PREDLogMeta *)logMeta;
-- (void)persistHttpMonitors:(NSArray<PREDHTTPMonitorModel *> *)httpMonitors;
-- (void)persistNetDiagResults:(NSArray<PREDNetDiagResult *> *)netDiagResults;
+- (void)persistHttpMonitor:(PREDHTTPMonitorModel *)httpMonitor;
+- (void)persistNetDiagResult:(PREDNetDiagResult *)netDiagResult;
 
 - (NSString *)nextAppInfoPath;
 - (NSString *)nextCrashMetaPath;

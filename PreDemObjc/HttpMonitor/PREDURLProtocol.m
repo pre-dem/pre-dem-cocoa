@@ -13,7 +13,7 @@
 
 #define DNSPodsHost @"119.29.29.29"
 
-static PREDChannel *_channel;
+static PREDPersistence *_persistence;
 
 @interface PREDURLProtocol ()
 <
@@ -30,8 +30,8 @@ NSURLSessionDataDelegate
 
 @synthesize HTTPMonitorModel;
 
-+ (void)setChannel:(PREDChannel *)channel {
-    _channel = channel;
++ (void)setPersistence:(PREDPersistence *)persistence {
+    _persistence = persistence;
 }
 
 + (void)enableHTTPDem {
@@ -150,7 +150,7 @@ NSURLSessionDataDelegate
     } else {
         [self.client URLProtocolDidFinishLoading:self];
     }
-    [_channel sinkHttpMonitorModel:HTTPMonitorModel];
+    [_persistence persistHttpMonitor:HTTPMonitorModel];
 }
 
 @end

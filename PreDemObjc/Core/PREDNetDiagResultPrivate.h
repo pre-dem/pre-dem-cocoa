@@ -7,12 +7,12 @@
 //
 
 #import "PREDNetDiagResult.h"
-#import "PREDChannel.h"
+#import "PREDPersistence.h"
 #import "QNNetDiag.h"
 
 @interface PREDNetDiagResult ()
 
-- (instancetype)initWithComplete:(PREDNetDiagCompleteHandler)complete channel:(PREDChannel *)channel;
+- (instancetype)initWithComplete:(PREDNetDiagCompleteHandler)complete persistence:(PREDPersistence *)persistence;
 - (void)gotTcpResult:(QNNTcpPingResult *)r;
 - (void)gotPingResult:(QNNPingResult *)r;
 - (void)gotHttpResult:(QNNHttpResult *)r;

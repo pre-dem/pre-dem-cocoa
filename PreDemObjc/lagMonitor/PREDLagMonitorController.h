@@ -7,11 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "PREDChannel.h"
+#import "PREDPersistence.h"
 
 @interface PREDLagMonitorController : NSObject
 
-- (instancetype)initWithChannel:(PREDChannel *)channel;
+- (instancetype)initWithPersistence:(PREDPersistence *)persistence;
 
 - (void)startMonitor;
 - (void)endMonitor;

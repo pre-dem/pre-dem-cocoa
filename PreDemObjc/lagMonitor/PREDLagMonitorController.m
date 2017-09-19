@@ -19,7 +19,7 @@
     CFRunLoopActivity _activity;
     NSInteger _countTime;
     PREPLCrashReporter *_reporter;
-    PREDChannel *_channel;
+    PREDPersistence *_persistence;
     QNUploadManager *_uploadManager;
 }
 
@@ -31,13 +31,13 @@ static void runLoopObserverCallBack(CFRunLoopObserverRef observer, CFRunLoopActi
     dispatch_semaphore_signal(semaphore);
 }
 
-- (instancetype)initWithChannel:(PREDChannel *)channel {
+- (instancetype)initWithPersistence:(PREDPersistence *)persistence {
     if (self = [super init]) {
         PLCrashReporterSignalHandlerType signalHandlerType = PLCrashReporterSignalHandlerTypeBSD;
         PREPLCrashReporterConfig *config = [[PREPLCrashReporterConfig alloc] initWithSignalHandlerType: signalHandlerType
                                                                                  symbolicationStrategy: PLCrashReporterSymbolicationStrategyAll];
         _reporter = [[PREPLCrashReporter alloc] initWithConfiguration:config];
-        _channel = channel;
+        _persistence = persistence;
         _uploadManager = [[QNUploadManager alloc] init];
     }
     return self;
@@ -105,7 +105,7 @@ static void runLoopObserverCallBack(CFRunLoopObserverRef observer, CFRunLoopActi
         PREDLogError(@"parse lag report error: %@", error);
         return;
     }
-    [_channel sinkLagMeta:meta];
+    [_persistence persistLagMeta:meta];
 }
 
 @end

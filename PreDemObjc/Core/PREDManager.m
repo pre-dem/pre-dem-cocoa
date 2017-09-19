@@ -19,6 +19,7 @@
 #import "PREDLogger.h"
 #import "PREDError.h"
 #import "PREDLoggerPrivate.h"
+#import "PREDSender.h"
 
 static NSString* app_id(NSString* appKey){
     if (appKey.length >= PREDAppIdLength) {
@@ -39,9 +40,11 @@ static NSString* app_id(NSString* appKey){
     
     PREDLagMonitorController *_lagManager;
     
-    PREDChannel *_channel;
+    PREDPersistence *_persistence;
     
     PREDNetworkClient *_networkClient;
+    
+    PREDSender *_sender;
 }
 
 
@@ -119,6 +122,7 @@ static NSString* app_id(NSString* appKey){
         _enableHttpMonitor = YES;
         _enableLagMonitor = YES;
         _startManagerIsInvoked = NO;
+        _persistence = [[PREDPersistence alloc] init];
     }
     return self;
 }
@@ -220,7 +224,7 @@ static NSString* app_id(NSString* appKey){
     
     aServerURL = [NSString stringWithFormat:@"%@/v1/%@/", aServerURL, app_id(appKey)];
     
-    _channel = [[PREDChannel alloc] initWithBaseUrl:[NSURL URLWithString:aServerURL]];
+    _sender = [[PREDSender alloc] initWithPersistence:_persistence baseUrl:[NSURL URLWithString:aServerURL]];
 }
 
 - (void)initializeModules {
@@ -232,11 +236,11 @@ static NSString* app_id(NSString* appKey){
     _startManagerIsInvoked = NO;
     
     _crashManager = [[PREDCrashManager alloc]
-                     initWithChannel:_channel];
-    [PREDURLProtocol setChannel:_channel];
-    _configManager = [[PREDConfigManager alloc] initWithChannel:_channel];
-    _lagManager = [[PREDLagMonitorController alloc] initWithChannel:_channel];
-    [PREDLogger setChannel:_channel];
+                     initWithPersistence:_persistence];
+    [PREDURLProtocol setPersistence:_persistence];
+    _configManager = [[PREDConfigManager alloc] initWithPersistence:_persistence];
+    _lagManager = [[PREDLagMonitorController alloc] initWithPersistence:_persistence];
+    [PREDLogger setPersistence:_persistence];
     _managersInitialized = YES;
 }
 
@@ -249,7 +253,7 @@ static NSString* app_id(NSString* appKey){
 
 - (void)diagnose:(NSString *)host
         complete:(PREDNetDiagCompleteHandler)complete {
-    [PREDNetDiag diagnose:host channel:_channel complete:complete];
+    [PREDNetDiag diagnose:host persistence:_persistence complete:complete];
 }
 
 - (void)registerObservers {

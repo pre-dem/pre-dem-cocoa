@@ -19,19 +19,19 @@
     NSInteger _completedCount;
     NSLock *_lock;
     PREDNetDiagCompleteHandler _complete;
-    PREDChannel *_channel;
+    PREDPersistence *_persistence;
 }
 
 - (NSString *)description {
     return [PREDHelper getObjectData:self].description;
 }
 
-- (instancetype)initWithComplete:(PREDNetDiagCompleteHandler)complete channel:(PREDChannel *)channel {
+- (instancetype)initWithComplete:(PREDNetDiagCompleteHandler)complete persistence:(PREDPersistence *)persistence {
     if (self = [super init]) {
         _completedCount = 0;
         _lock = [NSLock new];
         _complete = complete;
-        _channel = channel;
+        _persistence = persistence;
     }
     return self;
 }
@@ -96,7 +96,7 @@
         [_lock unlock];
         [self generateResultID];
         _complete(self);
-        [_channel sinkNetDiag:self];
+        [_persistence persistNetDiagResult:self];
     } else {
         [_lock unlock];
     }

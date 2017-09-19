@@ -23,13 +23,8 @@
         _persistence = persistence;
         _uploadManager = [[QNUploadManager alloc] init];
         _networkClient = [[PREDNetworkClient alloc] initWithBaseURL:baseUrl];
-        [self registerObservers];
     }
     return self;
-}
-
-- (void)registerObservers {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sendSavedData) name:kPREDDataPersistedNotification object:nil];
 }
 
 - (void)sendSavedData {

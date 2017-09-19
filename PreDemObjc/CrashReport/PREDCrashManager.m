@@ -54,13 +54,13 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
 
 
 @implementation PREDCrashManager {
-    PREDChannel *_channel;
+    PREDPersistence *_persistence;
     PREPLCrashReporter *_plCrashReporter;
 }
 
-- (instancetype)initWithChannel:(PREDChannel *)channel {
+- (instancetype)initWithPersistence:(PREDPersistence *)persistence {
     if ((self = [super init])) {
-        _channel = channel;
+        _persistence = persistence;
         _plCrashReporter = nil;
     }
     return self;
@@ -133,7 +133,7 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
             if (error) {
                 PREDLogError(@"Could not parse crash report: %@", error);
             } else {
-                [_channel sinkCrashMeta:meta];
+                [_persistence persistCrashMeta:meta];
             }
         }
         [_plCrashReporter purgePendingCrashReport];

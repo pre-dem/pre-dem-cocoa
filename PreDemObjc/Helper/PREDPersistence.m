@@ -13,8 +13,6 @@
 #import "PREDError.h"
 #import "NSData+gzip.h"
 
-NSString *kPREDDataPersistedNotification = @"com.qiniu.predem.persist";
-
 @implementation PREDPersistence {
     NSString *_appInfoDir;
     NSString *_crashDir;
@@ -75,8 +73,6 @@ NSString *kPREDDataPersistedNotification = @"com.qiniu.predem.persist";
     BOOL success = [data writeToFile:[NSString stringWithFormat:@"%@/%@", _appInfoDir, fileName] atomically:NO];
     if (!success) {
         PREDLogError(@"write app info to file %@ failed", fileName);
-    } else {
-        [[NSNotificationCenter defaultCenter] postNotificationName:kPREDDataPersistedNotification object:nil];
     }
 }
 
@@ -91,8 +87,6 @@ NSString *kPREDDataPersistedNotification = @"com.qiniu.predem.persist";
     BOOL success = [data writeToFile:[NSString stringWithFormat:@"%@/%@", _crashDir, fileName] atomically:NO];
     if (!success) {
         PREDLogError(@"write crash meta to file %@ failed", fileName);
-    } else {
-        [[NSNotificationCenter defaultCenter] postNotificationName:kPREDDataPersistedNotification object:nil];
     }
 }
 
@@ -107,8 +101,6 @@ NSString *kPREDDataPersistedNotification = @"com.qiniu.predem.persist";
     BOOL success = [data writeToFile:[NSString stringWithFormat:@"%@/%@", _lagDir, fileName] atomically:NO];
     if (!success) {
         PREDLogError(@"write lag meta to file %@ failed", fileName);
-    } else {
-        [[NSNotificationCenter defaultCenter] postNotificationName:kPREDDataPersistedNotification object:nil];
     }
 }
 
@@ -123,42 +115,33 @@ NSString *kPREDDataPersistedNotification = @"com.qiniu.predem.persist";
     BOOL success = [data writeToFile:[NSString stringWithFormat:@"%@/%@", _logDir, fileName] atomically:NO];
     if (!success) {
         PREDLogError(@"write log meta to file %@ failed", fileName);
-    } else {
-        [[NSNotificationCenter defaultCenter] postNotificationName:kPREDDataPersistedNotification object:nil];
     }
 }
 
-- (void)persistHttpMonitors:(NSArray<PREDHTTPMonitorModel *> *)httpMonitors {
-    __block NSString *toSave;
-    [httpMonitors enumerateObjectsUsingBlock:^(PREDHTTPMonitorModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        if (idx == 0) {
-            toSave = [obj tabString];
-        } else {
-            toSave = [NSString stringWithFormat:@"%@\n%@", toSave, [obj tabString]];
-        }
-    }];
-    NSData *compressedData = [[toSave dataUsingEncoding:NSUTF8StringEncoding] gzippedData];
-    NSString *fileName = [NSString stringWithFormat:@"%f", [[NSDate date] timeIntervalSince1970]];
-    BOOL success = [compressedData writeToFile:[NSString stringWithFormat:@"%@/%@", _httpDir, fileName] atomically:NO];
-    if (!success) {
-        PREDLogError(@"write http monitor to file %@ failed", fileName);
-    } else {
-        [[NSNotificationCenter defaultCenter] postNotificationName:kPREDDataPersistedNotification object:nil];
-    }
-}
-
-- (void)persistNetDiagResults:(NSArray<PREDNetDiagResult *> *)netDiagResults {
+- (void)persistHttpMonitor:(PREDHTTPMonitorModel *)httpMonitor {
     NSError *error;
-    NSData *toSave = [netDiagResults toJsonWithError:&error];
+    NSData *data = [httpMonitor toJsonWithError:&error];
     if (error) {
-        PREDLogError(@"parse net diag result error: %@", error);
+        PREDLogError(@"jsonize http meta error: %@", error);
+        return;
+    }
+    NSString *fileName = [NSString stringWithFormat:@"%f", [[NSDate date] timeIntervalSince1970]];
+    BOOL success = [data writeToFile:[NSString stringWithFormat:@"%@/%@", _httpDir, fileName] atomically:NO];
+    if (!success) {
+        PREDLogError(@"write http meta to file %@ failed", fileName);
+    }
+}
+
+- (void)persistNetDiagResult:(PREDNetDiagResult *)netDiagResult {
+    NSError *error;
+    NSData *toSave = [netDiagResult toJsonWithError:&error];
+    if (error) {
+        PREDLogError(@"jsonize net diag result error: %@", error);
     }
     NSString *fileName = [NSString stringWithFormat:@"%f", [[NSDate date] timeIntervalSince1970]];
     BOOL success = [toSave writeToFile:[NSString stringWithFormat:@"%@/%@", _netDir, fileName] atomically:NO];
     if (!success) {
         PREDLogError(@"write net diag to file %@ failed", fileName);
-    } else {
-        [[NSNotificationCenter defaultCenter] postNotificationName:kPREDDataPersistedNotification object:nil];
     }
 }
 
