@@ -246,7 +246,13 @@
         return;
     }
     __weak typeof(self) wSelf = self;
-    [_networkClient postPath:@"http-stats/i" data:data headers:nil completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
+    [_networkClient postPath:@"http-stats/i"
+                        data:data
+                     headers:@{
+                               @"Content-Type": @"application/x-gzip",
+                               @"Content-Encoding": @"gzip",
+                               }
+                  completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
         __strong typeof(wSelf) strongSelf = wSelf;
         if (!error) {
             [strongSelf->_persistence purgeFile:filePath];

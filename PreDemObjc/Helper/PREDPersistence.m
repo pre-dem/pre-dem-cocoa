@@ -11,6 +11,7 @@
 #import "PREDLogger.h"
 #import "NSObject+Serialization.h"
 #import "PREDError.h"
+#import "NSData+gzip.h"
 
 NSString *kPREDDataPersistedNotification = @"com.qiniu.predem.persist";
 
@@ -136,8 +137,9 @@ NSString *kPREDDataPersistedNotification = @"com.qiniu.predem.persist";
             toSave = [NSString stringWithFormat:@"%@\n%@", toSave, [obj tabString]];
         }
     }];
+    NSData *compressedData = [[toSave dataUsingEncoding:NSUTF8StringEncoding] gzippedData];
     NSString *fileName = [NSString stringWithFormat:@"%f", [[NSDate date] timeIntervalSince1970]];
-    BOOL success = [[toSave dataUsingEncoding:NSUTF8StringEncoding] writeToFile:[NSString stringWithFormat:@"%@/%@", _httpDir, fileName] atomically:NO];
+    BOOL success = [compressedData writeToFile:[NSString stringWithFormat:@"%@/%@", _httpDir, fileName] atomically:NO];
     if (!success) {
         PREDLogError(@"write http monitor to file %@ failed", fileName);
     } else {

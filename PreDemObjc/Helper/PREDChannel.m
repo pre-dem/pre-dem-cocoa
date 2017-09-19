@@ -37,16 +37,16 @@
     [_httpMonitorModels addObject:model];
     if (_httpMonitorModels.count >= PREDDefaultMaxBatchSize) {
         [_persistence persistHttpMonitors:_httpMonitorModels];
+        [_httpMonitorModels removeAllObjects];
     }
-    [_httpMonitorModels removeAllObjects];
 }
 
 - (void)sinkNetDiag:(PREDNetDiagResult *)netDiag {
     [_netDiagResults addObject:netDiag];
     if (_netDiagResults.count >= PREDDefaultMaxBatchSize) {
         [_persistence persistNetDiagResults:_netDiagResults];
+        [_netDiagResults removeAllObjects];
     }
-    [_netDiagResults removeAllObjects];
 }
 
 - (void)sinkCrashMeta:(PREDCrashMeta *)crashMeta {

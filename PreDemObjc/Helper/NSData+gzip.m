@@ -7,10 +7,11 @@
 //
 
 #import <zlib.h>
+#import "NSData+gzip.h"
 
 static const NSUInteger ChunkSize = 16384;
 
-@implementation NSData (PREDGZIP)
+@implementation NSData (gzip)
 
 - (NSData *)gzippedDataWithCompressionLevel:(float)level
 {

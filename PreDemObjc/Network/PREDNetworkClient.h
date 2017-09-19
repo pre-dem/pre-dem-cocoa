@@ -22,7 +22,7 @@
       completion:(PREDNetworkCompletionBlock) completion;
 
 - (void) postPath:(NSString*) path
-       parameters:(id) params
+       parameters:(NSObject *) params
        completion:(PREDNetworkCompletionBlock) completion;
 
 - (void) postPath:(NSString*) path

@@ -14,7 +14,7 @@
 @implementation PREDCredential
 
 + (NSString *)authorize:(NSString*) data
-                appKey:(NSString*) key {
+                 appKey:(NSString*) key {
     NSString* realK = [key substringFromIndex:PREDAppIdLength];
     return [NSString stringWithFormat:@"DEMv1 %@", [self hmacSha1:data data:realK]];
 }

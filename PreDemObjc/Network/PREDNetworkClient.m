@@ -10,15 +10,15 @@
 #import "PREDLogger.h"
 #import "PREDCredential.h"
 #import "PREDManagerPrivate.h"
-
-#define PREDNetMaxRetryTimes    5
-#define PREDNetRetryInterval    30
+#import "PREDError.h"
+#import "NSObject+Serialization.h"
 
 static NSString* PRED_HTTPS_PREFIX = @"https://";
 static NSString* PRED_HTTP_PREFIX = @"http://";
 
 static NSString* pred_appendTime(NSString* path){
-    return [NSString stringWithFormat:@"%@?t=%lld", path, (int64_t)[[NSDate date] timeIntervalSince1970]];
+    NSString *format = [path rangeOfString:@"?"].location == NSNotFound ? @"%@?t=%lld" : @"%@&t=%lld";
+    return [NSString stringWithFormat:format, path, (int64_t)[[NSDate date] timeIntervalSince1970]];
 }
 
 @implementation PREDNetworkClient
@@ -34,93 +34,46 @@ static NSString* pred_appendTime(NSString* path){
     return self;
 }
 
-- (void)dealloc {
-    [self cancelOperationsWithPath:nil method:nil];
+- (void)getPath:(NSString *)path
+     parameters:(NSDictionary *)params
+     completion:(PREDNetworkCompletionBlock)completion {
+    NSString* url =  [NSString stringWithFormat:@"%@%@", _baseURL, path];
+    if (params.count) {
+        url = [url stringByAppendingFormat:@"?%@", [self queryStringFromParameters:params withEncoding:NSUTF8StringEncoding]];
+    }
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
+    [self sendRequest:request completion:completion];
 }
 
-- (void)getPath:(NSString *)path parameters:(NSDictionary *)params completion:(PREDNetworkCompletionBlock)completion {
-    [self getPath:path parameters:params completion:completion retried:0];
-}
-
-- (void)postPath:(NSString *)path parameters:(id)params completion:(PREDNetworkCompletionBlock)completion {
-    [self postPath:path parameters:params completion:completion retried:0];
+- (void)postPath:(NSString *)path
+      parameters:(NSObject *)params
+      completion:(PREDNetworkCompletionBlock)completion {
+    NSError *error;
+    NSData *data = [params toJsonWithError:&error];
+    if (error) {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            completion(nil, nil, error);
+        });
+        return;
+    }
+    [self postPath:path data:data headers:@{@"Content-type": @"application/json"} completion:completion];
 }
 
 - (void) postPath:(NSString*) path
              data:(NSData *) data
           headers:(NSDictionary *)headers
        completion:(PREDNetworkCompletionBlock) completion {
-    [self postPath:path data:data headers:headers completion:completion retried:0];
-}
-
-- (void)getPath:(NSString *)path parameters:(NSDictionary *)params completion:(PREDNetworkCompletionBlock)completion retried:(NSInteger)retried {
-    NSError *err;
-    NSURLRequest *request = [self requestWithMethod:@"GET" path:path parameters:params error:&err];
-    if (err) {
+    NSError *error;
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:path relativeToURL:_baseURL]];
+    [request setHTTPMethod:@"POST"];
+    [request setHTTPBody:data];
+    
+    if (error) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            completion(nil, nil, err);
+            completion(nil, nil, error);
         });
         return;
     }
-    __weak typeof(self) wSelf = self;
-    PREDHTTPOperation *op = [self operationWithURLRequest:request
-                                               completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
-                                                   if ((error || operation.response.statusCode >= 400) && retried < PREDNetMaxRetryTimes) {
-                                                       PREDLogWarn(@"%@ request failed for: %@ statusCode: %ld", request.URL.absoluteString, error, (long)operation.response.statusCode);
-                                                       dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(PREDNetRetryInterval * NSEC_PER_SEC)), dispatch_get_global_queue(0, DISPATCH_QUEUE_PRIORITY_BACKGROUND), ^{
-                                                           __strong typeof(wSelf) strongSelf = wSelf;
-                                                           [strongSelf getPath:path parameters:params completion:completion retried:retried + 1];
-                                                       });
-                                                   } else if (!error && operation.response.statusCode < 300) {
-                                                       PREDLogDebug(@"request for url %@ succeeded, response data: %@", request.URL.absoluteString, [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);                                                       completion(operation, data, error);
-                                                   } else {
-                                                       PREDLogDebug(@"request for url %@ faild", request.URL.absoluteString);
-                                                       completion(operation, data, error);
-                                                   }
-                                               }];
-    [self enqeueHTTPOperation:op];
-}
-
-- (void)postPath:(NSString *)path parameters:(id)params completion:(PREDNetworkCompletionBlock)completion retried:(NSInteger)retried {
-    NSError *err;
-    NSURLRequest *request = [self requestWithMethod:@"POST" path:path parameters:params error:&err];
-    if (err) {
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            completion(nil, nil, err);
-        });
-        return;
-    }
-    __weak typeof(self) wSelf = self;
-    PREDHTTPOperation *op = [self operationWithURLRequest:request
-                                               completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
-                                                   if ((error || operation.response.statusCode >= 400) && retried < PREDNetMaxRetryTimes) {
-                                                       PREDLogWarn(@"%@ request failed for: %@ statusCode: %ld", request.URL.absoluteString, error, (long)operation.response.statusCode);
-                                                       dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(PREDNetRetryInterval * NSEC_PER_SEC)), dispatch_get_global_queue(0, DISPATCH_QUEUE_PRIORITY_BACKGROUND), ^{
-                                                           __strong typeof(wSelf) strongSelf = wSelf;
-                                                           [strongSelf postPath:path parameters:params completion:completion retried:retried + 1];
-                                                       });
-                                                   } else if (!error && operation.response.statusCode < 300) {
-                                                       PREDLogDebug(@"request for url %@ succeeded, response data: %@", request.URL.absoluteString, [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);                                                       completion(operation, data, error);
-                                                   } else {
-                                                       PREDLogDebug(@"request for url %@ faild", request.URL.absoluteString);
-                                                       completion(operation, data, error);
-                                                   }
-                                               }];
-    [self enqeueHTTPOperation:op];
-}
-
-- (void) postPath:(NSString*) path
-             data:(NSData *) data
-          headers:(NSDictionary *)headers
-       completion:(PREDNetworkCompletionBlock) completion
-          retried:(NSInteger)retried {
-    NSString* url = [NSString stringWithFormat:@"%@%@", _baseURL, path];
-    NSURL *endpoint = [NSURL URLWithString:url];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:endpoint];
-    request.HTTPMethod = @"POST";
-    [NSURLProtocol setProperty:@YES
-                        forKey:@"PREDInternalRequest"
-                     inRequest:request];
     if (headers) {
         [headers enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
             NSAssert([key isKindOfClass:[NSString class]], @"headers can only be string-string pairs");
@@ -129,21 +82,17 @@ static NSString* pred_appendTime(NSString* path){
         }];
     }
     [request setHTTPBody:data];
-    __weak typeof(self) wSelf = self;
+    [self sendRequest:request completion:completion];
+}
+
+- (void)sendRequest:(NSMutableURLRequest *)request completion:(PREDNetworkCompletionBlock)completion {
+    [self authorizeRequest:request];
     PREDHTTPOperation *op = [self operationWithURLRequest:request
                                                completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
-                                                   if ((error || operation.response.statusCode >= 400) && retried < PREDNetMaxRetryTimes) {
-                                                       PREDLogWarn(@"%@ request failed for: %@ statusCode: %ld", request.URL.absoluteString, error, (long)operation.response.statusCode);
-                                                       dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(PREDNetRetryInterval * NSEC_PER_SEC)), dispatch_get_global_queue(0, DISPATCH_QUEUE_PRIORITY_BACKGROUND), ^{
-                                                           __strong typeof(wSelf) strongSelf = wSelf;
-                                                           [strongSelf postPath:path data:data headers:headers completion:completion];
-                                                       });
-                                                   } else if (!error && operation.response.statusCode < 300) {
-                                                       PREDLogDebug(@"request for url %@ succeeded, response data: %@", request.URL.absoluteString, [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);                                                       completion(operation, data, error);
-                                                   } else {
-                                                       PREDLogDebug(@"request for url %@ faild", request.URL.absoluteString);
-                                                       completion(operation, data, error);
+                                                   if (operation.response.statusCode >= 400) {
+                                                       error = [PREDError GenerateNSError:kPREDErrorCodeInternalError description:@"server returned an error status code: %d", operation.response.statusCode];
                                                    }
+                                                   completion(operation, data, error);
                                                }];
     [self enqeueHTTPOperation:op];
 }
@@ -152,86 +101,16 @@ static NSString* pred_appendTime(NSString* path){
     [self.operationQueue addOperation:operation];
 }
 
-- (NSUInteger) cancelOperationsWithPath:(NSString*) path
-                                 method:(NSString*) method {
-    NSUInteger cancelledOperations = 0;
-    for(PREDHTTPOperation *operation in self.operationQueue.operations) {
-        NSURLRequest *request = operation.URLRequest;
-        
-        BOOL matchedMethod = YES;
-        if(method && ![request.HTTPMethod isEqualToString:method]) {
-            matchedMethod = NO;
-        }
-        
-        BOOL matchedPath = YES;
-        if(path) {
-            //method is not interesting here, we' just creating it to get the URL
-            NSURL *url = [self requestWithMethod:@"GET" path:path parameters:nil error:nil].URL;
-            matchedPath = [request.URL isEqual:url];
-        }
-        
-        if(matchedPath && matchedMethod) {
-            ++cancelledOperations;
-            [operation cancel];
-        }
-    }
-    return cancelledOperations;
+- (PREDHTTPOperation*)operationWithURLRequest:(NSURLRequest*) request
+                                   completion:(PREDNetworkCompletionBlock) completion {
+    PREDHTTPOperation *operation = [PREDHTTPOperation operationWithRequest:request
+                                    ];
+    [operation setCompletion:completion];
+    
+    return operation;
 }
 
-- (NSMutableURLRequest *) requestWithMethod:(NSString*) method
-                                       path:(NSString *) path
-                                 parameters:(NSDictionary *)params
-                                      error:(NSError **)err {
-    NSParameterAssert(self.baseURL);
-    NSParameterAssert(method);
-    NSParameterAssert(params == nil || [method isEqualToString:@"POST"] || [method isEqualToString:@"GET"]);
-    path = path ? : @"";
-    path = pred_appendTime(path);
-    
-    NSString* url =  [NSString stringWithFormat:@"%@%@", _baseURL, path];
-    NSString* domainPath;
-    if ([url hasPrefix:PRED_HTTPS_PREFIX]) {
-        domainPath = [url substringFromIndex:[PRED_HTTPS_PREFIX length]];
-    } else if ([url hasPrefix:PRED_HTTP_PREFIX]){
-        domainPath =  [url substringFromIndex:[PRED_HTTP_PREFIX length]];
-    } else {
-        domainPath = url;
-    }
-    NSString* auth = [PREDCredential authorize:domainPath appKey:[[PREDManager sharedPREDManager] appKey]];
-    
-    NSURL *endpoint = [NSURL URLWithString:url];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:endpoint];
-    [request setValue:auth forHTTPHeaderField:@"Authorization"];
-    
-    request.HTTPMethod = method;
-    [NSURLProtocol setProperty:@YES
-                        forKey:@"PREDInternalRequest"
-                     inRequest:request];
-    
-    if (params) {
-        if ([method isEqualToString:@"GET"]) {
-            NSString *absoluteURLString = [endpoint absoluteString];
-            //either path already has parameters, or not
-            NSString *appenderFormat = [path rangeOfString:@"?"].location == NSNotFound ? @"?%@" : @"&%@";
-            
-            endpoint = [NSURL URLWithString:[absoluteURLString stringByAppendingFormat:appenderFormat,
-                                             [self.class queryStringFromParameters:params withEncoding:NSUTF8StringEncoding]]];
-            [request setURL:endpoint];
-        } else {
-            [request setValue:@"application/json" forHTTPHeaderField:@"Content-type"];
-            NSData *postBody;
-            postBody = [NSJSONSerialization dataWithJSONObject:params options:0 error:err];
-            if (*err != nil) {
-                return nil;
-            }
-            [request setHTTPBody:postBody];
-        }
-    }
-    
-    return request;
-}
-
-+ (NSString *) queryStringFromParameters:(NSDictionary *) params withEncoding:(NSStringEncoding) encoding {
+- (NSString *)queryStringFromParameters:(NSDictionary *) params withEncoding:(NSStringEncoding) encoding {
     NSMutableString *queryString = [NSMutableString new];
     [params enumerateKeysAndObjectsUsingBlock:^(NSString* key, NSString* value, BOOL *stop) {
         NSAssert([key isKindOfClass:[NSString class]], @"Query parameters can only be string-string pairs");
@@ -242,13 +121,21 @@ static NSString* pred_appendTime(NSString* path){
     return queryString;
 }
 
-- (PREDHTTPOperation*) operationWithURLRequest:(NSURLRequest*) request
-                                    completion:(PREDNetworkCompletionBlock) completion {
-    PREDHTTPOperation *operation = [PREDHTTPOperation operationWithRequest:request
-                                    ];
-    [operation setCompletion:completion];
-    
-    return operation;
+- (void)authorizeRequest:(NSMutableURLRequest *)request {
+    NSString *path = request.URL.path;
+    path = pred_appendTime(path);
+    NSString* url =  [NSString stringWithFormat:@"%@%@", _baseURL, path];
+    NSString* domainPath;
+    if ([url hasPrefix:PRED_HTTPS_PREFIX]) {
+        domainPath = [url substringFromIndex:[PRED_HTTPS_PREFIX length]];
+    } else if ([url hasPrefix:PRED_HTTP_PREFIX]){
+        domainPath =  [url substringFromIndex:[PRED_HTTP_PREFIX length]];
+    } else {
+        domainPath = url;
+    }
+    NSString* auth = [PREDCredential authorize:domainPath appKey:[[PREDManager sharedPREDManager] appKey]];
+    [request setValue:auth forHTTPHeaderField:@"Authorization"];
+    [request setURL:[NSURL URLWithString:url]];
 }
 
 @end
