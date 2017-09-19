@@ -158,8 +158,8 @@ static void runLoopObserverCallBack(CFRunLoopObserverRef observer, CFRunLoopActi
 }
 
 - (void)sendMetaInfoWithKey:(NSString *)key report:(PREPLCrashReport *)report {
-    unsigned long startTime = 0;
-    unsigned long lagTime = [report.systemInfo.timestamp timeIntervalSince1970] * PREDMillisecondPerSecond;
+    u_int64_t startTime = 0;
+    u_int64_t lagTime = [report.systemInfo.timestamp timeIntervalSince1970] * PREDMillisecondPerSecond;
     if ([report.processInfo respondsToSelector:@selector(processStartTime)]) {
         if (report.systemInfo.timestamp && report.processInfo.processStartTime) {
             startTime = [report.processInfo.processStartTime timeIntervalSince1970] * PREDMillisecondPerSecond;

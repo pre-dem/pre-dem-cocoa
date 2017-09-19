@@ -140,8 +140,8 @@
                       @"sdk_id": PREDHelper.UUID,
                       @"tag": PREDHelper.tag,
                       @"manufacturer": @"Apple",
-                      @"start_time": @((unsigned long)([_logStartTime timeIntervalSince1970] * PREDMillisecondPerSecond)),
-                      @"end_time": @((unsigned long)([[NSDate date] timeIntervalSince1970] * PREDMillisecondPerSecond)),
+                      @"start_time": @((u_int64_t)([_logStartTime timeIntervalSince1970] * PREDMillisecondPerSecond)),
+                      @"end_time": @((u_int64_t)([[NSDate date] timeIntervalSince1970] * PREDMillisecondPerSecond)),
                       @"log_tags": [self logTagsString] ?: @"",
                       @"error_count": @(_errorLogCount),
                       } mutableCopy];
