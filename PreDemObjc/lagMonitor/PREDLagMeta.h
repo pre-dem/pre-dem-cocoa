@@ -13,8 +13,8 @@
 
 @property (nonatomic, strong) NSString *report_uuid;
 @property (nonatomic, strong) NSString *lag_log_key;
-@property (nonatomic, assign) unsigned long start_time;
-@property (nonatomic, assign) unsigned long lag_time;
+@property (nonatomic, assign) uint64_t start_time;
+@property (nonatomic, assign) uint64_t lag_time;
 
 - (instancetype)initWithData:(NSData *)crashData
                        error:(NSError **)error;
