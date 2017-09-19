@@ -42,7 +42,17 @@
 
 - (void)sendAppInfo {
     NSString *filePath = [_persistence nextAppInfoPath];
-    NSMutableDictionary *meta = [_persistence parseFile:filePath];
+    if (!filePath) {
+        PREDLogVerbose(@"no app info to send");
+        return;
+    }
+    NSError *error;
+    NSMutableDictionary *meta = [_persistence getStoredMeta:filePath error:&error];
+    if (error) {
+        PREDLogError(@"get stored meta %@ error %@", filePath, error);
+        [_persistence purgeFile:filePath];
+        return;
+    }
     [_networkClient postPath:@"app-config/i" parameters:meta completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
         if (error) {
             PREDLogError(@"get config failed: %@", error);
@@ -60,7 +70,17 @@
 
 - (void)sendCrashData {
     NSString *filePath = [_persistence nextCrashMetaPath];
-    NSMutableDictionary *meta = [_persistence parseFile:filePath];
+    if (!filePath) {
+        PREDLogVerbose(@"no app info to send");
+        return;
+    }
+    NSError *error;
+    NSMutableDictionary *meta = [_persistence getStoredMeta:filePath error:&error];
+    if (error) {
+        PREDLogError(@"get stored meta %@ error %@", filePath, error);
+        [_persistence purgeFile:filePath];
+        return;
+    }
     NSString *logString = meta[@"crash_log_key"];
     NSString *md5 = [PREDHelper MD5:logString];
     NSDictionary *param = @{@"md5": md5};
@@ -104,7 +124,17 @@
 
 - (void)sendLagData {
     NSString *filePath = [_persistence nextLagMetaPath];
-    NSMutableDictionary *meta = [_persistence parseFile:filePath];
+    if (!filePath) {
+        PREDLogVerbose(@"no app info to send");
+        return;
+    }
+    NSError *error;
+    NSMutableDictionary *meta = [_persistence getStoredMeta:filePath error:&error];
+    if (error) {
+        PREDLogError(@"get stored meta %@ error %@", filePath, error);
+        [_persistence purgeFile:filePath];
+        return;
+    }
     NSString *logString = meta[@"lag_log_key"];
     NSString *md5 = [PREDHelper MD5:logString];
     NSDictionary *param = @{@"md5": md5};
@@ -148,7 +178,17 @@
 
 - (void)sendLogData {
     NSString *filePath = [_persistence nextLogMetaPath];
-    NSMutableDictionary *meta = [_persistence parseFile:filePath];
+    if (!filePath) {
+        PREDLogVerbose(@"no app info to send");
+        return;
+    }
+    NSError *error;
+    NSMutableDictionary *meta = [_persistence getStoredMeta:filePath error:&error];
+    if (error) {
+        PREDLogError(@"get stored meta %@ error %@", filePath, error);
+        [_persistence purgeFile:filePath];
+        return;
+    }
     NSString *logFilePath = meta[@"log_key"];
     NSData *logData = [NSData dataWithContentsOfFile:logFilePath];
     NSString *md5 = [PREDHelper MD5ForData:logData];
@@ -195,8 +235,18 @@
 
 - (void)sendHttpMonitor {
     NSString *filePath = [_persistence nextHttpMonitorPath];
+    if (!filePath) {
+        PREDLogVerbose(@"no app info to send");
+        return;
+    }
+    
+    NSData *data = [NSData dataWithContentsOfFile:filePath];
+    if (!data) {
+        PREDLogError(@"get stored data %@ error", filePath);
+        return;
+    }
     __weak typeof(self) wSelf = self;
-    [_networkClient postPath:@"http-stats/i" parameters:[NSData dataWithContentsOfFile:filePath] completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
+    [_networkClient postPath:@"http-stats/i" data:data headers:nil completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
         __strong typeof(wSelf) strongSelf = wSelf;
         if (!error) {
             [strongSelf->_persistence purgeFile:filePath];
@@ -209,8 +259,17 @@
 
 - (void)sendNetDiag {
     NSString *filePath = [_persistence nextNetDiagPath];
+    if (!filePath) {
+        PREDLogVerbose(@"no app info to send");
+        return;
+    }
+    NSData *data = [NSData dataWithContentsOfFile:filePath];
+    if (!data) {
+        PREDLogError(@"get stored data %@ error", filePath);
+        return;
+    }
     __weak typeof(self) wSelf = self;
-    [_networkClient postPath:@"net-diags/i" parameters:[NSData dataWithContentsOfFile:filePath] completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
+    [_networkClient postPath:@"net-diags/i" data:data headers:nil completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
         __strong typeof(wSelf) strongSelf = wSelf;
         if (!error) {
             [strongSelf->_persistence purgeFile:filePath];

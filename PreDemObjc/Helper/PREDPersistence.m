@@ -10,6 +10,7 @@
 #import "PREDHelper.h"
 #import "PREDLogger.h"
 #import "NSObject+Serialization.h"
+#import "PREDError.h"
 
 NSString *kPREDDataPersistedNotification = @"com.qiniu.predem.persist";
 
@@ -213,17 +214,13 @@ NSString *kPREDDataPersistedNotification = @"com.qiniu.predem.persist";
     }
 }
 
-- (NSMutableDictionary *)parseFile:(NSString *)filePath {
-    NSError *error;
+- (NSMutableDictionary *)getStoredMeta:(NSString *)filePath error:(NSError **)error {
     NSData *data = [NSData dataWithContentsOfFile:filePath];
     if (!data) {
-        PREDLogError(@"read crash meta file %@ error", filePath);
+        [PREDError GenerateNSError:kPREDErrorCodeInternalError description:@"read crash meta file %@ error", filePath];
         return nil;
     }
-    NSMutableDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
-    if (error) {
-        PREDLogError(@"read crash meta file %@ error %@", filePath, error);
-    }
+    NSMutableDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:error];
     return dic;
 }
 

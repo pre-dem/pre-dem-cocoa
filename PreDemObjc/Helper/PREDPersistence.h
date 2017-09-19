@@ -32,7 +32,7 @@ extern NSString *kPREDDataPersistedNotification;
 - (NSString *)nextHttpMonitorPath;
 - (NSString *)nextNetDiagPath;
 
-- (NSMutableDictionary *)parseFile:(NSString *)filePath;
+- (NSMutableDictionary *)getStoredMeta:(NSString *)filePath error:(NSError **)error;
 - (void)purgeFile:(NSString *)filePath;
 
 @end
