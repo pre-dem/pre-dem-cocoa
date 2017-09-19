@@ -47,7 +47,9 @@ static NSString * wrapString(NSString *st) {
     __block NSString *result;
     [modelArray enumerateObjectsUsingBlock:^(NSString *  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         if (0 == idx) {
-            result = [NSString stringWithFormat:@"%@", obj];
+            result = obj;
+        } else if (idx == modelArray.count - 1) {
+            result = [NSString stringWithFormat:@"%@\t%@\n", result, obj];
         } else {
             result = [NSString stringWithFormat:@"%@\t%@", result, obj];
         }

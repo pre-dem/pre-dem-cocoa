@@ -119,12 +119,7 @@
 }
 
 - (void)persistHttpMonitor:(PREDHTTPMonitorModel *)httpMonitor {
-    NSError *error;
-    NSData *data = [httpMonitor toJsonWithError:&error];
-    if (error) {
-        PREDLogError(@"jsonize http meta error: %@", error);
-        return;
-    }
+    NSData *data = [[httpMonitor tabString] dataUsingEncoding:NSUTF8StringEncoding];
     NSString *fileName = [NSString stringWithFormat:@"%f", [[NSDate date] timeIntervalSince1970]];
     BOOL success = [data writeToFile:[NSString stringWithFormat:@"%@/%@", _httpDir, fileName] atomically:NO];
     if (!success) {

@@ -11,6 +11,7 @@
 #import "PREDLogger.h"
 #import "QiniuSDK.h"
 #import "PREDConfigManager.h"
+#import "NSData+gzip.h"
 
 @implementation PREDSender {
     PREDPersistence *_persistence;
@@ -229,20 +230,23 @@
 }
 
 - (void)sendHttpMonitor {
-    NSString *filePath = [_persistence nextHttpMonitorPath];
-    if (!filePath) {
-        PREDLogVerbose(@"no app info to send");
+    NSArray<NSString *> *filePaths = [_persistence allHttpMonitorPaths];
+    if (!filePaths.count) {
         return;
     }
-    
-    NSData *data = [NSData dataWithContentsOfFile:filePath];
-    if (!data) {
-        PREDLogError(@"get stored data %@ error", filePath);
-        return;
-    }
+    __block NSMutableData *toSend;
+    [filePaths enumerateObjectsUsingBlock:^(NSString * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        NSData *data = [NSData dataWithContentsOfFile:obj];
+        if (!data.length) {
+            PREDLogError(@"get stored data %@ error", obj);
+            return;
+        }
+        [toSend appendData:data];
+    }];
+    NSData *compressedData = [toSend gzippedData];
     __weak typeof(self) wSelf = self;
     [_networkClient postPath:@"http-stats/i"
-                        data:data
+                        data:compressedData
                      headers:@{
                                @"Content-Type": @"application/x-gzip",
                                @"Content-Encoding": @"gzip",
@@ -250,7 +254,9 @@
                   completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
         __strong typeof(wSelf) strongSelf = wSelf;
         if (!error) {
-            [strongSelf->_persistence purgeFile:filePath];
+            [filePaths enumerateObjectsUsingBlock:^(NSString * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                [strongSelf->_persistence purgeFile:obj];
+            }];
             [strongSelf sendHttpMonitor];
         } else {
             PREDLogError(@"upload http monitor fail: %@", error);
