@@ -19,6 +19,14 @@
 #import <execinfo.h>
 #import <libkern/OSAtomic.h>
 
+#ifndef LIBCXXABI_NORETURN
+    #ifdef  _LIBCXXABI_NORETURN
+        #define LIBCXXABI_NORETURN _LIBCXXABI_NORETURN
+    #else
+        #define LIBCXXABI_NORETURN
+    #endif
+#endif
+
 typedef std::vector<PREDCrashUncaughtCXXExceptionHandler> PREDCrashUncaughtCXXExceptionHandlerList;
 typedef struct
 {
