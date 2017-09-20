@@ -64,6 +64,7 @@
         if (error) {
             PREDLogError(@"create dir %@ failed", _httpDir);
         }
+        PREDLogVerbose(@"cache directory:\n%@", PREDHelper.cacheDirectory);
     }
     return self;
 }

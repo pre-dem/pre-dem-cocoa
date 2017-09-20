@@ -108,10 +108,10 @@
              token: token
              complete:^(QNResponseInfo *info, NSString *key, NSDictionary *resp) {
                  if (resp) {
-                     PREDLogDebug(@"Sending crash reports");
                      [strongSelf->_networkClient postPath:@"crashes/i" parameters:meta completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
                          __strong typeof (wSelf) strongSelf = wSelf;
                          if (!error) {
+                             PREDLogDebug(@"Send crash report succeeded");
                              [strongSelf->_persistence purgeFile:filePath];
                              [strongSelf sendCrashData];
                          } else {
@@ -124,6 +124,8 @@
                  }
              }
              option:nil];
+        } else {
+            PREDLogError(@"parse crash upload token error: %@, data: %@", error, dic);
         }
     }];
 }
@@ -162,10 +164,10 @@
              token: token
              complete:^(QNResponseInfo *info, NSString *key, NSDictionary *resp) {
                  if (resp) {
-                     PREDLogDebug(@"Sending lag reports");
                      [strongSelf->_networkClient postPath:@"lag-monitor/i" parameters:meta completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
                          __strong typeof (wSelf) strongSelf = wSelf;
                          if (!error) {
+                             PREDLogDebug(@"Send lag report succeeded");
                              [strongSelf->_persistence purgeFile:filePath];
                              [strongSelf sendLagData];
                          } else {
@@ -178,6 +180,8 @@
                  }
              }
              option:nil];
+        } else {
+            PREDLogError(@"parse lag upload token error: %@, data: %@", error, dic);
         }
     }];
 }
@@ -218,10 +222,10 @@
              complete:^(QNResponseInfo *info, NSString *key, NSDictionary *resp) {
                  __strong typeof(wSelf) strongSelf = wSelf;
                  if (resp) {
-                     PREDLogDebug(@"Sending log reports");
                      [strongSelf->_networkClient postPath:@"log-capture/i" parameters:meta completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
                          __strong typeof (wSelf) strongSelf = wSelf;
                          if (!error) {
+                             PREDLogDebug(@"Send log report succeeded");
                              [strongSelf->_persistence purgeFile:filePath];
                              [strongSelf->_persistence purgeFile:logFilePath];
                              [strongSelf sendLagData];
@@ -235,6 +239,8 @@
                  }
              }
              option:nil];
+        } else {
+            PREDLogError(@"parse log upload token error: %@, data: %@", error, dic);
         }
     }];
 }
@@ -265,6 +271,7 @@
                   completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
                       __strong typeof(wSelf) strongSelf = wSelf;
                       if (!error) {
+                          PREDLogDebug(@"Send http monitor succeeded");
                           [strongSelf->_persistence purgeFiles:filePaths];
                           [strongSelf sendHttpMonitor];
                       } else {
@@ -288,6 +295,7 @@
     [_networkClient postPath:@"net-diags/i" data:data headers:nil completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
         __strong typeof(wSelf) strongSelf = wSelf;
         if (!error) {
+            PREDLogDebug(@"Send net diag succeeded");
             [strongSelf->_persistence purgeFile:filePath];
             [strongSelf sendNetDiag];
         } else {
@@ -326,6 +334,7 @@
     [_networkClient postPath:[NSString stringWithFormat:@"events/%@", eventName] data:toSend headers:nil completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
         __strong typeof(wSelf) strongSelf = wSelf;
         if (!error) {
+            PREDLogDebug(@"Send custom events succeeded");
             [strongSelf->_persistence purgeFile:filePath];
             [strongSelf sendNetDiag];
         } else {
