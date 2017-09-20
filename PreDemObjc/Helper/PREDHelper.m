@@ -459,7 +459,6 @@ NSString *base64String(NSData * data, unsigned long length) {
         return dic;
     }
     return [self getObjectData:obj];
-    
 }
 
 + (NSString *)MD5:(NSString *)mdStr {

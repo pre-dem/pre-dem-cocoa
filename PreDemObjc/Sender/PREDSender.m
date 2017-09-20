@@ -32,6 +32,7 @@
 }
 
 - (void)sendAllSavedData {
+    PREDLogVerbose(@"trying to send all saved messages");
     [self sendAppInfo];
     [self sendCrashData];
     [self sendLagData];
@@ -46,7 +47,6 @@
 - (void)sendAppInfo {
     NSString *filePath = [_persistence nextAppInfoPath];
     if (!filePath) {
-        PREDLogVerbose(@"no app info to send");
         return;
     }
     NSError *error;
@@ -77,7 +77,6 @@
 - (void)sendCrashData {
     NSString *filePath = [_persistence nextCrashMetaPath];
     if (!filePath) {
-        PREDLogVerbose(@"no crash meta to send");
         return;
     }
     NSError *error;
@@ -133,7 +132,6 @@
 - (void)sendLagData {
     NSString *filePath = [_persistence nextLagMetaPath];
     if (!filePath) {
-        PREDLogVerbose(@"no lag meta to send");
         return;
     }
     NSError *error;
@@ -189,7 +187,6 @@
 - (void)sendLogData {
     NSString *filePath = [_persistence nextLogMetaPath];
     if (!filePath) {
-        PREDLogVerbose(@"no log meta to send");
         return;
     }
     NSError *error;
@@ -248,7 +245,6 @@
 - (void)sendHttpMonitor {
     NSArray<NSString *> *filePaths = [_persistence allHttpMonitorPaths];
     if (!filePaths.count) {
-        PREDLogVerbose(@"no http monitor to send");
         return;
     }
     __block NSMutableData *toSend = [NSMutableData data];
@@ -283,7 +279,6 @@
 - (void)sendNetDiag {
     NSString *filePath = [_persistence nextNetDiagPath];
     if (!filePath) {
-        PREDLogVerbose(@"no net diag to send");
         return;
     }
     NSData *data = [NSData dataWithContentsOfFile:filePath];
@@ -307,7 +302,6 @@
 - (void)sendCustomEvents {
     NSString *filePath = [_persistence nextCustomEventsPath];
     if (!filePath) {
-        PREDLogVerbose(@"no custom events to send");
         return;
     }
     NSError *error;
