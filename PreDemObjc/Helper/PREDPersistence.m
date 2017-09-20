@@ -185,7 +185,7 @@
     }
 }
 
-- (NSArray *)allHttpMonitorPath {
+- (NSArray *)allHttpMonitorPaths {
     return [_fileManager enumeratorAtPath:_httpDir].allObjects;
 }
 
@@ -214,6 +214,16 @@
     if (error) {
         PREDLogError(@"purge crash meta file %@ error %@", filePath, error);
     }
+}
+
+- (void)purgeFiles:(NSArray<NSString *> *)filePaths {
+    __block NSError *error;
+    [filePaths enumerateObjectsUsingBlock:^(NSString * _Nonnull filePath, NSUInteger idx, BOOL * _Nonnull stop) {
+        [_fileManager removeItemAtPath:filePath error:&error];
+        if (error) {
+            PREDLogError(@"purge crash meta file %@ error %@", filePath, error);
+        }
+    }];
 }
 
 @end

@@ -52,7 +52,7 @@
     [[NSUserDefaults standardUserDefaults] setObject:_textField.text forKey:kPreviousAppId];
 #ifdef DEBUG
     [PREDManager startWithAppKey:_textField.text
-                   serviceDomain:@"http://localhost:8080"
+                   serviceDomain:@"http://hriygkee.bq.cloudappl.com"
                            error:nil];
     PREDManager.tag = @"userid_debug";
 #else

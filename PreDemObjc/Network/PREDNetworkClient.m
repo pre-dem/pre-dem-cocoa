@@ -16,9 +16,9 @@
 static NSString* PRED_HTTPS_PREFIX = @"https://";
 static NSString* PRED_HTTP_PREFIX = @"http://";
 
-static NSString* pred_appendTime(NSString* path){
-    NSString *format = [path rangeOfString:@"?"].location == NSNotFound ? @"%@?t=%lld" : @"%@&t=%lld";
-    return [NSString stringWithFormat:format, path, (int64_t)[[NSDate date] timeIntervalSince1970]];
+static NSString* pred_appendTime(NSString* url){
+    NSString *format = [url rangeOfString:@"?"].location == NSNotFound ? @"%@?t=%lld" : @"%@&t=%lld";
+    return [NSString stringWithFormat:format, url, (int64_t)[[NSDate date] timeIntervalSince1970]];
 }
 
 @implementation PREDNetworkClient
@@ -86,6 +86,9 @@ static NSString* pred_appendTime(NSString* path){
 }
 
 - (void)sendRequest:(NSMutableURLRequest *)request completion:(PREDNetworkCompletionBlock)completion {
+    [NSURLProtocol setProperty:@YES
+                        forKey:@"PREDInternalRequest"
+                     inRequest:request];
     [self authorizeRequest:request];
     PREDHTTPOperation *op = [self operationWithURLRequest:request
                                                completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
@@ -122,10 +125,9 @@ static NSString* pred_appendTime(NSString* path){
 }
 
 - (void)authorizeRequest:(NSMutableURLRequest *)request {
-    NSString *path = request.URL.path;
-    path = pred_appendTime(path);
-    NSString* url =  [NSString stringWithFormat:@"%@%@", _baseURL, path];
-    NSString* domainPath;
+    NSString *url = request.URL.absoluteString;
+    url = pred_appendTime(url);
+    NSString *domainPath;
     if ([url hasPrefix:PRED_HTTPS_PREFIX]) {
         domainPath = [url substringFromIndex:[PRED_HTTPS_PREFIX length]];
     } else if ([url hasPrefix:PRED_HTTP_PREFIX]){

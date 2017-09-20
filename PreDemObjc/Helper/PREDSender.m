@@ -13,6 +13,8 @@
 #import "PREDConfigManager.h"
 #import "NSData+gzip.h"
 
+#define PREDSendInterval    60
+
 @implementation PREDSender {
     PREDPersistence *_persistence;
     PREDNetworkClient *_networkClient;
@@ -29,6 +31,7 @@
 }
 
 - (void)sendAllSavedData {
+    [self sendAppInfo];
     [self sendCrashData];
     [self sendLagData];
     [self sendLogData];
@@ -55,6 +58,7 @@
         } else {
             NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
             if ([dic respondsToSelector:@selector(objectForKey:)]) {
+                PREDLogVerbose(@"got config:\n%@", dic);
                 [[NSNotificationCenter defaultCenter] postNotificationName:kPREDConfigRefreshedNotification object:self userInfo:@{kPREDConfigRefreshedNotificationConfigKey: dic}];
             } else {
                 PREDLogError(@"config received from server has a wrong type");
@@ -67,7 +71,7 @@
 - (void)sendCrashData {
     NSString *filePath = [_persistence nextCrashMetaPath];
     if (!filePath) {
-        PREDLogVerbose(@"no app info to send");
+        PREDLogVerbose(@"no crash meta to send");
         return;
     }
     NSError *error;
@@ -121,7 +125,7 @@
 - (void)sendLagData {
     NSString *filePath = [_persistence nextLagMetaPath];
     if (!filePath) {
-        PREDLogVerbose(@"no app info to send");
+        PREDLogVerbose(@"no lag meta to send");
         return;
     }
     NSError *error;
@@ -175,7 +179,7 @@
 - (void)sendLogData {
     NSString *filePath = [_persistence nextLogMetaPath];
     if (!filePath) {
-        PREDLogVerbose(@"no app info to send");
+        PREDLogVerbose(@"no log meta to send");
         return;
     }
     NSError *error;
@@ -232,6 +236,7 @@
 - (void)sendHttpMonitor {
     NSArray<NSString *> *filePaths = [_persistence allHttpMonitorPaths];
     if (!filePaths.count) {
+        PREDLogVerbose(@"no http monitor to send");
         return;
     }
     __block NSMutableData *toSend;
@@ -252,22 +257,20 @@
                                @"Content-Encoding": @"gzip",
                                }
                   completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
-        __strong typeof(wSelf) strongSelf = wSelf;
-        if (!error) {
-            [filePaths enumerateObjectsUsingBlock:^(NSString * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                [strongSelf->_persistence purgeFile:obj];
-            }];
-            [strongSelf sendHttpMonitor];
-        } else {
-            PREDLogError(@"upload http monitor fail: %@", error);
-        }
-    }];
+                      __strong typeof(wSelf) strongSelf = wSelf;
+                      if (!error) {
+                          [strongSelf->_persistence purgeFiles:filePaths];
+                          [strongSelf sendHttpMonitor];
+                      } else {
+                          PREDLogError(@"upload http monitor fail: %@", error);
+                      }
+                  }];
 }
 
 - (void)sendNetDiag {
     NSString *filePath = [_persistence nextNetDiagPath];
     if (!filePath) {
-        PREDLogVerbose(@"no app info to send");
+        PREDLogVerbose(@"no net diag to send");
         return;
     }
     NSData *data = [NSData dataWithContentsOfFile:filePath];
