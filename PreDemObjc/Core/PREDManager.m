@@ -207,7 +207,7 @@ static NSString* app_id(NSString* appKey){
     if (self.isHttpMonitorEnabled) {
         PREDLogDebug(@"Starting HttpManager");
         
-        [PREDURLProtocol enableHTTPDem];
+        [PREDURLProtocol enableHTTPMonitor];
     }
     
     if (self.isLagMonitorEnabled) {
@@ -237,9 +237,9 @@ static NSString* app_id(NSString* appKey){
     }
     _enableHttpMonitor = enableHttpMonitor;
     if (enableHttpMonitor) {
-        [PREDURLProtocol enableHTTPDem];
+        [PREDURLProtocol enableHTTPMonitor];
     } else {
-        [PREDURLProtocol disableHTTPDem];
+        [PREDURLProtocol disableHTTMonitor];
     }
 }
 

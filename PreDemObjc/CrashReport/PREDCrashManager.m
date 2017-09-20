@@ -80,7 +80,6 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
     if (self.isOnDeviceSymbolicationEnabled) {
         symbolicationStrategy = PLCrashReporterSymbolicationStrategyAll;
     }
-    
     PREPLCrashReporterConfig *config = [[PREPLCrashReporterConfig alloc] initWithSignalHandlerType: signalHandlerType symbolicationStrategy: symbolicationStrategy];
     _plCrashReporter = [[PREPLCrashReporter alloc] initWithConfiguration: config];
     

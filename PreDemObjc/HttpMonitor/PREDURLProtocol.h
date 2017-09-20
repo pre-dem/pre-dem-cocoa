@@ -13,7 +13,7 @@
 
 + (void)setPersistence:(PREDPersistence *)persistence;
 
-+ (void)enableHTTPDem;
-+ (void)disableHTTPDem;
++ (void)enableHTTPMonitor;
++ (void)disableHTTMonitor;
 
 @end
