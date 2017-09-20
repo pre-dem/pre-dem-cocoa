@@ -35,6 +35,7 @@
 
 - (NSMutableDictionary *)getStoredMeta:(NSString *)filePath error:(NSError **)error;
 - (void)purgeFile:(NSString *)filePath;
+- (void)purgeAllAppInfo;
 - (void)purgeFiles:(NSArray<NSString *> *)filePaths;
 
 @end

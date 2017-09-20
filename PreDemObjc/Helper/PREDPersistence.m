@@ -205,7 +205,13 @@
 }
 
 - (NSArray *)allHttpMonitorPaths {
-    return [_fileManager enumeratorAtPath:_httpDir].allObjects;
+    NSMutableArray *result = [NSMutableArray array];
+    for (NSString *fileName in [_fileManager enumeratorAtPath:_httpDir]) {
+        if (![fileName hasPrefix:@"."]) {
+            [result addObject:[NSString stringWithFormat:@"%@/%@", _httpDir, fileName]];
+        }
+    }
+    return result;
 }
 
 - (NSString *)nextNetDiagPath {
@@ -248,6 +254,16 @@
     }
 }
 
+- (void)purgeAllAppInfo {
+    NSError *error;
+    for (NSString *fileName in [_fileManager enumeratorAtPath:_appInfoDir]) {
+        NSString *filePath = [NSString stringWithFormat:@"%@/%@", _appInfoDir, fileName];
+        [_fileManager removeItemAtPath:filePath error:&error];
+        if (error) {
+            PREDLogError(@"purge crash meta file %@ error %@", filePath, error);
+        }
+    }
+}
 - (void)purgeFiles:(NSArray<NSString *> *)filePaths {
     __block NSError *error;
     [filePaths enumerateObjectsUsingBlock:^(NSString * _Nonnull filePath, NSUInteger idx, BOOL * _Nonnull stop) {

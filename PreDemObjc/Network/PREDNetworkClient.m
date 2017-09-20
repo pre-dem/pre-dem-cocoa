@@ -93,7 +93,7 @@ static NSString* pred_appendTime(NSString* url){
     PREDHTTPOperation *op = [self operationWithURLRequest:request
                                                completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
                                                    if (operation.response.statusCode >= 400) {
-                                                       error = [PREDError GenerateNSError:kPREDErrorCodeInternalError description:@"server returned an error status code: %d", operation.response.statusCode];
+                                                       error = [PREDError GenerateNSError:kPREDErrorCodeInternalError description:@"server returned an error status code: %d, body: %@", operation.response.statusCode, [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]];
                                                    }
                                                    completion(operation, data, error);
                                                }];

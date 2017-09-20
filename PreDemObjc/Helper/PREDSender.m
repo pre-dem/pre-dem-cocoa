@@ -38,6 +38,9 @@
     [self sendLogData];
     [self sendHttpMonitor];
     [self sendNetDiag];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(PREDSendInterval * NSEC_PER_SEC)), dispatch_get_global_queue(0, DISPATCH_QUEUE_PRIORITY_DEFAULT), ^{
+        [self sendAllSavedData];
+    });
 }
 
 - (void)sendAppInfo {
@@ -53,7 +56,9 @@
         [_persistence purgeFile:filePath];
         return;
     }
+    __weak typeof(self) wSelf = self;
     [_networkClient postPath:@"app-config/i" parameters:meta completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
+        __strong typeof(wSelf) strongSelf = wSelf;
         if (error) {
             PREDLogError(@"get config failed: %@", error);
         } else {
@@ -62,11 +67,11 @@
                 PREDLogVerbose(@"got config:\n%@", dic);
                 [[NSNotificationCenter defaultCenter] postNotificationName:kPREDConfigRefreshedNotification object:self userInfo:@{kPREDConfigRefreshedNotificationConfigKey: dic}];
             } else {
-                PREDLogError(@"config received from server has a wrong type");
+                PREDLogError(@"config received from server has a wrong type: %@", dic);
             }
+            [strongSelf->_persistence purgeAllAppInfo];
         }
     }];
-    
 }
 
 - (void)sendCrashData {
@@ -240,7 +245,7 @@
         PREDLogVerbose(@"no http monitor to send");
         return;
     }
-    __block NSMutableData *toSend;
+    __block NSMutableData *toSend = [NSMutableData data];
     [filePaths enumerateObjectsUsingBlock:^(NSString * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         NSData *data = [NSData dataWithContentsOfFile:obj];
         if (!data.length) {
