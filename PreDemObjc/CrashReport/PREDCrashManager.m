@@ -72,41 +72,38 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
  *	 Main startup sequence initializing PLCrashReporter if it wasn't disabled
  */
 - (void)startManager {
-    static dispatch_once_t plcrPredicate;
-    dispatch_once(&plcrPredicate, ^{
-        /* Configure our reporter */
+    /* Configure our reporter */
+    
+    PLCrashReporterSignalHandlerType signalHandlerType = PLCrashReporterSignalHandlerTypeBSD;
+    
+    PLCrashReporterSymbolicationStrategy symbolicationStrategy = PLCrashReporterSymbolicationStrategyNone;
+    if (self.isOnDeviceSymbolicationEnabled) {
+        symbolicationStrategy = PLCrashReporterSymbolicationStrategyAll;
+    }
+    
+    PREPLCrashReporterConfig *config = [[PREPLCrashReporterConfig alloc] initWithSignalHandlerType: signalHandlerType symbolicationStrategy: symbolicationStrategy];
+    _plCrashReporter = [[PREPLCrashReporter alloc] initWithConfiguration: config];
+    
+    // Check if we previously crashed
+    
+    [self handleCrashReport];
+    
+    
+    if (PREDHelper.isDebuggerAttached) {
+        PREDLogWarn(@"Detecting crashes is NOT enabled due to running the app with a debugger attached.");
+    } else {
+        // PLCrashReporter may only be initialized once. So make sure the developer
+        // can't break this
+        NSError *error = NULL;
         
-        PLCrashReporterSignalHandlerType signalHandlerType = PLCrashReporterSignalHandlerTypeBSD;
-        
-        PLCrashReporterSymbolicationStrategy symbolicationStrategy = PLCrashReporterSymbolicationStrategyNone;
-        if (self.isOnDeviceSymbolicationEnabled) {
-            symbolicationStrategy = PLCrashReporterSymbolicationStrategyAll;
+        // Enable the Crash Reporter
+        if (![_plCrashReporter enableCrashReporterAndReturnError: &error]) {
+            PREDLogError(@"Could not enable crash reporter: %@", [error localizedDescription]);
         }
         
-        PREPLCrashReporterConfig *config = [[PREPLCrashReporterConfig alloc] initWithSignalHandlerType: signalHandlerType symbolicationStrategy: symbolicationStrategy];
-        _plCrashReporter = [[PREPLCrashReporter alloc] initWithConfiguration: config];
-        
-        // Check if we previously crashed
-        
-        [self handleCrashReport];
-        
-        
-        if (PREDHelper.isDebuggerAttached) {
-            PREDLogWarn(@"Detecting crashes is NOT enabled due to running the app with a debugger attached.");
-        } else {
-            // PLCrashReporter may only be initialized once. So make sure the developer
-            // can't break this
-            NSError *error = NULL;
-            
-            // Enable the Crash Reporter
-            if (![_plCrashReporter enableCrashReporterAndReturnError: &error]) {
-                PREDLogError(@"Could not enable crash reporter: %@", [error localizedDescription]);
-            }
-            
-            // Add the C++ uncaught exception handler, which is currently not handled by PLCrashReporter internally
-            [PREDCrashUncaughtCXXExceptionHandlerManager addCXXExceptionHandler:uncaught_cxx_exception_handler];
-        }
-    });
+        // Add the C++ uncaught exception handler, which is currently not handled by PLCrashReporter internally
+        [PREDCrashUncaughtCXXExceptionHandlerManager addCXXExceptionHandler:uncaught_cxx_exception_handler];
+    }
 }
 
 - (void)stopManager {

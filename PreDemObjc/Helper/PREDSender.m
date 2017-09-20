@@ -12,6 +12,7 @@
 #import "QiniuSDK.h"
 #import "PREDConfigManager.h"
 #import "NSData+gzip.h"
+#import "NSObject+Serialization.h"
 
 #define PREDSendInterval    60
 
@@ -290,5 +291,42 @@
     }];
 }
 
+- (void)sendCustomEvents {
+    NSString *filePath = [_persistence nextCustomEventsPath];
+    if (!filePath) {
+        PREDLogVerbose(@"no custom events to send");
+        return;
+    }
+    NSError *error;
+    NSDictionary *dic = [_persistence getStoredMeta:filePath error:&error];
+    if (error) {
+        PREDLogError(@"get stored data from %@ failed %@", filePath, error);
+        [self->_persistence purgeFile:filePath];
+        return;
+    }
+    NSString *eventName = dic[@"eventName"];
+    NSArray *events = dic[@"events"];
+    if (!eventName.length || events.count) {
+        PREDLogError(@"get custom events %@ error, %@", filePath, dic);
+        [self->_persistence purgeFile:filePath];
+        return;
+    }
+    NSData *toSend = [events toJsonWithError:&error];
+    if (error) {
+        PREDLogError(@"jsonize events %@ error %@", events, error);
+        [self->_persistence purgeFile:filePath];
+        return;
+    }
+    __weak typeof(self) wSelf = self;
+    [_networkClient postPath:[NSString stringWithFormat:@"events/%@", eventName] data:toSend headers:nil completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
+        __strong typeof(wSelf) strongSelf = wSelf;
+        if (!error) {
+            [strongSelf->_persistence purgeFile:filePath];
+            [strongSelf sendNetDiag];
+        } else {
+            PREDLogError(@"send custom events error: %@", error);
+        }
+    }];
+}
 
 @end

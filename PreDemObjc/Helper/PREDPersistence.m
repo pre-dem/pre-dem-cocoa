@@ -20,6 +20,7 @@
     NSString *_logDir;
     NSString *_httpDir;
     NSString *_netDir;
+    NSString *_customDir;
     NSFileManager *_fileManager;
 }
 
@@ -32,6 +33,7 @@
         _logDir = [NSString stringWithFormat:@"%@/%@", PREDHelper.cacheDirectory, @"log"];
         _httpDir = [NSString stringWithFormat:@"%@/%@", PREDHelper.cacheDirectory, @"http"];
         _netDir = [NSString stringWithFormat:@"%@/%@", PREDHelper.cacheDirectory, @"net"];
+        _customDir = [NSString stringWithFormat:@"%@/%@", PREDHelper.cacheDirectory, @"custom"];
 
         NSError *error;
         [_fileManager createDirectoryAtPath:_appInfoDir withIntermediateDirectories:YES attributes:nil error:&error];
@@ -55,6 +57,10 @@
             PREDLogError(@"create dir %@ failed", _httpDir);
         }
         [_fileManager createDirectoryAtPath:_netDir withIntermediateDirectories:YES attributes:nil error:&error];
+        if (error) {
+            PREDLogError(@"create dir %@ failed", _httpDir);
+        }
+        [_fileManager createDirectoryAtPath:_customDir withIntermediateDirectories:YES attributes:nil error:&error];
         if (error) {
             PREDLogError(@"create dir %@ failed", _httpDir);
         }
@@ -140,6 +146,19 @@
     }
 }
 
+- (void)persistCustomEventWithName:(NSString *)eventName events:(NSArray<NSDictionary<NSString *, NSString *> *>*)events {
+    NSError *error;
+    NSData *toSave = [@{@"eventName": eventName, @"events": events} toJsonWithError:&error];
+    if (error) {
+        PREDLogError(@"jsonize custom events error: %@", error);
+    }
+    NSString *fileName = [NSString stringWithFormat:@"%f", [[NSDate date] timeIntervalSince1970]];
+    BOOL success = [toSave writeToFile:[NSString stringWithFormat:@"%@/%@", _customDir, fileName] atomically:NO];
+    if (!success) {
+        PREDLogError(@"write custom events to file %@ failed", fileName);
+    }
+}
+
 - (NSString *)nextAppInfoPath {
     NSArray *files = [_fileManager enumeratorAtPath:_appInfoDir].allObjects;
     if (files.count == 0) {
@@ -198,13 +217,26 @@
     }
 }
 
+- (NSString *)nextCustomEventsPath {
+    NSArray *files = [_fileManager enumeratorAtPath:_customDir].allObjects;
+    if (files.count == 0) {
+        return nil;
+    } else {
+        return [NSString stringWithFormat:@"%@/%@", _customDir, files[0]];
+    }
+}
+
 - (NSMutableDictionary *)getStoredMeta:(NSString *)filePath error:(NSError **)error {
     NSData *data = [NSData dataWithContentsOfFile:filePath];
     if (!data) {
-        [PREDError GenerateNSError:kPREDErrorCodeInternalError description:@"read crash meta file %@ error", filePath];
+        [PREDError GenerateNSError:kPREDErrorCodeInternalError description:@"read file %@ error", filePath];
         return nil;
     }
     NSMutableDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:error];
+    if (!error && ![dic respondsToSelector:@selector(valueForKey:)]) {
+        *error = [PREDError GenerateNSError:kPREDErrorCodeInternalError description:@"wrong json object type %@", NSStringFromClass(dic.class)];
+        return nil;
+    }
     return dic;
 }
 

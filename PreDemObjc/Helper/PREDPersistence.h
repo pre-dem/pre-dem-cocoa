@@ -22,6 +22,7 @@
 - (void)persistLogMeta:(PREDLogMeta *)logMeta;
 - (void)persistHttpMonitor:(PREDHTTPMonitorModel *)httpMonitor;
 - (void)persistNetDiagResult:(PREDNetDiagResult *)netDiagResult;
+- (void)persistCustomEventWithName:(NSString *)eventName events:(NSArray<NSDictionary<NSString *, NSString *> *>*)events;
 
 - (NSString *)nextAppInfoPath;
 - (NSString *)nextCrashMetaPath;
@@ -30,6 +31,7 @@
 - (NSString *)nextHttpMonitorPath;
 - (NSArray *)allHttpMonitorPaths;
 - (NSString *)nextNetDiagPath;
+- (NSString *)nextCustomEventsPath;
 
 - (NSMutableDictionary *)getStoredMeta:(NSString *)filePath error:(NSError **)error;
 - (void)purgeFile:(NSString *)filePath;
