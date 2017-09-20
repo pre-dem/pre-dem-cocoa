@@ -76,7 +76,7 @@
         PREDLogError(@"jsonize app info error: %@", error);
         return;
     }
-    NSString *fileName = [NSString stringWithFormat:@"%f", [[NSDate date] timeIntervalSince1970]];
+    NSString *fileName = [NSString stringWithFormat:@"%f-%u", [[NSDate date] timeIntervalSince1970], arc4random()];
     BOOL success = [data writeToFile:[NSString stringWithFormat:@"%@/%@", _appInfoDir, fileName] atomically:NO];
     if (!success) {
         PREDLogError(@"write app info to file %@ failed", fileName);
@@ -90,7 +90,7 @@
         PREDLogError(@"jsonize crash meta error: %@", error);
         return;
     }
-    NSString *fileName = [NSString stringWithFormat:@"%f", [[NSDate date] timeIntervalSince1970]];
+    NSString *fileName = [NSString stringWithFormat:@"%f-%u", [[NSDate date] timeIntervalSince1970], arc4random()];
     BOOL success = [data writeToFile:[NSString stringWithFormat:@"%@/%@", _crashDir, fileName] atomically:NO];
     if (!success) {
         PREDLogError(@"write crash meta to file %@ failed", fileName);
@@ -104,7 +104,7 @@
         PREDLogError(@"jsonize lag meta error: %@", error);
         return;
     }
-    NSString *fileName = [NSString stringWithFormat:@"%f", [[NSDate date] timeIntervalSince1970]];
+    NSString *fileName = [NSString stringWithFormat:@"%f-%u", [[NSDate date] timeIntervalSince1970], arc4random()];
     BOOL success = [data writeToFile:[NSString stringWithFormat:@"%@/%@", _lagDir, fileName] atomically:NO];
     if (!success) {
         PREDLogError(@"write lag meta to file %@ failed", fileName);
@@ -118,7 +118,7 @@
         PREDLogError(@"jsonize log meta error: %@", error);
         return;
     }
-    NSString *fileName = [NSString stringWithFormat:@"%f", [[NSDate date] timeIntervalSince1970]];
+    NSString *fileName = [NSString stringWithFormat:@"%f-%u", [[NSDate date] timeIntervalSince1970], arc4random()];
     BOOL success = [data writeToFile:[NSString stringWithFormat:@"%@/%@", _logDir, fileName] atomically:NO];
     if (!success) {
         PREDLogError(@"write log meta to file %@ failed", fileName);
@@ -127,7 +127,7 @@
 
 - (void)persistHttpMonitor:(PREDHTTPMonitorModel *)httpMonitor {
     NSData *data = [[httpMonitor tabString] dataUsingEncoding:NSUTF8StringEncoding];
-    NSString *fileName = [NSString stringWithFormat:@"%f", [[NSDate date] timeIntervalSince1970]];
+    NSString *fileName = [NSString stringWithFormat:@"%f-%u", [[NSDate date] timeIntervalSince1970], arc4random()];
     BOOL success = [data writeToFile:[NSString stringWithFormat:@"%@/%@", _httpDir, fileName] atomically:NO];
     if (!success) {
         PREDLogError(@"write http meta to file %@ failed", fileName);
@@ -140,7 +140,7 @@
     if (error) {
         PREDLogError(@"jsonize net diag result error: %@", error);
     }
-    NSString *fileName = [NSString stringWithFormat:@"%f", [[NSDate date] timeIntervalSince1970]];
+    NSString *fileName = [NSString stringWithFormat:@"%f-%u", [[NSDate date] timeIntervalSince1970], arc4random()];
     BOOL success = [toSave writeToFile:[NSString stringWithFormat:@"%@/%@", _netDir, fileName] atomically:NO];
     if (!success) {
         PREDLogError(@"write net diag to file %@ failed", fileName);
@@ -153,7 +153,7 @@
     if (error) {
         PREDLogError(@"jsonize custom events error: %@", error);
     }
-    NSString *fileName = [NSString stringWithFormat:@"%f", [[NSDate date] timeIntervalSince1970]];
+    NSString *fileName = [NSString stringWithFormat:@"%f-%u", [[NSDate date] timeIntervalSince1970], arc4random()];
     BOOL success = [toSave writeToFile:[NSString stringWithFormat:@"%@/%@", _customDir, fileName] atomically:NO];
     if (!success) {
         PREDLogError(@"write custom events to file %@ failed", fileName);

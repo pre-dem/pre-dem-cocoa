@@ -90,26 +90,20 @@ static NSString* pred_appendTime(NSString* url){
                         forKey:@"PREDInternalRequest"
                      inRequest:request];
     [self authorizeRequest:request];
-    PREDHTTPOperation *op = [self operationWithURLRequest:request
+    PREDHTTPOperation *operation = [self operationWithURLRequest:request
                                                completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
                                                    if (operation.response.statusCode >= 400) {
                                                        error = [PREDError GenerateNSError:kPREDErrorCodeInternalError description:@"server returned an error status code: %d, body: %@", operation.response.statusCode, [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]];
                                                    }
                                                    completion(operation, data, error);
                                                }];
-    [self enqeueHTTPOperation:op];
-}
-
-- (void) enqeueHTTPOperation:(PREDHTTPOperation *) operation {
     [self.operationQueue addOperation:operation];
 }
 
 - (PREDHTTPOperation*)operationWithURLRequest:(NSURLRequest*) request
                                    completion:(PREDNetworkCompletionBlock) completion {
-    PREDHTTPOperation *operation = [PREDHTTPOperation operationWithRequest:request
-                                    ];
+    PREDHTTPOperation *operation = [PREDHTTPOperation operationWithRequest:request];
     [operation setCompletion:completion];
-    
     return operation;
 }
 

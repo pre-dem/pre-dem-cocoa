@@ -20,7 +20,7 @@
 #import "PREDLogger.h"
 
 static NSString *const kPREDUtcDateFormatter = @"utcDateFormatter";
-static NSString *const kPREDDirectory = @"com.qiniu.predem";
+static NSString *const kPREDDirectoryName = @"com.qiniu.predem";
 
 __strong static NSString *_tag = @"";
 
@@ -30,28 +30,6 @@ __strong static NSString *_tag = @"";
     id nsurlsessionClass = NSClassFromString(@"NSURLSessionUploadTask");
     BOOL isUrlSessionSupported = (nsurlsessionClass && !self.isRunningInAppExtension);
     return isUrlSessionSupported;
-}
-
-+ (NSString *)settingsDir {
-    static NSString *settingsDir = nil;
-    static dispatch_once_t predSettingsDir;
-    
-    dispatch_once(&predSettingsDir, ^{
-        NSFileManager *fileManager = [[NSFileManager alloc] init];
-        
-        // temporary directory for crashes grabbed from PLCrashReporter
-        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-        settingsDir = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"com.qiniu.predem"];
-        
-        if (![fileManager fileExistsAtPath:settingsDir]) {
-            NSDictionary *attributes = [NSDictionary dictionaryWithObject: [NSNumber numberWithUnsignedLong: 0755] forKey: NSFilePosixPermissions];
-            NSError *theError = NULL;
-            
-            [fileManager createDirectoryAtPath:settingsDir withIntermediateDirectories: YES attributes: attributes error: &theError];
-        }
-    });
-    
-    return settingsDir;
 }
 
 + (NSString *)keychainPreDemObjcServiceName {
@@ -341,7 +319,7 @@ __strong static NSString *_tag = @"";
 }
 
 + (NSString *)sdkDirectory {
-    return [NSString stringWithFormat:@"%@%@", [[[[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] objectAtIndex:0] absoluteString] substringFromIndex:7], kPREDDirectory];
+    return [NSString stringWithFormat:@"%@%@", [[[[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] objectAtIndex:0] absoluteString] substringFromIndex:7], kPREDDirectoryName];
 }
 
 + (NSString *)cacheDirectory {

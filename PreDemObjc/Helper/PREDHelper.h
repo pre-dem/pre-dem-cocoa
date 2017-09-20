@@ -12,7 +12,6 @@
 @interface PREDHelper : NSObject
 
 @property(class, readonly) BOOL isURLSessionSupported;
-@property(class, readonly) NSString *settingsDir;
 @property(class, readonly) NSString *keychainPreDemObjcServiceName;
 @property(class, readonly) NSString *mainBundleIdentifier;
 @property(class, readonly) NSString *UUID;

@@ -1,5 +1,5 @@
 //
-//  PREDHTTPMonitorself.m
+//  PREDHTTPMonitorModel.m
 //  PreDemObjc
 //
 //  Created by WangSiyu on 15/03/2017.
@@ -46,7 +46,7 @@ static NSString * wrapString(NSString *st) {
                             ];
     __block NSString *result;
     [modelArray enumerateObjectsUsingBlock:^(NSString *  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        if (0 == idx) {
+        if (idx == 0) {
             result = obj;
         } else if (idx == modelArray.count - 1) {
             result = [NSString stringWithFormat:@"%@\t%@\n", result, obj];

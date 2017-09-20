@@ -57,7 +57,6 @@
     if (props) {
         free(props);
     }
-    
     return dic;
 }
 
@@ -95,7 +94,6 @@
         return dic;
     }
     return [self toDic];
-    
 }
 
 @end

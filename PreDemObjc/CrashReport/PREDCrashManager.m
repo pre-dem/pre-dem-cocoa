@@ -106,6 +106,7 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
 }
 
 - (void)stopManager {
+    [PREDCrashUncaughtCXXExceptionHandlerManager removeCXXExceptionHandler:uncaught_cxx_exception_handler];
 }
 
 #pragma mark - PLCrashReporter

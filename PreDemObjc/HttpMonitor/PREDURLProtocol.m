@@ -14,6 +14,7 @@
 #define DNSPodsHost @"119.29.29.29"
 
 static PREDPersistence *_persistence;
+static BOOL _isHttpMonitorEnabled = NO;
 
 @interface PREDURLProtocol ()
 <
@@ -34,20 +35,26 @@ NSURLSessionDataDelegate
     _persistence = persistence;
 }
 
-+ (void)enableHTTPDem {
-    // 可拦截 [NSURLSession defaultSession] 以及 UIWebView 相关的请求
-    [NSURLProtocol registerClass:self.class];
-    
-    // 拦截自定义生成的 NSURLSession 的请求
-    if (![PREDURLSessionSwizzler isSwizzle]) {
-        [PREDURLSessionSwizzler load];
++ (void)enableHTTPMonitor {
+    if (!_isHttpMonitorEnabled) {
+        _isHttpMonitorEnabled = YES;
+        // 可拦截 [NSURLSession defaultSession] 以及 UIWebView 相关的请求
+        [NSURLProtocol registerClass:self.class];
+        
+        // 拦截自定义生成的 NSURLSession 的请求
+        if (![PREDURLSessionSwizzler isSwizzle]) {
+            [PREDURLSessionSwizzler load];
+        }
     }
 }
 
-+ (void)disableHTTPDem {
-    [NSURLProtocol unregisterClass:self.class];
-    if ([PREDURLSessionSwizzler isSwizzle]) {
-        [PREDURLSessionSwizzler unload];
++ (void)disableHTTMonitor {
+    if (_isHttpMonitorEnabled) {
+        _isHttpMonitorEnabled = NO;
+        [NSURLProtocol unregisterClass:self.class];
+        if ([PREDURLSessionSwizzler isSwizzle]) {
+            [PREDURLSessionSwizzler unload];
+        }
     }
 }
 

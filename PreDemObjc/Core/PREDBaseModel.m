@@ -8,7 +8,6 @@
 
 #import "PREDBaseModel.h"
 #import "PREDHelper.h"
-#import "PREDError.h"
 
 @implementation PREDBaseModel
 

@@ -30,10 +30,6 @@ static NSString* app_id(NSString* appKey){
 }
 
 @implementation PREDManager {
-    BOOL _startManagerIsInvoked;
-    
-    BOOL _managersInitialized;
-    
     PREDConfigManager *_configManager;
     
     PREDCrashManager *_crashManager;
@@ -41,8 +37,6 @@ static NSString* app_id(NSString* appKey){
     PREDLagMonitorController *_lagManager;
     
     PREDPersistence *_persistence;
-    
-    PREDNetworkClient *_networkClient;
     
     PREDSender *_sender;
 }
@@ -112,11 +106,9 @@ static NSString* app_id(NSString* appKey){
 
 - (instancetype)init {
     if ((self = [super init])) {
-        _managersInitialized = NO;
         _enableCrashManager = YES;
         _enableHttpMonitor = YES;
         _enableLagMonitor = YES;
-        _startManagerIsInvoked = NO;
         _persistence = [[PREDPersistence alloc] init];
     }
     return self;
@@ -165,20 +157,12 @@ static NSString* app_id(NSString* appKey){
 }
 
 - (void)initializeModules {
-    if (_managersInitialized) {
-        PREDLogWarn(@"The SDK should only be initialized once! This call is ignored.");
-        return;
-    }
-    
-    _startManagerIsInvoked = NO;
-    
     _crashManager = [[PREDCrashManager alloc]
                      initWithPersistence:_persistence];
     [PREDURLProtocol setPersistence:_persistence];
     _configManager = [[PREDConfigManager alloc] initWithPersistence:_persistence];
     _lagManager = [[PREDLagMonitorController alloc] initWithPersistence:_persistence];
     [PREDLogger setPersistence:_persistence];
-    _managersInitialized = YES;
 }
 
 - (void)applyConfig:(PREDConfig *)config {
@@ -189,14 +173,6 @@ static NSString* app_id(NSString* appKey){
 }
 
 - (void)startManager {
-    if (_startManagerIsInvoked) {
-        PREDLogWarn(@"startManager should only be invoked once! This call is ignored.");
-        return;
-    }
-    
-    PREDLogDebug(@"Starting PREDManager");
-    _startManagerIsInvoked = YES;
-    
     // start CrashManager
     if (self.isCrashManagerEnabled) {
         PREDLogDebug(@"Starting CrashManager");
