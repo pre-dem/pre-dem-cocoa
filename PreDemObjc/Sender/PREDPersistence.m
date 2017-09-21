@@ -38,7 +38,7 @@
         NSError *error;
         [_fileManager createDirectoryAtPath:_appInfoDir withIntermediateDirectories:YES attributes:nil error:&error];
         if (error) {
-            PREDLogError(@"create dir %@ failed", _crashDir);
+            PREDLogError(@"create dir %@ failed", _appInfoDir);
         }
         [_fileManager createDirectoryAtPath:_crashDir withIntermediateDirectories:YES attributes:nil error:&error];
         if (error) {
@@ -58,11 +58,11 @@
         }
         [_fileManager createDirectoryAtPath:_netDir withIntermediateDirectories:YES attributes:nil error:&error];
         if (error) {
-            PREDLogError(@"create dir %@ failed", _httpDir);
+            PREDLogError(@"create dir %@ failed", _netDir);
         }
         [_fileManager createDirectoryAtPath:_customDir withIntermediateDirectories:YES attributes:nil error:&error];
         if (error) {
-            PREDLogError(@"create dir %@ failed", _httpDir);
+            PREDLogError(@"create dir %@ failed", _customDir);
         }
         PREDLogVerbose(@"cache directory:\n%@", PREDHelper.cacheDirectory);
     }
