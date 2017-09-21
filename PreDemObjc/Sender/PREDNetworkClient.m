@@ -42,6 +42,7 @@ static NSString* pred_appendTime(NSString* url){
         url = [url stringByAppendingFormat:@"?%@", [self queryStringFromParameters:params withEncoding:NSUTF8StringEncoding]];
     }
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
+    [request setHTTPMethod:@"GET"];
     [self sendRequest:request completion:completion];
 }
 
@@ -81,7 +82,6 @@ static NSString* pred_appendTime(NSString* url){
             [request setValue:obj forHTTPHeaderField:key];
         }];
     }
-    [request setHTTPBody:data];
     [self sendRequest:request completion:completion];
 }
 

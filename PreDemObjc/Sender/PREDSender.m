@@ -49,15 +49,13 @@
     if (!filePath) {
         return;
     }
-    NSError *error;
-    NSMutableDictionary *meta = [_persistence getStoredMeta:filePath error:&error];
-    if (error) {
-        PREDLogError(@"get stored meta %@ error %@", filePath, error);
-        [_persistence purgeFile:filePath];
+    NSData *data = [NSData dataWithContentsOfFile:filePath];
+    if (!data) {
+        PREDLogError(@"get stored data %@ error", filePath);
         return;
     }
     __weak typeof(self) wSelf = self;
-    [_networkClient postPath:@"app-config/i" parameters:meta completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
+    [_networkClient postPath:@"app-config/i" data:data headers:@{@"Content-Type": @"application/json"} completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
         __strong typeof(wSelf) strongSelf = wSelf;
         if (error) {
             PREDLogError(@"get config failed: %@", error);
@@ -287,7 +285,7 @@
         return;
     }
     __weak typeof(self) wSelf = self;
-    [_networkClient postPath:@"net-diags/i" data:data headers:nil completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
+    [_networkClient postPath:@"net-diags/i" data:data headers:@{@"Content-Type": @"application/json"} completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
         __strong typeof(wSelf) strongSelf = wSelf;
         if (!error) {
             PREDLogDebug(@"Send net diag succeeded");
@@ -325,7 +323,7 @@
         return;
     }
     __weak typeof(self) wSelf = self;
-    [_networkClient postPath:[NSString stringWithFormat:@"events/%@", eventName] data:toSend headers:nil completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
+    [_networkClient postPath:[NSString stringWithFormat:@"events/%@", eventName] data:toSend headers:@{@"Content-Type": @"application/json"} completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
         __strong typeof(wSelf) strongSelf = wSelf;
         if (!error) {
             PREDLogDebug(@"Send custom events succeeded");
