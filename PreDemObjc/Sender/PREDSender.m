@@ -223,7 +223,7 @@
                              PREDLogDebug(@"Send log report succeeded");
                              [strongSelf->_persistence purgeFile:filePath];
                              [strongSelf->_persistence purgeFile:logFilePath];
-                             [strongSelf sendLagData];
+                             [strongSelf sendLogData];
                          } else {
                              PREDLogError(@"upload log meta fail: %@", error);
                          }
@@ -328,7 +328,7 @@
         if (!error) {
             PREDLogDebug(@"Send custom events succeeded");
             [strongSelf->_persistence purgeFile:filePath];
-            [strongSelf sendNetDiag];
+            [strongSelf sendCustomEvents];
         } else {
             PREDLogError(@"send custom events error: %@", error);
         }
