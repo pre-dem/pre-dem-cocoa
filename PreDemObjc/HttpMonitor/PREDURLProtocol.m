@@ -43,7 +43,7 @@ NSURLSessionDataDelegate
         
         // 拦截自定义生成的 NSURLSession 的请求
         if (![PREDURLSessionSwizzler isSwizzle]) {
-            [PREDURLSessionSwizzler load];
+            [PREDURLSessionSwizzler loadSwizzler];
         }
     }
 }
@@ -53,7 +53,7 @@ NSURLSessionDataDelegate
         _isHttpMonitorEnabled = NO;
         [NSURLProtocol unregisterClass:self.class];
         if ([PREDURLSessionSwizzler isSwizzle]) {
-            [PREDURLSessionSwizzler unload];
+            [PREDURLSessionSwizzler unloadSwizzler];
         }
     }
 }
