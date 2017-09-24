@@ -17,6 +17,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     
     @IBOutlet var versionLable: UILabel!
     @IBOutlet var logLevelPicker: UIPickerView!
+    
     let logPickerKeys = [
         "不上传 log",
         "PREDLogLevelOff",

@@ -18,27 +18,32 @@ class AppIDViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        let prevID = UserDefaults.standard.string(forKey: kPreviousAppId)
-        if let validPrevID = prevID {
-            textField.text = validPrevID;
+        
+        if let prevID = UserDefaults.standard.string(forKey: kPreviousAppId) {
+            textField.text = prevID;
         }
         self.view.addGestureRecognizer(UITapGestureRecognizer.init(target: self, action: #selector(tapped(sender:))))
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
     func tapped(sender: UIView) {
-        textField?.resignFirstResponder()
+        textField.resignFirstResponder()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         UserDefaults.standard.set(textField.text, forKey: kPreviousAppId)
         var error: NSError?
-        PREDManager.start(withAppKey: textField.text!, serviceDomain: "http://hriygkee.bq.cloudappl.com", error: &error)
-        PREDManager.tag = "userid_debug"
+        #if DEBUG
+            PREDManager.start(withAppKey: textField.text!, serviceDomain: "http://hriygkee.bq.cloudappl.com", error: &error)
+            PREDManager.tag = "userid_debug"
+        #else
+            PREDManager.start(withAppKey: textField.text!, serviceDomain: "http://jkbkolos.bq.cloudappl.com", error: &error)
+            PREDManager.tag = "userid_release"
+        #endif
     }
-
+    
 }
