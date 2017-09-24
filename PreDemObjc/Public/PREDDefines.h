@@ -52,10 +52,6 @@ typedef NS_ENUM(NSUInteger, PREDLogLevel) {
     PREDLogLevelAll = DDLogLevelAll
 };
 
-typedef void (^PREDNetDiagCompleteHandler)(PREDNetDiagResult* result);
-
-typedef NSString *(^PREDLogMessageProvider)(void);
-
-typedef void (^PREDLogHandler)(PREDLogMessageProvider messageProvider, PREDLogLevel logLevel, const char *file, const char *function, uint line);
+typedef void (^PREDNetDiagCompleteHandler)(PREDNetDiagResult* _Nonnull result);
 
 #endif /* PreDemObjc_Enums_h */
