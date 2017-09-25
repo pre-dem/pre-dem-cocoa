@@ -19,16 +19,10 @@
     return manager;
 }
 
-- (void)didArchiveLogFile:(NSString *)logFilePath {
-    if ([self.delegate respondsToSelector:@selector(logFileManager:didArchivedLogFile:)]){
-        [self.delegate logFileManager:self didArchivedLogFile:logFilePath];
-    }
-}
-
-- (void)didRollAndArchiveLogFile:(NSString *)logFilePath {
-    if ([self.delegate respondsToSelector:@selector(logFileManager:didArchivedLogFile:)]){
-        [self.delegate logFileManager:self didArchivedLogFile:logFilePath];
-    }
+- (NSString *)createNewLogFile {
+    NSString *logFilePath = [super createNewLogFile];
+    [self.delegate logFileManager:self willCreatedNewLogFile:logFilePath];
+    return logFilePath;
 }
 
 @end

@@ -189,7 +189,7 @@
         return;
     }
     NSError *error;
-    NSMutableDictionary *meta = [_persistence getStoredMeta:filePath error:&error];
+    NSMutableDictionary *meta = [_persistence getLogMeta:filePath error:&error];
     if (error) {
         PREDLogError(@"get stored meta %@ error %@", filePath, error);
         [_persistence purgeFile:filePath];

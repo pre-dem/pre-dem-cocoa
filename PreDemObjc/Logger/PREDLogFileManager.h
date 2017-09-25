@@ -12,7 +12,7 @@
 
 @protocol PREDLogFileManagerDelegate <NSObject>
 
-- (void)logFileManager:(PREDLogFileManager *)logFileManager didArchivedLogFile:(NSString *)logFilePath;
+- (void)logFileManager:(PREDLogFileManager *)logFileManager willCreatedNewLogFile:(NSString *)logFilePath;
 
 @end
 

@@ -22,6 +22,8 @@
     NSString *_netDir;
     NSString *_customDir;
     NSFileManager *_fileManager;
+    PREDLogMeta *_lastLogMeta;
+    NSString *_lastLogMetaPath;
 }
 
 - (instancetype)init {
@@ -112,13 +114,20 @@
 }
 
 - (void)persistLogMeta:(PREDLogMeta *)logMeta {
+    NSString *fileName;
     NSError *error;
+    if (logMeta != _lastLogMeta) {
+        fileName = [NSString stringWithFormat:@"%f-%u", [[NSDate date] timeIntervalSince1970], arc4random()];
+        _lastLogMetaPath = fileName;
+        _lastLogMeta = logMeta;
+    } else {
+        fileName = _lastLogMetaPath;
+    }
     NSData *data = [logMeta toJsonWithError:&error];
     if (error) {
         PREDLogError(@"jsonize log meta error: %@", error);
         return;
     }
-    NSString *fileName = [NSString stringWithFormat:@"%f-%u", [[NSDate date] timeIntervalSince1970], arc4random()];
     BOOL success = [data writeToFile:[NSString stringWithFormat:@"%@/%@", _logDir, fileName] atomically:NO];
     if (!success) {
         PREDLogError(@"write log meta to file %@ failed", fileName);
@@ -233,14 +242,48 @@
     }
 }
 
+- (NSMutableDictionary *)getLogMeta:(NSString *)filePath error:(NSError **)error {
+    NSError *err;
+    NSMutableDictionary *dic = [self getStoredMeta:filePath error:&err];
+    if (err) {
+        if (error) {
+            *error = err;
+        }
+        return nil;
+    }
+    NSString *logFilePath = dic[@"log_key"];
+    if (!logFilePath) {
+        if (error) {
+            *error = [PREDError GenerateNSError:kPREDErrorCodeInternalError description:@"get log meta %@ error", filePath];
+        }
+        return nil;
+    }
+    NSDictionary *attributes = [[NSFileManager defaultManager] attributesOfItemAtPath:logFilePath error:&err];
+    if (err) {
+        if (error) {
+            *error = err;
+        }
+        return nil;
+    }
+    dic[@"start_time"] = @((uint64_t)([attributes fileCreationDate].timeIntervalSince1970));
+    dic[@"end_time"] = @((uint64_t)([attributes fileModificationDate].timeIntervalSince1970));
+    return dic;
+}
+
 - (NSMutableDictionary *)getStoredMeta:(NSString *)filePath error:(NSError **)error {
     NSData *data = [NSData dataWithContentsOfFile:filePath];
     if (!data) {
-        [PREDError GenerateNSError:kPREDErrorCodeInternalError description:@"read file %@ error", filePath];
+        if (error) {
+            *error = [PREDError GenerateNSError:kPREDErrorCodeInternalError description:@"read file %@ error", filePath];
+        }
         return nil;
     }
-    NSMutableDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:error];
-    if (!error && ![dic respondsToSelector:@selector(valueForKey:)]) {
+    NSError *err;
+    NSMutableDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&err];
+    if (error) {
+        *error = err;
+    }
+    if (!err && ![dic respondsToSelector:@selector(valueForKey:)]) {
         *error = [PREDError GenerateNSError:kPREDErrorCodeInternalError description:@"wrong json object type %@", NSStringFromClass(dic.class)];
         return nil;
     }

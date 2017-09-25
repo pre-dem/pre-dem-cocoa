@@ -33,6 +33,7 @@
 - (NSString *)nextNetDiagPath;
 - (NSString *)nextCustomEventsPath;
 
+- (NSMutableDictionary *)getLogMeta:(NSString *)filePath error:(NSError **)error;
 - (NSMutableDictionary *)getStoredMeta:(NSString *)filePath error:(NSError **)error;
 - (void)purgeFile:(NSString *)filePath;
 - (void)purgeAllAppInfo;

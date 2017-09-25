@@ -25,11 +25,9 @@
     DDFileLogger *_fileLogger;
     PREDPersistence *_persistence;
     QNUploadManager *_uploadManager;
-    NSDate *_logStartTime;
     PREDLogFileManager *_logFileManagers;
     PREDLogFormatter *_fileLogFormatter;
-    NSUInteger _errorLogCount;
-    NSMutableSet *_logTags;
+    PREDLogMeta *_currentMeta;
 }
 
 + (void)load {
@@ -54,7 +52,6 @@
         _logFileManagers.delegate = self;
         _fileLogFormatter = [[PREDLogFormatter alloc] init];
         _fileLogFormatter.delegate = self;
-        _logTags = [[NSMutableSet alloc] init];
     }
     return self;
 }
@@ -95,7 +92,6 @@
     _fileLogger.maximumFileSize = 1024 * 512;   // 512 KB
     _fileLogger.logFormatter = _fileLogFormatter;
     [DDLog addLogger:_fileLogger withLevel:(DDLogLevel)logLevel];
-    _logStartTime = [NSDate date];
 }
 
 + (void)stopCaptureLog {
@@ -125,38 +121,30 @@
     return _persistence;
 }
 
-- (void)logFileManager:(PREDLogFileManager *)logFileManager didArchivedLogFile:(NSString *)logFilePath {
-    PREDLogMeta *meta;
-    @synchronized (self) {
-        meta = [[PREDLogMeta alloc] initWithLogKey:logFilePath startTime:[_logStartTime timeIntervalSince1970] * PREDMillisecondPerSecond endTime:[[NSDate date] timeIntervalSince1970] * PREDMillisecondPerSecond logTags:[self logTagsString] ?: @"" errorCount:_errorLogCount];
-        [_logTags removeAllObjects];
-        _errorLogCount = 0;
-    }
-    [_persistence persistLogMeta:meta];
-    _logStartTime = [NSDate date];
+- (void)logFileManager:(PREDLogFileManager *)logFileManager willCreatedNewLogFile:(NSString *)logFilePath {
+    _currentMeta = [[PREDLogMeta alloc] init];
+    _currentMeta.log_key = logFilePath;
 }
 
 - (void)logFormatter:(PREDLogFormatter *)logFormatter willFormatMessage:(DDLogMessage *)logMessage {
     @synchronized (self) {
+        BOOL needRefreshPersistence = NO;
         if (logMessage.flag == DDLogFlagError) {
-            _errorLogCount++;
+            _currentMeta.error_count++;
+            needRefreshPersistence = YES;
         }
         if ([logMessage.tag respondsToSelector:@selector(description)]) {
-            [_logTags addObject:[NSString stringWithFormat:@"%@", logMessage.tag]];
+            BOOL exist = [_currentMeta addLogTag:[NSString stringWithFormat:@"%@", logMessage.tag]];
+            if (!exist) {
+                needRefreshPersistence = YES;
+            }
+        }
+        if (needRefreshPersistence) {
+            [_persistence persistLogMeta:_currentMeta];
         }
     }
 }
 
-- (NSString *)logTagsString {
-    __block NSString *result;
-    [_logTags enumerateObjectsUsingBlock:^(NSString* obj, BOOL * stop) {
-        if (!result) {
-            result = obj;
-        } else {
-            result = [NSString stringWithFormat:@"%@\t%@", result, obj];
-        }
-    }];
-    return result;
-}
+
 
 @end
