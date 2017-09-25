@@ -118,20 +118,22 @@ static NSString* app_id(NSString* appKey){
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         _appKey = appKey;
-        [self registerObservers];
-        
+
         [self initSenderWithDomain:serviceDomain appKey:appKey error:error];
+        if (*error) {
+            return;
+        }
         
         [self initializeModules];
         
         [self applyConfig:[_configManager getConfig]];
         
         [self startManager];
+        
+        [self registerObservers];
+        
+        [_sender sendAllSavedData];
     });
-}
-
-- (void)registerObservers {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(configRefreshed:) name:kPREDConfigRefreshedNotification object:nil];
 }
 
 - (void)initSenderWithDomain:(NSString *)aServerURL appKey:(NSString *)appKey error:(NSError **)error {
@@ -191,8 +193,10 @@ static NSString* app_id(NSString* appKey){
         
         [_lagManager startMonitor];
     }
-    
-    [_sender sendAllSavedData];
+}
+
+- (void)registerObservers {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(configRefreshed:) name:kPREDConfigRefreshedNotification object:nil];
 }
 
 - (void)setEnableCrashManager:(BOOL)enableCrashManager {
