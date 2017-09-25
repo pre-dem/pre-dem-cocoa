@@ -149,7 +149,7 @@
 
 - (void)persistCustomEventWithName:(NSString *)eventName events:(NSArray<NSDictionary<NSString *, NSString *> *>*)events {
     NSError *error;
-    NSData *toSave = [@{@"eventName": eventName, @"events": events} toJsonWithError:&error];
+    NSData *toSave = [NSJSONSerialization dataWithJSONObject:@{@"eventName": eventName, @"events": events} options:0 error:&error];
     if (error) {
         PREDLogError(@"jsonize custom events error: %@", error);
     }
