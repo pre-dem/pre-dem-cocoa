@@ -39,6 +39,7 @@
     [self sendLogData];
     [self sendHttpMonitor];
     [self sendNetDiag];
+    [self sendCustomEvents];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(PREDSendInterval * NSEC_PER_SEC)), dispatch_get_global_queue(0, DISPATCH_QUEUE_PRIORITY_DEFAULT), ^{
         [self sendAllSavedData];
     });
@@ -311,12 +312,12 @@
     }
     NSString *eventName = dic[@"eventName"];
     NSArray *events = dic[@"events"];
-    if (!eventName.length || events.count) {
+    if (!eventName.length || !events.count) {
         PREDLogError(@"get custom events %@ error, %@", filePath, dic);
         [self->_persistence purgeFile:filePath];
         return;
     }
-    NSData *toSend = [events toJsonWithError:&error];
+    NSData *toSend = [NSJSONSerialization dataWithJSONObject:events options:0 error:&error];
     if (error) {
         PREDLogError(@"jsonize events %@ error %@", events, error);
         [self->_persistence purgeFile:filePath];
