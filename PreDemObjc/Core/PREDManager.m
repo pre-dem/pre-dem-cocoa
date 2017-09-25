@@ -120,7 +120,7 @@ static NSString* app_id(NSString* appKey){
         _appKey = appKey;
 
         [self initSenderWithDomain:serviceDomain appKey:appKey error:error];
-        if (*error) {
+        if (error != NULL && *error) {
             return;
         }
         
