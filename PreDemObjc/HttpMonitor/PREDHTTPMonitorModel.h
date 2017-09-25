@@ -7,20 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "PREDBaseModel.h"
 
-@interface PREDHTTPMonitorModel : NSObject
+@interface PREDHTTPMonitorModel : PREDBaseModel
 
-@property (nonatomic, assign) NSString      *app_bundle_id;
-@property (nonatomic, strong) NSString      *app_name;
-@property (nonatomic, strong) NSString      *app_version;
-@property (nonatomic, strong) NSString      *device_model;
-@property (nonatomic, strong) NSString      *os_platform;
-@property (nonatomic, strong) NSString      *os_version;
-@property (nonatomic, strong) NSString      *os_build;
-@property (nonatomic, strong) NSString      *sdk_version;
-@property (nonatomic, strong) NSString      *sdk_id;
-@property (nonatomic, strong) NSString      *tag;
-@property (nonatomic, strong) NSString      *manufacturer;
 @property (nonatomic, strong) NSString      *domain;
 @property (nonatomic, strong) NSString      *path;
 @property (nonatomic, strong) NSString      *method;
@@ -33,5 +23,7 @@
 @property (nonatomic, assign) NSInteger     data_length;
 @property (nonatomic, assign) NSInteger     network_error_code;
 @property (nonatomic, strong) NSString      *network_error_msg;
+
+- (NSString *)tabString;
 
 @end

@@ -13,9 +13,9 @@
 #import "PREDLogFormatter.h"
 #import "PREDLogFileManager.h"
 #import "PREDLoggerPrivate.h"
+#import "PREDLogMeta.h"
+#import "PREDPersistence.h"
 
-#define LogCaptureUploadRetryInterval   100
-#define LogCaptureUploadMaxTimes        5
 #define DefaltTtyLogLevel               DDLogLevelAll
 #define PREDMillisecondPerSecond        1000
 
@@ -23,7 +23,7 @@
     PREDLogLevel _ttyLogLevel;
     PREDLogLevel _fileLogLevel;
     DDFileLogger *_fileLogger;
-    PREDNetworkClient *_networkClient;
+    PREDPersistence *_persistence;
     QNUploadManager *_uploadManager;
     NSDate *_logStartTime;
     PREDLogFileManager *_logFileManagers;
@@ -109,46 +109,30 @@
     }
 }
 
-+ (void)setNetworkClient:(PREDNetworkClient *)networkClient {
-    [PREDLogger sharedLogger].networkClient = networkClient;
++ (void)setPersistence:(PREDPersistence *)persistence {
+    [PREDLogger sharedLogger].persistence = persistence;
 }
 
-- (void)setNetworkClient:(PREDNetworkClient *)networkClient {
-    _networkClient = networkClient;
++ (PREDPersistence *)persistence {
+    return [PREDLogger sharedLogger].persistence;
 }
 
-+ (PREDNetworkClient *)networkClient {
-    return [PREDLogger sharedLogger].networkClient;
+- (void)setPersistence:(PREDPersistence *)persistence {
+    _persistence = persistence;
 }
 
-- (PREDNetworkClient *)networkClient {
-    return _networkClient;
+- (PREDPersistence *)persistence {
+    return _persistence;
 }
 
 - (void)logFileManager:(PREDLogFileManager *)logFileManager didArchivedLogFile:(NSString *)logFilePath {
-    NSMutableDictionary *metadata;
+    PREDLogMeta *meta;
     @synchronized (self) {
-        metadata = [@{
-                      @"app_bundle_id": PREDHelper.appBundleId,
-                      @"app_name": PREDHelper.appName,
-                      @"app_version": PREDHelper.appVersion,
-                      @"device_model": PREDHelper.deviceModel,
-                      @"os_platform": PREDHelper.osPlatform,
-                      @"os_version": PREDHelper.osVersion,
-                      @"os_build": PREDHelper.osBuild,
-                      @"sdk_version": PREDHelper.sdkVersion,
-                      @"sdk_id": PREDHelper.UUID,
-                      @"tag": PREDHelper.tag,
-                      @"manufacturer": @"Apple",
-                      @"start_time": @((u_int64_t)([_logStartTime timeIntervalSince1970] * PREDMillisecondPerSecond)),
-                      @"end_time": @((u_int64_t)([[NSDate date] timeIntervalSince1970] * PREDMillisecondPerSecond)),
-                      @"log_tags": [self logTagsString] ?: @"",
-                      @"error_count": @(_errorLogCount),
-                      } mutableCopy];
+        meta = [[PREDLogMeta alloc] initWithLogKey:logFilePath startTime:[_logStartTime timeIntervalSince1970] * PREDMillisecondPerSecond endTime:[[NSDate date] timeIntervalSince1970] * PREDMillisecondPerSecond logTags:[self logTagsString] ?: @"" errorCount:_errorLogCount];
         [_logTags removeAllObjects];
         _errorLogCount = 0;
     }
-    [self uploadLog:logFilePath metadata:metadata retryTimes:0];
+    [_persistence persistLogMeta:meta];
     _logStartTime = [NSDate date];
 }
 
@@ -161,55 +145,6 @@
             [_logTags addObject:[NSString stringWithFormat:@"%@", logMessage.tag]];
         }
     }
-}
-
-- (void)uploadLog:(NSString *)logFilePath metadata:(NSMutableDictionary *)metadata retryTimes:(NSUInteger)retryTimes {
-    NSError *err;
-    NSString *log = [NSString stringWithContentsOfFile:logFilePath encoding:NSUTF8StringEncoding error:&err];
-    if (err) {
-        return;
-    }
-    NSString *md5 = [PREDHelper MD5:log];
-    NSDictionary *param = @{@"md5": md5};
-    [_networkClient getPath:@"log-capture-token/i" parameters:param completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
-        if (!error) {
-            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
-            if (!error && operation.response.statusCode < 400 && dic && [dic respondsToSelector:@selector(valueForKey:)] && [dic valueForKey:@"key"] && [dic valueForKey:@"token"]) {
-                [_uploadManager
-                 putData:[log dataUsingEncoding:NSUTF8StringEncoding]
-                 key:[dic valueForKey:@"key"]
-                 token:[dic valueForKey:@"token"]
-                 complete:^(QNResponseInfo *info, NSString *key, NSDictionary *resp) {
-                     if (resp) {
-                         metadata[@"log_key"] = key;
-                         [_networkClient postPath:@"log-capture/i" parameters:metadata completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
-                             if (error || operation.response.statusCode >= 400) {
-                                 PREDLogError(@"upload log metadata fail: %@ code: %ld, drop report", error?:@"unknown", (long)operation.response.statusCode);
-                             } else {
-                                 PREDLogDebug(@"upload log report succeed");
-                             }
-                         }];
-                     } else if (retryTimes < LogCaptureUploadMaxTimes) {
-                         PREDLogWarn(@"upload log fail: %@, retry after: %d seconds", info.error, LogCaptureUploadRetryInterval);
-                         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(LogCaptureUploadRetryInterval * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                             [self uploadLog:logFilePath metadata:metadata retryTimes:retryTimes+1];
-                             return;
-                         });
-                     } else {
-                         PREDLogError(@"upload log fail: %@, drop report", error);
-                         return;
-                     }
-                 }
-                 option:nil];
-            } else {
-                PREDLogError(@"get upload token fail: %@, drop report", error);
-                return;
-            }
-        } else {
-            PREDLogError(@"get upload token fail: %@, drop report", error);
-            return;
-        }
-    }];
 }
 
 - (NSString *)logTagsString {

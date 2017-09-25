@@ -12,7 +12,7 @@
 
 @property (class, nonatomic, assign) BOOL isSwizzle;
 
-+ (void)load;
-+ (void)unload;
++ (void)loadSwizzler;
++ (void)unloadSwizzler;
 
 @end

@@ -8,6 +8,7 @@
 
 #import "PREDNetDiagResult.h"
 #import "PREDManagerPrivate.h"
+#import "PREDNetDiagResultPrivate.h"
 #import "PREDHelper.h"
 #import "PREDLogger.h"
 #import "QNNetDiag.h"
@@ -18,73 +19,62 @@
     NSInteger _completedCount;
     NSLock *_lock;
     PREDNetDiagCompleteHandler _complete;
-    PREDNetworkClient *_client;
+    PREDPersistence *_persistence;
 }
 
 - (NSString *)description {
     return [PREDHelper getObjectData:self].description;
 }
 
-- (instancetype)initWithComplete:(PREDNetDiagCompleteHandler)complete netClient:(PREDNetworkClient *)client {
+- (instancetype)initWithComplete:(PREDNetDiagCompleteHandler)complete persistence:(PREDPersistence *)persistence {
     if (self = [super init]) {
         _completedCount = 0;
         _lock = [NSLock new];
         _complete = complete;
-        _client = client;
-        self.app_bundle_id = PREDHelper.appBundleId;
-        self.app_name = PREDHelper.appName;
-        self.app_version = PREDHelper.appVersion;
-        self.device_model = PREDHelper.deviceModel;
-        self.os_platform = PREDHelper.osPlatform;
-        self.os_version = PREDHelper.osVersion;
-        self.os_build = PREDHelper.osBuild;
-        self.sdk_version = PREDHelper.sdkVersion;
-        self.sdk_id = PREDHelper.UUID;
-        self.tag = PREDHelper.tag;
-        self.manufacturer = @"Apple";
+        _persistence = persistence;
     }
     return self;
 }
 
 - (void)gotTcpResult:(QNNTcpPingResult *)r {
-    self.tcp_code = r.code;
-    self.tcp_ip = r.ip;
-    self.tcp_max_time = r.maxTime;
-    self.tcp_min_time = r.minTime;
-    self.tcp_avg_time = r.avgTime;
-    self.tcp_loss = r.loss;
-    self.tcp_count = r.count;
-    self.tcp_total_time = r.totalTime;
-    self.tcp_stddev = r.stddev;
+    _tcp_code = r.code;
+    _tcp_ip = r.ip;
+    _tcp_max_time = r.maxTime;
+    _tcp_min_time = r.minTime;
+    _tcp_avg_time = r.avgTime;
+    _tcp_loss = r.loss;
+    _tcp_count = r.count;
+    _tcp_total_time = r.totalTime;
+    _tcp_stddev = r.stddev;
     [self checkAndSend];
 }
 
 - (void)gotPingResult:(QNNPingResult *)r {
-    self.ping_code = r.code;
-    self.ping_ip = r.ip;
-    self.ping_size = r.size;
-    self.ping_max_rtt = r.maxRtt;
-    self.ping_min_rtt = r.minRtt;
-    self.ping_avg_rtt = r.avgRtt;
-    self.ping_loss = r.loss;
-    self.ping_count = r.count;
-    self.ping_total_time = r.totalTime;
-    self.ping_stddev = r.stddev;
+    _ping_code = r.code;
+    _ping_ip = r.ip;
+    _ping_size = r.size;
+    _ping_max_rtt = r.maxRtt;
+    _ping_min_rtt = r.minRtt;
+    _ping_avg_rtt = r.avgRtt;
+    _ping_loss = r.loss;
+    _ping_count = r.count;
+    _ping_total_time = r.totalTime;
+    _ping_stddev = r.stddev;
     [self checkAndSend];
 }
 
 - (void)gotHttpResult:(QNNHttpResult *)r {
-    self.http_code = r.code;
-    self.http_ip = r.ip;
-    self.http_duration = r.duration;
-    self.http_body_size = r.body.length;
+    _http_code = r.code;
+    _http_ip = r.ip;
+    _http_duration = r.duration;
+    _http_body_size = r.body.length;
     [self checkAndSend];
 }
 
 - (void)gotTrResult:(QNNTraceRouteResult *)r {
-    self.tr_code = r.code;
-    self.tr_ip = r.ip;
-    self.tr_content = r.content;
+    _tr_code = r.code;
+    _tr_ip = r.ip;
+    _tr_content = r.content;
     [self checkAndSend];
 }
 
@@ -95,12 +85,8 @@
         [recordString appendFormat:@"%d\t", record.ttl];
         [recordString appendFormat:@"%d\n", record.type];
     }
-    self.dns_records = recordString;
+    _dns_records = recordString;
     [self checkAndSend];
-}
-
-- (NSDictionary *)toDic {
-    return [PREDHelper getObjectData:self];
 }
 
 - (void)checkAndSend {
@@ -110,22 +96,14 @@
         [_lock unlock];
         [self generateResultID];
         _complete(self);
-        [self sendReport];
+        [_persistence persistNetDiagResult:self];
     } else {
         [_lock unlock];
     }
 }
 
 - (void)generateResultID {
-    self.result_id = [PREDHelper MD5:[NSString stringWithFormat:@"%f%@%@%@", [[NSDate date] timeIntervalSince1970], self.ping_ip, self.tr_content, self.dns_records]];
-}
-
-- (void)sendReport {
-    [_client postPath:@"net-diags/i" parameters:[self toDic] completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
-        if (error || operation.response.statusCode >= 400) {
-            PREDLogError(@"send net diag error: %@, statusCode: %ld", error, (long)operation.response.statusCode);
-        }
-    }];
+    _result_id = [PREDHelper MD5:[NSString stringWithFormat:@"%f%@%@%@", [[NSDate date] timeIntervalSince1970], _ping_ip, _tr_content, _dns_records]];
 }
 
 @end

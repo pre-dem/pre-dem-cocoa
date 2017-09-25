@@ -7,11 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "PREDNetworkClient.h"
+#import "PREDPersistence.h"
 
 @interface PREDLagMonitorController : NSObject
 
-- (instancetype)initWithNetworkClient:(PREDNetworkClient *)networkClient;
+- (instancetype)initWithPersistence:(PREDPersistence *)persistence;
 
 - (void)startMonitor;
 - (void)endMonitor;

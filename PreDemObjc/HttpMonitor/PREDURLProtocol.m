@@ -10,9 +10,11 @@
 #import <HappyDNS/HappyDNS.h>
 #import "PREDURLSessionSwizzler.h"
 #import "PREDHTTPMonitorModel.h"
-#import "PREDHTTPMonitorSender.h"
 
 #define DNSPodsHost @"119.29.29.29"
+
+static PREDPersistence *_persistence;
+static BOOL _isHttpMonitorEnabled = NO;
 
 @interface PREDURLProtocol ()
 <
@@ -29,34 +31,31 @@ NSURLSessionDataDelegate
 
 @synthesize HTTPMonitorModel;
 
-+ (void)setClient:(PREDNetworkClient *)client {
-    [PREDHTTPMonitorSender setClient:client];
++ (void)setPersistence:(PREDPersistence *)persistence {
+    _persistence = persistence;
 }
 
-+ (void)enableHTTPDem {
-    if (PREDHTTPMonitorSender.isEnabled) {
-        return;
++ (void)enableHTTPMonitor {
+    if (!_isHttpMonitorEnabled) {
+        _isHttpMonitorEnabled = YES;
+        // 可拦截 [NSURLSession defaultSession] 以及 UIWebView 相关的请求
+        [NSURLProtocol registerClass:self.class];
+        
+        // 拦截自定义生成的 NSURLSession 的请求
+        if (![PREDURLSessionSwizzler isSwizzle]) {
+            [PREDURLSessionSwizzler loadSwizzler];
+        }
     }
-    // 可拦截 [NSURLSession defaultSession] 以及 UIWebView 相关的请求
-    [NSURLProtocol registerClass:self.class];
-    
-    // 拦截自定义生成的 NSURLSession 的请求
-    if (![PREDURLSessionSwizzler isSwizzle]) {
-        [PREDURLSessionSwizzler load];
-    }
-    
-    PREDHTTPMonitorSender.enable = YES;
 }
 
-+ (void)disableHTTPDem {
-    if (!PREDHTTPMonitorSender.isEnabled) {
-        return;
++ (void)disableHTTMonitor {
+    if (_isHttpMonitorEnabled) {
+        _isHttpMonitorEnabled = NO;
+        [NSURLProtocol unregisterClass:self.class];
+        if ([PREDURLSessionSwizzler isSwizzle]) {
+            [PREDURLSessionSwizzler unloadSwizzler];
+        }
     }
-    [NSURLProtocol unregisterClass:self.class];
-    if ([PREDURLSessionSwizzler isSwizzle]) {
-        [PREDURLSessionSwizzler unload];
-    }
-    PREDHTTPMonitorSender.enable = NO;
 }
 
 + (BOOL)canInitWithRequest:(NSURLRequest *)request {
@@ -158,7 +157,7 @@ NSURLSessionDataDelegate
     } else {
         [self.client URLProtocolDidFinishLoading:self];
     }
-    [PREDHTTPMonitorSender addModel:HTTPMonitorModel];
+    [_persistence persistHttpMonitor:HTTPMonitorModel];
 }
 
 @end

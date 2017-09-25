@@ -19,6 +19,7 @@
 #import "PREDLogger.h"
 #import "PREDError.h"
 #import "PREDLoggerPrivate.h"
+#import "PREDSender.h"
 
 static NSString* app_id(NSString* appKey){
     if (appKey.length >= PREDAppIdLength) {
@@ -29,15 +30,15 @@ static NSString* app_id(NSString* appKey){
 }
 
 @implementation PREDManager {
-    BOOL _startManagerIsInvoked;
-    
-    BOOL _managersInitialized;
-    
     PREDConfigManager *_configManager;
     
     PREDCrashManager *_crashManager;
     
     PREDLagMonitorController *_lagManager;
+    
+    PREDPersistence *_persistence;
+    
+    PREDSender *_sender;
 }
 
 
@@ -46,10 +47,9 @@ static NSString* app_id(NSString* appKey){
 + (void)startWithAppKey:(NSString *)appKey
           serviceDomain:(NSString *)serviceDomain
                   error:(NSError **)error {
-    if (![NSThread isMainThread]) {
-        @throw [NSException exceptionWithName:@"InvalidEnvException" reason:@"You must start pre-dem in main thread" userInfo:nil];
-    }
-    [[self sharedPREDManager] startWithAppKey:appKey serviceDomain:serviceDomain error:error];
+    dispatch_async(dispatch_get_global_queue(0, DISPATCH_QUEUE_PRIORITY_DEFAULT), ^{
+        [[self sharedPREDManager] startWithAppKey:appKey serviceDomain:serviceDomain error:error];
+    });
 }
 
 
@@ -63,9 +63,7 @@ static NSString* app_id(NSString* appKey){
     if (event == nil || eventName == nil) {
         return;
     }
-    [[self sharedPREDManager].networkClient postPath:[NSString stringWithFormat:@"events/%@", eventName] parameters:@[event] completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
-        PREDLogDebug(@"%@", [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil]);
-    }];
+    [[self sharedPREDManager]->_persistence persistCustomEventWithName:eventName events:@[event]];
 }
 
 + (void)trackEventsWithName:(NSString *)eventName
@@ -74,9 +72,7 @@ static NSString* app_id(NSString* appKey){
         return;
     }
     
-    [[self sharedPREDManager].networkClient postPath:[NSString stringWithFormat:@"events/%@", eventName] parameters:events completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
-        PREDLogDebug(@"%@", [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil]);
-    }];
+    [[self sharedPREDManager]->_persistence persistCustomEventWithName:eventName events:events];
 }
 
 + (NSString *)tag {
@@ -110,36 +106,75 @@ static NSString* app_id(NSString* appKey){
 
 - (instancetype)init {
     if ((self = [super init])) {
-        _managersInitialized = NO;
-        _networkClient = nil;
         _enableCrashManager = YES;
         _enableHttpMonitor = YES;
         _enableLagMonitor = YES;
-        _startManagerIsInvoked = NO;
+        _persistence = [[PREDPersistence alloc] init];
     }
     return self;
 }
 
 - (void)startWithAppKey:(NSString *)appKey serviceDomain:(NSString *)serviceDomain error:(NSError **)error {
-    _appKey = appKey;
-    [self initNetworkClientWithDomain:serviceDomain appKey:appKey error:error];
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _appKey = appKey;
+
+        [self initSenderWithDomain:serviceDomain appKey:appKey error:error];
+        if (*error) {
+            return;
+        }
+        
+        [self initializeModules];
+        
+        [self applyConfig:[_configManager getConfig]];
+        
+        [self startManager];
+        
+        [self registerObservers];
+        
+        [_sender sendAllSavedData];
+    });
+}
+
+- (void)initSenderWithDomain:(NSString *)aServerURL appKey:(NSString *)appKey error:(NSError **)error {
+    if (!aServerURL.length) {
+        if (error) {
+            *error = [PREDError GenerateNSError:kPREDErrorCodeInvalidServiceDomain description:@"you must specify server domain"];
+        }
+        return;
+    }
+    if (appKey.length < PREDAppIdLength) {
+        if (error) {
+            *error = [PREDError GenerateNSError:kPREDErrorCodeInvalidAppKey description:@"the length of your app key must be longer than %d", PREDAppIdLength];
+        }
+        return;
+    }
+    if (![aServerURL hasPrefix:@"http://"] && ![aServerURL hasPrefix:@"https://"]) {
+        aServerURL = [NSString stringWithFormat:@"http://%@", aServerURL];
+    }
     
-    [self initializeModules];
+    aServerURL = [NSString stringWithFormat:@"%@/v1/%@/", aServerURL, app_id(appKey)];
     
-    [self applyConfig:[_configManager getConfig]];
-    
-    [self startManager];
+    _sender = [[PREDSender alloc] initWithPersistence:_persistence baseUrl:[NSURL URLWithString:aServerURL]];
+}
+
+- (void)initializeModules {
+    _crashManager = [[PREDCrashManager alloc]
+                     initWithPersistence:_persistence];
+    [PREDURLProtocol setPersistence:_persistence];
+    _configManager = [[PREDConfigManager alloc] initWithPersistence:_persistence];
+    _lagManager = [[PREDLagMonitorController alloc] initWithPersistence:_persistence];
+    [PREDLogger setPersistence:_persistence];
+}
+
+- (void)applyConfig:(PREDConfig *)config {
+    self.enableCrashManager = config.crashReportEnabled;
+    self.enableHttpMonitor = config.httpMonitorEnabled;
+    self.enableLagMonitor = config.lagMonitorEnabled;
+    _crashManager.enableOnDeviceSymbolication = config.onDeviceSymbolicationEnabled;
 }
 
 - (void)startManager {
-    if (_startManagerIsInvoked) {
-        PREDLogWarn(@"startManager should only be invoked once! This call is ignored.");
-        return;
-    }
-    
-    PREDLogDebug(@"Starting PREDManager");
-    _startManagerIsInvoked = YES;
-    
     // start CrashManager
     if (self.isCrashManagerEnabled) {
         PREDLogDebug(@"Starting CrashManager");
@@ -150,7 +185,7 @@ static NSString* app_id(NSString* appKey){
     if (self.isHttpMonitorEnabled) {
         PREDLogDebug(@"Starting HttpManager");
         
-        [PREDURLProtocol enableHTTPDem];
+        [PREDURLProtocol enableHTTPMonitor];
     }
     
     if (self.isLagMonitorEnabled) {
@@ -158,6 +193,10 @@ static NSString* app_id(NSString* appKey){
         
         [_lagManager startMonitor];
     }
+}
+
+- (void)registerObservers {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(configRefreshed:) name:kPREDConfigRefreshedNotification object:nil];
 }
 
 - (void)setEnableCrashManager:(BOOL)enableCrashManager {
@@ -178,9 +217,9 @@ static NSString* app_id(NSString* appKey){
     }
     _enableHttpMonitor = enableHttpMonitor;
     if (enableHttpMonitor) {
-        [PREDURLProtocol enableHTTPDem];
+        [PREDURLProtocol enableHTTPMonitor];
     } else {
-        [PREDURLProtocol disableHTTPDem];
+        [PREDURLProtocol disableHTTMonitor];
     }
 }
 
@@ -196,60 +235,14 @@ static NSString* app_id(NSString* appKey){
     }
 }
 
-- (void)initNetworkClientWithDomain:(NSString *)aServerURL appKey:(NSString *)appKey error:(NSError **)error {
-    if (!aServerURL.length) {
-        if (error) {
-            *error = [PREDError GenerateNSError:kPREDErrorCodeInvalidServiceDomain description:@"you must specify server domain"];
-        }
-        return;
-    }
-    if (appKey.length < PREDAppIdLength) {
-        if (error) {
-            *error = [PREDError GenerateNSError:kPREDErrorCodeInvalidAppKey description:@"the length of your app key must be longer than %d", PREDAppIdLength];
-        }
-        return;
-    }
-    if (![aServerURL hasPrefix:@"http://"] && ![aServerURL hasPrefix:@"https://"]) {
-        aServerURL = [NSString stringWithFormat:@"http://%@", aServerURL];
-    }
-    
-    aServerURL = [NSString stringWithFormat:@"%@/v1/%@/", aServerURL, app_id(appKey)];
-    
-    _networkClient = [[PREDNetworkClient alloc] initWithBaseURL:[NSURL URLWithString:aServerURL]];
-}
-
-- (void)initializeModules {
-    if (_managersInitialized) {
-        PREDLogWarn(@"The SDK should only be initialized once! This call is ignored.");
-        return;
-    }
-    
-    _startManagerIsInvoked = NO;
-    
-    _crashManager = [[PREDCrashManager alloc]
-                     initWithNetworkClient:_networkClient];
-    [PREDURLProtocol setClient:_networkClient];
-    
-    _configManager = [[PREDConfigManager alloc] initWithNetClient:_networkClient];
-    _configManager.delegate = self;
-    _lagManager = [[PREDLagMonitorController alloc] initWithNetworkClient:_networkClient];
-    [PREDLogger setNetworkClient:_networkClient];
-    _managersInitialized = YES;
-}
-
-- (void)applyConfig:(PREDConfig *)config {
-    self.enableCrashManager = config.crashReportEnabled;
-    self.enableHttpMonitor = config.httpMonitorEnabled;
-    self.enableLagMonitor = config.lagMonitorEnabled;
-    _crashManager.enableOnDeviceSymbolication = config.onDeviceSymbolicationEnabled;
-}
-
 - (void)diagnose:(NSString *)host
         complete:(PREDNetDiagCompleteHandler)complete {
-    [PREDNetDiag diagnose:host netClient:_networkClient complete:complete];
+    [PREDNetDiag diagnose:host persistence:_persistence complete:complete];
 }
 
-- (void)configManager:(PREDConfigManager *)manager didReceivedConfig:(PREDConfig *)config {
+- (void)configRefreshed:(NSNotification *)noty {
+    NSDictionary *dic = noty.userInfo[kPREDConfigRefreshedNotificationConfigKey];
+    PREDConfig *config = [PREDConfig configWithDic:dic];
     [self applyConfig:config];
 }
 

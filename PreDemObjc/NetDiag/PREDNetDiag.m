@@ -14,7 +14,7 @@
 @implementation PREDNetDiag
 
 + (void)diagnose:(NSString *)host
-       netClient:(PREDNetworkClient *)client
+     persistence:(PREDPersistence *)persistence
         complete:(PREDNetDiagCompleteHandler)complete {
     NSString *httpHost;
     if ([host hasPrefix:@"http://"] || [host hasPrefix:@"https://"]) {
@@ -23,7 +23,7 @@
     } else {
         httpHost = [NSString stringWithFormat:@"http://%@", host];
     }
-    PREDNetDiagResult *result = [[PREDNetDiagResult alloc] initWithComplete:complete netClient:client];
+    PREDNetDiagResult *result = [[PREDNetDiagResult alloc] initWithComplete:complete persistence:persistence];
     [QNNPing start:host size:64 output:nil complete:^(QNNPingResult *r) {
         [result gotPingResult:r];
     }];

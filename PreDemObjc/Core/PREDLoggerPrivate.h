@@ -12,6 +12,7 @@
 #import "PREDLogger.h"
 #import "PREDLogFileManager.h"
 #import "PREDLogFormatter.h"
+#import "PREDPersistence.h"
 
 @interface PREDLogger (Private)
 <
@@ -19,7 +20,7 @@ PREDLogFileManagerDelegate,
 PREDLogFormatterDelegate
 >
 
-@property (class, nonatomic, strong) PREDNetworkClient *networkClient;
+@property (class, nonatomic, strong) PREDPersistence *persistence;
 
 @end
 

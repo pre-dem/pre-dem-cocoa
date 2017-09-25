@@ -20,7 +20,8 @@
 #import "PREDLogger.h"
 
 static NSString *const kPREDUtcDateFormatter = @"utcDateFormatter";
-NSString *const kPREDExcludeApplicationSupportFromBackup = @"kPREDExcludeApplicationSupportFromBackup";
+static NSString *const kPREDDirectoryName = @"com.qiniu.predem";
+
 __strong static NSString *_tag = @"";
 
 @implementation PREDHelper
@@ -29,28 +30,6 @@ __strong static NSString *_tag = @"";
     id nsurlsessionClass = NSClassFromString(@"NSURLSessionUploadTask");
     BOOL isUrlSessionSupported = (nsurlsessionClass && !self.isRunningInAppExtension);
     return isUrlSessionSupported;
-}
-
-+ (NSString *)settingsDir {
-    static NSString *settingsDir = nil;
-    static dispatch_once_t predSettingsDir;
-    
-    dispatch_once(&predSettingsDir, ^{
-        NSFileManager *fileManager = [[NSFileManager alloc] init];
-        
-        // temporary directory for crashes grabbed from PLCrashReporter
-        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-        settingsDir = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"com.qiniu.predem"];
-        
-        if (![fileManager fileExistsAtPath:settingsDir]) {
-            NSDictionary *attributes = [NSDictionary dictionaryWithObject: [NSNumber numberWithUnsignedLong: 0755] forKey: NSFilePosixPermissions];
-            NSError *theError = NULL;
-            
-            [fileManager createDirectoryAtPath:settingsDir withIntermediateDirectories: YES attributes: attributes error: &theError];
-        }
-    });
-    
-    return settingsDir;
 }
 
 + (NSString *)keychainPreDemObjcServiceName {
@@ -339,6 +318,14 @@ __strong static NSString *_tag = @"";
     return _tag;
 }
 
++ (NSString *)sdkDirectory {
+    return [NSString stringWithFormat:@"%@%@", [[[[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] objectAtIndex:0] absoluteString] substringFromIndex:7], kPREDDirectoryName];
+}
+
++ (NSString *)cacheDirectory {
+    return [NSString stringWithFormat:@"%@/%@", self.sdkDirectory, @"cache"];
+}
+
 + (NSString *)encodeAppIdentifier:(NSString *)inputString {
     return (inputString ? [self URLEncodedString:inputString] : [self URLEncodedString:self.mainBundleIdentifier]);
 }
@@ -450,11 +437,20 @@ NSString *base64String(NSData * data, unsigned long length) {
         return dic;
     }
     return [self getObjectData:obj];
-    
 }
 
 + (NSString *)MD5:(NSString *)mdStr {
     const char *original_str = [mdStr UTF8String];
+    unsigned char result[CC_MD5_DIGEST_LENGTH];
+    CC_MD5(original_str, strlen(original_str), result);
+    NSMutableString *hash = [NSMutableString string];
+    for (int i = 0; i < CC_MD5_DIGEST_LENGTH; i++)
+        [hash appendFormat:@"%02X", result[i]];
+    return [hash lowercaseString];
+}
+
++ (NSString *)MD5ForData:(NSData *)data {
+    const char *original_str = [data bytes];
     unsigned char result[CC_MD5_DIGEST_LENGTH];
     CC_MD5(original_str, strlen(original_str), result);
     NSMutableString *hash = [NSMutableString string];

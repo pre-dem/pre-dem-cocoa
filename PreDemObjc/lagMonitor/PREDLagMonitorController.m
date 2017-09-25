@@ -13,18 +13,13 @@
 #import <Qiniu/QiniuSDK.h>
 #import "PREDLogger.h"
 
-#define PREDLagReportUploadRetryInterval        100
-#define PREDLagReportUploadMaxTimes             5
-#define PREDMillisecondPerSecond                1000
-
 @implementation PREDLagMonitorController {
     CFRunLoopObserverRef _observer;
     dispatch_semaphore_t _semaphore;
     CFRunLoopActivity _activity;
     NSInteger _countTime;
     PREPLCrashReporter *_reporter;
-    PREPLCrashReport *_lastReport;
-    PREDNetworkClient *_networkClient;
+    PREDPersistence *_persistence;
     QNUploadManager *_uploadManager;
 }
 
@@ -36,13 +31,13 @@ static void runLoopObserverCallBack(CFRunLoopObserverRef observer, CFRunLoopActi
     dispatch_semaphore_signal(semaphore);
 }
 
-- (instancetype)initWithNetworkClient:(PREDNetworkClient *)networkClient {
+- (instancetype)initWithPersistence:(PREDPersistence *)persistence {
     if (self = [super init]) {
         PLCrashReporterSignalHandlerType signalHandlerType = PLCrashReporterSignalHandlerTypeBSD;
         PREPLCrashReporterConfig *config = [[PREPLCrashReporterConfig alloc] initWithSignalHandlerType: signalHandlerType
                                                                                  symbolicationStrategy: PLCrashReporterSymbolicationStrategyAll];
         _reporter = [[PREPLCrashReporter alloc] initWithConfiguration:config];
-        _networkClient = networkClient;
+        _persistence = persistence;
         _uploadManager = [[QNUploadManager alloc] init];
     }
     return self;
@@ -99,100 +94,18 @@ static void runLoopObserverCallBack(CFRunLoopObserverRef observer, CFRunLoopActi
 }
 
 - (void)sendLagStack {
-    NSError *err;
-    NSData *data = [_reporter generateLiveReportAndReturnError:&err];
-    if (err) {
+    NSError *error;
+    NSData *data = [_reporter generateLiveReportAndReturnError:&error];
+    if (error) {
+        PREDLogError(@"generate lag report error: %@", error);
         return;
     }
-    
-    PREPLCrashReport *report = [[PREPLCrashReport alloc] initWithData:data error:&err];
-    if (err) {
+    PREDLagMeta *meta = [[PREDLagMeta alloc] initWithData:data error:&error];
+    if (error) {
+        PREDLogError(@"parse lag report error: %@", error);
         return;
     }
-    if ([PREDCrashReportTextFormatter isReport:report euivalentWith:_lastReport]) {
-        return;
-    }
-    _lastReport = report;
-    [self uploadCrashLog:report retryTimes:0];
-}
-
-- (void)uploadCrashLog:(PREPLCrashReport *)report retryTimes:(NSUInteger)retryTimes {
-    NSString *crashLog = [PREDCrashReportTextFormatter stringValueForCrashReport:report crashReporterKey:PREDHelper.appName];
-    NSString *md5 = [PREDHelper MD5:crashLog];
-    NSDictionary *param = @{@"md5": md5};
-    __weak typeof(self) wSelf = self;
-    [_networkClient getPath:@"lag-report-token/i" parameters:param completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
-        __strong typeof(wSelf) strongSelf = wSelf;
-        if (!error) {
-            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
-            if (!error && operation.response.statusCode < 400 && dic && [dic respondsToSelector:@selector(valueForKey:)] && [dic valueForKey:@"key"] && [dic valueForKey:@"token"]) {
-                [strongSelf->_uploadManager
-                 putData:[crashLog dataUsingEncoding:NSUTF8StringEncoding]
-                 key:[dic valueForKey:@"key"]
-                 token:[dic valueForKey:@"token"]
-                 complete:^(QNResponseInfo *info, NSString *key, NSDictionary *resp) {
-                     __strong typeof(wSelf) strongSelf = wSelf;
-                     if (resp) {
-                         [strongSelf sendMetaInfoWithKey:key report:report];
-                     } else if (retryTimes < PREDLagReportUploadMaxTimes) {
-                         PREDLogWarn(@"upload log fail: %@, retry after: %d seconds", info.error, PREDLagReportUploadRetryInterval);
-                         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(PREDLagReportUploadRetryInterval * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                             [strongSelf uploadCrashLog:report retryTimes:retryTimes+1];
-                             return;
-                         });
-                     } else {
-                         PREDLogError(@"upload log fail: %@, drop report", error);
-                         return;
-                     }
-                 }
-                 option:nil];
-            } else {
-                PREDLogError(@"get upload token fail: %@, drop report", error);
-                return;
-            }
-        } else {
-            PREDLogError(@"get upload token fail: %@, drop report", error);
-            return;
-        }
-    }];
-}
-
-- (void)sendMetaInfoWithKey:(NSString *)key report:(PREPLCrashReport *)report {
-    u_int64_t startTime = 0;
-    u_int64_t lagTime = [report.systemInfo.timestamp timeIntervalSince1970] * PREDMillisecondPerSecond;
-    if ([report.processInfo respondsToSelector:@selector(processStartTime)]) {
-        if (report.systemInfo.timestamp && report.processInfo.processStartTime) {
-            startTime = [report.processInfo.processStartTime timeIntervalSince1970] * PREDMillisecondPerSecond;
-        }
-    }
-    NSString *reportUUID = PREDHelper.UUID;
-    if (report.uuidRef != NULL) {
-        reportUUID = (NSString *) CFBridgingRelease(CFUUIDCreateString(NULL, report.uuidRef));
-    }
-    NSDictionary *info = @{
-                           @"app_bundle_id": PREDHelper.appBundleId,
-                           @"app_name": PREDHelper.appName,
-                           @"app_version": PREDHelper.appVersion,
-                           @"device_model": PREDHelper.deviceModel,
-                           @"os_platform": PREDHelper.osPlatform,
-                           @"os_version": PREDHelper.osVersion,
-                           @"os_build": PREDHelper.osBuild,
-                           @"sdk_version": PREDHelper.sdkVersion,
-                           @"sdk_id": PREDHelper.UUID,
-                           @"tag": PREDHelper.tag,
-                           @"manufacturer": @"Apple",
-                           @"report_uuid": reportUUID,
-                           @"start_time": @(startTime),
-                           @"lag_time": @(lagTime),
-                           @"lag_log_key": key,
-                           };
-    [_networkClient postPath:@"lag-monitor/i" parameters:info completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
-        if (error || operation.response.statusCode >= 400) {
-            PREDLogError(@"upload lag metadata fail: %@ code: %ld, drop report", error?:@"unknown", (long)operation.response.statusCode);
-        } else {
-            PREDLogDebug(@"upload lag report succeed");
-        }
-    }];
+    [_persistence persistLagMeta:meta];
 }
 
 @end

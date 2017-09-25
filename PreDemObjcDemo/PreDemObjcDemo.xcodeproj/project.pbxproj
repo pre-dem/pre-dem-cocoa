@@ -17,7 +17,7 @@
 		B6383AB11ECAA6D400B67A7E /* PreDemObjc.podspec in Resources */ = {isa = PBXBuildFile; fileRef = B6383AB01ECAA6D400B67A7E /* PreDemObjc.podspec */; };
 		B6548F391ECB0C7E0031DD42 /* PreDemObjcDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B6548F381ECB0C7E0031DD42 /* PreDemObjcDemoTests.m */; };
 		B694F1521F3025AB00175FF1 /* AppIDViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B694F1511F3025AB00175FF1 /* AppIDViewController.m */; };
-		B6CFBE961F28697700A42B55 /* doc in Resources */ = {isa = PBXBuildFile; fileRef = B6CFBE951F28697700A42B55 /* doc */; };
+		B6CFBE961F28697700A42B55 /* docs in Resources */ = {isa = PBXBuildFile; fileRef = B6CFBE951F28697700A42B55 /* docs */; };
 		B6D9B05F1F5E419E001D893E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6D9B05E1F5E419E001D893E /* AppDelegate.swift */; };
 		B6D9B0611F5E419E001D893E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6D9B0601F5E419E001D893E /* ViewController.swift */; };
 		B6D9B0641F5E419E001D893E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B6D9B0621F5E419E001D893E /* Main.storyboard */; };
@@ -60,7 +60,7 @@
 		B6AC979A1ECC61C80084F2A3 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		B6CD372B1ECC346F00186D6D /* scripts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = scripts; path = ../scripts; sourceTree = "<group>"; };
 		B6CD372C1ECC348400186D6D /* fastlane */ = {isa = PBXFileReference; lastKnownFileType = folder; name = fastlane; path = ../fastlane; sourceTree = "<group>"; };
-		B6CFBE951F28697700A42B55 /* doc */ = {isa = PBXFileReference; lastKnownFileType = folder; name = doc; path = ../doc; sourceTree = "<group>"; };
+		B6CFBE951F28697700A42B55 /* docs */ = {isa = PBXFileReference; lastKnownFileType = folder; name = docs; path = ../docs; sourceTree = "<group>"; };
 		B6D9B05C1F5E419E001D893E /* PreDemSwiftDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PreDemSwiftDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6D9B05E1F5E419E001D893E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B6D9B0601F5E419E001D893E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -117,7 +117,7 @@
 				B6548F311ECB067C0031DD42 /* .gitignore */,
 				B6548F301ECB06710031DD42 /* .travis.yml */,
 				B6383AB01ECAA6D400B67A7E /* PreDemObjc.podspec */,
-				B6CFBE951F28697700A42B55 /* doc */,
+				B6CFBE951F28697700A42B55 /* docs */,
 				B6CD372C1ECC348400186D6D /* fastlane */,
 				B6CD372B1ECC346F00186D6D /* scripts */,
 				B60231461EC9B7AC005AB798 /* PreDemObjcDemo */,
@@ -266,7 +266,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0830;
-				LastUpgradeCheck = 0830;
+				LastUpgradeCheck = 0900;
 				ORGANIZATIONNAME = "pre-engineering";
 				TargetAttributes = {
 					B60231431EC9B7AC005AB798 = {
@@ -312,7 +312,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B6CFBE961F28697700A42B55 /* doc in Resources */,
+				B6CFBE961F28697700A42B55 /* docs in Resources */,
 				B60231571EC9B7AC005AB798 /* LaunchScreen.storyboard in Resources */,
 				B60231541EC9B7AC005AB798 /* Assets.xcassets in Resources */,
 				B60231521EC9B7AC005AB798 /* Main.storyboard in Resources */,
@@ -555,7 +555,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -563,7 +565,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -604,7 +610,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -612,7 +620,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;

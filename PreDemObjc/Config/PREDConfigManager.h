@@ -8,21 +8,14 @@
 
 #import <Foundation/Foundation.h>
 #import "PREDConfig.h"
-#import "PREDNetworkClient.h"
+#import "PREDPersistence.h"
 
-@class PREDConfigManager;
-
-@protocol PREDConfigManagerDelegate <NSObject>
-
-- (void)configManager:(PREDConfigManager *)manager didReceivedConfig:(PREDConfig *)config;
-
-@end
+extern NSString *kPREDConfigRefreshedNotification;
+extern NSString *kPREDConfigRefreshedNotificationConfigKey;
 
 @interface PREDConfigManager : NSObject
 
-@property(nonatomic, weak) id<PREDConfigManagerDelegate> delegate;
-
-- (instancetype)initWithNetClient:(PREDNetworkClient *)client;
+- (instancetype)initWithPersistence:(PREDPersistence *)persistence;
 
 - (PREDConfig *)getConfig;
 

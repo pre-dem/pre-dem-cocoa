@@ -7,13 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "PREDNetworkClient.h"
+#import "PREDPersistence.h"
 
 @interface PREDURLProtocol : NSURLProtocol
 
-+ (void)setClient:(PREDNetworkClient *)client;
++ (void)setPersistence:(PREDPersistence *)persistence;
 
-+ (void)enableHTTPDem;
-+ (void)disableHTTPDem;
++ (void)enableHTTPMonitor;
++ (void)disableHTTMonitor;
 
 @end

@@ -7,15 +7,16 @@
 //
 
 #import "PREDNetDiagResult.h"
+#import "PREDPersistence.h"
+#import "QNNetDiag.h"
 
 @interface PREDNetDiagResult ()
 
-- (instancetype)initWithComplete:(PREDNetDiagCompleteHandler)complete netClient:(PREDNetworkClient *)client;
+- (instancetype)initWithComplete:(PREDNetDiagCompleteHandler)complete persistence:(PREDPersistence *)persistence;
 - (void)gotTcpResult:(QNNTcpPingResult *)r;
 - (void)gotPingResult:(QNNPingResult *)r;
 - (void)gotHttpResult:(QNNHttpResult *)r;
 - (void)gotTrResult:(QNNTraceRouteResult *)r;
 - (void)gotNsLookupResult:(NSArray<QNNRecord *> *) r;
-- (NSDictionary *)toDic;
 
 @end

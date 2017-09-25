@@ -22,14 +22,14 @@ static BOOL s_isSwizzle = NO;
     return s_isSwizzle;
 }
 
-+ (void)load {
++ (void)loadSwizzler {
     self.isSwizzle=YES;
     Class cls = NSClassFromString(@"__NSCFURLSessionConfiguration") ?: NSClassFromString(@"NSURLSessionConfiguration");
     [self swizzleSelector:@selector(protocolClasses) fromClass:cls toClass:self];
     
 }
 
-+ (void)unload {
++ (void)unloadSwizzler {
     self.isSwizzle=NO;
     Class cls = NSClassFromString(@"__NSCFURLSessionConfiguration") ?: NSClassFromString(@"NSURLSessionConfiguration");
     [self swizzleSelector:@selector(protocolClasses) fromClass:cls toClass:self];

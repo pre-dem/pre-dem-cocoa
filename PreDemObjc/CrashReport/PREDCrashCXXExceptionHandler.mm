@@ -19,6 +19,15 @@
 #import <execinfo.h>
 #import <libkern/OSAtomic.h>
 
+// use this code to be compatible with Xcode 9
+#ifndef LIBCXXABI_NORETURN
+    #ifdef  _LIBCXXABI_NORETURN
+        #define LIBCXXABI_NORETURN _LIBCXXABI_NORETURN
+    #else
+        #define LIBCXXABI_NORETURN
+    #endif
+#endif
+
 typedef std::vector<PREDCrashUncaughtCXXExceptionHandler> PREDCrashUncaughtCXXExceptionHandlerList;
 typedef struct
 {

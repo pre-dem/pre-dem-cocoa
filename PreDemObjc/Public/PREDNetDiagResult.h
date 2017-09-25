@@ -7,20 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "PREDBaseModel.h"
 
-@interface PREDNetDiagResult : NSObject
-
-@property (nonatomic, nullable, strong) NSString *app_bundle_id;
-@property (nonatomic, nullable, strong) NSString *app_name;
-@property (nonatomic, nullable, strong) NSString *app_version;
-@property (nonatomic, nullable, strong) NSString *device_model;
-@property (nonatomic, nullable, strong) NSString *os_platform;
-@property (nonatomic, nullable, strong) NSString *os_version;
-@property (nonatomic, nullable, strong) NSString *os_build;
-@property (nonatomic, nullable, strong) NSString *sdk_version;
-@property (nonatomic, nullable, strong) NSString *sdk_id;
-@property (nonatomic, nullable, strong) NSString *tag;
-@property (nonatomic, nullable, strong) NSString *manufacturer;
+@interface PREDNetDiagResult: PREDBaseModel
 
 @property (nonatomic, nullable, strong) NSString *result_id;
 

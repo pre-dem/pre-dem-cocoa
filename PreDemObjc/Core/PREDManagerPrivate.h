@@ -16,13 +16,8 @@
 #define PREDAppIdLength     8
 
 @interface PREDManager ()
-<
-PREDConfigManagerDelegate
->
 
 + (PREDManager *_Nonnull)sharedPREDManager;
-
-@property (nonatomic, strong, nonnull) PREDNetworkClient *networkClient;
 
 @property (nonatomic, getter = isCrashManagerEnabled) BOOL enableCrashManager;
 

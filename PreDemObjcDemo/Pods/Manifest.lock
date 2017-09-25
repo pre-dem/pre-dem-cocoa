@@ -32,7 +32,7 @@ PODS:
     - HappyDNS
     - Qiniu
     - QNNetDiag
-  - Qiniu (7.1.6):
+  - Qiniu (7.1.7):
     - AFNetworking (~> 3)
     - HappyDNS (~> 0.3)
   - QNNetDiag (0.0.6)
@@ -49,7 +49,7 @@ SPEC CHECKSUMS:
   CocoaLumberjack: 2800c03334042fe80589423c8d80e582dcaec482
   HappyDNS: 691a3041128055d09866f86e6e9ca90f24da1f18
   PreDemObjc: f047d2bceafa05d3ccd5e17eaaf4167784fa4fd7
-  Qiniu: 8af94ce9b1611ed5f4350883e41d4a62cabad491
+  Qiniu: 56ea8b9d785326e45e3a6fdd45bdbc84f78d0eff
   QNNetDiag: 6f7bbafa34c1b020e51d440f25044fe5ee10145d
 
 PODFILE CHECKSUM: 331342ae2ae8c6d7f1d996afd927f2073461cf44
