@@ -21,8 +21,10 @@
 
 - (BOOL)addLogTag:(NSString *)tag {
     BOOL exist = [_tags containsObject:tag];
-    [_tags addObject:tag];
-    _log_tags = [self logTagsString];
+    if (!exist) {
+        [_tags addObject:tag];
+        _log_tags = [self logTagsString];
+    }
     return exist;
 }
 
