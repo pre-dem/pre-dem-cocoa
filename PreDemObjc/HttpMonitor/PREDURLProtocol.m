@@ -59,6 +59,10 @@ NSURLSessionDataDelegate
     }
 }
 
++ (BOOL)started {
+    return _started;
+}
+
 + (BOOL)canInitWithRequest:(NSURLRequest *)request {
     if (![request.URL.scheme isEqualToString:@"http"] &&
         ![request.URL.scheme isEqualToString:@"https"]) {
