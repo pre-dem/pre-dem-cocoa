@@ -39,8 +39,6 @@ static NSString* app_id(NSString* appKey){
     PREDPersistence *_persistence;
     
     PREDSender *_sender;
-    
-    PREDConfig *_config;
 }
 
 
@@ -164,11 +162,11 @@ static NSString* app_id(NSString* appKey){
 }
 
 - (void)setConfig:(PREDConfig *)config {
-    _crashManager.started = _config.crashReportEnabled;
+    _crashManager.started = config.crashReportEnabled;
     
-    PREDURLProtocol.started = _config.httpMonitorEnabled;
+    PREDURLProtocol.started = config.httpMonitorEnabled;
     
-    _lagManager.started = _config.lagMonitorEnabled;
+    _lagManager.started = config.lagMonitorEnabled;
     
     _crashManager.enableOnDeviceSymbolication = config.onDeviceSymbolicationEnabled;
 }
