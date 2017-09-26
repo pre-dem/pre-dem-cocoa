@@ -115,7 +115,7 @@ static NSString* app_id(NSString* appKey){
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         _appKey = appKey;
-
+        
         [self initSenderWithDomain:serviceDomain appKey:appKey error:error];
         if (error != NULL && *error) {
             return;
@@ -156,8 +156,8 @@ static NSString* app_id(NSString* appKey){
                      initWithPersistence:_persistence];
     [PREDURLProtocol setPersistence:_persistence];
     _configManager = [[PREDConfigManager alloc] initWithPersistence:_persistence];
-  
-    // this process will get default config and then use it to initialize all module, besides it will also retrieve config from the server and config will refresh when done. 
+    
+    // this process will get default config and then use it to initialize all module, besides it will also retrieve config from the server and config will refresh when done.
     [self setConfig:[_configManager getConfig]];
     
     _lagManager = [[PREDLagMonitorController alloc] initWithPersistence:_persistence];
@@ -165,13 +165,12 @@ static NSString* app_id(NSString* appKey){
 }
 
 - (void)setConfig:(PREDConfig *)config {
+    _crashManager.enableOnDeviceSymbolication = config.onDeviceSymbolicationEnabled;
     _crashManager.started = config.crashReportEnabled;
     
     PREDURLProtocol.started = config.httpMonitorEnabled;
     
     _lagManager.started = config.lagMonitorEnabled;
-    
-    _crashManager.enableOnDeviceSymbolication = config.onDeviceSymbolicationEnabled;
 }
 
 - (void)registerObservers {
