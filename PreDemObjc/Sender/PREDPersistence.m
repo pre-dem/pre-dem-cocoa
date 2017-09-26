@@ -11,6 +11,7 @@
 #import "PREDLogger.h"
 #import "NSObject+Serialization.h"
 #import "PREDError.h"
+#import "PREDEventPrivate.h"
 #import "NSData+gzip.h"
 
 @implementation PREDPersistence {
@@ -158,9 +159,18 @@
 
 - (void)persistCustomEventWithName:(NSString *)eventName events:(NSArray<NSDictionary<NSString *, NSString *> *>*)events {
     NSError *error;
-    NSData *toSave = [NSJSONSerialization dataWithJSONObject:@{@"eventName": eventName, @"events": events} options:0 error:&error];
+    NSData *contentData = [NSJSONSerialization dataWithJSONObject:events options:0 error:&error];
     if (error) {
         PREDLogError(@"jsonize custom events error: %@", error);
+        return;
+    }
+    
+    NSString *content = [NSString stringWithUTF8String:[contentData bytes]];
+    PREDEvent *event = [[PREDEvent alloc] initWithName:eventName content:content];
+    NSData *toSave = [event toJsonWithError:&error];
+    if (error) {
+        PREDLogError(@"jsonize custom events error: %@", error);
+        return;
     }
     NSString *fileName = [NSString stringWithFormat:@"%f-%u", [[NSDate date] timeIntervalSince1970], arc4random()];
     BOOL success = [toSave writeToFile:[NSString stringWithFormat:@"%@/%@", _customDir, fileName] atomically:NO];
