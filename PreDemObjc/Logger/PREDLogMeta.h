@@ -16,10 +16,6 @@
 @property (nonatomic, strong) NSString *log_tags;
 @property (nonatomic, assign) unsigned long error_count;
 
-- (instancetype)initWithLogKey:(NSString *)logKey
-                     startTime:(uint64_t)startTime
-                       endTime:(uint64_t)endTime
-                       logTags:(NSString *)logTags
-                    errorCount:(unsigned long)errorCount;
+- (BOOL)addLogTag:(NSString *)tag;
 
 @end

@@ -8,21 +8,36 @@
 
 #import "PREDLogMeta.h"
 
-@implementation PREDLogMeta
+@implementation PREDLogMeta {
+    NSMutableSet *_tags;
+}
 
-- (instancetype)initWithLogKey:(NSString *)logKey
-                     startTime:(uint64_t)startTime
-                       endTime:(uint64_t)endTime
-                       logTags:(NSString *)logTags
-                    errorCount:(unsigned long)errorCount{
+- (instancetype)init {
     if (self = [super init]) {
-        _log_key = logKey;
-        _start_time = startTime;
-        _end_time = endTime;
-        _log_tags = logTags;
-        _error_count = errorCount;
+        _tags = [NSMutableSet new];
     }
     return self;
+}
+
+- (BOOL)addLogTag:(NSString *)tag {
+    BOOL exist = [_tags containsObject:tag];
+    if (!exist) {
+        [_tags addObject:tag];
+        _log_tags = [self logTagsString];
+    }
+    return exist;
+}
+
+- (NSString *)logTagsString {
+    __block NSString *result;
+    [_tags enumerateObjectsUsingBlock:^(NSString* obj, BOOL * stop) {
+        if (!result) {
+            result = obj;
+        } else {
+            result = [NSString stringWithFormat:@"%@\t%@", result, obj];
+        }
+    }];
+    return result;
 }
 
 @end
