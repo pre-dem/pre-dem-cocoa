@@ -11,6 +11,20 @@
 
 @implementation PREDLogFileManager
 
+- (void)didArchiveLogFile:(NSString *)logFilePath {
+    if ([self.delegate respondsToSelector:@selector(logFileManager:willArchiveLogFile:)]) {
+        NSString *fileName = [[logFilePath componentsSeparatedByString:@"/"] lastObject];
+        [self.delegate logFileManager:self willArchiveLogFile:fileName];
+    }
+}
+
+- (void)didRollAndArchiveLogFile:(NSString *)logFilePath {
+    if ([self.delegate respondsToSelector:@selector(logFileManager:willArchiveLogFile:)]) {
+        NSString *fileName = [[logFilePath componentsSeparatedByString:@"/"] lastObject];
+        [self.delegate logFileManager:self willArchiveLogFile:fileName];
+    }
+}
+
 - (NSString *)newLogFileName {
     NSString *logFileName = [super newLogFileName];
     if ([self.delegate respondsToSelector:@selector(logFileManager:willCreatedNewLogFile:)]) {
