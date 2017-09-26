@@ -48,7 +48,7 @@
     if (self = [super init]) {
         _ttyLogLevel = (PREDLogLevel)DefaltTtyLogLevel;
         _uploadManager = [[QNUploadManager alloc] init];
-        _logFileManagers = [[PREDLogFileManager alloc] init];
+        _logFileManagers = [[PREDLogFileManager alloc] initWithLogsDirectory:[NSString stringWithFormat:@"%@/%@", PREDHelper.cacheDirectory, @"logfiles"]];
         _logFileManagers.delegate = self;
         _fileLogFormatter = [[PREDLogFormatter alloc] init];
         _fileLogFormatter.delegate = self;
@@ -90,6 +90,7 @@
     _fileLogger = [[DDFileLogger alloc] initWithLogFileManager:_logFileManagers]; // File Logger
     _fileLogger.rollingFrequency = 0;
     _fileLogger.maximumFileSize = 1024 * 512;   // 512 KB
+    _fileLogger.doNotReuseLogFiles = YES;
     _fileLogger.logFormatter = _fileLogFormatter;
     [DDLog addLogger:_fileLogger withLevel:(DDLogLevel)logLevel];
 }
@@ -121,13 +122,15 @@
     return _persistence;
 }
 
-- (void)logFileManager:(PREDLogFileManager *)logFileManager willCreatedNewLogFile:(NSString *)logFilePath {
+- (void)logFileManager:(PREDLogFileManager *)logFileManager willCreatedNewLogFile:(NSString *)logFileName {
     _currentMeta = [[PREDLogMeta alloc] init];
-    _currentMeta.log_key = logFilePath;
+    _currentMeta.log_key = logFileName;
 }
 
 - (void)logFormatter:(PREDLogFormatter *)logFormatter willFormatMessage:(DDLogMessage *)logMessage {
     @synchronized (self) {
+        // because DDFileLogger will format message before create new file, so we move creation process ahead
+        [_fileLogger currentLogFileInfo];
         BOOL needRefreshPersistence = NO;
         if (logMessage.flag == DDLogFlagError) {
             _currentMeta.error_count++;

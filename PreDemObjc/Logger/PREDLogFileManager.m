@@ -7,22 +7,16 @@
 //
 
 #import "PREDLogFileManager.h"
+#import "PREDHelper.h"
 
 @implementation PREDLogFileManager
 
-+ (instancetype)sharedManager {
-    static PREDLogFileManager *manager;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        manager = [[PREDLogFileManager alloc] init];
-    });
-    return manager;
-}
-
-- (NSString *)createNewLogFile {
-    NSString *logFilePath = [super createNewLogFile];
-    [self.delegate logFileManager:self willCreatedNewLogFile:logFilePath];
-    return logFilePath;
+- (NSString *)newLogFileName {
+    NSString *logFileName = [super newLogFileName];
+    if ([self.delegate respondsToSelector:@selector(logFileManager:willCreatedNewLogFile:)]) {
+        [self.delegate logFileManager:self willCreatedNewLogFile:logFileName];
+    }
+    return logFileName;
 }
 
 @end

@@ -198,11 +198,14 @@
 
 - (NSString *)nextLogMetaPath {
     NSArray *files = [_fileManager enumeratorAtPath:_logDir].allObjects;
-    if (files.count == 0) {
-        return nil;
-    } else {
-        return [NSString stringWithFormat:@"%@/%@", _logDir, files[0]];
-    }
+    __block NSString *nextMetaPath;
+    [files enumerateObjectsUsingBlock:^(NSString *_Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if (![obj isEqualToString:_lastLogMetaPath]) {
+            nextMetaPath = [NSString stringWithFormat:@"%@/%@", _logDir, obj];
+            *stop = YES;
+        }
+    }];
+    return nextMetaPath;
 }
 
 - (NSString *)nextHttpMonitorPath {
@@ -251,13 +254,15 @@
         }
         return nil;
     }
-    NSString *logFilePath = dic[@"log_key"];
-    if (!logFilePath) {
+    NSString *logFileName = dic[@"log_key"];
+    if (!logFileName) {
         if (error) {
-            *error = [PREDError GenerateNSError:kPREDErrorCodeInternalError description:@"get log meta %@ error", filePath];
+            *error = [PREDError GenerateNSError:kPREDErrorCodeInternalError description:@"get log meta %@ error", logFileName];
         }
         return nil;
     }
+    NSString *logFilePath = [NSString stringWithFormat:@"%@/%@/%@", PREDHelper.cacheDirectory, @"logfiles", logFileName];
+    dic[@"log_key"] = logFilePath;
     NSDictionary *attributes = [[NSFileManager defaultManager] attributesOfItemAtPath:logFilePath error:&err];
     if (err) {
         if (error) {
