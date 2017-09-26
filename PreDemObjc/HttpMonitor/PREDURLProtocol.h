@@ -11,9 +11,8 @@
 
 @interface PREDURLProtocol : NSURLProtocol
 
-+ (void)setPersistence:(PREDPersistence *)persistence;
+@property(class, nonatomic) BOOL started;
 
-+ (void)enableHTTPMonitor;
-+ (void)disableHTTMonitor;
++ (void)setPersistence:(PREDPersistence *)persistence;
 
 @end

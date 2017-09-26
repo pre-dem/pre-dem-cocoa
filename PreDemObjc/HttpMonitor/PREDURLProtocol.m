@@ -10,11 +10,12 @@
 #import <HappyDNS/HappyDNS.h>
 #import "PREDURLSessionSwizzler.h"
 #import "PREDHTTPMonitorModel.h"
+#import "PREDLogger.h"
 
 #define DNSPodsHost @"119.29.29.29"
 
 static PREDPersistence *_persistence;
-static BOOL _isHttpMonitorEnabled = NO;
+static BOOL _started = NO;
 
 @interface PREDURLProtocol ()
 <
@@ -35,9 +36,13 @@ NSURLSessionDataDelegate
     _persistence = persistence;
 }
 
-+ (void)enableHTTPMonitor {
-    if (!_isHttpMonitorEnabled) {
-        _isHttpMonitorEnabled = YES;
++ (void)setStarted:(BOOL)started {
+    if (_started == started) {
+        return;
+    }
+    _started = started;
+    if (started) {
+        PREDLogDebug(@"Starting HttpManager");
         // 可拦截 [NSURLSession defaultSession] 以及 UIWebView 相关的请求
         [NSURLProtocol registerClass:self.class];
         
@@ -45,12 +50,8 @@ NSURLSessionDataDelegate
         if (![PREDURLSessionSwizzler isSwizzle]) {
             [PREDURLSessionSwizzler loadSwizzler];
         }
-    }
-}
-
-+ (void)disableHTTMonitor {
-    if (_isHttpMonitorEnabled) {
-        _isHttpMonitorEnabled = NO;
+    } else {
+        PREDLogDebug(@"Terminating HttpManager");
         [NSURLProtocol unregisterClass:self.class];
         if ([PREDURLSessionSwizzler isSwizzle]) {
             [PREDURLSessionSwizzler unloadSwizzler];

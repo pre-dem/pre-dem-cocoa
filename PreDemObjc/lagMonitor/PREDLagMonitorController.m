@@ -44,23 +44,23 @@ static void runLoopObserverCallBack(CFRunLoopObserverRef observer, CFRunLoopActi
 }
 
 - (void)dealloc {
-    [self endMonitor];
+    self.started = NO;
 }
 
-- (void)startMonitor {
-    if (_observer) {
+- (void)setStarted:(BOOL)started {
+    if (_started == started) {
         return;
     }
-    [self registerObserver];
-}
-
-- (void)endMonitor {
-    if (!_observer) {
-        return;
+    _started = started;
+    if (started) {
+        PREDLogDebug(@"Starting lag monitor");
+        [self registerObserver];
+    } else {
+        PREDLogDebug(@"Terminating lag monitor");
+        CFRunLoopRemoveObserver(CFRunLoopGetMain(), _observer, kCFRunLoopCommonModes);
+        CFRelease(_observer);
+        _observer = NULL;
     }
-    CFRunLoopRemoveObserver(CFRunLoopGetMain(), _observer, kCFRunLoopCommonModes);
-    CFRelease(_observer);
-    _observer = NULL;
 }
 
 - (void)registerObserver {
