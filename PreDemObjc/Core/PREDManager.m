@@ -156,7 +156,10 @@ static NSString* app_id(NSString* appKey){
                      initWithPersistence:_persistence];
     [PREDURLProtocol setPersistence:_persistence];
     _configManager = [[PREDConfigManager alloc] initWithPersistence:_persistence];
+  
+    // this process will get default config and then use it to initialize all module, besides it will also retrieve config from the server and config will refresh when done. 
     [self setConfig:[_configManager getConfig]];
+    
     _lagManager = [[PREDLagMonitorController alloc] initWithPersistence:_persistence];
     [PREDLogger setPersistence:_persistence];
 }
