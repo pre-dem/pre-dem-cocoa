@@ -310,9 +310,9 @@
         [self->_persistence purgeFile:filePath];
         return;
     }
-    NSString *eventName = dic[@"eventName"];
-    NSArray *events = dic[@"events"];
-    if (!eventName.length || !events.count) {
+    NSString *eventName = dic[@"name"];
+    NSString *events = dic[@"content"] != [NSNull null] ? dic[@"content"] : @"";
+    if (!eventName.length || !events.length) {
         PREDLogError(@"get custom events %@ error, %@", filePath, dic);
         [self->_persistence purgeFile:filePath];
         return;

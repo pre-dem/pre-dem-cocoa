@@ -163,6 +163,9 @@
     if (error) {
         PREDLogError(@"jsonize custom events error: %@", error);
         return;
+    } else if ([contentData length] == 0) {
+        PREDLogInfo(@"discard empty custom event");
+        return;
     }
     
     NSString *content = [NSString stringWithUTF8String:[contentData bytes]];
