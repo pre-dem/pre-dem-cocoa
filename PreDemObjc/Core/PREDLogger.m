@@ -25,7 +25,7 @@
     DDFileLogger *_fileLogger;
     PREDPersistence *_persistence;
     QNUploadManager *_uploadManager;
-    PREDLogFileManager *_logFileManagers;
+    PREDLogFileManager *_logFileManager;
     PREDLogFormatter *_fileLogFormatter;
     PREDLogMeta *_currentMeta;
 }
@@ -48,8 +48,8 @@
     if (self = [super init]) {
         _ttyLogLevel = (PREDLogLevel)DefaltTtyLogLevel;
         _uploadManager = [[QNUploadManager alloc] init];
-        _logFileManagers = [[PREDLogFileManager alloc] initWithLogsDirectory:[NSString stringWithFormat:@"%@/%@", PREDHelper.cacheDirectory, @"logfiles"]];
-        _logFileManagers.delegate = self;
+        _logFileManager = [[PREDLogFileManager alloc] initWithLogsDirectory:[NSString stringWithFormat:@"%@/%@", PREDHelper.cacheDirectory, @"logfiles"]];
+        _logFileManager.delegate = self;
         _fileLogFormatter = [[PREDLogFormatter alloc] init];
         _fileLogFormatter.delegate = self;
     }
@@ -87,7 +87,7 @@
     }
     _fileLogLevel = logLevel;
     [self stopCaptureLog];
-    _fileLogger = [[DDFileLogger alloc] initWithLogFileManager:_logFileManagers]; // File Logger
+    _fileLogger = [[DDFileLogger alloc] initWithLogFileManager:_logFileManager]; // File Logger
     _fileLogger.rollingFrequency = 0;
     _fileLogger.maximumFileSize = 1024 * 512;   // 512 KB
     _fileLogger.doNotReuseLogFiles = YES;
@@ -127,6 +127,13 @@
     _currentMeta.log_key = logFileName;
 }
 
+- (void)logFileManager:(PREDLogFileManager *)logFileManager willArchiveLogFile:(NSString *)logFileName {
+    if (![_currentMeta.log_key isEqualToString:logFileName]) {
+        _currentMeta.log_key = logFileName;
+        [_persistence persistLogMeta:_currentMeta];
+    }
+}
+
 - (void)logFormatter:(PREDLogFormatter *)logFormatter willFormatMessage:(DDLogMessage *)logMessage {
     @synchronized (self) {
         // because DDFileLogger will format message before create new file, so we move creation process ahead
@@ -147,7 +154,5 @@
         }
     }
 }
-
-
 
 @end

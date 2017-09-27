@@ -11,9 +11,8 @@
 
 @interface PREDLagMonitorController : NSObject
 
-- (instancetype)initWithPersistence:(PREDPersistence *)persistence;
+@property (nonatomic, assign) BOOL started;
 
-- (void)startMonitor;
-- (void)endMonitor;
+- (instancetype)initWithPersistence:(PREDPersistence *)persistence;
 
 @end

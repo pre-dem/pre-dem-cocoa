@@ -12,11 +12,8 @@
 @interface PREDCrashManager : NSObject
 
 @property (nonatomic, assign, getter=isOnDeviceSymbolicationEnabled) BOOL enableOnDeviceSymbolication;
+@property (nonatomic, assign) BOOL started;
 
 - (instancetype)initWithPersistence:(PREDPersistence *)persistence;
-
-- (void)startManager;
-
-- (void)stopManager;
 
 @end

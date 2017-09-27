@@ -19,12 +19,6 @@
 
 + (PREDManager *_Nonnull)sharedPREDManager;
 
-@property (nonatomic, getter = isCrashManagerEnabled) BOOL enableCrashManager;
-
-@property (nonatomic, getter = isHttpMonitorEnabled) BOOL enableHttpMonitor;
-
-@property (nonatomic, getter = isLagMonitorEnabled) BOOL enableLagMonitor;
-
 @property (readonly, nonatomic, nonnull) NSString* appKey;
 
 @end

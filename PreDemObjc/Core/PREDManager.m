@@ -106,9 +106,6 @@ static NSString* app_id(NSString* appKey){
 
 - (instancetype)init {
     if ((self = [super init])) {
-        _enableCrashManager = YES;
-        _enableHttpMonitor = YES;
-        _enableLagMonitor = YES;
         _persistence = [[PREDPersistence alloc] init];
     }
     return self;
@@ -118,17 +115,13 @@ static NSString* app_id(NSString* appKey){
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         _appKey = appKey;
-
+        
         [self initSenderWithDomain:serviceDomain appKey:appKey error:error];
         if (error != NULL && *error) {
             return;
         }
         
         [self initializeModules];
-        
-        [self applyConfig:[_configManager getConfig]];
-        
-        [self startManager];
         
         [self registerObservers];
         
@@ -163,76 +156,25 @@ static NSString* app_id(NSString* appKey){
                      initWithPersistence:_persistence];
     [PREDURLProtocol setPersistence:_persistence];
     _configManager = [[PREDConfigManager alloc] initWithPersistence:_persistence];
+    
+    // this process will get default config and then use it to initialize all module, besides it will also retrieve config from the server and config will refresh when done.
+    [self setConfig:[_configManager getConfig]];
+    
     _lagManager = [[PREDLagMonitorController alloc] initWithPersistence:_persistence];
     [PREDLogger setPersistence:_persistence];
 }
 
-- (void)applyConfig:(PREDConfig *)config {
-    self.enableCrashManager = config.crashReportEnabled;
-    self.enableHttpMonitor = config.httpMonitorEnabled;
-    self.enableLagMonitor = config.lagMonitorEnabled;
+- (void)setConfig:(PREDConfig *)config {
     _crashManager.enableOnDeviceSymbolication = config.onDeviceSymbolicationEnabled;
-}
-
-- (void)startManager {
-    // start CrashManager
-    if (self.isCrashManagerEnabled) {
-        PREDLogDebug(@"Starting CrashManager");
-        
-        [_crashManager startManager];
-    }
+    _crashManager.started = config.crashReportEnabled;
     
-    if (self.isHttpMonitorEnabled) {
-        PREDLogDebug(@"Starting HttpManager");
-        
-        [PREDURLProtocol enableHTTPMonitor];
-    }
+    PREDURLProtocol.started = config.httpMonitorEnabled;
     
-    if (self.isLagMonitorEnabled) {
-        PREDLogDebug(@"Starting LagManager");
-        
-        [_lagManager startMonitor];
-    }
+    _lagManager.started = config.lagMonitorEnabled;
 }
 
 - (void)registerObservers {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(configRefreshed:) name:kPREDConfigRefreshedNotification object:nil];
-}
-
-- (void)setEnableCrashManager:(BOOL)enableCrashManager {
-    if (_enableCrashManager == enableCrashManager) {
-        return;
-    }
-    _enableCrashManager = enableCrashManager;
-    if (enableCrashManager) {
-        [_crashManager startManager];
-    } else {
-        [_crashManager stopManager];
-    }
-}
-
-- (void)setEnableHttpMonitor:(BOOL)enableHttpMonitor {
-    if (_enableHttpMonitor == enableHttpMonitor) {
-        return;
-    }
-    _enableHttpMonitor = enableHttpMonitor;
-    if (enableHttpMonitor) {
-        [PREDURLProtocol enableHTTPMonitor];
-    } else {
-        [PREDURLProtocol disableHTTMonitor];
-    }
-}
-
-- (void)setEnableLagMonitor:(BOOL)enableLagMonitor {
-    if (_enableLagMonitor == enableLagMonitor) {
-        return;
-    }
-    _enableLagMonitor = enableLagMonitor;
-    if (enableLagMonitor) {
-        [_lagManager startMonitor];
-    } else {
-        [_lagManager endMonitor];
-    }
 }
 
 - (void)diagnose:(NSString *)host
@@ -243,7 +185,7 @@ static NSString* app_id(NSString* appKey){
 - (void)configRefreshed:(NSNotification *)noty {
     NSDictionary *dic = noty.userInfo[kPREDConfigRefreshedNotificationConfigKey];
     PREDConfig *config = [PREDConfig configWithDic:dic];
-    [self applyConfig:config];
+    [self setConfig:config];
 }
 
 @end

@@ -14,6 +14,8 @@
 
 - (void)logFileManager:(PREDLogFileManager *)logFileManager willCreatedNewLogFile:(NSString *)logFileName;
 
+- (void)logFileManager:(PREDLogFileManager *)logFileManager willArchiveLogFile:(NSString *)logFileName;
+
 @end
 
 @interface PREDLogFileManager : DDLogFileManagerDefault
