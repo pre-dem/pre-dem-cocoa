@@ -60,6 +60,7 @@
                             }
                         }];
     PREDManager.tag = @"userid_debug";
+    PREDLogger.ttyLogLevel = PREDLogLevelWarning;
 #else
     [PREDManager startWithAppKey:_textField.text
                    serviceDomain:@"http://jkbkolos.bq.cloudappl.com"

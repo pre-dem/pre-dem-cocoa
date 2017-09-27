@@ -117,7 +117,7 @@
                          }
                      }];
                  } else {
-                     PREDLogError(@"upload log fail: %@", info.error);
+                     PREDLogError(@"upload crash fail: %@", info.error);
                      return;
                  }
              }
@@ -172,7 +172,7 @@
                          }
                      }];
                  } else {
-                     PREDLogError(@"upload log fail: %@", info.error);
+                     PREDLogError(@"upload lag fail: %@", info.error);
                      return;
                  }
              }
