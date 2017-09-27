@@ -84,7 +84,13 @@ UIPickerViewDelegate
 }
 
 - (IBAction)diyEvent:(id)sender {
-    [PREDManager trackEventWithName:@"viewDidLoadEvent" event:@{@"helloKey": @"worldValue", @"hellonum": @7}];
+    int rand = arc4random_uniform(100);
+    NSDictionary *dict = @{
+                           @"stringKey": [NSString stringWithFormat:@"test_%d", rand],
+                           @"longKey": @(rand),
+                           @"floatKey": @1.5
+                           };
+    [PREDManager trackEventWithName:@"test_ios_event_4" event:dict];
 }
 
 - (IBAction)blockMainThread:(id)sender {

@@ -22,7 +22,7 @@
 - (void)persistLogMeta:(PREDLogMeta *)logMeta;
 - (void)persistHttpMonitor:(PREDHTTPMonitorModel *)httpMonitor;
 - (void)persistNetDiagResult:(PREDNetDiagResult *)netDiagResult;
-- (void)persistCustomEventWithName:(NSString *)eventName events:(NSArray<NSDictionary<NSString *, NSString *> *>*)events;
+- (void)persistCustomEventWithName:(NSString *)eventName event:(NSDictionary<NSString *, NSString *>*)event;
 
 - (NSString *)nextAppInfoPath;
 - (NSString *)nextCrashMetaPath;

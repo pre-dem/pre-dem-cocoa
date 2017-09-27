@@ -157,9 +157,9 @@
     }
 }
 
-- (void)persistCustomEventWithName:(NSString *)eventName events:(NSArray<NSDictionary<NSString *, NSString *> *>*)events {
+- (void)persistCustomEventWithName:(NSString *)eventName event:(NSDictionary<NSString *, NSString *>*)event {
     NSError *error;
-    NSData *contentData = [NSJSONSerialization dataWithJSONObject:events options:0 error:&error];
+    NSData *contentData = [NSJSONSerialization dataWithJSONObject:event options:0 error:&error];
     if (error) {
         PREDLogError(@"jsonize custom events error: %@", error);
         return;
@@ -169,8 +169,8 @@
     }
     
     NSString *content = [NSString stringWithUTF8String:[contentData bytes]];
-    PREDEvent *event = [[PREDEvent alloc] initWithName:eventName content:content];
-    NSData *toSave = [event toJsonWithError:&error];
+    PREDEvent *eventObj = [[PREDEvent alloc] initWithName:eventName content:content];
+    NSData *toSave = [eventObj toJsonWithError:&error];
     if (error) {
         PREDLogError(@"jsonize custom events error: %@", error);
         return;

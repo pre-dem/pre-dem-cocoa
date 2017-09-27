@@ -311,20 +311,13 @@
         return;
     }
     NSString *eventName = dic[@"name"];
-    NSString *events = dic[@"content"] != [NSNull null] ? dic[@"content"] : @"";
-    if (!eventName.length || !events.length) {
-        PREDLogError(@"get custom events %@ error, %@", filePath, dic);
-        [self->_persistence purgeFile:filePath];
-        return;
-    }
-    NSData *toSend = [NSJSONSerialization dataWithJSONObject:events options:0 error:&error];
-    if (error) {
-        PREDLogError(@"jsonize events %@ error %@", events, error);
-        [self->_persistence purgeFile:filePath];
+    NSData *data = [NSData dataWithContentsOfFile:filePath];
+    if (!data) {
+        PREDLogError(@"get stored data from %@ failed %@", filePath, error);
         return;
     }
     __weak typeof(self) wSelf = self;
-    [_networkClient postPath:[NSString stringWithFormat:@"events/%@", eventName] data:toSend headers:@{@"Content-Type": @"application/json"} completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
+    [_networkClient postPath:[NSString stringWithFormat:@"events/%@", eventName] data:data headers:@{@"Content-Type": @"application/json"} completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
         __strong typeof(wSelf) strongSelf = wSelf;
         if (!error) {
             PREDLogDebug(@"Send custom events succeeded");

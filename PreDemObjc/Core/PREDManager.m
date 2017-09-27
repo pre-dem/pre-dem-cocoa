@@ -63,7 +63,7 @@ static NSString* app_id(NSString* appKey){
     if (event == nil || eventName == nil) {
         return;
     }
-    [[self sharedPREDManager]->_persistence persistCustomEventWithName:eventName events:@[event]];
+    [[self sharedPREDManager]->_persistence persistCustomEventWithName:eventName event:event];
 }
 
 + (void)trackEventsWithName:(NSString *)eventName
@@ -72,7 +72,9 @@ static NSString* app_id(NSString* appKey){
         return;
     }
     
-    [[self sharedPREDManager]->_persistence persistCustomEventWithName:eventName events:events];
+    for (NSDictionary * event in events) {
+        [[self sharedPREDManager]->_persistence persistCustomEventWithName:eventName event:event];
+    }
 }
 
 + (NSString *)tag {
