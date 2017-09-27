@@ -46,9 +46,9 @@ static NSString* app_id(NSString* appKey){
 
 + (void)startWithAppKey:(NSString *)appKey
           serviceDomain:(NSString *)serviceDomain
-                  error:(NSError **)error {
-    dispatch_async(dispatch_get_global_queue(0, DISPATCH_QUEUE_PRIORITY_DEFAULT), ^{
-        [[self sharedPREDManager] startWithAppKey:appKey serviceDomain:serviceDomain error:error];
+               complete:(PREDStartCompleteHandler)complete {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [[self sharedPREDManager] startWithAppKey:appKey serviceDomain:serviceDomain complete:complete];
     });
 }
 
@@ -111,13 +111,15 @@ static NSString* app_id(NSString* appKey){
     return self;
 }
 
-- (void)startWithAppKey:(NSString *)appKey serviceDomain:(NSString *)serviceDomain error:(NSError **)error {
+- (void)startWithAppKey:(NSString *)appKey serviceDomain:(NSString *)serviceDomain complete:(PREDStartCompleteHandler)complete {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         _appKey = appKey;
-        
-        [self initSenderWithDomain:serviceDomain appKey:appKey error:error];
-        if (error != NULL && *error) {
+        NSError *error;
+        if (![self initSenderWithDomain:serviceDomain appKey:appKey error:&error]) {
+            if (complete) {
+                complete(NO, error);
+            }
             return;
         }
         
@@ -127,20 +129,21 @@ static NSString* app_id(NSString* appKey){
         
         [_sender sendAllSavedData];
     });
+    return;
 }
 
-- (void)initSenderWithDomain:(NSString *)aServerURL appKey:(NSString *)appKey error:(NSError **)error {
+- (BOOL)initSenderWithDomain:(NSString *)aServerURL appKey:(NSString *)appKey error:(NSError **)error {
     if (!aServerURL.length) {
         if (error) {
             *error = [PREDError GenerateNSError:kPREDErrorCodeInvalidServiceDomain description:@"you must specify server domain"];
         }
-        return;
+        return NO;
     }
     if (appKey.length < PREDAppIdLength) {
         if (error) {
             *error = [PREDError GenerateNSError:kPREDErrorCodeInvalidAppKey description:@"the length of your app key must be longer than %d", PREDAppIdLength];
         }
-        return;
+        return NO;
     }
     if (![aServerURL hasPrefix:@"http://"] && ![aServerURL hasPrefix:@"https://"]) {
         aServerURL = [NSString stringWithFormat:@"http://%@", aServerURL];
@@ -149,6 +152,7 @@ static NSString* app_id(NSString* appKey){
     aServerURL = [NSString stringWithFormat:@"%@/v1/%@/", aServerURL, app_id(appKey)];
     
     _sender = [[PREDSender alloc] initWithPersistence:_persistence baseUrl:[NSURL URLWithString:aServerURL]];
+    return YES;
 }
 
 - (void)initializeModules {

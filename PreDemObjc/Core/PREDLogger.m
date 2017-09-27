@@ -50,6 +50,7 @@
         _uploadManager = [[QNUploadManager alloc] init];
         _logFileManager = [[PREDLogFileManager alloc] initWithLogsDirectory:[NSString stringWithFormat:@"%@/%@", PREDHelper.cacheDirectory, @"logfiles"]];
         _logFileManager.delegate = self;
+        _logFileManager.maximumNumberOfLogFiles = 0;
         _fileLogFormatter = [[PREDLogFormatter alloc] init];
         _fileLogFormatter.delegate = self;
     }
@@ -125,6 +126,7 @@
 - (void)logFileManager:(PREDLogFileManager *)logFileManager willCreatedNewLogFile:(NSString *)logFileName {
     _currentMeta = [[PREDLogMeta alloc] init];
     _currentMeta.log_key = logFileName;
+    [_persistence persistLogMeta:_currentMeta];
 }
 
 - (void)logFileManager:(PREDLogFileManager *)logFileManager willArchiveLogFile:(NSString *)logFileName {

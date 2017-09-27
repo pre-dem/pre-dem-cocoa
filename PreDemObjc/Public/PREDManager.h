@@ -26,7 +26,7 @@
  */
 + (void)startWithAppKey:(NSString *_Nonnull)appKey
           serviceDomain:(NSString *_Nonnull)serviceDomain
-                  error:(NSError *_Nullable *_Nullable)error;
+               complete:(PREDStartCompleteHandler _Nullable)complete;
 
 /**
  *  diagnose current network environment

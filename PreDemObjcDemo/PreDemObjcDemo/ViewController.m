@@ -50,18 +50,14 @@ UIPickerViewDelegate
                            @(PREDLogLevelVerbose),
                            @(PREDLogLevelAll)
                            ];
-    [self logTest];
 }
 
-- (void)logTest {
+- (IBAction)logTest:(id)sender {
     PREDLogVerbose(@"verbose log test");
     PREDLogDebug(@"debug log test");
     PREDLogInfo(@"info log test");
     PREDLogWarn(@"warn log test");
     PREDLogError(@"error log test");
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self logTest];
-    });
 }
 
 - (IBAction)sendHTTPRequest:(id)sender {

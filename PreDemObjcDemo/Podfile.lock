@@ -24,18 +24,14 @@ PODS:
   - PreDemObjc (1.0.1):
     - CocoaLumberjack
     - HappyDNS
-    - PreDemObjc/no-arc (= 1.0.1)
     - Qiniu
     - QNNetDiag
-  - PreDemObjc/no-arc (1.0.1):
-    - CocoaLumberjack
-    - HappyDNS
-    - Qiniu
-    - QNNetDiag
+    - UICKeyChainStore
   - Qiniu (7.1.7):
     - AFNetworking (~> 3)
     - HappyDNS (~> 0.3)
   - QNNetDiag (0.0.6)
+  - UICKeyChainStore (2.1.1)
 
 DEPENDENCIES:
   - PreDemObjc (from `../`)
@@ -48,9 +44,10 @@ SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
   CocoaLumberjack: 2800c03334042fe80589423c8d80e582dcaec482
   HappyDNS: 691a3041128055d09866f86e6e9ca90f24da1f18
-  PreDemObjc: f047d2bceafa05d3ccd5e17eaaf4167784fa4fd7
+  PreDemObjc: f6fd5ad32f391e612f6ba8e2e9aca2050e42e372
   Qiniu: 56ea8b9d785326e45e3a6fdd45bdbc84f78d0eff
   QNNetDiag: 6f7bbafa34c1b020e51d440f25044fe5ee10145d
+  UICKeyChainStore: 239558492fa260531a0774cfc611ea83a6eaff3a
 
 PODFILE CHECKSUM: 331342ae2ae8c6d7f1d996afd927f2073461cf44
 

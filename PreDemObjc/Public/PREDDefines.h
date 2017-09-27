@@ -54,4 +54,6 @@ typedef NS_ENUM(NSUInteger, PREDLogLevel) {
 
 typedef void (^PREDNetDiagCompleteHandler)(PREDNetDiagResult* _Nonnull result);
 
+typedef void (^PREDStartCompleteHandler)(BOOL succeess, NSError *_Nullable error);
+
 #endif /* PreDemObjc_Enums_h */

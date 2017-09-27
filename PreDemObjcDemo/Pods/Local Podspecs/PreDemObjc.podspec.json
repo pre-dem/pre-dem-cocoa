@@ -37,9 +37,6 @@
   "resource_bundles": {
     "PREDResources": "PreDemObjc/Resources/*.plist"
   },
-  "exclude_files": [
-    "PreDemObjc/Helper/KeychainItemWrapper.{h,m}"
-  ],
   "dependencies": {
     "HappyDNS": [
 
@@ -52,15 +49,9 @@
     ],
     "CocoaLumberjack": [
 
+    ],
+    "UICKeyChainStore": [
+
     ]
-  },
-  "subspecs": [
-    {
-      "name": "no-arc",
-      "requires_arc": false,
-      "source_files": [
-        "PreDemObjc/Helper/KeychainItemWrapper.{h,m}"
-      ]
-    }
-  ]
+  }
 }

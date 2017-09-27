@@ -299,7 +299,9 @@
     NSError *error;
     [_fileManager removeItemAtPath:filePath error:&error];
     if (error) {
-        PREDLogError(@"purge crash meta file %@ error %@", filePath, error);
+        PREDLogError(@"purge file %@ error %@", filePath, error);
+    } else {
+        PREDLogVerbose(@"purge file %@ succeeded", filePath);
     }
 }
 
@@ -309,7 +311,9 @@
         NSString *filePath = [NSString stringWithFormat:@"%@/%@", _appInfoDir, fileName];
         [_fileManager removeItemAtPath:filePath error:&error];
         if (error) {
-            PREDLogError(@"purge crash meta file %@ error %@", filePath, error);
+            PREDLogError(@"purge file %@ error %@", filePath, error);
+        } else {
+            PREDLogVerbose(@"purge file %@ succeeded", filePath);
         }
     }
 }
@@ -318,7 +322,9 @@
     [filePaths enumerateObjectsUsingBlock:^(NSString * _Nonnull filePath, NSUInteger idx, BOOL * _Nonnull stop) {
         [_fileManager removeItemAtPath:filePath error:&error];
         if (error) {
-            PREDLogError(@"purge crash meta file %@ error %@", filePath, error);
+            PREDLogError(@"purge file %@ error %@", filePath, error);
+        } else {
+            PREDLogVerbose(@"purge file %@ succeeded", filePath);
         }
     }];
 }

@@ -16,7 +16,6 @@
 #import "PREDLogger.h"
 #import "PREDManager.h"
 #import "PREDNetDiagResult.h"
-#import "KeychainItemWrapper.h"
 
 FOUNDATION_EXPORT double PreDemObjcVersionNumber;
 FOUNDATION_EXPORT const unsigned char PreDemObjcVersionString[];

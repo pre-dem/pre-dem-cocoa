@@ -12,7 +12,7 @@
 @implementation PREDBaseModel
 
 - (instancetype)init {
-    if ([super init]) {
+    if (self = [super init]) {
         _app_bundle_id = PREDHelper.appBundleId;
         _app_name = PREDHelper.appName;
         _app_version = PREDHelper.appVersion;
