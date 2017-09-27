@@ -16,10 +16,9 @@
 #import <CommonCrypto/CommonDigest.h>
 #import <mach-o/dyld.h>
 #import <mach-o/loader.h>
-#import "KeychainItemWrapper.h"
 #import "PREDLogger.h"
+#import <UICKeyChainStore/UICKeyChainStore.h>
 
-static NSString *const kPREDUtcDateFormatter = @"utcDateFormatter";
 static NSString *const kPREDDirectoryName = @"com.qiniu.predem";
 
 __strong static NSString *_tag = @"";
@@ -55,9 +54,9 @@ __strong static NSString *_tag = @"";
     return resultUUID;
 }
 
-+(NSString *)readUUIDFromKeyChain{
-    KeychainItemWrapper *keychainItemm = [[KeychainItemWrapper alloc] initWithAccount:@"Identfier" service:@"AppName" accessGroup:nil];
-    NSString *UUID = [keychainItemm objectForKey: (__bridge id)kSecAttrGeneric];
++ (NSString *)readUUIDFromKeyChain{
+    UICKeyChainStore *keychain = [UICKeyChainStore keyChainStoreWithService:@"com.qiniu.predem"];
+    NSString *UUID = keychain[@"uuid"];
     return UUID;
 }
 
@@ -67,8 +66,8 @@ __strong static NSString *_tag = @"";
     NSString *uuidString = [NSString stringWithString:(__bridge NSString*)strRef];
     CFRelease(strRef);
     CFRelease(uuidRef);
-    KeychainItemWrapper *keychainItem = [[KeychainItemWrapper alloc] initWithAccount:@"Identfier" service:@"AppName" accessGroup:nil];
-    [keychainItem setObject:uuidString forKey:(__bridge id)kSecAttrGeneric];
+    UICKeyChainStore *keychain = [UICKeyChainStore keyChainStoreWithService:@"com.qiniu.predem"];
+    keychain[@"uuid"] = uuidString;
     return uuidString;
 }
 
@@ -442,7 +441,7 @@ NSString *base64String(NSData * data, unsigned long length) {
 + (NSString *)MD5:(NSString *)mdStr {
     const char *original_str = [mdStr UTF8String];
     unsigned char result[CC_MD5_DIGEST_LENGTH];
-    CC_MD5(original_str, strlen(original_str), result);
+    CC_MD5(original_str, (unsigned int)strlen(original_str), result);
     NSMutableString *hash = [NSMutableString string];
     for (int i = 0; i < CC_MD5_DIGEST_LENGTH; i++)
         [hash appendFormat:@"%02X", result[i]];
@@ -452,7 +451,7 @@ NSString *base64String(NSData * data, unsigned long length) {
 + (NSString *)MD5ForData:(NSData *)data {
     const char *original_str = [data bytes];
     unsigned char result[CC_MD5_DIGEST_LENGTH];
-    CC_MD5(original_str, strlen(original_str), result);
+    CC_MD5(original_str, (unsigned int)strlen(original_str), result);
     NSMutableString *hash = [NSMutableString string];
     for (int i = 0; i < CC_MD5_DIGEST_LENGTH; i++)
         [hash appendFormat:@"%02X", result[i]];

@@ -53,12 +53,20 @@
 #ifdef DEBUG
     [PREDManager startWithAppKey:_textField.text
                    serviceDomain:@"http://hriygkee.bq.cloudappl.com"
-                           error:nil];
+                        complete:^(BOOL succeess, NSError * _Nullable error) {
+                            if (error) {
+                                NSLog(@"initialize PREDManager error: %@", error);
+                            }
+                        }];
     PREDManager.tag = @"userid_debug";
 #else
     [PREDManager startWithAppKey:_textField.text
                    serviceDomain:@"http://jkbkolos.bq.cloudappl.com"
-                           error:nil];
+                        complete:^(BOOL succeess, NSError * _Nullable error) {
+                            if (error) {
+                                NSLog(@"initialize PREDManager error: %@", error);
+                            }
+                        }];
     PREDManager.tag = @"userid_release";
 #endif
 }

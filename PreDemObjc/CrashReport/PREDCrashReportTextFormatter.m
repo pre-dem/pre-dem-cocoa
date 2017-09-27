@@ -681,9 +681,6 @@ NSString *const PREDXamarinStackTraceDelimiter = @"Xamarin Exception Stack:";
     
     /* System info */
     {
-        NSString *osBuild = @"???";
-        if (report.systemInfo.operatingSystemBuild != nil)
-            osBuild = report.systemInfo.operatingSystemBuild;
         if (report.hasExceptionInfo) {
             exceptionReason = report.exceptionInfo.exceptionReason;
             NSInteger xamarinTracePosition = [exceptionReason rangeOfString:PREDXamarinStackTraceDelimiter].location;
