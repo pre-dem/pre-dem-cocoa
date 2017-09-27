@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="cYA-5x-gqt">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="cYA-5x-gqt">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -15,7 +15,6 @@
             <objects>
                 <navigationController navigationBarHidden="YES" id="cYA-5x-gqt" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="j1t-4E-z1e">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -42,7 +41,7 @@
                                 <rect key="frame" x="20.5" y="159" width="280" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="FLg-jg-U0G"/>
-                                    <constraint firstAttribute="width" constant="280" id="gfu-XJ-eN5"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="280" id="gfu-XJ-eN5"/>
                                 </constraints>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
@@ -127,7 +126,7 @@
                                     <action selector="blockMainThread:" destination="BYZ-38-t0r" eventType="touchUpInside" id="nne-gY-igF"/>
                                 </connections>
                             </button>
-                            <pickerView contentMode="scaleToFill" showsSelectionIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3fP-OQ-YRc">
+                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3fP-OQ-YRc">
                                 <rect key="frame" x="0.0" y="344" width="320" height="120"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="120" id="paW-on-0au"/>
@@ -135,6 +134,7 @@
                             </pickerView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="6iu-Ah-PlK" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="0Mj-Ke-mrU"/>
                             <constraint firstItem="iZc-eD-4Yh" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="2za-lL-bop"/>
@@ -151,6 +151,9 @@
                             <constraint firstItem="a1F-JE-yhx" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="us1-rP-WCR"/>
                             <constraint firstItem="6iu-Ah-PlK" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="-40" id="x7b-DV-Yfu"/>
                         </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="dv2-y1-OrH" appends="YES" id="HlJ-KK-XGw"/>
+                        </connections>
                     </view>
                     <navigationItem key="navigationItem" id="hX5-fa-XYI"/>
                     <connections>
@@ -159,6 +162,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="dv2-y1-OrH">
+                    <connections>
+                        <action selector="logTest:" destination="BYZ-38-t0r" id="cwR-ow-VVx"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-75" y="44"/>
         </scene>

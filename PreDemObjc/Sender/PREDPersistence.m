@@ -300,6 +300,8 @@
     [_fileManager removeItemAtPath:filePath error:&error];
     if (error) {
         PREDLogError(@"purge file %@ error %@", filePath, error);
+    } else {
+        PREDLogVerbose(@"purge file %@ succeeded", filePath);
     }
 }
 
@@ -310,6 +312,8 @@
         [_fileManager removeItemAtPath:filePath error:&error];
         if (error) {
             PREDLogError(@"purge file %@ error %@", filePath, error);
+        } else {
+            PREDLogVerbose(@"purge file %@ succeeded", filePath);
         }
     }
 }
@@ -319,6 +323,8 @@
         [_fileManager removeItemAtPath:filePath error:&error];
         if (error) {
             PREDLogError(@"purge file %@ error %@", filePath, error);
+        } else {
+            PREDLogVerbose(@"purge file %@ succeeded", filePath);
         }
     }];
 }

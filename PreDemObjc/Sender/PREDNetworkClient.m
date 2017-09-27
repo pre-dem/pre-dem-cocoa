@@ -29,7 +29,7 @@ static NSString* pred_appendTime(NSString* url){
         NSParameterAssert(baseURL);
         _baseURL = baseURL;
         _operationQueue = [[NSOperationQueue alloc] init];
-        _operationQueue.maxConcurrentOperationCount = 1;
+        _operationQueue.maxConcurrentOperationCount = 3;
     }
     return self;
 }

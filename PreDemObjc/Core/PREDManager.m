@@ -47,7 +47,7 @@ static NSString* app_id(NSString* appKey){
 + (void)startWithAppKey:(NSString *)appKey
           serviceDomain:(NSString *)serviceDomain
                complete:(PREDStartCompleteHandler)complete {
-    dispatch_async(dispatch_get_global_queue(0, DISPATCH_QUEUE_PRIORITY_DEFAULT), ^{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         [[self sharedPREDManager] startWithAppKey:appKey serviceDomain:serviceDomain complete:complete];
     });
 }
