@@ -18,7 +18,7 @@
     dispatch_semaphore_t _semaphore;
     CFRunLoopActivity _activity;
     NSInteger _countTime;
-    PREPLCrashReporter *_reporter;
+    PREDPLCrashReporter *_reporter;
     PREDPersistence *_persistence;
     QNUploadManager *_uploadManager;
 }
@@ -34,9 +34,9 @@ static void runLoopObserverCallBack(CFRunLoopObserverRef observer, CFRunLoopActi
 - (instancetype)initWithPersistence:(PREDPersistence *)persistence {
     if (self = [super init]) {
         PLCrashReporterSignalHandlerType signalHandlerType = PLCrashReporterSignalHandlerTypeBSD;
-        PREPLCrashReporterConfig *config = [[PREPLCrashReporterConfig alloc] initWithSignalHandlerType: signalHandlerType
+        PREDPLCrashReporterConfig *config = [[PREDPLCrashReporterConfig alloc] initWithSignalHandlerType: signalHandlerType
                                                                                  symbolicationStrategy: PLCrashReporterSymbolicationStrategyAll];
-        _reporter = [[PREPLCrashReporter alloc] initWithConfiguration:config];
+        _reporter = [[PREDPLCrashReporter alloc] initWithConfiguration:config];
         _persistence = persistence;
         _uploadManager = [[QNUploadManager alloc] init];
     }

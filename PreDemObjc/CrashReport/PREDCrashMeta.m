@@ -17,7 +17,7 @@
 
 - (instancetype)initWithData:(NSData *)data error:(NSError **)error {
     if (self = [super init]) {
-        PREPLCrashReport *report = [[PREPLCrashReport alloc] initWithData:data error:error];
+        PREDPLCrashReport *report = [[PREDPLCrashReport alloc] initWithData:data error:error];
         if (*error) {
             return self;
         }
