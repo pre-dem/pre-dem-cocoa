@@ -8,8 +8,7 @@
 
 #import "AppIDViewController.h"
 #import <PreDemObjc/PREDemObjc.h>
-
-#define kPreviousAppId  @"kPreviousAppId"
+#import <UICKeyChainStore/UICKeyChainStore.h>
 
 @interface AppIDViewController ()
 
@@ -22,7 +21,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    NSString *prevID = [[NSUserDefaults standardUserDefaults] stringForKey:kPreviousAppId];
+    UICKeyChainStore *keychain = [UICKeyChainStore keyChainStoreWithService:@"com.qiniu.pre.demo"];
+    NSString *prevID = keychain[@"appid"];
     if (prevID) {
         _textField.text = prevID;
     }
@@ -49,7 +49,8 @@
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    [[NSUserDefaults standardUserDefaults] setObject:_textField.text forKey:kPreviousAppId];
+    UICKeyChainStore *keychain = [UICKeyChainStore keyChainStoreWithService:@"com.qiniu.pre.demo"];
+    keychain[@"appid"] = _textField.text;
 #ifdef DEBUG
     [PREDManager startWithAppKey:_textField.text
                    serviceDomain:@"http://hriygkee.bq.cloudappl.com"
