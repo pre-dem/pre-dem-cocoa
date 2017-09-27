@@ -55,7 +55,7 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
 
 @implementation PREDCrashManager {
     PREDPersistence *_persistence;
-    PREPLCrashReporter *_plCrashReporter;
+    PREDPLCrashReporter *_plCrashReporter;
 }
 
 - (instancetype)initWithPersistence:(PREDPersistence *)persistence {
@@ -81,8 +81,9 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
         if (self.isOnDeviceSymbolicationEnabled) {
             symbolicationStrategy = PLCrashReporterSymbolicationStrategyAll;
         }
-        PREPLCrashReporterConfig *config = [[PREPLCrashReporterConfig alloc] initWithSignalHandlerType: signalHandlerType symbolicationStrategy: symbolicationStrategy];
-        _plCrashReporter = [[PREPLCrashReporter alloc] initWithConfiguration: config];
+        
+        PREDPLCrashReporterConfig *config = [[PREDPLCrashReporterConfig alloc] initWithSignalHandlerType: signalHandlerType symbolicationStrategy: symbolicationStrategy];
+        _plCrashReporter = [[PREDPLCrashReporter alloc] initWithConfiguration: config];
         
         // Check if we previously crashed
         
