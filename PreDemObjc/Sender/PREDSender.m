@@ -304,7 +304,7 @@
         return;
     }
     NSData *data = [NSData dataWithContentsOfFile:filePath];
-    if (!data || !data.length) {
+    if (!data.length) {
         PREDLogError(@"get stored data from %@ failed", filePath);
         return;
     }
