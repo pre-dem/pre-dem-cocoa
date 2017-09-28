@@ -6,7 +6,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "PREDHelper.h"
+#import "NSObject+Serialization.h"
 #import "PREDEvent.h"
 
 #define CUSTOM_EVENT_TYPE @"custom"
@@ -14,7 +14,7 @@
 @implementation PREDEvent
 
 - (NSString *)description {
-    return [PREDHelper getObjectData:self].description;
+    return [self toDic].description;
 }
 
 - (instancetype)initWithName:(NSString *)name content:(NSString *)content {

@@ -303,17 +303,22 @@
     if (!filePath) {
         return;
     }
+    NSData *data = [NSData dataWithContentsOfFile:filePath];
+    if (!data || !data.length) {
+        PREDLogError(@"get stored data from %@ failed", filePath);
+        return;
+    }
     NSError *error;
-    NSDictionary *dic = [_persistence getStoredMeta:filePath error:&error];
+    NSMutableDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
     if (error) {
-        PREDLogError(@"get stored data from %@ failed %@", filePath, error);
+        PREDLogError(@"parse stored data failed %@", error);
         [self->_persistence purgeFile:filePath];
         return;
     }
-    NSString *eventName = dic[@"name"];
-    NSData *data = [NSData dataWithContentsOfFile:filePath];
-    if (!data) {
-        PREDLogError(@"get stored data from %@ failed %@", filePath, error);
+    NSString *eventName = dic[@"name"] != [NSNull null] ? dic[@"name"] : @"";
+    if ([eventName isEqualToString:@""]) {
+        PREDLogWarn(@"invalid stored event");
+        [self->_persistence purgeFile:filePath];
         return;
     }
     __weak typeof(self) wSelf = self;
