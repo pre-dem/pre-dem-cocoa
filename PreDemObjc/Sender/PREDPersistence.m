@@ -158,6 +158,11 @@
 }
 
 - (void)persistCustomEventWithName:(NSString *)eventName event:(NSDictionary<NSString *, NSString *>*)event {
+    if (eventName == nil || [eventName isEqualToString:@""]) {
+        PREDLogWarn(@"event name should not be empty");
+        return;
+    }
+    
     NSError *error;
     NSData *contentData = [NSJSONSerialization dataWithJSONObject:event options:0 error:&error];
     if (error) {
