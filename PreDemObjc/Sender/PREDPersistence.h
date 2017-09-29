@@ -36,7 +36,14 @@
 - (NSMutableDictionary *)getLogMeta:(NSString *)filePath error:(NSError **)error;
 - (NSMutableDictionary *)getStoredMeta:(NSString *)filePath error:(NSError **)error;
 - (void)purgeFile:(NSString *)filePath;
-- (void)purgeAllAppInfo;
 - (void)purgeFiles:(NSArray<NSString *> *)filePaths;
+- (void)purgeAllAppInfo;
+- (void)purgeAllCrashMeta;
+- (void)purgeAllLagMeta;
+- (void)purgeAllLogMeta;
+- (void)purgeAllHttpMonitor;
+- (void)purgeAllNetDiag;
+- (void)purgeAllCustom;
+- (void)purgeAllPersistence;
 
 @end

@@ -335,6 +335,95 @@
         }
     }
 }
+
+- (void)purgeAllCrashMeta {
+    NSError *error;
+    for (NSString *fileName in [_fileManager enumeratorAtPath:_crashDir]) {
+        NSString *filePath = [NSString stringWithFormat:@"%@/%@", _crashDir, fileName];
+        [_fileManager removeItemAtPath:filePath error:&error];
+        if (error) {
+            PREDLogError(@"purge file %@ error %@", filePath, error);
+        } else {
+            PREDLogVerbose(@"purge file %@ succeeded", filePath);
+        }
+    }
+}
+
+- (void)purgeAllLagMeta {
+    NSError *error;
+    for (NSString *fileName in [_fileManager enumeratorAtPath:_lagDir]) {
+        NSString *filePath = [NSString stringWithFormat:@"%@/%@", _lagDir, fileName];
+        [_fileManager removeItemAtPath:filePath error:&error];
+        if (error) {
+            PREDLogError(@"purge file %@ error %@", filePath, error);
+        } else {
+            PREDLogVerbose(@"purge file %@ succeeded", filePath);
+        }
+    }
+}
+
+- (void)purgeAllLogMeta {
+    NSError *error;
+    for (NSString *fileName in [_fileManager enumeratorAtPath:_logDir]) {
+        NSString *filePath = [NSString stringWithFormat:@"%@/%@", _logDir, fileName];
+        [_fileManager removeItemAtPath:filePath error:&error];
+        if (error) {
+            PREDLogError(@"purge file %@ error %@", filePath, error);
+        } else {
+            PREDLogVerbose(@"purge file %@ succeeded", filePath);
+        }
+    }
+}
+
+- (void)purgeAllHttpMonitor {
+    NSError *error;
+    for (NSString *fileName in [_fileManager enumeratorAtPath:_httpDir]) {
+        NSString *filePath = [NSString stringWithFormat:@"%@/%@", _httpDir, fileName];
+        [_fileManager removeItemAtPath:filePath error:&error];
+        if (error) {
+            PREDLogError(@"purge file %@ error %@", filePath, error);
+        } else {
+            PREDLogVerbose(@"purge file %@ succeeded", filePath);
+        }
+    }
+}
+
+- (void)purgeAllNetDiag {
+    NSError *error;
+    for (NSString *fileName in [_fileManager enumeratorAtPath:_netDir]) {
+        NSString *filePath = [NSString stringWithFormat:@"%@/%@", _netDir, fileName];
+        [_fileManager removeItemAtPath:filePath error:&error];
+        if (error) {
+            PREDLogError(@"purge file %@ error %@", filePath, error);
+        } else {
+            PREDLogVerbose(@"purge file %@ succeeded", filePath);
+        }
+    }
+}
+
+- (void)purgeAllCustom {
+    NSError *error;
+    for (NSString *fileName in [_fileManager enumeratorAtPath:_customDir]) {
+        NSString *filePath = [NSString stringWithFormat:@"%@/%@", _customDir, fileName];
+        [_fileManager removeItemAtPath:filePath error:&error];
+        if (error) {
+            PREDLogError(@"purge file %@ error %@", filePath, error);
+        } else {
+            PREDLogVerbose(@"purge file %@ succeeded", filePath);
+        }
+    }
+}
+
+- (void)purgeAllPersistence {
+    [self purgeAllAppInfo];
+    [self purgeAllLagMeta];
+    [self purgeAllLogMeta];
+    [self purgeAllHttpMonitor];
+    [self purgeAllCustom];
+    [self purgeAllCrashMeta];
+    [self purgeAllNetDiag];
+}
+
 - (void)purgeFiles:(NSArray<NSString *> *)filePaths {
     __block NSError *error;
     [filePaths enumerateObjectsUsingBlock:^(NSString * _Nonnull filePath, NSUInteger idx, BOOL * _Nonnull stop) {
