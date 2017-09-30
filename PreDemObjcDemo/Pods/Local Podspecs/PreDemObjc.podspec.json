@@ -14,7 +14,7 @@
     "git": "https://github.com/pre-dem/pre-dem-objc.git",
     "tag": "v1.0.1"
   },
-  "source_files": "PreDemObjc/**/*.{h,m,mm}",
+  "source_files": "PreDemObjc/**/*.{h,m,mm,swift}",
   "public_header_files": "PreDemObjc/Public/*.h",
   "vendored_frameworks": "Vendor/*.framework",
   "frameworks": [
@@ -48,6 +48,9 @@
 
     ],
     "CocoaLumberjack": [
+
+    ],
+    "CocoaLumberjack/Swift": [
 
     ],
     "UICKeyChainStore": [

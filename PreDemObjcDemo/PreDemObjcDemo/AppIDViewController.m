@@ -26,8 +26,6 @@
     if (prevID) {
         _textField.text = prevID;
     }
-    UITapGestureRecognizer *g = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapRootview:)];
-    [self.view addGestureRecognizer:g];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -35,7 +33,7 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)tapRootview:(UIView *)view {
+- (IBAction)tapped:(id)sender {
     [_textField resignFirstResponder];
 }
 
