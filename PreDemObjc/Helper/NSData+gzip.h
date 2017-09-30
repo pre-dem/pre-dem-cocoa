@@ -12,9 +12,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface NSData (gzip)
 
-- (nullable NSData *)gzippedDataWithCompressionLevel:(float)level;
-- (nullable NSData *)gzippedData;
-- (nullable NSData *)gunzippedData;
+- (NSData *)gzippedDataWithCompressionLevel:(float)level;
+- (NSData *)gzippedData;
+- (NSData *)gunzippedData;
 
 @end
 
