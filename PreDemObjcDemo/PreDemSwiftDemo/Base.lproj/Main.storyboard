@@ -41,7 +41,7 @@
                                 <rect key="frame" x="20.5" y="159" width="280" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="FLg-jg-U0G"/>
-                                    <constraint firstAttribute="width" constant="280" id="gfu-XJ-eN5"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="280" id="gfu-XJ-eN5"/>
                                 </constraints>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
@@ -57,12 +57,16 @@
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="3FR-zp-qXc" firstAttribute="centerY" secondItem="rOl-8A-hDy" secondAttribute="centerY" constant="100" id="BAg-4p-5S6"/>
                             <constraint firstItem="3FR-zp-qXc" firstAttribute="centerX" secondItem="rOl-8A-hDy" secondAttribute="centerX" id="S93-yT-ZeX"/>
                             <constraint firstItem="Lu5-nS-rrg" firstAttribute="centerY" secondItem="rOl-8A-hDy" secondAttribute="centerY" constant="-100" id="Uqk-TA-nh5"/>
                             <constraint firstItem="Lu5-nS-rrg" firstAttribute="centerX" secondItem="rOl-8A-hDy" secondAttribute="centerX" id="h5e-8j-bGy"/>
                         </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="Ore-Qk-vrV" appends="YES" id="m6N-98-KPD"/>
+                        </connections>
                     </view>
                     <navigationItem key="navigationItem" id="01c-Pq-O0a"/>
                     <connections>
@@ -70,6 +74,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jor-26-Vs9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="Ore-Qk-vrV">
+                    <connections>
+                        <action selector="tappedWithSender:" destination="J3S-3h-4mt" id="Qt9-2g-RWP"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-838" y="45"/>
         </scene>
@@ -138,6 +147,7 @@
                             </pickerView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="6iu-Ah-PlK" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="0Mj-Ke-mrU"/>
                             <constraint firstItem="iZc-eD-4Yh" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="2za-lL-bop"/>
@@ -154,6 +164,9 @@
                             <constraint firstItem="a1F-JE-yhx" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="us1-rP-WCR"/>
                             <constraint firstItem="6iu-Ah-PlK" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="-40" id="x7b-DV-Yfu"/>
                         </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="nLO-vJ-6Y0" appends="YES" id="9bY-oA-JhF"/>
+                        </connections>
                     </view>
                     <navigationItem key="navigationItem" id="hX5-fa-XYI"/>
                     <connections>
@@ -162,6 +175,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="nLO-vJ-6Y0">
+                    <connections>
+                        <action selector="logTestWithSender:" destination="BYZ-38-t0r" id="hw7-pX-dcW"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-75" y="44"/>
         </scene>
