@@ -22,7 +22,6 @@ class AppIDViewController: UIViewController {
         if let prevID = UserDefaults.standard.string(forKey: kPreviousAppId) {
             textField.text = prevID;
         }
-        self.view.addGestureRecognizer(UITapGestureRecognizer.init(target: self, action: #selector(tapped(sender:))))
     }
     
     override func didReceiveMemoryWarning() {
@@ -30,7 +29,7 @@ class AppIDViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    func tapped(sender: UIView) {
+    @IBAction func tapped(sender: Any) {
         textField.resignFirstResponder()
     }
     
@@ -38,10 +37,18 @@ class AppIDViewController: UIViewController {
         UserDefaults.standard.set(textField.text, forKey: kPreviousAppId)
         var error: NSError?
         #if DEBUG
-            PREDManager.start(withAppKey: textField.text!, serviceDomain: "http://hriygkee.bq.cloudappl.com", error: &error)
+            PREDManager.start(withAppKey: textField.text!, serviceDomain: "http://hriygkee.bq.cloudappl.com", complete: { (success, error) in
+                if !success {
+                    PREDLogError("start PREDManager error" + (error?.localizedDescription)!)
+                }
+            })
             PREDManager.tag = "userid_debug"
         #else
-            PREDManager.start(withAppKey: textField.text!, serviceDomain: "http://jkbkolos.bq.cloudappl.com", error: &error)
+            PREDManager.start(withAppKey: textField.text!, serviceDomain: "http://jkbkolos.bq.cloudappl.com", complete: { (success, error) in
+                if !success {
+                    PREDLogError("start PREDManager error" + (error?.localizedDescription)!)
+                }
+            })
             PREDManager.tag = "userid_release"
         #endif
     }

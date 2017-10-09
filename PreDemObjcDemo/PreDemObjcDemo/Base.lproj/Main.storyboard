@@ -57,12 +57,16 @@
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="3FR-zp-qXc" firstAttribute="centerY" secondItem="rOl-8A-hDy" secondAttribute="centerY" constant="100" id="BAg-4p-5S6"/>
                             <constraint firstItem="3FR-zp-qXc" firstAttribute="centerX" secondItem="rOl-8A-hDy" secondAttribute="centerX" id="S93-yT-ZeX"/>
                             <constraint firstItem="Lu5-nS-rrg" firstAttribute="centerY" secondItem="rOl-8A-hDy" secondAttribute="centerY" constant="-100" id="Uqk-TA-nh5"/>
                             <constraint firstItem="Lu5-nS-rrg" firstAttribute="centerX" secondItem="rOl-8A-hDy" secondAttribute="centerX" id="h5e-8j-bGy"/>
                         </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="i4V-0j-x2f" appends="YES" id="8bo-59-yBS"/>
+                        </connections>
                     </view>
                     <navigationItem key="navigationItem" id="01c-Pq-O0a"/>
                     <connections>
@@ -70,6 +74,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jor-26-Vs9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="i4V-0j-x2f">
+                    <connections>
+                        <action selector="tapped:" destination="J3S-3h-4mt" id="9AS-lz-qI4"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-838" y="45"/>
         </scene>

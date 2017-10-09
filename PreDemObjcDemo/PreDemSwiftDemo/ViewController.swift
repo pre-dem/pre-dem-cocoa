@@ -84,6 +84,14 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         PREDManager.trackEvent(withName: "viewDidLoadEvent", event: ["helloKey": "worldValue", "hellonum": 7])
     }
     
+    @IBAction func logTest(sender: Any) {
+        PREDLogVerbose("verbose log test");
+        PREDLogDebug("debug log test");
+        PREDLogInfo("info log test");
+        PREDLogWarn("warn log test");
+        PREDLogError("error log test");
+    }
+    
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
