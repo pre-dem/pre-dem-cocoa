@@ -303,28 +303,26 @@
     if (!filePath) {
         return;
     }
+    NSData *data = [NSData dataWithContentsOfFile:filePath];
+    if (!data.length) {
+        PREDLogError(@"get stored data from %@ failed", filePath);
+        return;
+    }
     NSError *error;
-    NSDictionary *dic = [_persistence getStoredMeta:filePath error:&error];
+    NSMutableDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
     if (error) {
-        PREDLogError(@"get stored data from %@ failed %@", filePath, error);
+        PREDLogError(@"parse stored data failed %@", error);
         [self->_persistence purgeFile:filePath];
         return;
     }
-    NSString *eventName = dic[@"eventName"];
-    NSArray *events = dic[@"events"];
-    if (!eventName.length || !events.count) {
-        PREDLogError(@"get custom events %@ error, %@", filePath, dic);
-        [self->_persistence purgeFile:filePath];
-        return;
-    }
-    NSData *toSend = [NSJSONSerialization dataWithJSONObject:events options:0 error:&error];
-    if (error) {
-        PREDLogError(@"jsonize events %@ error %@", events, error);
+    NSString *eventName = dic[@"name"] != [NSNull null] ? dic[@"name"] : @"";
+    if ([eventName isEqualToString:@""]) {
+        PREDLogWarn(@"invalid stored event");
         [self->_persistence purgeFile:filePath];
         return;
     }
     __weak typeof(self) wSelf = self;
-    [_networkClient postPath:[NSString stringWithFormat:@"events/%@", eventName] data:toSend headers:@{@"Content-Type": @"application/json"} completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
+    [_networkClient postPath:[NSString stringWithFormat:@"events/%@", eventName] data:data headers:@{@"Content-Type": @"application/json"} completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
         __strong typeof(wSelf) strongSelf = wSelf;
         if (!error) {
             PREDLogDebug(@"Send custom events succeeded");
