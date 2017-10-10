@@ -108,7 +108,8 @@
             NSString *key = [dic valueForKey:@"key"];
             NSString *token = [dic valueForKey:@"token"];
             meta[@"crash_log_key"] = key;
-            [_uploadManager putData:[logString dataUsingEncoding:NSUTF8StringEncoding]
+            [strongSelf->_uploadManager
+             putData:[logString dataUsingEncoding:NSUTF8StringEncoding]
              key:key
              token: token
              complete:^(QNResponseInfo *info, NSString *key, NSDictionary *resp) {
@@ -162,7 +163,7 @@
             NSString *key = [dic valueForKey:@"key"];
             NSString *token = [dic valueForKey:@"token"];
             meta[@"lag_log_key"] = key;
-            [_uploadManager
+            [strongSelf->_uploadManager
              putData:[logString dataUsingEncoding:NSUTF8StringEncoding]
              key:key
              token: token
@@ -218,7 +219,7 @@
             NSString *key = [dic valueForKey:@"key"];
             NSString *token = [dic valueForKey:@"token"];
             meta[@"log_key"] = key;
-            [_uploadManager
+            [strongSelf->_uploadManager
              putData:logData
              key:key
              token: token
