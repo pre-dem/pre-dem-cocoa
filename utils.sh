@@ -3,6 +3,7 @@
 PATH=/usr/libexec:$PATH
 
 COMMAND="$1"
+cd $(dirname "$0")
 
 case "$COMMAND" in
 
