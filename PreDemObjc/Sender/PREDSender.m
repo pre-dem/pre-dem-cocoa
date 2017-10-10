@@ -6,10 +6,11 @@
 //
 //
 
+#import <Qiniu/QiniuSDK.h>
+
 #import "PREDSender.h"
 #import "PREDHelper.h"
 #import "PREDLogger.h"
-#import "QiniuSDK.h"
 #import "PREDConfigManager.h"
 #import "NSData+gzip.h"
 #import "NSObject+Serialization.h"
@@ -25,8 +26,15 @@
 - (instancetype)initWithPersistence:(PREDPersistence *)persistence baseUrl:(NSURL *)baseUrl {
     if (self = [super init]) {
         _persistence = persistence;
-        _uploadManager = [[QNUploadManager alloc] init];
         _networkClient = [[PREDNetworkClient alloc] initWithBaseURL:baseUrl];
+        QNConfiguration *c = [QNConfiguration build:^(QNConfigurationBuilder *builder) {
+            builder.zone = [QNFixedZone zone0];
+#ifdef PREDEM_STAGING
+            builder.zone = [QNFixedZone createWithHost:@[@"10.200.20.23:5010"] ];
+            builder.useHttps = NO;
+#endif
+        }];
+        _uploadManager = [QNUploadManager sharedInstanceWithConfiguration:c];
     }
     return self;
 }
@@ -100,8 +108,7 @@
             NSString *key = [dic valueForKey:@"key"];
             NSString *token = [dic valueForKey:@"token"];
             meta[@"crash_log_key"] = key;
-            [strongSelf->_uploadManager
-             putData:[logString dataUsingEncoding:NSUTF8StringEncoding]
+            [_uploadManager putData:[logString dataUsingEncoding:NSUTF8StringEncoding]
              key:key
              token: token
              complete:^(QNResponseInfo *info, NSString *key, NSDictionary *resp) {
@@ -155,7 +162,7 @@
             NSString *key = [dic valueForKey:@"key"];
             NSString *token = [dic valueForKey:@"token"];
             meta[@"lag_log_key"] = key;
-            [strongSelf->_uploadManager
+            [_uploadManager
              putData:[logString dataUsingEncoding:NSUTF8StringEncoding]
              key:key
              token: token
@@ -211,7 +218,7 @@
             NSString *key = [dic valueForKey:@"key"];
             NSString *token = [dic valueForKey:@"token"];
             meta[@"log_key"] = key;
-            [strongSelf->_uploadManager
+            [_uploadManager
              putData:logData
              key:key
              token: token
