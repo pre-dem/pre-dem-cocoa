@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "PreDemObjc"
-  s.version      = "1.0.1"
+  s.version      = `sh utils.sh get-release-version`
   s.summary      = "A short description of PreDemObjc."
   s.homepage     = "https://github.com/pre-dem/pre-dem-objc"
   s.license      = "MIT"
