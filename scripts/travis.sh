@@ -12,6 +12,7 @@ prepare_sign_env()
   openssl aes-256-cbc -K $encrypted_321b310503f8_key -iv $encrypted_321b310503f8_iv -in encrypt/apple.cer.enc -out encrypt/apple.cer -d
   openssl aes-256-cbc -K $encrypted_321b310503f8_key -iv $encrypted_321b310503f8_iv -in encrypt/preengineeringPreDemObjcDemo_InHouse.mobileprovision.enc -out encrypt/preengineeringPreDemObjcDemo_InHouse.mobileprovision -d
   ./scripts/add-key.sh
+  echo "keys and certs successfully added"
 }
 
 # alpha
