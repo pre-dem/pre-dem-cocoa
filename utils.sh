@@ -24,14 +24,17 @@ case "$COMMAND" in
         dst_version="$2"
         sdk_version_file="PreDemObjc/Resources/Version.plist"
         demo_version_files="PreDemObjcDemo/PreDemObjcDemo/Info.plist PreDemObjcDemo/PreDemSwiftDemo/Info.plist"
+        git_commit=`git rev-parse --short HEAD`
 
         if [ -z "$dst_version" ]; then
             echo "You must specify a version."
             exit 1
         fi
             PlistBuddy -c "Set :Version $dst_version" "$sdk_version_file"
+            PlistBuddy -c "Set :Build $git_commit" "$sdk_version_file"
+
         for version_file in $demo_version_files; do
-            PlistBuddy -c "Set :CFBundleVersion $dst_version" "$version_file"
+            PlistBuddy -c "Set :CFBundleVersion $git_commit" "$version_file"
             PlistBuddy -c "Set :CFBundleShortVersionString $dst_version" "$version_file"
             echo "$version_file"
         done

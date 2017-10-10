@@ -28,7 +28,7 @@ UIPickerViewDelegate
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-    self.versionLable.text = PREDManager.version;
+    self.versionLable.text = [NSString stringWithFormat:@"%@(%@)", PREDManager.version, PREDManager.build];
     self.logLevelPicker.dataSource = self;
     self.logLevelPicker.delegate = self;
     self.logPickerKeys = @[
