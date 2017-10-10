@@ -10,7 +10,6 @@
 #import <CrashReporter/CrashReporter.h>
 #import "PREDCrashReportTextFormatter.h"
 #import "PREDHelper.h"
-#import <Qiniu/QiniuSDK.h>
 #import "PREDLogger.h"
 
 @implementation PREDLagMonitorController {
@@ -20,7 +19,6 @@
     NSInteger _countTime;
     PREDPLCrashReporter *_reporter;
     PREDPersistence *_persistence;
-    QNUploadManager *_uploadManager;
 }
 
 static void runLoopObserverCallBack(CFRunLoopObserverRef observer, CFRunLoopActivity activity, void *info) {
@@ -38,7 +36,6 @@ static void runLoopObserverCallBack(CFRunLoopObserverRef observer, CFRunLoopActi
                                                                                  symbolicationStrategy: PLCrashReporterSymbolicationStrategyAll];
         _reporter = [[PREDPLCrashReporter alloc] initWithConfiguration:config];
         _persistence = persistence;
-        _uploadManager = [[QNUploadManager alloc] init];
     }
     return self;
 }

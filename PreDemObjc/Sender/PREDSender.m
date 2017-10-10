@@ -6,10 +6,11 @@
 //
 //
 
+#import <Qiniu/QiniuSDK.h>
+
 #import "PREDSender.h"
 #import "PREDHelper.h"
 #import "PREDLogger.h"
-#import "QiniuSDK.h"
 #import "PREDConfigManager.h"
 #import "NSData+gzip.h"
 #import "NSObject+Serialization.h"
@@ -25,8 +26,15 @@
 - (instancetype)initWithPersistence:(PREDPersistence *)persistence baseUrl:(NSURL *)baseUrl {
     if (self = [super init]) {
         _persistence = persistence;
-        _uploadManager = [[QNUploadManager alloc] init];
         _networkClient = [[PREDNetworkClient alloc] initWithBaseURL:baseUrl];
+        QNConfiguration *c = [QNConfiguration build:^(QNConfigurationBuilder *builder) {
+            builder.zone = [QNFixedZone zone0];
+#ifdef PREDEM_STAGING
+            builder.zone = [QNFixedZone createWithHost:@[@"10.200.20.23:5010"] ];
+            builder.useHttps = NO;
+#endif
+        }];
+        _uploadManager = [QNUploadManager sharedInstanceWithConfiguration:c];
     }
     return self;
 }

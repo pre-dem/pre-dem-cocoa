@@ -9,7 +9,6 @@
 #import "PREDLogger.h"
 #import "PREDHelper.h"
 #import "PREDNetworkClient.h"
-#import <Qiniu/QiniuSDK.h>
 #import "PREDLogFormatter.h"
 #import "PREDLogFileManager.h"
 #import "PREDLoggerPrivate.h"
@@ -24,7 +23,6 @@
     PREDLogLevel _fileLogLevel;
     DDFileLogger *_fileLogger;
     PREDPersistence *_persistence;
-    QNUploadManager *_uploadManager;
     PREDLogFileManager *_logFileManager;
     PREDLogFormatter *_fileLogFormatter;
     PREDLogMeta *_currentMeta;
@@ -47,7 +45,6 @@
 - (instancetype)init {
     if (self = [super init]) {
         _ttyLogLevel = (PREDLogLevel)DefaltTtyLogLevel;
-        _uploadManager = [[QNUploadManager alloc] init];
         _logFileManager = [[PREDLogFileManager alloc] initWithLogsDirectory:[NSString stringWithFormat:@"%@/%@", PREDHelper.cacheDirectory, @"logfiles"]];
         _logFileManager.delegate = self;
         _logFileManager.maximumNumberOfLogFiles = 0;
