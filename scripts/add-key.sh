@@ -9,10 +9,6 @@
 # Create a custom keychain
 security create-keychain -p travis ios-build.keychain
 
-# avoid been asked to enter password while signing product
-# see https://github.com/fastlane/fastlane/issues/7104
-security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k travis ios-build.keychain
-
 # Make the custom keychain default, so xcodebuild will use it for signing
 security default-keychain -s ios-build.keychain
 
@@ -31,4 +27,9 @@ security import ./encrypt/dist.p12 -k ~/Library/Keychains/ios-build.keychain -P 
 # Put the provisioning profile in place
 mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
 cp "./encrypt/preengineeringPreDemObjcDemo_InHouse.mobileprovision" ~/Library/MobileDevice/Provisioning\ Profiles/
+
+# avoid been asked to enter password while signing product
+# see https://github.com/fastlane/fastlane/issues/7104
+security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k travis ios-build.keychain
+
 exit $?
