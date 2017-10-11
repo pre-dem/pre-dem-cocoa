@@ -13,7 +13,7 @@
 #import "PREDError.h"
 #import "NSData+gzip.h"
 
-#define PREDMaxCacheFileSize    512 * 1024  // 512MB
+#define PREDMaxCacheFileSize    512 * 1024  // 512KB
 
 @implementation PREDPersistence {
     NSString *_appInfoDir;
@@ -454,29 +454,34 @@
 
 - (NSFileHandle *)getCustomFileHandle {
     if (_customFileHandle) {
-        return _customFileHandle;
-    } else {
-        NSString *availableFile;
-        for (NSString *filePath in [_fileManager enumeratorAtPath:_customDir]) {
-            NSString *normalFilePattern = @"^[0-9]+\\.?[0-9]*$";
-            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", normalFilePattern];
-            if ([predicate evaluateWithObject:filePath]) {
-                availableFile = filePath;
-                break;
-            }
+        if (_customFileHandle.offsetInFile <= PREDMaxCacheFileSize) {
+            return _customFileHandle;
+        } else {
+            [_customFileHandle closeFile];
+            _customFileHandle = nil;
         }
-        if (!availableFile) {
-            availableFile = [NSString stringWithFormat:@"%@/%f", _customDir, [[NSDate date] timeIntervalSince1970]];
-            BOOL success = [_fileManager createFileAtPath:availableFile contents:nil attributes:nil];
-            if (!success) {
-                PREDLogError(@"create file failed %@", availableFile);
-                return nil;
-            }
-        }
-        _customFileHandle = [NSFileHandle fileHandleForUpdatingAtPath:availableFile];
-        [_customFileHandle seekToEndOfFile];
-        return _customFileHandle;
     }
+    
+    NSString *availableFile;
+    for (NSString *filePath in [_fileManager enumeratorAtPath:_customDir]) {
+        NSString *normalFilePattern = @"^[0-9]+\\.?[0-9]*$";
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", normalFilePattern];
+        if ([predicate evaluateWithObject:filePath]) {
+            availableFile = filePath;
+            break;
+        }
+    }
+    if (!availableFile) {
+        availableFile = [NSString stringWithFormat:@"%@/%f", _customDir, [[NSDate date] timeIntervalSince1970]];
+        BOOL success = [_fileManager createFileAtPath:availableFile contents:nil attributes:nil];
+        if (!success) {
+            PREDLogError(@"create file failed %@", availableFile);
+            return nil;
+        }
+    }
+    _customFileHandle = [NSFileHandle fileHandleForUpdatingAtPath:availableFile];
+    [_customFileHandle seekToEndOfFile];
+    return _customFileHandle;
 }
 
 @end
