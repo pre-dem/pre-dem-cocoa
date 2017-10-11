@@ -254,7 +254,7 @@
         for (NSString *filePath in [_fileManager enumeratorAtPath:_customDir]) {
             NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", @"^[0-9]+\\.?[0-9]*\\.archive$"];
             if ([predicate evaluateWithObject:filePath]) {
-                archivedPath = filePath;
+                archivedPath = [NSString stringWithFormat:@"%@/%@", _customDir, filePath];
             }
         }
         // if no archived file found
