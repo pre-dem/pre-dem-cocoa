@@ -20,7 +20,7 @@
 + (instancetype)eventWithName:(NSString *)name type:(NSString *)type contentDic:(NSDictionary *)contentDic {
     PREDEvent *event = [[PREDEvent alloc] init];
     if (event) {
-        if (name == nil || [name isEqualToString:@""]) {
+        if (!name.length) {
             PREDLogError(@"event name should not be empty");
             return nil;
         }
@@ -30,7 +30,7 @@
         if (error) {
             PREDLogError(@"jsonize custom events error: %@", error);
             return nil;
-        } else if ([contentData length] == 0) {
+        } else if (!contentData.length) {
             PREDLogWarn(@"discard empty custom event");
             return nil;
         }
