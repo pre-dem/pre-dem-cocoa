@@ -6,29 +6,43 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "NSObject+Serialization.h"
 #import "PREDEvent.h"
+#import "PREDLogger.h"
 
 #define CUSTOM_EVENT_TYPE @"custom"
 
 @implementation PREDEvent
 
-- (NSString *)description {
-    return [self toDic].description;
++ (instancetype)eventWithName:(NSString *)name contentDic:(NSDictionary *)contentDic {
+    return [self eventWithName:name type:CUSTOM_EVENT_TYPE contentDic:contentDic];
 }
 
-- (instancetype)initWithName:(NSString *)name content:(NSString *)content {
-    return [self initWithName:name content:content type:CUSTOM_EVENT_TYPE];
-}
-
-- (instancetype)initWithName:(NSString *)name content:(NSString *)content type:(NSString *)type {
-    if (self = [super init]) {
-        _name = name;
-        _content = content;
-        _type = type;
++ (instancetype)eventWithName:(NSString *)name type:(NSString *)type contentDic:(NSDictionary *)contentDic {
+    PREDEvent *event = [[PREDEvent alloc] init];
+    if (event) {
+        if (name == nil || [name isEqualToString:@""]) {
+            PREDLogError(@"event name should not be empty");
+            return nil;
+        }
+        
+        NSError *error;
+        NSData *contentData = [NSJSONSerialization dataWithJSONObject:contentDic options:0 error:&error];
+        if (error) {
+            PREDLogError(@"jsonize custom events error: %@", error);
+            return nil;
+        } else if ([contentData length] == 0) {
+            PREDLogWarn(@"discard empty custom event");
+            return nil;
+        }
+        
+        NSString *content = [[NSString alloc] initWithData:contentData encoding:NSUTF8StringEncoding];
+        
+        event->_name = name;
+        event->_content = content;
+        event->_type = type;
     }
     
-    return self;
+    return event;
 }
 
 @end

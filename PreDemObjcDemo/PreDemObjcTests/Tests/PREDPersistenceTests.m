@@ -128,6 +128,60 @@
     [_persistence purgeFile:path];
 }
 
+- (void)testCustomEvent {
+    NSError *error;
+    [_persistence purgeAllCustom];
+    
+    NSDictionary *dict1 = @{
+                           @"stringKey": [NSString stringWithFormat:@"test\t_\n%d", arc4random_uniform(100)],
+                           @"longKey": @(arc4random_uniform(100)),
+                           @"floatKey": @(arc4random_uniform(10000)/100.0)
+                           };
+    PREDEvent *event1 = [PREDEvent eventWithName:@"test\t_\nios\t_\nevent_1" contentDic:dict1];
+    [_persistence persistCustomEvent:event1];
+    
+    NSDictionary *dict2 = @{
+                            @"stringKey": [NSString stringWithFormat:@"test\t_\n%d", arc4random_uniform(100)],
+                            @"longKey": @(arc4random_uniform(100)),
+                            @"floatKey": @(arc4random_uniform(10000)/100.0)
+                            };
+    PREDEvent *event2 = [PREDEvent eventWithName:@"test\t_\nios\t_\nevent_2" contentDic:dict2];
+    [_persistence persistCustomEvent:event2];
+    
+    NSString *path = [_persistence nextArchivedCustomEventsPath];
+    XCTAssertNotEqual(path.length, 0);
+    NSData *data = [NSData dataWithContentsOfFile:path];
+    XCTAssertNotEqual(data.length, 0);
+    NSString *eventString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    NSArray *components = [eventString componentsSeparatedByString:@"\n"];
+    XCTAssertEqual(components.count, 3);
+    
+    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:[components[0] dataUsingEncoding:NSUTF8StringEncoding] options:0 error:&error];
+    XCTAssertNotNil(dic);
+    XCTAssertNil(error);
+    unsigned int count, count1, count2;
+    class_copyPropertyList(PREDEvent.class, &count1);
+    class_copyPropertyList(PREDEvent.superclass, &count2);
+    count = count1 + count2;
+    XCTAssertEqual(count, dic.count);
+    [dic enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, NSString * _Nonnull obj, BOOL * _Nonnull stop) {
+        XCTAssertTrue([[event1 valueForKey:key] isEqualToString:obj]);
+    }];
+    
+    dic = [NSJSONSerialization JSONObjectWithData:[components[1] dataUsingEncoding:NSUTF8StringEncoding] options:0 error:&error];
+    XCTAssertNotNil(dic);
+    XCTAssertNil(error);
+    class_copyPropertyList(PREDEvent.class, &count1);
+    class_copyPropertyList(PREDEvent.superclass, &count2);
+    count = count1 + count2;
+    XCTAssertEqual(count, dic.count);
+    [dic enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, NSString * _Nonnull obj, BOOL * _Nonnull stop) {
+        XCTAssertTrue([[event2 valueForKey:key] isEqualToString:obj]);
+    }];
+    
+    [_persistence purgeFile:path];
+}
+
 - (void)testPerformanceExample {
     // This is an example of a performance test case.
     [self measureBlock:^{

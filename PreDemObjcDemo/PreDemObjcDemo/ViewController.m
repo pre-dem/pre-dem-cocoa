@@ -90,7 +90,8 @@ UIPickerViewDelegate
                            @"longKey": @(rand),
                            @"floatKey": @1.5
                            };
-    [PREDManager trackEventWithName:@"test_ios_event_4" event:dict];
+    PREDEvent *event = [PREDEvent eventWithName:@"test_ios_event_4" contentDic:dict];
+    [PREDManager trackEvent:event];
 }
 
 - (IBAction)blockMainThread:(id)sender {

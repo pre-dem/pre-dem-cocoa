@@ -8,8 +8,13 @@
 
 #import "PREDBaseModel.h"
 #import "PREDHelper.h"
+#import "NSObject+Serialization.h"
 
 @implementation PREDBaseModel
+
+- (NSString *)description {
+    return [self toDic].description;
+}
 
 - (instancetype)init {
     if (self = [super init]) {

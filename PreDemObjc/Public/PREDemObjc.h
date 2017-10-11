@@ -10,3 +10,4 @@
 #import "PREDManager.h"
 #import "PREDNetDiagResult.h"
 #import "PREDLogger.h"
+#import "PREDEvent.h"

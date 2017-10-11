@@ -58,23 +58,12 @@ static NSString* app_id(NSString* appKey){
     [[self sharedPREDManager] diagnose:host complete:complete];
 }
 
-+ (void)trackEventWithName:(NSString *)eventName
-                     event:(NSDictionary *)event {
-    if (event == nil || eventName == nil) {
++ (void)trackEvent:(PREDEvent *_Nonnull)event {
+    if (!event) {
+        PREDLogError(@"event should not be nil");
         return;
     }
-    [[self sharedPREDManager]->_persistence persistCustomEventWithName:eventName event:event];
-}
-
-+ (void)trackEventsWithName:(NSString *)eventName
-                     events:(NSArray<NSDictionary *>*)events{
-    if (events == nil || events.count == 0 || eventName == nil) {
-        return;
-    }
-    
-    for (NSDictionary * event in events) {
-        [[self sharedPREDManager]->_persistence persistCustomEventWithName:eventName event:event];
-    }
+    [[self sharedPREDManager]->_persistence persistCustomEvent:event];
 }
 
 + (NSString *)tag {

@@ -13,6 +13,7 @@
 #import "PREDHTTPMonitorModel.h"
 #import "PREDNetDiagResult.h"
 #import "PREDAppInfo.h"
+#import "PREDEvent.h"
 
 @interface PREDPersistence : NSObject
 
@@ -22,7 +23,7 @@
 - (void)persistLogMeta:(PREDLogMeta *)logMeta;
 - (void)persistHttpMonitor:(PREDHTTPMonitorModel *)httpMonitor;
 - (void)persistNetDiagResult:(PREDNetDiagResult *)netDiagResult;
-- (void)persistCustomEventWithName:(NSString *)eventName event:(NSDictionary<NSString *, NSString *>*)event;
+- (void)persistCustomEvent:(PREDEvent *)event;
 
 - (NSString *)nextAppInfoPath;
 - (NSString *)nextCrashMetaPath;
@@ -31,7 +32,7 @@
 - (NSString *)nextHttpMonitorPath;
 - (NSArray *)allHttpMonitorPaths;
 - (NSString *)nextNetDiagPath;
-- (NSString *)nextCustomEventsPath;
+- (NSString *)nextArchivedCustomEventsPath;
 
 - (NSMutableDictionary *)getLogMeta:(NSString *)filePath error:(NSError **)error;
 - (NSMutableDictionary *)getStoredMeta:(NSString *)filePath error:(NSError **)error;
