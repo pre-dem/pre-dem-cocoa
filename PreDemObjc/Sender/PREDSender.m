@@ -316,7 +316,6 @@
         PREDLogError(@"get stored data from %@ failed", filePath);
         return;
     }
-    NSLog(@"%@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
     __weak typeof(self) wSelf = self;
     [_networkClient postPath:@"events" data:data headers:@{@"Content-Type": @"application/json"} completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
         __strong typeof(wSelf) strongSelf = wSelf;
