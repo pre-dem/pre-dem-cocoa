@@ -15,7 +15,7 @@
 #import "NSData+gzip.h"
 #import "NSObject+Serialization.h"
 
-#define PREDSendInterval    5
+#define PREDSendInterval    30
 
 @implementation PREDSender {
     PREDPersistence *_persistence;
