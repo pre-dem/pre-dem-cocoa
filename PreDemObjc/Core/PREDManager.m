@@ -58,7 +58,7 @@ static NSString* app_id(NSString* appKey){
     [[self sharedPREDManager] diagnose:host complete:complete];
 }
 
-+ (void)trackEvent:(PREDEvent *_Nonnull)event {
++ (void)trackEvent:(PREDEvent *)event {
     if (!event) {
         PREDLogError(@"event should not be nil");
         return;
