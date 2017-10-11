@@ -51,7 +51,7 @@
     keychain[@"appid"] = _textField.text;
 #ifdef DEBUG
     [PREDManager startWithAppKey:_textField.text
-                   serviceDomain:@"http://hriygkee.bq.cloudappl.com"
+                   serviceDomain:@"http://bgcn4yyud3ui.dem.qbox.net"
                         complete:^(BOOL succeess, NSError * _Nullable error) {
                             if (error) {
                                 NSLog(@"initialize PREDManager error: %@", error);
@@ -61,7 +61,7 @@
     PREDLogger.ttyLogLevel = PREDLogLevelWarning;
 #else
     [PREDManager startWithAppKey:_textField.text
-                   serviceDomain:@"http://jkbkolos.bq.cloudappl.com"
+                   serviceDomain:@"http://bgcn4yyud3ui.dem.qbox.net"
                         complete:^(BOOL succeess, NSError * _Nullable error) {
                             if (error) {
                                 NSLog(@"initialize PREDManager error: %@", error);
