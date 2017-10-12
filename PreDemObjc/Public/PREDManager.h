@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "PREDDefines.h"
+#import "PREDEvent.h"
 
 @interface PREDManager: NSObject
 
@@ -37,11 +38,7 @@
 + (void)diagnose:(NSString *_Nonnull)host
         complete:(PREDNetDiagCompleteHandler _Nullable)complete;
 
-+ (void)trackEventWithName:(NSString *_Nonnull)eventName
-                     event:(NSDictionary *_Nonnull)event;
-
-+ (void)trackEventsWithName:(NSString *_Nonnull)eventName
-                     events:(NSArray<NSDictionary *>*_Nonnull)events;
++ (void)trackEvent:(PREDEvent *_Nonnull)event;
 
 ///-----------------------------------------------------------------------------
 /// @name SDK meta data

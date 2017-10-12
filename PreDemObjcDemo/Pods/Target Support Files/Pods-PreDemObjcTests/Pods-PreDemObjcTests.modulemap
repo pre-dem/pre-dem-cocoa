@@ -1,0 +1,6 @@
+framework module Pods_PreDemObjcTests {
+  umbrella header "Pods-PreDemObjcTests-umbrella.h"
+
+  export *
+  module * { export * }
+}

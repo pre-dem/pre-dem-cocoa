@@ -97,6 +97,7 @@ static void runLoopObserverCallBack(CFRunLoopObserverRef observer, CFRunLoopActi
         PREDLogError(@"generate lag report error: %@", error);
         return;
     }
+    
     PREDLagMeta *meta = [[PREDLagMeta alloc] initWithData:data error:&error];
     if (error) {
         PREDLogError(@"parse lag report error: %@", error);

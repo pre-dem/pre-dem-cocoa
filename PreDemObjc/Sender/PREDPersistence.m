@@ -11,8 +11,9 @@
 #import "PREDLogger.h"
 #import "NSObject+Serialization.h"
 #import "PREDError.h"
-#import "PREDEventPrivate.h"
 #import "NSData+gzip.h"
+
+#define PREDMaxCacheFileSize    512 * 1024  // 512KB
 
 @implementation PREDPersistence {
     NSString *_appInfoDir;
@@ -23,6 +24,8 @@
     NSString *_netDir;
     NSString *_customDir;
     NSFileManager *_fileManager;
+    NSFileHandle *_customFileHandle;
+    dispatch_queue_t _customEventQueue;
     PREDLogMeta *_lastLogMeta;
     NSString *_lastLogMetaPath;
 }
@@ -37,7 +40,8 @@
         _httpDir = [NSString stringWithFormat:@"%@/%@", PREDHelper.cacheDirectory, @"http"];
         _netDir = [NSString stringWithFormat:@"%@/%@", PREDHelper.cacheDirectory, @"net"];
         _customDir = [NSString stringWithFormat:@"%@/%@", PREDHelper.cacheDirectory, @"custom"];
-
+        _customEventQueue = dispatch_queue_create("predem_custom_event", DISPATCH_QUEUE_SERIAL);
+        
         NSError *error;
         [_fileManager createDirectoryAtPath:_appInfoDir withIntermediateDirectories:YES attributes:nil error:&error];
         if (error) {
@@ -157,34 +161,23 @@
     }
 }
 
-- (void)persistCustomEventWithName:(NSString *)eventName event:(NSDictionary<NSString *, NSString *>*)event {
-    if (eventName == nil || [eventName isEqualToString:@""]) {
-        PREDLogWarn(@"event name should not be empty");
-        return;
-    }
-    
-    NSError *error;
-    NSData *contentData = [NSJSONSerialization dataWithJSONObject:event options:0 error:&error];
-    if (error) {
-        PREDLogError(@"jsonize custom events error: %@", error);
-        return;
-    } else if ([contentData length] == 0) {
-        PREDLogInfo(@"discard empty custom event");
-        return;
-    }
-    
-    NSString *content = [NSString stringWithUTF8String:[contentData bytes]];
-    PREDEvent *eventObj = [[PREDEvent alloc] initWithName:eventName content:content];
-    NSData *toSave = [eventObj toJsonWithError:&error];
-    if (error) {
-        PREDLogError(@"jsonize custom events error: %@", error);
-        return;
-    }
-    NSString *fileName = [NSString stringWithFormat:@"%f-%u", [[NSDate date] timeIntervalSince1970], arc4random()];
-    BOOL success = [toSave writeToFile:[NSString stringWithFormat:@"%@/%@", _customDir, fileName] atomically:NO];
-    if (!success) {
-        PREDLogError(@"write custom events to file %@ failed", fileName);
-    }
+- (void)persistCustomEvent:(PREDEvent *)event {
+    dispatch_async(_customEventQueue, ^{
+        NSError *error;
+        NSData *toSave = [event toJsonWithError:&error];
+        if (error) {
+            PREDLogError(@"jsonize custom events error: %@", error);
+            return;
+        }
+        
+        NSFileHandle *handle = [self getCustomFileHandle];
+        if (!handle) {
+            PREDLogError(@"no file handle drop custom data");
+            return;
+        }
+        [handle writeData:toSave];
+        [handle writeData:[@"\n" dataUsingEncoding:NSUTF8StringEncoding]];
+    });
 }
 
 - (NSString *)nextAppInfoPath {
@@ -254,13 +247,36 @@
     }
 }
 
-- (NSString *)nextCustomEventsPath {
-    NSArray *files = [_fileManager enumeratorAtPath:_customDir].allObjects;
-    if (files.count == 0) {
-        return nil;
-    } else {
-        return [NSString stringWithFormat:@"%@/%@", _customDir, files[0]];
-    }
+// do not use this method in _customEventQueue which will cause dead lock
+- (NSString *)nextArchivedCustomEventsPath {
+    __block NSString *archivedPath;
+    dispatch_sync(_customEventQueue, ^{
+        for (NSString *filePath in [_fileManager enumeratorAtPath:_customDir]) {
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", @"^[0-9]+\\.?[0-9]*\\.archive$"];
+            if ([predicate evaluateWithObject:filePath]) {
+                archivedPath = [NSString stringWithFormat:@"%@/%@", _customDir, filePath];
+            }
+        }
+        // if no archived file found
+        for (NSString *filePath in [_fileManager enumeratorAtPath:_customDir]) {
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", @"^[0-9]+\\.?[0-9]*$"];
+            if ([predicate evaluateWithObject:filePath]) {
+                if (_customFileHandle) {
+                    [_customFileHandle closeFile];
+                    _customFileHandle = nil;
+                }
+                NSError *error;
+                archivedPath = [NSString stringWithFormat:@"%@/%@.archive", _customDir, filePath];
+                [_fileManager moveItemAtPath:[NSString stringWithFormat:@"%@/%@", _customDir, filePath] toPath:archivedPath error:&error];
+                if (error) {
+                    archivedPath = nil;
+                    NSLog(@"archive file %@ fail", filePath);
+                    continue;
+                }
+            }
+        }
+    });
+    return archivedPath;
 }
 
 - (NSMutableDictionary *)getLogMeta:(NSString *)filePath error:(NSError **)error {
@@ -335,6 +351,95 @@
         }
     }
 }
+
+- (void)purgeAllCrashMeta {
+    NSError *error;
+    for (NSString *fileName in [_fileManager enumeratorAtPath:_crashDir]) {
+        NSString *filePath = [NSString stringWithFormat:@"%@/%@", _crashDir, fileName];
+        [_fileManager removeItemAtPath:filePath error:&error];
+        if (error) {
+            PREDLogError(@"purge file %@ error %@", filePath, error);
+        } else {
+            PREDLogVerbose(@"purge file %@ succeeded", filePath);
+        }
+    }
+}
+
+- (void)purgeAllLagMeta {
+    NSError *error;
+    for (NSString *fileName in [_fileManager enumeratorAtPath:_lagDir]) {
+        NSString *filePath = [NSString stringWithFormat:@"%@/%@", _lagDir, fileName];
+        [_fileManager removeItemAtPath:filePath error:&error];
+        if (error) {
+            PREDLogError(@"purge file %@ error %@", filePath, error);
+        } else {
+            PREDLogVerbose(@"purge file %@ succeeded", filePath);
+        }
+    }
+}
+
+- (void)purgeAllLogMeta {
+    NSError *error;
+    for (NSString *fileName in [_fileManager enumeratorAtPath:_logDir]) {
+        NSString *filePath = [NSString stringWithFormat:@"%@/%@", _logDir, fileName];
+        [_fileManager removeItemAtPath:filePath error:&error];
+        if (error) {
+            PREDLogError(@"purge file %@ error %@", filePath, error);
+        } else {
+            PREDLogVerbose(@"purge file %@ succeeded", filePath);
+        }
+    }
+}
+
+- (void)purgeAllHttpMonitor {
+    NSError *error;
+    for (NSString *fileName in [_fileManager enumeratorAtPath:_httpDir]) {
+        NSString *filePath = [NSString stringWithFormat:@"%@/%@", _httpDir, fileName];
+        [_fileManager removeItemAtPath:filePath error:&error];
+        if (error) {
+            PREDLogError(@"purge file %@ error %@", filePath, error);
+        } else {
+            PREDLogVerbose(@"purge file %@ succeeded", filePath);
+        }
+    }
+}
+
+- (void)purgeAllNetDiag {
+    NSError *error;
+    for (NSString *fileName in [_fileManager enumeratorAtPath:_netDir]) {
+        NSString *filePath = [NSString stringWithFormat:@"%@/%@", _netDir, fileName];
+        [_fileManager removeItemAtPath:filePath error:&error];
+        if (error) {
+            PREDLogError(@"purge file %@ error %@", filePath, error);
+        } else {
+            PREDLogVerbose(@"purge file %@ succeeded", filePath);
+        }
+    }
+}
+
+- (void)purgeAllCustom {
+    NSError *error;
+    for (NSString *fileName in [_fileManager enumeratorAtPath:_customDir]) {
+        NSString *filePath = [NSString stringWithFormat:@"%@/%@", _customDir, fileName];
+        [_fileManager removeItemAtPath:filePath error:&error];
+        if (error) {
+            PREDLogError(@"purge file %@ error %@", filePath, error);
+        } else {
+            PREDLogVerbose(@"purge file %@ succeeded", filePath);
+        }
+    }
+}
+
+- (void)purgeAllPersistence {
+    [self purgeAllAppInfo];
+    [self purgeAllLagMeta];
+    [self purgeAllLogMeta];
+    [self purgeAllHttpMonitor];
+    [self purgeAllCustom];
+    [self purgeAllCrashMeta];
+    [self purgeAllNetDiag];
+}
+
 - (void)purgeFiles:(NSArray<NSString *> *)filePaths {
     __block NSError *error;
     [filePaths enumerateObjectsUsingBlock:^(NSString * _Nonnull filePath, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -345,6 +450,38 @@
             PREDLogVerbose(@"purge file %@ succeeded", filePath);
         }
     }];
+}
+
+- (NSFileHandle *)getCustomFileHandle {
+    if (_customFileHandle) {
+        if (_customFileHandle.offsetInFile <= PREDMaxCacheFileSize) {
+            return _customFileHandle;
+        } else {
+            [_customFileHandle closeFile];
+            _customFileHandle = nil;
+        }
+    }
+    
+    NSString *availableFile;
+    for (NSString *filePath in [_fileManager enumeratorAtPath:_customDir]) {
+        NSString *normalFilePattern = @"^[0-9]+\\.?[0-9]*$";
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", normalFilePattern];
+        if ([predicate evaluateWithObject:filePath]) {
+            availableFile = filePath;
+            break;
+        }
+    }
+    if (!availableFile) {
+        availableFile = [NSString stringWithFormat:@"%@/%f", _customDir, [[NSDate date] timeIntervalSince1970]];
+        BOOL success = [_fileManager createFileAtPath:availableFile contents:nil attributes:nil];
+        if (!success) {
+            PREDLogError(@"create file failed %@", availableFile);
+            return nil;
+        }
+    }
+    _customFileHandle = [NSFileHandle fileHandleForUpdatingAtPath:availableFile];
+    [_customFileHandle seekToEndOfFile];
+    return _customFileHandle;
 }
 
 @end

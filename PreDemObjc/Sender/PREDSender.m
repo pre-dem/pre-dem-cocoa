@@ -15,7 +15,7 @@
 #import "NSData+gzip.h"
 #import "NSObject+Serialization.h"
 
-#define PREDSendInterval    60
+#define PREDSendInterval    30
 
 @implementation PREDSender {
     PREDPersistence *_persistence;
@@ -307,7 +307,7 @@
 }
 
 - (void)sendCustomEvents {
-    NSString *filePath = [_persistence nextCustomEventsPath];
+    NSString *filePath = [_persistence nextArchivedCustomEventsPath];
     if (!filePath) {
         return;
     }
@@ -316,21 +316,8 @@
         PREDLogError(@"get stored data from %@ failed", filePath);
         return;
     }
-    NSError *error;
-    NSMutableDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
-    if (error) {
-        PREDLogError(@"parse stored data failed %@", error);
-        [self->_persistence purgeFile:filePath];
-        return;
-    }
-    NSString *eventName = dic[@"name"] != [NSNull null] ? dic[@"name"] : @"";
-    if ([eventName isEqualToString:@""]) {
-        PREDLogWarn(@"invalid stored event");
-        [self->_persistence purgeFile:filePath];
-        return;
-    }
     __weak typeof(self) wSelf = self;
-    [_networkClient postPath:[NSString stringWithFormat:@"events/%@", eventName] data:data headers:@{@"Content-Type": @"application/json"} completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
+    [_networkClient postPath:@"events" data:data headers:@{@"Content-Type": @"application/json"} completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
         __strong typeof(wSelf) strongSelf = wSelf;
         if (!error) {
             PREDLogDebug(@"Send custom events succeeded");

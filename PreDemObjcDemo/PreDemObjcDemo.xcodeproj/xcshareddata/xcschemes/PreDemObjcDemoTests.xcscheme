@@ -18,8 +18,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "B6548F351ECB0C7E0031DD42"
-               BuildableName = "PreDemObjcDemoTests.xctest"
-               BlueprintName = "PreDemObjcDemoTests"
+               BuildableName = "PreDemObjcTests.xctest"
+               BlueprintName = "PreDemObjcTests"
                ReferencedContainer = "container:PreDemObjcDemo.xcodeproj">
             </BuildableReference>
          </TestableReference>

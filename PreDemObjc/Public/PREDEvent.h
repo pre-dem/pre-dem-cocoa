@@ -12,9 +12,12 @@
 
 @interface PREDEvent: PREDBaseModel
 
-@property (nonatomic, assign) NSString* name;
-@property (nonatomic, assign) NSString* content;
-@property (nonatomic, assign) NSString* type;
+@property (nonatomic, strong, readonly) NSString* name;
+@property (nonatomic, strong, readonly) NSString* content;
+@property (nonatomic, strong, readonly) NSString* type;
+
++ (instancetype)eventWithName:(NSString *)name contentDic:(NSDictionary *)contentDic;
++ (instancetype)eventWithName:(NSString *)name type:(NSString *)type contentDic:(NSDictionary *)contentDic;
 
 @end
 

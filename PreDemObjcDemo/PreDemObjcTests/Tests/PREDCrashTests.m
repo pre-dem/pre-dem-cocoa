@@ -1,18 +1,18 @@
 //
-//  PreDemObjcDemoTests.m
-//  PreDemObjcDemoTests
+//  PREDCrashTests.m
+//  PreDemObjcTests
 //
-//  Created by WangSiyu on 16/05/2017.
+//  Created by 王思宇 on 29/09/2017.
 //  Copyright © 2017 pre-engineering. All rights reserved.
 //
 
 #import <XCTest/XCTest.h>
 
-@interface PreDemObjcDemoTests : XCTestCase
+@interface PREDCrashTests : XCTestCase
 
 @end
 
-@implementation PreDemObjcDemoTests
+@implementation PREDCrashTests
 
 - (void)setUp {
     [super setUp];
