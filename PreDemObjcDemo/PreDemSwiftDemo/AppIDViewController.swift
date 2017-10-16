@@ -8,19 +8,25 @@
 
 import UIKit
 import PreDemObjc
-
-let kPreviousAppId = "kPreviousAppId"
+import UICKeyChainStore
 
 class AppIDViewController: UIViewController {
     
-    @IBOutlet var textField: UITextField!
+    @IBOutlet var appIdTextField: UITextField!
+    @IBOutlet var domainTextField: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        if let prevID = UserDefaults.standard.string(forKey: kPreviousAppId) {
-            textField.text = prevID;
+        let keychian = UICKeyChainStore(service: "com.qiniu.pre.demo")
+        
+        if let prevID = keychian["appid"] {
+            appIdTextField.text = prevID
+        }
+        
+        if let prevDomain = keychian["domain"] {
+            domainTextField.text = prevDomain
         }
     }
     
@@ -30,21 +36,23 @@ class AppIDViewController: UIViewController {
     }
     
     @IBAction func tapped(sender: Any) {
-        textField.resignFirstResponder()
+        appIdTextField.resignFirstResponder()
+        domainTextField.resignFirstResponder()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        UserDefaults.standard.set(textField.text, forKey: kPreviousAppId)
-        var error: NSError?
+        let keychian = UICKeyChainStore(service: "com.qiniu.pre.demo")
+        keychian["appid"] = appIdTextField.text
+        keychian["domain"] = domainTextField.text
         #if DEBUG
-            PREDManager.start(withAppKey: textField.text!, serviceDomain: "http://hriygkee.bq.cloudappl.com", complete: { (success, error) in
+            PREDManager.start(withAppKey: appIdTextField.text!, serviceDomain: domainTextField.text!, complete: { (success, error) in
                 if !success {
                     PREDLogError("start PREDManager error" + (error?.localizedDescription)!)
                 }
             })
             PREDManager.tag = "userid_debug"
         #else
-            PREDManager.start(withAppKey: textField.text!, serviceDomain: "http://jkbkolos.bq.cloudappl.com", complete: { (success, error) in
+            PREDManager.start(withAppKey: appIdTextField.text!, serviceDomain: domainTextField.text!, complete: { (success, error) in
                 if !success {
                     PREDLogError("start PREDManager error" + (error?.localizedDescription)!)
                 }

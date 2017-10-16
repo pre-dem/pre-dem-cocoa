@@ -37,7 +37,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="请输入您的 AppID" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Lu5-nS-rrg">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="请输入您的打点域名" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Lu5-nS-rrg">
                                 <rect key="frame" x="20.5" y="159" width="280" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="FLg-jg-U0G"/>
@@ -55,13 +55,25 @@
                                     <segue destination="BYZ-38-t0r" kind="show" id="1w9-gV-7cx"/>
                                 </connections>
                             </button>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="请输入您的 AppID" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Knn-pz-96A">
+                                <rect key="frame" x="20" y="259" width="280" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="VRB-vJ-DrW"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="280" id="ivI-RQ-odB"/>
+                                </constraints>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="3FR-zp-qXc" firstAttribute="centerY" secondItem="rOl-8A-hDy" secondAttribute="centerY" constant="100" id="BAg-4p-5S6"/>
+                            <constraint firstItem="Knn-pz-96A" firstAttribute="centerX" secondItem="rOl-8A-hDy" secondAttribute="centerX" id="PzU-ig-7Cf"/>
                             <constraint firstItem="3FR-zp-qXc" firstAttribute="centerX" secondItem="rOl-8A-hDy" secondAttribute="centerX" id="S93-yT-ZeX"/>
                             <constraint firstItem="Lu5-nS-rrg" firstAttribute="centerY" secondItem="rOl-8A-hDy" secondAttribute="centerY" constant="-100" id="Uqk-TA-nh5"/>
+                            <constraint firstItem="Knn-pz-96A" firstAttribute="centerY" secondItem="rOl-8A-hDy" secondAttribute="centerY" id="cr0-YC-xHP"/>
                             <constraint firstItem="Lu5-nS-rrg" firstAttribute="centerX" secondItem="rOl-8A-hDy" secondAttribute="centerX" id="h5e-8j-bGy"/>
                         </constraints>
                         <connections>
@@ -70,7 +82,8 @@
                     </view>
                     <navigationItem key="navigationItem" id="01c-Pq-O0a"/>
                     <connections>
-                        <outlet property="textField" destination="Lu5-nS-rrg" id="LXt-7z-O4U"/>
+                        <outlet property="appIdTextField" destination="Knn-pz-96A" id="Eer-T9-epE"/>
+                        <outlet property="domainTextField" destination="Lu5-nS-rrg" id="cM5-ig-qbc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jor-26-Vs9" userLabel="First Responder" sceneMemberID="firstResponder"/>
