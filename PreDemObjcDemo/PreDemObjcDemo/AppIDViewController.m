@@ -12,7 +12,8 @@
 
 @interface AppIDViewController ()
 
-@property (nonatomic, strong) IBOutlet UITextField *textField;
+@property (nonatomic, strong) IBOutlet UITextField *appIdTextField;
+@property (nonatomic, strong) IBOutlet UITextField *domainTextField;
 
 @end
 
@@ -23,8 +24,12 @@
     // Do any additional setup after loading the view.
     UICKeyChainStore *keychain = [UICKeyChainStore keyChainStoreWithService:@"com.qiniu.pre.demo"];
     NSString *prevID = keychain[@"appid"];
+    NSString *prevDomain = keychain[@"domain"];
     if (prevID) {
-        _textField.text = prevID;
+        _appIdTextField.text = prevID;
+    }
+    if (prevDomain) {
+        _domainTextField.text = prevDomain;
     }
 }
 
@@ -34,12 +39,15 @@
 }
 
 - (IBAction)tapped:(id)sender {
-    [_textField resignFirstResponder];
+    [_appIdTextField resignFirstResponder];
+    [_domainTextField resignFirstResponder];
 }
 
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {
-    if (_textField.text.length < 8) {
-        [[[UIAlertView alloc] initWithTitle:@"出错啦" message:@"appID必须在8位以上才能继续哦" delegate:nil cancelButtonTitle:@"好的" otherButtonTitles:nil] show];
+    if (_appIdTextField.text.length < 8 || _domainTextField.text.length == 0) {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"出错啦" message:@"appID 必须在8位以上，domain 不能为空，才能继续哦" preferredStyle:UIAlertControllerStyleAlert];
+        [alert addAction:[UIAlertAction actionWithTitle:@"好的" style:UIAlertActionStyleDefault handler:nil]];
+        [self presentViewController:alert animated:YES completion:nil];
         return NO;
     } else {
         return YES;
@@ -48,10 +56,11 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     UICKeyChainStore *keychain = [UICKeyChainStore keyChainStoreWithService:@"com.qiniu.pre.demo"];
-    keychain[@"appid"] = _textField.text;
+    keychain[@"appid"] = _appIdTextField.text;
+    keychain[@"domain"] = _domainTextField.text;
 #ifdef DEBUG
-    [PREDManager startWithAppKey:_textField.text
-                   serviceDomain:@"http://bgcn4yyud3ui.dem.qbox.net"
+    [PREDManager startWithAppKey:_appIdTextField.text
+                   serviceDomain:_domainTextField.text
                         complete:^(BOOL succeess, NSError * _Nullable error) {
                             if (error) {
                                 NSLog(@"initialize PREDManager error: %@", error);
@@ -60,8 +69,8 @@
     PREDManager.tag = @"userid_debug";
     PREDLogger.ttyLogLevel = PREDLogLevelWarning;
 #else
-    [PREDManager startWithAppKey:_textField.text
-                   serviceDomain:@"http://bgcn4yyud3ui.dem.qbox.net"
+    [PREDManager startWithAppKey:_appIdTextField.text
+                   serviceDomain:_domainTextField.text
                         complete:^(BOOL succeess, NSError * _Nullable error) {
                             if (error) {
                                 NSLog(@"initialize PREDManager error: %@", error);
