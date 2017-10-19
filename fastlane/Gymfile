@@ -1,3 +1,5 @@
 export_method "enterprise"
 workspace "PreDemObjcDemo/PreDemObjcDemo.xcworkspace"
 scheme "PreDemObjcDemo"
+# use staging for testing
+xcargs "GCC_PREPROCESSOR_DEFINITIONS='$(inherited) PREDEM_STAGING=1' OTHER_SWIFT_FLAGS='$(inherited) -DPREDEM_STAGING=1'"
