@@ -14,6 +14,7 @@
 #import "NSData+gzip.h"
 
 #define PREDMaxCacheFileSize    512 * 1024  // 512KB
+#define PREDMillisecondPerSecond        1000
 
 @implementation PREDPersistence {
     NSString *_appInfoDir;
@@ -304,8 +305,8 @@
         }
         return nil;
     }
-    dic[@"start_time"] = @((uint64_t)([attributes fileCreationDate].timeIntervalSince1970));
-    dic[@"end_time"] = @((uint64_t)([attributes fileModificationDate].timeIntervalSince1970));
+    dic[@"start_time"] = @((uint64_t)([attributes fileCreationDate].timeIntervalSince1970 * PREDMillisecondPerSecond));
+    dic[@"end_time"] = @((uint64_t)([attributes fileModificationDate].timeIntervalSince1970 * PREDMillisecondPerSecond));
     return dic;
 }
 
