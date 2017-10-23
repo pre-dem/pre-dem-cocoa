@@ -74,7 +74,8 @@ UIPickerViewDelegate
 }
 
 - (IBAction)diagnoseNetwork:(id)sender {
-    [PREDManager  diagnose:@"www.qiniu.com" complete:^(PREDNetDiagResult * _Nonnull result) {
+    [PREDManager  diagnose:@"www.qiniu.com"
+                  complete:^(PREDNetDiagResult * _Nonnull result) {
         NSLog(@"new diagnose completed with result:\n %@", result);
     }];
 }

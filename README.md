@@ -16,6 +16,7 @@ pre-dem-objc 是由[七牛云](https://www.qiniu.com)发起和维护的针对 Ob
 | UI 卡顿监控 | v1.0.0 |
 | 网络诊断 | v1.0.0 |
 | 自定义事件上报 | v1.0.0 |
+| log 上报 | v1.0.2 |
 
 ## 安装
 
@@ -32,8 +33,12 @@ pod "PreDemObjc"
 ``` objc
     NSError *error;
     [PREDManager startWithAppKey:@"YOUR_APP_KEY"
-                   serviceDomain:@"YOUR_SERVICE_DOMAIN"
-                           error:&error];
+                   serviceDomain:@"YOUR_REPORT_DOMAIN"
+                        complete:^(BOOL succeess, NSError * _Nullable error) {
+                            if (error) {
+                                NSLog(@"initialize PREDManager error: %@", error);
+                            }
+                        }];
 ```
 
 初始化之后，SDK 便会自动采集包括 crash、HTTP 请求等监控数据并上报到您指定的服务器
@@ -41,19 +46,42 @@ pod "PreDemObjc"
 - 网络诊断
 
 ``` objc
-    [PREDManager  diagnose:@"YOUR_SERVER" 
+    [PREDManager  diagnose:@"YOUR_SERVER"
                   complete:^(PREDNetDiagResult * _Nonnull result) {
-        // you can retrieve the diagnostic result here
+        NSLog(@"new diagnose completed with result:\n %@", result);
     }];
 ```
 
 网络诊断功能会使用包括 ping, traceroute 等一系列网络工具对您指定的服务器进行网络诊断并将诊断结果上传服务器。
 
+- log 上报
+
+log 打印
+``` objc
+    // 你可以使用你需要的级别打印相关的 log
+    PREDLogVerbose(@"verbose log test");
+    PREDLogDebug(@"debug log test");
+    PREDLogInfo(@"info log test");
+    PREDLogWarn(@"warn log test");
+    PREDLogError(@"error log test");
+```
+
+log 上报
+``` objc
+    // 开始上报指定级别及以上的 log
+    [PREDLogger startCaptureLogWithLevel:PREDLogLevelXXX];
+    // 停止上报
+    [PREDLogger stopCaptureLog];
+```
+
 - 自定义事件
 
 ``` objc
-    [PREDManager trackEventWithName:@"YOUR_EVENT_NAME" 
-                              event:@{@"EVENT_KEY": EVENT_VALUE, @"EVENT_KEY": EVENT_VALUE}];
+    NSDictionary *dict = @{
+                           @"PARAMETER_KEY1": @"PARAMETER_VALUE1",
+                           @"PARAMETER_KEY2": @"PARAMETER_VALUE2"
+                           };
+    PREDEvent *event = [PREDEvent eventWithName:@"YOUR_EVENT_NAME" contentDic:dict];
+    [PREDManager trackEvent:event];
 ```
-
 自定义事件上报功能能够将您自定义的事件直接上报至服务器。
