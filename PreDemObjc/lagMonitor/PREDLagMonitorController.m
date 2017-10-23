@@ -33,7 +33,7 @@ static void runLoopObserverCallBack(CFRunLoopObserverRef observer, CFRunLoopActi
     if (self = [super init]) {
         PLCrashReporterSignalHandlerType signalHandlerType = PLCrashReporterSignalHandlerTypeBSD;
         PREDPLCrashReporterConfig *config = [[PREDPLCrashReporterConfig alloc] initWithSignalHandlerType: signalHandlerType
-                                                                                 symbolicationStrategy: PLCrashReporterSymbolicationStrategyAll];
+                                                                                 symbolicationStrategy: PLCrashReporterSymbolicationStrategyNone];
         _reporter = [[PREDPLCrashReporter alloc] initWithConfiguration:config];
         _persistence = persistence;
     }

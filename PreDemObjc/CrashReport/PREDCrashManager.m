@@ -77,12 +77,7 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
                 
         PLCrashReporterSignalHandlerType signalHandlerType = PLCrashReporterSignalHandlerTypeBSD;
         
-        PLCrashReporterSymbolicationStrategy symbolicationStrategy = PLCrashReporterSymbolicationStrategyNone;
-        if (self.isOnDeviceSymbolicationEnabled) {
-            symbolicationStrategy = PLCrashReporterSymbolicationStrategyAll;
-        }
-        
-        PREDPLCrashReporterConfig *config = [[PREDPLCrashReporterConfig alloc] initWithSignalHandlerType: signalHandlerType symbolicationStrategy: symbolicationStrategy];
+        PREDPLCrashReporterConfig *config = [[PREDPLCrashReporterConfig alloc] initWithSignalHandlerType: signalHandlerType symbolicationStrategy: PLCrashReporterSymbolicationStrategyNone];
         _plCrashReporter = [[PREDPLCrashReporter alloc] initWithConfiguration: config];
         
         // Check if we previously crashed
