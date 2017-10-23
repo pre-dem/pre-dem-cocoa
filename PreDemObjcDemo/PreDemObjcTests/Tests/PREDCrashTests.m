@@ -7,6 +7,9 @@
 //
 
 #import <XCTest/XCTest.h>
+#import <CrashReporter/CrashReporter.h>
+#import "PREDLagMeta.h"
+#import "PREDLogger.h"
 
 @interface PREDCrashTests : XCTestCase
 
@@ -29,10 +32,21 @@
     // Use XCTAssert and related functions to verify your tests produce the correct results.
 }
 
-- (void)testPerformanceExample {
+- (void)testLiveReportGenerator {
+    PLCrashReporterSignalHandlerType signalHandlerType = PLCrashReporterSignalHandlerTypeBSD;
+    PREDPLCrashReporterConfig *config = [[PREDPLCrashReporterConfig alloc] initWithSignalHandlerType: signalHandlerType
+                                                                               symbolicationStrategy: PLCrashReporterSymbolicationStrategyNone];
+    PREDPLCrashReporter *reporter = [[PREDPLCrashReporter alloc] initWithConfiguration:config];
     // This is an example of a performance test case.
     [self measureBlock:^{
         // Put the code you want to measure the time of here.
+        NSError *error;
+        NSData *data = [reporter generateLiveReportAndReturnError:&error];
+        XCTAssertNil(error);
+        XCTAssertNotNil(data);
+        PREDLagMeta *meta = [[PREDLagMeta alloc] initWithData:data error:&error];
+        XCTAssertNil(error);
+        XCTAssertNotNil(meta);
     }];
 }
 

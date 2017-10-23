@@ -17,19 +17,6 @@
   "source_files": "PreDemObjc/**/*.{h,m,mm,swift}",
   "public_header_files": "PreDemObjc/Public/*.h",
   "vendored_frameworks": "Vendor/*.framework",
-  "frameworks": [
-    "AssetsLibrary",
-    "CoreTelephony",
-    "CoreText",
-    "CoreGraphics",
-    "Foundation",
-    "MobileCoreServices",
-    "Photos",
-    "QuartzCore",
-    "QuickLook",
-    "Security",
-    "SystemConfiguration"
-  ],
   "libraries": [
     "c++",
     "z"

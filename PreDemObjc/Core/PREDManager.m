@@ -160,7 +160,6 @@ static NSString* app_id(NSString* appKey){
 }
 
 - (void)setConfig:(PREDConfig *)config {
-    _crashManager.enableOnDeviceSymbolication = config.onDeviceSymbolicationEnabled;
     _crashManager.started = config.crashReportEnabled;
     
     PREDURLProtocol.started = config.httpMonitorEnabled;
