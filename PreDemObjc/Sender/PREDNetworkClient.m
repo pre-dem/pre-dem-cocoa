@@ -26,7 +26,6 @@ static NSString* pred_appendTime(NSString* url){
 - (instancetype)initWithBaseURL:(NSURL *)baseURL {
     self = [super init];
     if ( self ) {
-        NSParameterAssert(baseURL);
         _baseURL = baseURL;
         _operationQueue = [[NSOperationQueue alloc] init];
         _operationQueue.maxConcurrentOperationCount = 3;
