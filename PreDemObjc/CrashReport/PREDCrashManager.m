@@ -86,7 +86,7 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
         
         
         if (PREDHelper.isDebuggerAttached) {
-            PREDLogWarn(@"Detecting crashes is NOT enabled due to running the app with a debugger attached.");
+            PREDLogWarn(@"Detected crashes is NOT enabled due to running the app with a debugger attached.");
         } else {
             // PLCrashReporter may only be initialized once. So make sure the developer
             // can't break this
