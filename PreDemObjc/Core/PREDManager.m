@@ -146,7 +146,7 @@ static NSString* app_id(NSString* appKey){
     
     if (!url) {
         if (error) {
-            *error = [PREDError GenerateNSError:kPREDErrorCodeInvalidServiceDomain description:@"the service domain have a wrong stucture: %@", aServerURL];
+            *error = [PREDError GenerateNSError:kPREDErrorCodeInvalidServiceDomain description:@"the service domain has a wrong structure: %@", aServerURL];
         }
         return NO;
     }
