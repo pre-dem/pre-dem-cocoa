@@ -142,7 +142,16 @@ static NSString* app_id(NSString* appKey){
     
     aServerURL = [NSString stringWithFormat:@"%@/v1/%@/", aServerURL, app_id(appKey)];
     
-    _sender = [[PREDSender alloc] initWithPersistence:_persistence baseUrl:[NSURL URLWithString:aServerURL]];
+    NSURL *url = [NSURL URLWithString:aServerURL];
+    
+    if (!url) {
+        if (error) {
+            *error = [PREDError GenerateNSError:kPREDErrorCodeInvalidServiceDomain description:@"the service domain has a wrong structure: %@", aServerURL];
+        }
+        return NO;
+    }
+    
+    _sender = [[PREDSender alloc] initWithPersistence:_persistence baseUrl:url];
     return YES;
 }
 
