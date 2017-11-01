@@ -23,7 +23,7 @@ PODS:
   - CocoaLumberjack/Swift (3.2.1):
     - CocoaLumberjack/Default
   - HappyDNS (0.3.12)
-  - PreDemObjc (1.0.2):
+  - PreDemObjc (1.0.3):
     - CocoaLumberjack
     - CocoaLumberjack/Swift
     - HappyDNS
@@ -47,7 +47,7 @@ SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
   CocoaLumberjack: 2800c03334042fe80589423c8d80e582dcaec482
   HappyDNS: 691a3041128055d09866f86e6e9ca90f24da1f18
-  PreDemObjc: 523f5e7eba7000ea38f28106f686236173f09d64
+  PreDemObjc: 612dc2d3543adba4907d4084a998e28df2bbabf4
   Qiniu: 2f1b9d13904b6a7608a66a2d02c5b7b24575622a
   QNNetDiag: 6f7bbafa34c1b020e51d440f25044fe5ee10145d
   UICKeyChainStore: 239558492fa260531a0774cfc611ea83a6eaff3a

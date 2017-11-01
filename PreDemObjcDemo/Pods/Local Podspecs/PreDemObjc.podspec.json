@@ -1,6 +1,6 @@
 {
   "name": "PreDemObjc",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "summary": "A short description of PreDemObjc.",
   "homepage": "https://github.com/pre-dem/pre-dem-objc",
   "license": "MIT",
@@ -12,7 +12,7 @@
   },
   "source": {
     "git": "https://github.com/pre-dem/pre-dem-objc.git",
-    "tag": "v1.0.2"
+    "tag": "v1.0.3"
   },
   "source_files": "PreDemObjc/**/*.{h,m,mm,swift}",
   "public_header_files": "PreDemObjc/Public/*.h",
