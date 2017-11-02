@@ -29,7 +29,7 @@ public func PREDLogVerbose(_ message: @autoclosure () -> String) {
 }
 
 public func PREDTagLogError(tag: Any, message: @autoclosure () -> String) {
-    DDLogVerbose(message, tag:tag)
+    DDLogError(message, tag:tag)
 }
 
 public func PREDTagLogWarn(tag: Any, message: @autoclosure () -> String) {
