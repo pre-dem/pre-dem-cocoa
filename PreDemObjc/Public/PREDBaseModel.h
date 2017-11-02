@@ -8,6 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
+/**
+ * 上报数据的基类，包装一些基本信息
+ */
 @interface PREDBaseModel : NSObject
 
 /**

@@ -13,47 +13,53 @@
 #import <CocoaLumberjack/CocoaLumberjack.h>
 
 /**
- *  Log levels are used to filter out logs. Used together with flags.
+ *  log 级别，用于过滤 log
  */
 typedef NS_ENUM(NSUInteger, PREDLogLevel) {
     /**
-     *  No logs
+     *  过滤掉所有 log
      */
     PREDLogLevelOff = DDLogLevelOff,
     
     /**
-     *  Error logs only
+     *  仅打印 error 级别的 log
      */
     PREDLogLevelError = DDLogLevelError,
     
     /**
-     *  Error and warning logs
+     *  打印 Error 及 warning 级别的 log
      */
     PREDLogLevelWarning = DDLogLevelWarning,
     
     /**
-     *  Error, warning and info logs
+     *  打印 Error, warning 及 info 级别的 log
      */
     PREDLogLevelInfo = DDLogLevelInfo,
     
     /**
-     *  Error, warning, info and debug logs
+     *  打印 Error, warning, info 及 debug 级别的 log
      */
     PREDLogLevelDebug = DDLogLevelDebug,
     
     /**
-     *  Error, warning, info, debug and verbose logs
+     *  打印 Error, warning, info, debug 以及 verbose 级别的 log
      */
     PREDLogLevelVerbose = DDLogLevelVerbose,
     
     /**
-     *  All logs (1...11111)
+     *  打印所有级别的 log
      */
     PREDLogLevelAll = DDLogLevelAll
 };
 
+/**
+ *  网络诊断结果返回 block
+ */
 typedef void (^PREDNetDiagCompleteHandler)(PREDNetDiagResult* _Nonnull result);
 
+/**
+ *  sdk 启动结果返回 block
+ */
 typedef void (^PREDStartCompleteHandler)(BOOL succeess, NSError *_Nullable error);
 
 #endif /* PreDemObjc_Enums_h */
