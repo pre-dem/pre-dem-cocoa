@@ -52,6 +52,10 @@ UIPickerViewDelegate
                            ];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    self.navigationController.navigationBarHidden = YES;
+}
+
 - (IBAction)logTest:(id)sender {
     PREDLogVerbose(@"verbose log test");
     PREDLogDebug(@"debug log test");
