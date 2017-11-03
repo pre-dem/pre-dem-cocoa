@@ -16,7 +16,7 @@
 /**
  * 事件生成的时间
  */
-@property (nonatomic, assign) UInt64 time;
+@property (nonatomic, assign) int64_t time;
 
 /**
  * 宿主 app 的包名，即宿主 app 的 CFBundleIdentifier 属性
