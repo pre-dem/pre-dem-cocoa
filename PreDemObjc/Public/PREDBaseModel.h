@@ -14,6 +14,11 @@
 @interface PREDBaseModel : NSObject
 
 /**
+ * 事件生成的时间
+ */
+@property (nonatomic, assign) UInt64 time;
+
+/**
  * 宿主 app 的包名，即宿主 app 的 CFBundleIdentifier 属性
  */
 @property (nonatomic, strong) NSString *app_bundle_id;
