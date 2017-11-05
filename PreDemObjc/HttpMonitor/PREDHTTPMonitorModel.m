@@ -19,6 +19,7 @@ static NSString * wrapString(NSString *st) {
 
 - (NSString *)tabString {
     NSArray *modelArray = @[
+                            @(self.time),
                             wrapString(self.app_bundle_id),
                             wrapString(self.app_name),
                             wrapString(self.app_version),
