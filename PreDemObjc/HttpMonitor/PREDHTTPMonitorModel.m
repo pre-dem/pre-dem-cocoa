@@ -19,7 +19,6 @@ static NSString * wrapString(NSString *st) {
 
 - (NSString *)tabString {
     NSArray *modelArray = @[
-                            @(self.time),
                             wrapString(self.app_bundle_id),
                             wrapString(self.app_name),
                             wrapString(self.app_version),
@@ -43,7 +42,8 @@ static NSString * wrapString(NSString *st) {
                             @(self.dns_time),
                             @(self.data_length),
                             @(self.network_error_code),
-                            wrapString(self.network_error_msg)
+                            wrapString(self.network_error_msg),
+                            @(self.time)
                             ];
     __block NSString *result;
     [modelArray enumerateObjectsUsingBlock:^(NSString *  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
