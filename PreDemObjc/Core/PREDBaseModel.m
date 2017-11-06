@@ -18,6 +18,7 @@
 
 - (instancetype)init {
     if (self = [super init]) {
+        _time = (int64_t)(NSDate.date.timeIntervalSince1970 * 1000);
         _app_bundle_id = PREDHelper.appBundleId;
         _app_name = PREDHelper.appName;
         _app_version = PREDHelper.appVersion;
