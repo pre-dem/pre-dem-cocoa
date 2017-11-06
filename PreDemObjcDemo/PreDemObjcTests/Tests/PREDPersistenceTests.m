@@ -45,7 +45,7 @@
     count = count1 + count2;
     XCTAssertEqual(count, dic.count);
     [dic enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, NSString * _Nonnull obj, BOOL * _Nonnull stop) {
-        XCTAssertTrue([[appinfo valueForKey:key] isEqualToString:obj]);
+        XCTAssertTrue([[appinfo valueForKey:key] isEqual:obj]);
     }];
     [_persistence purgeFile:path];
 }
@@ -165,7 +165,7 @@
     count = count1 + count2;
     XCTAssertEqual(count, dic.count);
     [dic enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, NSString * _Nonnull obj, BOOL * _Nonnull stop) {
-        XCTAssertTrue([[event1 valueForKey:key] isEqualToString:obj]);
+        XCTAssertTrue([[event1 valueForKey:key] isEqual:obj]);
     }];
     
     dic = [NSJSONSerialization JSONObjectWithData:[components[1] dataUsingEncoding:NSUTF8StringEncoding] options:0 error:&error];
@@ -176,7 +176,7 @@
     count = count1 + count2;
     XCTAssertEqual(count, dic.count);
     [dic enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, NSString * _Nonnull obj, BOOL * _Nonnull stop) {
-        XCTAssertTrue([[event2 valueForKey:key] isEqualToString:obj]);
+        XCTAssertTrue([[event2 valueForKey:key] isEqual:obj]);
     }];
     
     [_persistence purgeFile:path];
