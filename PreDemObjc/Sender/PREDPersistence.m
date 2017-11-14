@@ -24,9 +24,12 @@
     NSString *_httpDir;
     NSString *_netDir;
     NSString *_customDir;
+    NSString *_breadcrumbDir;
     NSFileManager *_fileManager;
     NSFileHandle *_customFileHandle;
     dispatch_queue_t _customEventQueue;
+    NSFileHandle *_breadcrumbFileHandle;
+    dispatch_queue_t _breadcrumbQueue;
     PREDLogMeta *_lastLogMeta;
     NSString *_lastLogMetaPath;
 }
@@ -41,7 +44,9 @@
         _httpDir = [NSString stringWithFormat:@"%@/%@", PREDHelper.cacheDirectory, @"http"];
         _netDir = [NSString stringWithFormat:@"%@/%@", PREDHelper.cacheDirectory, @"net"];
         _customDir = [NSString stringWithFormat:@"%@/%@", PREDHelper.cacheDirectory, @"custom"];
+        _breadcrumbDir = [NSString stringWithFormat:@"%@/%@", PREDHelper.cacheDirectory, @"breadcrumb"];
         _customEventQueue = dispatch_queue_create("predem_custom_event", DISPATCH_QUEUE_SERIAL);
+        _breadcrumbQueue = dispatch_queue_create("predem_breadcrumb", DISPATCH_QUEUE_SERIAL);
         
         NSError *error;
         [_fileManager createDirectoryAtPath:_appInfoDir withIntermediateDirectories:YES attributes:nil error:&error];
@@ -69,6 +74,10 @@
             PREDLogError(@"create dir %@ failed", _netDir);
         }
         [_fileManager createDirectoryAtPath:_customDir withIntermediateDirectories:YES attributes:nil error:&error];
+        if (error) {
+            PREDLogError(@"create dir %@ failed", _customDir);
+        }
+        [_fileManager createDirectoryAtPath:_breadcrumbDir withIntermediateDirectories:YES attributes:nil error:&error];
         if (error) {
             PREDLogError(@"create dir %@ failed", _customDir);
         }
@@ -171,13 +180,32 @@
             return;
         }
         
-        NSFileHandle *handle = [self getCustomFileHandle];
-        if (!handle) {
+        _customFileHandle = [self updateFileHandle:_customFileHandle dir:_customDir];
+        if (!_customFileHandle) {
             PREDLogError(@"no file handle drop custom data");
             return;
         }
-        [handle writeData:toSave];
-        [handle writeData:[@"\n" dataUsingEncoding:NSUTF8StringEncoding]];
+        [_customFileHandle writeData:toSave];
+        [_customFileHandle writeData:[@"\n" dataUsingEncoding:NSUTF8StringEncoding]];
+    });
+}
+
+- (void)persistBreadcrumb:(PREDBreadcrumb *)breadcrumb {
+    dispatch_async(_breadcrumbQueue, ^{
+        NSError *error;
+        NSData *toSave = [breadcrumb toJsonWithError:&error];
+        if (error) {
+            PREDLogError(@"jsonize custom events error: %@", error);
+            return;
+        }
+        
+        _breadcrumbFileHandle = [self updateFileHandle:_breadcrumbFileHandle dir:_breadcrumbDir];
+        if (!_breadcrumbFileHandle) {
+            PREDLogError(@"no file handle drop custom data");
+            return;
+        }
+        [_breadcrumbFileHandle writeData:toSave];
+        [_breadcrumbFileHandle writeData:[@"\n" dataUsingEncoding:NSUTF8StringEncoding]];
     });
 }
 
@@ -269,6 +297,37 @@
                 NSError *error;
                 archivedPath = [NSString stringWithFormat:@"%@/%@.archive", _customDir, filePath];
                 [_fileManager moveItemAtPath:[NSString stringWithFormat:@"%@/%@", _customDir, filePath] toPath:archivedPath error:&error];
+                if (error) {
+                    archivedPath = nil;
+                    NSLog(@"archive file %@ fail", filePath);
+                    continue;
+                }
+            }
+        }
+    });
+    return archivedPath;
+}
+
+- (NSString *)nextArchivedBreadcrumbPath {
+    __block NSString *archivedPath;
+    dispatch_sync(_breadcrumbQueue, ^{
+        for (NSString *filePath in [_fileManager enumeratorAtPath:_breadcrumbDir]) {
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", @"^[0-9]+\\.?[0-9]*\\.archive$"];
+            if ([predicate evaluateWithObject:filePath]) {
+                archivedPath = [NSString stringWithFormat:@"%@/%@", _breadcrumbDir, filePath];
+            }
+        }
+        // if no archived file found
+        for (NSString *filePath in [_fileManager enumeratorAtPath:_breadcrumbDir]) {
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", @"^[0-9]+\\.?[0-9]*$"];
+            if ([predicate evaluateWithObject:filePath]) {
+                if (_breadcrumbFileHandle) {
+                    [_breadcrumbFileHandle closeFile];
+                    _breadcrumbFileHandle = nil;
+                }
+                NSError *error;
+                archivedPath = [NSString stringWithFormat:@"%@/%@.archive", _breadcrumbDir, filePath];
+                [_fileManager moveItemAtPath:[NSString stringWithFormat:@"%@/%@", _breadcrumbDir, filePath] toPath:archivedPath error:&error];
                 if (error) {
                     archivedPath = nil;
                     NSLog(@"archive file %@ fail", filePath);
@@ -453,18 +512,18 @@
     }];
 }
 
-- (NSFileHandle *)getCustomFileHandle {
-    if (_customFileHandle) {
-        if (_customFileHandle.offsetInFile <= PREDMaxCacheFileSize) {
-            return _customFileHandle;
+- (NSFileHandle *)updateFileHandle:(NSFileHandle *)oldFileHandle dir:(NSString *)dir {
+    if (oldFileHandle) {
+        if (oldFileHandle.offsetInFile <= PREDMaxCacheFileSize) {
+            return oldFileHandle;
         } else {
-            [_customFileHandle closeFile];
-            _customFileHandle = nil;
+            [oldFileHandle closeFile];
+            oldFileHandle = nil;
         }
     }
     
     NSString *availableFile;
-    for (NSString *filePath in [_fileManager enumeratorAtPath:_customDir]) {
+    for (NSString *filePath in [_fileManager enumeratorAtPath:dir]) {
         NSString *normalFilePattern = @"^[0-9]+\\.?[0-9]*$";
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", normalFilePattern];
         if ([predicate evaluateWithObject:filePath]) {
@@ -473,16 +532,16 @@
         }
     }
     if (!availableFile) {
-        availableFile = [NSString stringWithFormat:@"%@/%f", _customDir, [[NSDate date] timeIntervalSince1970]];
+        availableFile = [NSString stringWithFormat:@"%@/%f", dir, [[NSDate date] timeIntervalSince1970]];
         BOOL success = [_fileManager createFileAtPath:availableFile contents:nil attributes:nil];
         if (!success) {
             PREDLogError(@"create file failed %@", availableFile);
             return nil;
         }
     }
-    _customFileHandle = [NSFileHandle fileHandleForUpdatingAtPath:availableFile];
-    [_customFileHandle seekToEndOfFile];
-    return _customFileHandle;
+    oldFileHandle = [NSFileHandle fileHandleForUpdatingAtPath:availableFile];
+    [oldFileHandle seekToEndOfFile];
+    return oldFileHandle;
 }
 
 @end
