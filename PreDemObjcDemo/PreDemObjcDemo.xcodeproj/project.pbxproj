@@ -28,7 +28,7 @@
 		B6D9B0641F5E419E001D893E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B6D9B0621F5E419E001D893E /* Main.storyboard */; };
 		B6D9B0661F5E419E001D893E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B6D9B0651F5E419E001D893E /* Assets.xcassets */; };
 		B6D9B0691F5E419E001D893E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B6D9B0671F5E419E001D893E /* LaunchScreen.storyboard */; };
-		B6E6E4E51FB9376C0089F7C1 /* SentrySwizzleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E6E4E41FB9376C0089F7C1 /* SentrySwizzleTests.m */; };
+		B6E6E4E51FB9376C0089F7C1 /* PREDSwizzleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E6E4E41FB9376C0089F7C1 /* PREDSwizzleTests.m */; };
 		B6EDF28C1F7564AD0002C406 /* AppIDViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6EDF28B1F7564AD0002C406 /* AppIDViewController.swift */; };
 		BA757918E65B8FC141378954 /* Pods_PreDemObjcDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E6504F08203DC0F061B69C3 /* Pods_PreDemObjcDemo.framework */; };
 /* End PBXBuildFile section */
@@ -82,7 +82,7 @@
 		B6D9B0651F5E419E001D893E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B6D9B0681F5E419E001D893E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B6D9B06A1F5E419E001D893E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B6E6E4E41FB9376C0089F7C1 /* SentrySwizzleTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SentrySwizzleTests.m; sourceTree = "<group>"; };
+		B6E6E4E41FB9376C0089F7C1 /* PREDSwizzleTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PREDSwizzleTests.m; sourceTree = "<group>"; };
 		B6EDF28B1F7564AD0002C406 /* AppIDViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIDViewController.swift; sourceTree = "<group>"; };
 		CBABF7F8789ACF6993173BFE /* Pods-PreDemSwiftDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PreDemSwiftDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PreDemSwiftDemo/Pods-PreDemSwiftDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		CC2DE1862FAA2D9F0AD22B41 /* Pods-PreDemObjcDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PreDemObjcDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-PreDemObjcDemo/Pods-PreDemObjcDemo.release.xcconfig"; sourceTree = "<group>"; };
@@ -208,7 +208,7 @@
 		B6CC5C341F7E71A6009C92FB /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				B6E6E4E41FB9376C0089F7C1 /* SentrySwizzleTests.m */,
+				B6E6E4E41FB9376C0089F7C1 /* PREDSwizzleTests.m */,
 				B6CC5C2F1F7E4B31009C92FB /* PREDCrashTests.m */,
 				B6CC5C311F7E4C82009C92FB /* PREDPersistenceTests.m */,
 			);
@@ -606,7 +606,7 @@
 			files = (
 				B6CC5C321F7E4C82009C92FB /* PREDPersistenceTests.m in Sources */,
 				B6CC5C301F7E4B31009C92FB /* PREDCrashTests.m in Sources */,
-				B6E6E4E51FB9376C0089F7C1 /* SentrySwizzleTests.m in Sources */,
+				B6E6E4E51FB9376C0089F7C1 /* PREDSwizzleTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
