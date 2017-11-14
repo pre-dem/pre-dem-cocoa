@@ -31,7 +31,7 @@
 
 - (void)addEnabledCrumb {
     PREDBreadcrumb *breadcrumb = [PREDBreadcrumb breadcrumbWithName:@"started" contentDic:nil];
-    [_persistence persistCustomEvent:breadcrumb];
+    [_persistence persistBreadcrumb:breadcrumb];
 }
 
 - (void)swizzleSendAction {
@@ -52,7 +52,7 @@
         
         [data setObject:[NSString stringWithFormat:@"%s", sel_getName(action)] forKey:@"action_name"];
         PREDBreadcrumb *breadcrumb = [PREDBreadcrumb breadcrumbWithName:@"touch" contentDic:data];
-        [_persistence persistCustomEvent:breadcrumb];
+        [_persistence persistBreadcrumb:breadcrumb];
         return PREDSWCallOriginal(action, target, sender, event);
     }), PREDSwizzleModeOncePerClassAndSuperclasses, swizzleSendActionKey);
 }
@@ -71,7 +71,7 @@
                                       @"method": @"viewDidAppear",
                                       } mutableCopy];
         PREDBreadcrumb *breadcrumb = [PREDBreadcrumb breadcrumbWithName:@"UIViewController" contentDic:data];
-        [_persistence persistCustomEvent:breadcrumb];
+        [_persistence persistBreadcrumb:breadcrumb];
         PREDSWCallOriginal(animated);
     }), PREDSwizzleModeOncePerClassAndSuperclasses, swizzleViewDidAppearKey);
 }

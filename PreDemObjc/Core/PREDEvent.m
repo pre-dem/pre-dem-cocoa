@@ -26,16 +26,23 @@
         }
         
         NSError *error;
-        NSData *contentData = [NSJSONSerialization dataWithJSONObject:contentDic options:0 error:&error];
-        if (error) {
-            PREDLogError(@"jsonize custom events error: %@", error);
-            return nil;
-        } else if (!contentData.length) {
-            PREDLogWarn(@"discard empty custom event");
-            return nil;
-        }
         
-        NSString *content = [[NSString alloc] initWithData:contentData encoding:NSUTF8StringEncoding];
+        NSString *content;
+        if (contentDic.count) {
+            NSData *contentData = [NSJSONSerialization dataWithJSONObject:contentDic options:0 error:&error];
+            if (error) {
+                PREDLogError(@"jsonize custom events error: %@", error);
+                return nil;
+            } else if (!contentData.length) {
+                PREDLogWarn(@"discard empty custom event");
+                return nil;
+            }
+            
+            content = [[NSString alloc] initWithData:contentData encoding:NSUTF8StringEncoding];
+        } else {
+            content = @"";
+        }
+
         
         event->_name = name;
         event->_content = content;
