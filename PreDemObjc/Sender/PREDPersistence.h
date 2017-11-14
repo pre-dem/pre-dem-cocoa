@@ -25,6 +25,7 @@
 - (void)persistNetDiagResult:(PREDNetDiagResult *)netDiagResult;
 - (void)persistCustomEvent:(PREDEvent *)event;
 
+
 - (NSString *)nextAppInfoPath;
 - (NSString *)nextCrashMetaPath;
 - (NSString *)nextLagMetaPath;
