@@ -14,6 +14,16 @@
 @interface PREDBaseModel : NSObject
 
 /**
+ * 自定义事件的名称
+ */
+@property (nonatomic, strong, readonly) NSString* name;
+
+/**
+ * 事件的类型，自定义事件恒为 @"custom"
+ */
+@property (nonatomic, strong, readonly) NSString* type;
+
+/**
  * 事件生成的时间
  */
 @property (nonatomic, assign) int64_t time;
@@ -72,5 +82,21 @@
  * 设备制造商
  */
 @property (nonatomic, strong) NSString *manufacturer;
+
+/**
+ * 生成一个事件对象
+ *
+ * @param name 事件的名称
+ * @param type 事件的类型
+ */
++ (instancetype)eventWithName:(NSString *)name type:(NSString *)type;
+
+/**
+ * 初始化一个事件对象
+ *
+ * @param name 事件的名称
+ * @param type 事件的类型
+ */
+- (instancetype)initWithName:(NSString *)name type:(NSString *)type;
 
 @end

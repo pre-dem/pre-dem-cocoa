@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "PREDDefines.h"
-#import "PREDEvent.h"
+#import "PREDCustomEvent.h"
 
 /**
  * PREDManager 是 sdk 的核心类，提供 sdk 的主要对外接口
@@ -41,7 +41,7 @@
  *
  *  @param event 需要上报的自定义事件对象
  */
-+ (void)trackEvent:(PREDEvent *_Nonnull)event;
++ (void)trackCustomEvent:(PREDCustomEvent *_Nonnull)event;
 
 /**
  * 返回 sdk 的版本号

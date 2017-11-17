@@ -94,8 +94,8 @@ UIPickerViewDelegate
                            @"longKey": @(arc4random_uniform(100)),
                            @"floatKey": @(arc4random_uniform(10000)/100.0)
                            };
-    PREDEvent *event = [PREDEvent eventWithName:@"test\t_\nios\t_\nevent_2" contentDic:dict];
-    [PREDManager trackEvent:event];
+    PREDCustomEvent *event = [PREDCustomEvent eventWithName:@"test\t_\nios\t_\nevent_2" contentDic:dict];
+    [PREDManager trackCustomEvent:event];
 }
 
 - (IBAction)blockMainThread:(id)sender {

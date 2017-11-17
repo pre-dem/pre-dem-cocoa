@@ -7,7 +7,7 @@
 
 #import <PreDemObjc/PreDemObjc.h>
 
-@interface PREDBreadcrumb : PREDEvent
+@interface PREDBreadcrumb : PREDCustomEvent
 
 + (instancetype)breadcrumbWithName:(NSString *)name contentDic:(NSDictionary *)contentDic;
 

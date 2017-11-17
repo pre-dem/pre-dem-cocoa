@@ -10,13 +10,14 @@
 #import <CrashReporter/CrashReporter.h>
 #import "PREDHelper.h"
 #import "PREDCrashReportTextFormatter.h"
+#import "PREDConstants.h"
 
 #define PREDMillisecondPerSecond            1000
 
 @implementation PREDCrashMeta
 
 - (instancetype)initWithData:(NSData *)data error:(NSError **)error {
-    if (self = [super init]) {
+    if (self = [self initWithName:CrashReportEventName type:AutoCapturedEventType]) {
         PREDPLCrashReport *report = [[PREDPLCrashReport alloc] initWithData:data error:error];
         if (*error) {
             return self;

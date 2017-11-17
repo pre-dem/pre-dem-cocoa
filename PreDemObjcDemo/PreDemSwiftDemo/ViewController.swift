@@ -81,8 +81,8 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     }
     
     @IBAction func diyEvent(sender: Any) {
-        if let event = PREDEvent(name: "viewDidLoadEvent", contentDic: ["helloKey": "worldValue", "hellonum": 7]) {
-            PREDManager.trackEvent(event)
+        if let event = PREDCustomEvent(name: "viewDidLoadEvent", contentDic: ["helloKey": "worldValue", "hellonum": 7]) {
+            PREDManager.trackCustomEvent(event)
         }
     }
     

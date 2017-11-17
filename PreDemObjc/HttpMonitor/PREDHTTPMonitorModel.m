@@ -9,6 +9,7 @@
 #import "PREDHTTPMonitorModel.h"
 #import "PREDHelper.h"
 #import <objc/runtime.h>
+#import "PREDConstants.h"
 
 static NSString * wrapString(NSString *st) {
     NSString *ret = st ? (st.length != 0 ? st : @"-") : @"-";
@@ -16,6 +17,10 @@ static NSString * wrapString(NSString *st) {
 }
 
 @implementation PREDHTTPMonitorModel
+
+- (instancetype)init {
+    return [self initWithName:HttpMonitorEventName type:AutoCapturedEventType];
+}
 
 - (NSString *)tabString {
     NSArray *modelArray = @[

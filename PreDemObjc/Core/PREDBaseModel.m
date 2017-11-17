@@ -12,12 +12,26 @@
 
 @implementation PREDBaseModel
 
++ (instancetype)eventWithName:(NSString *)name type:(NSString *)type {
+    return [[self alloc] initWithName:name type:type];
+}
+
+- (instancetype)initWithName:(NSString *)name type:(NSString *)type {
+    if (self = [self init]) {
+        _name = name;
+        _type = type;
+    }
+    return self;
+}
+
 - (NSString *)description {
     return [self toDic].description;
 }
 
 - (instancetype)init {
     if (self = [super init]) {
+        _name = @"";
+        _type = @"";
         _time = (int64_t)(NSDate.date.timeIntervalSince1970 * 1000);
         _app_bundle_id = PREDHelper.appBundleId;
         _app_name = PREDHelper.appName;

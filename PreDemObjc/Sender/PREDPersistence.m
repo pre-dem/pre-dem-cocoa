@@ -171,7 +171,7 @@
     }
 }
 
-- (void)persistCustomEvent:(PREDEvent *)event {
+- (void)persistCustomEvent:(PREDCustomEvent *)event {
     dispatch_async(_customEventQueue, ^{
         NSError *error;
         NSData *toSave = [event toJsonWithError:&error];

@@ -13,22 +13,12 @@
 /**
  * 自定义事件数据对象
  */
-@interface PREDEvent: PREDBaseModel
-
-/**
- * 自定义事件的名称
- */
-@property (nonatomic, strong, readonly) NSString* name;
+@interface PREDCustomEvent: PREDBaseModel
 
 /**
  * 自定义事件的内容，仅支持键值对类型的内容
  */
 @property (nonatomic, strong, readonly) NSString* content;
-
-/**
- * 自定义事件的类型，自定义事件恒为 @"custom"
- */
-@property (nonatomic, strong, readonly) NSString* type;
 
 /**
  * 生成自定义事件的对象
