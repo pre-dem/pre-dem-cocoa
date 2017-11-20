@@ -11,7 +11,6 @@
 #import "PREDLogger.h"
 #import "NSObject+Serialization.h"
 #import "PREDError.h"
-#import "NSData+gzip.h"
 
 #define PREDMaxCacheFileSize    512 * 1024  // 512KB
 #define PREDMillisecondPerSecond        1000
