@@ -143,7 +143,7 @@ static NSString* app_id(NSString* appKey){
         aServerURL = [NSString stringWithFormat:@"http://%@", aServerURL];
     }
     
-    aServerURL = [NSString stringWithFormat:@"%@/v1/%@/", aServerURL, app_id(appKey)];
+    aServerURL = [NSString stringWithFormat:@"%@/v2/%@/", aServerURL, app_id(appKey)];
     
     NSURL *url = [NSURL URLWithString:aServerURL];
     

@@ -18,21 +18,9 @@
 }
 
 - (instancetype)initWithName:(NSString *)name type:(NSString *)type {
-    if (self = [self init]) {
+    if (self = [super init]) {
         _name = name;
         _type = type;
-    }
-    return self;
-}
-
-- (NSString *)description {
-    return [self toDic].description;
-}
-
-- (instancetype)init {
-    if (self = [super init]) {
-        _name = @"";
-        _type = @"";
         _time = (int64_t)(NSDate.date.timeIntervalSince1970 * 1000);
         _app_bundle_id = PREDHelper.appBundleId;
         _app_name = PREDHelper.appName;
@@ -49,6 +37,10 @@
     return self;
 }
 
+- (NSString *)description {
+    return [self toDic].description;
+}
+
 - (NSData *)serializeForSending:(NSError **)error {
     Class class = self.class;
     Class superClass = class_getSuperclass(class);
@@ -56,7 +48,10 @@
     NSMutableDictionary *dic = [self toDicForClass:superClass];
     NSMutableDictionary *thisClassDic = [self toDicForClass:class];
     if (thisClassDic.count > 0) {
-        [dic setObject:[self toDicForClass:class] forKey:@"content"];
+        NSData *data = [NSJSONSerialization dataWithJSONObject:thisClassDic options:0 error:error];
+        if (data) {
+            [dic setObject:[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] forKey:@"content"];
+        }
     }
     return [NSJSONSerialization dataWithJSONObject:dic options:0 error:error];
 }

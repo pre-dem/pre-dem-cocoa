@@ -7,7 +7,12 @@
 //
 
 #import "PREDAppInfo.h"
+#import "PREDConstants.h"
 
 @implementation PREDAppInfo
+
+- (instancetype)init {
+    return [self initWithName:AppInfoEventName type:AutoCapturedEventType];
+}
 
 @end

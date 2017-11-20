@@ -93,7 +93,25 @@
         [_persistence purgeFile:filePath];
         return;
     }
-    NSString *logString = meta[@"crash_log_key"];
+    NSString *content = meta[@"content"];
+    if (!content) {
+        PREDLogError(@"get meta content %@ error %@", filePath, error);
+        [_persistence purgeFile:filePath];
+        return;
+    }
+    
+    NSMutableDictionary *contentDic = [NSJSONSerialization JSONObjectWithData:[content dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:&error];
+    if (error) {
+        PREDLogError(@"parse meta content %@ error %@", filePath, error);
+        [_persistence purgeFile:filePath];
+        return;
+    }
+    NSString *logString = contentDic[@"crash_log_key"];
+    if (!logString) {
+        PREDLogError(@"get log string %@ error %@", filePath, error);
+        [_persistence purgeFile:filePath];
+        return;
+    }
     NSString *md5 = [PREDHelper MD5:logString];
     NSDictionary *param = @{@"md5": md5};
     __weak typeof(self) wSelf = self;
@@ -107,7 +125,9 @@
         if (!error && [dic respondsToSelector:@selector(valueForKey:)] && [dic valueForKey:@"key"] && [dic valueForKey:@"token"]) {
             NSString *key = [dic valueForKey:@"key"];
             NSString *token = [dic valueForKey:@"token"];
-            meta[@"crash_log_key"] = key;
+            contentDic[@"crash_log_key"] = key;
+            NSString *content = [[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:contentDic options:0 error:nil] encoding:NSUTF8StringEncoding];
+            meta[@"content"] = content;
             [strongSelf->_uploadManager
              putData:[logString dataUsingEncoding:NSUTF8StringEncoding]
              key:key
@@ -148,7 +168,25 @@
         [_persistence purgeFile:filePath];
         return;
     }
-    NSString *logString = meta[@"lag_log_key"];
+    NSString *content = meta[@"content"];
+    if (!content) {
+        PREDLogError(@"get meta content %@ error %@", filePath, error);
+        [_persistence purgeFile:filePath];
+        return;
+    }
+    
+    NSMutableDictionary *contentDic = [NSJSONSerialization JSONObjectWithData:[content dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:&error];
+    if (error) {
+        PREDLogError(@"parse meta content %@ error %@", filePath, error);
+        [_persistence purgeFile:filePath];
+        return;
+    }
+    NSString *logString = contentDic[@"lag_log_key"];
+    if (!logString) {
+        PREDLogError(@"get log string %@ error %@", filePath, error);
+        [_persistence purgeFile:filePath];
+        return;
+    }
     NSString *md5 = [PREDHelper MD5:logString];
     NSDictionary *param = @{@"md5": md5};
     __weak typeof(self) wSelf = self;
@@ -162,7 +200,9 @@
         if (!error && [dic respondsToSelector:@selector(valueForKey:)] && [dic valueForKey:@"key"] && [dic valueForKey:@"token"]) {
             NSString *key = [dic valueForKey:@"key"];
             NSString *token = [dic valueForKey:@"token"];
-            meta[@"lag_log_key"] = key;
+            contentDic[@"lag_log_key"] = key;
+            NSString *content = [[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:contentDic options:0 error:nil] encoding:NSUTF8StringEncoding];
+            meta[@"content"] = content;
             [strongSelf->_uploadManager
              putData:[logString dataUsingEncoding:NSUTF8StringEncoding]
              key:key
@@ -203,7 +243,25 @@
         [_persistence purgeFile:filePath];
         return;
     }
-    NSString *logFilePath = meta[@"log_key"];
+    NSString *content = meta[@"content"];
+    if (!content) {
+        PREDLogError(@"get meta content %@ error %@", filePath, error);
+        [_persistence purgeFile:filePath];
+        return;
+    }
+    
+    NSMutableDictionary *contentDic = [NSJSONSerialization JSONObjectWithData:[content dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:&error];
+    if (error) {
+        PREDLogError(@"parse meta content %@ error %@", filePath, error);
+        [_persistence purgeFile:filePath];
+        return;
+    }
+    NSString *logFilePath = contentDic[@"log_key"];
+    if (!logFilePath) {
+        PREDLogError(@"get log string %@ error %@", filePath, error);
+        [_persistence purgeFile:filePath];
+        return;
+    }
     NSData *logData = [NSData dataWithContentsOfFile:logFilePath];
     NSString *md5 = [PREDHelper MD5ForData:logData];
     NSDictionary *param = @{@"md5": md5};
@@ -218,7 +276,9 @@
         if (!error && [dic respondsToSelector:@selector(valueForKey:)] && [dic valueForKey:@"key"] && [dic valueForKey:@"token"]) {
             NSString *key = [dic valueForKey:@"key"];
             NSString *token = [dic valueForKey:@"token"];
-            meta[@"log_key"] = key;
+            contentDic[@"log_key"] = key;
+            NSString *content = [[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:contentDic options:0 error:nil] encoding:NSUTF8StringEncoding];
+            meta[@"content"] = content;
             [strongSelf->_uploadManager
              putData:logData
              key:key
@@ -260,13 +320,7 @@
         return;
     }
     __weak typeof(self) wSelf = self;
-    [_networkClient postPath:@"http-monitors"
-                        data:data
-                     headers:@{
-                               @"Content-Type": @"application/x-gzip",
-                               @"Content-Encoding": @"gzip",
-                               }
-                  completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
+    [_networkClient postPath:@"http-monitors" data:data headers:@{@"Content-Type": @"application/json"} completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
                       __strong typeof(wSelf) strongSelf = wSelf;
                       if (!error) {
                           PREDLogDebug(@"Send http monitor succeeded");
