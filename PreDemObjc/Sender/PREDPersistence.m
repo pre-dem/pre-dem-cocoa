@@ -150,9 +150,13 @@
 }
 
 - (void)persistHttpMonitor:(PREDHTTPMonitorModel *)httpMonitor {
-    NSData *data = [[httpMonitor tabString] dataUsingEncoding:NSUTF8StringEncoding];
+    NSError *error;
+    NSData *toSave = [httpMonitor serializeForSending:&error];
+    if (error) {
+        PREDLogError(@"jsonize httpMonitor error: %@", error);
+    }
     NSString *fileName = [NSString stringWithFormat:@"%f-%u", [[NSDate date] timeIntervalSince1970], arc4random()];
-    BOOL success = [data writeToFile:[NSString stringWithFormat:@"%@/%@", _httpDir, fileName] atomically:NO];
+    BOOL success = [toSave writeToFile:[NSString stringWithFormat:@"%@/%@", _httpDir, fileName] atomically:NO];
     if (!success) {
         PREDLogError(@"write http meta to file %@ failed", fileName);
     }
@@ -255,16 +259,6 @@
     } else {
         return [NSString stringWithFormat:@"%@/%@", _httpDir, files[0]];
     }
-}
-
-- (NSArray *)allHttpMonitorPaths {
-    NSMutableArray *result = [NSMutableArray array];
-    for (NSString *fileName in [_fileManager enumeratorAtPath:_httpDir]) {
-        if (![fileName hasPrefix:@"."]) {
-            [result addObject:[NSString stringWithFormat:@"%@/%@", _httpDir, fileName]];
-        }
-    }
-    return result;
 }
 
 - (NSString *)nextNetDiagPath {

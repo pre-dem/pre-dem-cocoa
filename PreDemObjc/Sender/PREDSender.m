@@ -12,7 +12,6 @@
 #import "PREDHelper.h"
 #import "PREDLogger.h"
 #import "PREDConfigManager.h"
-#import "NSData+gzip.h"
 #import "NSObject+Serialization.h"
 
 #define PREDSendInterval    30
@@ -251,23 +250,18 @@
 }
 
 - (void)sendHttpMonitor {
-    NSArray<NSString *> *filePaths = [_persistence allHttpMonitorPaths];
-    if (!filePaths.count) {
+    NSString *filePath = [_persistence nextHttpMonitorPath];
+    if (!filePath) {
         return;
     }
-    __block NSMutableData *toSend = [NSMutableData data];
-    [filePaths enumerateObjectsUsingBlock:^(NSString * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        NSData *data = [NSData dataWithContentsOfFile:obj];
-        if (!data.length) {
-            PREDLogError(@"get stored data %@ error", obj);
-            return;
-        }
-        [toSend appendData:data];
-    }];
-    NSData *compressedData = [toSend gzippedData];
+    NSData *data = [NSData dataWithContentsOfFile:filePath];
+    if (!data) {
+        PREDLogError(@"get stored data %@ error", filePath);
+        return;
+    }
     __weak typeof(self) wSelf = self;
     [_networkClient postPath:@"http-monitors"
-                        data:compressedData
+                        data:data
                      headers:@{
                                @"Content-Type": @"application/x-gzip",
                                @"Content-Encoding": @"gzip",
@@ -276,7 +270,7 @@
                       __strong typeof(wSelf) strongSelf = wSelf;
                       if (!error) {
                           PREDLogDebug(@"Send http monitor succeeded");
-                          [strongSelf->_persistence purgeFiles:filePaths];
+                          [strongSelf->_persistence purgeFile:filePath];
                           [strongSelf sendHttpMonitor];
                       } else {
                           PREDLogError(@"upload http monitor fail: %@", error);

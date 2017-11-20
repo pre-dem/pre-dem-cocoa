@@ -32,7 +32,6 @@
 - (NSString *)nextLagMetaPath;
 - (NSString *)nextLogMetaPath;
 - (NSString *)nextHttpMonitorPath;
-- (NSArray *)allHttpMonitorPaths;
 - (NSString *)nextNetDiagPath;
 - (NSString *)nextArchivedCustomEventsPath;
 - (NSString *)nextArchivedBreadcrumbPath;
