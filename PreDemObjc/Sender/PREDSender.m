@@ -65,7 +65,7 @@
         return;
     }
     __weak typeof(self) wSelf = self;
-    [_networkClient postPath:@"app-config/i" data:data headers:@{@"Content-Type": @"application/json"} completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
+    [_networkClient postPath:@"app-config" data:data headers:@{@"Content-Type": @"application/json"} completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
         __strong typeof(wSelf) strongSelf = wSelf;
         if (error) {
             PREDLogError(@"get config failed: %@", error);
@@ -98,7 +98,7 @@
     NSString *md5 = [PREDHelper MD5:logString];
     NSDictionary *param = @{@"md5": md5};
     __weak typeof(self) wSelf = self;
-    [_networkClient getPath:@"crash-report-token/i" parameters:param completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
+    [_networkClient getPath:@"crash-report-token" parameters:param completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
         __strong typeof(wSelf) strongSelf = wSelf;
         if (error) {
             PREDLogError(@"get crash token error: %@", error);
@@ -115,7 +115,7 @@
              token: token
              complete:^(QNResponseInfo *info, NSString *key, NSDictionary *resp) {
                  if (resp) {
-                     [strongSelf->_networkClient postPath:@"crashes/i" parameters:meta completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
+                     [strongSelf->_networkClient postPath:@"crashes" parameters:meta completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
                          __strong typeof (wSelf) strongSelf = wSelf;
                          if (!error) {
                              PREDLogDebug(@"Send crash report succeeded");
@@ -153,7 +153,7 @@
     NSString *md5 = [PREDHelper MD5:logString];
     NSDictionary *param = @{@"md5": md5};
     __weak typeof(self) wSelf = self;
-    [_networkClient getPath:@"lag-report-token/i" parameters:param completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
+    [_networkClient getPath:@"lag-report-token" parameters:param completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
         __strong typeof(wSelf) strongSelf = wSelf;
         if (error) {
             PREDLogError(@"get lag token error: %@", error);
@@ -170,7 +170,7 @@
              token: token
              complete:^(QNResponseInfo *info, NSString *key, NSDictionary *resp) {
                  if (resp) {
-                     [strongSelf->_networkClient postPath:@"lag-monitor/i" parameters:meta completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
+                     [strongSelf->_networkClient postPath:@"lag-monitor" parameters:meta completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
                          __strong typeof (wSelf) strongSelf = wSelf;
                          if (!error) {
                              PREDLogDebug(@"Send lag report succeeded");
@@ -209,7 +209,7 @@
     NSString *md5 = [PREDHelper MD5ForData:logData];
     NSDictionary *param = @{@"md5": md5};
     __weak typeof(self) wSelf = self;
-    [_networkClient getPath:@"log-capture-token/i" parameters:param completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
+    [_networkClient getPath:@"log-capture-token" parameters:param completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
         __strong typeof(wSelf) strongSelf = wSelf;
         if (error) {
             PREDLogError(@"get log token error: %@", error);
@@ -227,7 +227,7 @@
              complete:^(QNResponseInfo *info, NSString *key, NSDictionary *resp) {
                  __strong typeof(wSelf) strongSelf = wSelf;
                  if (resp) {
-                     [strongSelf->_networkClient postPath:@"log-capture/i" parameters:meta completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
+                     [strongSelf->_networkClient postPath:@"log-capture" parameters:meta completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
                          __strong typeof (wSelf) strongSelf = wSelf;
                          if (!error) {
                              PREDLogDebug(@"Send log report succeeded");
@@ -266,7 +266,7 @@
     }];
     NSData *compressedData = [toSend gzippedData];
     __weak typeof(self) wSelf = self;
-    [_networkClient postPath:@"http-stats/i"
+    [_networkClient postPath:@"http-monitors"
                         data:compressedData
                      headers:@{
                                @"Content-Type": @"application/x-gzip",
@@ -295,7 +295,7 @@
         return;
     }
     __weak typeof(self) wSelf = self;
-    [_networkClient postPath:@"net-diags/i" data:data headers:@{@"Content-Type": @"application/json"} completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
+    [_networkClient postPath:@"net-diags" data:data headers:@{@"Content-Type": @"application/json"} completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
         __strong typeof(wSelf) strongSelf = wSelf;
         if (!error) {
             PREDLogDebug(@"Send net diag succeeded");
@@ -318,7 +318,7 @@
         return;
     }
     __weak typeof(self) wSelf = self;
-    [_networkClient postPath:@"events" data:data headers:@{@"Content-Type": @"application/json"} completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
+    [_networkClient postPath:@"custom-events" data:data headers:@{@"Content-Type": @"application/json"} completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
         __strong typeof(wSelf) strongSelf = wSelf;
         if (!error) {
             PREDLogDebug(@"Send custom events succeeded");
@@ -341,7 +341,7 @@
         return;
     }
     __weak typeof(self) wSelf = self;
-    [_networkClient postPath:@"breadcrumbs/i" data:data headers:@{@"Content-Type": @"application/json"} completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
+    [_networkClient postPath:@"breadcrumbs" data:data headers:@{@"Content-Type": @"application/json"} completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
         __strong typeof(wSelf) strongSelf = wSelf;
         if (!error) {
             PREDLogDebug(@"Send breadcrumbs succeeded");
