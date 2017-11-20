@@ -16,7 +16,7 @@
 @property (nonatomic, assign) uint64_t start_time;
 @property (nonatomic, assign) uint64_t lag_time;
 
-- (instancetype)initWithData:(NSData *)crashData
-                       error:(NSError **)error;
+- (instancetype)initWithData:(NSData *)data error:(NSError **)error;
+
 
 @end

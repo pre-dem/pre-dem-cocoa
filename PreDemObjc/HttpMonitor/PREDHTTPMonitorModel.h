@@ -24,6 +24,4 @@
 @property (nonatomic, assign) NSInteger     network_error_code;
 @property (nonatomic, strong) NSString      *network_error_msg;
 
-- (NSString *)tabString;
-
 @end

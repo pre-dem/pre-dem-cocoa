@@ -12,6 +12,7 @@
 #import "PREDHelper.h"
 #import "PREDLogger.h"
 #import "QNNetDiag.h"
+#import "PREDConstants.h"
 
 #define PREDTotalResultNeeded   5
 
@@ -27,7 +28,7 @@
 }
 
 - (instancetype)initWithComplete:(PREDNetDiagCompleteHandler)complete persistence:(PREDPersistence *)persistence {
-    if (self = [super init]) {
+    if (self = [self initWithName:NetDiagEventName type:AutoCapturedEventType]) {
         _completedCount = 0;
         _lock = [NSLock new];
         _complete = complete;

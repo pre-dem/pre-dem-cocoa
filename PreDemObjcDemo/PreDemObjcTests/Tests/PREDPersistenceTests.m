@@ -65,12 +65,28 @@
     NSMutableDictionary *dic = [_persistence getStoredMeta:path error:&error];
     XCTAssertNotNil(dic);
     XCTAssertNil(error);
-    unsigned int count, count1, count2;
+    NSString *content = dic[@"content"];
+    XCTAssertNotNil(content);
+    NSMutableDictionary *contentDic = [NSJSONSerialization JSONObjectWithData:[content dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:&error];
+    XCTAssertNotNil(contentDic);
+    XCTAssertNil(error);
+    unsigned int count1, count2;
     class_copyPropertyList(PREDCrashMeta.class, &count1);
     class_copyPropertyList(PREDCrashMeta.superclass, &count2);
-    count = count1 + count2;
-    XCTAssertEqual(count, dic.count);
+    if (count1) {
+        XCTAssertEqual(count2, dic.count - 1);
+        XCTAssertEqual(count1, contentDic.count);
+    } else {
+        XCTAssertEqual(count2, dic.count);
+    }
+    
     [dic enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, id _Nonnull obj, BOOL * _Nonnull stop) {
+        if (![key isEqualToString:@"content"]) {
+            XCTAssertTrue([[meta valueForKey:key] isEqual:obj]);
+        }
+    }];
+    
+    [contentDic enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, id _Nonnull obj, BOOL * _Nonnull stop) {
         XCTAssertTrue([[meta valueForKey:key] isEqual:obj]);
     }];
     [_persistence purgeFile:path];
@@ -91,12 +107,28 @@
     NSMutableDictionary *dic = [_persistence getStoredMeta:path error:&error];
     XCTAssertNotNil(dic);
     XCTAssertNil(error);
-    unsigned int count, count1, count2;
-    class_copyPropertyList(PREDLagMeta.class, &count1);
-    class_copyPropertyList(PREDLagMeta.superclass, &count2);
-    count = count1 + count2;
-    XCTAssertEqual(count, dic.count);
+    NSString *content = dic[@"content"];
+    XCTAssertNotNil(content);
+    NSMutableDictionary *contentDic = [NSJSONSerialization JSONObjectWithData:[content dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:&error];
+    XCTAssertNotNil(contentDic);
+    XCTAssertNil(error);
+    unsigned int count1, count2;
+    class_copyPropertyList(PREDCrashMeta.class, &count1);
+    class_copyPropertyList(PREDCrashMeta.superclass, &count2);
+    if (count1) {
+        XCTAssertEqual(count2, dic.count - 1);
+        XCTAssertEqual(count1, contentDic.count);
+    } else {
+        XCTAssertEqual(count2, dic.count);
+    }
+    
     [dic enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, id _Nonnull obj, BOOL * _Nonnull stop) {
+        if (![key isEqualToString:@"content"]) {
+            XCTAssertTrue([[meta valueForKey:key] isEqual:obj]);
+        }
+    }];
+    
+    [contentDic enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, id _Nonnull obj, BOOL * _Nonnull stop) {
         XCTAssertTrue([[meta valueForKey:key] isEqual:obj]);
     }];
     [_persistence purgeFile:path];
@@ -117,12 +149,28 @@
     NSMutableDictionary *dic = [_persistence getStoredMeta:path error:&error];
     XCTAssertNotNil(dic);
     XCTAssertNil(error);
-    unsigned int count, count1, count2;
-    class_copyPropertyList(PREDLagMeta.class, &count1);
-    class_copyPropertyList(PREDLagMeta.superclass, &count2);
-    count = count1 + count2;
-    XCTAssertEqual(count, dic.count);
+    NSString *content = dic[@"content"];
+    XCTAssertNotNil(content);
+    NSMutableDictionary *contentDic = [NSJSONSerialization JSONObjectWithData:[content dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:&error];
+    XCTAssertNotNil(contentDic);
+    XCTAssertNil(error);
+    unsigned int count1, count2;
+    class_copyPropertyList(PREDCrashMeta.class, &count1);
+    class_copyPropertyList(PREDCrashMeta.superclass, &count2);
+    if (count1) {
+        XCTAssertEqual(count2, dic.count - 1);
+        XCTAssertEqual(count1, contentDic.count);
+    } else {
+        XCTAssertEqual(count2, dic.count);
+    }
+    
     [dic enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, id _Nonnull obj, BOOL * _Nonnull stop) {
+        if (![key isEqualToString:@"content"]) {
+            XCTAssertTrue([[meta valueForKey:key] isEqual:obj]);
+        }
+    }];
+    
+    [contentDic enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, id _Nonnull obj, BOOL * _Nonnull stop) {
         XCTAssertTrue([[meta valueForKey:key] isEqual:obj]);
     }];
     [_persistence purgeFile:path];
@@ -133,11 +181,11 @@
     [_persistence purgeAllCustom];
     
     NSDictionary *dict1 = @{
-                           @"stringKey": [NSString stringWithFormat:@"test\t_\n%d", arc4random_uniform(100)],
-                           @"longKey": @(arc4random_uniform(100)),
-                           @"floatKey": @(arc4random_uniform(10000)/100.0)
-                           };
-    PREDEvent *event1 = [PREDEvent eventWithName:@"test\t_\nios\t_\nevent_1" contentDic:dict1];
+                            @"stringKey": [NSString stringWithFormat:@"test\t_\n%d", arc4random_uniform(100)],
+                            @"longKey": @(arc4random_uniform(100)),
+                            @"floatKey": @(arc4random_uniform(10000)/100.0)
+                            };
+    PREDCustomEvent *event1 = [PREDCustomEvent eventWithName:@"test\t_\nios\t_\nevent_1" contentDic:dict1];
     [_persistence persistCustomEvent:event1];
     
     NSDictionary *dict2 = @{
@@ -145,7 +193,7 @@
                             @"longKey": @(arc4random_uniform(100)),
                             @"floatKey": @(arc4random_uniform(10000)/100.0)
                             };
-    PREDEvent *event2 = [PREDEvent eventWithName:@"test\t_\nios\t_\nevent_2" contentDic:dict2];
+    PREDCustomEvent *event2 = [PREDCustomEvent eventWithName:@"test\t_\nios\t_\nevent_2" contentDic:dict2];
     [_persistence persistCustomEvent:event2];
     
     NSString *path = [_persistence nextArchivedCustomEventsPath];
@@ -160,8 +208,8 @@
     XCTAssertNotNil(dic);
     XCTAssertNil(error);
     unsigned int count, count1, count2;
-    class_copyPropertyList(PREDEvent.class, &count1);
-    class_copyPropertyList(PREDEvent.superclass, &count2);
+    class_copyPropertyList(PREDCustomEvent.class, &count1);
+    class_copyPropertyList(PREDCustomEvent.superclass, &count2);
     count = count1 + count2;
     XCTAssertEqual(count, dic.count);
     [dic enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, NSString * _Nonnull obj, BOOL * _Nonnull stop) {
@@ -171,8 +219,8 @@
     dic = [NSJSONSerialization JSONObjectWithData:[components[1] dataUsingEncoding:NSUTF8StringEncoding] options:0 error:&error];
     XCTAssertNotNil(dic);
     XCTAssertNil(error);
-    class_copyPropertyList(PREDEvent.class, &count1);
-    class_copyPropertyList(PREDEvent.superclass, &count2);
+    class_copyPropertyList(PREDCustomEvent.class, &count1);
+    class_copyPropertyList(PREDCustomEvent.superclass, &count2);
     count = count1 + count2;
     XCTAssertEqual(count, dic.count);
     [dic enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, NSString * _Nonnull obj, BOOL * _Nonnull stop) {

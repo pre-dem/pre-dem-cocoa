@@ -10,7 +10,7 @@
 #define BREADCRUMB_EVENT_TYPE @"breadcrumb"
 
 // expose method to PREDBreadCrumb
-@interface PREDEvent()
+@interface PREDCustomEvent()
 
 + (instancetype)eventWithName:(NSString *)name type:(NSString *)type contentDic:(NSDictionary *)contentDic;
 

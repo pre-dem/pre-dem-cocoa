@@ -7,13 +7,14 @@
 //
 
 #import "PREDLogMeta.h"
+#import "PREDConstants.h"
 
 @implementation PREDLogMeta {
     NSMutableSet *_tags;
 }
 
 - (instancetype)init {
-    if (self = [super init]) {
+    if (self = [self initWithName:LogCaptureEventName type:AutoCapturedEventType]) {
         _tags = [NSMutableSet new];
     }
     return self;

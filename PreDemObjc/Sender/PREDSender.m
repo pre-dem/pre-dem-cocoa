@@ -12,7 +12,6 @@
 #import "PREDHelper.h"
 #import "PREDLogger.h"
 #import "PREDConfigManager.h"
-#import "NSData+gzip.h"
 #import "NSObject+Serialization.h"
 
 #define PREDSendInterval    30
@@ -65,7 +64,7 @@
         return;
     }
     __weak typeof(self) wSelf = self;
-    [_networkClient postPath:@"app-config/i" data:data headers:@{@"Content-Type": @"application/json"} completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
+    [_networkClient postPath:@"app-config" data:data headers:@{@"Content-Type": @"application/json"} completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
         __strong typeof(wSelf) strongSelf = wSelf;
         if (error) {
             PREDLogError(@"get config failed: %@", error);
@@ -94,11 +93,29 @@
         [_persistence purgeFile:filePath];
         return;
     }
-    NSString *logString = meta[@"crash_log_key"];
+    NSString *content = meta[@"content"];
+    if (!content) {
+        PREDLogError(@"get meta content %@ error %@", filePath, error);
+        [_persistence purgeFile:filePath];
+        return;
+    }
+    
+    NSMutableDictionary *contentDic = [NSJSONSerialization JSONObjectWithData:[content dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:&error];
+    if (error) {
+        PREDLogError(@"parse meta content %@ error %@", filePath, error);
+        [_persistence purgeFile:filePath];
+        return;
+    }
+    NSString *logString = contentDic[@"crash_log_key"];
+    if (!logString) {
+        PREDLogError(@"get log string %@ error %@", filePath, error);
+        [_persistence purgeFile:filePath];
+        return;
+    }
     NSString *md5 = [PREDHelper MD5:logString];
     NSDictionary *param = @{@"md5": md5};
     __weak typeof(self) wSelf = self;
-    [_networkClient getPath:@"crash-report-token/i" parameters:param completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
+    [_networkClient getPath:@"crash-report-token" parameters:param completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
         __strong typeof(wSelf) strongSelf = wSelf;
         if (error) {
             PREDLogError(@"get crash token error: %@", error);
@@ -108,14 +125,16 @@
         if (!error && [dic respondsToSelector:@selector(valueForKey:)] && [dic valueForKey:@"key"] && [dic valueForKey:@"token"]) {
             NSString *key = [dic valueForKey:@"key"];
             NSString *token = [dic valueForKey:@"token"];
-            meta[@"crash_log_key"] = key;
+            contentDic[@"crash_log_key"] = key;
+            NSString *content = [[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:contentDic options:0 error:nil] encoding:NSUTF8StringEncoding];
+            meta[@"content"] = content;
             [strongSelf->_uploadManager
              putData:[logString dataUsingEncoding:NSUTF8StringEncoding]
              key:key
              token: token
              complete:^(QNResponseInfo *info, NSString *key, NSDictionary *resp) {
                  if (resp) {
-                     [strongSelf->_networkClient postPath:@"crashes/i" parameters:meta completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
+                     [strongSelf->_networkClient postPath:@"crashes" parameters:meta completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
                          __strong typeof (wSelf) strongSelf = wSelf;
                          if (!error) {
                              PREDLogDebug(@"Send crash report succeeded");
@@ -149,11 +168,29 @@
         [_persistence purgeFile:filePath];
         return;
     }
-    NSString *logString = meta[@"lag_log_key"];
+    NSString *content = meta[@"content"];
+    if (!content) {
+        PREDLogError(@"get meta content %@ error %@", filePath, error);
+        [_persistence purgeFile:filePath];
+        return;
+    }
+    
+    NSMutableDictionary *contentDic = [NSJSONSerialization JSONObjectWithData:[content dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:&error];
+    if (error) {
+        PREDLogError(@"parse meta content %@ error %@", filePath, error);
+        [_persistence purgeFile:filePath];
+        return;
+    }
+    NSString *logString = contentDic[@"lag_log_key"];
+    if (!logString) {
+        PREDLogError(@"get log string %@ error %@", filePath, error);
+        [_persistence purgeFile:filePath];
+        return;
+    }
     NSString *md5 = [PREDHelper MD5:logString];
     NSDictionary *param = @{@"md5": md5};
     __weak typeof(self) wSelf = self;
-    [_networkClient getPath:@"lag-report-token/i" parameters:param completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
+    [_networkClient getPath:@"lag-report-token" parameters:param completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
         __strong typeof(wSelf) strongSelf = wSelf;
         if (error) {
             PREDLogError(@"get lag token error: %@", error);
@@ -163,14 +200,16 @@
         if (!error && [dic respondsToSelector:@selector(valueForKey:)] && [dic valueForKey:@"key"] && [dic valueForKey:@"token"]) {
             NSString *key = [dic valueForKey:@"key"];
             NSString *token = [dic valueForKey:@"token"];
-            meta[@"lag_log_key"] = key;
+            contentDic[@"lag_log_key"] = key;
+            NSString *content = [[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:contentDic options:0 error:nil] encoding:NSUTF8StringEncoding];
+            meta[@"content"] = content;
             [strongSelf->_uploadManager
              putData:[logString dataUsingEncoding:NSUTF8StringEncoding]
              key:key
              token: token
              complete:^(QNResponseInfo *info, NSString *key, NSDictionary *resp) {
                  if (resp) {
-                     [strongSelf->_networkClient postPath:@"lag-monitor/i" parameters:meta completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
+                     [strongSelf->_networkClient postPath:@"lag-monitor" parameters:meta completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
                          __strong typeof (wSelf) strongSelf = wSelf;
                          if (!error) {
                              PREDLogDebug(@"Send lag report succeeded");
@@ -204,12 +243,30 @@
         [_persistence purgeFile:filePath];
         return;
     }
-    NSString *logFilePath = meta[@"log_key"];
+    NSString *content = meta[@"content"];
+    if (!content) {
+        PREDLogError(@"get meta content %@ error %@", filePath, error);
+        [_persistence purgeFile:filePath];
+        return;
+    }
+    
+    NSMutableDictionary *contentDic = [NSJSONSerialization JSONObjectWithData:[content dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:&error];
+    if (error) {
+        PREDLogError(@"parse meta content %@ error %@", filePath, error);
+        [_persistence purgeFile:filePath];
+        return;
+    }
+    NSString *logFilePath = contentDic[@"log_key"];
+    if (!logFilePath) {
+        PREDLogError(@"get log string %@ error %@", filePath, error);
+        [_persistence purgeFile:filePath];
+        return;
+    }
     NSData *logData = [NSData dataWithContentsOfFile:logFilePath];
     NSString *md5 = [PREDHelper MD5ForData:logData];
     NSDictionary *param = @{@"md5": md5};
     __weak typeof(self) wSelf = self;
-    [_networkClient getPath:@"log-capture-token/i" parameters:param completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
+    [_networkClient getPath:@"log-capture-token" parameters:param completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
         __strong typeof(wSelf) strongSelf = wSelf;
         if (error) {
             PREDLogError(@"get log token error: %@", error);
@@ -219,7 +276,9 @@
         if (!error && [dic respondsToSelector:@selector(valueForKey:)] && [dic valueForKey:@"key"] && [dic valueForKey:@"token"]) {
             NSString *key = [dic valueForKey:@"key"];
             NSString *token = [dic valueForKey:@"token"];
-            meta[@"log_key"] = key;
+            contentDic[@"log_key"] = key;
+            NSString *content = [[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:contentDic options:0 error:nil] encoding:NSUTF8StringEncoding];
+            meta[@"content"] = content;
             [strongSelf->_uploadManager
              putData:logData
              key:key
@@ -227,7 +286,7 @@
              complete:^(QNResponseInfo *info, NSString *key, NSDictionary *resp) {
                  __strong typeof(wSelf) strongSelf = wSelf;
                  if (resp) {
-                     [strongSelf->_networkClient postPath:@"log-capture/i" parameters:meta completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
+                     [strongSelf->_networkClient postPath:@"log-capture" parameters:meta completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
                          __strong typeof (wSelf) strongSelf = wSelf;
                          if (!error) {
                              PREDLogDebug(@"Send log report succeeded");
@@ -251,32 +310,21 @@
 }
 
 - (void)sendHttpMonitor {
-    NSArray<NSString *> *filePaths = [_persistence allHttpMonitorPaths];
-    if (!filePaths.count) {
+    NSString *filePath = [_persistence nextHttpMonitorPath];
+    if (!filePath) {
         return;
     }
-    __block NSMutableData *toSend = [NSMutableData data];
-    [filePaths enumerateObjectsUsingBlock:^(NSString * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        NSData *data = [NSData dataWithContentsOfFile:obj];
-        if (!data.length) {
-            PREDLogError(@"get stored data %@ error", obj);
-            return;
-        }
-        [toSend appendData:data];
-    }];
-    NSData *compressedData = [toSend gzippedData];
+    NSData *data = [NSData dataWithContentsOfFile:filePath];
+    if (!data) {
+        PREDLogError(@"get stored data %@ error", filePath);
+        return;
+    }
     __weak typeof(self) wSelf = self;
-    [_networkClient postPath:@"http-stats/i"
-                        data:compressedData
-                     headers:@{
-                               @"Content-Type": @"application/x-gzip",
-                               @"Content-Encoding": @"gzip",
-                               }
-                  completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
+    [_networkClient postPath:@"http-monitors" data:data headers:@{@"Content-Type": @"application/json"} completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
                       __strong typeof(wSelf) strongSelf = wSelf;
                       if (!error) {
                           PREDLogDebug(@"Send http monitor succeeded");
-                          [strongSelf->_persistence purgeFiles:filePaths];
+                          [strongSelf->_persistence purgeFile:filePath];
                           [strongSelf sendHttpMonitor];
                       } else {
                           PREDLogError(@"upload http monitor fail: %@", error);
@@ -295,7 +343,7 @@
         return;
     }
     __weak typeof(self) wSelf = self;
-    [_networkClient postPath:@"net-diags/i" data:data headers:@{@"Content-Type": @"application/json"} completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
+    [_networkClient postPath:@"net-diags" data:data headers:@{@"Content-Type": @"application/json"} completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
         __strong typeof(wSelf) strongSelf = wSelf;
         if (!error) {
             PREDLogDebug(@"Send net diag succeeded");
@@ -318,7 +366,7 @@
         return;
     }
     __weak typeof(self) wSelf = self;
-    [_networkClient postPath:@"events" data:data headers:@{@"Content-Type": @"application/json"} completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
+    [_networkClient postPath:@"custom-events" data:data headers:@{@"Content-Type": @"application/json"} completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
         __strong typeof(wSelf) strongSelf = wSelf;
         if (!error) {
             PREDLogDebug(@"Send custom events succeeded");
@@ -341,7 +389,7 @@
         return;
     }
     __weak typeof(self) wSelf = self;
-    [_networkClient postPath:@"breadcrumbs/i" data:data headers:@{@"Content-Type": @"application/json"} completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
+    [_networkClient postPath:@"breadcrumbs" data:data headers:@{@"Content-Type": @"application/json"} completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
         __strong typeof(wSelf) strongSelf = wSelf;
         if (!error) {
             PREDLogDebug(@"Send breadcrumbs succeeded");

@@ -6,19 +6,19 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "PREDEvent.h"
+#import "PREDCustomEvent.h"
 #import "PREDLogger.h"
+#import "PREDConstants.h"
+#import "NSObject+Serialization.h"
 
-#define CUSTOM_EVENT_TYPE @"custom"
-
-@implementation PREDEvent
+@implementation PREDCustomEvent
 
 + (instancetype)eventWithName:(NSString *)name contentDic:(NSDictionary *)contentDic {
-    return [self eventWithName:name type:CUSTOM_EVENT_TYPE contentDic:contentDic];
+    return [self eventWithName:name type:CustomEventType contentDic:contentDic];
 }
 
 + (instancetype)eventWithName:(NSString *)name type:(NSString *)type contentDic:(NSDictionary *)contentDic {
-    PREDEvent *event = [[PREDEvent alloc] init];
+    PREDCustomEvent *event = [self eventWithName:name type:type];
     if (event) {
         if (!name.length) {
             PREDLogError(@"event name should not be empty");
@@ -44,12 +44,14 @@
         }
 
         
-        event->_name = name;
         event->_content = content;
-        event->_type = type;
     }
     
     return event;
+}
+
+- (NSData *)serializeForSending:(NSError **)error {
+    return [self toJsonWithError:error];
 }
 
 @end

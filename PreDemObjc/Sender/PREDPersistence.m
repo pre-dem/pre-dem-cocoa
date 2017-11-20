@@ -11,7 +11,6 @@
 #import "PREDLogger.h"
 #import "NSObject+Serialization.h"
 #import "PREDError.h"
-#import "NSData+gzip.h"
 
 #define PREDMaxCacheFileSize    512 * 1024  // 512KB
 #define PREDMillisecondPerSecond        1000
@@ -88,7 +87,7 @@
 
 - (void)persistAppInfo:(PREDAppInfo *)appInfo {
     NSError *error;
-    NSData *data = [appInfo toJsonWithError:&error];
+    NSData *data = [appInfo serializeForSending:&error];
     if (error) {
         PREDLogError(@"jsonize app info error: %@", error);
         return;
@@ -102,7 +101,7 @@
 
 - (void)persistCrashMeta:(PREDCrashMeta *)crashMeta {
     NSError *error;
-    NSData *data = [crashMeta toJsonWithError:&error];
+    NSData *data = [crashMeta serializeForSending:&error];
     if (error) {
         PREDLogError(@"jsonize crash meta error: %@", error);
         return;
@@ -116,7 +115,7 @@
 
 - (void)persistLagMeta:(PREDLagMeta *)lagMeta {
     NSError *error;
-    NSData *data = [lagMeta toJsonWithError:&error];
+    NSData *data = [lagMeta serializeForSending:&error];
     if (error) {
         PREDLogError(@"jsonize lag meta error: %@", error);
         return;
@@ -138,7 +137,7 @@
     } else {
         fileName = _lastLogMetaPath;
     }
-    NSData *data = [logMeta toJsonWithError:&error];
+    NSData *data = [logMeta serializeForSending:&error];
     if (error) {
         PREDLogError(@"jsonize log meta error: %@", error);
         return;
@@ -150,9 +149,13 @@
 }
 
 - (void)persistHttpMonitor:(PREDHTTPMonitorModel *)httpMonitor {
-    NSData *data = [[httpMonitor tabString] dataUsingEncoding:NSUTF8StringEncoding];
+    NSError *error;
+    NSData *toSave = [httpMonitor serializeForSending:&error];
+    if (error) {
+        PREDLogError(@"jsonize httpMonitor error: %@", error);
+    }
     NSString *fileName = [NSString stringWithFormat:@"%f-%u", [[NSDate date] timeIntervalSince1970], arc4random()];
-    BOOL success = [data writeToFile:[NSString stringWithFormat:@"%@/%@", _httpDir, fileName] atomically:NO];
+    BOOL success = [toSave writeToFile:[NSString stringWithFormat:@"%@/%@", _httpDir, fileName] atomically:NO];
     if (!success) {
         PREDLogError(@"write http meta to file %@ failed", fileName);
     }
@@ -160,7 +163,7 @@
 
 - (void)persistNetDiagResult:(PREDNetDiagResult *)netDiagResult {
     NSError *error;
-    NSData *toSave = [netDiagResult toJsonWithError:&error];
+    NSData *toSave = [netDiagResult serializeForSending:&error];
     if (error) {
         PREDLogError(@"jsonize net diag result error: %@", error);
     }
@@ -171,10 +174,10 @@
     }
 }
 
-- (void)persistCustomEvent:(PREDEvent *)event {
+- (void)persistCustomEvent:(PREDCustomEvent *)event {
     dispatch_async(_customEventQueue, ^{
         NSError *error;
-        NSData *toSave = [event toJsonWithError:&error];
+        NSData *toSave = [event serializeForSending:&error];
         if (error) {
             PREDLogError(@"jsonize custom events error: %@", error);
             return;
@@ -193,7 +196,7 @@
 - (void)persistBreadcrumb:(PREDBreadcrumb *)breadcrumb {
     dispatch_async(_breadcrumbQueue, ^{
         NSError *error;
-        NSData *toSave = [breadcrumb toJsonWithError:&error];
+        NSData *toSave = [breadcrumb serializeForSending:&error];
         if (error) {
             PREDLogError(@"jsonize custom events error: %@", error);
             return;
@@ -255,16 +258,6 @@
     } else {
         return [NSString stringWithFormat:@"%@/%@", _httpDir, files[0]];
     }
-}
-
-- (NSArray *)allHttpMonitorPaths {
-    NSMutableArray *result = [NSMutableArray array];
-    for (NSString *fileName in [_fileManager enumeratorAtPath:_httpDir]) {
-        if (![fileName hasPrefix:@"."]) {
-            [result addObject:[NSString stringWithFormat:@"%@/%@", _httpDir, fileName]];
-        }
-    }
-    return result;
 }
 
 - (NSString *)nextNetDiagPath {
