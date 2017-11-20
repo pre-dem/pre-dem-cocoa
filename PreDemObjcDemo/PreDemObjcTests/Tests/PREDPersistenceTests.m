@@ -65,7 +65,11 @@
     NSMutableDictionary *dic = [_persistence getStoredMeta:path error:&error];
     XCTAssertNotNil(dic);
     XCTAssertNil(error);
-    NSMutableDictionary *contentDic = [dic objectForKey:@"content"];
+    NSString *content = dic[@"content"];
+    XCTAssertNotNil(content);
+    NSMutableDictionary *contentDic = [NSJSONSerialization JSONObjectWithData:[content dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:&error];
+    XCTAssertNotNil(contentDic);
+    XCTAssertNil(error);
     unsigned int count1, count2;
     class_copyPropertyList(PREDCrashMeta.class, &count1);
     class_copyPropertyList(PREDCrashMeta.superclass, &count2);
@@ -103,7 +107,11 @@
     NSMutableDictionary *dic = [_persistence getStoredMeta:path error:&error];
     XCTAssertNotNil(dic);
     XCTAssertNil(error);
-    NSMutableDictionary *contentDic = [dic objectForKey:@"content"];
+    NSString *content = dic[@"content"];
+    XCTAssertNotNil(content);
+    NSMutableDictionary *contentDic = [NSJSONSerialization JSONObjectWithData:[content dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:&error];
+    XCTAssertNotNil(contentDic);
+    XCTAssertNil(error);
     unsigned int count1, count2;
     class_copyPropertyList(PREDCrashMeta.class, &count1);
     class_copyPropertyList(PREDCrashMeta.superclass, &count2);
@@ -141,7 +149,11 @@
     NSMutableDictionary *dic = [_persistence getStoredMeta:path error:&error];
     XCTAssertNotNil(dic);
     XCTAssertNil(error);
-    NSMutableDictionary *contentDic = [dic objectForKey:@"content"];
+    NSString *content = dic[@"content"];
+    XCTAssertNotNil(content);
+    NSMutableDictionary *contentDic = [NSJSONSerialization JSONObjectWithData:[content dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:&error];
+    XCTAssertNotNil(contentDic);
+    XCTAssertNil(error);
     unsigned int count1, count2;
     class_copyPropertyList(PREDCrashMeta.class, &count1);
     class_copyPropertyList(PREDCrashMeta.superclass, &count2);
