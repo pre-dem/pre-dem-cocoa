@@ -88,7 +88,7 @@
 
 - (void)persistAppInfo:(PREDAppInfo *)appInfo {
     NSError *error;
-    NSData *data = [appInfo toJsonWithError:&error];
+    NSData *data = [appInfo serializeForSending:&error];
     if (error) {
         PREDLogError(@"jsonize app info error: %@", error);
         return;
@@ -102,7 +102,7 @@
 
 - (void)persistCrashMeta:(PREDCrashMeta *)crashMeta {
     NSError *error;
-    NSData *data = [crashMeta toJsonWithError:&error];
+    NSData *data = [crashMeta serializeForSending:&error];
     if (error) {
         PREDLogError(@"jsonize crash meta error: %@", error);
         return;
@@ -116,7 +116,7 @@
 
 - (void)persistLagMeta:(PREDLagMeta *)lagMeta {
     NSError *error;
-    NSData *data = [lagMeta toJsonWithError:&error];
+    NSData *data = [lagMeta serializeForSending:&error];
     if (error) {
         PREDLogError(@"jsonize lag meta error: %@", error);
         return;
@@ -138,7 +138,7 @@
     } else {
         fileName = _lastLogMetaPath;
     }
-    NSData *data = [logMeta toJsonWithError:&error];
+    NSData *data = [logMeta serializeForSending:&error];
     if (error) {
         PREDLogError(@"jsonize log meta error: %@", error);
         return;
@@ -160,7 +160,7 @@
 
 - (void)persistNetDiagResult:(PREDNetDiagResult *)netDiagResult {
     NSError *error;
-    NSData *toSave = [netDiagResult toJsonWithError:&error];
+    NSData *toSave = [netDiagResult serializeForSending:&error];
     if (error) {
         PREDLogError(@"jsonize net diag result error: %@", error);
     }
@@ -174,7 +174,7 @@
 - (void)persistCustomEvent:(PREDCustomEvent *)event {
     dispatch_async(_customEventQueue, ^{
         NSError *error;
-        NSData *toSave = [event toJsonWithError:&error];
+        NSData *toSave = [event serializeForSending:&error];
         if (error) {
             PREDLogError(@"jsonize custom events error: %@", error);
             return;
@@ -193,7 +193,7 @@
 - (void)persistBreadcrumb:(PREDBreadcrumb *)breadcrumb {
     dispatch_async(_breadcrumbQueue, ^{
         NSError *error;
-        NSData *toSave = [breadcrumb toJsonWithError:&error];
+        NSData *toSave = [breadcrumb serializeForSending:&error];
         if (error) {
             PREDLogError(@"jsonize custom events error: %@", error);
             return;

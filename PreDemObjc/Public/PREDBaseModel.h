@@ -99,4 +99,9 @@
  */
 - (instancetype)initWithName:(NSString *)name type:(NSString *)type;
 
+/**
+ * 将事件序列化供发送
+ */
+- (NSData *)serializeForSending:(NSError **)error;
+
 @end

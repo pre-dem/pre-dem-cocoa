@@ -9,6 +9,7 @@
 #import "PREDCustomEvent.h"
 #import "PREDLogger.h"
 #import "PREDConstants.h"
+#import "NSObject+Serialization.h"
 
 @implementation PREDCustomEvent
 
@@ -47,6 +48,10 @@
     }
     
     return event;
+}
+
+- (NSData *)serializeForSending:(NSError **)error {
+    return [self toJsonWithError:error];
 }
 
 @end

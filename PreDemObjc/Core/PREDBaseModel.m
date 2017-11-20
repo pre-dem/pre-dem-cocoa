@@ -9,6 +9,7 @@
 #import "PREDBaseModel.h"
 #import "PREDHelper.h"
 #import "NSObject+Serialization.h"
+#import <objc/runtime.h>
 
 @implementation PREDBaseModel
 
@@ -46,6 +47,18 @@
         _manufacturer = @"Apple";
     }
     return self;
+}
+
+- (NSData *)serializeForSending:(NSError **)error {
+    Class class = self.class;
+    Class superClass = class_getSuperclass(class);
+    NSAssert([superClass isEqual:PREDBaseModel.class], @"%@ should be subclass of PREDBaseModel", class);
+    NSMutableDictionary *dic = [self toDicForClass:superClass];
+    NSMutableDictionary *thisClassDic = [self toDicForClass:class];
+    if (thisClassDic.count > 0) {
+        [dic setObject:[self toDicForClass:class] forKey:@"content"];
+    }
+    return [NSJSONSerialization dataWithJSONObject:dic options:0 error:error];
 }
 
 @end
