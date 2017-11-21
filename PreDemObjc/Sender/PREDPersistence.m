@@ -333,15 +333,23 @@
 }
 
 - (NSMutableDictionary *)getLogMeta:(NSString *)filePath error:(NSError **)error {
-    NSError *err;
-    NSMutableDictionary *dic = [self getStoredMeta:filePath error:&err];
-    if (err) {
+    NSMutableDictionary *dic = [self getStoredMeta:filePath error:error];
+    if (!dic) {
+        return nil;
+    }
+    NSString *content = dic[@"content"];
+    if (!content) {
         if (error) {
-            *error = err;
+            *error = [PREDError GenerateNSError:kPREDErrorCodeInternalError description:@"get meta content %@ error", filePath];
         }
         return nil;
     }
-    NSString *logFileName = dic[@"log_key"];
+    
+    NSMutableDictionary *contentDic = [NSJSONSerialization JSONObjectWithData:[content dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:error];
+    if (!contentDic) {
+        return nil;
+    }
+    NSString *logFileName = contentDic[@"log_key"];
     if (!logFileName) {
         if (error) {
             *error = [PREDError GenerateNSError:kPREDErrorCodeInternalError description:@"get log meta %@ error", logFileName];
@@ -349,16 +357,18 @@
         return nil;
     }
     NSString *logFilePath = [NSString stringWithFormat:@"%@/%@/%@", PREDHelper.cacheDirectory, @"logfiles", logFileName];
-    dic[@"log_key"] = logFilePath;
-    NSDictionary *attributes = [[NSFileManager defaultManager] attributesOfItemAtPath:logFilePath error:&err];
-    if (err) {
-        if (error) {
-            *error = err;
-        }
+    contentDic[@"log_key"] = logFilePath;
+    NSDictionary *attributes = [[NSFileManager defaultManager] attributesOfItemAtPath:logFilePath error:error];
+    if (!attributes) {
         return nil;
     }
-    dic[@"start_time"] = @((uint64_t)([attributes fileCreationDate].timeIntervalSince1970 * PREDMillisecondPerSecond));
-    dic[@"end_time"] = @((uint64_t)([attributes fileModificationDate].timeIntervalSince1970 * PREDMillisecondPerSecond));
+    contentDic[@"start_time"] = @((uint64_t)([attributes fileCreationDate].timeIntervalSince1970 * PREDMillisecondPerSecond));
+    contentDic[@"end_time"] = @((uint64_t)([attributes fileModificationDate].timeIntervalSince1970 * PREDMillisecondPerSecond));
+    NSData *contentData = [NSJSONSerialization dataWithJSONObject:contentDic options:0 error:error];
+    if (!contentData) {
+        return nil;
+    }
+    dic[@"content"] = [[NSString alloc] initWithData:contentData encoding:NSUTF8StringEncoding];
     return dic;
 }
 
