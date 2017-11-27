@@ -19,6 +19,8 @@
 
 #define PREDMillisecondPerSecond        1000
 
+static __weak id<PREDLoggerDelegate> _delegate;
+
 @implementation PREDLogMessage
 
 @end
@@ -61,6 +63,9 @@
         PREDLogMessage *message = [[PREDLogMessage alloc] initWithMessage:[[NSString alloc] initWithFormat:format arguments:args] level:(DDLogLevel)level flag:(DDLogFlag)flag context:context file:[NSString stringWithFormat:@"%s", file] function:[NSString stringWithFormat:@"%s", function] line:line tag:tag options:0 timestamp:nil];
         va_end(args);
         [[PREDLogger sharedLogger]->_ddLog log:asynchronous message:message];
+        if([_delegate respondsToSelector:@selector(logger:didReceivedLogMessage:)]) {
+            [_delegate logger:[PREDLogger sharedLogger] didReceivedLogMessage:message];
+        }
     }
 }
 
@@ -87,6 +92,14 @@
 
 - (BOOL)started {
     return _started;
+}
+
++ (void)setDelegate:(id<PREDLoggerDelegate>)delegate {
+    _delegate = delegate;
+}
+
++ (id<PREDLoggerDelegate>)delegate {
+    return _delegate;
 }
 
 + (DDLog *)ddLog {

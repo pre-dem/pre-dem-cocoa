@@ -79,6 +79,14 @@ static const PREDLogLevel predLogLevel = PREDLogLevelAll;
  */
 #define PREDTagLogVerbose(tag, frmt, ...) PRED_LOG_MAYBE(LOG_ASYNC_ENABLED, predLogLevel, PREDLogFlagVerbose, 0, tag, __PRETTY_FUNCTION__, frmt, ##__VA_ARGS__)
 
+@class PREDLogger;
+
+@protocol PREDLoggerDelegate<NSObject>
+
+- (void)logger:(PREDLogger *)logger didReceivedLogMessage:(PREDLogMessage *)message;
+
+@end
+
 /**
  * logger 核心类，提供日志打印相关接口
  */
@@ -114,6 +122,8 @@ static const PREDLogLevel predLogLevel = PREDLogLevelAll;
  * 是否开启控制台打印，当您启动了 PREDManager，控制台打印将自动启动
  */
 @property(class, nonatomic, assign) BOOL started;
+
+@property(class, nonatomic, weak) id<PREDLoggerDelegate> delegate;
 
 /**
  * 底层的 DDLog 对象，请勿直接使用
