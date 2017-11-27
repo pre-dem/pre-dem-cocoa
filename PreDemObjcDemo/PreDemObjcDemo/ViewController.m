@@ -125,7 +125,13 @@ UIPickerViewDelegate
     if (row == 0) {
         [PREDLogger stopCaptureLog];
     } else {
-        [PREDLogger startCaptureLogWithLevel:(PREDLogLevel)[self.logPickerValues[row-1] intValue]];
+        NSError *error;
+        BOOL success = [PREDLogger startCaptureLogWithLevel:(PREDLogLevel)[self.logPickerValues[row-1] intValue] error:&error];
+        if (!success) {
+            UIAlertController *controller = [UIAlertController alertControllerWithTitle:@"错误" message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
+            [controller addAction:[UIAlertAction actionWithTitle:@"好的" style:UIAlertActionStyleDefault handler:nil]];
+            [self presentViewController:controller animated:YES completion:nil];
+        }
     }
 }
 

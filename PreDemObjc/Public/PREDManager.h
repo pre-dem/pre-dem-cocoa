@@ -44,6 +44,11 @@
 + (void)trackCustomEvent:(PREDCustomEvent *_Nonnull)event;
 
 /**
+ * 返回 SDK 是否处于已启动的状态
+ */
++ (BOOL)started;
+
+/**
  * 返回 sdk 的版本号
  */
 + (NSString *_Nonnull)version;

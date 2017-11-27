@@ -31,6 +31,8 @@ static NSString* app_id(NSString* appKey){
 }
 
 @implementation PREDManager {
+    BOOL _started;
+    
     PREDConfigManager *_configManager;
     
     PREDCrashManager *_crashManager;
@@ -67,6 +69,10 @@ static NSString* app_id(NSString* appKey){
         return;
     }
     [[self sharedPREDManager]->_persistence persistCustomEvent:event];
+}
+
++ (BOOL)started {
+    return [PREDManager sharedPREDManager]->_started;
 }
 
 + (NSString *)tag {
@@ -122,6 +128,8 @@ static NSString* app_id(NSString* appKey){
         [self registerObservers];
         
         [_sender sendAllSavedData];
+        
+        _started = YES;
     });
     return;
 }

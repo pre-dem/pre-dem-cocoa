@@ -53,6 +53,36 @@ typedef NS_ENUM(NSUInteger, PREDLogLevel) {
 };
 
 /**
+ *  Flag 用于标明单条 log 的级别，与 Level 搭配使用过滤 log
+ */
+typedef NS_OPTIONS(NSUInteger, PREDLogFlag){
+    /**
+     *  0...00001 PREDLogFlagError
+     */
+    PREDLogFlagError      = (1 << 0),
+    
+    /**
+     *  0...00010 PREDLogFlagWarning
+     */
+    PREDLogFlagWarning    = (1 << 1),
+    
+    /**
+     *  0...00100 PREDLogFlagInfo
+     */
+    PREDLogFlagInfo       = (1 << 2),
+    
+    /**
+     *  0...01000 PREDLogFlagDebug
+     */
+    PREDLogFlagDebug      = (1 << 3),
+    
+    /**
+     *  0...10000 PREDLogFlagVerbose
+     */
+    PREDLogFlagVerbose    = (1 << 4)
+};
+
+/**
  *  网络诊断结果返回 block
  */
 typedef void (^PREDNetDiagCompleteHandler)(PREDNetDiagResult* _Nonnull result);

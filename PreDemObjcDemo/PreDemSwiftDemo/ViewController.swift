@@ -110,7 +110,11 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         if row == 0 {
             PREDLogger.stopCaptureLog()
         } else {
-            PREDLogger.startCaptureLog(with: logPickerValues[row-1])
+            do {
+                try PREDLogger.startCaptureLog(with: logPickerValues[row-1])
+            } catch {
+                print("\(error)")
+            }
         }
     }
     

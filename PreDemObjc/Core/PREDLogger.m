@@ -14,23 +14,23 @@
 #import "PREDLoggerPrivate.h"
 #import "PREDLogMeta.h"
 #import "PREDPersistence.h"
+#import "PREDManager.h"
+#import "PREDError.h"
 
-#define DefaltTtyLogLevel               DDLogLevelAll
 #define PREDMillisecondPerSecond        1000
 
 @implementation PREDLogger {
+    BOOL _started;
+    DDLog *_ddLog;
+    DDFileLogger *_fileLogger;
+    DDTTYLogger *_ttyLogger;
     PREDLogLevel _ttyLogLevel;
     PREDLogLevel _fileLogLevel;
-    DDFileLogger *_fileLogger;
     PREDPersistence *_persistence;
     PREDLogFileManager *_logFileManager;
+    PREDLogFormatter *_ttyLogFormatter;
     PREDLogFormatter *_fileLogFormatter;
     PREDLogMeta *_currentMeta;
-}
-
-+ (void)load {
-    [DDTTYLogger sharedInstance].logFormatter = [[PREDLogFormatter alloc] init];
-    [DDLog addLogger:[DDTTYLogger sharedInstance] withLevel:DefaltTtyLogLevel];
 }
 
 + (instancetype)sharedLogger {
@@ -42,12 +42,57 @@
     return logger;
 }
 
++ (void)log:(BOOL)asynchronous
+      level:(PREDLogLevel)level
+       flag:(PREDLogFlag)flag
+    context:(NSInteger)context
+       file:(const char *)file
+   function:(const char *)function
+       line:(NSUInteger)line
+        tag:(id)tag
+     format:(NSString *)format, ... {
+    va_list args;
+    if (format) {
+        va_start(args, format);
+        [[PREDLogger sharedLogger]->_ddLog log:asynchronous level:(DDLogLevel)level flag:(DDLogFlag)flag context:context file:file function:function line:line tag:tag format:format, args];
+        va_end(args);
+    }
+}
+
++ (void)setStarted:(BOOL)started {
+    [PREDLogger sharedLogger].started = started;
+}
+
+- (void)setStarted:(BOOL)started {
+    if (_started == started) {
+        return;
+    }
+    _started = started;
+    if (started) {
+        _ttyLogger.logFormatter = _ttyLogFormatter;
+        [_ddLog addLogger:_ttyLogger];
+    } else {
+        [_ddLog removeLogger:_ttyLogger];
+    }
+}
+
++ (BOOL)started {
+    return [PREDLogger sharedLogger].started;
+}
+
+- (BOOL)started {
+    return _started;
+}
+
 - (instancetype)init {
     if (self = [super init]) {
-        _ttyLogLevel = (PREDLogLevel)DefaltTtyLogLevel;
+        _ddLog = [[DDLog alloc] init];
+        _ttyLogger = [[DDTTYLogger alloc] init];
+        _ttyLogLevel = PREDLogLevelAll;
         _logFileManager = [[PREDLogFileManager alloc] initWithLogsDirectory:[NSString stringWithFormat:@"%@/%@", PREDHelper.cacheDirectory, @"logfiles"]];
         _logFileManager.delegate = self;
         _logFileManager.maximumNumberOfLogFiles = 0;
+        _ttyLogFormatter = [[PREDLogFormatter alloc] init];
         _fileLogFormatter = [[PREDLogFormatter alloc] init];
         _fileLogFormatter.delegate = self;
     }
@@ -63,8 +108,8 @@
         return;
     }
     _ttyLogLevel = ttyLogLevel;
-    [DDLog removeLogger:[DDTTYLogger sharedInstance]];
-    [DDLog addLogger:[DDTTYLogger sharedInstance] withLevel:(DDLogLevel)_ttyLogLevel];
+    [_ddLog removeLogger:_ttyLogger];
+    [_ddLog addLogger:_ttyLogger withLevel:(DDLogLevel)_ttyLogLevel];
 }
 
 + (PREDLogLevel)ttyLogLevel {
@@ -75,13 +120,19 @@
     return _ttyLogLevel;
 }
 
-+ (void)startCaptureLogWithLevel:(PREDLogLevel)logLevel {
-    [[PREDLogger sharedLogger] startCaptureLogWithLevel:logLevel];
++ (BOOL)startCaptureLogWithLevel:(PREDLogLevel)logLevel error:(NSError **)error {
+    return [[PREDLogger sharedLogger] startCaptureLogWithLevel:logLevel error:error];
 }
 
-- (void)startCaptureLogWithLevel:(PREDLogLevel)logLevel {
+- (BOOL)startCaptureLogWithLevel:(PREDLogLevel)logLevel error:(NSError **)error {
     if (_fileLogger && _fileLogLevel == logLevel) {
-        return;
+        return YES;
+    }
+    if (![PREDManager started]) {
+        if (error) {
+            *error = [PREDError GenerateNSError:kPREDErrorCodeNotInitedError description:@"you should init PREDManager first before capturing your log"];
+        }
+        return NO;
     }
     _fileLogLevel = logLevel;
     [self stopCaptureLog];
@@ -90,7 +141,8 @@
     _fileLogger.maximumFileSize = 1024 * 512;   // 512 KB
     _fileLogger.doNotReuseLogFiles = YES;
     _fileLogger.logFormatter = _fileLogFormatter;
-    [DDLog addLogger:_fileLogger withLevel:(DDLogLevel)logLevel];
+    [_ddLog addLogger:_fileLogger withLevel:(DDLogLevel)logLevel];
+    return YES;
 }
 
 + (void)stopCaptureLog {
@@ -99,7 +151,7 @@
 
 - (void)stopCaptureLog {
     if (_fileLogger) {
-        [DDLog removeLogger:_fileLogger];
+        [_ddLog removeLogger:_fileLogger];
         _fileLogger = nil;
     }
 }
