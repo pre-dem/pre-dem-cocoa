@@ -14,13 +14,13 @@ PODS:
   - AFNetworking/Serialization (3.1.0)
   - AFNetworking/UIKit (3.1.0):
     - AFNetworking/NSURLSession
-  - CocoaLumberjack (3.2.1):
-    - CocoaLumberjack/Default (= 3.2.1)
-    - CocoaLumberjack/Extensions (= 3.2.1)
-  - CocoaLumberjack/Default (3.2.1)
-  - CocoaLumberjack/Extensions (3.2.1):
+  - CocoaLumberjack (3.3.0):
+    - CocoaLumberjack/Default (= 3.3.0)
+    - CocoaLumberjack/Extensions (= 3.3.0)
+  - CocoaLumberjack/Default (3.3.0)
+  - CocoaLumberjack/Extensions (3.3.0):
     - CocoaLumberjack/Default
-  - CocoaLumberjack/Swift (3.2.1):
+  - CocoaLumberjack/Swift (3.3.0):
     - CocoaLumberjack/Default
   - HappyDNS (0.3.12)
   - PreDemObjc (1.0.3):
@@ -45,7 +45,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
-  CocoaLumberjack: 2800c03334042fe80589423c8d80e582dcaec482
+  CocoaLumberjack: 3c8c74683302f9012bb168e1c4b7ae3c0b558431
   HappyDNS: 691a3041128055d09866f86e6e9ca90f24da1f18
   PreDemObjc: 612dc2d3543adba4907d4084a998e28df2bbabf4
   Qiniu: 2f1b9d13904b6a7608a66a2d02c5b7b24575622a
