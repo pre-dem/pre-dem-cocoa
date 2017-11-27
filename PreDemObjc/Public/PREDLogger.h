@@ -112,9 +112,16 @@ static const PREDLogLevel predLogLevel = PREDLogLevelAll;
 @property(class, nonatomic, assign) BOOL started;
 
 /**
+ * 底层的 DDLog 对象，请勿直接使用
+ */
+@property(class, nonatomic, readonly, strong) DDLog *ddLog;
+
+/**
  * 控制台 log 打印的级别
  */
 @property(class, nonatomic, assign) PREDLogLevel ttyLogLevel;
+
++ (void)logError:(NSString *)message Tag:(NSString *)tag;
 
 /**
  * 开始采集 log 上报到服务器，这项和 `started` 属性配置互不影响

@@ -84,6 +84,10 @@
     return _started;
 }
 
++ (DDLog *)ddLog {
+    return [PREDLogger sharedLogger]->_ddLog;
+}
+
 - (instancetype)init {
     if (self = [super init]) {
         _ddLog = [[DDLog alloc] init];

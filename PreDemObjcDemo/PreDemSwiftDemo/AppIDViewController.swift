@@ -47,14 +47,14 @@ class AppIDViewController: UIViewController {
         #if DEBUG
             PREDManager.start(withAppKey: appIdTextField.text!, serviceDomain: domainTextField.text!, complete: { (success, error) in
                 if !success {
-                    PREDLogError("start PREDManager error" + (error?.localizedDescription)!)
+                    PREDLogError("start PREDManager error \(String(describing: error))")
                 }
             })
             PREDManager.tag = "userid_debug"
         #else
             PREDManager.start(withAppKey: appIdTextField.text!, serviceDomain: domainTextField.text!, complete: { (success, error) in
                 if !success {
-                    PREDLogError("start PREDManager error" + (error?.localizedDescription)!)
+                    PREDLogError("start PREDManager error \(String(describing: error))")
                 }
             })
             PREDManager.tag = "userid_release"

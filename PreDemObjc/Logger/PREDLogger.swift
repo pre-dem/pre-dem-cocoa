@@ -8,42 +8,22 @@
 import Foundation
 import CocoaLumberjack
 
-public func PREDLogError(_ message: @autoclosure () -> String) {
-    DDLogError(message)
+public func PREDLogError(_ message: @autoclosure () -> String, tag: Any? = nil, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+    DDLogError(message, file:file, function:function, line:line, tag:tag, ddlog:PREDLogger.ddLog)
 }
 
-public func PREDLogWarn(_ message: @autoclosure () -> String) {
-    DDLogWarn(message)
+public func PREDLogWarn(_ message: @autoclosure () -> String, tag: Any? = nil, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+    DDLogWarn(message, file:file, function:function, line:line, tag:tag, ddlog:PREDLogger.ddLog)
 }
 
-public func PREDLogInfo(_ message: @autoclosure () -> String) {
-    DDLogInfo(message)
+public func PREDLogInfo(_ message: @autoclosure () -> String, tag: Any? = nil, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+    DDLogInfo(message, file:file, function:function, line:line, tag:tag, ddlog:PREDLogger.ddLog)
 }
 
-public func PREDLogDebug(_ message: @autoclosure () -> String) {
-    DDLogDebug(message)
+public func PREDLogDebug(_ message: @autoclosure () -> String, tag: Any? = nil, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+    DDLogDebug(message, file:file, function:function, line:line, tag:tag, ddlog:PREDLogger.ddLog)
 }
 
-public func PREDLogVerbose(_ message: @autoclosure () -> String) {
-    DDLogVerbose(message)
-}
-
-public func PREDTagLogError(tag: Any, message: @autoclosure () -> String) {
-    DDLogError(message, tag:tag)
-}
-
-public func PREDTagLogWarn(tag: Any, message: @autoclosure () -> String) {
-    DDLogWarn(message, tag:tag)
-}
-
-public func PREDTagLogInfo(tag: Any, message: @autoclosure () -> String) {
-    DDLogInfo(message, tag:tag)
-}
-
-public func PREDTagLogDebug(tag: Any, message: @autoclosure () -> String) {
-    DDLogDebug(message, tag:tag)
-}
-
-public func PREDTagLogVerbose(tag: Any, message: @autoclosure () -> String) {
-    DDLogVerbose(message, tag:tag)
+public func PREDLogVerbose(_ message: @autoclosure () -> String, tag: Any? = nil, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+    DDLogVerbose(message, file:file, function:function, line:line, tag:tag, ddlog:PREDLogger.ddLog)
 }
