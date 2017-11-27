@@ -19,6 +19,10 @@
 
 #define PREDMillisecondPerSecond        1000
 
+@implementation PREDLogMessage
+
+@end
+
 @implementation PREDLogger {
     BOOL _started;
     DDLog *_ddLog;
@@ -54,8 +58,9 @@
     va_list args;
     if (format) {
         va_start(args, format);
-        [[PREDLogger sharedLogger]->_ddLog log:asynchronous level:(DDLogLevel)level flag:(DDLogFlag)flag context:context file:file function:function line:line tag:tag format:format, args];
+        PREDLogMessage *message = [[PREDLogMessage alloc] initWithMessage:[[NSString alloc] initWithFormat:format arguments:args] level:(DDLogLevel)level flag:(DDLogFlag)flag context:context file:[NSString stringWithFormat:@"%s", file] function:[NSString stringWithFormat:@"%s", function] line:line tag:tag options:0 timestamp:nil];
         va_end(args);
+        [[PREDLogger sharedLogger]->_ddLog log:asynchronous message:message];
     }
 }
 

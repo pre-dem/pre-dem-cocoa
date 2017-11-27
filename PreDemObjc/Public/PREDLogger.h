@@ -11,6 +11,10 @@
 
 static const PREDLogLevel predLogLevel = PREDLogLevelAll;
 
+@interface PREDLogMessage: DDLogMessage
+
+@end
+
 #define PRED_LOG_MACRO(isAsynchronous, lvl, flg, ctx, atag, fnct, frmt, ...) \
         [PREDLogger log : isAsynchronous                                     \
                   level : lvl                                                \
@@ -120,8 +124,6 @@ static const PREDLogLevel predLogLevel = PREDLogLevelAll;
  * 控制台 log 打印的级别
  */
 @property(class, nonatomic, assign) PREDLogLevel ttyLogLevel;
-
-+ (void)logError:(NSString *)message Tag:(NSString *)tag;
 
 /**
  * 开始采集 log 上报到服务器，这项和 `started` 属性配置互不影响
