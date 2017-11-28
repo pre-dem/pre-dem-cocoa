@@ -104,9 +104,15 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         } else {
             actionName = "关闭将 log 输出到界面"
         }
-        controller.addAction(UIAlertAction(title: actionName, style: .default) { (action) in
+        controller.addAction(UIAlertAction(title: actionName, style: .default) { (_) in
             self.logTextView.isHidden = !self.logTextView.isHidden
         })
+        
+        controller.addAction(UIAlertAction(title: "清空界面 log", style: .default, handler: { (_) in
+            self.logTextView.text = ""
+        }))
+        
+        controller.addAction(UIAlertAction(title: "取消", style: .cancel))
         self.present(controller, animated: true, completion: nil)
     }
     

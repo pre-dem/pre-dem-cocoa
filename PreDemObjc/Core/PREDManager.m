@@ -178,6 +178,7 @@ static NSString* app_id(NSString* appKey){
     [_breadcrumbTracker start];
     
     [PREDLog setPersistence:_persistence];
+    PREDLog.started = YES;
     
     // this process will get default config and then use it to initialize all module, besides it will also retrieve config from the server and config will refresh when done.
     [self setConfig:[_configManager getConfig]];
