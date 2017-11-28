@@ -27,6 +27,12 @@
         <!--AppID View Controller-->
         <scene sceneID="hyi-Bl-Zev">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jor-26-Vs9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="i4V-0j-x2f">
+                    <connections>
+                        <action selector="tappedWithSender:" destination="J3S-3h-4mt" id="DnK-wq-62K"/>
+                    </connections>
+                </tapGestureRecognizer>
                 <viewController id="J3S-3h-4mt" customClass="AppIDViewController" customModule="PreDemSwiftDemo" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="9FP-Uq-8dL"/>
@@ -85,12 +91,6 @@
                         <outlet property="domainTextField" destination="Lu5-nS-rrg" id="uy7-5E-eer"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="jor-26-Vs9" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="i4V-0j-x2f">
-                    <connections>
-                        <action selector="tapped:" destination="J3S-3h-4mt" id="9AS-lz-qI4"/>
-                    </connections>
-                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-838" y="45"/>
         </scene>
