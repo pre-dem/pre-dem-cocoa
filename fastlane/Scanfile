@@ -6,9 +6,9 @@
 
 # Remove the # in front of the line to enable the option
 
-workspace "PreDemObjcDemo/PreDemObjcDemo.xcworkspace"
+workspace "PreDemCocoaDemo/PreDemCocoaDemo.xcworkspace"
 
-scheme "PreDemObjcDemo"
+scheme "PreDemCocoaTests"
 
 clean true
 

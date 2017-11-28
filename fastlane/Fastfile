@@ -15,6 +15,14 @@ fastlane_version "2.28.7"
 
 desc "Runs all the tests"
 lane :test do
+  gym(
+    scheme: "PreDemObjcDemo",
+    skip_package_ipa: true,
+  )
+  gym(
+    scheme: "PreDemSwiftDemo",
+    skip_package_ipa: true,
+  )
   scan
 end
 

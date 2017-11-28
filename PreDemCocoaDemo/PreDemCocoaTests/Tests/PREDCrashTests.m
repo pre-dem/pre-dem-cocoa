@@ -9,7 +9,7 @@
 #import <XCTest/XCTest.h>
 #import <CrashReporter/CrashReporter.h>
 #import "PREDLagMeta.h"
-#import "PREDLogger.h"
+#import "PREDLog.h"
 
 @interface PREDCrashTests : XCTestCase
 

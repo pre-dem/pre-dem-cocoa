@@ -7,9 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		15B9707242F8C2BEFF848A90 /* Pods_PreDemCocoaTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E0F69381CF7E04817C69FAD /* Pods_PreDemCocoaTests.framework */; };
 		5BC9043C8931AC56B90A9258 /* Pods_PreDemSwiftDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA9DE848F18E85B4D07C40CD /* Pods_PreDemSwiftDemo.framework */; };
-		A03BC5B1429FADB7892D31FB /* Pods_PreDemObjcTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 992F0DC405310959DBD9E018 /* Pods_PreDemObjcTests.framework */; };
 		B60231491EC9B7AC005AB798 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B60231481EC9B7AC005AB798 /* main.m */; };
 		B602314C1EC9B7AC005AB798 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B602314B1EC9B7AC005AB798 /* AppDelegate.m */; };
 		B602314F1EC9B7AC005AB798 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B602314E1EC9B7AC005AB798 /* ViewController.m */; };
@@ -32,16 +30,6 @@
 		B6EDF28C1F7564AD0002C406 /* AppIDViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6EDF28B1F7564AD0002C406 /* AppIDViewController.swift */; };
 		BA757918E65B8FC141378954 /* Pods_PreDemObjcDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E6504F08203DC0F061B69C3 /* Pods_PreDemObjcDemo.framework */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		B6548F3B1ECB0C7E0031DD42 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B602313C1EC9B7AC005AB798 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = B60231431EC9B7AC005AB798;
-			remoteInfo = PreDemObjcDemo;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		1397A38FBFDF6AFC6CD62BB8 /* Pods-PreDemCocoaTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PreDemCocoaTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-PreDemCocoaTests/Pods-PreDemCocoaTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -107,8 +95,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A03BC5B1429FADB7892D31FB /* Pods_PreDemObjcTests.framework in Frameworks */,
-				15B9707242F8C2BEFF848A90 /* Pods_PreDemCocoaTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -286,7 +272,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				B6548F3C1ECB0C7E0031DD42 /* PBXTargetDependency */,
 			);
 			name = PreDemCocoaTests;
 			productName = PreDemObjcDemoTests;
@@ -332,7 +317,6 @@
 						CreatedOnToolsVersion = 8.3.2;
 						DevelopmentTeam = GDFHW66V92;
 						ProvisioningStyle = Automatic;
-						TestTargetID = B60231431EC9B7AC005AB798;
 					};
 					B6D9B05B1F5E419E001D893E = {
 						CreatedOnToolsVersion = 8.3.3;
@@ -628,14 +612,6 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
-/* Begin PBXTargetDependency section */
-		B6548F3C1ECB0C7E0031DD42 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = B60231431EC9B7AC005AB798 /* PreDemObjcDemo */;
-			targetProxy = B6548F3B1ECB0C7E0031DD42 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
-
 /* Begin PBXVariantGroup section */
 		B60231501EC9B7AC005AB798 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
@@ -833,7 +809,6 @@
 			baseConfigurationReference = 49D5A09E5EA4256627F3F27E /* Pods-PreDemCocoaTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -848,14 +823,13 @@
 					"\"../Vendor\"",
 				);
 				HEADER_SEARCH_PATHS = "";
-				INFOPLIST_FILE = PreDemObjcTests/Info.plist;
+				INFOPLIST_FILE = PreDemCocoaTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "pre-engineering.PreDemObjcDemoTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PreDemCocoaDemo.app/PreDemCocoaDemo";
-				USER_HEADER_SEARCH_PATHS = "../PreDemObjc/**";
+				USER_HEADER_SEARCH_PATHS = "../PreDemCocoa/**";
 			};
 			name = Debug;
 		};
@@ -864,18 +838,16 @@
 			baseConfigurationReference = 1397A38FBFDF6AFC6CD62BB8 /* Pods-PreDemCocoaTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = "";
 				HEADER_SEARCH_PATHS = "";
-				INFOPLIST_FILE = PreDemObjcTests/Info.plist;
+				INFOPLIST_FILE = PreDemCocoaTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "pre-engineering.PreDemObjcDemoTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PreDemCocoaDemo.app/PreDemCocoaDemo";
-				USER_HEADER_SEARCH_PATHS = "../PreDemObjc/**";
+				USER_HEADER_SEARCH_PATHS = "../PreDemCocoa/**";
 			};
 			name = Release;
 		};
