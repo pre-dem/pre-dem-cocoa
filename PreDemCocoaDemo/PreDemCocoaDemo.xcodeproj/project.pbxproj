@@ -878,8 +878,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "pre-engineering.PreDemSwiftDemo";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "aca65e82-c669-48e9-a104-54ff3178be03";
-				PROVISIONING_PROFILE_SPECIFIER = PreDemSwiftDemo;
+				PROVISIONING_PROFILE = "853fc120-3552-43b7-b374-3f473c9fd6cb";
+				PROVISIONING_PROFILE_SPECIFIER = "pre-engineering.PreDemSwiftDemo InHouse";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
 				SWIFT_VERSION = 4.0;
