@@ -7,6 +7,7 @@
 //
 
 #import "WebViewController.h"
+#import <WebKit/WebKit.h>
 
 @interface WebViewController ()
 <

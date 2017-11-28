@@ -14,6 +14,7 @@
 		B60231521EC9B7AC005AB798 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B60231501EC9B7AC005AB798 /* Main.storyboard */; };
 		B60231541EC9B7AC005AB798 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B60231531EC9B7AC005AB798 /* Assets.xcassets */; };
 		B60231571EC9B7AC005AB798 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B60231551EC9B7AC005AB798 /* LaunchScreen.storyboard */; };
+		B60A670B1FCD4FD10069EB24 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60A670A1FCD4FD10069EB24 /* WebViewController.swift */; };
 		B671D8D71FAB15E60040ECAC /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B671D8D61FAB15E60040ECAC /* WebViewController.m */; };
 		B6727E311FCD337900AEF01D /* Pods_PreDemCocoaTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6727E321FCD337900AEF01D /* Pods_PreDemCocoaTests.framework */; };
 		B6741B261F7E90810039ED99 /* lag.dat in Resources */ = {isa = PBXBuildFile; fileRef = B6741B251F7E90790039ED99 /* lag.dat */; };
@@ -50,6 +51,7 @@
 		B60231561EC9B7AC005AB798 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B60231581EC9B7AC005AB798 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B60A67091FCD369E0069EB24 /* encrypt */ = {isa = PBXFileReference; lastKnownFileType = folder; name = encrypt; path = ../encrypt; sourceTree = "<group>"; };
+		B60A670A1FCD4FD10069EB24 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		B6548F301ECB06710031DD42 /* .travis.yml */ = {isa = PBXFileReference; lastKnownFileType = text; name = .travis.yml; path = ../.travis.yml; sourceTree = "<group>"; };
 		B6548F311ECB067C0031DD42 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; name = .gitignore; path = ../.gitignore; sourceTree = "<group>"; };
 		B6548F361ECB0C7E0031DD42 /* PreDemCocoaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PreDemCocoaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -216,6 +218,7 @@
 				B6D9B05E1F5E419E001D893E /* AppDelegate.swift */,
 				B6D9B0601F5E419E001D893E /* ViewController.swift */,
 				B6EDF28B1F7564AD0002C406 /* AppIDViewController.swift */,
+				B60A670A1FCD4FD10069EB24 /* WebViewController.swift */,
 				B6D9B0621F5E419E001D893E /* Main.storyboard */,
 				B6D9B0651F5E419E001D893E /* Assets.xcassets */,
 				B6D9B0671F5E419E001D893E /* LaunchScreen.storyboard */,
@@ -609,6 +612,7 @@
 				B6EDF28C1F7564AD0002C406 /* AppIDViewController.swift in Sources */,
 				B6D9B0611F5E419E001D893E /* ViewController.swift in Sources */,
 				B6D9B05F1F5E419E001D893E /* AppDelegate.swift in Sources */,
+				B60A670B1FCD4FD10069EB24 /* WebViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
