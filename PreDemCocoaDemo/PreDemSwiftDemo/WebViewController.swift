@@ -49,11 +49,15 @@ class WebViewController: UIViewController, UITextFieldDelegate {
             
             urlTextField.resignFirstResponder()
             self.navigationItem.rightBarButtonItem = nil
-            var url = URL(string: text)
-            if url?.scheme == nil {
-                url = URL(string: "http://\(String(describing: url?.absoluteString))")
+            if var url = URL(string: text) {
+                if url.scheme == nil {
+                    if let x = URL(string: "http://\(url.absoluteString)") {
+                        url = x
+                    }
+                }
+                webView.load(URLRequest(url: url))
             }
-            webView.load(URLRequest(url: url!))
+
             return true
         } else {
             return false
