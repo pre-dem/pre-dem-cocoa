@@ -27,6 +27,7 @@ security import ./encrypt/dist.p12 -k ~/Library/Keychains/ios-build.keychain -P 
 # Put the provisioning profile in place
 mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
 cp "./encrypt/preengineeringPreDemObjcDemo_InHouse.mobileprovision" ~/Library/MobileDevice/Provisioning\ Profiles/
+cp "./encrypt/preengineeringPreDemSwiftDemo_InHouse.mobileprovision" ~/Library/MobileDevice/Provisioning\ Profiles/
 
 # avoid been asked to enter password while signing product
 # see https://github.com/fastlane/fastlane/issues/7104

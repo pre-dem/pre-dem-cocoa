@@ -1,0 +1,57 @@
+//
+//  PREDEvent.m
+//  PreDemCocoa
+//
+//  Created by Troy on 2017/9/27.
+//
+
+#import <Foundation/Foundation.h>
+#import "PREDCustomEvent.h"
+#import "PREDLog.h"
+#import "PREDConstants.h"
+#import "NSObject+Serialization.h"
+
+@implementation PREDCustomEvent
+
++ (instancetype)eventWithName:(NSString *)name contentDic:(NSDictionary *)contentDic {
+    return [self eventWithName:name type:CustomEventType contentDic:contentDic];
+}
+
++ (instancetype)eventWithName:(NSString *)name type:(NSString *)type contentDic:(NSDictionary *)contentDic {
+    PREDCustomEvent *event = [self eventWithName:name type:type];
+    if (event) {
+        if (!name.length) {
+            PREDLogError(@"event name should not be empty");
+            return nil;
+        }
+        
+        NSError *error;
+        
+        NSString *content;
+        if (contentDic.count) {
+            NSData *contentData = [NSJSONSerialization dataWithJSONObject:contentDic options:0 error:&error];
+            if (error) {
+                PREDLogError(@"jsonize custom events error: %@", error);
+                return nil;
+            } else if (!contentData.length) {
+                PREDLogWarn(@"discard empty custom event");
+                return nil;
+            }
+            
+            content = [[NSString alloc] initWithData:contentData encoding:NSUTF8StringEncoding];
+        } else {
+            content = @"";
+        }
+
+        
+        event->_content = content;
+    }
+    
+    return event;
+}
+
+- (NSData *)serializeForSending:(NSError **)error {
+    return [self toJsonWithError:error];
+}
+
+@end

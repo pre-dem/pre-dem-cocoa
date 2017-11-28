@@ -1,11 +1,11 @@
-# pre-dem-objc
+# pre-dem-cocoa
 
-[![Build Status](https://travis-ci.org/pre-dem/pre-dem-objc.svg?branch=master)](https://travis-ci.org/pre-dem/pre-dem-objc)
-[![codecov](https://codecov.io/gh/pre-dem/pre-dem-objc/branch/master/graph/badge.svg)](https://codecov.io/gh/pre-dem/pre-dem-objc)
+[![Build Status](https://travis-ci.org/pre-dem/pre-dem-cocoa.svg?branch=master)](https://travis-ci.org/pre-dem/pre-dem-cocoa)
+[![codecov](https://codecov.io/gh/pre-dem/pre-dem-cocoa/branch/master/graph/badge.svg)](https://codecov.io/gh/pre-dem/pre-dem-cocoa)
 
 ## 简介
 
-pre-dem-objc 是由[七牛云](https://www.qiniu.com)发起和维护的针对 Objective-C 的集用户体验监控及报障于一体的开源 SDK，具有无埋点集成，轻量级，高性能等优点
+pre-dem-cocoa 是由[七牛云](https://www.qiniu.com)发起和维护的针对 iOS (Mac OS, Tv OS, Watch OS WIP) 等平台集用户体验监控及报障于一体的开源 SDK，具有无埋点集成，轻量级，高性能等优点
 
 ## 功能清单
 

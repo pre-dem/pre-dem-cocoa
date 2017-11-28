@@ -1,0 +1,6 @@
+framework module PreDemCocoa {
+  umbrella header "PreDemCocoa-umbrella.h"
+
+  export *
+  module * { export * }
+}
