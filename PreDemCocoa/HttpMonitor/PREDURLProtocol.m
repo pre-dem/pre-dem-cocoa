@@ -45,6 +45,8 @@ NSURLSessionDataDelegate
         PREDLogDebug(@"Starting HttpManager");
         // 可拦截 [NSURLSession defaultSession] 以及 UIWebView 相关的请求
         [NSURLProtocol registerClass:self.class];
+        [NSURLProtocol wk_registerScheme:@"http"];
+        [NSURLProtocol wk_registerScheme:@"https"];
         
         // 拦截自定义生成的 NSURLSession 的请求
         if (![PREDURLSessionSwizzler isSwizzle]) {
@@ -53,6 +55,8 @@ NSURLSessionDataDelegate
     } else {
         PREDLogDebug(@"Terminating HttpManager");
         [NSURLProtocol unregisterClass:self.class];
+        [NSURLProtocol wk_unregisterScheme:@"http"];
+        [NSURLProtocol wk_unregisterScheme:@"https"];
         if ([PREDURLSessionSwizzler isSwizzle]) {
             [PREDURLSessionSwizzler unloadSwizzler];
         }

@@ -399,6 +399,7 @@
 				"${BUILT_PRODUCTS_DIR}/QNNetDiag/QNNetDiag.framework",
 				"${BUILT_PRODUCTS_DIR}/Qiniu/Qiniu.framework",
 				"${BUILT_PRODUCTS_DIR}/UICKeyChainStore/UICKeyChainStore.framework",
+				"${BUILT_PRODUCTS_DIR}/WKWebViewWithURLProtocol/WKWebViewWithURLProtocol.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -409,6 +410,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/QNNetDiag.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Qiniu.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UICKeyChainStore.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WKWebViewWithURLProtocol.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -429,6 +431,7 @@
 				"${BUILT_PRODUCTS_DIR}/QNNetDiag/QNNetDiag.framework",
 				"${BUILT_PRODUCTS_DIR}/Qiniu/Qiniu.framework",
 				"${BUILT_PRODUCTS_DIR}/UICKeyChainStore/UICKeyChainStore.framework",
+				"${BUILT_PRODUCTS_DIR}/WKWebViewWithURLProtocol/WKWebViewWithURLProtocol.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -439,6 +442,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/QNNetDiag.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Qiniu.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UICKeyChainStore.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WKWebViewWithURLProtocol.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -459,6 +463,7 @@
 				"${BUILT_PRODUCTS_DIR}/QNNetDiag/QNNetDiag.framework",
 				"${BUILT_PRODUCTS_DIR}/Qiniu/Qiniu.framework",
 				"${BUILT_PRODUCTS_DIR}/UICKeyChainStore/UICKeyChainStore.framework",
+				"${BUILT_PRODUCTS_DIR}/WKWebViewWithURLProtocol/WKWebViewWithURLProtocol.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -469,6 +474,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/QNNetDiag.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Qiniu.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UICKeyChainStore.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WKWebViewWithURLProtocol.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -569,7 +575,7 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-PreDemSwiftDemo/Pods-PreDemSwiftDemo-resources.sh",
-				$PODS_CONFIGURATION_BUILD_DIR/PreDemObjc/PREDResources.bundle,
+				"$PODS_CONFIGURATION_BUILD_DIR/PreDemObjc/PREDResources.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (

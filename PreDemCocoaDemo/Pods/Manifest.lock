@@ -30,11 +30,13 @@ PODS:
     - Qiniu
     - QNNetDiag
     - UICKeyChainStore
+    - WKWebViewWithURLProtocol
   - Qiniu (7.1.8):
     - AFNetworking (~> 3)
     - HappyDNS (~> 0.3)
   - QNNetDiag (0.0.6)
   - UICKeyChainStore (2.1.1)
+  - WKWebViewWithURLProtocol (0.1.0)
 
 DEPENDENCIES:
   - PreDemCocoa (from `../`)
@@ -47,10 +49,11 @@ SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
   CocoaLumberjack: 3c8c74683302f9012bb168e1c4b7ae3c0b558431
   HappyDNS: 691a3041128055d09866f86e6e9ca90f24da1f18
-  PreDemCocoa: d18166b27b1e4257c04f2772c963a7cfb84239b6
+  PreDemCocoa: 6def0d3d1b05bef67a2987d764898f4f5c8c2bca
   Qiniu: 2f1b9d13904b6a7608a66a2d02c5b7b24575622a
   QNNetDiag: 6f7bbafa34c1b020e51d440f25044fe5ee10145d
   UICKeyChainStore: 239558492fa260531a0774cfc611ea83a6eaff3a
+  WKWebViewWithURLProtocol: f7f2b367c40680105794a068ed2bb2cd5922c27c
 
 PODFILE CHECKSUM: 180f26d2b2e71c802f3c788f237b9737e2ff33af
 
