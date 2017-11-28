@@ -1,13 +1,10 @@
 //
 //  PREDEnums.h
-//  PreDemObjc
+//  PreDemCocoa
 //
 //  Created by WangSiyu on 21/02/2017.
 //  Copyright © 2017 pre-engineering. All rights reserved.
 //
-
-#ifndef PreDemObjc_Enums_h
-#define PreDemObjc_Enums_h
 
 #import "PREDNetDiagResult.h"
 #import <CocoaLumberjack/CocoaLumberjack.h>
@@ -91,5 +88,3 @@ typedef void (^PREDNetDiagCompleteHandler)(PREDNetDiagResult* _Nonnull result);
  *  sdk 启动结果返回 block
  */
 typedef void (^PREDStartCompleteHandler)(BOOL succeess, NSError *_Nullable error);
-
-#endif /* PreDemObjc_Enums_h */

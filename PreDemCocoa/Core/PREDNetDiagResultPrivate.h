@@ -1,6 +1,6 @@
 //
 //  PREDNetDiagResultPrivate.h
-//  PreDemObjc
+//  PreDemCocoa
 //
 //  Created by WangSiyu on 01/06/2017.
 //  Copyright © 2017 pre-engineering. All rights reserved.

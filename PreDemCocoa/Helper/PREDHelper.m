@@ -1,6 +1,6 @@
 //
 //  PREDHelper.m
-//  PreDemObjc
+//  PreDemCocoa
 //
 //  Created by WangSiyu on 21/02/2017.
 //  Copyright © 2017 pre-engineering. All rights reserved.
@@ -31,12 +31,12 @@ __strong static NSString *_tag = @"";
     return isUrlSessionSupported;
 }
 
-+ (NSString *)keychainPreDemObjcServiceName {
++ (NSString *)keychainPreDemCocoaServiceName {
     static NSString *serviceName = nil;
     static dispatch_once_t predServiceName;
     
     dispatch_once(&predServiceName, ^{
-        serviceName = [NSString stringWithFormat:@"%@.PreDemObjc", self.mainBundleIdentifier];
+        serviceName = [NSString stringWithFormat:@"%@.PreDemCocoa", self.mainBundleIdentifier];
     });
     
     return serviceName;

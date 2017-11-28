@@ -1,6 +1,6 @@
 //
 //  PREDEvent.m
-//  PreDemObjc
+//  PreDemCocoa
 //
 //  Created by Troy on 2017/9/27.
 //

@@ -1,6 +1,6 @@
 //
 //  PREDHelper.h
-//  PreDemObjc
+//  PreDemCocoa
 //
 //  Created by WangSiyu on 21/02/2017.
 //  Copyright © 2017 pre-engineering. All rights reserved.
@@ -12,7 +12,7 @@
 @interface PREDHelper : NSObject
 
 @property(class, readonly) BOOL isURLSessionSupported;
-@property(class, readonly) NSString *keychainPreDemObjcServiceName;
+@property(class, readonly) NSString *keychainPreDemCocoaServiceName;
 @property(class, readonly) NSString *mainBundleIdentifier;
 @property(class, readonly) NSString *UUID;
 @property(class, readonly) BOOL isPreiOS8Environment;
