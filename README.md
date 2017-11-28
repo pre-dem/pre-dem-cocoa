@@ -23,7 +23,7 @@ pre-dem-cocoa 是由[七牛云](https://www.qiniu.com)发起和维护的针对 i
 使用 [CocoaPods](https://cocoapods.org) 进行安装
 
 ```ruby
-pod "PreDemObjc"
+pod "PreDemCocoa"
 ```
 
 ## 快速开始
