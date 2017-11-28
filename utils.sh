@@ -40,7 +40,7 @@ case "$COMMAND" in
             echo "$version_file"
         done
 
-        cd PreDemObjcDemo
+        cd PreDemCocoaDemo
         pod update --no-repo-update
         cd ..
 
