@@ -11,15 +11,6 @@
 
 static const DDLogLevel predLogLevel = DDLogLevelAll;
 
-@interface PREDLogMessage: DDLogMessage {
-    @public
-    NSString *_formattedMessage;
-}
-
-@property(nonatomic, readonly, strong) NSString *formattedMessage;
-
-@end
-
 #define PRED_LOG_MACRO(isAsynchronous, lvl, flg, ctx, atag, fnct, frmt, ...) \
         [PREDLog log : isAsynchronous                                     \
                level : lvl                                                \
@@ -88,7 +79,7 @@ static const DDLogLevel predLogLevel = DDLogLevelAll;
 
 @protocol PREDLogDelegate<NSObject>
 
-- (void)log:(PREDLog *)log didReceivedLogMessage:(PREDLogMessage *)message;
+- (void)log:(PREDLog *)log didReceivedLogMessage:(DDLogMessage *)message formattedLog:(NSString *)formattedLog;
 
 @end
 

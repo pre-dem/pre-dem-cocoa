@@ -21,10 +21,6 @@
 
 static __weak id<PREDLogDelegate> _delegate;
 
-@implementation PREDLogMessage
-
-@end
-
 @implementation PREDLog {
     BOOL _started;
     DDFileLogger *_fileLogger;
@@ -59,17 +55,16 @@ static __weak id<PREDLogDelegate> _delegate;
     va_list args;
     if (format) {
         va_start(args, format);
-        PREDLogMessage *message = [[PREDLogMessage alloc] initWithMessage:[[NSString alloc] initWithFormat:format arguments:args] level:(DDLogLevel)level flag:(DDLogFlag)flag context:context file:[NSString stringWithFormat:@"%s", file] function:[NSString stringWithFormat:@"%s", function] line:line tag:tag options:0 timestamp:nil];
+        DDLogMessage *message = [[DDLogMessage alloc] initWithMessage:[[NSString alloc] initWithFormat:format arguments:args] level:(DDLogLevel)level flag:(DDLogFlag)flag context:context file:[NSString stringWithFormat:@"%s", file] function:[NSString stringWithFormat:@"%s", function] line:line tag:tag options:0 timestamp:nil];
         va_end(args);
         [[PREDLog sharedInstance] log:asynchronous message:message];
     }
 }
 
 - (void)log:(BOOL)asynchronous
-    message:(PREDLogMessage *)logMessage {
-    if([_delegate respondsToSelector:@selector(log:didReceivedLogMessage:)]) {
-        logMessage->_formattedMessage = [[PREDLog sharedInstance]->_ttyLogFormatter formatLogMessage:logMessage];
-        [_delegate log:[PREDLog sharedInstance] didReceivedLogMessage:logMessage];
+    message:(DDLogMessage *)logMessage {
+    if([_delegate respondsToSelector:@selector(log:didReceivedLogMessage:formattedLog:)]) {
+        [_delegate log:[PREDLog sharedInstance] didReceivedLogMessage:logMessage formattedLog:[[PREDLog sharedInstance]->_ttyLogFormatter formatLogMessage:logMessage]];
     }
     [super log:asynchronous message:logMessage];
 }

@@ -110,9 +110,9 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         self.present(controller, animated: true, completion: nil)
     }
     
-    func log(_ log: PREDLog!, didReceivedLogMessage message: PREDLogMessage!) {
+    func log(_ log: PREDLog!, didReceivedLogMessage message: DDLogMessage!, formattedLog: String!) {
         DispatchQueue.main.async {
-            self.logTextView.text = self.logTextView.text + message.formattedMessage + "\n"
+            self.logTextView.text = self.logTextView.text + formattedLog + "\n"
             // 自动滚动
             self.logTextView.layoutManager.allowsNonContiguousLayout = false
             let allStrCount = self.logTextView.text.count
