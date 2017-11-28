@@ -10,7 +10,7 @@
 #import "PREDManagerPrivate.h"
 #import "PREDNetDiagResultPrivate.h"
 #import "PREDHelper.h"
-#import "PREDLogger.h"
+#import "PREDLog.h"
 #import "QNNetDiag.h"
 #import "PREDConstants.h"
 

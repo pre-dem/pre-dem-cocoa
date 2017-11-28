@@ -9,12 +9,12 @@
 #ifndef PREDLogger_private_h
 #define PREDLogger_private_h
 
-#import "PREDLogger.h"
+#import "PREDLog.h"
 #import "PREDLogFileManager.h"
 #import "PREDLogFormatter.h"
 #import "PREDPersistence.h"
 
-@interface PREDLogger (Private)
+@interface PREDLog (Private)
 <
 PREDLogFileManagerDelegate,
 PREDLogFormatterDelegate

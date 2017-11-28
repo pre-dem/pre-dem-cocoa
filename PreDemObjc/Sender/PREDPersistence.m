@@ -8,7 +8,7 @@
 
 #import "PREDPersistence.h"
 #import "PREDHelper.h"
-#import "PREDLogger.h"
+#import "PREDLog.h"
 #import "NSObject+Serialization.h"
 #import "PREDError.h"
 

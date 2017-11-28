@@ -10,7 +10,7 @@
 #import "PREDemObjc.h"
 #import "PREDHelper.h"
 #import "PREDCrashCXXExceptionHandler.h"
-#import "PREDLogger.h"
+#import "PREDLog.h"
 #import "PREDCrashMeta.h"
 #import <CrashReporter/CrashReporter.h>
 

@@ -7,7 +7,7 @@
 
 #import <Foundation/Foundation.h>
 #import "PREDCustomEvent.h"
-#import "PREDLogger.h"
+#import "PREDLog.h"
 #import "PREDConstants.h"
 #import "NSObject+Serialization.h"
 

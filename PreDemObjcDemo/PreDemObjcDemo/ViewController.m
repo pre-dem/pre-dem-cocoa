@@ -123,10 +123,10 @@ UIPickerViewDelegate
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component __TVOS_PROHIBITED; {
     if (row == 0) {
-        [PREDLogger stopCaptureLog];
+        [PREDLog stopCaptureLog];
     } else {
         NSError *error;
-        BOOL success = [PREDLogger startCaptureLogWithLevel:(PREDLogLevel)[self.logPickerValues[row-1] intValue] error:&error];
+        BOOL success = [PREDLog startCaptureLogWithLevel:(PREDLogLevel)[self.logPickerValues[row-1] intValue] error:&error];
         if (!success) {
             UIAlertController *controller = [UIAlertController alertControllerWithTitle:@"错误" message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
             [controller addAction:[UIAlertAction actionWithTitle:@"好的" style:UIAlertActionStyleDefault handler:nil]];

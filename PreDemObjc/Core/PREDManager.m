@@ -16,9 +16,9 @@
 #import "PREDURLProtocol.h"
 #import "PREDCrashManager.h"
 #import "PREDLagMonitorController.h"
-#import "PREDLogger.h"
+#import "PREDLog.h"
 #import "PREDError.h"
-#import "PREDLoggerPrivate.h"
+#import "PREDLogPrivate.h"
 #import "PREDSender.h"
 #import "PREDBreadcrumbTracker.h"
 
@@ -177,7 +177,7 @@ static NSString* app_id(NSString* appKey){
     _breadcrumbTracker = [[PREDBreadcrumbTracker alloc] initWithPersistence:_persistence];
     [_breadcrumbTracker start];
     
-    [PREDLogger setPersistence:_persistence];
+    [PREDLog setPersistence:_persistence];
     
     // this process will get default config and then use it to initialize all module, besides it will also retrieve config from the server and config will refresh when done.
     [self setConfig:[_configManager getConfig]];

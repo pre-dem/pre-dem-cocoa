@@ -14,7 +14,7 @@
 #import "PREDCustomEvent.h"
 #import "PREDDefines.h"
 #import "PREDemObjc.h"
-#import "PREDLogger.h"
+#import "PREDLog.h"
 #import "PREDManager.h"
 #import "PREDNetDiagResult.h"
 

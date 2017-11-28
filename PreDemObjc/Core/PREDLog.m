@@ -1,17 +1,17 @@
 //
-//  PREDLogger.m
+//  PREDLog.m
 //  PreDemObjc
 //
 //  Created by WangSiyu on 21/02/2017.
 //  Copyright © 2017 pre-engineering. All rights reserved.
 //
 
-#import "PREDLogger.h"
+#import "PREDLog.h"
 #import "PREDHelper.h"
 #import "PREDNetworkClient.h"
 #import "PREDLogFormatter.h"
 #import "PREDLogFileManager.h"
-#import "PREDLoggerPrivate.h"
+#import "PREDLogPrivate.h"
 #import "PREDLogMeta.h"
 #import "PREDPersistence.h"
 #import "PREDManager.h"
@@ -19,15 +19,14 @@
 
 #define PREDMillisecondPerSecond        1000
 
-static __weak id<PREDLoggerDelegate> _delegate;
+static __weak id<PREDLogDelegate> _delegate;
 
 @implementation PREDLogMessage
 
 @end
 
-@implementation PREDLogger {
+@implementation PREDLog {
     BOOL _started;
-    DDLog *_ddLog;
     DDFileLogger *_fileLogger;
     DDTTYLogger *_ttyLogger;
     PREDLogLevel _ttyLogLevel;
@@ -39,18 +38,18 @@ static __weak id<PREDLoggerDelegate> _delegate;
     PREDLogMeta *_currentMeta;
 }
 
-+ (instancetype)sharedLogger {
-    static PREDLogger *logger;
++ (instancetype)sharedInstance {
+    static PREDLog *logger;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        logger = [[PREDLogger alloc] init];
+        logger = [[PREDLog alloc] init];
     });
     return logger;
 }
 
 + (void)log:(BOOL)asynchronous
-      level:(PREDLogLevel)level
-       flag:(PREDLogFlag)flag
+      level:(DDLogLevel)level
+       flag:(DDLogFlag)flag
     context:(NSInteger)context
        file:(const char *)file
    function:(const char *)function
@@ -62,15 +61,21 @@ static __weak id<PREDLoggerDelegate> _delegate;
         va_start(args, format);
         PREDLogMessage *message = [[PREDLogMessage alloc] initWithMessage:[[NSString alloc] initWithFormat:format arguments:args] level:(DDLogLevel)level flag:(DDLogFlag)flag context:context file:[NSString stringWithFormat:@"%s", file] function:[NSString stringWithFormat:@"%s", function] line:line tag:tag options:0 timestamp:nil];
         va_end(args);
-        [[PREDLogger sharedLogger]->_ddLog log:asynchronous message:message];
-        if([_delegate respondsToSelector:@selector(logger:didReceivedLogMessage:)]) {
-            [_delegate logger:[PREDLogger sharedLogger] didReceivedLogMessage:message];
-        }
+        [[PREDLog sharedInstance] log:asynchronous message:message];
     }
 }
 
+- (void)log:(BOOL)asynchronous
+    message:(PREDLogMessage *)logMessage {
+    if([_delegate respondsToSelector:@selector(log:didReceivedLogMessage:)]) {
+        logMessage->_formattedMessage = [[PREDLog sharedInstance]->_ttyLogFormatter formatLogMessage:logMessage];
+        [_delegate log:[PREDLog sharedInstance] didReceivedLogMessage:logMessage];
+    }
+    [super log:asynchronous message:logMessage];
+}
+
 + (void)setStarted:(BOOL)started {
-    [PREDLogger sharedLogger].started = started;
+    [PREDLog sharedInstance].started = started;
 }
 
 - (void)setStarted:(BOOL)started {
@@ -80,35 +85,30 @@ static __weak id<PREDLoggerDelegate> _delegate;
     _started = started;
     if (started) {
         _ttyLogger.logFormatter = _ttyLogFormatter;
-        [_ddLog addLogger:_ttyLogger];
+        [self addLogger:_ttyLogger];
     } else {
-        [_ddLog removeLogger:_ttyLogger];
+        [self removeLogger:_ttyLogger];
     }
 }
 
 + (BOOL)started {
-    return [PREDLogger sharedLogger].started;
+    return [PREDLog sharedInstance].started;
 }
 
 - (BOOL)started {
     return _started;
 }
 
-+ (void)setDelegate:(id<PREDLoggerDelegate>)delegate {
++ (void)setDelegate:(id<PREDLogDelegate>)delegate {
     _delegate = delegate;
 }
 
-+ (id<PREDLoggerDelegate>)delegate {
++ (id<PREDLogDelegate>)delegate {
     return _delegate;
-}
-
-+ (DDLog *)ddLog {
-    return [PREDLogger sharedLogger]->_ddLog;
 }
 
 - (instancetype)init {
     if (self = [super init]) {
-        _ddLog = [[DDLog alloc] init];
         _ttyLogger = [[DDTTYLogger alloc] init];
         _ttyLogLevel = PREDLogLevelAll;
         _logFileManager = [[PREDLogFileManager alloc] initWithLogsDirectory:[NSString stringWithFormat:@"%@/%@", PREDHelper.cacheDirectory, @"logfiles"]];
@@ -122,7 +122,7 @@ static __weak id<PREDLoggerDelegate> _delegate;
 }
 
 + (void)setTtyLogLevel:(PREDLogLevel)ttyLogLevel {
-    [PREDLogger sharedLogger].ttyLogLevel = ttyLogLevel;
+    [PREDLog sharedInstance].ttyLogLevel = ttyLogLevel;
 }
 
 - (void)setTtyLogLevel:(PREDLogLevel)ttyLogLevel {
@@ -130,12 +130,12 @@ static __weak id<PREDLoggerDelegate> _delegate;
         return;
     }
     _ttyLogLevel = ttyLogLevel;
-    [_ddLog removeLogger:_ttyLogger];
-    [_ddLog addLogger:_ttyLogger withLevel:(DDLogLevel)_ttyLogLevel];
+    [self removeLogger:_ttyLogger];
+    [self addLogger:_ttyLogger withLevel:(DDLogLevel)_ttyLogLevel];
 }
 
 + (PREDLogLevel)ttyLogLevel {
-    return [PREDLogger sharedLogger].ttyLogLevel;
+    return [PREDLog sharedInstance].ttyLogLevel;
 }
 
 - (PREDLogLevel)ttyLogLevel {
@@ -143,7 +143,7 @@ static __weak id<PREDLoggerDelegate> _delegate;
 }
 
 + (BOOL)startCaptureLogWithLevel:(PREDLogLevel)logLevel error:(NSError **)error {
-    return [[PREDLogger sharedLogger] startCaptureLogWithLevel:logLevel error:error];
+    return [[PREDLog sharedInstance] startCaptureLogWithLevel:logLevel error:error];
 }
 
 - (BOOL)startCaptureLogWithLevel:(PREDLogLevel)logLevel error:(NSError **)error {
@@ -163,27 +163,27 @@ static __weak id<PREDLoggerDelegate> _delegate;
     _fileLogger.maximumFileSize = 1024 * 512;   // 512 KB
     _fileLogger.doNotReuseLogFiles = YES;
     _fileLogger.logFormatter = _fileLogFormatter;
-    [_ddLog addLogger:_fileLogger withLevel:(DDLogLevel)logLevel];
+    [self addLogger:_fileLogger withLevel:(DDLogLevel)logLevel];
     return YES;
 }
 
 + (void)stopCaptureLog {
-    [[PREDLogger sharedLogger] stopCaptureLog];
+    [[PREDLog sharedInstance] stopCaptureLog];
 }
 
 - (void)stopCaptureLog {
     if (_fileLogger) {
-        [_ddLog removeLogger:_fileLogger];
+        [self removeLogger:_fileLogger];
         _fileLogger = nil;
     }
 }
 
 + (void)setPersistence:(PREDPersistence *)persistence {
-    [PREDLogger sharedLogger].persistence = persistence;
+    [PREDLog sharedInstance].persistence = persistence;
 }
 
 + (PREDPersistence *)persistence {
-    return [PREDLogger sharedLogger].persistence;
+    return [PREDLog sharedInstance].persistence;
 }
 
 - (void)setPersistence:(PREDPersistence *)persistence {

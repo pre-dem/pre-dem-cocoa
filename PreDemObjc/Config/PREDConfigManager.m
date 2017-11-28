@@ -7,7 +7,7 @@
 //
 
 #import "PREDConfigManager.h"
-#import "PREDLogger.h"
+#import "PREDLog.h"
 #import "PREDManagerPrivate.h"
 #import "PREDHelper.h"
 

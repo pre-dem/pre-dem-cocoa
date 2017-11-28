@@ -9,7 +9,7 @@
 import UIKit
 import PreDemObjc
 
-class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
+class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, PREDLogDelegate {
     
     enum CustomError: Error {
         case CustomError(String)
@@ -17,6 +17,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     
     @IBOutlet var versionLable: UILabel!
     @IBOutlet var logLevelPicker: UIPickerView!
+    @IBOutlet var logTextView: UITextView!
     
     let logPickerKeys = [
         "不上传 log",
@@ -41,6 +42,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        PREDLog.delegate = self
     }
     
     override func didReceiveMemoryWarning() {
@@ -86,12 +88,36 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         }
     }
     
-    @IBAction func logTest(sender: Any) {
+    @IBAction func viewTapped(sender: Any) {
         PREDLogVerbose("verbose log test");
         PREDLogDebug("debug log test");
         PREDLogInfo("info log test");
         PREDLogWarn("warn log test");
         PREDLogError("error log test");
+    }
+    
+    @IBAction func viewLongPressed(sender: Any) {
+        let controller = UIAlertController(title: "调试菜单", message: nil, preferredStyle: .actionSheet)
+        var actionName: String
+        if logTextView.isHidden {
+            actionName = "开启将 log 输出到界面"
+        } else {
+            actionName = "关闭将 log 输出到界面"
+        }
+        controller.addAction(UIAlertAction(title: actionName, style: .default) { (action) in
+            self.logTextView.isHidden = !self.logTextView.isHidden
+        })
+        self.present(controller, animated: true, completion: nil)
+    }
+    
+    func log(_ log: PREDLog!, didReceivedLogMessage message: PREDLogMessage!) {
+        DispatchQueue.main.async {
+            self.logTextView.text = self.logTextView.text + message.formattedMessage + "\n"
+            // 自动滚动
+            self.logTextView.layoutManager.allowsNonContiguousLayout = false
+            let allStrCount = self.logTextView.text.count
+            self.logTextView.scrollRangeToVisible(NSMakeRange(0, allStrCount))
+        }
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -108,10 +134,10 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if row == 0 {
-            PREDLogger.stopCaptureLog()
+            PREDLog.stopCapture()
         } else {
             do {
-                try PREDLogger.startCaptureLog(with: logPickerValues[row-1])
+                try PREDLog.startCapture(with: logPickerValues[row-1])
             } catch {
                 print("\(error)")
             }

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="cYA-5x-gqt">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="cYA-5x-gqt">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -107,6 +107,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z4R-mi-tUz">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <gestureRecognizers/>
+                                <color key="textColor" red="1" green="0.57637232540000005" blue="0.0" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UuS-Fo-nh4">
                                 <rect key="frame" x="83.5" y="69" width="153" height="30"/>
                                 <state key="normal" title="点我发送一些网络请求"/>
@@ -169,30 +177,41 @@
                             <constraint firstItem="3fP-OQ-YRc" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="120" id="DS2-Nn-1J1"/>
                             <constraint firstItem="a1F-JE-yhx" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="40" id="DTD-N7-zpp"/>
                             <constraint firstItem="UuS-Fo-nh4" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="-200" id="FJe-Y4-tRn"/>
+                            <constraint firstItem="Z4R-mi-tUz" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="KST-Ng-ITQ"/>
                             <constraint firstItem="QPF-qD-pBb" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="TVN-hD-9f7"/>
                             <constraint firstItem="iZc-eD-4Yh" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="bottom" constant="-20" id="VBF-Vc-jsI"/>
                             <constraint firstItem="4XG-nN-BeY" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="200" id="XIL-1H-SpZ"/>
                             <constraint firstItem="3fP-OQ-YRc" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="cvN-KG-qgS"/>
+                            <constraint firstItem="Z4R-mi-tUz" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="daX-vi-i7o"/>
+                            <constraint firstAttribute="bottom" secondItem="Z4R-mi-tUz" secondAttribute="bottom" id="ecW-to-P7u"/>
+                            <constraint firstAttribute="trailing" secondItem="Z4R-mi-tUz" secondAttribute="trailing" id="jbD-rt-gpR"/>
                             <constraint firstItem="QPF-qD-pBb" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="-120" id="tIf-DC-LdN"/>
                             <constraint firstItem="a1F-JE-yhx" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="us1-rP-WCR"/>
                             <constraint firstItem="6iu-Ah-PlK" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="-40" id="x7b-DV-Yfu"/>
                         </constraints>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="nLO-vJ-6Y0" appends="YES" id="9bY-oA-JhF"/>
+                            <outletCollection property="gestureRecognizers" destination="W21-4R-niS" appends="YES" id="08J-mX-9bd"/>
                         </connections>
                     </view>
                     <navigationItem key="navigationItem" id="hX5-fa-XYI"/>
                     <connections>
                         <outlet property="logLevelPicker" destination="3fP-OQ-YRc" id="e5M-r9-6Z9"/>
+                        <outlet property="logTextView" destination="Z4R-mi-tUz" id="8NQ-cQ-rPf"/>
                         <outlet property="versionLable" destination="iZc-eD-4Yh" id="o2K-Er-5BE"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
                 <tapGestureRecognizer id="nLO-vJ-6Y0">
                     <connections>
-                        <action selector="logTestWithSender:" destination="BYZ-38-t0r" id="hw7-pX-dcW"/>
+                        <action selector="viewTappedWithSender:" destination="BYZ-38-t0r" id="Riq-nf-2ow"/>
                     </connections>
                 </tapGestureRecognizer>
+                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="W21-4R-niS">
+                    <connections>
+                        <action selector="viewLongPressedWithSender:" destination="BYZ-38-t0r" id="WeA-Gk-zVp"/>
+                    </connections>
+                </pongPressGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-75" y="44"/>
         </scene>

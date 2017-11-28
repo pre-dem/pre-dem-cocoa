@@ -10,7 +10,7 @@
 
 #import "PREDSender.h"
 #import "PREDHelper.h"
-#import "PREDLogger.h"
+#import "PREDLog.h"
 #import "PREDConfigManager.h"
 #import "NSObject+Serialization.h"
 

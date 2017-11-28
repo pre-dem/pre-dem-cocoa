@@ -7,7 +7,7 @@
 //
 
 #import "PREDVersion.h"
-#import "PREDLogger.h"
+#import "PREDLog.h"
 
 static NSString *version;
 static NSString *build;

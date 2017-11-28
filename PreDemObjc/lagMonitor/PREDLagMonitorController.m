@@ -10,7 +10,7 @@
 #import <CrashReporter/CrashReporter.h>
 #import "PREDCrashReportTextFormatter.h"
 #import "PREDHelper.h"
-#import "PREDLogger.h"
+#import "PREDLog.h"
 
 @implementation PREDLagMonitorController {
     CFRunLoopObserverRef _observer;

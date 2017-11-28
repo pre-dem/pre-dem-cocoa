@@ -6,7 +6,7 @@
 //  Copyright © 2017 pre-engineering. All rights reserved.
 //
 
-#import "PREDLogger.h"
+#import "PREDLog.h"
 #import "PREDCrashReportTextFormatter.h"
 #import <CrashReporter/CrashReporter.h>
 

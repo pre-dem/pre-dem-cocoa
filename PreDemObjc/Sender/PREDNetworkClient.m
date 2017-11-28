@@ -7,7 +7,7 @@
 //
 
 #import "PREDNetworkClient.h"
-#import "PREDLogger.h"
+#import "PREDLog.h"
 #import "PREDCredential.h"
 #import "PREDManagerPrivate.h"
 #import "PREDError.h"

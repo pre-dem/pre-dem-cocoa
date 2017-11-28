@@ -16,7 +16,7 @@
 #import <CommonCrypto/CommonDigest.h>
 #import <mach-o/dyld.h>
 #import <mach-o/loader.h>
-#import "PREDLogger.h"
+#import "PREDLog.h"
 #import <UICKeyChainStore/UICKeyChainStore.h>
 
 static NSString *const kPREDDirectoryName = @"com.qiniu.predem";
