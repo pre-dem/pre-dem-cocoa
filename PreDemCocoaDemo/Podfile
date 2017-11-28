@@ -1,0 +1,14 @@
+platform :ios, '8.0'
+use_frameworks!
+
+target 'PreDemObjcDemo' do
+    pod 'PreDemCocoa', :path => '../'
+end
+
+target 'PreDemSwiftDemo' do
+    pod 'PreDemCocoa', :path => '../'
+end
+
+target 'PreDemCocoaTests' do
+    pod 'PreDemCocoa', :path => '../'
+end

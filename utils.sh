@@ -11,7 +11,7 @@ case "$COMMAND" in
     # Versioning
     ######################################
     "get-version")
-        version_file="PreDemObjc/Resources/Version.plist"
+        version_file="PreDemCocoa/Resources/Version.plist"
         echo "$(PlistBuddy -c "Print :Version" "$version_file")"
         exit 0
         ;; 
@@ -23,8 +23,8 @@ case "$COMMAND" in
 
     "set-version")
         dst_version="$2"
-        sdk_version_file="PreDemObjc/Resources/Version.plist"
-        demo_version_files="PreDemObjcDemo/PreDemObjcDemo/Info.plist PreDemObjcDemo/PreDemSwiftDemo/Info.plist"
+        sdk_version_file="PreDemCocoa/Resources/Version.plist"
+        demo_version_files="PreDemCocoaDemo/PreDemObjcDemo/Info.plist PreDemCocoaDemo/PreDemSwiftDemo/Info.plist"
         git_commit=`git rev-parse --short HEAD`
 
         if [ -z "$dst_version" ]; then
