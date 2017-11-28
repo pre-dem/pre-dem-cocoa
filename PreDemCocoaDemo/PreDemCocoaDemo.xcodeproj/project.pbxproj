@@ -34,7 +34,6 @@
 
 /* Begin PBXFileReference section */
 		1397A38FBFDF6AFC6CD62BB8 /* Pods-PreDemCocoaTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PreDemCocoaTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-PreDemCocoaTests/Pods-PreDemCocoaTests.release.xcconfig"; sourceTree = "<group>"; };
-		319FFEE0D09B78CF88665AAB /* Pods-PreDemObjcTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PreDemObjcTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-PreDemObjcTests/Pods-PreDemObjcTests.release.xcconfig"; sourceTree = "<group>"; };
 		3E0F69381CF7E04817C69FAD /* Pods_PreDemCocoaTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PreDemCocoaTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		49D5A09E5EA4256627F3F27E /* Pods-PreDemCocoaTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PreDemCocoaTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PreDemCocoaTests/Pods-PreDemCocoaTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5627CA5A610BBE9856BD0D35 /* Pods-PreDemSwiftDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PreDemSwiftDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-PreDemSwiftDemo/Pods-PreDemSwiftDemo.release.xcconfig"; sourceTree = "<group>"; };
@@ -81,7 +80,6 @@
 		CC2DE1862FAA2D9F0AD22B41 /* Pods-PreDemObjcDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PreDemObjcDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-PreDemObjcDemo/Pods-PreDemObjcDemo.release.xcconfig"; sourceTree = "<group>"; };
 		EA9DE848F18E85B4D07C40CD /* Pods_PreDemSwiftDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PreDemSwiftDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EEA8E066865EF848E9BA43AC /* Pods-PreDemObjcDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PreDemObjcDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PreDemObjcDemo/Pods-PreDemObjcDemo.debug.xcconfig"; sourceTree = "<group>"; };
-		F5E2C22208FFDAE0FA39122F /* Pods-PreDemObjcTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PreDemObjcTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PreDemObjcTests/Pods-PreDemObjcTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -231,8 +229,6 @@
 				CC2DE1862FAA2D9F0AD22B41 /* Pods-PreDemObjcDemo.release.xcconfig */,
 				CBABF7F8789ACF6993173BFE /* Pods-PreDemSwiftDemo.debug.xcconfig */,
 				5627CA5A610BBE9856BD0D35 /* Pods-PreDemSwiftDemo.release.xcconfig */,
-				F5E2C22208FFDAE0FA39122F /* Pods-PreDemObjcTests.debug.xcconfig */,
-				319FFEE0D09B78CF88665AAB /* Pods-PreDemObjcTests.release.xcconfig */,
 				49D5A09E5EA4256627F3F27E /* Pods-PreDemCocoaTests.debug.xcconfig */,
 				1397A38FBFDF6AFC6CD62BB8 /* Pods-PreDemCocoaTests.release.xcconfig */,
 			);
