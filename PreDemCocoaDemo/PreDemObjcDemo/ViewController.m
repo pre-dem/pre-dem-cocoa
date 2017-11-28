@@ -19,6 +19,7 @@ PREDLogDelegate
 
 @property (nonatomic, strong) IBOutlet UILabel *versionLable;
 @property (nonatomic, strong) IBOutlet UIPickerView *logLevelPicker;
+@property (nonatomic, strong) IBOutlet UITextView *logTextView;
 @property (nonatomic, strong) NSArray *logPickerKeys;
 @property (nonatomic, strong) NSArray *logPickerValues;
 
@@ -30,8 +31,7 @@ PREDLogDelegate
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     self.versionLable.text = [NSString stringWithFormat:@"%@(%@)", PREDManager.version, PREDManager.build];
-    self.logLevelPicker.dataSource = self;
-    self.logLevelPicker.delegate = self;
+    PREDLog.delegate = self;
     self.logPickerKeys = @[
                                @"不上传 log",
                                @"PREDLogLevelOff",
@@ -57,12 +57,33 @@ PREDLogDelegate
     self.navigationController.navigationBarHidden = YES;
 }
 
-- (IBAction)logTest:(id)sender {
+- (IBAction)viewTapped:(id)sender {
     PREDLogVerbose(@"verbose log test");
     PREDLogDebug(@"debug log test");
     PREDLogInfo(@"info log test");
     PREDLogWarn(@"warn log test");
     PREDLogError(@"error log test");
+}
+
+- (IBAction)viewLongPressed:(id)sender {
+    UIAlertController *controller = [UIAlertController alertControllerWithTitle:@"调试菜单" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    NSString *actionName;
+    if (_logTextView.hidden) {
+        actionName = @"开启将 log 输出到界面";
+    } else {
+        actionName = @"关闭将 log 输出到界面";
+    }
+    [controller addAction:[UIAlertAction actionWithTitle:actionName style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        _logTextView.hidden = !_logTextView.isHidden;
+    }]];
+    
+    [controller addAction:[UIAlertAction actionWithTitle:@"清空界面 log" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        _logTextView.text = @"";
+    }]];
+    
+    [controller addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
+    
+    [self presentViewController:controller animated:YES completion:nil];
 }
 
 - (IBAction)sendHTTPRequest:(id)sender {
@@ -109,7 +130,11 @@ PREDLogDelegate
 }
 
 - (void)log:(PREDLog *)log didReceivedLogMessage:(DDLogMessage *)message formattedLog:(NSString *)formattedLog {
-    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        _logTextView.text = [NSString stringWithFormat:@"%@%@\n", _logTextView.text, formattedLog];
+        _logTextView.layoutManager.allowsNonContiguousLayout = NO;
+        [_logTextView scrollRangeToVisible:NSMakeRange(0, _logTextView.text.length)];
+    });
 }
 
 // returns the number of 'columns' to display.

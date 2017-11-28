@@ -42,6 +42,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        versionLable.text = "\(PREDManager.version())(\(PREDManager.build()))"
         PREDLog.delegate = self
     }
     
@@ -121,8 +122,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
             self.logTextView.text = self.logTextView.text + formattedLog + "\n"
             // 自动滚动
             self.logTextView.layoutManager.allowsNonContiguousLayout = false
-            let allStrCount = self.logTextView.text.count
-            self.logTextView.scrollRangeToVisible(NSMakeRange(0, allStrCount))
+            self.logTextView.scrollRangeToVisible(NSMakeRange(0, self.logTextView.text.count))
         }
     }
     

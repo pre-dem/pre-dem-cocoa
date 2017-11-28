@@ -320,7 +320,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0830;
-				LastUpgradeCheck = 0900;
+				LastUpgradeCheck = 0910;
 				ORGANIZATIONNAME = "pre-engineering";
 				TargetAttributes = {
 					B60231431EC9B7AC005AB798 = {
@@ -832,6 +832,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 49D5A09E5EA4256627F3F27E /* Pods-PreDemCocoaTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = "";
@@ -862,6 +863,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 1397A38FBFDF6AFC6CD62BB8 /* Pods-PreDemCocoaTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = "";

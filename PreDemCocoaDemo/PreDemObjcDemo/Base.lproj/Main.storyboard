@@ -106,10 +106,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="MKt-Wd-rJd">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MKt-Wd-rJd">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                 <color key="textColor" red="1" green="0.57637232540000005" blue="0.0" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -139,6 +138,10 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="120" id="paW-on-0au"/>
                                 </constraints>
+                                <connections>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="Dip-uW-bS4"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="amS-m8-NBJ"/>
+                                </connections>
                             </pickerView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a1F-JE-yhx">
                                 <rect key="frame" x="99" y="364" width="123" height="30"/>
@@ -195,20 +198,27 @@
                         </constraints>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="dv2-y1-OrH" appends="YES" id="HlJ-KK-XGw"/>
+                            <outletCollection property="gestureRecognizers" destination="xAx-j7-Tc4" appends="YES" id="14S-Tt-eyO"/>
                         </connections>
                     </view>
                     <navigationItem key="navigationItem" id="hX5-fa-XYI"/>
                     <connections>
                         <outlet property="logLevelPicker" destination="3fP-OQ-YRc" id="Kch-83-Ia0"/>
+                        <outlet property="logTextView" destination="MKt-Wd-rJd" id="6oP-yI-iyg"/>
                         <outlet property="versionLable" destination="iZc-eD-4Yh" id="o2K-Er-5BE"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
                 <tapGestureRecognizer id="dv2-y1-OrH">
                     <connections>
-                        <action selector="logTest:" destination="BYZ-38-t0r" id="cwR-ow-VVx"/>
+                        <action selector="viewTapped:" destination="BYZ-38-t0r" id="JgR-KK-qXP"/>
                     </connections>
                 </tapGestureRecognizer>
+                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="xAx-j7-Tc4">
+                    <connections>
+                        <action selector="viewLongPressed:" destination="BYZ-38-t0r" id="2h2-w8-sem"/>
+                    </connections>
+                </pongPressGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-75" y="44"/>
         </scene>
