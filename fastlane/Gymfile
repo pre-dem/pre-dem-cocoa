@@ -2,6 +2,8 @@ workspace "PreDemCocoaDemo/PreDemCocoaDemo.xcworkspace"
 
 clean true
 
+silent true
+
 export_method "enterprise"
 
 # use staging for testing

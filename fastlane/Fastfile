@@ -18,10 +18,12 @@ lane :test do
   scan
   xcodebuild(
     workspace: "PreDemCocoaDemo/PreDemCocoaDemo.xcworkspace",
+    quiet: true,
     scheme: "PreDemObjcDemo"
   )
   xcodebuild(
     workspace: "PreDemCocoaDemo/PreDemCocoaDemo.xcworkspace",
+    quiet: true,
     scheme: "PreDemSwiftDemo"
   )
 end
