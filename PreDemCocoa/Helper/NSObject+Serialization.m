@@ -51,13 +51,10 @@
         objc_property_t prop = props[i];
         NSString *propName = [NSString stringWithUTF8String:property_getName(prop)];
         id value = [self valueForKey:propName];
-        if(value == nil) {
-            
-            value = [NSNull null];
-        } else {
+        if(value != nil) {
             value = [self getObjectInternal:value];
+            [dic setObject:value forKey:propName];
         }
-        [dic setObject:value forKey:propName];
     }
     
     if (props) {

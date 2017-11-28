@@ -15,6 +15,7 @@
 		B60231541EC9B7AC005AB798 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B60231531EC9B7AC005AB798 /* Assets.xcassets */; };
 		B60231571EC9B7AC005AB798 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B60231551EC9B7AC005AB798 /* LaunchScreen.storyboard */; };
 		B671D8D71FAB15E60040ECAC /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B671D8D61FAB15E60040ECAC /* WebViewController.m */; };
+		B6727E311FCD337900AEF01D /* Pods_PreDemCocoaTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6727E321FCD337900AEF01D /* Pods_PreDemCocoaTests.framework */; };
 		B6741B261F7E90810039ED99 /* lag.dat in Resources */ = {isa = PBXBuildFile; fileRef = B6741B251F7E90790039ED99 /* lag.dat */; };
 		B694F1521F3025AB00175FF1 /* AppIDViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B694F1511F3025AB00175FF1 /* AppIDViewController.m */; };
 		B6CC5C301F7E4B31009C92FB /* PREDCrashTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B6CC5C2F1F7E4B31009C92FB /* PREDCrashTests.m */; };
@@ -56,6 +57,7 @@
 		B671D8D51FAB15E60040ECAC /* WebViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
 		B671D8D61FAB15E60040ECAC /* WebViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
 		B6727E2E1FCD0F9F00AEF01D /* PreDemCocoa.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; name = PreDemCocoa.podspec; path = ../PreDemCocoa.podspec; sourceTree = "<group>"; };
+		B6727E321FCD337900AEF01D /* Pods_PreDemCocoaTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_PreDemCocoaTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6741B251F7E90790039ED99 /* lag.dat */ = {isa = PBXFileReference; lastKnownFileType = file; path = lag.dat; sourceTree = "<group>"; };
 		B694F1501F3025AB00175FF1 /* AppIDViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppIDViewController.h; sourceTree = "<group>"; };
 		B694F1511F3025AB00175FF1 /* AppIDViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppIDViewController.m; sourceTree = "<group>"; };
@@ -95,6 +97,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B6727E311FCD337900AEF01D /* Pods_PreDemCocoaTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -112,6 +115,7 @@
 		873953D5F83C737C48720D4A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B6727E321FCD337900AEF01D /* Pods_PreDemCocoaTests.framework */,
 				EA9DE848F18E85B4D07C40CD /* Pods_PreDemSwiftDemo.framework */,
 				9E6504F08203DC0F061B69C3 /* Pods_PreDemObjcDemo.framework */,
 				992F0DC405310959DBD9E018 /* Pods_PreDemObjcTests.framework */,
@@ -764,11 +768,7 @@
 				DEVELOPMENT_TEAM = GDFHW66V92;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"${PODS_ROOT}/Headers/Public\"",
-					"\"${PODS_ROOT}/Headers/Public/HappyDNS\"",
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = PreDemObjcDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -789,11 +789,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				DEVELOPMENT_TEAM = GDFHW66V92;
 				ENABLE_BITCODE = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"${PODS_ROOT}/Headers/Public\"",
-					"\"${PODS_ROOT}/Headers/Public/HappyDNS\"",
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = PreDemObjcDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

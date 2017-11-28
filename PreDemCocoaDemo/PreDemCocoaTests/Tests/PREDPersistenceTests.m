@@ -39,11 +39,6 @@
     NSMutableDictionary *dic = [_persistence getStoredMeta:path error:&error];
     XCTAssertNotNil(dic);
     XCTAssertNil(error);
-    unsigned int count, count1, count2;
-    class_copyPropertyList(PREDAppInfo.class, &count1);
-    class_copyPropertyList(PREDAppInfo.superclass, &count2);
-    count = count1 + count2;
-    XCTAssertEqual(count, dic.count);
     [dic enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, NSString * _Nonnull obj, BOOL * _Nonnull stop) {
         XCTAssertTrue([[appinfo valueForKey:key] isEqual:obj]);
     }];
@@ -70,15 +65,6 @@
     NSMutableDictionary *contentDic = [NSJSONSerialization JSONObjectWithData:[content dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:&error];
     XCTAssertNotNil(contentDic);
     XCTAssertNil(error);
-    unsigned int count1, count2;
-    class_copyPropertyList(PREDCrashMeta.class, &count1);
-    class_copyPropertyList(PREDCrashMeta.superclass, &count2);
-    if (count1) {
-        XCTAssertEqual(count2, dic.count - 1);
-        XCTAssertEqual(count1, contentDic.count);
-    } else {
-        XCTAssertEqual(count2, dic.count);
-    }
     
     [dic enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, id _Nonnull obj, BOOL * _Nonnull stop) {
         if (![key isEqualToString:@"content"]) {
@@ -112,15 +98,6 @@
     NSMutableDictionary *contentDic = [NSJSONSerialization JSONObjectWithData:[content dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:&error];
     XCTAssertNotNil(contentDic);
     XCTAssertNil(error);
-    unsigned int count1, count2;
-    class_copyPropertyList(PREDCrashMeta.class, &count1);
-    class_copyPropertyList(PREDCrashMeta.superclass, &count2);
-    if (count1) {
-        XCTAssertEqual(count2, dic.count - 1);
-        XCTAssertEqual(count1, contentDic.count);
-    } else {
-        XCTAssertEqual(count2, dic.count);
-    }
     
     [dic enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, id _Nonnull obj, BOOL * _Nonnull stop) {
         if (![key isEqualToString:@"content"]) {
@@ -154,15 +131,6 @@
     NSMutableDictionary *contentDic = [NSJSONSerialization JSONObjectWithData:[content dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:&error];
     XCTAssertNotNil(contentDic);
     XCTAssertNil(error);
-    unsigned int count1, count2;
-    class_copyPropertyList(PREDCrashMeta.class, &count1);
-    class_copyPropertyList(PREDCrashMeta.superclass, &count2);
-    if (count1) {
-        XCTAssertEqual(count2, dic.count - 1);
-        XCTAssertEqual(count1, contentDic.count);
-    } else {
-        XCTAssertEqual(count2, dic.count);
-    }
     
     [dic enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, id _Nonnull obj, BOOL * _Nonnull stop) {
         if (![key isEqualToString:@"content"]) {
@@ -207,11 +175,6 @@
     NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:[components[0] dataUsingEncoding:NSUTF8StringEncoding] options:0 error:&error];
     XCTAssertNotNil(dic);
     XCTAssertNil(error);
-    unsigned int count, count1, count2;
-    class_copyPropertyList(PREDCustomEvent.class, &count1);
-    class_copyPropertyList(PREDCustomEvent.superclass, &count2);
-    count = count1 + count2;
-    XCTAssertEqual(count, dic.count);
     [dic enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, NSString * _Nonnull obj, BOOL * _Nonnull stop) {
         XCTAssertTrue([[event1 valueForKey:key] isEqual:obj]);
     }];
@@ -219,10 +182,6 @@
     dic = [NSJSONSerialization JSONObjectWithData:[components[1] dataUsingEncoding:NSUTF8StringEncoding] options:0 error:&error];
     XCTAssertNotNil(dic);
     XCTAssertNil(error);
-    class_copyPropertyList(PREDCustomEvent.class, &count1);
-    class_copyPropertyList(PREDCustomEvent.superclass, &count2);
-    count = count1 + count2;
-    XCTAssertEqual(count, dic.count);
     [dic enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, NSString * _Nonnull obj, BOOL * _Nonnull stop) {
         XCTAssertTrue([[event2 valueForKey:key] isEqual:obj]);
     }];
