@@ -15,6 +15,7 @@ fastlane_version "2.28.7"
 
 desc "Runs all the tests"
 lane :test do
+  scan
   gym(
     scheme: "PreDemObjcDemo",
     skip_package_ipa: true,
@@ -23,13 +24,19 @@ lane :test do
     scheme: "PreDemSwiftDemo",
     skip_package_ipa: true,
   )
-  scan
 end
 
 desc "Submit a new Beta Build to fir.im"
 lane :beta do
-  path = gym
-  sh "bundle exec fir publish #{path} -T " + ENV["FIR_TOKEN"]
+  scan
+  objcPath = gym(
+    scheme: "PreDemObjcDemo",
+  )
+  swiftPath = gym(
+    scheme: "PreDemSwiftDemo",
+  )
+  sh "bundle exec fir publish #{objcPath} -T " + ENV["FIR_TOKEN"]
+  sh "bundle exec fir publish #{swiftPath} -T " + ENV["FIR_TOKEN"]
 end
 
 desc "Deploy a new version to the App Store"
