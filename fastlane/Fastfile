@@ -16,14 +16,6 @@ fastlane_version "2.28.7"
 desc "Runs all the tests"
 lane :test do
   scan
-  xcodebuild(
-    workspace: "PreDemCocoaDemo/PreDemCocoaDemo.xcworkspace",
-    scheme: "PreDemObjcDemo"
-  )
-  xcodebuild(
-    workspace: "PreDemCocoaDemo/PreDemCocoaDemo.xcworkspace",
-    scheme: "PreDemSwiftDemo"
-  )
 end
 
 desc "Submit a new Beta Build to fir.im"
