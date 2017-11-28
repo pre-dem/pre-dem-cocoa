@@ -49,6 +49,7 @@
 		B60231531EC9B7AC005AB798 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B60231561EC9B7AC005AB798 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B60231581EC9B7AC005AB798 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B60A67091FCD369E0069EB24 /* encrypt */ = {isa = PBXFileReference; lastKnownFileType = folder; name = encrypt; path = ../encrypt; sourceTree = "<group>"; };
 		B6548F301ECB06710031DD42 /* .travis.yml */ = {isa = PBXFileReference; lastKnownFileType = text; name = .travis.yml; path = ../.travis.yml; sourceTree = "<group>"; };
 		B6548F311ECB067C0031DD42 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; name = .gitignore; path = ../.gitignore; sourceTree = "<group>"; };
 		B6548F361ECB0C7E0031DD42 /* PreDemCocoaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PreDemCocoaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -129,6 +130,7 @@
 				B6548F311ECB067C0031DD42 /* .gitignore */,
 				B6548F301ECB06710031DD42 /* .travis.yml */,
 				B6727E2E1FCD0F9F00AEF01D /* PreDemCocoa.podspec */,
+				B60A67091FCD369E0069EB24 /* encrypt */,
 				B6CFBE951F28697700A42B55 /* docs */,
 				B6CD372C1ECC348400186D6D /* fastlane */,
 				B6CD372B1ECC346F00186D6D /* scripts */,
