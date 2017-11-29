@@ -1,6 +1,0 @@
-framework module WKWebViewWithURLProtocol {
-  umbrella header "WKWebViewWithURLProtocol-umbrella.h"
-
-  export *
-  module * { export * }
-}

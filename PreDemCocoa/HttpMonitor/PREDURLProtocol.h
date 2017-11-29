@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <WKWebViewWithURLProtocol/NSURLProtocol+WKWebViewSupport.h>
 #import "PREDPersistence.h"
 
 @interface PREDURLProtocol : NSURLProtocol
