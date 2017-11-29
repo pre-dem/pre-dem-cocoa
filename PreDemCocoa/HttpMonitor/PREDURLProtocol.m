@@ -133,7 +133,13 @@ NSURLSessionDataDelegate
     HTTPMonitorModel = [[PREDHTTPMonitorModel alloc] init];
     NSURL *originURL = [NSURLProtocol propertyForKey:@"PREDOriginalURL" inRequest:self.request];
     HTTPMonitorModel.domain = originURL.host;
+    if (originURL.port) {
+        HTTPMonitorModel.domain = [NSString stringWithFormat:@"%@:%@", HTTPMonitorModel.domain, originURL.port];
+    }
     HTTPMonitorModel.path = originURL.path;
+    if (originURL.query.length) {
+        HTTPMonitorModel.path = [NSString stringWithFormat:@"%@?%@", HTTPMonitorModel.path, originURL.query];
+    }
     HTTPMonitorModel.method = self.request.HTTPMethod;
     HTTPMonitorModel.host_ip = [NSURLProtocol propertyForKey:@"PREDHostIP" inRequest:self.request];
     HTTPMonitorModel.start_timestamp = [[NSDate date] timeIntervalSince1970] * 1000;
