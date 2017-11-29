@@ -20,13 +20,14 @@ class WebViewController: UIViewController, UITextFieldDelegate {
         urlTextField.placeholder = "请输入 URL"
         urlTextField.keyboardType = .URL
         urlTextField.returnKeyType = .go
-        urlTextField.textContentType = UITextContentType.URL
+        urlTextField.textContentType = .URL
         urlTextField.clearButtonMode = .whileEditing
         urlTextField.delegate = self
         self.navigationItem.titleView = urlTextField
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         self.navigationController?.isNavigationBarHidden = false
     }
     

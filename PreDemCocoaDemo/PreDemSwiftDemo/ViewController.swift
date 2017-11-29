@@ -43,7 +43,11 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         versionLable.text = "\(PREDManager.version())(\(PREDManager.build()))"
-        PREDLog.delegate = self
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.isNavigationBarHidden = true
     }
     
     override func didReceiveMemoryWarning() {
@@ -100,13 +104,17 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     @IBAction func viewLongPressed(sender: Any) {
         let controller = UIAlertController(title: "调试菜单", message: nil, preferredStyle: .actionSheet)
         var actionName: String
-        if logTextView.isHidden {
+        if PREDLog.delegate == nil {
             actionName = "开启将 log 输出到界面"
         } else {
             actionName = "关闭将 log 输出到界面"
         }
         controller.addAction(UIAlertAction(title: actionName, style: .default) { (_) in
-            self.logTextView.isHidden = !self.logTextView.isHidden
+            if PREDLog.delegate == nil {
+                PREDLog.delegate = self
+            } else {
+                PREDLog.delegate = nil
+            }
         })
         
         controller.addAction(UIAlertAction(title: "清空界面 log", style: .default, handler: { (_) in
@@ -117,7 +125,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         self.present(controller, animated: true, completion: nil)
     }
     
-    func log(_ log: PREDLog!, didReceivedLogMessage message: DDLogMessage!, formattedLog: String!) {
+    func log(_ log: PREDLog, didReceivedLogMessage message: DDLogMessage, formattedLog: String) {
         DispatchQueue.main.async {
             self.logTextView.text = self.logTextView.text + formattedLog + "\n"
             // 自动滚动

@@ -31,7 +31,6 @@ PREDLogDelegate
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     self.versionLable.text = [NSString stringWithFormat:@"%@(%@)", PREDManager.version, PREDManager.build];
-    PREDLog.delegate = self;
     self.logPickerKeys = @[
                                @"不上传 log",
                                @"PREDLogLevelOff",
@@ -69,13 +68,17 @@ PREDLogDelegate
 - (IBAction)viewLongPressed:(id)sender {
     UIAlertController *controller = [UIAlertController alertControllerWithTitle:@"调试菜单" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     NSString *actionName;
-    if (_logTextView.hidden) {
+    if (!_logTextView.delegate) {
         actionName = @"开启将 log 输出到界面";
     } else {
         actionName = @"关闭将 log 输出到界面";
     }
     [controller addAction:[UIAlertAction actionWithTitle:actionName style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        _logTextView.hidden = !_logTextView.isHidden;
+        if (!_logTextView.delegate) {
+            _logTextView.delegate = self;
+        } else {
+            _logTextView.delegate = nil;
+        }
     }]];
     
     [controller addAction:[UIAlertAction actionWithTitle:@"清空界面 log" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
