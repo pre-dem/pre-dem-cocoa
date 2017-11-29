@@ -21,5 +21,6 @@ Pod::Spec.new do |s|
   s.dependency "CocoaLumberjack"
   s.dependency "CocoaLumberjack/Swift"
   s.dependency "UICKeyChainStore"
+  s.dependency "WKWebViewWithURLProtocol"
 
 end
