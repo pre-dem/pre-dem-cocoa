@@ -43,7 +43,6 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         versionLable.text = "\(PREDManager.version())(\(PREDManager.build()))"
-        PREDLog.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {

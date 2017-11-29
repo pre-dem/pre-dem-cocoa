@@ -31,7 +31,6 @@ PREDLogDelegate
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     self.versionLable.text = [NSString stringWithFormat:@"%@(%@)", PREDManager.version, PREDManager.build];
-    PREDLog.delegate = self;
     self.logPickerKeys = @[
                                @"不上传 log",
                                @"PREDLogLevelOff",
