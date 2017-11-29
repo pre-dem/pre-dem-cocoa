@@ -172,7 +172,7 @@ static NSString* app_id(NSString* appKey){
     [PREDURLProtocol setPersistence:_persistence];
     _configManager = [[PREDConfigManager alloc] initWithPersistence:_persistence];
     
-//    _lagManager = [[PREDLagMonitorController alloc] initWithPersistence:_persistence];
+    _lagManager = [[PREDLagMonitorController alloc] initWithPersistence:_persistence];
     
     _breadcrumbTracker = [[PREDBreadcrumbTracker alloc] initWithPersistence:_persistence];
     [_breadcrumbTracker start];
