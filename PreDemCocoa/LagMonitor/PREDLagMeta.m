@@ -7,7 +7,6 @@
 //
 
 #import "PREDLagMeta.h"
-#import <CrashReporter/CrashReporter.h>
 #import "PREDHelper.h"
 #import "PREDCrashReportTextFormatter.h"
 #import "PREDConstants.h"
@@ -16,12 +15,8 @@
 
 @implementation PREDLagMeta
 
-- (instancetype)initWithData:(NSData *)data error:(NSError **)error {
+- (instancetype)initWithReport:(PREDPLCrashReport *)report {
     if (self = [self initWithName:LagMonitorEventName type:AutoCapturedEventType]) {
-        PREDPLCrashReport *report = [[PREDPLCrashReport alloc] initWithData:data error:error];
-        if (*error) {
-            return self;
-        }
         if (report.uuidRef != NULL) {
             _report_uuid = (NSString *) CFBridgingRelease(CFUUIDCreateString(NULL, report.uuidRef));
         }
