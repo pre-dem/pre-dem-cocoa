@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CrashReporter/CrashReporter.h>
 #import "PREDBaseModel.h"
 
 @interface PREDLagMeta : PREDBaseModel
@@ -16,7 +17,7 @@
 @property (nonatomic, assign) uint64_t start_time;
 @property (nonatomic, assign) uint64_t lag_time;
 
-- (instancetype)initWithData:(NSData *)data error:(NSError **)error;
+- (instancetype)initWithReport:(PREDPLCrashReport *)report;
 
 
 @end
