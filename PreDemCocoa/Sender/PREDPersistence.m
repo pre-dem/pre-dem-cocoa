@@ -25,6 +25,12 @@
     NSString *_customDir;
     NSString *_breadcrumbDir;
     NSFileManager *_fileManager;
+    NSFileHandle *_appInfoFileHandle;
+    dispatch_queue_t _appInfoQueue;
+    NSFileHandle *_httpFileHandle;
+    dispatch_queue_t _httpQueue;
+    NSFileHandle *_netFileHandle;
+    dispatch_queue_t _netQueue;
     NSFileHandle *_customFileHandle;
     dispatch_queue_t _customEventQueue;
     NSFileHandle *_breadcrumbFileHandle;
@@ -36,6 +42,7 @@
 - (instancetype)init {
     if (self = [super init]) {
         _fileManager = [NSFileManager defaultManager];
+        
         _appInfoDir = [NSString stringWithFormat:@"%@/%@", PREDHelper.cacheDirectory, @"appInfo"];
         _crashDir = [NSString stringWithFormat:@"%@/%@", PREDHelper.cacheDirectory, @"crash"];
         _lagDir = [NSString stringWithFormat:@"%@/%@", PREDHelper.cacheDirectory, @"lag"];
@@ -44,6 +51,10 @@
         _netDir = [NSString stringWithFormat:@"%@/%@", PREDHelper.cacheDirectory, @"net"];
         _customDir = [NSString stringWithFormat:@"%@/%@", PREDHelper.cacheDirectory, @"custom"];
         _breadcrumbDir = [NSString stringWithFormat:@"%@/%@", PREDHelper.cacheDirectory, @"breadcrumb"];
+        
+        _appInfoQueue = dispatch_queue_create("predem_app_info", DISPATCH_QUEUE_SERIAL);
+        _httpQueue = dispatch_queue_create("predem_http", DISPATCH_QUEUE_SERIAL);
+        _netQueue = dispatch_queue_create("predem_net", DISPATCH_QUEUE_SERIAL);
         _customEventQueue = dispatch_queue_create("predem_custom_event", DISPATCH_QUEUE_SERIAL);
         _breadcrumbQueue = dispatch_queue_create("predem_breadcrumb", DISPATCH_QUEUE_SERIAL);
         
@@ -86,18 +97,101 @@
 }
 
 - (void)persistAppInfo:(PREDAppInfo *)appInfo {
-    NSError *error;
-    NSData *data = [appInfo serializeForSending:&error];
-    if (error) {
-        PREDLogError(@"jsonize app info error: %@", error);
-        return;
-    }
-    NSString *fileName = [NSString stringWithFormat:@"%f-%u", [[NSDate date] timeIntervalSince1970], arc4random()];
-    BOOL success = [data writeToFile:[NSString stringWithFormat:@"%@/%@", _appInfoDir, fileName] atomically:NO];
-    if (!success) {
-        PREDLogError(@"write app info to file %@ failed", fileName);
-    }
+    dispatch_async(_appInfoQueue, ^{
+        NSError *error;
+        NSData *toSave = [appInfo serializeForSending:&error];
+        if (error) {
+            PREDLogError(@"jsonize app info error: %@", error);
+            return;
+        }
+        
+        _appInfoFileHandle = [self updateFileHandle:_appInfoFileHandle dir:_appInfoDir];
+        if (!_appInfoFileHandle) {
+            PREDLogError(@"no file handle drop app info data");
+            return;
+        }
+        [_appInfoFileHandle writeData:toSave];
+        [_appInfoFileHandle writeData:[@"\n" dataUsingEncoding:NSUTF8StringEncoding]];
+    });
 }
+
+- (void)persistHttpMonitor:(PREDHTTPMonitorModel *)httpMonitor {
+    dispatch_async(_httpQueue, ^{
+        NSError *error;
+        NSData *toSave = [httpMonitor serializeForSending:&error];
+        if (error) {
+            PREDLogError(@"jsonize http monitor error: %@", error);
+            return;
+        }
+        
+        _httpFileHandle = [self updateFileHandle:_httpFileHandle dir:_httpDir];
+        if (!_httpFileHandle) {
+            PREDLogError(@"no file handle drop http monitor data");
+            return;
+        }
+        [_httpFileHandle writeData:toSave];
+        [_httpFileHandle writeData:[@"\n" dataUsingEncoding:NSUTF8StringEncoding]];
+    });
+}
+
+- (void)persistNetDiagResult:(PREDNetDiagResult *)netDiagResult {
+    dispatch_async(_netQueue, ^{
+        NSError *error;
+        NSData *toSave = [netDiagResult serializeForSending:&error];
+        if (error) {
+            PREDLogError(@"jsonize net diag error: %@", error);
+            return;
+        }
+        
+        _netFileHandle = [self updateFileHandle:_netFileHandle dir:_netDir];
+        if (!_netFileHandle) {
+            PREDLogError(@"no file handle drop http monitor data");
+            return;
+        }
+        [_netFileHandle writeData:toSave];
+        [_netFileHandle writeData:[@"\n" dataUsingEncoding:NSUTF8StringEncoding]];
+    });
+}
+
+- (void)persistCustomEvent:(PREDCustomEvent *)event {
+    dispatch_async(_customEventQueue, ^{
+        NSError *error;
+        NSData *toSave = [event serializeForSending:&error];
+        if (error) {
+            PREDLogError(@"jsonize custom events error: %@", error);
+            return;
+        }
+        
+        _customFileHandle = [self updateFileHandle:_customFileHandle dir:_customDir];
+        if (!_customFileHandle) {
+            PREDLogError(@"no file handle drop custom data");
+            return;
+        }
+        [_customFileHandle writeData:toSave];
+        [_customFileHandle writeData:[@"\n" dataUsingEncoding:NSUTF8StringEncoding]];
+    });
+}
+
+- (void)persistBreadcrumb:(PREDBreadcrumb *)breadcrumb {
+    dispatch_async(_breadcrumbQueue, ^{
+        NSError *error;
+        NSData *toSave = [breadcrumb serializeForSending:&error];
+        if (error) {
+            PREDLogError(@"jsonize custom events error: %@", error);
+            return;
+        }
+        
+        _breadcrumbFileHandle = [self updateFileHandle:_breadcrumbFileHandle dir:_breadcrumbDir];
+        if (!_breadcrumbFileHandle) {
+            PREDLogError(@"no file handle drop custom data");
+            return;
+        }
+        [_breadcrumbFileHandle writeData:toSave];
+        [_breadcrumbFileHandle writeData:[@"\n" dataUsingEncoding:NSUTF8StringEncoding]];
+    });
+}
+
+// no batch
 
 - (void)persistCrashMeta:(PREDCrashMeta *)crashMeta {
     NSError *error;
@@ -148,77 +242,71 @@
     }
 }
 
-- (void)persistHttpMonitor:(PREDHTTPMonitorModel *)httpMonitor {
-    NSError *error;
-    NSData *toSave = [httpMonitor serializeForSending:&error];
-    if (error) {
-        PREDLogError(@"jsonize httpMonitor error: %@", error);
-    }
-    NSString *fileName = [NSString stringWithFormat:@"%f-%u", [[NSDate date] timeIntervalSince1970], arc4random()];
-    BOOL success = [toSave writeToFile:[NSString stringWithFormat:@"%@/%@", _httpDir, fileName] atomically:NO];
-    if (!success) {
-        PREDLogError(@"write http meta to file %@ failed", fileName);
-    }
+- (NSString *)nextArchivedAppInfoPath {
+    NSFileHandle *fileHanle = _appInfoFileHandle;
+    NSString *path = [self nextArchivedPathForDir:_appInfoDir fileHandle:&fileHanle inQueue:_appInfoQueue];
+    _appInfoFileHandle = fileHanle;
+    return path;
 }
 
-- (void)persistNetDiagResult:(PREDNetDiagResult *)netDiagResult {
-    NSError *error;
-    NSData *toSave = [netDiagResult serializeForSending:&error];
-    if (error) {
-        PREDLogError(@"jsonize net diag result error: %@", error);
-    }
-    NSString *fileName = [NSString stringWithFormat:@"%f-%u", [[NSDate date] timeIntervalSince1970], arc4random()];
-    BOOL success = [toSave writeToFile:[NSString stringWithFormat:@"%@/%@", _netDir, fileName] atomically:NO];
-    if (!success) {
-        PREDLogError(@"write net diag to file %@ failed", fileName);
-    }
+- (NSString *)nextArchivedHttpMonitorPath {
+    NSFileHandle *fileHanle = _httpFileHandle;
+    NSString *path = [self nextArchivedPathForDir:_httpDir fileHandle:&fileHanle inQueue:_httpQueue];
+    _httpFileHandle = fileHanle;
+    return path;
 }
 
-- (void)persistCustomEvent:(PREDCustomEvent *)event {
-    dispatch_async(_customEventQueue, ^{
-        NSError *error;
-        NSData *toSave = [event serializeForSending:&error];
-        if (error) {
-            PREDLogError(@"jsonize custom events error: %@", error);
-            return;
+- (NSString *)nextArchivedNetDiagPath {
+    NSFileHandle *fileHanle = _netFileHandle;
+    NSString *path = [self nextArchivedPathForDir:_netDir fileHandle:&fileHanle inQueue:_netQueue];
+    _netFileHandle = fileHanle;
+    return path;
+}
+
+// do not use this method in _customEventQueue which will cause dead lock
+- (NSString *)nextArchivedCustomEventsPath {
+    NSFileHandle *fileHanle = _customFileHandle;
+    NSString *path = [self nextArchivedPathForDir:_customDir fileHandle:&fileHanle inQueue:_customEventQueue];
+    _customFileHandle = fileHanle;
+    return path;
+}
+
+- (NSString *)nextArchivedBreadcrumbPath {
+    NSFileHandle *fileHanle = _breadcrumbFileHandle;
+    NSString *path = [self nextArchivedPathForDir:_breadcrumbDir fileHandle:&fileHanle inQueue:_breadcrumbQueue];
+    _breadcrumbFileHandle = fileHanle;
+    return path;
+}
+
+- (NSString *)nextArchivedPathForDir:(NSString *)dir fileHandle:(NSFileHandle * __autoreleasing *)fileHandle inQueue:(dispatch_queue_t)queue {
+    __block NSString *archivedPath;
+    dispatch_sync(queue, ^{
+        for (NSString *filePath in [_fileManager enumeratorAtPath:dir]) {
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", @"^[0-9]+\\.?[0-9]*\\.archive$"];
+            if ([predicate evaluateWithObject:filePath]) {
+                archivedPath = [NSString stringWithFormat:@"%@/%@", dir, filePath];
+            }
         }
-        
-        _customFileHandle = [self updateFileHandle:_customFileHandle dir:_customDir];
-        if (!_customFileHandle) {
-            PREDLogError(@"no file handle drop custom data");
-            return;
+        // if no archived file found
+        for (NSString *filePath in [_fileManager enumeratorAtPath:dir]) {
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", @"^[0-9]+\\.?[0-9]*$"];
+            if ([predicate evaluateWithObject:filePath]) {
+                if (*fileHandle) {
+                    [*fileHandle closeFile];
+                    *fileHandle = nil;
+                }
+                NSError *error;
+                archivedPath = [NSString stringWithFormat:@"%@/%@.archive", dir, filePath];
+                [_fileManager moveItemAtPath:[NSString stringWithFormat:@"%@/%@", dir, filePath] toPath:archivedPath error:&error];
+                if (error) {
+                    archivedPath = nil;
+                    NSLog(@"archive file %@ fail", filePath);
+                    continue;
+                }
+            }
         }
-        [_customFileHandle writeData:toSave];
-        [_customFileHandle writeData:[@"\n" dataUsingEncoding:NSUTF8StringEncoding]];
     });
-}
-
-- (void)persistBreadcrumb:(PREDBreadcrumb *)breadcrumb {
-    dispatch_async(_breadcrumbQueue, ^{
-        NSError *error;
-        NSData *toSave = [breadcrumb serializeForSending:&error];
-        if (error) {
-            PREDLogError(@"jsonize custom events error: %@", error);
-            return;
-        }
-        
-        _breadcrumbFileHandle = [self updateFileHandle:_breadcrumbFileHandle dir:_breadcrumbDir];
-        if (!_breadcrumbFileHandle) {
-            PREDLogError(@"no file handle drop custom data");
-            return;
-        }
-        [_breadcrumbFileHandle writeData:toSave];
-        [_breadcrumbFileHandle writeData:[@"\n" dataUsingEncoding:NSUTF8StringEncoding]];
-    });
-}
-
-- (NSString *)nextAppInfoPath {
-    NSArray *files = [_fileManager enumeratorAtPath:_appInfoDir].allObjects;
-    if (files.count == 0) {
-        return nil;
-    } else {
-        return [NSString stringWithFormat:@"%@/%@", _appInfoDir, files[0]];
-    }
+    return archivedPath;
 }
 
 - (NSString *)nextCrashMetaPath {
@@ -249,87 +337,6 @@
         }
     }];
     return nextMetaPath;
-}
-
-- (NSString *)nextHttpMonitorPath {
-    NSArray *files = [_fileManager enumeratorAtPath:_httpDir].allObjects;
-    if (files.count == 0) {
-        return nil;
-    } else {
-        return [NSString stringWithFormat:@"%@/%@", _httpDir, files[0]];
-    }
-}
-
-- (NSString *)nextNetDiagPath {
-    NSArray *files = [_fileManager enumeratorAtPath:_netDir].allObjects;
-    if (files.count == 0) {
-        return nil;
-    } else {
-        return [NSString stringWithFormat:@"%@/%@", _netDir, files[0]];
-    }
-}
-
-// do not use this method in _customEventQueue which will cause dead lock
-- (NSString *)nextArchivedCustomEventsPath {
-    __block NSString *archivedPath;
-    dispatch_sync(_customEventQueue, ^{
-        for (NSString *filePath in [_fileManager enumeratorAtPath:_customDir]) {
-            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", @"^[0-9]+\\.?[0-9]*\\.archive$"];
-            if ([predicate evaluateWithObject:filePath]) {
-                archivedPath = [NSString stringWithFormat:@"%@/%@", _customDir, filePath];
-            }
-        }
-        // if no archived file found
-        for (NSString *filePath in [_fileManager enumeratorAtPath:_customDir]) {
-            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", @"^[0-9]+\\.?[0-9]*$"];
-            if ([predicate evaluateWithObject:filePath]) {
-                if (_customFileHandle) {
-                    [_customFileHandle closeFile];
-                    _customFileHandle = nil;
-                }
-                NSError *error;
-                archivedPath = [NSString stringWithFormat:@"%@/%@.archive", _customDir, filePath];
-                [_fileManager moveItemAtPath:[NSString stringWithFormat:@"%@/%@", _customDir, filePath] toPath:archivedPath error:&error];
-                if (error) {
-                    archivedPath = nil;
-                    NSLog(@"archive file %@ fail", filePath);
-                    continue;
-                }
-            }
-        }
-    });
-    return archivedPath;
-}
-
-- (NSString *)nextArchivedBreadcrumbPath {
-    __block NSString *archivedPath;
-    dispatch_sync(_breadcrumbQueue, ^{
-        for (NSString *filePath in [_fileManager enumeratorAtPath:_breadcrumbDir]) {
-            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", @"^[0-9]+\\.?[0-9]*\\.archive$"];
-            if ([predicate evaluateWithObject:filePath]) {
-                archivedPath = [NSString stringWithFormat:@"%@/%@", _breadcrumbDir, filePath];
-            }
-        }
-        // if no archived file found
-        for (NSString *filePath in [_fileManager enumeratorAtPath:_breadcrumbDir]) {
-            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", @"^[0-9]+\\.?[0-9]*$"];
-            if ([predicate evaluateWithObject:filePath]) {
-                if (_breadcrumbFileHandle) {
-                    [_breadcrumbFileHandle closeFile];
-                    _breadcrumbFileHandle = nil;
-                }
-                NSError *error;
-                archivedPath = [NSString stringWithFormat:@"%@/%@.archive", _breadcrumbDir, filePath];
-                [_fileManager moveItemAtPath:[NSString stringWithFormat:@"%@/%@", _breadcrumbDir, filePath] toPath:archivedPath error:&error];
-                if (error) {
-                    archivedPath = nil;
-                    NSLog(@"archive file %@ fail", filePath);
-                    continue;
-                }
-            }
-        }
-    });
-    return archivedPath;
 }
 
 - (NSMutableDictionary *)getLogMeta:(NSString *)filePath error:(NSError **)error {
