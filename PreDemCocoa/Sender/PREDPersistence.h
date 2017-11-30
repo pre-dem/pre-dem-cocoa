@@ -44,6 +44,7 @@
 - (void)purgeAllHttpMonitor;
 - (void)purgeAllNetDiag;
 - (void)purgeAllCustom;
+- (void)purgeAllBreadcrumb;
 - (void)purgeAllCrashMeta;
 - (void)purgeAllLagMeta;
 - (void)purgeAllLogMeta;

@@ -23,10 +23,6 @@
     PREDPersistence *_persistence;
 }
 
-- (NSString *)description {
-    return [PREDHelper getObjectData:self].description;
-}
-
 - (instancetype)initWithComplete:(PREDNetDiagCompleteHandler)complete persistence:(PREDPersistence *)persistence {
     if (self = [self initWithName:NetDiagEventName type:AutoCapturedEventType]) {
         _completedCount = 0;
@@ -96,8 +92,10 @@
     if (_completedCount == PREDTotalResultNeeded) {
         [_lock unlock];
         [self generateResultID];
-        _complete(self);
         [_persistence persistNetDiagResult:self];
+        if (_complete) {
+            _complete(self);
+        }
     } else {
         [_lock unlock];
     }

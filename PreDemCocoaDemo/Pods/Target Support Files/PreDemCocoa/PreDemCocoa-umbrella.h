@@ -13,7 +13,7 @@
 #import "PREDBaseModel.h"
 #import "PREDCustomEvent.h"
 #import "PREDDefines.h"
-#import "PREDemCocoa.h"
+#import "PreDemCocoa.h"
 #import "PREDLog.h"
 #import "PREDManager.h"
 #import "PREDNetDiagResult.h"

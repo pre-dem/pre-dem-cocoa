@@ -500,6 +500,19 @@
     }
 }
 
+- (void)purgeAllBreadcrumb {
+    NSError *error;
+    for (NSString *fileName in [_fileManager enumeratorAtPath:_breadcrumbDir]) {
+        NSString *filePath = [NSString stringWithFormat:@"%@/%@", _breadcrumbDir, fileName];
+        [_fileManager removeItemAtPath:filePath error:&error];
+        if (error) {
+            PREDLogError(@"purge file %@ error %@", filePath, error);
+        } else {
+            PREDLogVerbose(@"purge file %@ succeeded", filePath);
+        }
+    }
+}
+
 - (void)purgeAllPersistence {
     [self purgeAllAppInfo];
     [self purgeAllLagMeta];
