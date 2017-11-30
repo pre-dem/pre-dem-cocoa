@@ -15,9 +15,9 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>v1.0.4_alpha1</string>
+	<string>v1.0.4</string>
 	<key>CFBundleVersion</key>
-	<string>7cca823</string>
+	<string>f7b03ec</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
