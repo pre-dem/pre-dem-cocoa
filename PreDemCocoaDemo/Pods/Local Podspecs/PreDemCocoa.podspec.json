@@ -7,41 +7,62 @@
   "authors": {
     "cnwangsiyu": "cn.wangsiyu@gmail.com"
   },
-  "platforms": {
-    "ios": "8.0"
-  },
   "source": {
     "git": "https://github.com/pre-dem/pre-dem-cocoa.git",
     "tag": "v1.0.5"
   },
-  "source_files": "PreDemCocoa/**/*.{h,m,mm,swift}",
-  "public_header_files": "PreDemCocoa/Public/*.h",
-  "vendored_frameworks": "Vendor/*.framework",
-  "libraries": [
-    "c++",
-    "z"
-  ],
-  "resource_bundles": {
-    "PREDResources": "PreDemCocoa/Resources/*.plist"
+  "default_subspecs": "Core",
+  "platforms": {
+    "osx": null,
+    "ios": null,
+    "tvos": null,
+    "watchos": null
   },
-  "dependencies": {
-    "HappyDNS": [
+  "subspecs": [
+    {
+      "name": "Core",
+      "platforms": {
+        "ios": "8.0"
+      },
+      "source_files": "PreDemCocoa/**/*.{h,m,mm}",
+      "public_header_files": "PreDemCocoa/Public/*.h",
+      "vendored_frameworks": "Vendor/*.framework",
+      "libraries": [
+        "c++",
+        "z"
+      ],
+      "resource_bundles": {
+        "PREDResources": "PreDemCocoa/Resources/*.plist"
+      },
+      "dependencies": {
+        "HappyDNS": [
 
-    ],
-    "QNNetDiag": [
+        ],
+        "QNNetDiag": [
 
-    ],
-    "Qiniu": [
+        ],
+        "Qiniu": [
 
-    ],
-    "CocoaLumberjack": [
+        ],
+        "CocoaLumberjack": [
 
-    ],
-    "CocoaLumberjack/Swift": [
+        ],
+        "UICKeyChainStore": [
 
-    ],
-    "UICKeyChainStore": [
+        ]
+      }
+    },
+    {
+      "name": "Swift",
+      "dependencies": {
+        "PreDemCocoa/Core": [
 
-    ]
-  }
+        ],
+        "CocoaLumberjack/Swift": [
+
+        ]
+      },
+      "source_files": "PreDemCocoa/**/*.{swift}"
+    }
+  ]
 }
