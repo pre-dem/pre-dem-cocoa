@@ -91,8 +91,8 @@ NSURLSessionDataDelegate
                      inRequest:mutableRequest];
     if ([request.URL.scheme isEqualToString:@"http"]) {
         NSMutableArray *resolvers = [[NSMutableArray alloc] init];
-        [resolvers addObject:[QNResolver systemResolver]];
         [resolvers addObject:[[QNResolver alloc] initWithAddress:DNSPodsHost]];
+        [resolvers addObject:[QNResolver systemResolver]];
         QNDnsManager *dns = [[QNDnsManager alloc] init:resolvers networkInfo:[QNNetworkInfo normal]];
         NSTimeInterval dnsStartTime = [[NSDate date] timeIntervalSince1970];
         NSURL *replacedURL = [dns queryAndReplaceWithIP:mutableRequest.URL];
