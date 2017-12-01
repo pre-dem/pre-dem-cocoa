@@ -5,21 +5,27 @@ Pod::Spec.new do |s|
   s.homepage     = "https://github.com/pre-dem/pre-dem-cocoa"
   s.license      = "MIT"
   s.author       = { "cnwangsiyu" => "cn.wangsiyu@gmail.com" }
-
-
-  s.ios.deployment_target = "8.0"
-
   s.source       = { :git => "https://github.com/pre-dem/pre-dem-cocoa.git", :tag => "v#{s.version}" }
-  s.source_files = "PreDemCocoa/**/*.{h,m,mm,swift}"
-  s.public_header_files = 'PreDemCocoa/Public/*.h'
-  s.vendored_frameworks = 'Vendor/*.framework'
-  s.libraries  = "c++", "z"
-  s.resource_bundles = { 'PREDResources' => 'PreDemCocoa/Resources/*.plist' }
-  s.dependency "HappyDNS"
-  s.dependency "QNNetDiag"
-  s.dependency "Qiniu"
-  s.dependency "CocoaLumberjack"
-  s.dependency "CocoaLumberjack/Swift"
-  s.dependency "UICKeyChainStore"
 
+  s.default_subspec = "Core"
+
+  s.subspec 'Core' do |cs|
+    cs.ios.deployment_target = "8.0"
+    cs.source_files = "PreDemCocoa/**/*.{h,m,mm}"
+    cs.public_header_files = 'PreDemCocoa/Public/*.h'
+    cs.vendored_frameworks = 'Vendor/*.framework'
+    cs.libraries  = "c++", "z"
+    cs.resource_bundles = { 'PREDResources' => 'PreDemCocoa/Resources/*.plist' }
+    cs.dependency "HappyDNS"
+    cs.dependency "QNNetDiag"
+    cs.dependency "Qiniu"
+    cs.dependency "CocoaLumberjack"
+    cs.dependency "UICKeyChainStore"
+  end
+
+  s.subspec 'Swift' do |ss|
+    ss.dependency "PreDemCocoa/Core"
+    ss.dependency "CocoaLumberjack/Swift"
+    ss.source_files = "PreDemCocoa/**/*.{swift}"
+  end
 end
