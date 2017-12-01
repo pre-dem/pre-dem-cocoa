@@ -823,7 +823,7 @@ NSString *const PREDXamarinStackTraceDelimiter = @"Xamarin Exception Stack:";
     return text;
 }
 
-+ (BOOL)isReport:(PLCrashReport *)report euivalentWith:(PLCrashReport *)otherReport {
++ (BOOL)isReport:(PLCrashReport *)report equivalentWith:(PLCrashReport *)otherReport {
     if ([[self getStack:report] isEqualToString:[self getStack:otherReport]]) {
         return YES;
     } else {

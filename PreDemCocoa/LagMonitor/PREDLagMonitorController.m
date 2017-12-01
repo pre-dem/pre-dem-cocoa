@@ -19,6 +19,8 @@
     NSInteger _countTime;
     PREDPLCrashReporter *_reporter;
     PREDPersistence *_persistence;
+    NSDate *_lastSendTime;
+    PREDPLCrashReport *_lastLagReport;
 }
 
 static void runLoopObserverCallBack(CFRunLoopObserverRef observer, CFRunLoopActivity activity, void *info) {
@@ -33,7 +35,7 @@ static void runLoopObserverCallBack(CFRunLoopObserverRef observer, CFRunLoopActi
     if (self = [super init]) {
         PLCrashReporterSignalHandlerType signalHandlerType = PLCrashReporterSignalHandlerTypeBSD;
         PREDPLCrashReporterConfig *config = [[PREDPLCrashReporterConfig alloc] initWithSignalHandlerType: signalHandlerType
-                                                                                 symbolicationStrategy: PLCrashReporterSymbolicationStrategyNone];
+                                                                                   symbolicationStrategy: PLCrashReporterSymbolicationStrategyNone];
         _reporter = [[PREDPLCrashReporter alloc] initWithConfiguration:config];
         _persistence = persistence;
     }
@@ -75,15 +77,17 @@ static void runLoopObserverCallBack(CFRunLoopObserverRef observer, CFRunLoopActi
     
     // 在子线程监控时长
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        while (YES) {
-            // 假定连续5次超时50ms认为卡顿(当然也包含了单次超时250ms)
-            long st = dispatch_semaphore_wait(_semaphore, dispatch_time(DISPATCH_TIME_NOW, 50*NSEC_PER_MSEC));
-            if (st != 0) {
-                if (_activity==kCFRunLoopBeforeSources || _activity==kCFRunLoopAfterWaiting) {
-                    if (++_countTime < 5)
-                        continue;
-                    [self sendLagStack];
-                }
+        while (_started) {
+            // 假定连续5次超时100ms认为卡顿(当然也包含了单次超时500ms)
+            // 每分钟至多只采集一次
+            long st = dispatch_semaphore_wait(_semaphore, dispatch_time(DISPATCH_TIME_NOW, 100 * NSEC_PER_MSEC));
+            if (st != 0 &&
+                (_activity==kCFRunLoopBeforeSources || _activity==kCFRunLoopAfterWaiting) &&
+                (!_lastSendTime || [[NSDate date] timeIntervalSinceDate:_lastSendTime] >= 60)) {
+                if (++_countTime < 5)
+                    continue;
+                [self sendLagStack];
+                _lastSendTime = [NSDate date];
             }
             _countTime = 0;
         }
@@ -97,12 +101,21 @@ static void runLoopObserverCallBack(CFRunLoopObserverRef observer, CFRunLoopActi
         PREDLogError(@"generate lag report error: %@", error);
         return;
     }
-    
-    PREDLagMeta *meta = [[PREDLagMeta alloc] initWithData:data error:&error];
+    PREDPLCrashReport *report = [[PREDPLCrashReport alloc] initWithData:data error:&error];
     if (error) {
         PREDLogError(@"parse lag report error: %@", error);
         return;
     }
+    
+    if ([PREDCrashReportTextFormatter isReport:_lastLagReport equivalentWith:report]) {
+        PREDLogInfo(@"generated a equal report: %@", report);
+        return;
+    }
+    
+    _lastLagReport = report;
+    
+    PREDLagMeta *meta = [[PREDLagMeta alloc] initWithReport:report];
+
     [_persistence persistLagMeta:meta];
 }
 

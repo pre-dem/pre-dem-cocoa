@@ -307,8 +307,11 @@
     XCTAssertNotNil(dataPath);
     NSData *data = [NSData dataWithContentsOfFile:dataPath];
     XCTAssertNotNil(data);
-    PREDLagMeta *meta = [[PREDLagMeta alloc] initWithData:data error:&error];
+    PREDPLCrashReport *report = [[PREDPLCrashReport alloc] initWithData:data error:&error];
     XCTAssertNil(error);
+    XCTAssertNotNil(report);
+    PREDLagMeta *meta = [[PREDLagMeta alloc] initWithReport:report];
+    XCTAssertNotNil(meta);
     [_persistence persistLagMeta:meta];
     NSString *path = [_persistence nextLagMetaPath];
     XCTAssertNotNil(path);
@@ -340,8 +343,11 @@
     XCTAssertNotNil(dataPath);
     NSData *data = [NSData dataWithContentsOfFile:dataPath];
     XCTAssertNotNil(data);
-    PREDLagMeta *meta = [[PREDLagMeta alloc] initWithData:data error:&error];
+    PREDPLCrashReport *report = [[PREDPLCrashReport alloc] initWithData:data error:&error];
     XCTAssertNil(error);
+    XCTAssertNotNil(report);
+    PREDLagMeta *meta = [[PREDLagMeta alloc] initWithReport:report];
+    XCTAssertNotNil(meta);
     [_persistence persistLagMeta:meta];
     NSString *path = [_persistence nextLagMetaPath];
     XCTAssertNotNil(path);

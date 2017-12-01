@@ -44,8 +44,10 @@
         NSData *data = [reporter generateLiveReportAndReturnError:&error];
         XCTAssertNil(error);
         XCTAssertNotNil(data);
-        PREDLagMeta *meta = [[PREDLagMeta alloc] initWithData:data error:&error];
+        PREDPLCrashReport *report = [[PREDPLCrashReport alloc] initWithData:data error:&error];
         XCTAssertNil(error);
+        XCTAssertNotNil(report);
+        PREDLagMeta *meta = [[PREDLagMeta alloc] initWithReport:report];
         XCTAssertNotNil(meta);
     }];
 }
