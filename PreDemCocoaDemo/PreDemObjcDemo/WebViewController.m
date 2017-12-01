@@ -15,7 +15,7 @@ UITextFieldDelegate
 >
 
 @property (strong, nonatomic) UITextField *urlTextField;
-@property (strong, nonatomic) WKWebView *webView;
+@property (strong, nonatomic) UIWebView *webView;
 
 @end
 
@@ -25,7 +25,7 @@ UITextFieldDelegate
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     WKWebViewConfiguration *config = [WKWebViewConfiguration new];
-    _webView = [[WKWebView alloc] initWithFrame:self.view.frame configuration:config];
+    _webView = [[UIWebView alloc] initWithFrame:self.view.frame];
     [self.view addSubview:_webView];
     _urlTextField = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 150, 30)];
     _urlTextField.placeholder = @"请输入 URL";
