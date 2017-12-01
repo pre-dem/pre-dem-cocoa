@@ -41,20 +41,20 @@
 - (void)sendAllSavedData {
     PREDLogVerbose(@"trying to send all saved messages");
     [self sendAppInfo];
-    [self sendCrashData];
-    [self sendLagData];
-    [self sendLogData];
     [self sendHttpMonitor];
     [self sendNetDiag];
     [self sendCustomEvents];
     [self sendBreadcrumbs];
+    [self sendCrashData];
+    [self sendLagData];
+    [self sendLogData];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(PREDSendInterval * NSEC_PER_SEC)), dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         [self sendAllSavedData];
     });
 }
 
 - (void)sendAppInfo {
-    NSString *filePath = [_persistence nextAppInfoPath];
+    NSString *filePath = [_persistence nextArchivedAppInfoPath];
     if (!filePath) {
         return;
     }
@@ -77,6 +77,98 @@
                 PREDLogError(@"config received from server has a wrong type: %@", dic);
             }
             [strongSelf->_persistence purgeAllAppInfo];
+        }
+    }];
+}
+
+- (void)sendHttpMonitor {
+    NSString *filePath = [_persistence nextArchivedHttpMonitorPath];
+    if (!filePath) {
+        return;
+    }
+    NSData *data = [NSData dataWithContentsOfFile:filePath];
+    if (!data) {
+        PREDLogError(@"get stored data %@ error", filePath);
+        return;
+    }
+    __weak typeof(self) wSelf = self;
+    [_networkClient postPath:@"http-monitors" data:data headers:@{@"Content-Type": @"application/json"} completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
+        __strong typeof(wSelf) strongSelf = wSelf;
+        if (!error) {
+            PREDLogDebug(@"Send http monitor succeeded");
+            [strongSelf->_persistence purgeFile:filePath];
+            [strongSelf sendHttpMonitor];
+        } else {
+            PREDLogError(@"upload http monitor fail: %@", error);
+        }
+    }];
+}
+
+- (void)sendNetDiag {
+    NSString *filePath = [_persistence nextArchivedNetDiagPath];
+    if (!filePath) {
+        return;
+    }
+    NSData *data = [NSData dataWithContentsOfFile:filePath];
+    if (!data) {
+        PREDLogError(@"get stored data %@ error", filePath);
+        return;
+    }
+    __weak typeof(self) wSelf = self;
+    [_networkClient postPath:@"net-diags" data:data headers:@{@"Content-Type": @"application/json"} completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
+        __strong typeof(wSelf) strongSelf = wSelf;
+        if (!error) {
+            PREDLogDebug(@"Send net diag succeeded");
+            [strongSelf->_persistence purgeFile:filePath];
+            [strongSelf sendNetDiag];
+        } else {
+            PREDLogError(@"send net diag error: %@", error);
+        }
+    }];
+}
+
+- (void)sendCustomEvents {
+    NSString *filePath = [_persistence nextArchivedCustomEventsPath];
+    if (!filePath) {
+        return;
+    }
+    NSData *data = [NSData dataWithContentsOfFile:filePath];
+    if (!data.length) {
+        PREDLogError(@"get stored data from %@ failed", filePath);
+        return;
+    }
+    __weak typeof(self) wSelf = self;
+    [_networkClient postPath:@"custom-events" data:data headers:@{@"Content-Type": @"application/json"} completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
+        __strong typeof(wSelf) strongSelf = wSelf;
+        if (!error) {
+            PREDLogDebug(@"Send custom events succeeded");
+            [strongSelf->_persistence purgeFile:filePath];
+            [strongSelf sendCustomEvents];
+        } else {
+            PREDLogError(@"send custom events error: %@", error);
+        }
+    }];
+}
+
+- (void)sendBreadcrumbs {
+    NSString *filePath = [_persistence nextArchivedBreadcrumbPath];
+    if (!filePath) {
+        return;
+    }
+    NSData *data = [NSData dataWithContentsOfFile:filePath];
+    if (!data.length) {
+        PREDLogError(@"get stored data from %@ failed", filePath);
+        return;
+    }
+    __weak typeof(self) wSelf = self;
+    [_networkClient postPath:@"breadcrumbs" data:data headers:@{@"Content-Type": @"application/json"} completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
+        __strong typeof(wSelf) strongSelf = wSelf;
+        if (!error) {
+            PREDLogDebug(@"Send breadcrumbs succeeded");
+            [strongSelf->_persistence purgeFile:filePath];
+            [strongSelf sendBreadcrumbs];
+        } else {
+            PREDLogError(@"send breadcrumbs error: %@", error);
         }
     }];
 }
@@ -305,98 +397,6 @@
              option:nil];
         } else {
             PREDLogError(@"parse log upload token error: %@, data: %@", error, dic);
-        }
-    }];
-}
-
-- (void)sendHttpMonitor {
-    NSString *filePath = [_persistence nextHttpMonitorPath];
-    if (!filePath) {
-        return;
-    }
-    NSData *data = [NSData dataWithContentsOfFile:filePath];
-    if (!data) {
-        PREDLogError(@"get stored data %@ error", filePath);
-        return;
-    }
-    __weak typeof(self) wSelf = self;
-    [_networkClient postPath:@"http-monitors" data:data headers:@{@"Content-Type": @"application/json"} completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
-                      __strong typeof(wSelf) strongSelf = wSelf;
-                      if (!error) {
-                          PREDLogDebug(@"Send http monitor succeeded");
-                          [strongSelf->_persistence purgeFile:filePath];
-                          [strongSelf sendHttpMonitor];
-                      } else {
-                          PREDLogError(@"upload http monitor fail: %@", error);
-                      }
-                  }];
-}
-
-- (void)sendNetDiag {
-    NSString *filePath = [_persistence nextNetDiagPath];
-    if (!filePath) {
-        return;
-    }
-    NSData *data = [NSData dataWithContentsOfFile:filePath];
-    if (!data) {
-        PREDLogError(@"get stored data %@ error", filePath);
-        return;
-    }
-    __weak typeof(self) wSelf = self;
-    [_networkClient postPath:@"net-diags" data:data headers:@{@"Content-Type": @"application/json"} completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
-        __strong typeof(wSelf) strongSelf = wSelf;
-        if (!error) {
-            PREDLogDebug(@"Send net diag succeeded");
-            [strongSelf->_persistence purgeFile:filePath];
-            [strongSelf sendNetDiag];
-        } else {
-            PREDLogError(@"send net diag error: %@", error);
-        }
-    }];
-}
-
-- (void)sendCustomEvents {
-    NSString *filePath = [_persistence nextArchivedCustomEventsPath];
-    if (!filePath) {
-        return;
-    }
-    NSData *data = [NSData dataWithContentsOfFile:filePath];
-    if (!data.length) {
-        PREDLogError(@"get stored data from %@ failed", filePath);
-        return;
-    }
-    __weak typeof(self) wSelf = self;
-    [_networkClient postPath:@"custom-events" data:data headers:@{@"Content-Type": @"application/json"} completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
-        __strong typeof(wSelf) strongSelf = wSelf;
-        if (!error) {
-            PREDLogDebug(@"Send custom events succeeded");
-            [strongSelf->_persistence purgeFile:filePath];
-            [strongSelf sendCustomEvents];
-        } else {
-            PREDLogError(@"send custom events error: %@", error);
-        }
-    }];
-}
-
-- (void)sendBreadcrumbs {
-    NSString *filePath = [_persistence nextArchivedBreadcrumbPath];
-    if (!filePath) {
-        return;
-    }
-    NSData *data = [NSData dataWithContentsOfFile:filePath];
-    if (!data.length) {
-        PREDLogError(@"get stored data from %@ failed", filePath);
-        return;
-    }
-    __weak typeof(self) wSelf = self;
-    [_networkClient postPath:@"breadcrumbs" data:data headers:@{@"Content-Type": @"application/json"} completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
-        __strong typeof(wSelf) strongSelf = wSelf;
-        if (!error) {
-            PREDLogDebug(@"Send breadcrumbs succeeded");
-            [strongSelf->_persistence purgeFile:filePath];
-            [strongSelf sendBreadcrumbs];
-        } else {
-            PREDLogError(@"send breadcrumbs error: %@", error);
         }
     }];
 }

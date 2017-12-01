@@ -66,7 +66,9 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
             ]
         for urlString in urls {
             if let url = URL(string: urlString) {
-                URLSession.shared.dataTask(with: URLRequest.init(url: url)).resume()
+                URLSession.shared.dataTask(with: URLRequest.init(url: url), completionHandler: { (_, response, _) in
+                    print("response \(response?.url?.absoluteString ?? "")")
+                }).resume()
             } else {
                 print("url not valid \(urlString)")
             }

@@ -5,7 +5,7 @@
 //  Created by WangSiyu on 14/11/2017.
 //
 
-#import <PreDemCocoa/PreDemCocoa.h>
+#import "PreDemCocoa.h"
 
 @interface PREDBreadcrumb : PREDCustomEvent
 
