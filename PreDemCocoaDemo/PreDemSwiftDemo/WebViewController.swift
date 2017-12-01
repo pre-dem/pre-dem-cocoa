@@ -11,11 +11,11 @@ import WebKit
 
 class WebViewController: UIViewController, UITextFieldDelegate {
     var urlTextField = UITextField(frame: CGRect(x: 0, y: 0, width: 150, height: 30))
-    var webView: WKWebView!
+    var webView: UIWebView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        webView = WKWebView(frame: self.view.frame, configuration: WKWebViewConfiguration())
+        webView = UIWebView(frame: self.view.frame)
         self.view.addSubview(webView)
         urlTextField.placeholder = "请输入 URL"
         urlTextField.keyboardType = .URL
@@ -56,7 +56,7 @@ class WebViewController: UIViewController, UITextFieldDelegate {
                         url = x
                     }
                 }
-                webView.load(URLRequest(url: url))
+                webView.loadRequest(URLRequest(url: url))
             }
 
             return true
