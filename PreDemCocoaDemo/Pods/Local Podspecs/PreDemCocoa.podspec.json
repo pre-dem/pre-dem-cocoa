@@ -11,19 +11,13 @@
     "git": "https://github.com/pre-dem/pre-dem-cocoa.git",
     "tag": "v1.0.5"
   },
-  "default_subspecs": "Core",
   "platforms": {
-    "osx": null,
-    "ios": null,
-    "tvos": null,
-    "watchos": null
+    "ios": "8.0"
   },
+  "default_subspecs": "Core",
   "subspecs": [
     {
       "name": "Core",
-      "platforms": {
-        "ios": "8.0"
-      },
       "source_files": "PreDemCocoa/**/*.{h,m,mm}",
       "public_header_files": "PreDemCocoa/Public/*.h",
       "vendored_frameworks": "Vendor/*.framework",

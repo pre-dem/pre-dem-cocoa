@@ -6,11 +6,11 @@ Pod::Spec.new do |s|
   s.license      = "MIT"
   s.author       = { "cnwangsiyu" => "cn.wangsiyu@gmail.com" }
   s.source       = { :git => "https://github.com/pre-dem/pre-dem-cocoa.git", :tag => "v#{s.version}" }
+  s.ios.deployment_target = "8.0"
 
   s.default_subspec = "Core"
 
   s.subspec 'Core' do |cs|
-    cs.ios.deployment_target = "8.0"
     cs.source_files = "PreDemCocoa/**/*.{h,m,mm}"
     cs.public_header_files = 'PreDemCocoa/Public/*.h'
     cs.vendored_frameworks = 'Vendor/*.framework'
