@@ -7,7 +7,7 @@
 //
 
 #import "ViewController.h"
-#import <PreDemCocoa/PREDemCocoa.h>
+#import <PreDemCocoa/PreDemCocoa.h>
 
 
 @interface ViewController ()
@@ -68,16 +68,16 @@ PREDLogDelegate
 - (IBAction)viewLongPressed:(id)sender {
     UIAlertController *controller = [UIAlertController alertControllerWithTitle:@"调试菜单" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     NSString *actionName;
-    if (!_logTextView.delegate) {
+    if (!PREDLog.delegate) {
         actionName = @"开启将 log 输出到界面";
     } else {
         actionName = @"关闭将 log 输出到界面";
     }
     [controller addAction:[UIAlertAction actionWithTitle:actionName style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        if (!_logTextView.delegate) {
-            _logTextView.delegate = self;
+        if (!PREDLog.delegate) {
+            PREDLog.delegate = self;
         } else {
-            _logTextView.delegate = nil;
+            PREDLog.delegate = nil;
         }
     }]];
     

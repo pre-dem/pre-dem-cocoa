@@ -7,7 +7,7 @@
 //
 
 #import "AppIDViewController.h"
-#import "PREDemCocoa.h"
+#import "PreDemCocoa.h"
 #import <UICKeyChainStore/UICKeyChainStore.h>
 
 @interface AppIDViewController ()
