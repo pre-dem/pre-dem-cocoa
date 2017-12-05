@@ -24,7 +24,6 @@ UITextFieldDelegate
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    WKWebViewConfiguration *config = [WKWebViewConfiguration new];
     _webView = [[UIWebView alloc] initWithFrame:self.view.frame];
     [self.view addSubview:_webView];
     _urlTextField = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 150, 30)];
