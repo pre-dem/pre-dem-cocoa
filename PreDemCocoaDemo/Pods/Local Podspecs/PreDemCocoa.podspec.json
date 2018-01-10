@@ -1,6 +1,6 @@
 {
   "name": "PreDemCocoa",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "summary": "A short description of PreDemCocoa.",
   "homepage": "https://github.com/pre-dem/pre-dem-cocoa",
   "license": "MIT",
@@ -9,7 +9,7 @@
   },
   "source": {
     "git": "https://github.com/pre-dem/pre-dem-cocoa.git",
-    "tag": "v1.0.5"
+    "tag": "v1.0.6"
   },
   "platforms": {
     "ios": "8.0"
