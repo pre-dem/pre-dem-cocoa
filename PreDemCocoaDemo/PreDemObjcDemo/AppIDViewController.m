@@ -65,12 +65,7 @@
     keychain[@"domain"] = _domainTextField.text;
 #ifdef DEBUG
     [PREDManager startWithAppKey:_appIdTextField.text
-                   serviceDomain:_domainTextField.text
-                        complete:^(BOOL succeess, NSError * _Nullable error) {
-                            if (error) {
-                                NSLog(@"initialize PREDManager error: %@", error);
-                            }
-                        }];
+                   serviceDomain:_domainTextField.text];
     PREDManager.tag = @"userid_debug";
     PREDLog.ttyLogLevel = DDLogLevelAll;
 #else

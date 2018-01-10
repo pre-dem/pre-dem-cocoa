@@ -147,7 +147,7 @@ static __weak id<PREDLogDelegate> _delegate;
     }
     if (![PREDManager started]) {
         if (error) {
-            *error = [PREDError GenerateNSError:kPREDErrorCodeNotInitedError description:@"you should init PREDManager first before capturing your log"];
+            *error = [PREDError GenerateNSError:kPREDErrorCodeNotInitedError description:@"请先启动 PREDManager 然后再开始采集 log ！！！！！"];
         }
         return NO;
     }
