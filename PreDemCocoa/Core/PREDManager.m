@@ -50,10 +50,9 @@ static NSString* app_id(NSString* appKey){
 #pragma mark - Public Class Methods
 
 + (void)startWithAppKey:(NSString *)appKey
-          serviceDomain:(NSString *)serviceDomain
-               complete:(PREDStartCompleteHandler)complete {
+          serviceDomain:(NSString *)serviceDomain {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [[self sharedPREDManager] startWithAppKey:appKey serviceDomain:serviceDomain complete:complete];
+        [[self sharedPREDManager] startWithAppKey:appKey serviceDomain:serviceDomain];
     });
 }
 
@@ -111,15 +110,13 @@ static NSString* app_id(NSString* appKey){
     return self;
 }
 
-- (void)startWithAppKey:(NSString *)appKey serviceDomain:(NSString *)serviceDomain complete:(PREDStartCompleteHandler)complete {
+- (void)startWithAppKey:(NSString *)appKey serviceDomain:(NSString *)serviceDomain {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         _appKey = appKey;
         NSError *error;
         if (![self initSenderWithDomain:serviceDomain appKey:appKey error:&error]) {
-            if (complete) {
-                complete(NO, error);
-            }
+            PREDLogError(@"%@", error);
             return;
         }
         
@@ -137,13 +134,13 @@ static NSString* app_id(NSString* appKey){
 - (BOOL)initSenderWithDomain:(NSString *)aServerURL appKey:(NSString *)appKey error:(NSError **)error {
     if (!aServerURL.length) {
         if (error) {
-            *error = [PREDError GenerateNSError:kPREDErrorCodeInvalidServiceDomain description:@"you must specify server domain"];
+            *error = [PREDError GenerateNSError:kPREDErrorCodeInvalidServiceDomain description:@"你必须指定 server domain ！！！！！！"];
         }
         return NO;
     }
     if (appKey.length < PREDAppIdLength) {
         if (error) {
-            *error = [PREDError GenerateNSError:kPREDErrorCodeInvalidAppKey description:@"the length of your app key must be longer than %d", PREDAppIdLength];
+            *error = [PREDError GenerateNSError:kPREDErrorCodeInvalidAppKey description:@"app key 的长度必须大于等于 %d！！！！！！", PREDAppIdLength];
         }
         return NO;
     }
@@ -157,7 +154,7 @@ static NSString* app_id(NSString* appKey){
     
     if (!url) {
         if (error) {
-            *error = [PREDError GenerateNSError:kPREDErrorCodeInvalidServiceDomain description:@"the service domain has a wrong structure: %@", aServerURL];
+            *error = [PREDError GenerateNSError:kPREDErrorCodeInvalidServiceDomain description:@"service domain 的结构不正确: %@ ！！！！！！", aServerURL];
         }
         return NO;
     }

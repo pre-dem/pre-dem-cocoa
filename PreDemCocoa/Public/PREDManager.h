@@ -24,8 +24,7 @@
  * @param serviceDomain 数据上传的服务器域名
  */
 + (void)startWithAppKey:(NSString *_Nonnull)appKey
-          serviceDomain:(NSString *_Nonnull)serviceDomain
-               complete:(PREDStartCompleteHandler _Nullable)complete;
+          serviceDomain:(NSString *_Nonnull)serviceDomain;
 
 /**
  *  获取当前网络环境下对指定服务器的网络诊断信息并上报
