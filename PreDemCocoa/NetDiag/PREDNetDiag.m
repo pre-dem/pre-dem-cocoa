@@ -16,6 +16,8 @@
 + (void)diagnose:(NSString *)host
      persistence:(PREDPersistence *)persistence
         complete:(PREDNetDiagCompleteHandler)complete {
+    PREDNetDiagResult *result = [[PREDNetDiagResult alloc] initWithComplete:complete persistence:persistence];
+    result.host = host;
     NSString *httpHost;
     if ([host hasPrefix:@"http://"] || [host hasPrefix:@"https://"]) {
         httpHost = host;
@@ -23,7 +25,6 @@
     } else {
         httpHost = [NSString stringWithFormat:@"http://%@", host];
     }
-    PREDNetDiagResult *result = [[PREDNetDiagResult alloc] initWithComplete:complete persistence:persistence];
     [QNNPing start:host size:64 output:nil complete:^(QNNPingResult *r) {
         [result gotPingResult:r];
     }];
