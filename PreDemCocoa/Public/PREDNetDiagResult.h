@@ -20,6 +20,11 @@
 @property (nonatomic, nullable, strong) NSString *result_id;
 
 /**
+ * 进行网络诊断的 host
+ */
+@property (nonatomic, nullable, strong) NSString *host;
+
+/**
  * ping 返回的 code
  */
 @property (nonatomic, assign) NSInteger ping_code;

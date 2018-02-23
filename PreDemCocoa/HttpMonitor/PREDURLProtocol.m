@@ -96,6 +96,9 @@ NSURLSessionDataDelegate
         QNDnsManager *dns = [[QNDnsManager alloc] init:resolvers networkInfo:[QNNetworkInfo normal]];
         NSTimeInterval dnsStartTime = [[NSDate date] timeIntervalSince1970];
         NSURL *replacedURL = [dns queryAndReplaceWithIP:mutableRequest.URL];
+        if (!replacedURL) {
+            return mutableRequest;
+        }
         NSTimeInterval dnsEndTime = [[NSDate date] timeIntervalSince1970];
         NSError *err;
         NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"^[0-9]+\\.[0-9]+\\.[0-9]+" options:0 error:&err];
