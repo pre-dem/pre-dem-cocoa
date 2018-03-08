@@ -8,15 +8,15 @@ PODS:
   - CocoaLumberjack/Swift (3.4.1):
     - CocoaLumberjack/Default
   - HappyDNS (0.3.12)
-  - PreDemCocoa (1.0.7):
-    - PreDemCocoa/Core (= 1.0.7)
-  - PreDemCocoa/Core (1.0.7):
+  - PreDemCocoa (1.0.8):
+    - PreDemCocoa/Core (= 1.0.8)
+  - PreDemCocoa/Core (1.0.8):
     - CocoaLumberjack
     - HappyDNS
     - Qiniu
     - QNNetDiag
     - UICKeyChainStore
-  - PreDemCocoa/Swift (1.0.7):
+  - PreDemCocoa/Swift (1.0.8):
     - CocoaLumberjack/Swift
     - PreDemCocoa/Core
   - Qiniu (7.2.3):
@@ -35,7 +35,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   CocoaLumberjack: 2e258a064cacc8eb9a2aca318e24d02a0a7fd56d
   HappyDNS: 691a3041128055d09866f86e6e9ca90f24da1f18
-  PreDemCocoa: 893ac160c632d54f5c747732e2a227adfed947b4
+  PreDemCocoa: 9531dea3aa429211cae3daaf80cbb813d7245c0e
   Qiniu: ae0fea1cc379fae1560d8748ac537e0fbeb8626e
   QNNetDiag: d115f58d294bdbeecb139e5f681bc5a8bc2a4181
   UICKeyChainStore: 239558492fa260531a0774cfc611ea83a6eaff3a
