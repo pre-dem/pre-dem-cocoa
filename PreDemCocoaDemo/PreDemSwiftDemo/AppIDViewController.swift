@@ -45,18 +45,10 @@ class AppIDViewController: UIViewController {
         keychian["appid"] = appIdTextField.text
         keychian["domain"] = domainTextField.text
         #if DEBUG
-            PREDManager.start(withAppKey: appIdTextField.text!, serviceDomain: domainTextField.text!, complete: { (success, error) in
-                if !success {
-                    PREDLogError("start PREDManager error \(String(describing: error))")
-                }
-            })
+            PREDManager.start(withAppKey: appIdTextField.text!, serviceDomain: domainTextField.text!)
             PREDManager.tag = "userid_debug"
         #else
-            PREDManager.start(withAppKey: appIdTextField.text!, serviceDomain: domainTextField.text!, complete: { (success, error) in
-                if !success {
-                    PREDLogError("start PREDManager error \(String(describing: error))")
-                }
-            })
+            PREDManager.start(withAppKey: appIdTextField.text!, serviceDomain: domainTextField.text!)
             PREDManager.tag = "userid_release"
         #endif
     }
