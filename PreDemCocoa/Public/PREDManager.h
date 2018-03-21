@@ -36,6 +36,37 @@
         complete:(PREDNetDiagCompleteHandler _Nullable)complete;
 
 /**
+ *  开始一个 transaction
+ *
+ *  @param transactionName 该 transaction 的名字
+ *  @return 该 transaction 对应的 transactionID
+ */
++ (NSString *_Nonnull)transactionStart:(NSString *_Nonnull)transactionName;
+
+/**
+ * transaction 正常结束并上报数据
+ *
+ *  @param transactionID 该 transaction 对应的 transactionID
+ */
++ (NSError *_Nullable)transactionComplete:(NSString *_Nonnull)transactionID;
+
+/**
+ *  transaction 取消并上报数据
+ *
+ *  @param transactionID 该 transaction 对应的 transactionID
+ *  @param reason transaction 被取消的原因
+ */
++ (NSError *_Nullable)transactionCancel:(NSString *_Nonnull)transactionID reason:(NSString *_Nullable)reason;
+
+/**
+ *  transaction 失败并上报数据
+ *
+ *  @param transactionID 该 transaction 对应的 transactionID
+ *  @param reason transaction 被取消的原因
+ */
++ (NSError *_Nullable)transactionFail:(NSString *_Nonnull)transactionID reason:(NSString *_Nullable)reason;
+
+/**
  *  上报自定义事件
  *
  *  @param event 需要上报的自定义事件对象

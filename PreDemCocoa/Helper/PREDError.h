@@ -15,6 +15,7 @@ typedef NS_ENUM(NSInteger, PREDErrorCode) {
     kPREDErrorCodeInvalidJsonObject = 102,
     kPREDErrorCodeInternalError = 103,
     kPREDErrorCodeNotInitedError = 104,
+    kPREDErrorCodeInvalidTransactionIDError = 105,
 };
 
 extern NSString *const PREDErrorDomain;
