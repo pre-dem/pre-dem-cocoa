@@ -9,19 +9,20 @@
 #import <Foundation/Foundation.h>
 
 @class PREDHTTPOperation;
-typedef void (^PREDNetworkCompletionBlock)(PREDHTTPOperation* operation, NSData* data, NSError* error);
+
+typedef void (^PREDNetworkCompletionBlock)(PREDHTTPOperation *operation, NSData *data, NSError *error);
 
 @interface PREDHTTPOperation : NSOperation
 
-+ (instancetype) operationWithRequest:(NSURLRequest *) urlRequest;
++ (instancetype)operationWithRequest:(NSURLRequest *)urlRequest;
 
-@property (nonatomic, readonly) NSURLRequest *URLRequest;
+@property(nonatomic, readonly) NSURLRequest *URLRequest;
 
 //the completion is only called if the operation wasn't cancelled
-- (void) setCompletion:(PREDNetworkCompletionBlock) completionBlock;
+- (void)setCompletion:(PREDNetworkCompletionBlock)completionBlock;
 
-@property (nonatomic, readonly) NSHTTPURLResponse *response;
-@property (nonatomic, readonly) NSData *data;
-@property (nonatomic, readonly) NSError *error;
+@property(nonatomic, readonly) NSHTTPURLResponse *response;
+@property(nonatomic, readonly) NSData *data;
+@property(nonatomic, readonly) NSError *error;
 
 @end

@@ -7,9 +7,6 @@
 //
 
 #import "PREDConfigManager.h"
-#import "PREDLog.h"
-#import "PREDManagerPrivate.h"
-#import "PREDHelper.h"
 
 #define PREDConfigUserDefaultsKey   @"PREDConfigUserDefaultsKey"
 
@@ -18,7 +15,7 @@ NSString *kPREDConfigRefreshedNotificationConfigKey = @"com.qiniu.predem.config"
 
 @interface PREDConfigManager ()
 
-@property (nonatomic, strong) NSDate *lastReportTime;
+@property(nonatomic, strong) NSDate *lastReportTime;
 
 @end
 
@@ -47,7 +44,7 @@ NSString *kPREDConfigRefreshedNotificationConfigKey = @"com.qiniu.predem.config"
     } else {
         defaultConfig = PREDConfig.defaultConfig;
     }
-    
+
     PREDAppInfo *info = [[PREDAppInfo alloc] init];
     [_persistence persistAppInfo:info];
     return defaultConfig;

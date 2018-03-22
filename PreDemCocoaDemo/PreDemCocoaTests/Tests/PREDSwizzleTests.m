@@ -64,9 +64,11 @@ static NSMutableString *_logString = nil;
 };
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunused-parameter"
+
 - (void)methodWithArgument:(id)arg {
 };
 #pragma GCC diagnostic pop
+
 - (void)methodForAlwaysSwizzling {
 };
 
@@ -272,7 +274,7 @@ static void swizzleNumber(Class classToSwizzle, int(^transformationBlock)(int)) 
                             NSNumber * result = PREDSWCallOriginal(floatSummand, doubleSummand);
                             return @([result doubleValue]* 2.);
                     }));
-    
+
     XCTAssertEqualObjects(@(2.), [PREDSwizzleTestClass_A sumFloat:0.5 withDouble:1.5]);
     XCTAssertEqualObjects(@(4.), [PREDSwizzleTestClass_B sumFloat:0.5 withDouble:1.5]);
     XCTAssertEqualObjects(@(4.), [PREDSwizzleTestClass_C sumFloat:0.5 withDouble:1.5]);

@@ -9,8 +9,6 @@
 #import "PREDURLProtocol.h"
 #import <HappyDNS/HappyDNS.h>
 #import "PREDURLSessionSwizzler.h"
-#import "PREDHTTPMonitorModel.h"
-#import "PREDLog.h"
 
 #define DNSPodsHost @"119.29.29.29"
 
@@ -18,13 +16,13 @@ static PREDPersistence *_persistence;
 static BOOL _started = NO;
 
 @interface PREDURLProtocol ()
-<
-NSURLSessionDataDelegate
->
+        <
+        NSURLSessionDataDelegate
+        >
 
-@property (nonatomic, strong) NSURLSessionDataTask *task;
-@property (nonatomic, strong) NSURLResponse *response;
-@property (nonatomic, strong) PREDHTTPMonitorModel *HTTPMonitorModel;
+@property(nonatomic, strong) NSURLSessionDataTask *task;
+@property(nonatomic, strong) NSURLResponse *response;
+@property(nonatomic, strong) PREDHTTPMonitorModel *HTTPMonitorModel;
 
 @end
 
@@ -45,7 +43,7 @@ NSURLSessionDataDelegate
         PREDLogDebug(@"Starting HttpManager");
         // 可拦截 [NSURLSession defaultSession] 以及 UIWebView 相关的请求
         [NSURLProtocol registerClass:self.class];
-        
+
         // 拦截自定义生成的 NSURLSession 的请求
         if (![PREDURLSessionSwizzler isSwizzle]) {
             [PREDURLSessionSwizzler loadSwizzler];
@@ -53,7 +51,7 @@ NSURLSessionDataDelegate
     } else {
         PREDLogDebug(@"Terminating HttpManager");
         [NSURLProtocol unregisterClass:self.class];
-        
+
         if ([PREDURLSessionSwizzler isSwizzle]) {
             [PREDURLSessionSwizzler unloadSwizzler];
         }
@@ -66,15 +64,15 @@ NSURLSessionDataDelegate
 
 + (BOOL)canInitWithRequest:(NSURLRequest *)request {
     if (![request.URL.scheme isEqualToString:@"http"] &&
-        ![request.URL.scheme isEqualToString:@"https"]) {
+            ![request.URL.scheme isEqualToString:@"https"]) {
         return NO;
     }
-    
+
     // SDK主动发送的数据
-    if ([NSURLProtocol propertyForKey:@"PREDInternalRequest" inRequest:request] ) {
+    if ([NSURLProtocol propertyForKey:@"PREDInternalRequest" inRequest:request]) {
         return NO;
     }
-    
+
     return YES;
 }
 
@@ -106,7 +104,7 @@ NSURLSessionDataDelegate
         if (number == 0) {
             return mutableRequest;
         }
-        [NSURLProtocol setProperty:@((dnsEndTime - dnsStartTime)*1000)
+        [NSURLProtocol setProperty:@((dnsEndTime - dnsStartTime) * 1000)
                             forKey:@"PREDDNSTime"
                          inRequest:mutableRequest];
         [NSURLProtocol setProperty:replacedURL.host
@@ -124,7 +122,7 @@ NSURLSessionDataDelegate
     self.task = [session dataTaskWithRequest:self.request];
     [self.task resume];
     [session finishTasksAndInvalidate];
-    
+
     HTTPMonitorModel = [[PREDHTTPMonitorModel alloc] init];
     NSURL *originURL = [NSURLProtocol propertyForKey:@"PREDOriginalURL" inRequest:self.request];
     HTTPMonitorModel.domain = originURL.host;
@@ -146,7 +144,7 @@ NSURLSessionDataDelegate
     [self.task cancel];
 }
 
-- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask willCacheResponse:(NSCachedURLResponse *)proposedResponse completionHandler:(void (^)(NSCachedURLResponse * _Nullable))completionHandler {
+- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask willCacheResponse:(NSCachedURLResponse *)proposedResponse completionHandler:(void (^)(NSCachedURLResponse *_Nullable))completionHandler {
     completionHandler(nil);
 }
 
@@ -154,7 +152,7 @@ NSURLSessionDataDelegate
     [self.client URLProtocol:self didReceiveResponse:response cacheStoragePolicy:NSURLCacheStorageNotAllowed];
     completionHandler(NSURLSessionResponseAllow);
     HTTPMonitorModel.response_time_stamp = [[NSDate date] timeIntervalSince1970] * 1000;
-    HTTPMonitorModel.status_code = ((NSHTTPURLResponse *)response).statusCode;
+    HTTPMonitorModel.status_code = ((NSHTTPURLResponse *) response).statusCode;
 }
 
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask

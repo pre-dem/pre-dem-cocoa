@@ -23,17 +23,17 @@ static BOOL s_isSwizzle = NO;
 }
 
 + (void)loadSwizzler {
-    self.isSwizzle=YES;
+    self.isSwizzle = YES;
     Class cls = NSClassFromString(@"__NSCFURLSessionConfiguration") ?: NSClassFromString(@"NSURLSessionConfiguration");
     [self swizzleSelector:@selector(protocolClasses) fromClass:cls toClass:self];
-    
+
 }
 
 + (void)unloadSwizzler {
-    self.isSwizzle=NO;
+    self.isSwizzle = NO;
     Class cls = NSClassFromString(@"__NSCFURLSessionConfiguration") ?: NSClassFromString(@"NSURLSessionConfiguration");
     [self swizzleSelector:@selector(protocolClasses) fromClass:cls toClass:self];
-    
+
 }
 
 + (void)swizzleSelector:(SEL)selector fromClass:(Class)original toClass:(Class)stub {

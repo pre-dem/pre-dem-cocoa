@@ -11,7 +11,9 @@
 @interface NSObject (Serialization)
 
 - (NSData *)toJsonWithError:(NSError **)error;
+
 - (NSMutableDictionary *)toDic;
+
 - (NSMutableDictionary *)toDicForClass:(Class)class;
 
 @end

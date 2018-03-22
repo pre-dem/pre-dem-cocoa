@@ -241,6 +241,7 @@ static NSString *app_id(NSString *appKey) {
     uint64_t endTime = (uint64_t) ([[NSDate date] timeIntervalSince1970] * 1000);
     transaction.end_time = endTime;
     transaction.transaction_type = PREDTransactionTypeCompleted;
+    [_persistence persistTransaction:transaction];
     return nil;
 }
 
@@ -253,6 +254,7 @@ static NSString *app_id(NSString *appKey) {
     transaction.end_time = endTime;
     transaction.transaction_type = PREDTransactionTypeCancelled;
     transaction.reason = reason;
+    [_persistence persistTransaction:transaction];
     return nil;
 }
 
@@ -265,6 +267,7 @@ static NSString *app_id(NSString *appKey) {
     transaction.end_time = endTime;
     transaction.transaction_type = PREDTransactionTypeFailed;
     transaction.reason = reason;
+    [_persistence persistTransaction:transaction];
     return nil;
 }
 

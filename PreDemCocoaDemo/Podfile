@@ -3,14 +3,14 @@ use_frameworks!
 install! 'cocoapods', :deterministic_uuids => false
 
 target 'PreDemObjcDemo' do
-    pod 'PreDemCocoa', :path => '../'
+  pod 'PreDemCocoa', :path => '../'
 end
 
 target 'PreDemSwiftDemo' do
-    pod 'PreDemCocoa/Swift', :path => '../'
+  pod 'PreDemCocoa/Swift', :path => '../'
 end
 
 target 'PreDemCocoaTests' do
-    pod 'PreDemCocoa', :path => '../'
+  pod 'PreDemCocoa', :path => '../'
 end
 

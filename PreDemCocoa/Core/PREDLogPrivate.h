@@ -15,12 +15,12 @@
 #import "PREDPersistence.h"
 
 @interface PREDLog (Private)
-<
-PREDLogFileManagerDelegate,
-PREDLogFormatterDelegate
->
+        <
+        PREDLogFileManagerDelegate,
+        PREDLogFormatterDelegate
+        >
 
-@property (class, nonatomic, strong) PREDPersistence *persistence;
+@property(class, nonatomic, strong) PREDPersistence *persistence;
 
 @end
 

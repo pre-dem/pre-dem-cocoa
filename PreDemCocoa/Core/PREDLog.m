@@ -8,18 +8,14 @@
 
 #import "PREDLog.h"
 #import "PREDHelper.h"
-#import "PREDNetworkClient.h"
 #import "PREDLogFormatter.h"
 #import "PREDLogFileManager.h"
 #import "PREDLogPrivate.h"
-#import "PREDLogMeta.h"
-#import "PREDPersistence.h"
-#import "PREDManager.h"
 #import "PREDError.h"
 
 #define PREDMillisecondPerSecond        1000
 
-static __weak id<PREDLogDelegate> _delegate;
+static __weak id <PREDLogDelegate> _delegate;
 
 @implementation PREDLog {
     BOOL _started;
@@ -55,7 +51,7 @@ static __weak id<PREDLogDelegate> _delegate;
     va_list args;
     if (format) {
         va_start(args, format);
-        DDLogMessage *message = [[DDLogMessage alloc] initWithMessage:[[NSString alloc] initWithFormat:format arguments:args] level:(DDLogLevel)level flag:(DDLogFlag)flag context:context file:[NSString stringWithFormat:@"%s", file] function:[NSString stringWithFormat:@"%s", function] line:line tag:tag options:0 timestamp:nil];
+        DDLogMessage *message = [[DDLogMessage alloc] initWithMessage:[[NSString alloc] initWithFormat:format arguments:args] level:(DDLogLevel) level flag:(DDLogFlag) flag context:context file:[NSString stringWithFormat:@"%s", file] function:[NSString stringWithFormat:@"%s", function] line:line tag:tag options:0 timestamp:nil];
         va_end(args);
         [[PREDLog sharedInstance] log:asynchronous message:message];
     }
@@ -63,7 +59,7 @@ static __weak id<PREDLogDelegate> _delegate;
 
 - (void)log:(BOOL)asynchronous
     message:(DDLogMessage *)logMessage {
-    if([_delegate respondsToSelector:@selector(log:didReceivedLogMessage:formattedLog:)]) {
+    if ([_delegate respondsToSelector:@selector(log:didReceivedLogMessage:formattedLog:)]) {
         [_delegate log:[PREDLog sharedInstance] didReceivedLogMessage:logMessage formattedLog:[[PREDLog sharedInstance]->_ttyLogFormatter formatLogMessage:logMessage]];
     }
     [super log:asynchronous message:logMessage];
@@ -94,11 +90,11 @@ static __weak id<PREDLogDelegate> _delegate;
     return _started;
 }
 
-+ (void)setDelegate:(id<PREDLogDelegate>)delegate {
++ (void)setDelegate:(id <PREDLogDelegate>)delegate {
     _delegate = delegate;
 }
 
-+ (id<PREDLogDelegate>)delegate {
++ (id <PREDLogDelegate>)delegate {
     return _delegate;
 }
 
@@ -126,7 +122,7 @@ static __weak id<PREDLogDelegate> _delegate;
     }
     _ttyLogLevel = ttyLogLevel;
     [self removeLogger:_ttyLogger];
-    [self addLogger:_ttyLogger withLevel:(DDLogLevel)_ttyLogLevel];
+    [self addLogger:_ttyLogger withLevel:(DDLogLevel) _ttyLogLevel];
 }
 
 + (PREDLogLevel)ttyLogLevel {
@@ -158,7 +154,7 @@ static __weak id<PREDLogDelegate> _delegate;
     _fileLogger.maximumFileSize = 1024 * 512;   // 512 KB
     _fileLogger.doNotReuseLogFiles = YES;
     _fileLogger.logFormatter = _fileLogFormatter;
-    [self addLogger:_fileLogger withLevel:(DDLogLevel)logLevel];
+    [self addLogger:_fileLogger withLevel:(DDLogLevel) logLevel];
     return YES;
 }
 

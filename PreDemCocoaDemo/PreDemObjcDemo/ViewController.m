@@ -11,17 +11,17 @@
 
 
 @interface ViewController ()
-<
-UIPickerViewDataSource,
-UIPickerViewDelegate,
-PREDLogDelegate
->
+        <
+        UIPickerViewDataSource,
+        UIPickerViewDelegate,
+        PREDLogDelegate
+        >
 
-@property (nonatomic, strong) IBOutlet UILabel *versionLable;
-@property (nonatomic, strong) IBOutlet UIPickerView *logLevelPicker;
-@property (nonatomic, strong) IBOutlet UITextView *logTextView;
-@property (nonatomic, strong) NSArray *logPickerKeys;
-@property (nonatomic, strong) NSArray *logPickerValues;
+@property(nonatomic, strong) IBOutlet UILabel *versionLable;
+@property(nonatomic, strong) IBOutlet UIPickerView *logLevelPicker;
+@property(nonatomic, strong) IBOutlet UITextView *logTextView;
+@property(nonatomic, strong) NSArray *logPickerKeys;
+@property(nonatomic, strong) NSArray *logPickerValues;
 
 @end
 
@@ -32,24 +32,24 @@ PREDLogDelegate
     // Do any additional setup after loading the view, typically from a nib.
     self.versionLable.text = [NSString stringWithFormat:@"%@(%@)", PREDManager.version, PREDManager.build];
     self.logPickerKeys = @[
-                               @"不上传 log",
-                               @"PREDLogLevelOff",
-                               @"PREDLogLevelError",
-                               @"PREDLogLevelWarning",
-                               @"PREDLogLevelInfo",
-                               @"PREDLogLevelDebug",
-                               @"PREDLogLevelVerbose",
-                               @"PREDLogLevelAll"
-                               ];
+            @"不上传 log",
+            @"PREDLogLevelOff",
+            @"PREDLogLevelError",
+            @"PREDLogLevelWarning",
+            @"PREDLogLevelInfo",
+            @"PREDLogLevelDebug",
+            @"PREDLogLevelVerbose",
+            @"PREDLogLevelAll"
+    ];
     self.logPickerValues = @[
-                           @(PREDLogLevelOff),
-                           @(PREDLogLevelError),
-                           @(PREDLogLevelWarning),
-                           @(PREDLogLevelInfo),
-                           @(PREDLogLevelDebug),
-                           @(PREDLogLevelVerbose),
-                           @(PREDLogLevelAll)
-                           ];
+            @(PREDLogLevelOff),
+            @(PREDLogLevelError),
+            @(PREDLogLevelWarning),
+            @(PREDLogLevelInfo),
+            @(PREDLogLevelDebug),
+            @(PREDLogLevelVerbose),
+            @(PREDLogLevelAll)
+    ];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -73,20 +73,20 @@ PREDLogDelegate
     } else {
         actionName = @"关闭将 log 输出到界面";
     }
-    [controller addAction:[UIAlertAction actionWithTitle:actionName style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    [controller addAction:[UIAlertAction actionWithTitle:actionName style:UIAlertActionStyleDefault handler:^(UIAlertAction *_Nonnull action) {
         if (!PREDLog.delegate) {
             PREDLog.delegate = self;
         } else {
             PREDLog.delegate = nil;
         }
     }]];
-    
-    [controller addAction:[UIAlertAction actionWithTitle:@"清空界面 log" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+
+    [controller addAction:[UIAlertAction actionWithTitle:@"清空界面 log" style:UIAlertActionStyleDefault handler:^(UIAlertAction *_Nonnull action) {
         _logTextView.text = @"";
     }]];
-    
+
     [controller addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
-    
+
     [self presentViewController:controller animated:YES completion:nil];
 }
 
@@ -104,10 +104,10 @@ PREDLogDelegate
 }
 
 - (IBAction)diagnoseNetwork:(id)sender {
-    [PREDManager  diagnose:@"www.qiniu.com"
-                  complete:^(PREDNetDiagResult * _Nonnull result) {
-        NSLog(@"new diagnose completed with result:\n %@", result);
-    }];
+    [PREDManager diagnose:@"www.qiniu.com"
+                 complete:^(PREDNetDiagResult *_Nonnull result) {
+                     NSLog(@"new diagnose completed with result:\n %@", result);
+                 }];
 }
 
 - (IBAction)forceCrash:(id)sender {
@@ -116,10 +116,10 @@ PREDLogDelegate
 
 - (IBAction)diyEvent:(id)sender {
     NSDictionary *dict = @{
-                           @"stringKey": [NSString stringWithFormat:@"test\t_\n%d", arc4random_uniform(100)],
-                           @"longKey": @(arc4random_uniform(100)),
-                           @"floatKey": @(arc4random_uniform(10000)/100.0)
-                           };
+            @"stringKey": [NSString stringWithFormat:@"test\t_\n%d", arc4random_uniform(100)],
+            @"longKey": @(arc4random_uniform(100)),
+            @"floatKey": @(arc4random_uniform(10000) / 100.0)
+    };
     PREDCustomEvent *event = [PREDCustomEvent eventWithName:@"test\t_\nios\t_\nevent_2" contentDic:dict];
     [PREDManager trackCustomEvent:event];
 }
@@ -160,7 +160,7 @@ PREDLogDelegate
         [PREDLog stopCaptureLog];
     } else {
         NSError *error;
-        BOOL success = [PREDLog startCaptureLogWithLevel:(PREDLogLevel)[self.logPickerValues[row-1] intValue] error:&error];
+        BOOL success = [PREDLog startCaptureLogWithLevel:(PREDLogLevel) [self.logPickerValues[row - 1] intValue] error:&error];
         if (!success) {
             UIAlertController *controller = [UIAlertController alertControllerWithTitle:@"错误" message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
             [controller addAction:[UIAlertAction actionWithTitle:@"好的" style:UIAlertActionStyleDefault handler:nil]];

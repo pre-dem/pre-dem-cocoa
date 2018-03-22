@@ -7,10 +7,7 @@
 //
 
 #import "PREDLagMonitorController.h"
-#import <CrashReporter/CrashReporter.h>
 #import "PREDCrashReportTextFormatter.h"
-#import "PREDHelper.h"
-#import "PREDLog.h"
 
 @implementation PREDLagMonitorController {
     CFRunLoopObserverRef _observer;
@@ -24,7 +21,7 @@
 }
 
 static void runLoopObserverCallBack(CFRunLoopObserverRef observer, CFRunLoopActivity activity, void *info) {
-    PREDLagMonitorController *instrance = (__bridge PREDLagMonitorController *)info;
+    PREDLagMonitorController *instrance = (__bridge PREDLagMonitorController *) info;
     instrance->_activity = activity;
     // 发送信号
     dispatch_semaphore_t semaphore = instrance->_semaphore;
@@ -34,8 +31,8 @@ static void runLoopObserverCallBack(CFRunLoopObserverRef observer, CFRunLoopActi
 - (instancetype)initWithPersistence:(PREDPersistence *)persistence {
     if (self = [super init]) {
         PLCrashReporterSignalHandlerType signalHandlerType = PLCrashReporterSignalHandlerTypeBSD;
-        PREDPLCrashReporterConfig *config = [[PREDPLCrashReporterConfig alloc] initWithSignalHandlerType: signalHandlerType
-                                                                                   symbolicationStrategy: PLCrashReporterSymbolicationStrategyNone];
+        PREDPLCrashReporterConfig *config = [[PREDPLCrashReporterConfig alloc] initWithSignalHandlerType:signalHandlerType
+                                                                                   symbolicationStrategy:PLCrashReporterSymbolicationStrategyNone];
         _reporter = [[PREDPLCrashReporter alloc] initWithConfiguration:config];
         _persistence = persistence;
     }
@@ -63,18 +60,18 @@ static void runLoopObserverCallBack(CFRunLoopObserverRef observer, CFRunLoopActi
 }
 
 - (void)registerObserver {
-    CFRunLoopObserverContext context = {0,(__bridge void*)self,NULL,NULL};
+    CFRunLoopObserverContext context = {0, (__bridge void *) self, NULL, NULL};
     _observer = CFRunLoopObserverCreate(kCFAllocatorDefault,
-                                        kCFRunLoopAllActivities,
-                                        YES,
-                                        0,
-                                        &runLoopObserverCallBack,
-                                        &context);
+            kCFRunLoopAllActivities,
+            YES,
+            0,
+            &runLoopObserverCallBack,
+            &context);
     CFRunLoopAddObserver(CFRunLoopGetMain(), _observer, kCFRunLoopCommonModes);
-    
+
     // 创建信号
     _semaphore = dispatch_semaphore_create(0);
-    
+
     // 在子线程监控时长
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         while (_started) {
@@ -82,8 +79,8 @@ static void runLoopObserverCallBack(CFRunLoopObserverRef observer, CFRunLoopActi
             // 每分钟至多只采集一次
             long st = dispatch_semaphore_wait(_semaphore, dispatch_time(DISPATCH_TIME_NOW, 100 * NSEC_PER_MSEC));
             if (st != 0 &&
-                (_activity==kCFRunLoopBeforeSources || _activity==kCFRunLoopAfterWaiting) &&
-                (!_lastSendTime || [[NSDate date] timeIntervalSinceDate:_lastSendTime] >= 60)) {
+                    (_activity == kCFRunLoopBeforeSources || _activity == kCFRunLoopAfterWaiting) &&
+                    (!_lastSendTime || [[NSDate date] timeIntervalSinceDate:_lastSendTime] >= 60)) {
                 if (++_countTime < 5)
                     continue;
                 [self sendLagStack];
@@ -106,14 +103,14 @@ static void runLoopObserverCallBack(CFRunLoopObserverRef observer, CFRunLoopActi
         PREDLogError(@"parse lag report error: %@", error);
         return;
     }
-    
+
     if ([PREDCrashReportTextFormatter isReport:_lastLagReport equivalentWith:report]) {
         PREDLogInfo(@"generated a equal report: %@", report);
         return;
     }
-    
+
     _lastLagReport = report;
-    
+
     PREDLagMeta *meta = [[PREDLagMeta alloc] initWithReport:report];
 
     [_persistence persistLagMeta:meta];

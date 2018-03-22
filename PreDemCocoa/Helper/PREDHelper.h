@@ -41,10 +41,15 @@
 @property(class, readonly) NSString *cacheDirectory;
 
 + (NSString *)encodeAppIdentifier:(NSString *)inputString;
+
 + (NSString *)appName:(NSString *)placeHolderString;
+
 + (NSString *)URLEncodedString:(NSString *)inputString;
-+ (NSDictionary*)getObjectData:(id)obj;
+
++ (NSDictionary *)getObjectData:(id)obj;
+
 + (NSString *)MD5:(NSString *)mdStr;
+
 + (NSString *)MD5ForData:(NSData *)data;
 
 @end

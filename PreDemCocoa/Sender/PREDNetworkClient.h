@@ -11,22 +11,22 @@
 
 @interface PREDNetworkClient : NSObject
 
-@property (nonatomic, strong) NSURL *baseURL;
+@property(nonatomic, strong) NSURL *baseURL;
 
-@property (nonatomic, strong) NSOperationQueue *operationQueue;
+@property(nonatomic, strong) NSOperationQueue *operationQueue;
 
-- (instancetype) initWithBaseURL:(NSURL*) baseURL;
+- (instancetype)initWithBaseURL:(NSURL *)baseURL;
 
-- (void) getPath:(NSString*) path
-      parameters:(NSDictionary *) params
-      completion:(PREDNetworkCompletionBlock) completion;
+- (void)getPath:(NSString *)path
+     parameters:(NSDictionary *)params
+     completion:(PREDNetworkCompletionBlock)completion;
 
-- (void) postPath:(NSString*) path
-       parameters:(NSObject *) params
-       completion:(PREDNetworkCompletionBlock) completion;
+- (void)postPath:(NSString *)path
+      parameters:(NSObject *)params
+      completion:(PREDNetworkCompletionBlock)completion;
 
-- (void) postPath:(NSString*) path
-             data:(NSData *) data
-          headers:(NSDictionary *)headers
-       completion:(PREDNetworkCompletionBlock) completion;
+- (void)postPath:(NSString *)path
+            data:(NSData *)data
+         headers:(NSDictionary *)headers
+      completion:(PREDNetworkCompletionBlock)completion;
 @end

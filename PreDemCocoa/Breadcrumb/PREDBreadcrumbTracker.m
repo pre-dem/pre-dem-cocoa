@@ -8,8 +8,6 @@
 
 #import "PREDSwizzle.h"
 #import "PREDBreadcrumbTracker.h"
-#import "PREDBreadCrumb.h"
-#import <UIKit/UIKit.h>
 
 
 @implementation PREDBreadcrumbTracker {
@@ -39,22 +37,25 @@
     //    - (BOOL)sendAction:(SEL)action to:(nullable id)target from:(nullable id)sender forEvent:(nullable UIEvent *)event;
     SEL selector = NSSelectorFromString(@"sendAction:to:from:forEvent:");
     PREDSwizzleInstanceMethod(UIApplication.class,
-                              selector,
-                              PREDSWReturnType(BOOL),
-                              PREDSWArguments(SEL action, id target, id sender, UIEvent * event),
-                              PREDSWReplacement({
-        NSMutableDictionary *data = [NSMutableDictionary new];
-        for (UITouch *touch in event.allTouches) {
-            if (touch.phase == UITouchPhaseCancelled || touch.phase == UITouchPhaseEnded) {
-                data = [@{@"view": [NSString stringWithFormat:@"%@", touch.view]} mutableCopy];
-            }
-        }
-        
-        [data setObject:[NSString stringWithFormat:@"%s", sel_getName(action)] forKey:@"action_name"];
-        PREDBreadcrumb *breadcrumb = [PREDBreadcrumb breadcrumbWithName:@"touch" contentDic:data];
-        [_persistence persistBreadcrumb:breadcrumb];
-        return PREDSWCallOriginal(action, target, sender, event);
-    }), PREDSwizzleModeOncePerClassAndSuperclasses, swizzleSendActionKey);
+            selector,
+            PREDSWReturnType(BOOL),
+            PREDSWArguments(SEL
+            action, id
+            target, id
+            sender, UIEvent * event),
+            PREDSWReplacement({
+                    NSMutableDictionary * data = [NSMutableDictionary new];
+                    for (UITouch *touch in event.allTouches) {
+                        if (touch.phase == UITouchPhaseCancelled || touch.phase == UITouchPhaseEnded) {
+                            data = [@{@"view": [NSString stringWithFormat:@"%@", touch.view]} mutableCopy];
+                        }
+                    }
+
+            [data setObject:[NSString stringWithFormat:@"%s", sel_getName(action)] forKey:@"action_name"];
+                    PREDBreadcrumb *breadcrumb =[PREDBreadcrumb breadcrumbWithName:@"touch" contentDic:data];
+            [_persistence persistBreadcrumb:breadcrumb];
+                    return PREDSWCallOriginal(action, target, sender, event);
+            }), PREDSwizzleModeOncePerClassAndSuperclasses, swizzleSendActionKey);
 }
 
 - (void)swizzleViewDidAppear {
@@ -62,18 +63,20 @@
     // -(void)viewDidAppear:(BOOL)animated
     SEL selector = NSSelectorFromString(@"viewDidAppear:");
     PREDSwizzleInstanceMethod(UIViewController.class,
-                              selector,
-                              PREDSWReturnType(void),
-                              PREDSWArguments(BOOL animated),
-                              PREDSWReplacement({
-        NSMutableDictionary *data = [@{
-                                      @"controller": [NSString stringWithFormat:@"%@", self],
-                                      @"method": @"viewDidAppear",
-                                      } mutableCopy];
-        PREDBreadcrumb *breadcrumb = [PREDBreadcrumb breadcrumbWithName:@"UIViewController" contentDic:data];
-        [_persistence persistBreadcrumb:breadcrumb];
-        PREDSWCallOriginal(animated);
-    }), PREDSwizzleModeOncePerClassAndSuperclasses, swizzleViewDidAppearKey);
+            selector,
+            PREDSWReturnType(
+            void),
+            PREDSWArguments(BOOL
+            animated),
+            PREDSWReplacement({
+                    NSMutableDictionary * data = [@{
+                            @"controller": [NSString stringWithFormat:@"%@", self],
+                            @"method": @"viewDidAppear",
+                    } mutableCopy];
+                    PREDBreadcrumb *breadcrumb =[PREDBreadcrumb breadcrumbWithName:@"UIViewController" contentDic:data];
+            [_persistence persistBreadcrumb:breadcrumb];
+                    PREDSWCallOriginal(animated);
+            }), PREDSwizzleModeOncePerClassAndSuperclasses, swizzleViewDidAppearKey);
 }
 
 @end

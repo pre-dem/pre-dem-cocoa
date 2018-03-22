@@ -5,7 +5,6 @@
 //  Created by Troy on 2017/9/27.
 //
 
-#import <Foundation/Foundation.h>
 #import "PREDCustomEvent.h"
 #import "PREDLog.h"
 #import "PREDConstants.h"
@@ -24,9 +23,9 @@
             PREDLogError(@"event name should not be empty");
             return nil;
         }
-        
+
         NSError *error;
-        
+
         NSString *content;
         if (contentDic.count) {
             NSData *contentData = [NSJSONSerialization dataWithJSONObject:contentDic options:0 error:&error];
@@ -37,16 +36,16 @@
                 PREDLogWarn(@"discard empty custom event");
                 return nil;
             }
-            
+
             content = [[NSString alloc] initWithData:contentData encoding:NSUTF8StringEncoding];
         } else {
             content = @"";
         }
 
-        
+
         event->_content = content;
     }
-    
+
     return event;
 }
 

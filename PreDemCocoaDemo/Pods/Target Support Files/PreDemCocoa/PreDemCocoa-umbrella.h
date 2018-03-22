@@ -17,6 +17,7 @@
 #import "PREDLog.h"
 #import "PREDManager.h"
 #import "PREDNetDiagResult.h"
+#import "test.h"
 
 FOUNDATION_EXPORT double PreDemCocoaVersionNumber;
 FOUNDATION_EXPORT const unsigned char PreDemCocoaVersionString[];

@@ -7,12 +7,9 @@
 //
 
 #import <Qiniu/QiniuSDK.h>
-
 #import "PREDSender.h"
 #import "PREDHelper.h"
-#import "PREDLog.h"
 #import "PREDConfigManager.h"
-#import "NSObject+Serialization.h"
 
 #define PREDSendInterval    30
 
@@ -48,7 +45,7 @@
     [self sendCrashData];
     [self sendLagData];
     [self sendLogData];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(PREDSendInterval * NSEC_PER_SEC)), dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t) (PREDSendInterval * NSEC_PER_SEC)), dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         [self sendAllSavedData];
     });
 }
@@ -69,7 +66,7 @@
         if (error) {
             PREDLogError(@"get config failed: %@", error);
         } else {
-            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
             if ([dic respondsToSelector:@selector(objectForKey:)]) {
                 PREDLogVerbose(@"got config:\n%@", dic);
                 [[NSNotificationCenter defaultCenter] postNotificationName:kPREDConfigRefreshedNotification object:self userInfo:@{kPREDConfigRefreshedNotificationConfigKey: dic}];
@@ -191,7 +188,7 @@
         [_persistence purgeFile:filePath];
         return;
     }
-    
+
     NSMutableDictionary *contentDic = [NSJSONSerialization JSONObjectWithData:[content dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:&error];
     if (error) {
         PREDLogError(@"parse meta content %@ error %@", filePath, error);
@@ -221,27 +218,27 @@
             NSString *content = [[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:contentDic options:0 error:nil] encoding:NSUTF8StringEncoding];
             meta[@"content"] = content;
             [strongSelf->_uploadManager
-             putData:[logString dataUsingEncoding:NSUTF8StringEncoding]
-             key:key
-             token: token
-             complete:^(QNResponseInfo *info, NSString *key, NSDictionary *resp) {
-                 if (resp) {
-                     [strongSelf->_networkClient postPath:@"crashes" parameters:meta completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
-                         __strong typeof (wSelf) strongSelf = wSelf;
-                         if (!error) {
-                             PREDLogDebug(@"Send crash report succeeded");
-                             [strongSelf->_persistence purgeFile:filePath];
-                             [strongSelf sendCrashData];
-                         } else {
-                             PREDLogError(@"upload crash meta fail: %@", error);
-                         }
-                     }];
-                 } else {
-                     PREDLogError(@"upload crash fail: %@", info.error);
-                     return;
-                 }
-             }
-             option:nil];
+                    putData:[logString dataUsingEncoding:NSUTF8StringEncoding]
+                        key:key
+                      token:token
+                   complete:^(QNResponseInfo *info, NSString *key, NSDictionary *resp) {
+                       if (resp) {
+                           [strongSelf->_networkClient postPath:@"crashes" parameters:meta completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
+                               __strong typeof(wSelf) strongSelf = wSelf;
+                               if (!error) {
+                                   PREDLogDebug(@"Send crash report succeeded");
+                                   [strongSelf->_persistence purgeFile:filePath];
+                                   [strongSelf sendCrashData];
+                               } else {
+                                   PREDLogError(@"upload crash meta fail: %@", error);
+                               }
+                           }];
+                       } else {
+                           PREDLogError(@"upload crash fail: %@", info.error);
+                           return;
+                       }
+                   }
+                     option:nil];
         } else {
             PREDLogError(@"parse crash upload token error: %@, data: %@", error, dic);
         }
@@ -266,7 +263,7 @@
         [_persistence purgeFile:filePath];
         return;
     }
-    
+
     NSMutableDictionary *contentDic = [NSJSONSerialization JSONObjectWithData:[content dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:&error];
     if (error) {
         PREDLogError(@"parse meta content %@ error %@", filePath, error);
@@ -296,27 +293,27 @@
             NSString *content = [[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:contentDic options:0 error:nil] encoding:NSUTF8StringEncoding];
             meta[@"content"] = content;
             [strongSelf->_uploadManager
-             putData:[logString dataUsingEncoding:NSUTF8StringEncoding]
-             key:key
-             token: token
-             complete:^(QNResponseInfo *info, NSString *key, NSDictionary *resp) {
-                 if (resp) {
-                     [strongSelf->_networkClient postPath:@"lag-monitor" parameters:meta completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
-                         __strong typeof (wSelf) strongSelf = wSelf;
-                         if (!error) {
-                             PREDLogDebug(@"Send lag report succeeded");
-                             [strongSelf->_persistence purgeFile:filePath];
-                             [strongSelf sendLagData];
-                         } else {
-                             PREDLogError(@"upload lag meta fail: %@", error);
-                         }
-                     }];
-                 } else {
-                     PREDLogError(@"upload lag fail: %@", info.error);
-                     return;
-                 }
-             }
-             option:nil];
+                    putData:[logString dataUsingEncoding:NSUTF8StringEncoding]
+                        key:key
+                      token:token
+                   complete:^(QNResponseInfo *info, NSString *key, NSDictionary *resp) {
+                       if (resp) {
+                           [strongSelf->_networkClient postPath:@"lag-monitor" parameters:meta completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
+                               __strong typeof(wSelf) strongSelf = wSelf;
+                               if (!error) {
+                                   PREDLogDebug(@"Send lag report succeeded");
+                                   [strongSelf->_persistence purgeFile:filePath];
+                                   [strongSelf sendLagData];
+                               } else {
+                                   PREDLogError(@"upload lag meta fail: %@", error);
+                               }
+                           }];
+                       } else {
+                           PREDLogError(@"upload lag fail: %@", info.error);
+                           return;
+                       }
+                   }
+                     option:nil];
         } else {
             PREDLogError(@"parse lag upload token error: %@, data: %@", error, dic);
         }
@@ -341,7 +338,7 @@
         [_persistence purgeFile:filePath];
         return;
     }
-    
+
     NSMutableDictionary *contentDic = [NSJSONSerialization JSONObjectWithData:[content dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:&error];
     if (error) {
         PREDLogError(@"parse meta content %@ error %@", filePath, error);
@@ -372,29 +369,29 @@
             NSString *content = [[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:contentDic options:0 error:nil] encoding:NSUTF8StringEncoding];
             meta[@"content"] = content;
             [strongSelf->_uploadManager
-             putData:logData
-             key:key
-             token: token
-             complete:^(QNResponseInfo *info, NSString *key, NSDictionary *resp) {
-                 __strong typeof(wSelf) strongSelf = wSelf;
-                 if (resp) {
-                     [strongSelf->_networkClient postPath:@"log-capture" parameters:meta completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
-                         __strong typeof (wSelf) strongSelf = wSelf;
-                         if (!error) {
-                             PREDLogDebug(@"Send log report succeeded");
-                             [strongSelf->_persistence purgeFile:filePath];
-                             [strongSelf->_persistence purgeFile:logFilePath];
-                             [strongSelf sendLogData];
-                         } else {
-                             PREDLogError(@"upload log meta fail: %@", error);
-                         }
-                     }];
-                 } else {
-                     PREDLogError(@"upload log fail: %@", info.error);
-                     return;
-                 }
-             }
-             option:nil];
+                    putData:logData
+                        key:key
+                      token:token
+                   complete:^(QNResponseInfo *info, NSString *key, NSDictionary *resp) {
+                       __strong typeof(wSelf) strongSelf = wSelf;
+                       if (resp) {
+                           [strongSelf->_networkClient postPath:@"log-capture" parameters:meta completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
+                               __strong typeof(wSelf) strongSelf = wSelf;
+                               if (!error) {
+                                   PREDLogDebug(@"Send log report succeeded");
+                                   [strongSelf->_persistence purgeFile:filePath];
+                                   [strongSelf->_persistence purgeFile:logFilePath];
+                                   [strongSelf sendLogData];
+                               } else {
+                                   PREDLogError(@"upload log meta fail: %@", error);
+                               }
+                           }];
+                       } else {
+                           PREDLogError(@"upload log fail: %@", info.error);
+                           return;
+                       }
+                   }
+                     option:nil];
         } else {
             PREDLogError(@"parse log upload token error: %@, data: %@", error, dic);
         }
@@ -402,7 +399,7 @@
 }
 
 - (void)sendTransactions {
-    NSString *filePath = [_persistence nextArchivedBreadcrumbPath];
+    NSString *filePath = [_persistence nextArchivedTransactionsPath];
     if (!filePath) {
         return;
     }
@@ -412,14 +409,14 @@
         return;
     }
     __weak typeof(self) wSelf = self;
-    [_networkClient postPath:@"breadcrumbs" data:data headers:@{@"Content-Type": @"application/json"} completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
+    [_networkClient postPath:@"transactions" data:data headers:@{@"Content-Type": @"application/json"} completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
         __strong typeof(wSelf) strongSelf = wSelf;
         if (!error) {
-            PREDLogDebug(@"Send breadcrumbs succeeded");
+            PREDLogDebug(@"Send transactions succeeded");
             [strongSelf->_persistence purgeFile:filePath];
-            [strongSelf sendBreadcrumbs];
+            [strongSelf sendTransactions];
         } else {
-            PREDLogError(@"send breadcrumbs error: %@", error);
+            PREDLogError(@"send transactions error: %@", error);
         }
     }];
 }

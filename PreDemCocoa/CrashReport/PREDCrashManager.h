@@ -11,7 +11,7 @@
 
 @interface PREDCrashManager : NSObject
 
-@property (nonatomic, assign) BOOL started;
+@property(nonatomic, assign) BOOL started;
 
 - (instancetype)initWithPersistence:(PREDPersistence *)persistence;
 

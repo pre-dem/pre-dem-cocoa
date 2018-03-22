@@ -12,7 +12,7 @@ import WebKit
 class WebViewController: UIViewController, UITextFieldDelegate {
     var urlTextField = UITextField(frame: CGRect(x: 0, y: 0, width: 150, height: 30))
     var webView: UIWebView!
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         webView = UIWebView(frame: self.view.frame)
@@ -25,21 +25,21 @@ class WebViewController: UIViewController, UITextFieldDelegate {
         urlTextField.delegate = self
         self.navigationItem.titleView = urlTextField
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.isNavigationBarHidden = false
     }
-    
+
     @objc func didPressedCancelButton() {
         urlTextField.resignFirstResponder()
         self.navigationItem.rightBarButtonItem = nil
     }
-    
+
     func textFieldDidBeginEditing(_ textField: UITextField) {
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "取消", style: .plain, target: self, action: #selector(didPressedCancelButton))
     }
-    
+
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if let text = textField.text {
             if text.count == 0 {
@@ -47,7 +47,7 @@ class WebViewController: UIViewController, UITextFieldDelegate {
                 controller.addAction(UIAlertAction(title: "好的", style: .default, handler: nil))
                 return false
             }
-            
+
             urlTextField.resignFirstResponder()
             self.navigationItem.rightBarButtonItem = nil
             if var url = URL(string: text) {

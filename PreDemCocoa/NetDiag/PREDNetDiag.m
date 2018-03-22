@@ -8,7 +8,6 @@
 
 #import "PREDNetDiag.h"
 #import "QNNetDiag.h"
-#import "PREDNetDiagResult.h"
 #import "PREDNetDiagResultPrivate.h"
 
 @implementation PREDNetDiag
