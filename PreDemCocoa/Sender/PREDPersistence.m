@@ -306,9 +306,9 @@
 }
 
 - (NSString *)nextArchivedTransactionsPath {
-    NSFileHandle *fileHanle = _breadcrumbFileHandle;
-    NSString *path = [self nextArchivedPathForDir:_breadcrumbDir fileHandle:&fileHanle inQueue:_breadcrumbQueue];
-    _breadcrumbFileHandle = fileHanle;
+    NSFileHandle *fileHanle = _transactionsFileHandle;
+    NSString *path = [self nextArchivedPathForDir:_transactionsDir fileHandle:&fileHanle inQueue:_transactionsQueue];
+    _transactionsFileHandle = fileHanle;
     return path;
 }
 
@@ -599,7 +599,7 @@
         NSString *normalFilePattern = @"^[0-9]+\\.?[0-9]*$";
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", normalFilePattern];
         if ([predicate evaluateWithObject:filePath]) {
-            availableFile = filePath;
+            availableFile = [NSString stringWithFormat:@"%@/%@", dir, filePath];
             break;
         }
     }

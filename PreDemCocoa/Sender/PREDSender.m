@@ -42,6 +42,7 @@
     [self sendNetDiag];
     [self sendCustomEvents];
     [self sendBreadcrumbs];
+    [self sendTransactions];
     [self sendCrashData];
     [self sendLagData];
     [self sendLogData];

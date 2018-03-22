@@ -128,6 +128,27 @@
     sleep(1);
 }
 
+- (IBAction)completeTransaction:(id)sender {
+    NSString *transactionID = [PREDManager transactionStart:@"test"];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, arc4random() % 10 * NSEC_PER_SEC), dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [PREDManager transactionFail:transactionID reason:@"test reason"];
+    });
+}
+
+- (IBAction)failTransaction:(id)sender {
+    NSString *transactionID = [PREDManager transactionStart:@"test"];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, arc4random() % 10 * NSEC_PER_SEC), dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [PREDManager transactionFail:transactionID reason:@"test reason for failed transaction"];
+    });
+}
+
+- (IBAction)calcelTransaction:(id)sender {
+    NSString *transactionID = [PREDManager transactionStart:@"test"];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, arc4random() % 10 * NSEC_PER_SEC), dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [PREDManager transactionCancel:transactionID reason:@"test reason for cancelled transaction"];
+    });
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -152,7 +173,7 @@
 }
 
 - (nullable NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component __TVOS_PROHIBITED {
-    return self.logPickerKeys[row];
+    return self.logPickerKeys[(NSUInteger) row];
 }
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component __TVOS_PROHIBITED; {
@@ -160,7 +181,7 @@
         [PREDLog stopCaptureLog];
     } else {
         NSError *error;
-        BOOL success = [PREDLog startCaptureLogWithLevel:(PREDLogLevel) [self.logPickerValues[row - 1] intValue] error:&error];
+        BOOL success = [PREDLog startCaptureLogWithLevel:(PREDLogLevel) [self.logPickerValues[(NSUInteger) (row - 1)] intValue] error:&error];
         if (!success) {
             UIAlertController *controller = [UIAlertController alertControllerWithTitle:@"错误" message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
             [controller addAction:[UIAlertAction actionWithTitle:@"好的" style:UIAlertActionStyleDefault handler:nil]];
@@ -168,6 +189,5 @@
         }
     }
 }
-
 
 @end
