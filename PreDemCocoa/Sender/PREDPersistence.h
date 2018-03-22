@@ -15,6 +15,7 @@
 #import "PREDAppInfo.h"
 #import "PREDCustomEvent.h"
 #import "PREDBreadcrumb.h"
+#import "PREDTransaction.h"
 
 @interface PREDPersistence : NSObject
 
@@ -23,6 +24,7 @@
 - (void)persistNetDiagResult:(PREDNetDiagResult *)netDiagResult;
 - (void)persistCustomEvent:(PREDCustomEvent *)event;
 - (void)persistBreadcrumb:(PREDBreadcrumb *)breadcrumb;
+- (void)persistTransaction:(PREDTransaction *)transaction;
 - (void)persistCrashMeta:(PREDCrashMeta *)crashMeta;
 - (void)persistLagMeta:(PREDLagMeta *)lagMeta;
 - (void)persistLogMeta:(PREDLogMeta *)logMeta;

@@ -24,6 +24,7 @@
     NSString *_netDir;
     NSString *_customDir;
     NSString *_breadcrumbDir;
+    NSString *_transactionsDir;
     NSFileManager *_fileManager;
     NSFileHandle *_appInfoFileHandle;
     dispatch_queue_t _appInfoQueue;
@@ -35,6 +36,8 @@
     dispatch_queue_t _customEventQueue;
     NSFileHandle *_breadcrumbFileHandle;
     dispatch_queue_t _breadcrumbQueue;
+    NSFileHandle *_transactionsFileHandle;
+    dispatch_queue_t _transactionsQueue;
     PREDLogMeta *_lastLogMeta;
     NSString *_lastLogMetaPath;
 }
@@ -51,12 +54,15 @@
         _netDir = [NSString stringWithFormat:@"%@/%@", PREDHelper.cacheDirectory, @"net"];
         _customDir = [NSString stringWithFormat:@"%@/%@", PREDHelper.cacheDirectory, @"custom"];
         _breadcrumbDir = [NSString stringWithFormat:@"%@/%@", PREDHelper.cacheDirectory, @"breadcrumb"];
+        _transactionsDir = [NSString stringWithFormat:@"%@/%@", PREDHelper.cacheDirectory, @"transactions"];
+
         
         _appInfoQueue = dispatch_queue_create("predem_app_info", DISPATCH_QUEUE_SERIAL);
         _httpQueue = dispatch_queue_create("predem_http", DISPATCH_QUEUE_SERIAL);
         _netQueue = dispatch_queue_create("predem_net", DISPATCH_QUEUE_SERIAL);
         _customEventQueue = dispatch_queue_create("predem_custom_event", DISPATCH_QUEUE_SERIAL);
         _breadcrumbQueue = dispatch_queue_create("predem_breadcrumb", DISPATCH_QUEUE_SERIAL);
+        _transactionsQueue = dispatch_queue_create("predem_transactions", DISPATCH_QUEUE_SERIAL);
         
         NSError *error;
         [_fileManager createDirectoryAtPath:_appInfoDir withIntermediateDirectories:YES attributes:nil error:&error];
@@ -90,6 +96,10 @@
         [_fileManager createDirectoryAtPath:_breadcrumbDir withIntermediateDirectories:YES attributes:nil error:&error];
         if (error) {
             PREDLogError(@"create dir %@ failed", _customDir);
+        }
+        [_fileManager createDirectoryAtPath:_transactionsDir withIntermediateDirectories:YES attributes:nil error:&error];
+        if (error) {
+            PREDLogError(@"create dir %@ failed", _transactionsDir);
         }
         PREDLogVerbose(@"cache directory:\n%@", PREDHelper.cacheDirectory);
     }
@@ -191,6 +201,25 @@
     });
 }
 
+- (void)persistTransaction:(PREDBreadcrumb *)breadcrumb {
+    dispatch_async(_breadcrumbQueue, ^{
+        NSError *error;
+        NSData *toSave = [breadcrumb serializeForSending:&error];
+        if (error) {
+            PREDLogError(@"jsonize custom events error: %@", error);
+            return;
+        }
+        
+        _breadcrumbFileHandle = [self updateFileHandle:_breadcrumbFileHandle dir:_breadcrumbDir];
+        if (!_breadcrumbFileHandle) {
+            PREDLogError(@"no file handle drop custom data");
+            return;
+        }
+        [_breadcrumbFileHandle writeData:toSave];
+        [_breadcrumbFileHandle writeData:[@"\n" dataUsingEncoding:NSUTF8StringEncoding]];
+    });
+}
+
 // no batch
 
 - (void)persistCrashMeta:(PREDCrashMeta *)crashMeta {
@@ -272,6 +301,13 @@
 }
 
 - (NSString *)nextArchivedBreadcrumbPath {
+    NSFileHandle *fileHanle = _breadcrumbFileHandle;
+    NSString *path = [self nextArchivedPathForDir:_breadcrumbDir fileHandle:&fileHanle inQueue:_breadcrumbQueue];
+    _breadcrumbFileHandle = fileHanle;
+    return path;
+}
+
+- (NSString *)nextArchivedTransactionsPath {
     NSFileHandle *fileHanle = _breadcrumbFileHandle;
     NSString *path = [self nextArchivedPathForDir:_breadcrumbDir fileHandle:&fileHanle inQueue:_breadcrumbQueue];
     _breadcrumbFileHandle = fileHanle;
@@ -513,6 +549,19 @@
     }
 }
 
+- (void)purgeAllTransactions {
+    NSError *error;
+    for (NSString *fileName in [_fileManager enumeratorAtPath:_transactionsDir]) {
+        NSString *filePath = [NSString stringWithFormat:@"%@/%@", _transactionsDir, fileName];
+        [_fileManager removeItemAtPath:filePath error:&error];
+        if (error) {
+            PREDLogError(@"purge file %@ error %@", filePath, error);
+        } else {
+            PREDLogVerbose(@"purge file %@ succeeded", filePath);
+        }
+    }
+}
+
 - (void)purgeAllPersistence {
     [self purgeAllAppInfo];
     [self purgeAllLagMeta];
@@ -521,6 +570,8 @@
     [self purgeAllCustom];
     [self purgeAllCrashMeta];
     [self purgeAllNetDiag];
+    [self purgeAllBreadcrumb];
+    [self purgeAllTransactions];
 }
 
 - (void)purgeFiles:(NSArray<NSString *> *)filePaths {

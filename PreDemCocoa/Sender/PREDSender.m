@@ -401,4 +401,27 @@
     }];
 }
 
+- (void)sendTransactions {
+    NSString *filePath = [_persistence nextArchivedBreadcrumbPath];
+    if (!filePath) {
+        return;
+    }
+    NSData *data = [NSData dataWithContentsOfFile:filePath];
+    if (!data.length) {
+        PREDLogError(@"get stored data from %@ failed", filePath);
+        return;
+    }
+    __weak typeof(self) wSelf = self;
+    [_networkClient postPath:@"breadcrumbs" data:data headers:@{@"Content-Type": @"application/json"} completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
+        __strong typeof(wSelf) strongSelf = wSelf;
+        if (!error) {
+            PREDLogDebug(@"Send breadcrumbs succeeded");
+            [strongSelf->_persistence purgeFile:filePath];
+            [strongSelf sendBreadcrumbs];
+        } else {
+            PREDLogError(@"send breadcrumbs error: %@", error);
+        }
+    }];
+}
+
 @end

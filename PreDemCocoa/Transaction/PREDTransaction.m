@@ -11,9 +11,7 @@
 @implementation PREDTransaction
 
 - (instancetype)init {
-    if (self = [self initWithName:TransactionEventName type:AutoCapturedEventType]) {
-    }
-    return self;
+    return [self initWithName:TransactionEventName type:CustomEventType];
 }
 
 @end

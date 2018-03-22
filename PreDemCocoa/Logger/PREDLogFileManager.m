@@ -7,7 +7,6 @@
 //
 
 #import "PREDLogFileManager.h"
-#import "PREDHelper.h"
 
 @implementation PREDLogFileManager
 
