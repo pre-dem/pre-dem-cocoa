@@ -62,7 +62,7 @@ static NSString *app_id(NSString *appKey) {
     PREDTransaction *transaction = [PREDTransaction transactionWithPersistence:[self sharedPREDManager]->_persistence];
     transaction.transaction_name = transactionName;
     transaction.start_time = startTime;
-    return nil;
+    return transaction;
 }
 
 + (void)trackCustomEvent:(PREDCustomEvent *)event {
