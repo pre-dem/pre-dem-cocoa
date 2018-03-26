@@ -7,12 +7,8 @@
 //
 
 #import "PREDCrashManager.h"
-#import "PREDemCocoa.h"
 #import "PREDHelper.h"
 #import "PREDCrashCXXExceptionHandler.h"
-#import "PREDLog.h"
-#import "PREDCrashMeta.h"
-#import <CrashReporter/CrashReporter.h>
 
 // Temporary class until PLCR catches up
 // We trick PLCR with an Objective-C exception.
@@ -30,13 +26,13 @@
 }
 
 - (instancetype)initWithCXXExceptionInfo:(const PREDCrashUncaughtCXXExceptionInfo *)info {
-    extern char* __cxa_demangle(const char* mangled_name, char* output_buffer, size_t* length, int* status);
+    extern char *__cxa_demangle(const char *mangled_name, char *output_buffer, size_t *length, int *status);
     char *demangled_name = &__cxa_demangle ? __cxa_demangle(info->exception_type_name ?: "", NULL, NULL, NULL) : NULL;
-    
+
     if ((self = [super
-                 initWithName:[NSString stringWithUTF8String:demangled_name ?: info->exception_type_name ?: ""]
-                 reason:[NSString stringWithUTF8String:info->exception_message ?: ""]
-                 userInfo:nil])) {
+            initWithName:[NSString stringWithUTF8String:demangled_name ?: info->exception_type_name ?: ""]
+                  reason:[NSString stringWithUTF8String:info->exception_message ?: ""]
+                userInfo:nil])) {
         _info = info;
     }
     return self;
@@ -74,29 +70,29 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
     _started = started;
     if (started) {
         PREDLogDebug(@"Starting CrashManager");
-                
+
         PLCrashReporterSignalHandlerType signalHandlerType = PLCrashReporterSignalHandlerTypeBSD;
-        
-        PREDPLCrashReporterConfig *config = [[PREDPLCrashReporterConfig alloc] initWithSignalHandlerType: signalHandlerType symbolicationStrategy: PLCrashReporterSymbolicationStrategyNone];
-        _plCrashReporter = [[PREDPLCrashReporter alloc] initWithConfiguration: config];
-        
+
+        PREDPLCrashReporterConfig *config = [[PREDPLCrashReporterConfig alloc] initWithSignalHandlerType:signalHandlerType symbolicationStrategy:PLCrashReporterSymbolicationStrategyNone];
+        _plCrashReporter = [[PREDPLCrashReporter alloc] initWithConfiguration:config];
+
         // Check if we previously crashed
-        
+
         [self handleCrashReport];
-        
-        
+
+
         if (PREDHelper.isDebuggerAttached) {
             PREDLogWarn(@"Detected crashes is NOT enabled due to running the app with a debugger attached.");
         } else {
             // PLCrashReporter may only be initialized once. So make sure the developer
             // can't break this
             NSError *error = NULL;
-            
+
             // Enable the Crash Reporter
-            if (![_plCrashReporter enableCrashReporterAndReturnError: &error]) {
+            if (![_plCrashReporter enableCrashReporterAndReturnError:&error]) {
                 PREDLogError(@"Could not enable crash reporter: %@", [error localizedDescription]);
             }
-            
+
             // Add the C++ uncaught exception handler, which is currently not handled by PLCrashReporter internally
             [PREDCrashUncaughtCXXExceptionHandlerManager addCXXExceptionHandler:uncaught_cxx_exception_handler];
         }
@@ -116,10 +112,10 @@ static void uncaught_cxx_exception_handler(const PREDCrashUncaughtCXXExceptionIn
     if ([_plCrashReporter hasPendingCrashReport]) {
         PREDLogVerbose(@"Handling crash report");
         NSError *error;
-        
+
         // Try loading the crash report
         NSData *data = [_plCrashReporter loadPendingCrashReportDataAndReturnError:&error];
-        
+
         if (error) {
             PREDLogError(@"Could not load crash report: %@", error);
         } else {

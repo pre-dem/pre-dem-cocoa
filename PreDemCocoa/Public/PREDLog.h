@@ -77,7 +77,7 @@ static const DDLogLevel predLogLevel = DDLogLevelAll;
 
 @class PREDLog;
 
-@protocol PREDLogDelegate<NSObject>
+@protocol PREDLogDelegate <NSObject>
 
 - (void)log:(PREDLog *_Nonnull)log didReceivedLogMessage:(DDLogMessage *_Nonnull)message formattedLog:(NSString *_Nonnull)formattedLog;
 
@@ -99,7 +99,7 @@ static const DDLogLevel predLogLevel = DDLogLevelAll;
 @property(class, nonatomic, assign) BOOL started;
 
 
-@property(class, nonatomic, weak, nullable) id<PREDLogDelegate> delegate;
+@property(class, nonatomic, weak, nullable) id <PREDLogDelegate> delegate;
 
 /**
  * 控制台 log 打印的级别
@@ -112,7 +112,7 @@ static const DDLogLevel predLogLevel = DDLogLevelAll;
  * @param logLevel 采集的 log 级别，例如 PREDLogLevelWarning 将采集 error 及 warn 级别的 log 进行上报
  * @return 是否成功开启 log 采集
  */
-+ (BOOL)startCaptureLogWithLevel:(PREDLogLevel)logLevel error:(NSError *_Nullable*_Nullable)error;
++ (BOOL)startCaptureLogWithLevel:(PREDLogLevel)logLevel error:(NSError *_Nullable *_Nullable)error;
 
 /**
  * 停止采集 log 上报到服务器

@@ -13,10 +13,10 @@
 @implementation NSObject (Serialization)
 
 - (NSData *)toJsonWithError:(NSError **)error {
-    
+
     NSDictionary *dic;
-    if([self isKindOfClass:[NSDictionary class]]) {
-        dic = (NSDictionary *)self;
+    if ([self isKindOfClass:[NSDictionary class]]) {
+        dic = (NSDictionary *) self;
     } else {
         dic = [self toDic];
     }
@@ -43,20 +43,20 @@
 - (NSMutableDictionary *)toDicForClass:(Class)class {
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
     unsigned int propsCount;
-    
+
     objc_property_t *props = class_copyPropertyList(class, &propsCount);
-    
-    for(int i = 0;i < propsCount; i++) {
-        
+
+    for (int i = 0; i < propsCount; i++) {
+
         objc_property_t prop = props[i];
         NSString *propName = [NSString stringWithUTF8String:property_getName(prop)];
         id value = [self valueForKey:propName];
-        if(value != nil) {
+        if (value != nil) {
             value = [self getObjectInternal:value];
             [dic setObject:value forKey:propName];
         }
     }
-    
+
     if (props) {
         free(props);
     }
@@ -64,34 +64,34 @@
 }
 
 - (id)getObjectInternal:(id)obj {
-    
-    if([obj isKindOfClass:[NSString class]]
-       ||
-       [obj isKindOfClass:[NSNumber class]]
-       ||
-       [obj isKindOfClass:[NSNull class]]) {
-        
+
+    if ([obj isKindOfClass:[NSString class]]
+            ||
+            [obj isKindOfClass:[NSNumber class]]
+                    ||
+            [obj isKindOfClass:[NSNull class]]) {
+
         return obj;
-        
+
     }
-    if([obj isKindOfClass:[NSArray class]]) {
-        
+    if ([obj isKindOfClass:[NSArray class]]) {
+
         NSArray *objarr = obj;
         NSMutableArray *arr = [NSMutableArray arrayWithCapacity:objarr.count];
-        
-        for(int i = 0; i < objarr.count; i++) {
-            
+
+        for (int i = 0; i < objarr.count; i++) {
+
             [arr setObject:[self getObjectInternal:[objarr objectAtIndex:i]] atIndexedSubscript:i];
         }
         return arr;
     }
-    if([obj isKindOfClass:[NSDictionary class]]) {
-        
+    if ([obj isKindOfClass:[NSDictionary class]]) {
+
         NSDictionary *objdic = obj;
         NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:[objdic count]];
-        
-        for(NSString *key in objdic.allKeys) {
-            
+
+        for (NSString *key in objdic.allKeys) {
+
             [dic setObject:[self getObjectInternal:[objdic objectForKey:key]] forKey:key];
         }
         return dic;

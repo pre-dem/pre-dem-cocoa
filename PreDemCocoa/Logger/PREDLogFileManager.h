@@ -20,6 +20,6 @@
 
 @interface PREDLogFileManager : DDLogFileManagerDefault
 
-@property (nonatomic, weak) id<PREDLogFileManagerDelegate> delegate;
+@property(nonatomic, weak) id <PREDLogFileManagerDelegate> delegate;
 
 @end

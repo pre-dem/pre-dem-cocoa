@@ -10,9 +10,10 @@
 
 @interface PREDURLSessionSwizzler : NSObject
 
-@property (class, nonatomic, assign) BOOL isSwizzle;
+@property(class, nonatomic, assign) BOOL isSwizzle;
 
 + (void)loadSwizzler;
+
 + (void)unloadSwizzler;
 
 @end

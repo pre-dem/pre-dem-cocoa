@@ -9,11 +9,12 @@
 #import <Foundation/Foundation.h>
 #import "PREDDefines.h"
 #import "PREDCustomEvent.h"
+#import "PREDTransaction.h"
 
 /**
  * PREDManager 是 sdk 的核心类，提供 sdk 的主要对外接口
  */
-@interface PREDManager: NSObject
+@interface PREDManager : NSObject
 
 #pragma mark - Public Methods
 
@@ -34,6 +35,14 @@
  */
 + (void)diagnose:(NSString *_Nonnull)host
         complete:(PREDNetDiagCompleteHandler _Nullable)complete;
+
+/**
+ *  开始一个 transaction
+ *
+ *  @param transactionName 该 transaction 的名字
+ *  @return 该 transaction 对应的 transactionID
+ */
++ (PREDTransaction *_Nonnull)transactionStart:(NSString *_Nonnull)transactionName;
 
 /**
  *  上报自定义事件
@@ -62,6 +71,6 @@
 /**
  * 用户标签，用于标识唯一用户，例如您可以传入用户ID，我们将透传该字段，以便您可以在后台通过用户标签查找对应用户的数据
  */
-@property (class, nonnull, nonatomic, strong) NSString *tag;
+@property(class, nonnull, nonatomic, strong) NSString *tag;
 
 @end

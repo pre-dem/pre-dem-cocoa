@@ -17,23 +17,26 @@ typedef NS_ENUM (NSInteger, PREDBinaryImageType) {
     /**
      *  App binary
      */
-    PREDBinaryImageTypeAppBinary,
+            PREDBinaryImageTypeAppBinary,
     /**
      *  App provided framework
      */
-    PREDBinaryImageTypeAppFramework,
+            PREDBinaryImageTypeAppFramework,
     /**
      *  Image not related to the app
      */
-    PREDBinaryImageTypeOther
+            PREDBinaryImageTypeOther
 };
 
 
 @interface PREDCrashReportTextFormatter : NSObject
 
 + (NSString *)stringValueForCrashReport:(PLCrashReport *)report crashReporterKey:(NSString *)crashReporterKey;
+
 + (BOOL)isReport:(PLCrashReport *)report equivalentWith:(PLCrashReport *)otherReport;
+
 + (NSString *)pres_archNameFromCPUType:(uint64_t)cpuType subType:(uint64_t)subType;
+
 + (PREDBinaryImageType)pres_imageTypeForImagePath:(NSString *)imagePath processPath:(NSString *)processPath;
 
 @end

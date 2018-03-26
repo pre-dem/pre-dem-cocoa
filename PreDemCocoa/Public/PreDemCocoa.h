@@ -12,3 +12,4 @@
 #import "PREDNetDiagResult.h"
 #import "PREDLog.h"
 #import "PREDCustomEvent.h"
+#import "PREDTransaction.h"

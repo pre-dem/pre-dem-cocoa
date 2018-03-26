@@ -13,10 +13,15 @@
 @interface PREDNetDiagResult ()
 
 - (instancetype)initWithComplete:(PREDNetDiagCompleteHandler)complete persistence:(PREDPersistence *)persistence;
+
 - (void)gotTcpResult:(QNNTcpPingResult *)r;
+
 - (void)gotPingResult:(QNNPingResult *)r;
+
 - (void)gotHttpResult:(QNNHttpResult *)r;
+
 - (void)gotTrResult:(QNNTraceRouteResult *)r;
-- (void)gotNsLookupResult:(NSArray<QNNRecord *> *) r;
+
+- (void)gotNsLookupResult:(NSArray<QNNRecord *> *)r;
 
 @end

@@ -31,7 +31,7 @@
 
 - (NSString *)logTagsString {
     __block NSString *result;
-    [_tags enumerateObjectsUsingBlock:^(NSString* obj, BOOL * stop) {
+    [_tags enumerateObjectsUsingBlock:^(NSString *obj, BOOL *stop) {
         if (!result) {
             result = obj;
         } else {

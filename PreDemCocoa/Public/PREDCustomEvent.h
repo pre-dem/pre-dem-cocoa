@@ -7,18 +7,19 @@
 
 #ifndef PREDEvent_h
 #define PREDEvent_h
+
 #import <Foundation/Foundation.h>
 #import "PREDBaseModel.h"
 
 /**
  * 自定义事件数据对象
  */
-@interface PREDCustomEvent: PREDBaseModel
+@interface PREDCustomEvent : PREDBaseModel
 
 /**
  * 自定义事件的内容，仅支持键值对类型的内容
  */
-@property (nonatomic, strong, readonly) NSString* content;
+@property(nonatomic, strong, readonly) NSString *content;
 
 /**
  * 生成自定义事件的对象

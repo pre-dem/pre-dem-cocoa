@@ -9,20 +9,17 @@
 #import "PreDemCocoa.h"
 #import "PREDManagerPrivate.h"
 #import "PREDHelper.h"
-#import "PREDNetworkClient.h"
 #import "PREDVersion.h"
-#import "PREDConfigManager.h"
 #import "PREDNetDiag.h"
 #import "PREDURLProtocol.h"
 #import "PREDCrashManager.h"
 #import "PREDLagMonitorController.h"
-#import "PREDLog.h"
 #import "PREDError.h"
 #import "PREDLogPrivate.h"
 #import "PREDSender.h"
 #import "PREDBreadcrumbTracker.h"
 
-static NSString* app_id(NSString* appKey){
+static NSString *app_id(NSString *appKey) {
     if (appKey.length >= PREDAppIdLength) {
         return [appKey substringToIndex:PREDAppIdLength];
     } else {
@@ -32,20 +29,19 @@ static NSString* app_id(NSString* appKey){
 
 @implementation PREDManager {
     BOOL _started;
-    
+
     PREDConfigManager *_configManager;
-    
+
     PREDCrashManager *_crashManager;
-    
+
     PREDLagMonitorController *_lagManager;
-    
+
     PREDBreadcrumbTracker *_breadcrumbTracker;
-    
+
     PREDPersistence *_persistence;
-    
+
     PREDSender *_sender;
 }
-
 
 #pragma mark - Public Class Methods
 
@@ -56,10 +52,17 @@ static NSString* app_id(NSString* appKey){
     });
 }
 
-
 + (void)diagnose:(NSString *)host
         complete:(PREDNetDiagCompleteHandler)complete {
     [[self sharedPREDManager] diagnose:host complete:complete];
+}
+
++ (PREDTransaction *)transactionStart:(NSString *)transactionName {
+    uint64_t startTime = (uint64_t) ([[NSDate date] timeIntervalSince1970] * 1000);
+    PREDTransaction *transaction = [PREDTransaction transactionWithPersistence:[self sharedPREDManager]->_persistence];
+    transaction.transaction_name = transactionName;
+    transaction.start_time = startTime;
+    return transaction;
 }
 
 + (void)trackCustomEvent:(PREDCustomEvent *)event {
@@ -95,11 +98,11 @@ static NSString* app_id(NSString* appKey){
 + (PREDManager *)sharedPREDManager {
     static PREDManager *sharedInstance = nil;
     static dispatch_once_t pred;
-    
+
     dispatch_once(&pred, ^{
         sharedInstance = [[PREDManager alloc] init];
     });
-    
+
     return sharedInstance;
 }
 
@@ -119,13 +122,13 @@ static NSString* app_id(NSString* appKey){
             PREDLogError(@"%@", error);
             return;
         }
-        
+
         [self initializeModules];
-        
+
         [self registerObservers];
-        
+
         [_sender sendAllSavedData];
-        
+
         _started = YES;
     });
     return;
@@ -147,45 +150,45 @@ static NSString* app_id(NSString* appKey){
     if (![aServerURL hasPrefix:@"http://"] && ![aServerURL hasPrefix:@"https://"]) {
         aServerURL = [NSString stringWithFormat:@"http://%@", aServerURL];
     }
-    
+
     aServerURL = [NSString stringWithFormat:@"%@/v2/%@/", aServerURL, app_id(appKey)];
-    
+
     NSURL *url = [NSURL URLWithString:aServerURL];
-    
+
     if (!url) {
         if (error) {
             *error = [PREDError GenerateNSError:kPREDErrorCodeInvalidServiceDomain description:@"service domain 的结构不正确: %@ ！！！！！！", aServerURL];
         }
         return NO;
     }
-    
+
     _sender = [[PREDSender alloc] initWithPersistence:_persistence baseUrl:url];
     return YES;
 }
 
 - (void)initializeModules {
     _crashManager = [[PREDCrashManager alloc]
-                     initWithPersistence:_persistence];
+            initWithPersistence:_persistence];
     [PREDURLProtocol setPersistence:_persistence];
     _configManager = [[PREDConfigManager alloc] initWithPersistence:_persistence];
-    
+
     _lagManager = [[PREDLagMonitorController alloc] initWithPersistence:_persistence];
-    
-    _breadcrumbTracker = [[PREDBreadcrumbTracker alloc] initWithPersistence:_persistence];
-    [_breadcrumbTracker start];
-    
+
+//    _breadcrumbTracker = [[PREDBreadcrumbTracker alloc] initWithPersistence:_persistence];
+//    [_breadcrumbTracker start];
+
     [PREDLog setPersistence:_persistence];
     PREDLog.started = YES;
-    
+
     // this process will get default config and then use it to initialize all module, besides it will also retrieve config from the server and config will refresh when done.
     [self setConfig:[_configManager getConfig]];
 }
 
 - (void)setConfig:(PREDConfig *)config {
     _crashManager.started = config.crashReportEnabled;
-    
+
     PREDURLProtocol.started = config.httpMonitorEnabled;
-    
+
     _lagManager.started = config.lagMonitorEnabled;
 }
 

@@ -10,8 +10,6 @@
 #import "PREDManagerPrivate.h"
 #import "PREDNetDiagResultPrivate.h"
 #import "PREDHelper.h"
-#import "PREDLog.h"
-#import "QNNetDiag.h"
 #import "PREDConstants.h"
 
 #define PREDTotalResultNeeded   5
@@ -75,7 +73,7 @@
     [self checkAndSend];
 }
 
-- (void)gotNsLookupResult:(NSArray<QNNRecord *> *) r {
+- (void)gotNsLookupResult:(NSArray<QNNRecord *> *)r {
     NSMutableString *recordString = [[NSMutableString alloc] initWithCapacity:30];
     for (QNNRecord *record in r) {
         [recordString appendFormat:@"%@\t", record.value];

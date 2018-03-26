@@ -18,10 +18,10 @@
 @end
 
 @interface PREDLogFormatter : NSObject
-<
-DDLogFormatter
->
+        <
+        DDLogFormatter
+        >
 
-@property (nonatomic, weak) id<PREDLogFormatterDelegate> delegate;
+@property(nonatomic, weak) id <PREDLogFormatterDelegate> delegate;
 
 @end

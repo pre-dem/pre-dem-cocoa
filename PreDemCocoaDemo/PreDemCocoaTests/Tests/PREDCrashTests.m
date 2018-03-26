@@ -9,7 +9,6 @@
 #import <XCTest/XCTest.h>
 #import <CrashReporter/CrashReporter.h>
 #import "PREDLagMeta.h"
-#import "PREDLog.h"
 
 @interface PREDCrashTests : XCTestCase
 
@@ -34,8 +33,8 @@
 
 - (void)testLiveReportGenerator {
     PLCrashReporterSignalHandlerType signalHandlerType = PLCrashReporterSignalHandlerTypeBSD;
-    PREDPLCrashReporterConfig *config = [[PREDPLCrashReporterConfig alloc] initWithSignalHandlerType: signalHandlerType
-                                                                               symbolicationStrategy: PLCrashReporterSymbolicationStrategyNone];
+    PREDPLCrashReporterConfig *config = [[PREDPLCrashReporterConfig alloc] initWithSignalHandlerType:signalHandlerType
+                                                                               symbolicationStrategy:PLCrashReporterSymbolicationStrategyNone];
     PREDPLCrashReporter *reporter = [[PREDPLCrashReporter alloc] initWithConfiguration:config];
     // This is an example of a performance test case.
     [self measureBlock:^{

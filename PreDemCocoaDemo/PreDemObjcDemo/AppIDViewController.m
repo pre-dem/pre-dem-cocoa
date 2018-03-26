@@ -7,13 +7,13 @@
 //
 
 #import "AppIDViewController.h"
-#import "PreDemCocoa.h"
 #import <UICKeyChainStore/UICKeyChainStore.h>
+#import "PreDemCocoa/PreDemCocoa.h"
 
 @interface AppIDViewController ()
 
-@property (nonatomic, strong) IBOutlet UITextField *appIdTextField;
-@property (nonatomic, strong) IBOutlet UITextField *domainTextField;
+@property(nonatomic, strong) IBOutlet UITextField *appIdTextField;
+@property(nonatomic, strong) IBOutlet UITextField *domainTextField;
 
 @end
 
@@ -67,7 +67,7 @@
     [PREDManager startWithAppKey:_appIdTextField.text
                    serviceDomain:_domainTextField.text];
     PREDManager.tag = @"userid_debug";
-    PREDLog.ttyLogLevel = DDLogLevelAll;
+    PREDLog.ttyLogLevel = (PREDLogLevel) DDLogLevelAll;
 #else
     [PREDManager startWithAppKey:_appIdTextField.text
                    serviceDomain:_domainTextField.text];

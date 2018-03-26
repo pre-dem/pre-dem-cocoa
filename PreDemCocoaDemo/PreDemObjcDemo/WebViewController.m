@@ -7,15 +7,14 @@
 //
 
 #import "WebViewController.h"
-#import <WebKit/WebKit.h>
 
 @interface WebViewController ()
-<
-UITextFieldDelegate
->
+        <
+        UITextFieldDelegate
+        >
 
-@property (strong, nonatomic) UITextField *urlTextField;
-@property (strong, nonatomic) UIWebView *webView;
+@property(strong, nonatomic) UITextField *urlTextField;
+@property(strong, nonatomic) UIWebView *webView;
 
 @end
 

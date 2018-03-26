@@ -19,7 +19,7 @@
 
 + (PREDManager *_Nonnull)sharedPREDManager;
 
-@property (readonly, nonatomic, nonnull) NSString* appKey;
+@property(readonly, nonatomic, nonnull) NSString *appKey;
 
 @end
 

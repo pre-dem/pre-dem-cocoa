@@ -14,7 +14,7 @@
     if ([self.delegate respondsToSelector:@selector(logFormatter:willFormatMessage:)]) {
         [self.delegate logFormatter:self willFormatMessage:logMessage];
     }
-    if(logMessage.tag) {
+    if (logMessage.tag) {
         return [NSString stringWithFormat:@"[%@](%@): %@", [self flagString:logMessage.flag], logMessage.tag, logMessage.message];
     } else {
         return [NSString stringWithFormat:@"[%@]: %@", [self flagString:logMessage.flag], logMessage.message];

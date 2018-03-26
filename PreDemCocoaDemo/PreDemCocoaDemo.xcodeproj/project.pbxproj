@@ -532,7 +532,7 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-PreDemSwiftDemo/Pods-PreDemSwiftDemo-resources.sh",
-				"$PODS_CONFIGURATION_BUILD_DIR/PreDemObjc/PREDResources.bundle",
+				$PODS_CONFIGURATION_BUILD_DIR/PreDemObjc/PREDResources.bundle,
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
@@ -767,7 +767,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "pre-engineering.PreDemObjcDemo";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "3d03e798-789b-4cbf-a0ef-bf16a217ea54";
+				PROVISIONING_PROFILE = "7426129b-0223-44d1-8631-5e3b2ae6e82c";
 				PROVISIONING_PROFILE_SPECIFIER = Wildcard_Enterprise;
 			};
 			name = Debug;

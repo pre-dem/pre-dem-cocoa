@@ -25,6 +25,7 @@
 }
 
 #pragma mark - NSOperation overrides
+
 - (BOOL)isAsynchronous {
     return YES;
 }
@@ -35,17 +36,17 @@
 }
 
 - (void)start {
-    if(self.isCancelled) {
+    if (self.isCancelled) {
         [self finish];
         return;
     }
-    
+
     [self willChangeValueForKey:@"isExecuting"];
     _isExecuting = YES;
     [self didChangeValueForKey:@"isExecuting"];
-    
-    _task = [[NSURLSession sharedSession] dataTaskWithRequest:_URLRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        _response = (NSHTTPURLResponse *)response;
+
+    _task = [[NSURLSession sharedSession] dataTaskWithRequest:_URLRequest completionHandler:^(NSData *_Nullable data, NSURLResponse *_Nullable response, NSError *_Nullable error) {
+        _response = (NSHTTPURLResponse *) response;
         if (error) {
             _error = error;
         } else {
@@ -56,7 +57,7 @@
     [_task resume];
 }
 
-- (void) finish {
+- (void)finish {
     [self willChangeValueForKey:@"isExecuting"];
     [self willChangeValueForKey:@"isFinished"];
     _isExecuting = NO;
@@ -68,15 +69,15 @@
 #pragma mark - Public interface
 
 - (void)setCompletion:(PREDNetworkCompletionBlock)completion {
-    if(!completion) {
+    if (!completion) {
         [super setCompletionBlock:nil];
     } else {
         __weak typeof(self) weakSelf = self;
         [super setCompletionBlock:^{
             typeof(self) strongSelf = weakSelf;
-            if(strongSelf) {
+            if (strongSelf) {
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    if(!strongSelf.isCancelled) {
+                    if (!strongSelf.isCancelled) {
                         completion(strongSelf, strongSelf->_data, strongSelf->_error);
                     }
                     [strongSelf setCompletionBlock:nil];

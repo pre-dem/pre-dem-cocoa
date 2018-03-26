@@ -11,6 +11,7 @@
 @interface PREDVersion : NSObject
 
 + (NSString *)getSDKVersion;
+
 + (NSString *)getSDKBuild;
 
 @end
