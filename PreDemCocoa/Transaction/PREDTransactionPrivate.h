@@ -16,7 +16,7 @@ typedef NS_ENUM(NSInteger, PREDTransactionType) {
     PREDTransactionTypeFailed,
 };
 
-@interface PREDTransaction()
+@interface PREDTransaction ()
 
 @property(nonatomic, strong) NSString *transaction_name;
 @property(nonatomic, assign) uint64_t start_time;
