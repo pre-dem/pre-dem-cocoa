@@ -41,10 +41,6 @@ static NSString *app_id(NSString *appKey) {
     PREDPersistence *_persistence;
 
     PREDSender *_sender;
-
-    NSMutableDictionary *_transactions;
-
-    NSLock *_transactionsLock;
 }
 
 #pragma mark - Public Class Methods
@@ -61,20 +57,12 @@ static NSString *app_id(NSString *appKey) {
     [[self sharedPREDManager] diagnose:host complete:complete];
 }
 
-+ (NSString *)transactionStart:(NSString *)transactionName {
-    return [[PREDManager sharedPREDManager] transactionStart:transactionName];
-}
-
-+ (NSError *)transactionComplete:(NSString *)transactionID {
-    return [[PREDManager sharedPREDManager] transactionComplete:transactionID];
-}
-
-+ (NSError *)transactionCancel:(NSString *)transactionID reason:(NSString *)reason {
-    return [[PREDManager sharedPREDManager] transactionCancel:transactionID reason:reason];
-}
-
-+ (NSError *)transactionFail:(NSString *)transactionID reason:(NSString *)reason {
-    return [[PREDManager sharedPREDManager] transactionFail:transactionID reason:reason];
++ (PREDTransaction *)transactionStart:(NSString *)transactionName {
+    uint64_t startTime = (uint64_t) ([[NSDate date] timeIntervalSince1970] * 1000);
+    PREDTransaction *transaction = [PREDTransaction transactionWithPersistence:[self sharedPREDManager]->_persistence];
+    transaction.transaction_name = transactionName;
+    transaction.start_time = startTime;
+    return nil;
 }
 
 + (void)trackCustomEvent:(PREDCustomEvent *)event {
@@ -121,8 +109,6 @@ static NSString *app_id(NSString *appKey) {
 - (instancetype)init {
     if ((self = [super init])) {
         _persistence = [[PREDPersistence alloc] init];
-        _transactions = [NSMutableDictionary new];
-        _transactionsLock = [NSLock new];
     }
     return self;
 }
@@ -219,56 +205,6 @@ static NSString *app_id(NSString *appKey) {
     NSDictionary *dic = noty.userInfo[kPREDConfigRefreshedNotificationConfigKey];
     PREDConfig *config = [PREDConfig configWithDic:dic];
     [self setConfig:config];
-}
-
-- (NSString *)transactionStart:(NSString *)transactionName {
-    uint64_t startTime = (uint64_t) ([[NSDate date] timeIntervalSince1970] * 1000);
-    NSString *transactionID = [NSString stringWithFormat:@"%@%llu", transactionName, startTime];
-    PREDTransaction *transaction = [[PREDTransaction alloc] init];
-    transaction.transaction_name = transactionName;
-    transaction.start_time = startTime;
-    [_transactionsLock lock];
-    _transactions[transactionID] = transaction;
-    [_transactionsLock unlock];
-    return transactionID;
-}
-
-- (NSError *)transactionComplete:(NSString *)transactionID {
-    PREDTransaction *transaction = _transactions[transactionID];
-    if (!transaction) {
-        return [PREDError GenerateNSError:kPREDErrorCodeInvalidTransactionIDError description:@"invalid transaction id, you should generate transaction id via [PREDMnanager transactionStart:] method first before call this method"];
-    }
-    uint64_t endTime = (uint64_t) ([[NSDate date] timeIntervalSince1970] * 1000);
-    transaction.end_time = endTime;
-    transaction.transaction_type = PREDTransactionTypeCompleted;
-    [_persistence persistTransaction:transaction];
-    return nil;
-}
-
-- (NSError *)transactionCancel:(NSString *)transactionID reason:(NSString *)reason {
-    PREDTransaction *transaction = _transactions[transactionID];
-    if (!transaction) {
-        return [PREDError GenerateNSError:kPREDErrorCodeInvalidTransactionIDError description:@"invalid transaction id, you should generate transaction id via [PREDMnanager transactionStart:] method first before call this method"];
-    }
-    uint64_t endTime = (uint64_t) ([[NSDate date] timeIntervalSince1970] * 1000);
-    transaction.end_time = endTime;
-    transaction.transaction_type = PREDTransactionTypeCancelled;
-    transaction.reason = reason;
-    [_persistence persistTransaction:transaction];
-    return nil;
-}
-
-- (NSError *)transactionFail:(NSString *)transactionID reason:(NSString *)reason {
-    PREDTransaction *transaction = _transactions[transactionID];
-    if (!transaction) {
-        return [PREDError GenerateNSError:kPREDErrorCodeInvalidTransactionIDError description:@"invalid transaction id, you should generate transaction id via [PREDMnanager transactionStart:] method first before call this method"];
-    }
-    uint64_t endTime = (uint64_t) ([[NSDate date] timeIntervalSince1970] * 1000);
-    transaction.end_time = endTime;
-    transaction.transaction_type = PREDTransactionTypeFailed;
-    transaction.reason = reason;
-    [_persistence persistTransaction:transaction];
-    return nil;
 }
 
 @end

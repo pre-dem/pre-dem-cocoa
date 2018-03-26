@@ -6,6 +6,9 @@
 //
 
 #import <PreDemCocoa/PreDemCocoa.h>
+#import "PREDTransaction.h"
+
+@class PREDPersistence;
 
 typedef NS_ENUM(NSInteger, PREDTransactionType) {
     PREDTransactionTypeCompleted,
@@ -13,7 +16,7 @@ typedef NS_ENUM(NSInteger, PREDTransactionType) {
     PREDTransactionTypeFailed,
 };
 
-@interface PREDTransaction : PREDBaseModel
+@interface PREDTransaction()
 
 @property(nonatomic, strong) NSString *transaction_name;
 @property(nonatomic, assign) uint64_t start_time;
@@ -21,5 +24,7 @@ typedef NS_ENUM(NSInteger, PREDTransactionType) {
 // 0 正常结束，1 被取消，2 失败
 @property(nonatomic, assign) PREDTransactionType transaction_type;
 @property(nonatomic, assign) NSString *reason;
+
++ (PREDTransaction *)transactionWithPersistence:(PREDPersistence *)persistence;
 
 @end

@@ -15,7 +15,7 @@
 #import "PREDAppInfo.h"
 #import "PREDCustomEvent.h"
 #import "PREDBreadcrumb.h"
-#import "PREDTransaction.h"
+#import "PREDTransactionPrivate.h"
 
 @interface PREDPersistence : NSObject
 

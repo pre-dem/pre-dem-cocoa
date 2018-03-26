@@ -129,23 +129,23 @@
 }
 
 - (IBAction)completeTransaction:(id)sender {
-    NSString *transactionID = [PREDManager transactionStart:@"test"];
+    PREDTransaction *transaction = [PREDManager transactionStart:@"test"];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, arc4random() % 10 * NSEC_PER_SEC), dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [PREDManager transactionFail:transactionID reason:@"test reason"];
+        [transaction complete];
     });
 }
 
 - (IBAction)failTransaction:(id)sender {
-    NSString *transactionID = [PREDManager transactionStart:@"test"];
+    PREDTransaction *transaction = [PREDManager transactionStart:@"test"];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, arc4random() % 10 * NSEC_PER_SEC), dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [PREDManager transactionFail:transactionID reason:@"test reason for failed transaction"];
+        [transaction failWithReason:@"test reason for failed transaction"];
     });
 }
 
 - (IBAction)calcelTransaction:(id)sender {
-    NSString *transactionID = [PREDManager transactionStart:@"test"];
+    PREDTransaction *transaction = [PREDManager transactionStart:@"test"];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, arc4random() % 10 * NSEC_PER_SEC), dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [PREDManager transactionCancel:transactionID reason:@"test reason for cancelled transaction"];
+        [transaction cancelWithReason:@"test reason for cancelled transaction"];
     });
 }
 
