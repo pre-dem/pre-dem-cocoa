@@ -174,8 +174,8 @@ static NSString *app_id(NSString *appKey) {
 
     _lagManager = [[PREDLagMonitorController alloc] initWithPersistence:_persistence];
 
-    _breadcrumbTracker = [[PREDBreadcrumbTracker alloc] initWithPersistence:_persistence];
-    [_breadcrumbTracker start];
+//    _breadcrumbTracker = [[PREDBreadcrumbTracker alloc] initWithPersistence:_persistence];
+//    [_breadcrumbTracker start];
 
     [PREDLog setPersistence:_persistence];
     PREDLog.started = YES;
