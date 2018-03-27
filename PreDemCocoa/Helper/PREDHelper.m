@@ -17,6 +17,8 @@
 #import "PREDLogger.h"
 
 static NSString *const kPREDDirectoryName = @"com.qiniu.predem";
+static NSString *const kPREDKeychainServiceName = @"com.qiniu.predem";
+static NSString *const kPREDUUIDKeychainName = @"uuid";
 
 __strong static NSString *_tag = @"";
 
@@ -52,8 +54,8 @@ __strong static NSString *_tag = @"";
 }
 
 + (NSString *)readUUIDFromKeyChain {
-    UICKeyChainStore *keychain = [UICKeyChainStore keyChainStoreWithService:@"com.qiniu.predem"];
-    NSString *UUID = keychain[@"uuid"];
+    UICKeyChainStore *keychain = [UICKeyChainStore keyChainStoreWithService:kPREDKeychainServiceName];
+    NSString *UUID = [keychain stringForKey:kPREDUUIDKeychainName];
     return UUID;
 }
 
@@ -63,8 +65,8 @@ __strong static NSString *_tag = @"";
     NSString *uuidString = [NSString stringWithString:(__bridge NSString *) strRef];
     CFRelease(strRef);
     CFRelease(uuidRef);
-    UICKeyChainStore *keychain = [UICKeyChainStore keyChainStoreWithService:@"com.qiniu.predem"];
-    keychain[@"uuid"] = uuidString;
+    UICKeyChainStore *keychain = [UICKeyChainStore keyChainStoreWithService:kPREDKeychainServiceName];
+    [keychain setString:uuidString forKey:kPREDUUIDKeychainName];
     return uuidString;
 }
 
