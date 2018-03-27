@@ -32,6 +32,16 @@
 		CAC554802271976E0B9A8427 /* Pods_PreDemCocoaTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6727E321FCD337900AEF01D /* Pods_PreDemCocoaTests.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		B64266F02069EC420012EE06 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B602313C1EC9B7AC005AB798 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B60231431EC9B7AC005AB798;
+			remoteInfo = PreDemObjcDemo;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		0EBE59C619EB9355CEBD3EF5 /* Pods-PreDemCocoaTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PreDemCocoaTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PreDemCocoaTests/Pods-PreDemCocoaTests.debug.xcconfig"; sourceTree = "<group>"; };
 		18A00E8E5E9625CA16EC414B /* Pods-PreDemObjcDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PreDemObjcDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PreDemObjcDemo/Pods-PreDemObjcDemo.debug.xcconfig"; sourceTree = "<group>"; };
@@ -279,6 +289,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				B64266F12069EC420012EE06 /* PBXTargetDependency */,
 			);
 			name = PreDemCocoaTests;
 			productName = PreDemObjcDemoTests;
@@ -324,6 +335,7 @@
 						CreatedOnToolsVersion = 8.3.2;
 						DevelopmentTeam = GDFHW66V92;
 						ProvisioningStyle = Automatic;
+						TestTargetID = B60231431EC9B7AC005AB798;
 					};
 					B6D9B05B1F5E419E001D893E = {
 						CreatedOnToolsVersion = 8.3.3;
@@ -598,6 +610,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		B64266F12069EC420012EE06 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B60231431EC9B7AC005AB798 /* PreDemObjcDemo */;
+			targetProxy = B64266F02069EC420012EE06 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		B60231501EC9B7AC005AB798 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
@@ -807,6 +827,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PreDemObjcDemo.app/PreDemObjcDemo";
 				USER_HEADER_SEARCH_PATHS = "../PreDemCocoa/**";
 			};
 			name = Debug;
@@ -825,6 +846,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PreDemObjcDemo.app/PreDemObjcDemo";
 				USER_HEADER_SEARCH_PATHS = "../PreDemCocoa/**";
 			};
 			name = Release;
