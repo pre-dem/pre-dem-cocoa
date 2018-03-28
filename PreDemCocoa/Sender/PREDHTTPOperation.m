@@ -19,7 +19,7 @@
 
 
 + (instancetype)operationWithRequest:(NSURLRequest *)urlRequest {
-    PREDHTTPOperation *op = [[self class] new];
+    PREDHTTPOperation *op = (PREDHTTPOperation *) [[self class] new];
     op->_URLRequest = urlRequest;
     return op;
 }

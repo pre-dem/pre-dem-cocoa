@@ -6,9 +6,9 @@
 //
 
 #import "PREDCustomEvent.h"
-#import "PREDLog.h"
 #import "PREDConstants.h"
 #import "NSObject+Serialization.h"
+#import "PREDLogger.h"
 
 @implementation PREDCustomEvent
 
@@ -33,7 +33,7 @@
                 PREDLogError(@"jsonize custom events error: %@", error);
                 return nil;
             } else if (!contentData.length) {
-                PREDLogWarn(@"discard empty custom event");
+                PREDLogWarning(@"discard empty custom event");
                 return nil;
             }
 

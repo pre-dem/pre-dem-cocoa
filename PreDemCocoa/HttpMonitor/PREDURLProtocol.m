@@ -9,6 +9,7 @@
 #import "PREDURLProtocol.h"
 #import <HappyDNS/HappyDNS.h>
 #import "PREDURLSessionSwizzler.h"
+#import "PREDLogger.h"
 
 #define DNSPodsHost @"119.29.29.29"
 

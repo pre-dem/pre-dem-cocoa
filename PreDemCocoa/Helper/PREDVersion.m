@@ -7,7 +7,7 @@
 //
 
 #import "PREDVersion.h"
-#import "PREDLog.h"
+#import "PREDLogger.h"
 
 static NSString *version;
 static NSString *build;
@@ -17,14 +17,14 @@ static NSString *build;
 + (void)load {
     NSURL *bundleUrl = [[NSBundle bundleForClass:self] URLForResource:@"PREDResources" withExtension:@"bundle"];
     if (!bundleUrl) {
-        PREDLogWarn(@"version bundle is not detected");
+        PREDLogWarning(@"version bundle is not detected");
         return;
     }
     NSBundle *bundle = [NSBundle bundleWithURL:bundleUrl];
     NSString *plistPath = [bundle pathForResource:@"Version" ofType:@"plist"];
     NSDictionary *data = [[NSDictionary alloc] initWithContentsOfFile:plistPath];
-    version = [data objectForKey:@"Version"];
-    build = [data objectForKey:@"Build"];
+    version = data[@"Version"];
+    build = data[@"Build"];
 }
 
 + (NSString *)getSDKVersion {

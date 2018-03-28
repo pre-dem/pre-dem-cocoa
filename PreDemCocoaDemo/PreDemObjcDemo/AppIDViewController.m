@@ -67,7 +67,6 @@
     [PREDManager startWithAppKey:_appIdTextField.text
                    serviceDomain:_domainTextField.text];
     PREDManager.tag = @"userid_debug";
-    PREDLog.ttyLogLevel = (PREDLogLevel) DDLogLevelAll;
 #else
     [PREDManager startWithAppKey:_appIdTextField.text
                    serviceDomain:_domainTextField.text];

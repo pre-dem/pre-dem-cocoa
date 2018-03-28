@@ -11,17 +11,10 @@
 
 
 @interface ViewController ()
-        <
-        UIPickerViewDataSource,
-        UIPickerViewDelegate,
-        PREDLogDelegate
-        >
 
 @property(nonatomic, strong) IBOutlet UILabel *versionLable;
 @property(nonatomic, strong) IBOutlet UIPickerView *logLevelPicker;
 @property(nonatomic, strong) IBOutlet UITextView *logTextView;
-@property(nonatomic, strong) NSArray *logPickerKeys;
-@property(nonatomic, strong) NSArray *logPickerValues;
 
 @end
 
@@ -31,25 +24,6 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     self.versionLable.text = [NSString stringWithFormat:@"%@(%@)", PREDManager.version, PREDManager.build];
-    self.logPickerKeys = @[
-            @"不上传 log",
-            @"PREDLogLevelOff",
-            @"PREDLogLevelError",
-            @"PREDLogLevelWarning",
-            @"PREDLogLevelInfo",
-            @"PREDLogLevelDebug",
-            @"PREDLogLevelVerbose",
-            @"PREDLogLevelAll"
-    ];
-    self.logPickerValues = @[
-            @(PREDLogLevelOff),
-            @(PREDLogLevelError),
-            @(PREDLogLevelWarning),
-            @(PREDLogLevelInfo),
-            @(PREDLogLevelDebug),
-            @(PREDLogLevelVerbose),
-            @(PREDLogLevelAll)
-    ];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -57,38 +31,6 @@
     self.navigationController.navigationBarHidden = YES;
 }
 
-- (IBAction)viewTapped:(id)sender {
-    PREDLogVerbose(@"verbose log test");
-    PREDLogDebug(@"debug log test");
-    PREDLogInfo(@"info log test");
-    PREDLogWarn(@"warn log test");
-    PREDLogError(@"error log test");
-}
-
-- (IBAction)viewLongPressed:(id)sender {
-    UIAlertController *controller = [UIAlertController alertControllerWithTitle:@"调试菜单" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-    NSString *actionName;
-    if (!PREDLog.delegate) {
-        actionName = @"开启将 log 输出到界面";
-    } else {
-        actionName = @"关闭将 log 输出到界面";
-    }
-    [controller addAction:[UIAlertAction actionWithTitle:actionName style:UIAlertActionStyleDefault handler:^(UIAlertAction *_Nonnull action) {
-        if (!PREDLog.delegate) {
-            PREDLog.delegate = self;
-        } else {
-            PREDLog.delegate = nil;
-        }
-    }]];
-
-    [controller addAction:[UIAlertAction actionWithTitle:@"清空界面 log" style:UIAlertActionStyleDefault handler:^(UIAlertAction *_Nonnull action) {
-        _logTextView.text = @"";
-    }]];
-
-    [controller addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
-
-    [self presentViewController:controller animated:YES completion:nil];
-}
 
 - (IBAction)sendHTTPRequest:(id)sender {
     NSArray *urls = @[@"http://www.baidu.com", @"https://www.163.com", @"http://www.qq.com", @"https://www.dehenglalala.com", @"http://www.balabalabalatest.com", @"http://www.alipay.com"];
@@ -152,42 +94,6 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
-- (void)log:(PREDLog *)log didReceivedLogMessage:(DDLogMessage *)message formattedLog:(NSString *)formattedLog {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        _logTextView.text = [NSString stringWithFormat:@"%@%@\n", _logTextView.text, formattedLog];
-        _logTextView.layoutManager.allowsNonContiguousLayout = NO;
-        [_logTextView scrollRangeToVisible:NSMakeRange(0, _logTextView.text.length)];
-    });
-}
-
-// returns the number of 'columns' to display.
-- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
-    return 1;
-}
-
-// returns the # of rows in each component..
-- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
-    return self.logPickerKeys.count;
-}
-
-- (nullable NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component __TVOS_PROHIBITED {
-    return self.logPickerKeys[(NSUInteger) row];
-}
-
-- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component __TVOS_PROHIBITED; {
-    if (row == 0) {
-        [PREDLog stopCaptureLog];
-    } else {
-        NSError *error;
-        BOOL success = [PREDLog startCaptureLogWithLevel:(PREDLogLevel) [self.logPickerValues[(NSUInteger) (row - 1)] intValue] error:&error];
-        if (!success) {
-            UIAlertController *controller = [UIAlertController alertControllerWithTitle:@"错误" message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
-            [controller addAction:[UIAlertAction actionWithTitle:@"好的" style:UIAlertActionStyleDefault handler:nil]];
-            [self presentViewController:controller animated:YES completion:nil];
-        }
-    }
 }
 
 @end

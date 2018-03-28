@@ -9,19 +9,16 @@
 #import "PREDPersistence.h"
 #import "PREDHelper.h"
 #import "PREDError.h"
+#import "PREDLogger.h"
 
 #define PREDMaxCacheFileSize    512 * 1024  // 512KB
 #define PREDMillisecondPerSecond        1000
 
 @implementation PREDPersistence {
     NSString *_appInfoDir;
-    NSString *_crashDir;
-    NSString *_lagDir;
-    NSString *_logDir;
     NSString *_httpDir;
     NSString *_netDir;
     NSString *_customDir;
-    NSString *_breadcrumbDir;
     NSString *_transactionsDir;
     NSFileManager *_fileManager;
     NSFileHandle *_appInfoFileHandle;
@@ -32,12 +29,8 @@
     dispatch_queue_t _netQueue;
     NSFileHandle *_customFileHandle;
     dispatch_queue_t _customEventQueue;
-    NSFileHandle *_breadcrumbFileHandle;
-    dispatch_queue_t _breadcrumbQueue;
     NSFileHandle *_transactionsFileHandle;
     dispatch_queue_t _transactionsQueue;
-    PREDLogMeta *_lastLogMeta;
-    NSString *_lastLogMetaPath;
 }
 
 - (instancetype)init {
@@ -45,13 +38,9 @@
         _fileManager = [NSFileManager defaultManager];
 
         _appInfoDir = [NSString stringWithFormat:@"%@/%@", PREDHelper.cacheDirectory, @"appInfo"];
-        _crashDir = [NSString stringWithFormat:@"%@/%@", PREDHelper.cacheDirectory, @"crash"];
-        _lagDir = [NSString stringWithFormat:@"%@/%@", PREDHelper.cacheDirectory, @"lag"];
-        _logDir = [NSString stringWithFormat:@"%@/%@", PREDHelper.cacheDirectory, @"log"];
         _httpDir = [NSString stringWithFormat:@"%@/%@", PREDHelper.cacheDirectory, @"http"];
         _netDir = [NSString stringWithFormat:@"%@/%@", PREDHelper.cacheDirectory, @"net"];
         _customDir = [NSString stringWithFormat:@"%@/%@", PREDHelper.cacheDirectory, @"custom"];
-        _breadcrumbDir = [NSString stringWithFormat:@"%@/%@", PREDHelper.cacheDirectory, @"breadcrumb"];
         _transactionsDir = [NSString stringWithFormat:@"%@/%@", PREDHelper.cacheDirectory, @"transactions"];
 
 
@@ -59,25 +48,12 @@
         _httpQueue = dispatch_queue_create("predem_http", DISPATCH_QUEUE_SERIAL);
         _netQueue = dispatch_queue_create("predem_net", DISPATCH_QUEUE_SERIAL);
         _customEventQueue = dispatch_queue_create("predem_custom_event", DISPATCH_QUEUE_SERIAL);
-        _breadcrumbQueue = dispatch_queue_create("predem_breadcrumb", DISPATCH_QUEUE_SERIAL);
         _transactionsQueue = dispatch_queue_create("predem_transactions", DISPATCH_QUEUE_SERIAL);
 
         NSError *error;
         [_fileManager createDirectoryAtPath:_appInfoDir withIntermediateDirectories:YES attributes:nil error:&error];
         if (error) {
             PREDLogError(@"create dir %@ failed", _appInfoDir);
-        }
-        [_fileManager createDirectoryAtPath:_crashDir withIntermediateDirectories:YES attributes:nil error:&error];
-        if (error) {
-            PREDLogError(@"create dir %@ failed", _crashDir);
-        }
-        [_fileManager createDirectoryAtPath:_lagDir withIntermediateDirectories:YES attributes:nil error:&error];
-        if (error) {
-            PREDLogError(@"create dir %@ failed", _lagDir);
-        }
-        [_fileManager createDirectoryAtPath:_logDir withIntermediateDirectories:YES attributes:nil error:&error];
-        if (error) {
-            PREDLogError(@"create dir %@ failed", _logDir);
         }
         [_fileManager createDirectoryAtPath:_httpDir withIntermediateDirectories:YES attributes:nil error:&error];
         if (error) {
@@ -88,10 +64,6 @@
             PREDLogError(@"create dir %@ failed", _netDir);
         }
         [_fileManager createDirectoryAtPath:_customDir withIntermediateDirectories:YES attributes:nil error:&error];
-        if (error) {
-            PREDLogError(@"create dir %@ failed", _customDir);
-        }
-        [_fileManager createDirectoryAtPath:_breadcrumbDir withIntermediateDirectories:YES attributes:nil error:&error];
         if (error) {
             PREDLogError(@"create dir %@ failed", _customDir);
         }
@@ -180,25 +152,6 @@
     });
 }
 
-- (void)persistBreadcrumb:(PREDBreadcrumb *)breadcrumb {
-    dispatch_async(_breadcrumbQueue, ^{
-        NSError *error;
-        NSData *toSave = [breadcrumb serializeForSending:&error];
-        if (error) {
-            PREDLogError(@"jsonize breadcrumb events error: %@", error);
-            return;
-        }
-
-        _breadcrumbFileHandle = [self updateFileHandle:_breadcrumbFileHandle dir:_breadcrumbDir];
-        if (!_breadcrumbFileHandle) {
-            PREDLogError(@"no file handle drop breadcrumb data");
-            return;
-        }
-        [_breadcrumbFileHandle writeData:toSave];
-        [_breadcrumbFileHandle writeData:[@"\n" dataUsingEncoding:NSUTF8StringEncoding]];
-    });
-}
-
 - (void)persistTransaction:(PREDTransaction *)transaction {
     dispatch_async(_transactionsQueue, ^{
         NSError *error;
@@ -219,55 +172,6 @@
 }
 
 // no batch
-
-- (void)persistCrashMeta:(PREDCrashMeta *)crashMeta {
-    NSError *error;
-    NSData *data = [crashMeta serializeForSending:&error];
-    if (error) {
-        PREDLogError(@"jsonize crash meta error: %@", error);
-        return;
-    }
-    NSString *fileName = [NSString stringWithFormat:@"%f-%u", [[NSDate date] timeIntervalSince1970], arc4random()];
-    BOOL success = [data writeToFile:[NSString stringWithFormat:@"%@/%@", _crashDir, fileName] atomically:NO];
-    if (!success) {
-        PREDLogError(@"write crash meta to file %@ failed", fileName);
-    }
-}
-
-- (void)persistLagMeta:(PREDLagMeta *)lagMeta {
-    NSError *error;
-    NSData *data = [lagMeta serializeForSending:&error];
-    if (error) {
-        PREDLogError(@"jsonize lag meta error: %@", error);
-        return;
-    }
-    NSString *fileName = [NSString stringWithFormat:@"%f-%u", [[NSDate date] timeIntervalSince1970], arc4random()];
-    BOOL success = [data writeToFile:[NSString stringWithFormat:@"%@/%@", _lagDir, fileName] atomically:NO];
-    if (!success) {
-        PREDLogError(@"write lag meta to file %@ failed", fileName);
-    }
-}
-
-- (void)persistLogMeta:(PREDLogMeta *)logMeta {
-    NSString *fileName;
-    NSError *error;
-    if (logMeta != _lastLogMeta) {
-        fileName = [NSString stringWithFormat:@"%f-%u", [[NSDate date] timeIntervalSince1970], arc4random()];
-        _lastLogMetaPath = fileName;
-        _lastLogMeta = logMeta;
-    } else {
-        fileName = _lastLogMetaPath;
-    }
-    NSData *data = [logMeta serializeForSending:&error];
-    if (error) {
-        PREDLogError(@"jsonize log meta error: %@", error);
-        return;
-    }
-    BOOL success = [data writeToFile:[NSString stringWithFormat:@"%@/%@", _logDir, fileName] atomically:NO];
-    if (!success) {
-        PREDLogError(@"write log meta to file %@ failed", fileName);
-    }
-}
 
 - (NSString *)nextArchivedAppInfoPath {
     NSFileHandle *fileHanle = _appInfoFileHandle;
@@ -295,13 +199,6 @@
     NSFileHandle *fileHanle = _customFileHandle;
     NSString *path = [self nextArchivedPathForDir:_customDir fileHandle:&fileHanle inQueue:_customEventQueue];
     _customFileHandle = fileHanle;
-    return path;
-}
-
-- (NSString *)nextArchivedBreadcrumbPath {
-    NSFileHandle *fileHanle = _breadcrumbFileHandle;
-    NSString *path = [self nextArchivedPathForDir:_breadcrumbDir fileHandle:&fileHanle inQueue:_breadcrumbQueue];
-    _breadcrumbFileHandle = fileHanle;
     return path;
 }
 
@@ -341,36 +238,6 @@
         }
     });
     return archivedPath;
-}
-
-- (NSString *)nextCrashMetaPath {
-    NSArray *files = [_fileManager enumeratorAtPath:_crashDir].allObjects;
-    if (files.count == 0) {
-        return nil;
-    } else {
-        return [NSString stringWithFormat:@"%@/%@", _crashDir, files[0]];
-    }
-}
-
-- (NSString *)nextLagMetaPath {
-    NSArray *files = [_fileManager enumeratorAtPath:_lagDir].allObjects;
-    if (files.count == 0) {
-        return nil;
-    } else {
-        return [NSString stringWithFormat:@"%@/%@", _lagDir, files[0]];
-    }
-}
-
-- (NSString *)nextLogMetaPath {
-    NSArray *files = [_fileManager enumeratorAtPath:_logDir].allObjects;
-    __block NSString *nextMetaPath;
-    [files enumerateObjectsUsingBlock:^(NSString *_Nonnull obj, NSUInteger idx, BOOL *_Nonnull stop) {
-        if (![obj isEqualToString:_lastLogMetaPath]) {
-            nextMetaPath = [NSString stringWithFormat:@"%@/%@", _logDir, obj];
-            *stop = YES;
-        }
-    }];
-    return nextMetaPath;
 }
 
 - (NSMutableDictionary *)getLogMeta:(NSString *)filePath error:(NSError **)error {
@@ -427,7 +294,9 @@
         *error = err;
     }
     if (!err && ![dic respondsToSelector:@selector(valueForKey:)]) {
-        *error = [PREDError GenerateNSError:kPREDErrorCodeInternalError description:@"wrong json object type %@", NSStringFromClass(dic.class)];
+        if (error) {
+            *error = [PREDError GenerateNSError:kPREDErrorCodeInternalError description:@"wrong json object type %@", NSStringFromClass(dic.class)];
+        }
         return nil;
     }
     return dic;
@@ -447,45 +316,6 @@
     NSError *error;
     for (NSString *fileName in [_fileManager enumeratorAtPath:_appInfoDir]) {
         NSString *filePath = [NSString stringWithFormat:@"%@/%@", _appInfoDir, fileName];
-        [_fileManager removeItemAtPath:filePath error:&error];
-        if (error) {
-            PREDLogError(@"purge file %@ error %@", filePath, error);
-        } else {
-            PREDLogVerbose(@"purge file %@ succeeded", filePath);
-        }
-    }
-}
-
-- (void)purgeAllCrashMeta {
-    NSError *error;
-    for (NSString *fileName in [_fileManager enumeratorAtPath:_crashDir]) {
-        NSString *filePath = [NSString stringWithFormat:@"%@/%@", _crashDir, fileName];
-        [_fileManager removeItemAtPath:filePath error:&error];
-        if (error) {
-            PREDLogError(@"purge file %@ error %@", filePath, error);
-        } else {
-            PREDLogVerbose(@"purge file %@ succeeded", filePath);
-        }
-    }
-}
-
-- (void)purgeAllLagMeta {
-    NSError *error;
-    for (NSString *fileName in [_fileManager enumeratorAtPath:_lagDir]) {
-        NSString *filePath = [NSString stringWithFormat:@"%@/%@", _lagDir, fileName];
-        [_fileManager removeItemAtPath:filePath error:&error];
-        if (error) {
-            PREDLogError(@"purge file %@ error %@", filePath, error);
-        } else {
-            PREDLogVerbose(@"purge file %@ succeeded", filePath);
-        }
-    }
-}
-
-- (void)purgeAllLogMeta {
-    NSError *error;
-    for (NSString *fileName in [_fileManager enumeratorAtPath:_logDir]) {
-        NSString *filePath = [NSString stringWithFormat:@"%@/%@", _logDir, fileName];
         [_fileManager removeItemAtPath:filePath error:&error];
         if (error) {
             PREDLogError(@"purge file %@ error %@", filePath, error);
@@ -534,19 +364,6 @@
     }
 }
 
-- (void)purgeAllBreadcrumb {
-    NSError *error;
-    for (NSString *fileName in [_fileManager enumeratorAtPath:_breadcrumbDir]) {
-        NSString *filePath = [NSString stringWithFormat:@"%@/%@", _breadcrumbDir, fileName];
-        [_fileManager removeItemAtPath:filePath error:&error];
-        if (error) {
-            PREDLogError(@"purge file %@ error %@", filePath, error);
-        } else {
-            PREDLogVerbose(@"purge file %@ succeeded", filePath);
-        }
-    }
-}
-
 - (void)purgeAllTransactions {
     NSError *error;
     for (NSString *fileName in [_fileManager enumeratorAtPath:_transactionsDir]) {
@@ -562,13 +379,9 @@
 
 - (void)purgeAllPersistence {
     [self purgeAllAppInfo];
-    [self purgeAllLagMeta];
-    [self purgeAllLogMeta];
     [self purgeAllHttpMonitor];
     [self purgeAllCustom];
-    [self purgeAllCrashMeta];
     [self purgeAllNetDiag];
-    [self purgeAllBreadcrumb];
     [self purgeAllTransactions];
 }
 

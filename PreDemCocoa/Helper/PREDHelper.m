@@ -8,13 +8,13 @@
 
 
 #import "PREDHelper.h"
-#import "PreDemCocoa.h"
 #import "PREDVersion.h"
 #import <sys/sysctl.h>
 #import <objc/runtime.h>
 #import <CommonCrypto/CommonDigest.h>
 #import <mach-o/dyld.h>
 #import <UICKeyChainStore/UICKeyChainStore.h>
+#import "PREDLogger.h"
 
 static NSString *const kPREDDirectoryName = @"com.qiniu.predem";
 
@@ -315,7 +315,7 @@ __strong static NSString *_tag = @"";
 }
 
 + (NSString *)sdkDirectory {
-    return [NSString stringWithFormat:@"%@%@", [[[[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] objectAtIndex:0] absoluteString] substringFromIndex:7], kPREDDirectoryName];
+    return [NSString stringWithFormat:@"%@%@", [[[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask][0] absoluteString] substringFromIndex:7], kPREDDirectoryName];
 }
 
 + (NSString *)cacheDirectory {
@@ -327,11 +327,11 @@ __strong static NSString *_tag = @"";
 }
 
 + (NSString *)appName:(NSString *)placeHolderString {
-    NSString *appName = [[[NSBundle mainBundle] localizedInfoDictionary] objectForKey:@"CFBundleDisplayName"];
+    NSString *appName = [[NSBundle mainBundle] localizedInfoDictionary][@"CFBundleDisplayName"];
     if (!appName)
         appName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"];
     if (!appName)
-        appName = [[[NSBundle mainBundle] localizedInfoDictionary] objectForKey:@"CFBundleName"];
+        appName = [[NSBundle mainBundle] localizedInfoDictionary][@"CFBundleName"];
     if (!appName)
         appName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleName"] ?: placeHolderString;
 
@@ -389,7 +389,7 @@ NSString *base64String(NSData *data, unsigned long length) {
         } else {
             value = [self getObjectInternal:value];
         }
-        [dic setObject:value forKey:propName];
+        dic[propName] = value;
     }
 
     if (props) {
@@ -417,7 +417,7 @@ NSString *base64String(NSData *data, unsigned long length) {
 
         for (int i = 0; i < objarr.count; i++) {
 
-            [arr setObject:[self getObjectInternal:[objarr objectAtIndex:i]] atIndexedSubscript:i];
+            arr[i] = [self getObjectInternal:objarr[i]];
         }
         return arr;
     }
@@ -428,7 +428,7 @@ NSString *base64String(NSData *data, unsigned long length) {
 
         for (NSString *key in objdic.allKeys) {
 
-            [dic setObject:[self getObjectInternal:[objdic objectForKey:key]] forKey:key];
+            dic[key] = [self getObjectInternal:objdic[key]];
         }
         return dic;
     }

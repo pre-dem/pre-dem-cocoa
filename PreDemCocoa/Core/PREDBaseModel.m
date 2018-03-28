@@ -50,7 +50,7 @@
     if (thisClassDic.count > 0) {
         NSData *data = [NSJSONSerialization dataWithJSONObject:thisClassDic options:0 error:error];
         if (data) {
-            [dic setObject:[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] forKey:@"content"];
+            dic[@"content"] = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
         }
     }
     return [NSJSONSerialization dataWithJSONObject:dic options:0 error:error];
