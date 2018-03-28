@@ -81,6 +81,9 @@
     XCTAssertEqual([parsedContent[@"data_length"] intValue], 168);
     XCTAssertNil(parsedContent[@"network_error_msg"]);
     XCTAssertEqual([parsedContent[@"network_error_code"] intValue], 0);
+    XCTAssertTrue([parsedContent[@"start_timestamp"] intValue] > 0);
+    XCTAssertTrue([parsedContent[@"response_time_stamp"] intValue] >= [parsedContent[@"start_timestamp"] intValue]);
+    XCTAssertTrue([parsedContent[@"end_timestamp"] intValue] >= [parsedContent[@"start_timestamp"] intValue]);
 }
 
 - (void)testForSharedSessionHttp200 {
@@ -92,7 +95,7 @@
     __block NSData *originalData;
     __block NSHTTPURLResponse *originalResponse;
     __block NSError *originalError;
-    NSURLSessionDataTask *dataTask = [session dataTaskWithURL:[NSURL URLWithString:@"https://predem.qiniu.com"] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+    NSURLSessionDataTask *dataTask = [session dataTaskWithURL:[NSURL URLWithString:@"http://predem.qiniu.com"] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         originalData = data;
         originalResponse = (NSHTTPURLResponse *) response;
         originalError = error;
@@ -131,6 +134,11 @@
     XCTAssertEqual(originalData.length, [parsedContent[@"data_length"] intValue]);
     XCTAssertNil(parsedContent[@"network_error_msg"]);
     XCTAssertEqual([parsedContent[@"network_error_code"] intValue], 0);
+    XCTAssertTrue([parsedContent[@"start_timestamp"] intValue] > 0);
+    XCTAssertTrue([parsedContent[@"response_time_stamp"] intValue] >= [parsedContent[@"start_timestamp"] intValue]);
+    XCTAssertTrue([parsedContent[@"end_timestamp"] intValue] >= [parsedContent[@"start_timestamp"] intValue]);
+    XCTAssertTrue([parsedContent[@"dns_time"] intValue] > 0);
+    XCTAssertNotEqual(((NSString *) parsedContent[@"host_ip"]).length, 0);
 }
 
 - (void)testForSharedSession404 {
@@ -182,6 +190,9 @@
     XCTAssertEqual([parsedContent[@"data_length"] intValue], 18);
     XCTAssertNil(parsedContent[@"network_error_msg"]);
     XCTAssertEqual([parsedContent[@"network_error_code"] intValue], 0);
+    XCTAssertTrue([parsedContent[@"start_timestamp"] intValue] > 0);
+    XCTAssertTrue([parsedContent[@"response_time_stamp"] intValue] >= [parsedContent[@"start_timestamp"] intValue]);
+    XCTAssertTrue([parsedContent[@"end_timestamp"] intValue] >= [parsedContent[@"start_timestamp"] intValue]);
 }
 
 - (void)testForSharedSessionNetworkError {
@@ -231,6 +242,9 @@
     XCTAssertEqual(originalData.length, 0);
     XCTAssertTrue([originalError.localizedDescription isEqual:parsedContent[@"network_error_msg"]]);
     XCTAssertEqual(originalError.code, [parsedContent[@"network_error_code"] intValue]);
+    XCTAssertTrue([parsedContent[@"start_timestamp"] intValue] > 0);
+    XCTAssertTrue([parsedContent[@"response_time_stamp"] intValue] >= [parsedContent[@"start_timestamp"] intValue]);
+    XCTAssertTrue([parsedContent[@"end_timestamp"] intValue] >= [parsedContent[@"start_timestamp"] intValue]);
 }
 
 
@@ -283,6 +297,9 @@
     XCTAssertEqual([parsedContent[@"data_length"] intValue], 168);
     XCTAssertNil(parsedContent[@"network_error_msg"]);
     XCTAssertEqual([parsedContent[@"network_error_code"] intValue], 0);
+    XCTAssertTrue([parsedContent[@"start_timestamp"] intValue] > 0);
+    XCTAssertTrue([parsedContent[@"response_time_stamp"] intValue] >= [parsedContent[@"start_timestamp"] intValue]);
+    XCTAssertTrue([parsedContent[@"end_timestamp"] intValue] >= [parsedContent[@"start_timestamp"] intValue]);
 }
 
 - (void)testForHttpURLConnectionHttps200 {
@@ -333,6 +350,9 @@
     XCTAssertEqual([parsedContent[@"data_length"] intValue], 168);
     XCTAssertNil(parsedContent[@"network_error_msg"]);
     XCTAssertEqual([parsedContent[@"network_error_code"] intValue], 0);
+    XCTAssertTrue([parsedContent[@"start_timestamp"] intValue] > 0);
+    XCTAssertTrue([parsedContent[@"response_time_stamp"] intValue] >= [parsedContent[@"start_timestamp"] intValue]);
+    XCTAssertTrue([parsedContent[@"end_timestamp"] intValue] >= [parsedContent[@"start_timestamp"] intValue]);
 }
 
 - (void)testForHttpURLConnectionHttp200 {
@@ -382,9 +402,12 @@
     XCTAssertEqual(originalData.length, [parsedContent[@"data_length"] intValue]);
     XCTAssertNil(parsedContent[@"network_error_msg"]);
     XCTAssertEqual([parsedContent[@"network_error_code"] intValue], 0);
+    XCTAssertTrue([parsedContent[@"start_timestamp"] intValue] > 0);
+    XCTAssertTrue([parsedContent[@"response_time_stamp"] intValue] >= [parsedContent[@"start_timestamp"] intValue]);
+    XCTAssertTrue([parsedContent[@"end_timestamp"] intValue] >= [parsedContent[@"start_timestamp"] intValue]);
 }
 
-- (void)testForHttpURLConnectionHttp404 {
+- (void)testForHttpURLConnectionHttps404 {
     [_persistence purgeAllHttpMonitor];
     [PREDURLProtocol setPersistence:_persistence];
     PREDURLProtocol.started = YES;
@@ -432,6 +455,9 @@
     XCTAssertEqual([parsedContent[@"data_length"] intValue], 18);
     XCTAssertNil(parsedContent[@"network_error_msg"]);
     XCTAssertEqual([parsedContent[@"network_error_code"] intValue], 0);
+    XCTAssertTrue([parsedContent[@"start_timestamp"] intValue] > 0);
+    XCTAssertTrue([parsedContent[@"response_time_stamp"] intValue] >= [parsedContent[@"start_timestamp"] intValue]);
+    XCTAssertTrue([parsedContent[@"end_timestamp"] intValue] >= [parsedContent[@"start_timestamp"] intValue]);
 }
 
 - (void)testForHttpURLConnectionNetworkError {
@@ -480,6 +506,9 @@
     XCTAssertEqual(originalData.length, 0);
     XCTAssertTrue([originalError.localizedDescription isEqual:parsedContent[@"network_error_msg"]]);
     XCTAssertEqual(originalError.code, [parsedContent[@"network_error_code"] intValue]);
+    XCTAssertTrue([parsedContent[@"start_timestamp"] intValue] > 0);
+    XCTAssertTrue([parsedContent[@"response_time_stamp"] intValue] >= [parsedContent[@"start_timestamp"] intValue]);
+    XCTAssertTrue([parsedContent[@"end_timestamp"] intValue] >= [parsedContent[@"start_timestamp"] intValue]);
 }
 
 @end
