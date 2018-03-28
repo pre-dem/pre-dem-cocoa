@@ -10,6 +10,7 @@
 #import "PREDHelper.h"
 #import "PREDError.h"
 #import "PREDLogger.h"
+#import "PREDTransaction.h"
 
 #define PREDMaxCacheFileSize    512 * 1024  // 512KB
 #define PREDMillisecondPerSecond        1000

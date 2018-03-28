@@ -11,7 +11,8 @@
 #import "PREDNetDiagResult.h"
 #import "PREDAppInfo.h"
 #import "PREDCustomEvent.h"
-#import "PREDTransactionPrivate.h"
+
+@class PREDTransaction;
 
 @interface PREDPersistence : NSObject
 

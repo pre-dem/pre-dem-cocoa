@@ -15,6 +15,7 @@
 #import "PREDError.h"
 #import "PREDSender.h"
 #import "PREDLogger.h"
+#import "PREDTransactionPrivate.h"
 
 static NSString *app_id(NSString *appKey) {
     if (appKey.length >= PREDAppIdLength) {
