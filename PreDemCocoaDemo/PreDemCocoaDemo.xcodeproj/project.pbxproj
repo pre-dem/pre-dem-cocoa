@@ -64,6 +64,9 @@
 		B694F1501F3025AB00175FF1 /* AppIDViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppIDViewController.h; sourceTree = "<group>"; };
 		B694F1511F3025AB00175FF1 /* AppIDViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppIDViewController.m; sourceTree = "<group>"; };
 		B6AC979A1ECC61C80084F2A3 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		B6ADA384206B4EDD000A0852 /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = CHANGELOG.md; path = ../CHANGELOG.md; sourceTree = "<group>"; };
+		B6ADA385206B4EE5000A0852 /* Contributing.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = Contributing.md; path = ../Contributing.md; sourceTree = "<group>"; };
+		B6CC5C2F1F7E4B31009C92FB /* PREDCrashTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PREDCrashTests.m; sourceTree = "<group>"; };
 		B6CC5C311F7E4C82009C92FB /* PREDPersistenceTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PREDPersistenceTests.m; sourceTree = "<group>"; };
 		B6CC5C351F7E8BD6009C92FB /* crash.dat */ = {isa = PBXFileReference; lastKnownFileType = file; path = crash.dat; sourceTree = "<group>"; };
 		B6CD372B1ECC346F00186D6D /* scripts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = scripts; path = ../scripts; sourceTree = "<group>"; };
@@ -126,6 +129,8 @@
 		B602313B1EC9B7AC005AB798 = {
 			isa = PBXGroup;
 			children = (
+				B6ADA385206B4EE5000A0852 /* Contributing.md */,
+				B6ADA384206B4EDD000A0852 /* CHANGELOG.md */,
 				B6AC979A1ECC61C80084F2A3 /* README.md */,
 				B6548F311ECB067C0031DD42 /* .gitignore */,
 				B6548F301ECB06710031DD42 /* .travis.yml */,
