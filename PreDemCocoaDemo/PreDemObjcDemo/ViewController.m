@@ -13,8 +13,6 @@
 @interface ViewController ()
 
 @property(nonatomic, strong) IBOutlet UILabel *versionLable;
-@property(nonatomic, strong) IBOutlet UIPickerView *logLevelPicker;
-@property(nonatomic, strong) IBOutlet UITextView *logTextView;
 
 @end
 
@@ -52,10 +50,6 @@
                  }];
 }
 
-- (IBAction)forceCrash:(id)sender {
-    @throw [NSException exceptionWithName:@"Manually Exception" reason:@"嗯，我是故意的" userInfo:nil];
-}
-
 - (IBAction)diyEvent:(id)sender {
     NSDictionary *dict = @{
             @"stringKey": [NSString stringWithFormat:@"test\t_\n%d", arc4random_uniform(100)],
@@ -64,10 +58,6 @@
     };
     PREDCustomEvent *event = [PREDCustomEvent eventWithName:@"test\t_\nios\t_\nevent_2" contentDic:dict];
     [PREDManager trackCustomEvent:event];
-}
-
-- (IBAction)blockMainThread:(id)sender {
-    sleep(1);
 }
 
 - (IBAction)completeTransaction:(id)sender {
