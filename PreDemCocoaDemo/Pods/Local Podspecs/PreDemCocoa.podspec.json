@@ -18,9 +18,8 @@
   "subspecs": [
     {
       "name": "Core",
-      "source_files": "PreDemCocoa/**/*.{h,m,mm}",
+      "source_files": "PreDemCocoa/**/*.{h,m,mm,c,cpp}",
       "public_header_files": "PreDemCocoa/Public/*.h",
-      "vendored_frameworks": "Vendor/*.framework",
       "libraries": [
         "c++",
         "z"
@@ -29,19 +28,13 @@
         "PREDResources": "PreDemCocoa/Resources/*.plist"
       },
       "dependencies": {
-        "HappyDNS": [
-
-        ],
         "QNNetDiag": [
 
         ],
-        "Qiniu": [
-
-        ],
-        "CocoaLumberjack": [
-
-        ],
         "UICKeyChainStore": [
+
+        ],
+        "HappyDNS": [
 
         ]
       }
@@ -50,9 +43,6 @@
       "name": "Swift",
       "dependencies": {
         "PreDemCocoa/Core": [
-
-        ],
-        "CocoaLumberjack/Swift": [
 
         ]
       },

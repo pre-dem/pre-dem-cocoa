@@ -102,19 +102,15 @@ strip_invalid_archs() {
 
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
-  install_framework "${BUILT_PRODUCTS_DIR}/CocoaLumberjack/CocoaLumberjack.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/HappyDNS/HappyDNS.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/PreDemCocoa/PreDemCocoa.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/QNNetDiag/QNNetDiag.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/Qiniu/Qiniu.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/UICKeyChainStore/UICKeyChainStore.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
-  install_framework "${BUILT_PRODUCTS_DIR}/CocoaLumberjack/CocoaLumberjack.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/HappyDNS/HappyDNS.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/PreDemCocoa/PreDemCocoa.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/QNNetDiag/QNNetDiag.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/Qiniu/Qiniu.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/UICKeyChainStore/UICKeyChainStore.framework"
 fi
 if [ "${COCOAPODS_PARALLEL_CODE_SIGN}" == "true" ]; then

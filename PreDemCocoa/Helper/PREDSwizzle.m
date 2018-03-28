@@ -128,10 +128,10 @@ static NSMutableDictionary *swizzledClassesDictionary() {
 static NSMutableSet *swizzledClassesForKey(const void *key) {
     NSMutableDictionary *classesDictionary = swizzledClassesDictionary();
     NSValue *keyValue = [NSValue valueWithPointer:key];
-    NSMutableSet *swizzledClasses = [classesDictionary objectForKey:keyValue];
+    NSMutableSet *swizzledClasses = classesDictionary[keyValue];
     if (!swizzledClasses) {
         swizzledClasses = [NSMutableSet new];
-        [classesDictionary setObject:swizzledClasses forKey:keyValue];
+        classesDictionary[keyValue] = swizzledClasses;
     }
     return swizzledClasses;
 }

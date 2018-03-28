@@ -12,12 +12,10 @@
 #import "PREDVersion.h"
 #import "PREDNetDiag.h"
 #import "PREDURLProtocol.h"
-#import "PREDCrashManager.h"
-#import "PREDLagMonitorController.h"
 #import "PREDError.h"
-#import "PREDLogPrivate.h"
 #import "PREDSender.h"
-#import "PREDBreadcrumbTracker.h"
+#import "PREDLogger.h"
+#import "PREDTransactionPrivate.h"
 
 static NSString *app_id(NSString *appKey) {
     if (appKey.length >= PREDAppIdLength) {
@@ -31,12 +29,6 @@ static NSString *app_id(NSString *appKey) {
     BOOL _started;
 
     PREDConfigManager *_configManager;
-
-    PREDCrashManager *_crashManager;
-
-    PREDLagMonitorController *_lagManager;
-
-    PREDBreadcrumbTracker *_breadcrumbTracker;
 
     PREDPersistence *_persistence;
 
@@ -167,29 +159,15 @@ static NSString *app_id(NSString *appKey) {
 }
 
 - (void)initializeModules {
-    _crashManager = [[PREDCrashManager alloc]
-            initWithPersistence:_persistence];
     [PREDURLProtocol setPersistence:_persistence];
     _configManager = [[PREDConfigManager alloc] initWithPersistence:_persistence];
-
-    _lagManager = [[PREDLagMonitorController alloc] initWithPersistence:_persistence];
-
-//    _breadcrumbTracker = [[PREDBreadcrumbTracker alloc] initWithPersistence:_persistence];
-//    [_breadcrumbTracker start];
-
-    [PREDLog setPersistence:_persistence];
-    PREDLog.started = YES;
 
     // this process will get default config and then use it to initialize all module, besides it will also retrieve config from the server and config will refresh when done.
     [self setConfig:[_configManager getConfig]];
 }
 
 - (void)setConfig:(PREDConfig *)config {
-    _crashManager.started = config.crashReportEnabled;
-
     PREDURLProtocol.started = config.httpMonitorEnabled;
-
-    _lagManager.started = config.lagMonitorEnabled;
 }
 
 - (void)registerObservers {

@@ -59,11 +59,11 @@ pod "PreDemCocoa"
 log 打印
 ``` objc
     // 你可以使用你需要的级别打印相关的 log
-    PREDLogVerbose(@"verbose log test");
-    PREDLogDebug(@"debug log test");
-    PREDLogInfo(@"info log test");
-    PREDLogWarn(@"warn log test");
-    PREDLogError(@"error log test");
+    os_log_info(OS_LOG_DEFAULT,"verbose log test");
+    os_log_debug(OS_LOG_DEFAULT,"debug log test");
+    os_log_info(OS_LOG_DEFAULT,"info log test");
+    os_log_debug(OS_LOG_DEFAULT,"warn log test");
+    os_log_error(OS_LOG_DEFAULT,"error log test");
 ```
 
 log 上报

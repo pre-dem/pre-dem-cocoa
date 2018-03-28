@@ -7,15 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "PREDCrashMeta.h"
-#import "PREDLagMeta.h"
-#import "PREDLogMeta.h"
 #import "PREDHTTPMonitorModel.h"
 #import "PREDNetDiagResult.h"
 #import "PREDAppInfo.h"
 #import "PREDCustomEvent.h"
-#import "PREDBreadcrumb.h"
-#import "PREDTransactionPrivate.h"
+
+@class PREDTransaction;
 
 @interface PREDPersistence : NSObject
 
@@ -27,15 +24,7 @@
 
 - (void)persistCustomEvent:(PREDCustomEvent *)event;
 
-- (void)persistBreadcrumb:(PREDBreadcrumb *)breadcrumb;
-
 - (void)persistTransaction:(PREDTransaction *)transaction;
-
-- (void)persistCrashMeta:(PREDCrashMeta *)crashMeta;
-
-- (void)persistLagMeta:(PREDLagMeta *)lagMeta;
-
-- (void)persistLogMeta:(PREDLogMeta *)logMeta;
 
 - (NSString *)nextArchivedAppInfoPath;
 
@@ -45,15 +34,7 @@
 
 - (NSString *)nextArchivedCustomEventsPath;
 
-- (NSString *)nextArchivedBreadcrumbPath;
-
 - (NSString *)nextArchivedTransactionsPath;
-
-- (NSString *)nextCrashMetaPath;
-
-- (NSString *)nextLagMetaPath;
-
-- (NSString *)nextLogMetaPath;
 
 - (NSMutableDictionary *)getLogMeta:(NSString *)filePath error:(NSError **)error;
 
@@ -71,15 +52,7 @@
 
 - (void)purgeAllCustom;
 
-- (void)purgeAllBreadcrumb;
-
 - (void)purgeAllTransactions;
-
-- (void)purgeAllCrashMeta;
-
-- (void)purgeAllLagMeta;
-
-- (void)purgeAllLogMeta;
 
 - (void)purgeAllPersistence;
 

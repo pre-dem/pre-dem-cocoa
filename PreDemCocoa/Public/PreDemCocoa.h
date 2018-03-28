@@ -10,6 +10,5 @@
 #import "PREDDefines.h"
 #import "PREDManager.h"
 #import "PREDNetDiagResult.h"
-#import "PREDLog.h"
 #import "PREDCustomEvent.h"
 #import "PREDTransaction.h"

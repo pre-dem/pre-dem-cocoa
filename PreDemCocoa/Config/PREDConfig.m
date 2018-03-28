@@ -21,10 +21,10 @@
 
 + (instancetype)configWithDic:(NSDictionary *)dic {
     PREDConfig *config = [PREDConfig new];
-    config.httpMonitorEnabled = [[dic objectForKey:@"http_monitor_enabled"] boolValue];
-    config.crashReportEnabled = [[dic objectForKey:@"crash_report_enabled"] boolValue];
-    config.lagMonitorEnabled = [[dic objectForKey:@"lag_monitor_enabled"] boolValue];
-    config.webviewEnabled = [[dic objectForKey:@"webview_enabled"] boolValue];
+    config.httpMonitorEnabled = [dic[@"http_monitor_enabled"] boolValue];
+    config.crashReportEnabled = [dic[@"crash_report_enabled"] boolValue];
+    config.lagMonitorEnabled = [dic[@"lag_monitor_enabled"] boolValue];
+    config.webviewEnabled = [dic[@"webview_enabled"] boolValue];
 
     return config;
 }

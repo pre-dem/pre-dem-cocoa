@@ -53,7 +53,7 @@
         id value = [self valueForKey:propName];
         if (value != nil) {
             value = [self getObjectInternal:value];
-            [dic setObject:value forKey:propName];
+            dic[propName] = value;
         }
     }
 
@@ -81,7 +81,7 @@
 
         for (int i = 0; i < objarr.count; i++) {
 
-            [arr setObject:[self getObjectInternal:[objarr objectAtIndex:i]] atIndexedSubscript:i];
+            arr[i] = [self getObjectInternal:[objarr objectAtIndex:i]];
         }
         return arr;
     }
@@ -92,7 +92,7 @@
 
         for (NSString *key in objdic.allKeys) {
 
-            [dic setObject:[self getObjectInternal:[objdic objectForKey:key]] forKey:key];
+            dic[key] = [self getObjectInternal:[objdic objectForKey:key]];
         }
         return dic;
     }

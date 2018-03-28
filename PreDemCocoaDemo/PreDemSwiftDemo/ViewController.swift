@@ -9,7 +9,7 @@
 import UIKit
 import PreDemCocoa
 
-class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, PREDLogDelegate {
+class ViewController: UIViewController {
 
     enum CustomError: Error {
         case CustomError(String)
@@ -75,16 +75,6 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         }
     }
 
-    @IBAction func blockMainThread(sender: Any) {
-        sleep(1)
-    }
-
-    @IBAction func forceCrash(sender: Any) {
-        try! {
-            throw CustomError.CustomError("嗯，我是故意的")
-        }()
-    }
-
     @IBAction func diagnoseNetwork(sender: Any) {
         PREDManager.diagnose("www.qiniu.com") { (result) in
             print("new diagnose completed with result:\n\(result)")
@@ -94,71 +84,6 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     @IBAction func diyEvent(sender: Any) {
         if let event = PREDCustomEvent(name: "viewDidLoadEvent", contentDic: ["helloKey": "worldValue", "hellonum": 7]) {
             PREDManager.trackCustomEvent(event)
-        }
-    }
-
-    @IBAction func viewTapped(sender: Any) {
-        PREDLogVerbose("verbose log test");
-        PREDLogDebug("debug log test");
-        PREDLogInfo("info log test");
-        PREDLogWarn("warn log test");
-        PREDLogError("error log test");
-    }
-
-    @IBAction func viewLongPressed(sender: Any) {
-        let controller = UIAlertController(title: "调试菜单", message: nil, preferredStyle: .actionSheet)
-        var actionName: String
-        if PREDLog.delegate == nil {
-            actionName = "开启将 log 输出到界面"
-        } else {
-            actionName = "关闭将 log 输出到界面"
-        }
-        controller.addAction(UIAlertAction(title: actionName, style: .default) { (_) in
-            if PREDLog.delegate == nil {
-                PREDLog.delegate = self
-            } else {
-                PREDLog.delegate = nil
-            }
-        })
-
-        controller.addAction(UIAlertAction(title: "清空界面 log", style: .default, handler: { (_) in
-            self.logTextView.text = ""
-        }))
-
-        controller.addAction(UIAlertAction(title: "取消", style: .cancel))
-        self.present(controller, animated: true, completion: nil)
-    }
-
-    func log(_ log: PREDLog, didReceivedLogMessage message: DDLogMessage, formattedLog: String) {
-        DispatchQueue.main.async {
-            self.logTextView.text = self.logTextView.text + formattedLog + "\n"
-            // 自动滚动
-            self.logTextView.layoutManager.allowsNonContiguousLayout = false
-            self.logTextView.scrollRangeToVisible(NSMakeRange(0, self.logTextView.text.count))
-        }
-    }
-
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
-    }
-
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return logPickerKeys.count
-    }
-
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return logPickerKeys[row]
-    }
-
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        if row == 0 {
-            PREDLog.stopCapture()
-        } else {
-            do {
-                try PREDLog.startCapture(with: logPickerValues[row - 1])
-            } catch {
-                print("\(error)")
-            }
         }
     }
 }

@@ -11,21 +11,17 @@ Pod::Spec.new do |s|
   s.default_subspec = "Core"
 
   s.subspec 'Core' do |cs|
-    cs.source_files = "PreDemCocoa/**/*.{h,m,mm}"
+    cs.source_files = "PreDemCocoa/**/*.{h,m,mm,c,cpp}"
     cs.public_header_files = 'PreDemCocoa/Public/*.h'
-    cs.vendored_frameworks = 'Vendor/*.framework'
     cs.libraries  = "c++", "z"
     cs.resource_bundles = { 'PREDResources' => 'PreDemCocoa/Resources/*.plist' }
-    cs.dependency "HappyDNS"
     cs.dependency "QNNetDiag"
-    cs.dependency "Qiniu"
-    cs.dependency "CocoaLumberjack"
     cs.dependency "UICKeyChainStore"
+    cs.dependency "HappyDNS"
   end
 
   s.subspec 'Swift' do |ss|
     ss.dependency "PreDemCocoa/Core"
-    ss.dependency "CocoaLumberjack/Swift"
     ss.source_files = "PreDemCocoa/**/*.{swift}"
   end
 end
