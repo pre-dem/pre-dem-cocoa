@@ -5,7 +5,6 @@
 //  Created by WangSiyu on 21/03/2018.
 //
 
-#import <PreDemCocoa/PreDemCocoa.h>
 #import "PREDTransaction.h"
 
 @class PREDPersistence;
