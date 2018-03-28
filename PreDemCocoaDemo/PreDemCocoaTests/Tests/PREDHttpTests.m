@@ -10,9 +10,6 @@
 #import "PREDURLProtocol.h"
 
 @interface PREDHttpTests : XCTestCase
-        <
-        UIWebViewDelegate
-        >
 
 @end
 
@@ -84,6 +81,7 @@
     XCTAssertTrue([parsedContent[@"start_timestamp"] intValue] > 0);
     XCTAssertTrue([parsedContent[@"response_time_stamp"] intValue] >= [parsedContent[@"start_timestamp"] intValue]);
     XCTAssertTrue([parsedContent[@"end_timestamp"] intValue] >= [parsedContent[@"start_timestamp"] intValue]);
+    [_persistence purgeAllHttpMonitor];
 }
 
 - (void)testForSharedSessionHttp200 {
@@ -139,6 +137,7 @@
     XCTAssertTrue([parsedContent[@"end_timestamp"] intValue] >= [parsedContent[@"start_timestamp"] intValue]);
     XCTAssertTrue([parsedContent[@"dns_time"] intValue] > 0);
     XCTAssertNotEqual(((NSString *) parsedContent[@"host_ip"]).length, 0);
+    [_persistence purgeAllHttpMonitor];
 }
 
 - (void)testForSharedSession404 {
@@ -193,6 +192,7 @@
     XCTAssertTrue([parsedContent[@"start_timestamp"] intValue] > 0);
     XCTAssertTrue([parsedContent[@"response_time_stamp"] intValue] >= [parsedContent[@"start_timestamp"] intValue]);
     XCTAssertTrue([parsedContent[@"end_timestamp"] intValue] >= [parsedContent[@"start_timestamp"] intValue]);
+    [_persistence purgeAllHttpMonitor];
 }
 
 - (void)testForSharedSessionNetworkError {
@@ -245,6 +245,7 @@
     XCTAssertTrue([parsedContent[@"start_timestamp"] intValue] > 0);
     XCTAssertTrue([parsedContent[@"response_time_stamp"] intValue] >= [parsedContent[@"start_timestamp"] intValue]);
     XCTAssertTrue([parsedContent[@"end_timestamp"] intValue] >= [parsedContent[@"start_timestamp"] intValue]);
+    [_persistence purgeAllHttpMonitor];
 }
 
 
@@ -300,6 +301,7 @@
     XCTAssertTrue([parsedContent[@"start_timestamp"] intValue] > 0);
     XCTAssertTrue([parsedContent[@"response_time_stamp"] intValue] >= [parsedContent[@"start_timestamp"] intValue]);
     XCTAssertTrue([parsedContent[@"end_timestamp"] intValue] >= [parsedContent[@"start_timestamp"] intValue]);
+    [_persistence purgeAllHttpMonitor];
 }
 
 - (void)testForHttpURLConnectionHttps200 {
@@ -353,6 +355,7 @@
     XCTAssertTrue([parsedContent[@"start_timestamp"] intValue] > 0);
     XCTAssertTrue([parsedContent[@"response_time_stamp"] intValue] >= [parsedContent[@"start_timestamp"] intValue]);
     XCTAssertTrue([parsedContent[@"end_timestamp"] intValue] >= [parsedContent[@"start_timestamp"] intValue]);
+    [_persistence purgeAllHttpMonitor];
 }
 
 - (void)testForHttpURLConnectionHttp200 {
@@ -405,6 +408,7 @@
     XCTAssertTrue([parsedContent[@"start_timestamp"] intValue] > 0);
     XCTAssertTrue([parsedContent[@"response_time_stamp"] intValue] >= [parsedContent[@"start_timestamp"] intValue]);
     XCTAssertTrue([parsedContent[@"end_timestamp"] intValue] >= [parsedContent[@"start_timestamp"] intValue]);
+    [_persistence purgeAllHttpMonitor];
 }
 
 - (void)testForHttpURLConnectionHttps404 {
@@ -458,6 +462,7 @@
     XCTAssertTrue([parsedContent[@"start_timestamp"] intValue] > 0);
     XCTAssertTrue([parsedContent[@"response_time_stamp"] intValue] >= [parsedContent[@"start_timestamp"] intValue]);
     XCTAssertTrue([parsedContent[@"end_timestamp"] intValue] >= [parsedContent[@"start_timestamp"] intValue]);
+    [_persistence purgeAllHttpMonitor];
 }
 
 - (void)testForHttpURLConnectionNetworkError {
@@ -509,6 +514,7 @@
     XCTAssertTrue([parsedContent[@"start_timestamp"] intValue] > 0);
     XCTAssertTrue([parsedContent[@"response_time_stamp"] intValue] >= [parsedContent[@"start_timestamp"] intValue]);
     XCTAssertTrue([parsedContent[@"end_timestamp"] intValue] >= [parsedContent[@"start_timestamp"] intValue]);
+    [_persistence purgeAllHttpMonitor];
 }
 
 @end
