@@ -20,7 +20,7 @@ static NSString *levelString(PREDLogLevel logLevel) {
         case PREDLogLevelWarning:
             return @"Warning";
         case PREDLogLevelInfo:
-            return @"Warning";
+            return @"Info";
         case PREDLogLevelDebug:
             return @"Debug";
         case PREDLogLevelVerbose:
