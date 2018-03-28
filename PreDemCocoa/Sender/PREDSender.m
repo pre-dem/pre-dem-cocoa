@@ -27,17 +27,17 @@
 
 - (void)sendAllSavedData {
     PREDLogVerbose(@"trying to send all saved messages");
-    [self sendAppInfo];
-    [self sendHttpMonitor];
-    [self sendNetDiag];
-    [self sendCustomEvents];
-    [self sendTransactions];
+    [self sendAppInfo:nil];
+    [self sendHttpMonitor:nil];
+    [self sendNetDiag:nil];
+    [self sendCustomEvents:nil];
+    [self sendTransactions:nil];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t) (PREDSendInterval * NSEC_PER_SEC)), dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         [self sendAllSavedData];
     });
 }
 
-- (void)sendAppInfo {
+- (void)sendAppInfo:(PREDNetworkCompletionBlock)completion {
     NSString *filePath = [_persistence nextArchivedAppInfoPath];
     if (!filePath) {
         return;
@@ -61,11 +61,14 @@
                 PREDLogError(@"config received from server has a wrong type: %@", dic);
             }
             [strongSelf->_persistence purgeAllAppInfo];
+            if (completion) {
+                completion(operation, data, error);
+            }
         }
     }];
 }
 
-- (void)sendHttpMonitor {
+- (void)sendHttpMonitor:(PREDNetworkCompletionBlock)completion {
     NSString *filePath = [_persistence nextArchivedHttpMonitorPath];
     if (!filePath) {
         return;
@@ -81,14 +84,17 @@
         if (!error) {
             PREDLogDebug(@"Send http monitor succeeded");
             [strongSelf->_persistence purgeFile:filePath];
-            [strongSelf sendHttpMonitor];
+            [strongSelf sendHttpMonitor:completion];
         } else {
             PREDLogError(@"upload http monitor fail: %@", error);
+        }
+        if (completion) {
+            completion(operation, data, error);
         }
     }];
 }
 
-- (void)sendNetDiag {
+- (void)sendNetDiag:(PREDNetworkCompletionBlock)completion {
     NSString *filePath = [_persistence nextArchivedNetDiagPath];
     if (!filePath) {
         return;
@@ -104,14 +110,17 @@
         if (!error) {
             PREDLogDebug(@"Send net diag succeeded");
             [strongSelf->_persistence purgeFile:filePath];
-            [strongSelf sendNetDiag];
+            [strongSelf sendNetDiag:completion];
         } else {
             PREDLogError(@"send net diag error: %@", error);
+        }
+        if (completion) {
+            completion(operation, data, error);
         }
     }];
 }
 
-- (void)sendCustomEvents {
+- (void)sendCustomEvents:(PREDNetworkCompletionBlock)completion {
     NSString *filePath = [_persistence nextArchivedCustomEventsPath];
     if (!filePath) {
         return;
@@ -127,14 +136,17 @@
         if (!error) {
             PREDLogDebug(@"Send custom events succeeded");
             [strongSelf->_persistence purgeFile:filePath];
-            [strongSelf sendCustomEvents];
+            [strongSelf sendCustomEvents:completion];
         } else {
             PREDLogError(@"send custom events error: %@", error);
+        }
+        if (completion) {
+            completion(operation, data, error);
         }
     }];
 }
 
-- (void)sendTransactions {
+- (void)sendTransactions:(PREDNetworkCompletionBlock)completion {
     NSString *filePath = [_persistence nextArchivedTransactionsPath];
     if (!filePath) {
         return;
@@ -150,9 +162,12 @@
         if (!error) {
             PREDLogDebug(@"Send transactions succeeded");
             [strongSelf->_persistence purgeFile:filePath];
-            [strongSelf sendTransactions];
+            [strongSelf sendTransactions:completion];
         } else {
             PREDLogError(@"send transactions error: %@", error);
+        }
+        if (completion) {
+            completion(operation, data, error);
         }
     }];
 }

@@ -16,4 +16,14 @@
 
 - (void)sendAllSavedData;
 
+- (void)sendAppInfo:(PREDNetworkCompletionBlock)completion;
+
+- (void)sendHttpMonitor:(PREDNetworkCompletionBlock)completion;
+
+- (void)sendNetDiag:(PREDNetworkCompletionBlock)completion;
+
+- (void)sendCustomEvents:(PREDNetworkCompletionBlock)completion;
+
+- (void)sendTransactions:(PREDNetworkCompletionBlock)completion;
+
 @end
