@@ -7,9 +7,9 @@
 //
 
 #import "PREDURLProtocol.h"
-#import <HappyDNS/HappyDNS.h>
 #import "PREDURLSessionSwizzler.h"
 #import "PREDLogger.h"
+#import "PREDHelper.h"
 
 static PREDPersistence *_persistence;
 static BOOL _started = NO;
@@ -93,24 +93,23 @@ static NSString *kTaskPropertyKey = @"PREDTask";
 
     // 仅 http 可使用 ip 直连
     if ([request.URL.scheme isEqualToString:@"http"]) {
-        NSMutableArray *resolvers = [[NSMutableArray alloc] init];
-        [resolvers addObject:[QNResolver systemResolver]];
-        QNDnsManager *dns = [[QNDnsManager alloc] init:resolvers networkInfo:[QNNetworkInfo normal]];
         NSTimeInterval dnsStartTime = [[NSDate date] timeIntervalSince1970];
-        NSURL *replacedURL = [dns queryAndReplaceWithIP:mutableRequest.URL];
-        if (!replacedURL) {
+        NSString *hostIP = [PREDHelper lookupHostIPAddressForURL:mutableRequest.URL];
+        NSTimeInterval dnsEndTime = [[NSDate date] timeIntervalSince1970];
+        if (!hostIP.length) {
             return mutableRequest;
         }
-        NSTimeInterval dnsEndTime = [[NSDate date] timeIntervalSince1970];
-
         // 判定解析出的 IP 格式是否正确
         NSError *err;
         NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"^[0-9]+\\.[0-9]+\\.[0-9]+" options:0 error:&err];
         NSAssert(err == nil, @"invalid regex %@", err);
-        NSInteger number = [regex numberOfMatchesInString:replacedURL.host options:0 range:NSMakeRange(0, [replacedURL.host length])];
+        NSInteger number = [regex numberOfMatchesInString:hostIP options:0 range:NSMakeRange(0, [hostIP length])];
         if (number == 0) {
             return mutableRequest;
         }
+
+        NSString *otherComponents = [mutableRequest.URL.absoluteString substringFromIndex:mutableRequest.URL.scheme.length + 3 + mutableRequest.URL.host.length];
+        NSURL *replacedURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@://%@%@", mutableRequest.URL.scheme, hostIP, otherComponents]];
         HTTPMonitorModel.dns_time = (NSUInteger) ((dnsEndTime - dnsStartTime) * 1000);
         mutableRequest.URL = replacedURL;
         HTTPMonitorModel.host_ip = replacedURL.host;
@@ -122,6 +121,7 @@ static NSString *kTaskPropertyKey = @"PREDTask";
     PREDHTTPMonitorModel *HTTPMonitorModel = [NSURLProtocol propertyForKey:kHTTPMonitorModelPropertyKey inRequest:self.request];
     HTTPMonitorModel.start_timestamp = (UInt64) ([[NSDate date] timeIntervalSince1970] * 1000);
     HTTPMonitorModel.end_timestamp = (UInt64) ([[NSDate date] timeIntervalSince1970] * 1000);
+    HTTPMonitorModel.response_time_stamp = (UInt64) ([[NSDate date] timeIntervalSince1970] * 1000);
     NSURLSessionConfiguration *sessionConfig = NSURLSessionConfiguration.ephemeralSessionConfiguration;
     NSURLSession *session = [NSURLSession sessionWithConfiguration:sessionConfig delegate:self delegateQueue:[NSOperationQueue new]];
     NSURLSessionTask *task = [session dataTaskWithRequest:self.request];

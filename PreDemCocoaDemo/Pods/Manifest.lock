@@ -1,9 +1,7 @@
 PODS:
-  - HappyDNS (0.3.12)
   - PreDemCocoa (1.0.8):
     - PreDemCocoa/Core (= 1.0.8)
   - PreDemCocoa/Core (1.0.8):
-    - HappyDNS
     - QNNetDiag
     - UICKeyChainStore
   - PreDemCocoa/Swift (1.0.8):
@@ -20,8 +18,7 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  HappyDNS: 691a3041128055d09866f86e6e9ca90f24da1f18
-  PreDemCocoa: 96c799f03fc9ef02392ef26665d7c2a46058ea33
+  PreDemCocoa: a6a58d340983db1086bc704e5aba79b719c95404
   QNNetDiag: d115f58d294bdbeecb139e5f681bc5a8bc2a4181
   UICKeyChainStore: 239558492fa260531a0774cfc611ea83a6eaff3a
 

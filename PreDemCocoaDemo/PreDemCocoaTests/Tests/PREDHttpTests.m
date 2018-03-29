@@ -135,7 +135,7 @@
     XCTAssertTrue([parsedContent[@"start_timestamp"] intValue] > 0);
     XCTAssertTrue([parsedContent[@"response_time_stamp"] intValue] >= [parsedContent[@"start_timestamp"] intValue]);
     XCTAssertTrue([parsedContent[@"end_timestamp"] intValue] >= [parsedContent[@"start_timestamp"] intValue]);
-    XCTAssertTrue([parsedContent[@"dns_time"] intValue] > 0);
+    XCTAssertTrue([parsedContent[@"dns_time"] intValue] >= 0);
     XCTAssertNotEqual(((NSString *) parsedContent[@"host_ip"]).length, 0);
     [_persistence purgeAllHttpMonitor];
 }

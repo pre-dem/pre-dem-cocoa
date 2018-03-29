@@ -15,6 +15,8 @@
 #import <mach-o/dyld.h>
 #import <UICKeyChainStore/UICKeyChainStore.h>
 #import "PREDLogger.h"
+#import "netdb.h"
+#import "arpa/inet.h"
 
 static NSString *const kPREDDirectoryName = @"com.qiniu.predem";
 static NSString *const kPREDKeychainServiceName = @"com.qiniu.predem";
@@ -455,6 +457,34 @@ NSString *base64String(NSData *data, unsigned long length) {
     for (int i = 0; i < CC_MD5_DIGEST_LENGTH; i++)
         [hash appendFormat:@"%02X", result[i]];
     return [hash lowercaseString];
+}
+
++ (NSString *)lookupHostIPAddressForURL:(NSURL *)url {
+    if (!url) {
+        return nil;
+    }
+    const char *host = [[url host] UTF8String];
+    if (host == NULL) {
+        return nil;
+    }
+    // Ask the unix subsytem to query the DNS
+    struct hostent *remoteHostEnt = gethostbyname(host);
+    if (remoteHostEnt == NULL || remoteHostEnt->h_addr_list == NULL) {
+        return nil;
+    }
+    // Get address info from host entry
+    struct in_addr *remoteInAddr = (struct in_addr *) remoteHostEnt->h_addr_list[0];
+    if (remoteInAddr == NULL) {
+        return nil;
+    }
+    // Convert numeric addr to ASCII string
+    char *sRemoteInAddr = inet_ntoa(*remoteInAddr);
+    if (sRemoteInAddr == NULL) {
+        return nil;
+    }
+    // hostIP
+    NSString *hostIP = [NSString stringWithUTF8String:sRemoteInAddr];
+    return hostIP;
 }
 
 @end
