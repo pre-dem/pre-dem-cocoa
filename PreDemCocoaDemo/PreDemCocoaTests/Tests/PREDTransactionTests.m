@@ -7,7 +7,6 @@
 //
 
 #import <XCTest/XCTest.h>
-#import <HappyDNS/QNNetworkInfo.h>
 #import "PREDTransactionPrivate.h"
 #import "PREDPersistence.h"
 
