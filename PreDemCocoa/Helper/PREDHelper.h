@@ -11,24 +11,10 @@
 
 @interface PREDHelper : NSObject
 
-@property(class, readonly) BOOL isURLSessionSupported;
-@property(class, readonly) NSString *keychainPreDemCocoaServiceName;
-@property(class, readonly) NSString *mainBundleIdentifier;
 @property(class, readonly) NSString *UUID;
-@property(class, readonly) BOOL isPreiOS8Environment;
-@property(class, readonly) BOOL isAppStoreReceiptSandbox;
-@property(class, readonly) BOOL hasEmbeddedMobileProvision;
-@property(class, readonly) BOOL isRunningInAppExtension;
-@property(class, readonly) BOOL isDebuggerAttached;
-@property(class, readonly) NSString *deviceType;
-@property(class, readonly) NSString *osVersionBuild;
 @property(class, readonly) NSString *osPlatform;
-@property(class, readonly) NSString *deviceLocale;
-@property(class, readonly) NSString *deviceLanguage;
 @property(class, readonly) NSString *sdkVersion;
-@property(class, readonly) NSString *sdkBuild;
 @property(class, readonly) NSString *appVersion;
-@property(class, readonly) NSString *appBuild;
 @property(class, readonly) NSString *appName;
 @property(class, readonly) NSString *appBundleId;
 @property(class, readonly) NSString *osVersion;
@@ -40,18 +26,8 @@
 @property(class, readonly) NSString *sdkDirectory;
 @property(class, readonly) NSString *cacheDirectory;
 
-+ (NSString *)encodeAppIdentifier:(NSString *)inputString;
-
-+ (NSString *)appName:(NSString *)placeHolderString;
-
-+ (NSString *)URLEncodedString:(NSString *)inputString;
-
-+ (NSDictionary *)getObjectData:(id)obj;
-
 + (NSString *)MD5:(NSString *)mdStr;
 
-+ (NSString *)MD5ForData:(NSData *)data;
-
-+ (NSString*)lookupHostIPAddressForURL:(NSURL*)url;
++ (NSString *)lookupHostIPAddressForURL:(NSURL *)url;
 
 @end

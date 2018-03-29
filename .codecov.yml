@@ -1,0 +1,4 @@
+ignore:
+  - "PreDemCocoaDemo/PreDemObjcDemo"
+  - "PreDemCocoaDemo/PreDemSwiftDemo"
+  - "PreDemCocoaDemo/Pods"

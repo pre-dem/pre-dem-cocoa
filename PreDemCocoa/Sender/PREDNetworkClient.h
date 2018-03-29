@@ -13,16 +13,9 @@
 
 - (instancetype)initWithBaseURL:(NSURL *)baseURL;
 
-- (void)getPath:(NSString *)path
-     parameters:(NSDictionary *)params
-     completion:(PREDNetworkCompletionBlock)completion;
-
-- (void)postPath:(NSString *)path
-      parameters:(NSObject *)params
-      completion:(PREDNetworkCompletionBlock)completion;
-
 - (void)postPath:(NSString *)path
             data:(NSData *)data
          headers:(NSDictionary *)headers
       completion:(PREDNetworkCompletionBlock)completion;
+
 @end
