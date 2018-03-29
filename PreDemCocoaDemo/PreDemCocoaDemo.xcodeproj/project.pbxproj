@@ -802,17 +802,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = "";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$PODS_CONFIGURATION_BUILD_DIR/AFNetworking\"",
-					"\"$PODS_CONFIGURATION_BUILD_DIR/CocoaLumberjack\"",
-					"\"$PODS_CONFIGURATION_BUILD_DIR/HappyDNS\"",
-					"\"$PODS_CONFIGURATION_BUILD_DIR/PreDemObjc\"",
-					"\"$PODS_CONFIGURATION_BUILD_DIR/QNNetDiag\"",
-					"\"$PODS_CONFIGURATION_BUILD_DIR/Qiniu\"",
-					"\"$PODS_CONFIGURATION_BUILD_DIR/UICKeyChainStore\"",
-					"\"../Vendor\"",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = PreDemCocoaTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -832,6 +822,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = "";
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = PreDemCocoaTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";

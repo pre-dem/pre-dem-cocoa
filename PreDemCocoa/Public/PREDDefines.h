@@ -48,9 +48,9 @@ typedef NS_ENUM(NSUInteger, PREDLogLevel) {
             PREDLogLevelAll = NSUIntegerMax
 };
 
-typedef NSString *(^PREDLogMessageProvider)(void);
+typedef NSString *_Nullable(^PREDLogMessageProvider)(void);
 
-typedef void (^PREDLogHandler)(PREDLogMessageProvider messageProvider, PREDLogLevel logLevel, const char *file, const char *function, uint line);
+typedef void (^PREDLogHandler)(PREDLogMessageProvider _Nullable messageProvider, PREDLogLevel logLevel, const char * _Nullable file, const char * _Nonnull function, uint line);
 
 /**
  *  网络诊断结果返回 block

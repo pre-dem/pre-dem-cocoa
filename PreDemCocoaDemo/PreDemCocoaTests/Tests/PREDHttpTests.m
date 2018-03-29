@@ -45,7 +45,7 @@
         [expectation fulfill];
     }];
     [dataTask resume];
-    [self waitForExpectationsWithTimeout:10 handler:^(NSError *error) {
+    [self waitForExpectationsWithTimeout:20 handler:^(NSError *error) {
         XCTAssertNil(error, @"%@", error);
     }];
     NSString *filePath = [_persistence nextArchivedHttpMonitorPath];
@@ -100,7 +100,7 @@
         [expectation fulfill];
     }];
     [dataTask resume];
-    [self waitForExpectationsWithTimeout:10 handler:^(NSError *error) {
+    [self waitForExpectationsWithTimeout:20 handler:^(NSError *error) {
         XCTAssertNil(error, @"%@", error);
     }];
     NSString *filePath = [_persistence nextArchivedHttpMonitorPath];
@@ -156,7 +156,7 @@
         [expectation fulfill];
     }];
     [dataTask resume];
-    [self waitForExpectationsWithTimeout:10 handler:^(NSError *error) {
+    [self waitForExpectationsWithTimeout:20 handler:^(NSError *error) {
         XCTAssertNil(error, @"%@", error);
     }];
     NSString *filePath = [_persistence nextArchivedHttpMonitorPath];
@@ -211,7 +211,7 @@
         [expectation fulfill];
     }];
     [dataTask resume];
-    [self waitForExpectationsWithTimeout:10 handler:^(NSError *error) {
+    [self waitForExpectationsWithTimeout:20 handler:^(NSError *error) {
         XCTAssertNil(error, @"%@", error);
     }];
     NSString *filePath = [_persistence nextArchivedHttpMonitorPath];
@@ -254,11 +254,12 @@
     PREDURLProtocol.started = YES;
     NSURLSession *session = [NSURLSession sharedSession];
     XCTestExpectation *expectation = [self expectationWithDescription:@"Download predem page"];
-    NSURLSessionDataTask *dataTask = [session dataTaskWithURL:[NSURL URLWithString:nil] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+    NSString *url;
+    NSURLSessionDataTask *dataTask = [session dataTaskWithURL:[NSURL URLWithString:url] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         [expectation fulfill];
     }];
     [dataTask resume];
-    [self waitForExpectationsWithTimeout:10 handler:^(NSError *error) {
+    [self waitForExpectationsWithTimeout:20 handler:^(NSError *error) {
         XCTAssertNil(error, @"%@", error);
     }];
     NSString *filePath = [_persistence nextArchivedHttpMonitorPath];
@@ -276,7 +277,7 @@
         [expectation fulfill];
     }];
     [dataTask resume];
-    [self waitForExpectationsWithTimeout:10 handler:^(NSError *error) {
+    [self waitForExpectationsWithTimeout:20 handler:^(NSError *error) {
         XCTAssertNil(error, @"%@", error);
     }];
     NSString *filePath = [_persistence nextArchivedHttpMonitorPath];
@@ -300,7 +301,7 @@
         [expectation fulfill];
     }];
     [dataTask resume];
-    [self waitForExpectationsWithTimeout:10 handler:^(NSError *error) {
+    [self waitForExpectationsWithTimeout:20 handler:^(NSError *error) {
         XCTAssertNil(error, @"%@", error);
     }];
     NSString *filePath = [_persistence nextArchivedHttpMonitorPath];
@@ -354,7 +355,7 @@
         originalError = connectionError;
         [expectation fulfill];
     }];
-    [self waitForExpectationsWithTimeout:10 handler:^(NSError *error) {
+    [self waitForExpectationsWithTimeout:20 handler:^(NSError *error) {
         XCTAssertNil(error, @"%@", error);
     }];
     NSString *filePath = [_persistence nextArchivedHttpMonitorPath];
@@ -408,7 +409,7 @@
         originalError = connectionError;
         [expectation fulfill];
     }];
-    [self waitForExpectationsWithTimeout:10 handler:^(NSError *error) {
+    [self waitForExpectationsWithTimeout:20 handler:^(NSError *error) {
         XCTAssertNil(error, @"%@", error);
     }];
     NSString *filePath = [_persistence nextArchivedHttpMonitorPath];
@@ -461,7 +462,7 @@
         originalError = connectionError;
         [expectation fulfill];
     }];
-    [self waitForExpectationsWithTimeout:10 handler:^(NSError *error) {
+    [self waitForExpectationsWithTimeout:20 handler:^(NSError *error) {
         XCTAssertNil(error, @"%@", error);
     }];
     NSString *filePath = [_persistence nextArchivedHttpMonitorPath];
@@ -515,7 +516,7 @@
         originalError = connectionError;
         [expectation fulfill];
     }];
-    [self waitForExpectationsWithTimeout:10 handler:^(NSError *error) {
+    [self waitForExpectationsWithTimeout:20 handler:^(NSError *error) {
         XCTAssertNil(error, @"%@", error);
     }];
     NSString *filePath = [_persistence nextArchivedHttpMonitorPath];
