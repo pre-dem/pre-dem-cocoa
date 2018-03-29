@@ -38,7 +38,7 @@ static BOOL doubleEqual(id obj1, id obj2) {
     [_persistence purgeAllNetDiag];
     __block PREDNetDiagResult *originalResult;
     XCTestExpectation *expectation = [self expectationWithDescription:@"diagnosing"];
-    [PREDNetDiag diagnose:@"http://predem.qiniu.com" persistence:_persistence complete:^(PREDNetDiagResult *result) {
+    [PREDNetDiag diagnose:@"http://www.baidu.com" persistence:_persistence complete:^(PREDNetDiagResult *result) {
         originalResult = result;
         [expectation fulfill];
     }];
@@ -69,7 +69,7 @@ static BOOL doubleEqual(id obj1, id obj2) {
     [_persistence purgeAllNetDiag];
     __block PREDNetDiagResult *originalResult;
     XCTestExpectation *expectation = [self expectationWithDescription:@"diagnosing"];
-    [PREDNetDiag diagnose:@"predem.qiniu.com" persistence:_persistence complete:^(PREDNetDiagResult *result) {
+    [PREDNetDiag diagnose:@"www.baidu.com" persistence:_persistence complete:^(PREDNetDiagResult *result) {
         originalResult = result;
         [expectation fulfill];
     }];

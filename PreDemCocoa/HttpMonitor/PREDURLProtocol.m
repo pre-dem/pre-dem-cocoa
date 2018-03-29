@@ -124,7 +124,7 @@ static NSString *kTaskPropertyKey = @"PREDTask";
     HTTPMonitorModel.response_time_stamp = (UInt64) ([[NSDate date] timeIntervalSince1970] * 1000);
     NSURLSessionConfiguration *sessionConfig = NSURLSessionConfiguration.ephemeralSessionConfiguration;
     NSURLSession *session = [NSURLSession sessionWithConfiguration:sessionConfig delegate:self delegateQueue:[NSOperationQueue new]];
-    NSURLSessionTask *task = [session dataTaskWithRequest:self.request];
+    NSURLSessionDataTask *task = [session dataTaskWithRequest:self.request];
     [task resume];
     [NSURLProtocol setProperty:task forKey:kTaskPropertyKey inRequest:(NSMutableURLRequest *) self.request];
     [session finishTasksAndInvalidate];
