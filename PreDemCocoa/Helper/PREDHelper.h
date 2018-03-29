@@ -20,8 +20,6 @@
 @property(class, readonly) NSString *osVersion;
 @property(class, readonly) NSString *osBuild;
 @property(class, readonly) NSString *deviceModel;
-
-
 @property(class, strong) NSString *tag;
 @property(class, readonly) NSString *sdkDirectory;
 @property(class, readonly) NSString *cacheDirectory;
@@ -29,5 +27,7 @@
 + (NSString *)MD5:(NSString *)mdStr;
 
 + (NSString *)lookupHostIPAddressForURL:(NSURL *)url;
+
++ (NSMutableDictionary *)parseQuery:(NSString *)query;
 
 @end

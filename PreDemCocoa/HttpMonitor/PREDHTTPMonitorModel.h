@@ -13,6 +13,7 @@
 
 @property(nonatomic, strong) NSString *domain;
 @property(nonatomic, strong) NSString *path;
+@property(nonatomic, strong) NSString *query;
 @property(nonatomic, strong) NSString *method;
 @property(nonatomic, strong) NSString *host_ip;
 @property(nonatomic, assign) NSInteger status_code;

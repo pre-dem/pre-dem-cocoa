@@ -158,5 +158,17 @@ __strong static NSString *_tag = @"";
     return hostIP;
 }
 
++ (NSMutableDictionary *)parseQuery:(NSString *)query {
+    NSMutableDictionary *queryStringDictionary = [[NSMutableDictionary alloc] init];
+    NSArray *urlComponents = [query componentsSeparatedByString:@"&"];
+    for (NSString *keyValuePair in urlComponents) {
+        NSArray *pairComponents = [keyValuePair componentsSeparatedByString:@"="];
+        NSString *key = [[pairComponents firstObject] stringByRemovingPercentEncoding];
+        NSString *value = [[pairComponents lastObject] stringByRemovingPercentEncoding];
+        queryStringDictionary[key] = value;
+    }
+    return queryStringDictionary;
+}
+
 @end
 
