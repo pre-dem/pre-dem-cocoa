@@ -39,15 +39,18 @@
     [_persistence purgeAllAppInfo];
     [_persistence persistAppInfo:[[PREDAppInfo alloc] init]];
     __block NSData *originalData;
+    __block NSError *originalError;
     XCTestExpectation *expectation = [self expectationWithDescription:@"sending"];
     [_sender sendAppInfo:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
         originalData = data;
+        originalError = error;
         [expectation fulfill];
     }];
     [self waitForExpectationsWithTimeout:10 handler:^(NSError *error) {
         XCTAssertNil(error, @"%@", error);
     }];
     XCTAssertNotNil(originalData);
+    XCTAssertNil(originalError);
     [_persistence purgeAllAppInfo];
 }
 
@@ -55,15 +58,18 @@
     [_persistence purgeAllHttpMonitor];
     [_persistence persistHttpMonitor:[[PREDHTTPMonitorModel alloc] init]];
     __block NSData *originalData;
+    __block NSError *originalError;
     XCTestExpectation *expectation = [self expectationWithDescription:@"sending"];
     [_sender sendHttpMonitor:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
         originalData = data;
+        originalError = error;
         [expectation fulfill];
     } recursively:NO];
     [self waitForExpectationsWithTimeout:10 handler:^(NSError *error) {
         XCTAssertNil(error, @"%@", error);
     }];
     XCTAssertNotNil(originalData);
+    XCTAssertNil(originalError);
     [_persistence purgeAllHttpMonitor];
 }
 
@@ -71,15 +77,18 @@
     [_persistence purgeAllNetDiag];
     [_persistence persistNetDiagResult:[[PREDNetDiagResult alloc] init]];
     __block NSData *originalData;
+    __block NSError *originalError;
     XCTestExpectation *expectation = [self expectationWithDescription:@"sending"];
     [_sender sendNetDiag:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
         originalData = data;
+        originalError = error;
         [expectation fulfill];
     } recursively:NO];
     [self waitForExpectationsWithTimeout:10 handler:^(NSError *error) {
         XCTAssertNil(error, @"%@", error);
     }];
     XCTAssertNotNil(originalData);
+    XCTAssertNil(originalError);
     [_persistence purgeAllNetDiag];
 }
 
@@ -87,15 +96,18 @@
     [_persistence purgeAllCustom];
     [_persistence persistCustomEvent:[PREDCustomEvent eventWithName:@"testName" contentDic:nil]];
     __block NSData *originalData;
+    __block NSError *originalError;
     XCTestExpectation *expectation = [self expectationWithDescription:@"sending"];
     [_sender sendCustomEvents:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
         originalData = data;
+        originalError = error;
         [expectation fulfill];
     } recursively:NO];
     [self waitForExpectationsWithTimeout:10 handler:^(NSError *error) {
         XCTAssertNil(error, @"%@", error);
     }];
     XCTAssertNotNil(originalData);
+    XCTAssertNil(originalError);
     [_persistence purgeAllCustom];
 }
 
@@ -103,15 +115,18 @@
     [_persistence purgeAllTransactions];
     [_persistence persistTransaction:[PREDTransaction transactionWithPersistence:_persistence]];
     __block NSData *originalData;
+    __block NSError *originalError;
     XCTestExpectation *expectation = [self expectationWithDescription:@"sending"];
     [_sender sendTransactions:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
         originalData = data;
+        originalError = error;
         [expectation fulfill];
     } recursively:NO];
     [self waitForExpectationsWithTimeout:10 handler:^(NSError *error) {
         XCTAssertNil(error, @"%@", error);
     }];
     XCTAssertNotNil(originalData);
+    XCTAssertNil(originalError);
     [_persistence purgeAllTransactions];
 }
 
