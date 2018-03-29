@@ -80,7 +80,7 @@ PREDTransaction *transaction = [PREDManager transactionStart:@"test"];
 ```
 
 ## 示例代码
-* 完整的demo 见 PreDemCocoaDemo 目录下的代码
+* 完整的 demo 见 PreDemCocoaDemo 目录下的代码
 * 具体细节的一些配置 可参考 PreDemCocoaDemo/PreDemCocoaTests 下面的一些单元测试，以及源代码
 
 ## 常见问题
