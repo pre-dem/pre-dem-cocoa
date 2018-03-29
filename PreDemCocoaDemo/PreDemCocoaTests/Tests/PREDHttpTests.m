@@ -254,7 +254,8 @@
     PREDURLProtocol.started = YES;
     NSURLSession *session = [NSURLSession sharedSession];
     XCTestExpectation *expectation = [self expectationWithDescription:@"Download predem page"];
-    NSURLSessionDataTask *dataTask = [session dataTaskWithURL:[NSURL URLWithString:nil] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+    NSString *url;
+    NSURLSessionDataTask *dataTask = [session dataTaskWithURL:[NSURL URLWithString:url] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         [expectation fulfill];
     }];
     [dataTask resume];
