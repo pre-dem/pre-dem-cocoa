@@ -120,34 +120,6 @@ __strong static NSString *_tag = @"";
 
 #pragma mark Context helpers
 
-+ (NSDictionary *)getObjectData:(id)obj {
-
-    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-    unsigned int propsCount;
-
-    objc_property_t *props = class_copyPropertyList([obj class], &propsCount);
-
-    for (int i = 0; i < propsCount; i++) {
-
-        objc_property_t prop = props[i];
-        NSString *propName = [NSString stringWithUTF8String:property_getName(prop)];
-        id value = [obj valueForKey:propName];
-        if (value == nil) {
-
-            value = [NSNull null];
-        } else {
-            value = [self getObjectInternal:value];
-        }
-        dic[propName] = value;
-    }
-
-    if (props) {
-        free(props);
-    }
-
-    return dic;
-}
-
 + (NSString *)MD5:(NSString *)mdStr {
     const char *original_str = [mdStr UTF8String];
     unsigned char result[CC_MD5_DIGEST_LENGTH];
