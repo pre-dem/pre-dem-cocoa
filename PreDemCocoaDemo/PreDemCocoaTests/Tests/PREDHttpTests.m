@@ -248,6 +248,41 @@
     [_persistence purgeAllHttpMonitor];
 }
 
+- (void)testForSharedSessionNoProxy1 {
+    [_persistence purgeAllHttpMonitor];
+    [PREDURLProtocol setPersistence:_persistence];
+    PREDURLProtocol.started = YES;
+    NSURLSession *session = [NSURLSession sharedSession];
+    XCTestExpectation *expectation = [self expectationWithDescription:@"Download predem page"];
+    NSURLSessionDataTask *dataTask = [session dataTaskWithURL:[NSURL URLWithString:nil] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        [expectation fulfill];
+    }];
+    [dataTask resume];
+    [self waitForExpectationsWithTimeout:10 handler:^(NSError *error) {
+        XCTAssertNil(error, @"%@", error);
+    }];
+    NSString *filePath = [_persistence nextArchivedHttpMonitorPath];
+    XCTAssertNil(filePath);
+    [_persistence purgeAllHttpMonitor];
+}
+
+- (void)testForSharedSessionNoProxy2 {
+    [_persistence purgeAllHttpMonitor];
+    [PREDURLProtocol setPersistence:_persistence];
+    PREDURLProtocol.started = YES;
+    NSURLSession *session = [NSURLSession sharedSession];
+    XCTestExpectation *expectation = [self expectationWithDescription:@"Download predem page"];
+    NSURLSessionDataTask *dataTask = [session dataTaskWithURL:[NSURL URLWithString:@"rtmp://test.qiniu.com"] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        [expectation fulfill];
+    }];
+    [dataTask resume];
+    [self waitForExpectationsWithTimeout:10 handler:^(NSError *error) {
+        XCTAssertNil(error, @"%@", error);
+    }];
+    NSString *filePath = [_persistence nextArchivedHttpMonitorPath];
+    XCTAssertNil(filePath);
+    [_persistence purgeAllHttpMonitor];
+}
 
 - (void)testForCustomSession {
     [_persistence purgeAllHttpMonitor];
