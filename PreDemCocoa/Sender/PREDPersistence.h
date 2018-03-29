@@ -36,10 +36,6 @@
 
 - (NSString *)nextArchivedTransactionsPath;
 
-- (NSMutableDictionary *)getLogMeta:(NSString *)filePath error:(NSError **)error;
-
-- (NSMutableDictionary *)getStoredMeta:(NSString *)filePath error:(NSError **)error;
-
 - (void)purgeFile:(NSString *)filePath;
 
 - (void)purgeFiles:(NSArray<NSString *> *)filePaths;

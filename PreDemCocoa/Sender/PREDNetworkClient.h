@@ -11,10 +11,6 @@
 
 @interface PREDNetworkClient : NSObject
 
-@property(nonatomic, strong) NSURL *baseURL;
-
-@property(nonatomic, strong) NSOperationQueue *operationQueue;
-
 - (instancetype)initWithBaseURL:(NSURL *)baseURL;
 
 - (void)getPath:(NSString *)path

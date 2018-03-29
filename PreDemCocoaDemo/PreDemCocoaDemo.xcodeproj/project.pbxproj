@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		167EB1A4C7C7107386973413 /* PREDSenderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 167EB2CB9B281C51D07D83D3 /* PREDSenderTests.m */; };
 		167EB6345FB8F0B0C95F8B89 /* PREDNetDiagTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 167EB6BEECF8DA72F65CE396 /* PREDNetDiagTests.m */; };
 		167EBC4FAF4C893E964C8D5A /* PREDTransactionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 167EB92CA8086F6B7E33BDD9 /* PREDTransactionTests.m */; };
 		167EBF762A8824A7679C3F57 /* PREDHttpTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 167EBC8F572F69DF33E58B83 /* PREDHttpTests.m */; };
@@ -45,6 +46,7 @@
 
 /* Begin PBXFileReference section */
 		0EBE59C619EB9355CEBD3EF5 /* Pods-PreDemCocoaTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PreDemCocoaTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PreDemCocoaTests/Pods-PreDemCocoaTests.debug.xcconfig"; sourceTree = "<group>"; };
+		167EB2CB9B281C51D07D83D3 /* PREDSenderTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PREDSenderTests.m; sourceTree = "<group>"; };
 		167EB6BEECF8DA72F65CE396 /* PREDNetDiagTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PREDNetDiagTests.m; sourceTree = "<group>"; };
 		167EB92CA8086F6B7E33BDD9 /* PREDTransactionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PREDTransactionTests.m; sourceTree = "<group>"; };
 		167EBC8F572F69DF33E58B83 /* PREDHttpTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PREDHttpTests.m; sourceTree = "<group>"; };
@@ -214,6 +216,7 @@
 				167EBC8F572F69DF33E58B83 /* PREDHttpTests.m */,
 				167EB6BEECF8DA72F65CE396 /* PREDNetDiagTests.m */,
 				167EB92CA8086F6B7E33BDD9 /* PREDTransactionTests.m */,
+				167EB2CB9B281C51D07D83D3 /* PREDSenderTests.m */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -583,6 +586,7 @@
 				167EBF762A8824A7679C3F57 /* PREDHttpTests.m in Sources */,
 				167EB6345FB8F0B0C95F8B89 /* PREDNetDiagTests.m in Sources */,
 				167EBC4FAF4C893E964C8D5A /* PREDTransactionTests.m in Sources */,
+				167EB1A4C7C7107386973413 /* PREDSenderTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
