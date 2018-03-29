@@ -26,8 +26,6 @@
 @property(class, readonly) NSString *sdkDirectory;
 @property(class, readonly) NSString *cacheDirectory;
 
-+ (NSDictionary *)getObjectData:(id)obj;
-
 + (NSString *)MD5:(NSString *)mdStr;
 
 + (NSString *)lookupHostIPAddressForURL:(NSURL *)url;

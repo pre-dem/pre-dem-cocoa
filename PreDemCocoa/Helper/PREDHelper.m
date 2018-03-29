@@ -148,42 +148,6 @@ __strong static NSString *_tag = @"";
     return dic;
 }
 
-+ (id)getObjectInternal:(id)obj {
-
-    if ([obj isKindOfClass:[NSString class]]
-            ||
-            [obj isKindOfClass:[NSNumber class]]
-                    ||
-            [obj isKindOfClass:[NSNull class]]) {
-
-        return obj;
-
-    }
-    if ([obj isKindOfClass:[NSArray class]]) {
-
-        NSArray *objArr = obj;
-        NSMutableArray *arr = [NSMutableArray arrayWithCapacity:objArr.count];
-
-        for (int i = 0; i < objArr.count; i++) {
-
-            arr[(NSUInteger) i] = [self getObjectInternal:objArr[(NSUInteger) i]];
-        }
-        return arr;
-    }
-    if ([obj isKindOfClass:[NSDictionary class]]) {
-
-        NSDictionary *objdic = obj;
-        NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:[objdic count]];
-
-        for (NSString *key in objdic.allKeys) {
-
-            dic[key] = [self getObjectInternal:objdic[key]];
-        }
-        return dic;
-    }
-    return [self getObjectData:obj];
-}
-
 + (NSString *)MD5:(NSString *)mdStr {
     const char *original_str = [mdStr UTF8String];
     unsigned char result[CC_MD5_DIGEST_LENGTH];
