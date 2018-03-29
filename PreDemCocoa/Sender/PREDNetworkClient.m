@@ -21,7 +21,11 @@ static NSString *pred_appendTime(NSString *url) {
     return [NSString stringWithFormat:format, url, (int64_t) [[NSDate date] timeIntervalSince1970]];
 }
 
-@implementation PREDNetworkClient
+@implementation PREDNetworkClient {
+    NSURL *_baseURL;
+
+    NSOperationQueue *_operationQueue;
+}
 
 - (instancetype)initWithBaseURL:(NSURL *)baseURL {
     self = [super init];
@@ -38,7 +42,7 @@ static NSString *pred_appendTime(NSString *url) {
      completion:(PREDNetworkCompletionBlock)completion {
     NSString *url = [NSString stringWithFormat:@"%@%@", _baseURL, path];
     if (params.count) {
-        url = [url stringByAppendingFormat:@"?%@", [self queryStringFromParameters:params withEncoding:NSUTF8StringEncoding]];
+        url = [url stringByAppendingFormat:@"?%@", [self queryStringFromParameters:params]];
     }
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
     [request setHTTPMethod:@"GET"];
@@ -88,7 +92,7 @@ static NSString *pred_appendTime(NSString *url) {
                                                           }
                                                           completion(operation, data, error);
                                                       }];
-    [self.operationQueue addOperation:operation];
+    [_operationQueue addOperation:operation];
 }
 
 - (PREDHTTPOperation *)operationWithURLRequest:(NSURLRequest *)request
@@ -98,7 +102,7 @@ static NSString *pred_appendTime(NSString *url) {
     return operation;
 }
 
-- (NSString *)queryStringFromParameters:(NSDictionary *)params withEncoding:(NSStringEncoding)encoding {
+- (NSString *)queryStringFromParameters:(NSDictionary *)params {
     NSMutableString *queryString = [NSMutableString new];
     [params enumerateKeysAndObjectsUsingBlock:^(NSString *key, NSString *value, BOOL *stop) {
         NSAssert([key isKindOfClass:[NSString class]], @"Query parameters can only be string-string pairs");

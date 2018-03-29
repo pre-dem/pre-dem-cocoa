@@ -5,6 +5,7 @@
 //  Created by WangSiyu on 21/03/2018.
 //
 
+#import "PREDBaseModel.h"
 
 @interface PREDTransaction : PREDBaseModel
 

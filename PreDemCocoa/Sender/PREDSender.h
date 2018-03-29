@@ -16,4 +16,14 @@
 
 - (void)sendAllSavedData;
 
+- (void)sendAppInfo:(PREDNetworkCompletionBlock)completion;
+
+- (void)sendHttpMonitor:(PREDNetworkCompletionBlock)completion recursively:(BOOL)recursively;
+
+- (void)sendNetDiag:(PREDNetworkCompletionBlock)completion recursively:(BOOL)recursively;
+
+- (void)sendCustomEvents:(PREDNetworkCompletionBlock)completion recursively:(BOOL)recursively;
+
+- (void)sendTransactions:(PREDNetworkCompletionBlock)completion recursively:(BOOL)recursively;
+
 @end

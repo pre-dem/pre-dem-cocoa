@@ -17,7 +17,6 @@ Pod::Spec.new do |s|
     cs.resource_bundles = { 'PREDResources' => 'PreDemCocoa/Resources/*.plist' }
     cs.dependency "QNNetDiag"
     cs.dependency "UICKeyChainStore"
-    cs.dependency "HappyDNS"
   end
 
   s.subspec 'Swift' do |ss|

@@ -52,4 +52,6 @@
 
 + (NSString *)MD5ForData:(NSData *)data;
 
++ (NSString*)lookupHostIPAddressForURL:(NSURL*)url;
+
 @end

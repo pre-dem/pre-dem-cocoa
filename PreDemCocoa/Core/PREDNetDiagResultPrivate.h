@@ -8,8 +8,8 @@
 
 #import "PREDNetDiagResult.h"
 #import "PREDPersistence.h"
-#import "QNNetDiag.h"
 #import "PREDDefines.h"
+#import <QNNetDiag/QNNetDiag.h>
 
 @interface PREDNetDiagResult ()
 
