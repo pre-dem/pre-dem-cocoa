@@ -11,6 +11,7 @@
 #import "PREDCredential.h"
 #import "PREDManagerPrivate.h"
 #import "PREDError.h"
+#import "PREDHelper.h"
 
 static NSString *PRED_HTTPS_PREFIX = @"https://";
 static NSString *PRED_HTTP_PREFIX = @"http://";
@@ -38,10 +39,18 @@ static NSString *pred_appendTime(NSString *url) {
 
 - (void)postPath:(NSString *)path
             data:(NSData *)data
-         headers:(NSDictionary *)headers
+         headers:(NSMutableDictionary *)headers
       completion:(PREDNetworkCompletionBlock)completion {
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:path relativeToURL:_baseURL]];
     [request setHTTPMethod:@"POST"];
+    NSError *error;
+    NSData *compressedData = [PREDHelper gzipData:data error:&error];
+    if (!error) {
+        headers[@"Content-Encoding"] = @"gzip";
+        data = compressedData;
+    } else {
+        PREDLogWarning(@"compress data failed, using raw data for sending");
+    }
     [request setHTTPBody:data];
     if (headers) {
         [headers enumerateKeysAndObjectsUsingBlock:^(id _Nonnull key, id _Nonnull obj, BOOL *_Nonnull stop) {

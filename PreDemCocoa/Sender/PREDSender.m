@@ -55,7 +55,7 @@
         return;
     }
     __weak typeof(self) wSelf = self;
-    [_networkClient postPath:@"app-config" data:data headers:@{@"Content-Type": @"application/json"} completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
+    [_networkClient postPath:@"app-config" data:data headers:[@{@"Content-Type": @"application/json"} mutableCopy] completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
         __strong typeof(wSelf) strongSelf = wSelf;
         if (error) {
             PREDLogError(@"get config failed: %@", error);
@@ -92,7 +92,7 @@
         return;
     }
     __weak typeof(self) wSelf = self;
-    [_networkClient postPath:@"http-monitors" data:data headers:@{@"Content-Type": @"application/json"} completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
+    [_networkClient postPath:@"http-monitors" data:data headers:[@{@"Content-Type": @"application/json"} mutableCopy] completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
         __strong typeof(wSelf) strongSelf = wSelf;
         if (!error) {
             PREDLogDebug(@"Send http monitor succeeded");
@@ -130,7 +130,7 @@
         return;
     }
     __weak typeof(self) wSelf = self;
-    [_networkClient postPath:@"net-diags" data:data headers:@{@"Content-Type": @"application/json"} completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
+    [_networkClient postPath:@"net-diags" data:data headers:[@{@"Content-Type": @"application/json"} mutableCopy] completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
         __strong typeof(wSelf) strongSelf = wSelf;
         if (!error) {
             PREDLogDebug(@"Send net diag succeeded");
@@ -168,7 +168,7 @@
         return;
     }
     __weak typeof(self) wSelf = self;
-    [_networkClient postPath:@"custom-events" data:data headers:@{@"Content-Type": @"application/json"} completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
+    [_networkClient postPath:@"custom-events" data:data headers:[@{@"Content-Type": @"application/json"} mutableCopy] completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
         __strong typeof(wSelf) strongSelf = wSelf;
         if (!error) {
             PREDLogDebug(@"Send custom events succeeded");
@@ -206,7 +206,7 @@
         return;
     }
     __weak typeof(self) wSelf = self;
-    [_networkClient postPath:@"transactions" data:data headers:@{@"Content-Type": @"application/json"} completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
+    [_networkClient postPath:@"transactions" data:data headers:[@{@"Content-Type": @"application/json"} mutableCopy] completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
         __strong typeof(wSelf) strongSelf = wSelf;
         if (!error) {
             PREDLogDebug(@"Send transactions succeeded");

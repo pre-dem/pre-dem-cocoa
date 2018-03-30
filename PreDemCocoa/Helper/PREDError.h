@@ -16,6 +16,7 @@ typedef NS_ENUM(NSInteger, PREDErrorCode) {
     kPREDErrorCodeInternalError = 103,
     kPREDErrorCodeNotInitedError = 104,
     kPREDErrorCodeInvalidTransactionIDError = 105,
+    kPREDErrorCodeCompressionError = 106,
 };
 
 extern NSString *const PREDErrorDomain;
