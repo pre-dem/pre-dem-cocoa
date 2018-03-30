@@ -13,6 +13,10 @@
 
 @property(nonatomic, strong) NSString *domain;
 @property(nonatomic, strong) NSString *path;
+@property(nonatomic, strong) NSString *path1;
+@property(nonatomic, strong) NSString *path2;
+@property(nonatomic, strong) NSString *path3;
+@property(nonatomic, strong) NSString *path4;
 @property(nonatomic, strong) NSString *query;
 @property(nonatomic, strong) NSString *method;
 @property(nonatomic, strong) NSString *host_ip;

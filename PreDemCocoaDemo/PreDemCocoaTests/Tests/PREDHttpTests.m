@@ -151,7 +151,7 @@
     __block NSData *originalData;
     __block NSHTTPURLResponse *originalResponse;
     __block NSError *originalError;
-    NSURLSessionDataTask *dataTask = [session dataTaskWithURL:[NSURL URLWithString:@"https://test.predem.qiniuapi.com/404"] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+    NSURLSessionDataTask *dataTask = [session dataTaskWithURL:[NSURL URLWithString:@"https://test.predem.qiniuapi.com/404/path2/path3/path4/path5/path6"] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         originalData = data;
         originalResponse = (NSHTTPURLResponse *) response;
         originalError = error;
@@ -194,6 +194,10 @@
     XCTAssertTrue([parsedContent[@"start_timestamp"] intValue] > 0);
     XCTAssertTrue([parsedContent[@"response_time_stamp"] intValue] >= [parsedContent[@"start_timestamp"] intValue]);
     XCTAssertTrue([parsedContent[@"end_timestamp"] intValue] >= [parsedContent[@"start_timestamp"] intValue]);
+    XCTAssertTrue([parsedContent[@"path1"] isEqual: @"404"]);
+    XCTAssertTrue([parsedContent[@"path2"] isEqual: @"path2"]);
+    XCTAssertTrue([parsedContent[@"path3"] isEqual: @"path3"]);
+    XCTAssertTrue([parsedContent[@"path4"] isEqual: @"path4/path5/path6"]);
     [_persistence purgeAllHttpMonitor];
 }
 
