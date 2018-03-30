@@ -38,7 +38,7 @@
     __block NSData *originalData;
     __block NSHTTPURLResponse *originalResponse;
     __block NSError *originalError;
-    NSURLSessionDataTask *dataTask = [session dataTaskWithURL:[NSURL URLWithString:@"https://test.predem.qiniuapi.com"] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+    NSURLSessionDataTask *dataTask = [session dataTaskWithURL:[NSURL URLWithString:@"https://test.predem.qiniuapi.com?test_key=test_value"] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         originalData = data;
         originalResponse = (NSHTTPURLResponse *) response;
         originalError = error;
@@ -81,6 +81,7 @@
     XCTAssertTrue([parsedContent[@"start_timestamp"] intValue] > 0);
     XCTAssertTrue([parsedContent[@"response_time_stamp"] intValue] >= [parsedContent[@"start_timestamp"] intValue]);
     XCTAssertTrue([parsedContent[@"end_timestamp"] intValue] >= [parsedContent[@"start_timestamp"] intValue]);
+    XCTAssertTrue([parsedContent[@"query"] isEqual:@"{\"test_key\":\"test_value\"}"]);
     [_persistence purgeAllHttpMonitor];
 }
 
@@ -93,7 +94,7 @@
     __block NSData *originalData;
     __block NSHTTPURLResponse *originalResponse;
     __block NSError *originalError;
-    NSURLSessionDataTask *dataTask = [session dataTaskWithURL:[NSURL URLWithString:@"http://predem.qiniu.com"] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+    NSURLSessionDataTask *dataTask = [session dataTaskWithURL:[NSURL URLWithString:@"http://predem.qiniu.com?testkv"] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         originalData = data;
         originalResponse = (NSHTTPURLResponse *) response;
         originalError = error;
@@ -137,6 +138,7 @@
     XCTAssertTrue([parsedContent[@"end_timestamp"] intValue] >= [parsedContent[@"start_timestamp"] intValue]);
     XCTAssertTrue([parsedContent[@"dns_time"] intValue] >= 0);
     XCTAssertNotEqual(((NSString *) parsedContent[@"host_ip"]).length, 0);
+    XCTAssertTrue([parsedContent[@"query"] isEqual:@"{\"testkv\":\"testkv\"}"]);
     [_persistence purgeAllHttpMonitor];
 }
 
