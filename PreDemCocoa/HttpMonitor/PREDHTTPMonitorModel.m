@@ -21,7 +21,7 @@
     [pathsComponents enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         // 第一部分为空，舍去
         if (idx >0 && idx < 5) {
-            [self setValue:obj forKey:[NSString stringWithFormat:@"path%d", idx]];
+            [self setValue:obj forKey:[NSString stringWithFormat:@"path%lu", (unsigned long)idx]];
         }
     }];
 

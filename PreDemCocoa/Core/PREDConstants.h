@@ -20,6 +20,6 @@ static NSString *NetDiagEventName = @"netdiag";
 static NSString *LogCaptureEventName = @"log";
 static NSString *LagMonitorEventName = @"lag_monitor";
 static NSString *BreadcrumbEventName = @"breadcrumb";
-static NSString *TransactionEventName = @"transaction";
+static NSString *TransactionEventName = @"auto_captured_transaction";
 
 #endif /* Constants_h */
