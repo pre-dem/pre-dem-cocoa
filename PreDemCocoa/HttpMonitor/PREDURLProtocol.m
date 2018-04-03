@@ -84,10 +84,11 @@ static NSString *kTaskPropertyKey = @"PREDTask";
     if (path.length == 0) {
         path = @"/";
     }
-    if (request.URL.query.length) {
-        HTTPMonitorModel.path = [NSString stringWithFormat:@"%@?%@", path, request.URL.query];
-    } else {
-        HTTPMonitorModel.path = path;
+    HTTPMonitorModel.path = path;
+    NSError *error;
+    NSData *queryData = [NSJSONSerialization dataWithJSONObject:[PREDHelper parseQuery:request.URL.query] options:0 error:&error];
+    if (!error) {
+        HTTPMonitorModel.query = [[NSString alloc] initWithData:queryData encoding:NSUTF8StringEncoding];
     }
     HTTPMonitorModel.method = request.HTTPMethod;
 

@@ -15,7 +15,7 @@
 
 - (void)postPath:(NSString *)path
             data:(NSData *)data
-         headers:(NSDictionary *)headers
+         headers:(NSMutableDictionary *)headers
       completion:(PREDNetworkCompletionBlock)completion;
 
 @end

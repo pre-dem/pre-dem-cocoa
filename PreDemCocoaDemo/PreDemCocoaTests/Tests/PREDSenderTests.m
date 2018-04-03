@@ -64,7 +64,7 @@
         originalData = data;
         originalError = error;
         [expectation fulfill];
-    } recursively:NO];
+    }            recursively:NO];
     [self waitForExpectationsWithTimeout:10 handler:^(NSError *error) {
         XCTAssertNil(error, @"%@", error);
     }];
@@ -83,7 +83,7 @@
         originalData = data;
         originalError = error;
         [expectation fulfill];
-    } recursively:NO];
+    }        recursively:NO];
     [self waitForExpectationsWithTimeout:10 handler:^(NSError *error) {
         XCTAssertNil(error, @"%@", error);
     }];
@@ -102,7 +102,7 @@
         originalData = data;
         originalError = error;
         [expectation fulfill];
-    } recursively:NO];
+    }             recursively:NO];
     [self waitForExpectationsWithTimeout:10 handler:^(NSError *error) {
         XCTAssertNil(error, @"%@", error);
     }];
@@ -121,7 +121,7 @@
         originalData = data;
         originalError = error;
         [expectation fulfill];
-    } recursively:NO];
+    }             recursively:NO];
     [self waitForExpectationsWithTimeout:10 handler:^(NSError *error) {
         XCTAssertNil(error, @"%@", error);
     }];
