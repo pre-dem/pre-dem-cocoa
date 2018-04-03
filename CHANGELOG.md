@@ -1,5 +1,10 @@
 # Changelog
 
+## [2.0.0](https://github.com/pre-dem/pre-dem-cocoa/releases/tag/v2.0.0) / 2018-03-26
+- 删除 `log`、`crash`、`lag` 及 `breadcrumb` 监控
+- `http` 模块进行小幅重构
+- 添加更新单测用例
+
 ## [1.0.8](https://github.com/pre-dem/pre-dem-cocoa/releases/tag/v1.0.8) / 2018-03-26
 - 增加 `transaction` 监控的支持
 - 更新 demo
