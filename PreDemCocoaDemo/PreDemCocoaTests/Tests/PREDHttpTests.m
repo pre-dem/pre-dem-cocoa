@@ -73,14 +73,14 @@
 
     XCTAssertNil(originalError);
     XCTAssertEqual(originalResponse.statusCode, 200);
-    XCTAssertEqual([parsedContent[@"status_code"] intValue], 200);
+    XCTAssertEqual([parsedContent[@"status_code"] longLongValue], 200);
     XCTAssertEqual(originalData.length, 168);
-    XCTAssertEqual([parsedContent[@"data_length"] intValue], 168);
+    XCTAssertEqual([parsedContent[@"data_length"] longLongValue], 168);
     XCTAssertNil(parsedContent[@"network_error_msg"]);
-    XCTAssertEqual([parsedContent[@"network_error_code"] intValue], 0);
-    XCTAssertTrue([parsedContent[@"start_timestamp"] intValue] > 0);
-    XCTAssertTrue([parsedContent[@"response_time_stamp"] intValue] >= [parsedContent[@"start_timestamp"] intValue]);
-    XCTAssertTrue([parsedContent[@"end_timestamp"] intValue] >= [parsedContent[@"start_timestamp"] intValue]);
+    XCTAssertEqual([parsedContent[@"network_error_code"] longLongValue], 0);
+    XCTAssertTrue([parsedContent[@"start_timestamp"] longLongValue] > 0);
+    XCTAssertTrue([parsedContent[@"response_time_stamp"] longLongValue] >= [parsedContent[@"start_timestamp"] longLongValue]);
+    XCTAssertTrue([parsedContent[@"end_timestamp"] longLongValue] >= [parsedContent[@"start_timestamp"] longLongValue]);
     XCTAssertTrue([parsedContent[@"query"] isEqual:@"{\"test_key\":\"test_value\"}"]);
     [_persistence purgeAllHttpMonitor];
 }
@@ -129,14 +129,14 @@
 
     XCTAssertNil(originalError);
     XCTAssertEqual(originalResponse.statusCode, 200);
-    XCTAssertEqual([parsedContent[@"status_code"] intValue], 200);
-    XCTAssertEqual(originalData.length, [parsedContent[@"data_length"] intValue]);
+    XCTAssertEqual([parsedContent[@"status_code"] longLongValue], 200);
+    XCTAssertEqual(originalData.length, [parsedContent[@"data_length"] longLongValue]);
     XCTAssertNil(parsedContent[@"network_error_msg"]);
-    XCTAssertEqual([parsedContent[@"network_error_code"] intValue], 0);
-    XCTAssertTrue([parsedContent[@"start_timestamp"] intValue] > 0);
-    XCTAssertTrue([parsedContent[@"response_time_stamp"] intValue] >= [parsedContent[@"start_timestamp"] intValue]);
-    XCTAssertTrue([parsedContent[@"end_timestamp"] intValue] >= [parsedContent[@"start_timestamp"] intValue]);
-    XCTAssertTrue([parsedContent[@"dns_time"] intValue] >= 0);
+    XCTAssertEqual([parsedContent[@"network_error_code"] longLongValue], 0);
+    XCTAssertTrue([parsedContent[@"start_timestamp"] longLongValue] > 0);
+    XCTAssertTrue([parsedContent[@"response_time_stamp"] longLongValue] >= [parsedContent[@"start_timestamp"] longLongValue]);
+    XCTAssertTrue([parsedContent[@"end_timestamp"] longLongValue] >= [parsedContent[@"start_timestamp"] longLongValue]);
+    XCTAssertTrue([parsedContent[@"dns_time"] longLongValue] >= 0);
     XCTAssertNotEqual(((NSString *) parsedContent[@"host_ip"]).length, 0);
     XCTAssertTrue([parsedContent[@"query"] isEqual:@"{\"testkv\":\"testkv\"}"]);
     [_persistence purgeAllHttpMonitor];
@@ -183,17 +183,16 @@
     } else {
         XCTAssertTrue([dataTask.originalRequest.URL.path isEqual:parsedContent[@"path"]]);
     }
-    NSLog(@"%@", [[NSString alloc] initWithData:originalData encoding:NSUTF8StringEncoding]);
     XCTAssertNil(originalError);
     XCTAssertEqual(originalResponse.statusCode, 404);
-    XCTAssertEqual([parsedContent[@"status_code"] intValue], 404);
+    XCTAssertEqual([parsedContent[@"status_code"] longLongValue], 404);
     XCTAssertEqual(originalData.length, 18);
-    XCTAssertEqual([parsedContent[@"data_length"] intValue], 18);
+    XCTAssertEqual([parsedContent[@"data_length"] longLongValue], 18);
     XCTAssertNil(parsedContent[@"network_error_msg"]);
-    XCTAssertEqual([parsedContent[@"network_error_code"] intValue], 0);
-    XCTAssertTrue([parsedContent[@"start_timestamp"] intValue] > 0);
-    XCTAssertTrue([parsedContent[@"response_time_stamp"] intValue] >= [parsedContent[@"start_timestamp"] intValue]);
-    XCTAssertTrue([parsedContent[@"end_timestamp"] intValue] >= [parsedContent[@"start_timestamp"] intValue]);
+    XCTAssertEqual([parsedContent[@"network_error_code"] longLongValue], 0);
+    XCTAssertTrue([parsedContent[@"start_timestamp"] longLongValue] > 0);
+    XCTAssertTrue([parsedContent[@"response_time_stamp"] longLongValue] >= [parsedContent[@"start_timestamp"] longLongValue]);
+    XCTAssertTrue([parsedContent[@"end_timestamp"] longLongValue] >= [parsedContent[@"start_timestamp"] longLongValue]);
     XCTAssertTrue([parsedContent[@"path1"] isEqual: @"404"]);
     XCTAssertTrue([parsedContent[@"path2"] isEqual: @"path2"]);
     XCTAssertTrue([parsedContent[@"path3"] isEqual: @"path3"]);
@@ -247,10 +246,10 @@
     XCTAssertEqual(originalResponse.statusCode, 0);
     XCTAssertEqual(originalData.length, 0);
     XCTAssertTrue([originalError.localizedDescription isEqual:parsedContent[@"network_error_msg"]]);
-    XCTAssertEqual(originalError.code, [parsedContent[@"network_error_code"] intValue]);
-    XCTAssertTrue([parsedContent[@"start_timestamp"] intValue] > 0);
-    XCTAssertTrue([parsedContent[@"response_time_stamp"] intValue] >= [parsedContent[@"start_timestamp"] intValue]);
-    XCTAssertTrue([parsedContent[@"end_timestamp"] intValue] >= [parsedContent[@"start_timestamp"] intValue]);
+    XCTAssertEqual(originalError.code, [parsedContent[@"network_error_code"] longLongValue]);
+    XCTAssertTrue([parsedContent[@"start_timestamp"] longLongValue] > 0);
+    XCTAssertTrue([parsedContent[@"response_time_stamp"] longLongValue] >= [parsedContent[@"start_timestamp"] longLongValue]);
+    XCTAssertTrue([parsedContent[@"end_timestamp"] longLongValue] >= [parsedContent[@"start_timestamp"] longLongValue]);
     [_persistence purgeAllHttpMonitor];
 }
 
@@ -335,14 +334,14 @@
 
     XCTAssertNil(originalError);
     XCTAssertEqual(originalResponse.statusCode, 200);
-    XCTAssertEqual([parsedContent[@"status_code"] intValue], 200);
+    XCTAssertEqual([parsedContent[@"status_code"] longLongValue], 200);
     XCTAssertEqual(originalData.length, 168);
-    XCTAssertEqual([parsedContent[@"data_length"] intValue], 168);
+    XCTAssertEqual([parsedContent[@"data_length"] longLongValue], 168);
     XCTAssertNil(parsedContent[@"network_error_msg"]);
-    XCTAssertEqual([parsedContent[@"network_error_code"] intValue], 0);
-    XCTAssertTrue([parsedContent[@"start_timestamp"] intValue] > 0);
-    XCTAssertTrue([parsedContent[@"response_time_stamp"] intValue] >= [parsedContent[@"start_timestamp"] intValue]);
-    XCTAssertTrue([parsedContent[@"end_timestamp"] intValue] >= [parsedContent[@"start_timestamp"] intValue]);
+    XCTAssertEqual([parsedContent[@"network_error_code"] longLongValue], 0);
+    XCTAssertTrue([parsedContent[@"start_timestamp"] longLongValue] > 0);
+    XCTAssertTrue([parsedContent[@"response_time_stamp"] longLongValue] >= [parsedContent[@"start_timestamp"] longLongValue]);
+    XCTAssertTrue([parsedContent[@"end_timestamp"] longLongValue] >= [parsedContent[@"start_timestamp"] longLongValue]);
     [_persistence purgeAllHttpMonitor];
 }
 
@@ -389,14 +388,14 @@
 
     XCTAssertNil(originalError);
     XCTAssertEqual(originalResponse.statusCode, 200);
-    XCTAssertEqual([parsedContent[@"status_code"] intValue], 200);
+    XCTAssertEqual([parsedContent[@"status_code"] longLongValue], 200);
     XCTAssertEqual(originalData.length, 168);
-    XCTAssertEqual([parsedContent[@"data_length"] intValue], 168);
+    XCTAssertEqual([parsedContent[@"data_length"] longLongValue], 168);
     XCTAssertNil(parsedContent[@"network_error_msg"]);
-    XCTAssertEqual([parsedContent[@"network_error_code"] intValue], 0);
-    XCTAssertTrue([parsedContent[@"start_timestamp"] intValue] > 0);
-    XCTAssertTrue([parsedContent[@"response_time_stamp"] intValue] >= [parsedContent[@"start_timestamp"] intValue]);
-    XCTAssertTrue([parsedContent[@"end_timestamp"] intValue] >= [parsedContent[@"start_timestamp"] intValue]);
+    XCTAssertEqual([parsedContent[@"network_error_code"] longLongValue], 0);
+    XCTAssertTrue([parsedContent[@"start_timestamp"] longLongValue] > 0);
+    XCTAssertTrue([parsedContent[@"response_time_stamp"] longLongValue] >= [parsedContent[@"start_timestamp"] longLongValue]);
+    XCTAssertTrue([parsedContent[@"end_timestamp"] longLongValue] >= [parsedContent[@"start_timestamp"] longLongValue]);
     [_persistence purgeAllHttpMonitor];
 }
 
@@ -443,13 +442,13 @@
 
     XCTAssertNil(originalError);
     XCTAssertEqual(originalResponse.statusCode, 200);
-    XCTAssertEqual([parsedContent[@"status_code"] intValue], 200);
-    XCTAssertEqual(originalData.length, [parsedContent[@"data_length"] intValue]);
+    XCTAssertEqual([parsedContent[@"status_code"] longLongValue], 200);
+    XCTAssertEqual(originalData.length, [parsedContent[@"data_length"] longLongValue]);
     XCTAssertNil(parsedContent[@"network_error_msg"]);
-    XCTAssertEqual([parsedContent[@"network_error_code"] intValue], 0);
-    XCTAssertTrue([parsedContent[@"start_timestamp"] intValue] > 0);
-    XCTAssertTrue([parsedContent[@"response_time_stamp"] intValue] >= [parsedContent[@"start_timestamp"] intValue]);
-    XCTAssertTrue([parsedContent[@"end_timestamp"] intValue] >= [parsedContent[@"start_timestamp"] intValue]);
+    XCTAssertEqual([parsedContent[@"network_error_code"] longLongValue], 0);
+    XCTAssertTrue([parsedContent[@"start_timestamp"] longLongValue] > 0);
+    XCTAssertTrue([parsedContent[@"response_time_stamp"] longLongValue] >= [parsedContent[@"start_timestamp"] longLongValue]);
+    XCTAssertTrue([parsedContent[@"end_timestamp"] longLongValue] >= [parsedContent[@"start_timestamp"] longLongValue]);
     [_persistence purgeAllHttpMonitor];
 }
 
@@ -496,14 +495,14 @@
 
     XCTAssertNil(originalError);
     XCTAssertEqual(originalResponse.statusCode, 404);
-    XCTAssertEqual([parsedContent[@"status_code"] intValue], 404);
+    XCTAssertEqual([parsedContent[@"status_code"] longLongValue], 404);
     XCTAssertEqual(originalData.length, 18);
-    XCTAssertEqual([parsedContent[@"data_length"] intValue], 18);
+    XCTAssertEqual([parsedContent[@"data_length"] longLongValue], 18);
     XCTAssertNil(parsedContent[@"network_error_msg"]);
-    XCTAssertEqual([parsedContent[@"network_error_code"] intValue], 0);
-    XCTAssertTrue([parsedContent[@"start_timestamp"] intValue] > 0);
-    XCTAssertTrue([parsedContent[@"response_time_stamp"] intValue] >= [parsedContent[@"start_timestamp"] intValue]);
-    XCTAssertTrue([parsedContent[@"end_timestamp"] intValue] >= [parsedContent[@"start_timestamp"] intValue]);
+    XCTAssertEqual([parsedContent[@"network_error_code"] longLongValue], 0);
+    XCTAssertTrue([parsedContent[@"start_timestamp"] longLongValue] > 0);
+    XCTAssertTrue([parsedContent[@"response_time_stamp"] longLongValue] >= [parsedContent[@"start_timestamp"] longLongValue]);
+    XCTAssertTrue([parsedContent[@"end_timestamp"] longLongValue] >= [parsedContent[@"start_timestamp"] longLongValue]);
     [_persistence purgeAllHttpMonitor];
 }
 
@@ -552,10 +551,10 @@
     XCTAssertEqual(originalResponse.statusCode, 0);
     XCTAssertEqual(originalData.length, 0);
     XCTAssertTrue([originalError.localizedDescription isEqual:parsedContent[@"network_error_msg"]]);
-    XCTAssertEqual(originalError.code, [parsedContent[@"network_error_code"] intValue]);
-    XCTAssertTrue([parsedContent[@"start_timestamp"] intValue] > 0);
-    XCTAssertTrue([parsedContent[@"response_time_stamp"] intValue] >= [parsedContent[@"start_timestamp"] intValue]);
-    XCTAssertTrue([parsedContent[@"end_timestamp"] intValue] >= [parsedContent[@"start_timestamp"] intValue]);
+    XCTAssertEqual(originalError.code, [parsedContent[@"network_error_code"] longLongValue]);
+    XCTAssertTrue([parsedContent[@"start_timestamp"] longLongValue] > 0);
+    XCTAssertTrue([parsedContent[@"response_time_stamp"] longLongValue] >= [parsedContent[@"start_timestamp"] longLongValue]);
+    XCTAssertTrue([parsedContent[@"end_timestamp"] longLongValue] >= [parsedContent[@"start_timestamp"] longLongValue]);
     [_persistence purgeAllHttpMonitor];
 }
 
