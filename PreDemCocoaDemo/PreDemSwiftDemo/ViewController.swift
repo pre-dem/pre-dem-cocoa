@@ -16,28 +16,6 @@ class ViewController: UIViewController {
     }
 
     @IBOutlet var versionLable: UILabel!
-    @IBOutlet var logLevelPicker: UIPickerView!
-    @IBOutlet var logTextView: UITextView!
-
-    let logPickerKeys = [
-        "不上传 log",
-        "PREDLogLevelOff",
-        "PREDLogLevelError",
-        "PREDLogLevelWarning",
-        "PREDLogLevelInfo",
-        "PREDLogLevelDebug",
-        "PREDLogLevelVerbose",
-        "PREDLogLevelAll"
-    ]
-    let logPickerValues = [
-        PREDLogLevel.off,
-        PREDLogLevel.error,
-        PREDLogLevel.warning,
-        PREDLogLevel.info,
-        PREDLogLevel.debug,
-        PREDLogLevel.verbose,
-        PREDLogLevel.all,
-    ]
 
     override func viewDidLoad() {
         super.viewDidLoad()

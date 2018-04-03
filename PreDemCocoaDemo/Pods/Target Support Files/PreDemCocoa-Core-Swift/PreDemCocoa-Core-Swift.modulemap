@@ -1,6 +1,0 @@
-framework module PreDemCocoa {
-  umbrella header "PreDemCocoa-Core-Swift-umbrella.h"
-
-  export *
-  module * { export * }
-}

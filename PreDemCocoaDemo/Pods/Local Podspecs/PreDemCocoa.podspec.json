@@ -35,15 +35,6 @@
 
         ]
       }
-    },
-    {
-      "name": "Swift",
-      "dependencies": {
-        "PreDemCocoa/Core": [
-
-        ]
-      },
-      "source_files": "PreDemCocoa/**/*.{swift}"
     }
   ]
 }

@@ -434,7 +434,7 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-PreDemSwiftDemo/Pods-PreDemSwiftDemo-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/PreDemCocoa-Core-Swift/PreDemCocoa.framework",
+				"${BUILT_PRODUCTS_DIR}/PreDemCocoa/PreDemCocoa.framework",
 				"${BUILT_PRODUCTS_DIR}/QNNetDiag/QNNetDiag.framework",
 				"${BUILT_PRODUCTS_DIR}/UICKeyChainStore/UICKeyChainStore.framework",
 			);
@@ -529,7 +529,7 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-PreDemSwiftDemo/Pods-PreDemSwiftDemo-resources.sh",
-				$PODS_CONFIGURATION_BUILD_DIR/PreDemObjc/PREDResources.bundle,
+				"$PODS_CONFIGURATION_BUILD_DIR/PreDemObjc/PREDResources.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (

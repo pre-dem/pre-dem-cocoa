@@ -18,9 +18,4 @@ Pod::Spec.new do |s|
     cs.dependency "QNNetDiag"
     cs.dependency "UICKeyChainStore"
   end
-
-  s.subspec 'Swift' do |ss|
-    ss.dependency "PreDemCocoa/Core"
-    ss.source_files = "PreDemCocoa/**/*.{swift}"
-  end
 end

@@ -7,7 +7,7 @@ target 'PreDemObjcDemo' do
 end
 
 target 'PreDemSwiftDemo' do
-  pod 'PreDemCocoa/Swift', :path => '../'
+  pod 'PreDemCocoa', :path => '../'
 end
 
 target 'PreDemCocoaTests' do

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="cYA-5x-gqt">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="cYA-5x-gqt">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -27,7 +27,7 @@
         <!--AppID View Controller-->
         <scene sceneID="hyi-Bl-Zev">
             <objects>
-                <viewController id="J3S-3h-4mt" customClass="AppIDViewController" sceneMemberID="viewController">
+                <viewController id="J3S-3h-4mt" customClass="AppIDViewController" customModule="PreDemSwiftDemo" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="9FP-Uq-8dL"/>
                         <viewControllerLayoutGuide type="bottom" id="X3z-e6-VSf"/>
@@ -81,8 +81,8 @@
                     </view>
                     <navigationItem key="navigationItem" id="01c-Pq-O0a"/>
                     <connections>
-                        <outlet property="appIdTextField" destination="tnf-6S-WgF" id="Qo9-fJ-Ci6"/>
-                        <outlet property="domainTextField" destination="Lu5-nS-rrg" id="Npe-Sw-6og"/>
+                        <outlet property="appIdTextField" destination="tnf-6S-WgF" id="yVh-lx-HHC"/>
+                        <outlet property="domainTextField" destination="Lu5-nS-rrg" id="Nmv-rV-3ZL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jor-26-Vs9" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -97,7 +97,7 @@
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="PreDemSwiftDemo" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -123,21 +123,21 @@
                                 <rect key="frame" x="99" y="207" width="123" height="30"/>
                                 <state key="normal" title="点我诊断一下网络"/>
                                 <connections>
-                                    <action selector="diagnoseNetworkWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="dWI-cY-1t9"/>
+                                    <action selector="diagnoseNetworkWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="SWz-Th-oBO"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="05a-Y6-qXL">
                                 <rect key="frame" x="84" y="317" width="153" height="30"/>
                                 <state key="normal" title="点我发送一些网络请求"/>
                                 <connections>
-                                    <action selector="sendHttpRequestWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Sey-0f-EGM"/>
+                                    <action selector="sendHttpRequestWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Siu-rG-kNf"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4XG-nN-BeY">
                                 <rect key="frame" x="76" y="427" width="169" height="30"/>
                                 <state key="normal" title="点我触发一次自定义事件"/>
                                 <connections>
-                                    <action selector="diyEventWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="W6Y-QL-fLq"/>
+                                    <action selector="diyEventWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="YEK-h1-KpM"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -158,7 +158,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="hX5-fa-XYI"/>
                     <connections>
-                        <outlet property="versionLable" destination="iZc-eD-4Yh" id="o2K-Er-5BE"/>
+                        <outlet property="versionLable" destination="iZc-eD-4Yh" id="rwP-WE-2x3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -168,7 +168,7 @@
         <!--Web View Controller-->
         <scene sceneID="Y60-9P-6ba">
             <objects>
-                <viewController id="th5-Jt-DBT" customClass="WebViewController" sceneMemberID="viewController">
+                <viewController id="th5-Jt-DBT" customClass="WebViewController" customModule="PreDemSwiftDemo" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Pxi-mK-HmX"/>
                         <viewControllerLayoutGuide type="bottom" id="Cai-M4-JwI"/>
