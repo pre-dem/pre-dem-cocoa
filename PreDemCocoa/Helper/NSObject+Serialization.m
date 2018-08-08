@@ -13,7 +13,6 @@
 @implementation NSObject (Serialization)
 
 - (NSData *)toJsonWithError:(NSError **)error {
-
     NSDictionary *dic;
     if ([self isKindOfClass:[NSDictionary class]]) {
         dic = (NSDictionary *) self;

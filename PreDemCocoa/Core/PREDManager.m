@@ -110,15 +110,19 @@ static NSString *app_id(NSString *appKey) {
     dispatch_once(&onceToken, ^{
         _appKey = appKey;
         NSError *error;
+        // 初始化 sender
         if (![self initSenderWithDomain:serviceDomain appKey:appKey error:&error]) {
             PREDLogError(@"%@", error);
             return;
         }
 
+        // 进行其他功能模块的初始化
         [self initializeModules];
 
+        // 注册观察者，接收通知
         [self registerObservers];
 
+        // 开始循环发送数据
         [_sender sendAllSavedData];
 
         _started = YES;

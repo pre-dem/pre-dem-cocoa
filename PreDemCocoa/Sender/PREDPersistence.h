@@ -16,6 +16,7 @@
 
 @interface PREDPersistence : NSObject
 
+// 将收集到的相关数据序列化并持久化到本地
 - (void)persistAppInfo:(PREDAppInfo *)appInfo;
 
 - (void)persistHttpMonitor:(PREDHTTPMonitorModel *)httpMonitor;
@@ -26,6 +27,7 @@
 
 - (void)persistTransaction:(PREDTransaction *)transaction;
 
+// 获取持久化在本地的各种数据文件地址
 - (NSString *)nextArchivedAppInfoPath;
 
 - (NSString *)nextArchivedHttpMonitorPath;
@@ -36,6 +38,7 @@
 
 - (NSString *)nextArchivedTransactionsPath;
 
+// 清除缓存文件相关方法
 - (void)purgeFile:(NSString *)filePath;
 
 - (void)purgeFiles:(NSArray<NSString *> *)filePaths;
