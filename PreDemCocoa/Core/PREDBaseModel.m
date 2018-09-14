@@ -42,6 +42,7 @@
 }
 
 - (NSData *)serializeForSending:(NSError **)error {
+    // 需要同时获取该类及其父类的相关属性值
     Class class = self.class;
     Class superClass = class_getSuperclass(class);
     NSAssert([superClass isEqual:PREDBaseModel.class], @"%@ should be subclass of PREDBaseModel", class);

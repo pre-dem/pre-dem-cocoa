@@ -84,6 +84,7 @@
     [self checkAndSend];
 }
 
+// 当收到所有请求返回之后再进行存储和回调
 - (void)checkAndSend {
     [_lock lock];
     _completedCount++;

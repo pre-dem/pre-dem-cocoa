@@ -38,6 +38,7 @@ NSString *kPREDConfigRefreshedNotificationConfigKey = @"com.qiniu.predem.config"
 
 - (PREDConfig *)getConfig {
     PREDConfig *defaultConfig;
+    // 优先获取保存在 UserDefaults 中的配置
     NSDictionary *dic = [NSUserDefaults.standardUserDefaults objectForKey:PREDConfigUserDefaultsKey];
     if (dic && [dic respondsToSelector:@selector(objectForKey:)]) {
         defaultConfig = [PREDConfig configWithDic:dic];
@@ -51,12 +52,14 @@ NSString *kPREDConfigRefreshedNotificationConfigKey = @"com.qiniu.predem.config"
 }
 
 - (void)didBecomeActive:(NSNotification *)noty {
+    // 每天只获取一次
     if (self.lastReportTime && [[NSDate date] timeIntervalSinceDate:self.lastReportTime] >= 60 * 60 * 24) {
         [self getConfig];
     }
 }
 
 - (void)configRefreshed:(NSNotification *)noty {
+    // 将获取到的配置保存在 UserDefaults 中
     NSDictionary *dic = noty.userInfo[kPREDConfigRefreshedNotificationConfigKey];
     [NSUserDefaults.standardUserDefaults setObject:dic forKey:PREDConfigUserDefaultsKey];
     self.lastReportTime = [NSDate date];
