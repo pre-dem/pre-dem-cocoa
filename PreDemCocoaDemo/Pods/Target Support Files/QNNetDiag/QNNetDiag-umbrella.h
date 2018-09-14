@@ -10,7 +10,6 @@
 #endif
 #endif
 
-#import "QNNetDiag.h"
 #import "QNNExternalIp.h"
 #import "QNNHttp.h"
 #import "QNNNslookup.h"
@@ -21,7 +20,7 @@
 #import "QNNTcpPing.h"
 #import "QNNTraceRoute.h"
 #import "QNNUtil.h"
+#import "QNNetDiag.h"
 
 FOUNDATION_EXPORT double QNNetDiagVersionNumber;
 FOUNDATION_EXPORT const unsigned char QNNetDiagVersionString[];
-

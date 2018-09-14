@@ -10,7 +10,8 @@
 
 @class PREDHTTPOperation;
 
-typedef void (^PREDNetworkCompletionBlock)(PREDHTTPOperation *operation, NSData *data, NSError *error);
+typedef void (^PREDNetworkCompletionBlock)(PREDHTTPOperation *operation,
+                                           NSData *data, NSError *error);
 
 @interface PREDHTTPOperation : NSOperation
 
@@ -18,7 +19,7 @@ typedef void (^PREDNetworkCompletionBlock)(PREDHTTPOperation *operation, NSData 
 
 @property(nonatomic, readonly) NSURLRequest *URLRequest;
 
-//the completion is only called if the operation wasn't cancelled
+// the completion is only called if the operation wasn't cancelled
 - (void)setCompletion:(PREDNetworkCompletionBlock)completionBlock;
 
 @property(nonatomic, readonly) NSHTTPURLResponse *response;

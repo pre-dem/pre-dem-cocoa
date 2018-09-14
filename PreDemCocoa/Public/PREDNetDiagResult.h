@@ -6,8 +6,8 @@
 //  Copyright © 2017 pre-engineering. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
 #import "PREDBaseModel.h"
+#import <Foundation/Foundation.h>
 
 /**
  * 网络诊断结果对象

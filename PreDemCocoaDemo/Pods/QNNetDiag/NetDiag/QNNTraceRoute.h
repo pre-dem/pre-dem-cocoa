@@ -13,21 +13,21 @@
 
 @interface QNNTraceRouteResult : NSObject
 
-@property (readonly) NSInteger code;
-@property (readonly) NSString* ip;
-@property (readonly) NSString* content;
+@property(readonly) NSInteger code;
+@property(readonly) NSString *ip;
+@property(readonly) NSString *content;
 
 @end
 
-typedef void (^QNNTraceRouteCompleteHandler)(QNNTraceRouteResult*);
+typedef void (^QNNTraceRouteCompleteHandler)(QNNTraceRouteResult *);
 
 @interface QNNTraceRoute : NSObject <QNNStopDelegate>
 
-+ (instancetype)start:(NSString*)host
++ (instancetype)start:(NSString *)host
                output:(id<QNNOutputDelegate>)output
              complete:(QNNTraceRouteCompleteHandler)complete;
 
-+ (instancetype)start:(NSString*)host
++ (instancetype)start:(NSString *)host
                output:(id<QNNOutputDelegate>)output
              complete:(QNNTraceRouteCompleteHandler)complete
                maxTtl:(NSInteger)maxTtl;

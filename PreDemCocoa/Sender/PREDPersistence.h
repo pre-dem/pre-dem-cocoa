@@ -6,11 +6,11 @@
 //
 //
 
-#import <Foundation/Foundation.h>
-#import "PREDHTTPMonitorModel.h"
-#import "PREDNetDiagResult.h"
 #import "PREDAppInfo.h"
 #import "PREDCustomEvent.h"
+#import "PREDHTTPMonitorModel.h"
+#import "PREDNetDiagResult.h"
+#import <Foundation/Foundation.h>
 
 @class PREDTransaction;
 

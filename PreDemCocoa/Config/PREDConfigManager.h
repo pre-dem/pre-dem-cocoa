@@ -6,9 +6,9 @@
 //  Copyright © 2017 pre-engineering. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
 #import "PREDConfig.h"
 #import "PREDPersistence.h"
+#import <Foundation/Foundation.h>
 
 extern NSString *kPREDConfigRefreshedNotification;
 extern NSString *kPREDConfigRefreshedNotificationConfigKey;

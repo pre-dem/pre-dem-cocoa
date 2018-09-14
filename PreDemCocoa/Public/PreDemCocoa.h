@@ -7,8 +7,8 @@
 //
 
 #import "PREDBaseModel.h"
+#import "PREDCustomEvent.h"
 #import "PREDDefines.h"
 #import "PREDManager.h"
 #import "PREDNetDiagResult.h"
-#import "PREDCustomEvent.h"
 #import "PREDTransaction.h"

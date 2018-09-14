@@ -12,7 +12,7 @@
 @implementation PREDAppInfo
 
 - (instancetype)init {
-    return [self initWithName:AppInfoEventName type:AutoCapturedEventType];
+  return [self initWithName:AppInfoEventName type:AutoCapturedEventType];
 }
 
 @end

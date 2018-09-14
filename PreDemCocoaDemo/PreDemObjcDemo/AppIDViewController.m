@@ -7,8 +7,8 @@
 //
 
 #import "AppIDViewController.h"
-#import <UICKeyChainStore/UICKeyChainStore.h>
 #import "PreDemCocoa/PreDemCocoa.h"
+#import <UICKeyChainStore/UICKeyChainStore.h>
 
 @interface AppIDViewController ()
 
@@ -20,57 +20,66 @@
 @implementation AppIDViewController
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    UICKeyChainStore *keychain = [UICKeyChainStore keyChainStoreWithService:@"com.qiniu.pre.demo"];
-    NSString *prevID = keychain[@"appid"];
-    NSString *prevDomain = keychain[@"domain"];
-    if (prevID) {
-        _appIdTextField.text = prevID;
-    }
-    if (prevDomain) {
-        _domainTextField.text = prevDomain;
-    }
+  [super viewDidLoad];
+  // Do any additional setup after loading the view.
+  UICKeyChainStore *keychain =
+      [UICKeyChainStore keyChainStoreWithService:@"com.qiniu.pre.demo"];
+  NSString *prevID = keychain[@"appid"];
+  NSString *prevDomain = keychain[@"domain"];
+  if (prevID) {
+    _appIdTextField.text = prevID;
+  }
+  if (prevDomain) {
+    _domainTextField.text = prevDomain;
+  }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    self.navigationController.navigationBarHidden = YES;
+  [super viewWillAppear:animated];
+  self.navigationController.navigationBarHidden = YES;
 }
 
 - (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+  [super didReceiveMemoryWarning];
+  // Dispose of any resources that can be recreated.
 }
 
 - (IBAction)tapped:(id)sender {
-    [_appIdTextField resignFirstResponder];
-    [_domainTextField resignFirstResponder];
+  [_appIdTextField resignFirstResponder];
+  [_domainTextField resignFirstResponder];
 }
 
-- (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {
-    if (_appIdTextField.text.length < 8 || _domainTextField.text.length == 0) {
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"出错啦" message:@"appID 必须在8位以上，domain 不能为空，才能继续哦" preferredStyle:UIAlertControllerStyleAlert];
-        [alert addAction:[UIAlertAction actionWithTitle:@"好的" style:UIAlertActionStyleDefault handler:nil]];
-        [self presentViewController:alert animated:YES completion:nil];
-        return NO;
-    } else {
-        return YES;
-    }
+- (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier
+                                  sender:(id)sender {
+  if (_appIdTextField.text.length < 8 || _domainTextField.text.length == 0) {
+    UIAlertController *alert = [UIAlertController
+        alertControllerWithTitle:@"出错啦"
+                         message:
+                             @"appID 必须在8位以上，domain 不能为空，才能继续哦"
+                  preferredStyle:UIAlertControllerStyleAlert];
+    [alert addAction:[UIAlertAction actionWithTitle:@"好的"
+                                              style:UIAlertActionStyleDefault
+                                            handler:nil]];
+    [self presentViewController:alert animated:YES completion:nil];
+    return NO;
+  } else {
+    return YES;
+  }
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    UICKeyChainStore *keychain = [UICKeyChainStore keyChainStoreWithService:@"com.qiniu.pre.demo"];
-    keychain[@"appid"] = _appIdTextField.text;
-    keychain[@"domain"] = _domainTextField.text;
+  UICKeyChainStore *keychain =
+      [UICKeyChainStore keyChainStoreWithService:@"com.qiniu.pre.demo"];
+  keychain[@"appid"] = _appIdTextField.text;
+  keychain[@"domain"] = _domainTextField.text;
 #ifdef DEBUG
-    [PREDManager startWithAppKey:_appIdTextField.text
-                   serviceDomain:_domainTextField.text];
-    PREDManager.tag = @"userid_debug";
+  [PREDManager startWithAppKey:_appIdTextField.text
+                 serviceDomain:_domainTextField.text];
+  PREDManager.tag = @"userid_debug";
 #else
-    [PREDManager startWithAppKey:_appIdTextField.text
-                   serviceDomain:_domainTextField.text];
-    PREDManager.tag = @"userid_release";
+  [PREDManager startWithAppKey:_appIdTextField.text
+                 serviceDomain:_domainTextField.text];
+  PREDManager.tag = @"userid_release";
 #endif
 }
 

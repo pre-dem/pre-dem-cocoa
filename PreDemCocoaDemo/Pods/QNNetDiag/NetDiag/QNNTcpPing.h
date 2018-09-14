@@ -11,21 +11,21 @@
 
 @interface QNNTcpPingResult : NSObject
 
-@property (readonly) NSInteger code;
-@property (readonly) NSString* ip;
-@property (readonly) NSTimeInterval maxTime;
-@property (readonly) NSTimeInterval minTime;
-@property (readonly) NSTimeInterval avgTime;
-@property (readonly) NSInteger loss;
-@property (readonly) NSInteger count;
-@property (readonly) NSTimeInterval totalTime;
-@property (readonly) NSTimeInterval stddev;
+@property(readonly) NSInteger code;
+@property(readonly) NSString *ip;
+@property(readonly) NSTimeInterval maxTime;
+@property(readonly) NSTimeInterval minTime;
+@property(readonly) NSTimeInterval avgTime;
+@property(readonly) NSInteger loss;
+@property(readonly) NSInteger count;
+@property(readonly) NSTimeInterval totalTime;
+@property(readonly) NSTimeInterval stddev;
 
-- (NSString*)description;
+- (NSString *)description;
 
 @end
 
-typedef void (^QNNTcpPingCompleteHandler)(QNNTcpPingResult*);
+typedef void (^QNNTcpPingCompleteHandler)(QNNTcpPingResult *);
 
 @interface QNNTcpPing : NSObject <QNNStopDelegate>
 
@@ -38,11 +38,11 @@ typedef void (^QNNTcpPingCompleteHandler)(QNNTcpPingResult*);
  *
  *    @return QNNTcpping instance, could be stop
  */
-+ (instancetype)start:(NSString*)host
++ (instancetype)start:(NSString *)host
                output:(id<QNNOutputDelegate>)output
              complete:(QNNTcpPingCompleteHandler)complete;
 
-+ (instancetype)start:(NSString*)host
++ (instancetype)start:(NSString *)host
                  port:(NSUInteger)port
                 count:(NSInteger)count
                output:(id<QNNOutputDelegate>)output

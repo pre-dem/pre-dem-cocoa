@@ -6,8 +6,8 @@
 //  Copyright © 2017 pre-engineering. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
 #import "PREDHTTPOperation.h" //needed for typedef
+#import <Foundation/Foundation.h>
 
 @interface PREDNetworkClient : NSObject
 

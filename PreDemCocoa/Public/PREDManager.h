@@ -6,10 +6,10 @@
 //  Copyright © 2017 pre-engineering. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import "PREDDefines.h"
 #import "PREDCustomEvent.h"
+#import "PREDDefines.h"
 #import "PREDTransaction.h"
+#import <Foundation/Foundation.h>
 
 /**
  * PREDManager 是 sdk 的核心类，提供 sdk 的主要对外接口
@@ -19,7 +19,8 @@
 #pragma mark - Public Methods
 
 /**
- * 启动 PREDManager，如果您使用的是我们的公有云产品，相关参数请通过 https://predem.qiniu.com 获取
+ * 启动 PREDManager，如果您使用的是我们的公有云产品，相关参数请通过
+ * https://predem.qiniu.com 获取
  *
  * @param appKey 用于唯一标识单个 app
  * @param serviceDomain 数据上传的服务器域名
@@ -42,7 +43,8 @@
  *  @param transactionName 该 transaction 的名字
  *  @return 该 transaction 对应的 transactionID
  */
-+ (PREDTransaction *_Nonnull)transactionStart:(NSString *_Nonnull)transactionName;
++ (PREDTransaction *_Nonnull)transactionStart:
+    (NSString *_Nonnull)transactionName;
 
 /**
  *  上报自定义事件

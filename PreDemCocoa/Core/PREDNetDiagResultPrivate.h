@@ -6,14 +6,15 @@
 //  Copyright © 2017 pre-engineering. All rights reserved.
 //
 
+#import "PREDDefines.h"
 #import "PREDNetDiagResult.h"
 #import "PREDPersistence.h"
-#import "PREDDefines.h"
 #import <QNNetDiag/QNNetDiag.h>
 
 @interface PREDNetDiagResult ()
 
-- (instancetype)initWithComplete:(PREDNetDiagCompleteHandler)complete persistence:(PREDPersistence *)persistence;
+- (instancetype)initWithComplete:(PREDNetDiagCompleteHandler)complete
+                     persistence:(PREDPersistence *)persistence;
 
 - (void)gotTcpResult:(QNNTcpPingResult *)r;
 

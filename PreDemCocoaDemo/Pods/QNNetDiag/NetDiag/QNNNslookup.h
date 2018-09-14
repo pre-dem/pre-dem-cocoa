@@ -20,13 +20,11 @@ extern const int kQNNTypeA;
 extern const int kQNNTypeCname;
 
 @interface QNNRecord : NSObject
-@property (nonatomic, readonly) NSString *value;
-@property (readonly) int ttl;
-@property (readonly) int type;
+@property(nonatomic, readonly) NSString *value;
+@property(readonly) int ttl;
+@property(readonly) int type;
 
-- (instancetype)init:(NSString *)value
-                 ttl:(int)ttl
-                type:(int)type;
+- (instancetype)init:(NSString *)value ttl:(int)ttl type:(int)type;
 
 - (NSString *)description;
 

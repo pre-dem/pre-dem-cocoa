@@ -7,54 +7,58 @@
 //
 
 #import "PREDBaseModel.h"
-#import "PREDHelper.h"
 #import "NSObject+Serialization.h"
+#import "PREDHelper.h"
 #import <objc/runtime.h>
 
 @implementation PREDBaseModel
 
 + (instancetype)eventWithName:(NSString *)name type:(NSString *)type {
-    return [[self alloc] initWithName:name type:type];
+  return [[self alloc] initWithName:name type:type];
 }
 
 - (instancetype)initWithName:(NSString *)name type:(NSString *)type {
-    if (self = [super init]) {
-        _name = name;
-        _type = type;
-        _time = (int64_t) (NSDate.date.timeIntervalSince1970 * 1000);
-        _app_bundle_id = PREDHelper.appBundleId;
-        _app_name = PREDHelper.appName;
-        _app_version = PREDHelper.appVersion;
-        _device_model = PREDHelper.deviceModel;
-        _os_platform = PREDHelper.osPlatform;
-        _os_version = PREDHelper.osVersion;
-        _os_build = PREDHelper.osBuild;
-        _sdk_version = PREDHelper.sdkVersion;
-        _sdk_id = PREDHelper.UUID;
-        _tag = PREDHelper.tag;
-        _manufacturer = @"Apple";
-    }
-    return self;
+  if (self = [super init]) {
+    _name = name;
+    _type = type;
+    _time = (int64_t)(NSDate.date.timeIntervalSince1970 * 1000);
+    _app_bundle_id = PREDHelper.appBundleId;
+    _app_name = PREDHelper.appName;
+    _app_version = PREDHelper.appVersion;
+    _device_model = PREDHelper.deviceModel;
+    _os_platform = PREDHelper.osPlatform;
+    _os_version = PREDHelper.osVersion;
+    _os_build = PREDHelper.osBuild;
+    _sdk_version = PREDHelper.sdkVersion;
+    _sdk_id = PREDHelper.UUID;
+    _tag = PREDHelper.tag;
+    _manufacturer = @"Apple";
+  }
+  return self;
 }
 
 - (NSString *)description {
-    return [self toDic].description;
+  return [self toDic].description;
 }
 
 - (NSData *)serializeForSending:(NSError **)error {
-    // 需要同时获取该类及其父类的相关属性值
-    Class class = self.class;
-    Class superClass = class_getSuperclass(class);
-    NSAssert([superClass isEqual:PREDBaseModel.class], @"%@ should be subclass of PREDBaseModel", class);
-    NSMutableDictionary *dic = [self toDicForClass:superClass];
-    NSMutableDictionary *thisClassDic = [self toDicForClass:class];
-    if (thisClassDic.count > 0) {
-        NSData *data = [NSJSONSerialization dataWithJSONObject:thisClassDic options:0 error:error];
-        if (data) {
-            dic[@"content"] = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        }
+  // 需要同时获取该类及其父类的相关属性值
+  Class class = self.class;
+  Class superClass = class_getSuperclass(class);
+  NSAssert([superClass isEqual:PREDBaseModel.class],
+           @"%@ should be subclass of PREDBaseModel", class);
+  NSMutableDictionary *dic = [self toDicForClass:superClass];
+  NSMutableDictionary *thisClassDic = [self toDicForClass:class];
+  if (thisClassDic.count > 0) {
+    NSData *data = [NSJSONSerialization dataWithJSONObject:thisClassDic
+                                                   options:0
+                                                     error:error];
+    if (data) {
+      dic[@"content"] =
+          [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     }
-    return [NSJSONSerialization dataWithJSONObject:dic options:0 error:error];
+  }
+  return [NSJSONSerialization dataWithJSONObject:dic options:0 error:error];
 }
 
 @end

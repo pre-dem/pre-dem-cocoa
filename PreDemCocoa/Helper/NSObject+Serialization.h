@@ -14,6 +14,6 @@
 
 - (NSMutableDictionary *)toDic;
 
-- (NSMutableDictionary *)toDicForClass:(Class)class;
+- (NSMutableDictionary *)toDicForClass:(Class) class;
 
 @end

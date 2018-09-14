@@ -15,24 +15,26 @@ static NSString *build;
 @implementation PREDVersion
 
 + (void)load {
-    NSURL *bundleUrl = [[NSBundle bundleForClass:self] URLForResource:@"PREDResources" withExtension:@"bundle"];
-    if (!bundleUrl) {
-        PREDLogWarning(@"version bundle is not detected");
-        return;
-    }
-    NSBundle *bundle = [NSBundle bundleWithURL:bundleUrl];
-    NSString *plistPath = [bundle pathForResource:@"Version" ofType:@"plist"];
-    NSDictionary *data = [[NSDictionary alloc] initWithContentsOfFile:plistPath];
-    version = data[@"Version"];
-    build = data[@"Build"];
+  NSURL *bundleUrl =
+      [[NSBundle bundleForClass:self] URLForResource:@"PREDResources"
+                                       withExtension:@"bundle"];
+  if (!bundleUrl) {
+    PREDLogWarning(@"version bundle is not detected");
+    return;
+  }
+  NSBundle *bundle = [NSBundle bundleWithURL:bundleUrl];
+  NSString *plistPath = [bundle pathForResource:@"Version" ofType:@"plist"];
+  NSDictionary *data = [[NSDictionary alloc] initWithContentsOfFile:plistPath];
+  version = data[@"Version"];
+  build = data[@"Build"];
 }
 
 + (NSString *)getSDKVersion {
-    return version.copy;
+  return version.copy;
 }
 
 + (NSString *)getSDKBuild {
-    return build.copy;
+  return build.copy;
 }
 
 @end

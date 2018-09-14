@@ -10,9 +10,9 @@
 @class PREDPersistence;
 
 typedef NS_ENUM(NSInteger, PREDTransactionType) {
-    PREDTransactionTypeCompleted,
-    PREDTransactionTypeCancelled,
-    PREDTransactionTypeFailed,
+  PREDTransactionTypeCompleted,
+  PREDTransactionTypeCancelled,
+  PREDTransactionTypeFailed,
 };
 
 @interface PREDTransaction ()

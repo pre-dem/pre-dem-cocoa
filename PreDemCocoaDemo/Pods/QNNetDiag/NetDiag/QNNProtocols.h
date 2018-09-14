@@ -16,7 +16,7 @@
 
 @protocol QNNOutputDelegate <NSObject>
 
-- (void)write:(NSString*)line;
+- (void)write:(NSString *)line;
 
 @end
 

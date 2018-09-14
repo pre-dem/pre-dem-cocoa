@@ -11,17 +11,17 @@
 
 @interface QNNHttpResult : NSObject
 
-@property (readonly) NSInteger code;
-@property (readonly) NSString* ip;
-@property (readonly) NSTimeInterval duration;
-@property (readonly) NSDictionary* headers;
-@property (readonly) NSData* body;
+@property(readonly) NSInteger code;
+@property(readonly) NSString *ip;
+@property(readonly) NSTimeInterval duration;
+@property(readonly) NSDictionary *headers;
+@property(readonly) NSData *body;
 
-- (NSString*)description;
+- (NSString *)description;
 
 @end
 
-typedef void (^QNNHttpCompleteHandler)(QNNHttpResult*);
+typedef void (^QNNHttpCompleteHandler)(QNNHttpResult *);
 
 @interface QNNHttp : NSObject <QNNStopDelegate>
 
@@ -34,7 +34,7 @@ typedef void (^QNNHttpCompleteHandler)(QNNHttpResult*);
  *
  *    @return QNNTcpping instance, could be stop
  */
-+ (instancetype)start:(NSString*)url
++ (instancetype)start:(NSString *)url
                output:(id<QNNOutputDelegate>)output
              complete:(QNNHttpCompleteHandler)complete;
 

@@ -6,9 +6,9 @@
 //  Copyright © 2017 pre-engineering. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import "PreDemCocoa.h"
 #import "PREDPersistence.h"
+#import "PreDemCocoa.h"
+#import <Foundation/Foundation.h>
 
 @interface PREDNetDiag : NSObject
 

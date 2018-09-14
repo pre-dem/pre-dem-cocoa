@@ -9,14 +9,14 @@
 #import <Foundation/Foundation.h>
 
 typedef NS_ENUM(NSInteger, PREDErrorCode) {
-    kPREDErrorCodeUnknown = -1,
-    kPREDErrorCodeInvalidServiceDomain = 100,
-    kPREDErrorCodeInvalidAppKey = 101,
-    kPREDErrorCodeInvalidJsonObject = 102,
-    kPREDErrorCodeInternalError = 103,
-    kPREDErrorCodeNotInitedError = 104,
-    kPREDErrorCodeInvalidTransactionIDError = 105,
-    kPREDErrorCodeCompressionError = 106,
+  kPREDErrorCodeUnknown = -1,
+  kPREDErrorCodeInvalidServiceDomain = 100,
+  kPREDErrorCodeInvalidAppKey = 101,
+  kPREDErrorCodeInvalidJsonObject = 102,
+  kPREDErrorCodeInternalError = 103,
+  kPREDErrorCodeNotInitedError = 104,
+  kPREDErrorCodeInvalidTransactionIDError = 105,
+  kPREDErrorCodeCompressionError = 106,
 };
 
 extern NSString *const PREDErrorDomain;

@@ -9,11 +9,11 @@
 #ifndef PREDManagerPrivate_h
 #define PREDManagerPrivate_h
 
-#import "PREDManager.h"
 #import "PREDConfigManager.h"
+#import "PREDManager.h"
 #import "PREDNetworkClient.h"
 
-#define PREDAppIdLength     8
+#define PREDAppIdLength 8
 
 @interface PREDManager ()
 

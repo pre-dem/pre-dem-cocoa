@@ -11,22 +11,22 @@
 @implementation PREDConfig
 
 + (PREDConfig *)defaultConfig {
-    PREDConfig *config = [PREDConfig new];
-    config.httpMonitorEnabled = YES;
-    config.crashReportEnabled = YES;
-    config.lagMonitorEnabled = YES;
-    config.webviewEnabled = YES;
-    return config;
+  PREDConfig *config = [PREDConfig new];
+  config.httpMonitorEnabled = YES;
+  config.crashReportEnabled = YES;
+  config.lagMonitorEnabled = YES;
+  config.webviewEnabled = YES;
+  return config;
 }
 
 + (instancetype)configWithDic:(NSDictionary *)dic {
-    PREDConfig *config = [PREDConfig new];
-    config.httpMonitorEnabled = [dic[@"http_monitor_enabled"] boolValue];
-    config.crashReportEnabled = [dic[@"crash_report_enabled"] boolValue];
-    config.lagMonitorEnabled = [dic[@"lag_monitor_enabled"] boolValue];
-    config.webviewEnabled = [dic[@"webview_enabled"] boolValue];
+  PREDConfig *config = [PREDConfig new];
+  config.httpMonitorEnabled = [dic[@"http_monitor_enabled"] boolValue];
+  config.crashReportEnabled = [dic[@"crash_report_enabled"] boolValue];
+  config.lagMonitorEnabled = [dic[@"lag_monitor_enabled"] boolValue];
+  config.webviewEnabled = [dic[@"webview_enabled"] boolValue];
 
-    return config;
+  return config;
 }
 
 @end

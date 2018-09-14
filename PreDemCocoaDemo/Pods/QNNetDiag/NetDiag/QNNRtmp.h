@@ -15,17 +15,17 @@ extern const int kQNNRtmpServerTimeError;
 
 @interface QNNRtmpHandshakeResult : NSObject
 
-@property (readonly) NSInteger code;
-@property (readonly) NSTimeInterval maxTime;
-@property (readonly) NSTimeInterval minTime;
-@property (readonly) NSTimeInterval avgTime;
-@property (readonly) NSInteger count;
+@property(readonly) NSInteger code;
+@property(readonly) NSTimeInterval maxTime;
+@property(readonly) NSTimeInterval minTime;
+@property(readonly) NSTimeInterval avgTime;
+@property(readonly) NSInteger count;
 
-- (NSString*)description;
+- (NSString *)description;
 
 @end
 
-typedef void (^QNNRtmpHandshakeCompleteHandler)(QNNRtmpHandshakeResult*);
+typedef void (^QNNRtmpHandshakeCompleteHandler)(QNNRtmpHandshakeResult *);
 
 @interface QNNRtmpHandshake : NSObject <QNNStopDelegate>
 
@@ -38,11 +38,11 @@ typedef void (^QNNRtmpHandshakeCompleteHandler)(QNNRtmpHandshakeResult*);
  *
  *    @return QNNTcpping instance, could be stop
  */
-+ (instancetype)start:(NSString*)host
++ (instancetype)start:(NSString *)host
                output:(id<QNNOutputDelegate>)output
              complete:(QNNRtmpHandshakeCompleteHandler)complete;
 
-+ (instancetype)start:(NSString*)host
++ (instancetype)start:(NSString *)host
                  port:(NSUInteger)port
                 count:(NSInteger)count
                output:(id<QNNOutputDelegate>)output
