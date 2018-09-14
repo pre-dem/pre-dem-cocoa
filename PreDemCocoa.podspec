@@ -15,7 +15,6 @@ Pod::Spec.new do |s|
     cs.public_header_files = 'PreDemCocoa/Public/*.h'
     cs.libraries  = "c++", "z"
     cs.resource_bundles = { 'PREDResources' => 'PreDemCocoa/Resources/*.plist' }
-    cs.dependency "QNNetDiag"
     cs.dependency "UICKeyChainStore"
   end
 end

@@ -120,44 +120,6 @@
   });
 }
 
-- (void)persistHttpMonitor:(PREDHTTPMonitorModel *)httpMonitor {
-  dispatch_async(_httpQueue, ^{
-    NSError *error;
-    NSData *toSave = [httpMonitor serializeForSending:&error];
-    if (error) {
-      PREDLogError(@"jsonize http monitor error: %@", error);
-      return;
-    }
-
-    _httpFileHandle = [self updateFileHandle:_httpFileHandle dir:_httpDir];
-    if (!_httpFileHandle) {
-      PREDLogError(@"no file handle drop http monitor data");
-      return;
-    }
-    [_httpFileHandle writeData:toSave];
-    [_httpFileHandle writeData:[@"\n" dataUsingEncoding:NSUTF8StringEncoding]];
-  });
-}
-
-- (void)persistNetDiagResult:(PREDNetDiagResult *)netDiagResult {
-  dispatch_async(_netQueue, ^{
-    NSError *error;
-    NSData *toSave = [netDiagResult serializeForSending:&error];
-    if (error) {
-      PREDLogError(@"jsonize net diag error: %@", error);
-      return;
-    }
-
-    _netFileHandle = [self updateFileHandle:_netFileHandle dir:_netDir];
-    if (!_netFileHandle) {
-      PREDLogError(@"no file handle drop http monitor data");
-      return;
-    }
-    [_netFileHandle writeData:toSave];
-    [_netFileHandle writeData:[@"\n" dataUsingEncoding:NSUTF8StringEncoding]];
-  });
-}
-
 - (void)persistCustomEvent:(PREDCustomEvent *)event {
   dispatch_async(_customEventQueue, ^{
     NSError *error;
@@ -248,42 +210,50 @@
   return path;
 }
 
+- (NSString *)nextArchivedPathForDirRun:(NSString *)dir
+                             fileHandle:
+                                 (NSFileHandle *__autoreleasing *)fileHandle {
+  NSString *archivedPath;
+  for (NSString *filePath in [_fileManager enumeratorAtPath:dir]) {
+    NSPredicate *predicate =
+        [NSPredicate predicateWithFormat:@"SELF MATCHES %@",
+                                         @"^[0-9]+\\.?[0-9]*\\.archive$"];
+    if ([predicate evaluateWithObject:filePath]) {
+      archivedPath = [NSString stringWithFormat:@"%@/%@", dir, filePath];
+    }
+  }
+  // if no archived file found
+  for (NSString *filePath in [_fileManager enumeratorAtPath:dir]) {
+    NSPredicate *predicate = [NSPredicate
+        predicateWithFormat:@"SELF MATCHES %@", @"^[0-9]+\\.?[0-9]*$"];
+    if ([predicate evaluateWithObject:filePath]) {
+      if (*fileHandle) {
+        [*fileHandle closeFile];
+        *fileHandle = nil;
+      }
+      NSError *error;
+      archivedPath =
+          [NSString stringWithFormat:@"%@/%@.archive", dir, filePath];
+      [_fileManager
+          moveItemAtPath:[NSString stringWithFormat:@"%@/%@", dir, filePath]
+                  toPath:archivedPath
+                   error:&error];
+      if (error) {
+        archivedPath = nil;
+        NSLog(@"archive file %@ fail", filePath);
+        continue;
+      }
+    }
+  }
+  return archivedPath;
+}
+
 - (NSString *)nextArchivedPathForDir:(NSString *)dir
                           fileHandle:(NSFileHandle *__autoreleasing *)fileHandle
                              inQueue:(dispatch_queue_t)queue {
   __block NSString *archivedPath;
   dispatch_sync(queue, ^{
-    for (NSString *filePath in [_fileManager enumeratorAtPath:dir]) {
-      NSPredicate *predicate =
-          [NSPredicate predicateWithFormat:@"SELF MATCHES %@",
-                                           @"^[0-9]+\\.?[0-9]*\\.archive$"];
-      if ([predicate evaluateWithObject:filePath]) {
-        archivedPath = [NSString stringWithFormat:@"%@/%@", dir, filePath];
-      }
-    }
-    // if no archived file found
-    for (NSString *filePath in [_fileManager enumeratorAtPath:dir]) {
-      NSPredicate *predicate = [NSPredicate
-          predicateWithFormat:@"SELF MATCHES %@", @"^[0-9]+\\.?[0-9]*$"];
-      if ([predicate evaluateWithObject:filePath]) {
-        if (*fileHandle) {
-          [*fileHandle closeFile];
-          *fileHandle = nil;
-        }
-        NSError *error;
-        archivedPath =
-            [NSString stringWithFormat:@"%@/%@.archive", dir, filePath];
-        [_fileManager
-            moveItemAtPath:[NSString stringWithFormat:@"%@/%@", dir, filePath]
-                    toPath:archivedPath
-                     error:&error];
-        if (error) {
-          archivedPath = nil;
-          NSLog(@"archive file %@ fail", filePath);
-          continue;
-        }
-      }
-    }
+    archivedPath = [self nextArchivedPathForDirRun:dir fileHandle:fileHandle];
   });
   return archivedPath;
 }

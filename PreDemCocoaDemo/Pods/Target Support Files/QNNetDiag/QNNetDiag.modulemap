@@ -1,6 +1,0 @@
-framework module QNNetDiag {
-  umbrella header "QNNetDiag-umbrella.h"
-
-  export *
-  module * { export * }
-}

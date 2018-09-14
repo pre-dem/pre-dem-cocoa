@@ -28,9 +28,6 @@
         "PREDResources": "PreDemCocoa/Resources/*.plist"
       },
       "dependencies": {
-        "QNNetDiag": [
-
-        ],
         "UICKeyChainStore": [
 
         ]

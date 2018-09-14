@@ -236,7 +236,7 @@ http://deusty.blogspot.com/2007/07/gzip-compressiondecompression.html
   zlibStreamStruct.next_in =
       (Bytef *)[pUncompressedData bytes]; // Pointer to input bytes
   zlibStreamStruct.avail_in =
-      [pUncompressedData length]; // Number of input bytes left to process
+      (uInt)[pUncompressedData length]; // Number of input bytes left to process
 
   /* Initialize the zlib deflation (i.e. compression) internals with
    deflateInit2().
@@ -310,7 +310,7 @@ http://deusty.blogspot.com/2007/07/gzip-compressiondecompression.html
     // by subtracting the number of bytes that have been written so far
     // from the buffer's total capacity
     zlibStreamStruct.avail_out =
-        [compressedData length] - zlibStreamStruct.total_out;
+        (uInt)[compressedData length] - (uInt)zlibStreamStruct.total_out;
 
     /* deflate() compresses as much data as possible, and stops/returns when
      the input buffer becomes empty or the output buffer becomes full. If
@@ -368,8 +368,9 @@ http://deusty.blogspot.com/2007/07/gzip-compressiondecompression.html
   // Free data structures that were dynamically created for the stream.
   deflateEnd(&zlibStreamStruct);
   [compressedData setLength:zlibStreamStruct.total_out];
-  PREDLogDebug(@"%s: Compressed file from %d B to %d B", __func__,
-               [pUncompressedData length], [compressedData length]);
+  PREDLogDebug(@"%s: Compressed file from %lu B to %lu B", __func__,
+               (unsigned long)[pUncompressedData length],
+               (unsigned long)[compressedData length]);
 
   return compressedData;
 }

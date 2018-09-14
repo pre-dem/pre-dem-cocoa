@@ -56,7 +56,6 @@
   XCTAssertNil(error, @"%@", error);
   XCTAssertNotNil(parsedContent);
   [parsedContent[@"transaction_type"] isEqual:@(PREDTransactionTypeCompleted)];
-  [_persistence purgeAllNetDiag];
 }
 
 - (void)testCancelledTransaction {
@@ -85,7 +84,6 @@
   XCTAssertNotNil(parsedContent);
   [parsedContent[@"transaction_type"] isEqual:@(PREDTransactionTypeCancelled)];
   [parsedContent[@"reason"] isEqual:reason];
-  [_persistence purgeAllNetDiag];
 }
 
 - (void)testfailedTransaction {
@@ -114,7 +112,6 @@
   XCTAssertNotNil(parsedContent);
   [parsedContent[@"transaction_type"] isEqual:@(PREDTransactionTypeFailed)];
   [parsedContent[@"reason"] isEqual:reason];
-  [_persistence purgeAllNetDiag];
 }
 
 @end

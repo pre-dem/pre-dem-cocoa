@@ -11,10 +11,8 @@
 #import "PREDHelper.h"
 #import "PREDLogger.h"
 #import "PREDManagerPrivate.h"
-#import "PREDNetDiag.h"
 #import "PREDSender.h"
 #import "PREDTransactionPrivate.h"
-#import "PREDURLProtocol.h"
 #import "PREDVersion.h"
 
 static NSString *app_id(NSString *appKey) {
@@ -26,13 +24,13 @@ static NSString *app_id(NSString *appKey) {
 }
 
 @implementation PREDManager {
-  BOOL _started;
+  BOOL started;
 
-  PREDConfigManager *_configManager;
+  PREDConfigManager *configManager;
 
-  PREDPersistence *_persistence;
+  PREDPersistence *persistence;
 
-  PREDSender *_sender;
+  PREDSender *sender;
 }
 
 #pragma mark - Public Class Methods
@@ -46,15 +44,10 @@ static NSString *app_id(NSString *appKey) {
                  });
 }
 
-+ (void)diagnose:(NSString *)host
-        complete:(PREDNetDiagCompleteHandler)complete {
-  [[self sharedPREDManager] diagnose:host complete:complete];
-}
-
 + (PREDTransaction *)transactionStart:(NSString *)transactionName {
   uint64_t startTime = (uint64_t)([[NSDate date] timeIntervalSince1970] * 1000);
   PREDTransaction *transaction = [PREDTransaction
-      transactionWithPersistence:[self sharedPREDManager]->_persistence];
+      transactionWithPersistence:[self sharedPREDManager]->persistence];
   transaction.transaction_name = transactionName;
   transaction.start_time = startTime;
   return transaction;
@@ -65,11 +58,11 @@ static NSString *app_id(NSString *appKey) {
     PREDLogError(@"event should not be nil");
     return;
   }
-  [[self sharedPREDManager]->_persistence persistCustomEvent:event];
+  [[self sharedPREDManager]->persistence persistCustomEvent:event];
 }
 
 + (BOOL)started {
-  return [PREDManager sharedPREDManager]->_started;
+  return [PREDManager sharedPREDManager]->started;
 }
 
 + (NSString *)tag {
@@ -78,6 +71,13 @@ static NSString *app_id(NSString *appKey) {
 
 + (void)setTag:(NSString *)tag {
   PREDHelper.tag = tag;
+}
+
++ (NSUInteger)updateInterval {
+  return 24;
+}
+
++ (void)setUpdateInterval:(NSUInteger)interval {
 }
 
 + (NSString *)version {
@@ -103,33 +103,38 @@ static NSString *app_id(NSString *appKey) {
 
 - (instancetype)init {
   if ((self = [super init])) {
-    _persistence = [[PREDPersistence alloc] init];
+    persistence = [[PREDPersistence alloc] init];
   }
   return self;
+}
+
+- (void)startInternalWithAppKey:(NSString *)appKey
+                  serviceDomain:(NSString *)serviceDomain {
+  self.appKey = appKey;
+  NSError *error;
+  // 初始化 sender
+  if (![self initSenderWithDomain:serviceDomain appKey:appKey error:&error]) {
+    PREDLogError(@"%@", error);
+    return;
+  }
+
+  // 进行其他功能模块的初始化
+  [self initializeModules];
+
+  // 注册观察者，接收通知
+  [self registerObservers];
+
+  // 开始循环发送数据
+  [sender sendAllSavedData];
+
+  started = YES;
 }
 
 - (void)startWithAppKey:(NSString *)appKey
           serviceDomain:(NSString *)serviceDomain {
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
-    _appKey = appKey;
-    NSError *error;
-    // 初始化 sender
-    if (![self initSenderWithDomain:serviceDomain appKey:appKey error:&error]) {
-      PREDLogError(@"%@", error);
-      return;
-    }
-
-    // 进行其他功能模块的初始化
-    [self initializeModules];
-
-    // 注册观察者，接收通知
-    [self registerObservers];
-
-    // 开始循环发送数据
-    [_sender sendAllSavedData];
-
-    _started = YES;
+    [self startInternalWithAppKey:appKey serviceDomain:serviceDomain];
   });
   return;
 }
@@ -174,22 +179,20 @@ static NSString *app_id(NSString *appKey) {
     return NO;
   }
 
-  _sender = [[PREDSender alloc] initWithPersistence:_persistence baseUrl:url];
+  sender = [[PREDSender alloc] initWithPersistence:persistence baseUrl:url];
   return YES;
 }
 
 - (void)initializeModules {
-  [PREDURLProtocol setPersistence:_persistence];
-  _configManager = [[PREDConfigManager alloc] initWithPersistence:_persistence];
+  configManager = [[PREDConfigManager alloc] initWithPersistence:persistence];
 
   // this process will get default config and then use it to initialize all
   // module, besides it will also retrieve config from the server and config
   // will refresh when done.
-  [self setConfig:[_configManager getConfig]];
+  [self setConfig:[configManager getConfig]];
 }
 
 - (void)setConfig:(PREDConfig *)config {
-  PREDURLProtocol.started = config.httpMonitorEnabled;
 }
 
 - (void)registerObservers {
@@ -200,15 +203,24 @@ static NSString *app_id(NSString *appKey) {
            object:nil];
 }
 
-- (void)diagnose:(NSString *)host
-        complete:(PREDNetDiagCompleteHandler)complete {
-  [PREDNetDiag diagnose:host persistence:_persistence complete:complete];
-}
-
 - (void)configRefreshed:(NSNotification *)noty {
   NSDictionary *dic = noty.userInfo[kPREDConfigRefreshedNotificationConfigKey];
   PREDConfig *config = [PREDConfig configWithDic:dic];
   [self setConfig:config];
+}
+
++ (BOOL)isVip {
+  return NO;
+}
+
++ (PREDTransactionQueue *)defaultTransactionQueue {
+  return [PREDTransactionQueue new];
+}
+
+/* 默认的自定义事件队列，传送事件类型数据到服务端
+ */
++ (PREDEventQueue *)defaultCustomEventQueue {
+  return [PREDEventQueue new];
 }
 
 @end

@@ -30,8 +30,6 @@
 - (void)sendAllSavedData {
   PREDLogVerbose(@"trying to send all saved messages");
   [self sendAppInfo:nil];
-  [self sendHttpMonitor:nil recursively:YES];
-  [self sendNetDiag:nil recursively:YES];
   [self sendCustomEvents:nil recursively:YES];
   [self sendTransactions:nil recursively:YES];
   dispatch_after(dispatch_time(DISPATCH_TIME_NOW,
@@ -91,102 +89,6 @@
         }
         if (completion) {
           completion(operation, data, error);
-        }
-      }];
-}
-
-- (void)sendHttpMonitor:(PREDNetworkCompletionBlock)completion
-            recursively:(BOOL)recursively {
-  NSString *filePath = [_persistence nextArchivedHttpMonitorPath];
-  if (!filePath) {
-    if (completion) {
-      completion(nil, nil, nil);
-    }
-    return;
-  }
-  NSData *data = [NSData dataWithContentsOfFile:filePath];
-  if (!data) {
-    PREDLogError(@"get stored data %@ error", filePath);
-    if (completion) {
-      completion(nil, nil,
-                 [PREDError
-                     GenerateNSError:kPREDErrorCodeUnknown
-                         description:@"get stored data %@ error", filePath]);
-    }
-    return;
-  }
-  __weak typeof(self) wSelf = self;
-  [_networkClient
-        postPath:@"http-monitors"
-            data:data
-         headers:[@{
-           @"Content-Type" : @"application/json"
-         } mutableCopy]
-      completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
-        __strong typeof(wSelf) strongSelf = wSelf;
-        if (!error) {
-          PREDLogDebug(@"Send http monitor succeeded");
-          [strongSelf->_persistence purgeFile:filePath];
-          if (recursively) {
-            [strongSelf sendHttpMonitor:completion recursively:recursively];
-          } else {
-            if (completion) {
-              completion(operation, data, error);
-            }
-          }
-        } else {
-          PREDLogError(@"upload http monitor fail: %@", error);
-          if (completion) {
-            completion(operation, data, error);
-          }
-        }
-      }];
-}
-
-- (void)sendNetDiag:(PREDNetworkCompletionBlock)completion
-        recursively:(BOOL)recursively {
-  NSString *filePath = [_persistence nextArchivedNetDiagPath];
-  if (!filePath) {
-    if (completion) {
-      completion(nil, nil, nil);
-    }
-    return;
-  }
-  NSData *data = [NSData dataWithContentsOfFile:filePath];
-  if (!data) {
-    PREDLogError(@"get stored data %@ error", filePath);
-    if (completion) {
-      completion(nil, nil,
-                 [PREDError
-                     GenerateNSError:kPREDErrorCodeUnknown
-                         description:@"get stored data %@ error", filePath]);
-    }
-    return;
-  }
-  __weak typeof(self) wSelf = self;
-  [_networkClient
-        postPath:@"net-diags"
-            data:data
-         headers:[@{
-           @"Content-Type" : @"application/json"
-         } mutableCopy]
-      completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
-        __strong typeof(wSelf) strongSelf = wSelf;
-        if (!error) {
-          PREDLogDebug(@"Send net diag succeeded");
-          [strongSelf->_persistence purgeFile:filePath];
-          if (recursively) {
-            [strongSelf sendNetDiag:completion recursively:recursively];
-          } else {
-            if (completion) {
-              completion(operation, data, error);
-            }
-          }
-        } else {
-          PREDLogError(@"send net diag error: %@", error);
-          if (completion) {
-            completion(operation, data, error);
-          }
         }
       }];
 }

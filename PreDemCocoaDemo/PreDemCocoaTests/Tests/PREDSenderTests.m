@@ -62,50 +62,6 @@
   [_persistence purgeAllAppInfo];
 }
 
-- (void)testHttpSender {
-  [_persistence purgeAllHttpMonitor];
-  [_persistence persistHttpMonitor:[[PREDHTTPMonitorModel alloc] init]];
-  __block NSData *originalData;
-  __block NSError *originalError;
-  XCTestExpectation *expectation = [self expectationWithDescription:@"sending"];
-  [_sender sendHttpMonitor:^(PREDHTTPOperation *operation, NSData *data,
-                             NSError *error) {
-    originalData = data;
-    originalError = error;
-    [expectation fulfill];
-  }
-               recursively:NO];
-  [self waitForExpectationsWithTimeout:10
-                               handler:^(NSError *error) {
-                                 XCTAssertNil(error, @"%@", error);
-                               }];
-  XCTAssertNotNil(originalData);
-  XCTAssertNil(originalError);
-  [_persistence purgeAllHttpMonitor];
-}
-
-- (void)testNetDiagSender {
-  [_persistence purgeAllNetDiag];
-  [_persistence persistNetDiagResult:[[PREDNetDiagResult alloc] init]];
-  __block NSData *originalData;
-  __block NSError *originalError;
-  XCTestExpectation *expectation = [self expectationWithDescription:@"sending"];
-  [_sender sendNetDiag:^(PREDHTTPOperation *operation, NSData *data,
-                         NSError *error) {
-    originalData = data;
-    originalError = error;
-    [expectation fulfill];
-  }
-           recursively:NO];
-  [self waitForExpectationsWithTimeout:10
-                               handler:^(NSError *error) {
-                                 XCTAssertNil(error, @"%@", error);
-                               }];
-  XCTAssertNotNil(originalData);
-  XCTAssertNil(originalError);
-  [_persistence purgeAllNetDiag];
-}
-
 - (void)testCustomSender {
   [_persistence purgeAllCustom];
   [_persistence persistCustomEvent:[PREDCustomEvent eventWithName:@"testName"

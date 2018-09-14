@@ -8,9 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		167EB1A4C7C7107386973413 /* PREDSenderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 167EB2CB9B281C51D07D83D3 /* PREDSenderTests.m */; };
-		167EB6345FB8F0B0C95F8B89 /* PREDNetDiagTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 167EB6BEECF8DA72F65CE396 /* PREDNetDiagTests.m */; };
 		167EBC4FAF4C893E964C8D5A /* PREDTransactionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 167EB92CA8086F6B7E33BDD9 /* PREDTransactionTests.m */; };
-		167EBF762A8824A7679C3F57 /* PREDHttpTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 167EBC8F572F69DF33E58B83 /* PREDHttpTests.m */; };
 		1EAB631FFF9C51B468A206CD /* Pods_PreDemObjcDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E6504F08203DC0F061B69C3 /* Pods_PreDemObjcDemo.framework */; };
 		5BC9043C8931AC56B90A9258 /* Pods_PreDemSwiftDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA9DE848F18E85B4D07C40CD /* Pods_PreDemSwiftDemo.framework */; };
 		B60231491EC9B7AC005AB798 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B60231481EC9B7AC005AB798 /* main.m */; };
@@ -47,9 +45,7 @@
 /* Begin PBXFileReference section */
 		0EBE59C619EB9355CEBD3EF5 /* Pods-PreDemCocoaTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PreDemCocoaTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PreDemCocoaTests/Pods-PreDemCocoaTests.debug.xcconfig"; sourceTree = "<group>"; };
 		167EB2CB9B281C51D07D83D3 /* PREDSenderTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PREDSenderTests.m; sourceTree = "<group>"; };
-		167EB6BEECF8DA72F65CE396 /* PREDNetDiagTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PREDNetDiagTests.m; sourceTree = "<group>"; };
 		167EB92CA8086F6B7E33BDD9 /* PREDTransactionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PREDTransactionTests.m; sourceTree = "<group>"; };
-		167EBC8F572F69DF33E58B83 /* PREDHttpTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PREDHttpTests.m; sourceTree = "<group>"; };
 		18A00E8E5E9625CA16EC414B /* Pods-PreDemObjcDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PreDemObjcDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PreDemObjcDemo/Pods-PreDemObjcDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		3E0F69381CF7E04817C69FAD /* Pods_PreDemCocoaTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PreDemCocoaTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A87498106984D5B97A13DB6 /* Pods-PreDemObjcDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PreDemObjcDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-PreDemObjcDemo/Pods-PreDemObjcDemo.release.xcconfig"; sourceTree = "<group>"; };
@@ -213,8 +209,6 @@
 			children = (
 				B6E6E4E41FB9376C0089F7C1 /* PREDSwizzleTests.m */,
 				B6CC5C311F7E4C82009C92FB /* PREDPersistenceTests.m */,
-				167EBC8F572F69DF33E58B83 /* PREDHttpTests.m */,
-				167EB6BEECF8DA72F65CE396 /* PREDNetDiagTests.m */,
 				167EB92CA8086F6B7E33BDD9 /* PREDTransactionTests.m */,
 				167EB2CB9B281C51D07D83D3 /* PREDSenderTests.m */,
 			);
@@ -435,13 +429,11 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-PreDemSwiftDemo/Pods-PreDemSwiftDemo-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/PreDemCocoa/PreDemCocoa.framework",
-				"${BUILT_PRODUCTS_DIR}/QNNetDiag/QNNetDiag.framework",
 				"${BUILT_PRODUCTS_DIR}/UICKeyChainStore/UICKeyChainStore.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PreDemCocoa.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/QNNetDiag.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UICKeyChainStore.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -457,13 +449,11 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-PreDemObjcDemo/Pods-PreDemObjcDemo-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/PreDemCocoa/PreDemCocoa.framework",
-				"${BUILT_PRODUCTS_DIR}/QNNetDiag/QNNetDiag.framework",
 				"${BUILT_PRODUCTS_DIR}/UICKeyChainStore/UICKeyChainStore.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PreDemCocoa.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/QNNetDiag.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UICKeyChainStore.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -529,7 +519,7 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-PreDemSwiftDemo/Pods-PreDemSwiftDemo-resources.sh",
-				"$PODS_CONFIGURATION_BUILD_DIR/PreDemObjc/PREDResources.bundle",
+				$PODS_CONFIGURATION_BUILD_DIR/PreDemObjc/PREDResources.bundle,
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
@@ -548,13 +538,11 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-PreDemCocoaTests/Pods-PreDemCocoaTests-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/PreDemCocoa/PreDemCocoa.framework",
-				"${BUILT_PRODUCTS_DIR}/QNNetDiag/QNNetDiag.framework",
 				"${BUILT_PRODUCTS_DIR}/UICKeyChainStore/UICKeyChainStore.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PreDemCocoa.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/QNNetDiag.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UICKeyChainStore.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -583,8 +571,6 @@
 			files = (
 				B6CC5C321F7E4C82009C92FB /* PREDPersistenceTests.m in Sources */,
 				B6E6E4E51FB9376C0089F7C1 /* PREDSwizzleTests.m in Sources */,
-				167EBF762A8824A7679C3F57 /* PREDHttpTests.m in Sources */,
-				167EB6345FB8F0B0C95F8B89 /* PREDNetDiagTests.m in Sources */,
 				167EBC4FAF4C893E964C8D5A /* PREDTransactionTests.m in Sources */,
 				167EB1A4C7C7107386973413 /* PREDSenderTests.m in Sources */,
 			);

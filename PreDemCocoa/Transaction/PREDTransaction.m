@@ -9,6 +9,8 @@
 #import "PREDConstants.h"
 #import "PREDPersistence.h"
 
+#import "PREDManager.h"
+
 @implementation PREDTransaction {
   PREDPersistence *_persistence;
 }
@@ -42,6 +44,29 @@
   self.transaction_type = PREDTransactionTypeFailed;
   self.reason = reason;
   [_persistence persistTransaction:self];
+}
+
+@end
+
+@implementation PREDTransactionQueue
+
+- (void)setSizeThreshhold:(NSUInteger)size {
+}
+
+- (NSUInteger)sizeThreshhold {
+  return 10;
+}
+
+- (void)setSendInterval:(NSUInteger)interval {
+}
+
+- (NSUInteger)sendInterval {
+  return 30;
+}
+
+- (PREDTransaction *_Nonnull)transactionStart:
+    (NSString *_Nonnull)transactionName {
+  return [PREDManager transactionStart:transactionName];
 }
 
 @end
