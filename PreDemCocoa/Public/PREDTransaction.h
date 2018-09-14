@@ -30,3 +30,13 @@
 - (void)failWithReason:(NSString *_Nullable)reason;
 
 @end
+
+@interface PREDTransactionQueue : NSObject
+
+@property NSUInteger sizeThreshhold;
+@property NSUInteger sendInterval;
+
+- (PREDTransaction *_Nonnull)transactionStart:
+    (NSString *_Nonnull)transactionName;
+
+@end

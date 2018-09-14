@@ -17,17 +17,11 @@
 
 @implementation PREDPersistence {
   NSString *_appInfoDir;
-  NSString *_httpDir;
-  NSString *_netDir;
   NSString *_customDir;
   NSString *_transactionsDir;
   NSFileManager *_fileManager;
   NSFileHandle *_appInfoFileHandle;
   dispatch_queue_t _appInfoQueue;
-  NSFileHandle *_httpFileHandle;
-  dispatch_queue_t _httpQueue;
-  NSFileHandle *_netFileHandle;
-  dispatch_queue_t _netQueue;
   NSFileHandle *_customFileHandle;
   dispatch_queue_t _customEventQueue;
   NSFileHandle *_transactionsFileHandle;
@@ -40,10 +34,6 @@
 
     _appInfoDir = [NSString
         stringWithFormat:@"%@/%@", PREDHelper.cacheDirectory, @"appInfo"];
-    _httpDir = [NSString
-        stringWithFormat:@"%@/%@", PREDHelper.cacheDirectory, @"http"];
-    _netDir =
-        [NSString stringWithFormat:@"%@/%@", PREDHelper.cacheDirectory, @"net"];
     _customDir = [NSString
         stringWithFormat:@"%@/%@", PREDHelper.cacheDirectory, @"custom"];
     _transactionsDir = [NSString
@@ -51,8 +41,6 @@
 
     _appInfoQueue =
         dispatch_queue_create("predem_app_info", DISPATCH_QUEUE_SERIAL);
-    _httpQueue = dispatch_queue_create("predem_http", DISPATCH_QUEUE_SERIAL);
-    _netQueue = dispatch_queue_create("predem_net", DISPATCH_QUEUE_SERIAL);
     _customEventQueue =
         dispatch_queue_create("predem_custom_event", DISPATCH_QUEUE_SERIAL);
     _transactionsQueue =
@@ -66,20 +54,7 @@
     if (error) {
       PREDLogError(@"create dir %@ failed", _appInfoDir);
     }
-    [_fileManager createDirectoryAtPath:_httpDir
-            withIntermediateDirectories:YES
-                             attributes:nil
-                                  error:&error];
-    if (error) {
-      PREDLogError(@"create dir %@ failed", _httpDir);
-    }
-    [_fileManager createDirectoryAtPath:_netDir
-            withIntermediateDirectories:YES
-                             attributes:nil
-                                  error:&error];
-    if (error) {
-      PREDLogError(@"create dir %@ failed", _netDir);
-    }
+   
     [_fileManager createDirectoryAtPath:_customDir
             withIntermediateDirectories:YES
                              attributes:nil
@@ -117,44 +92,6 @@
     [_appInfoFileHandle writeData:toSave];
     [_appInfoFileHandle
         writeData:[@"\n" dataUsingEncoding:NSUTF8StringEncoding]];
-  });
-}
-
-- (void)persistHttpMonitor:(PREDHTTPMonitorModel *)httpMonitor {
-  dispatch_async(_httpQueue, ^{
-    NSError *error;
-    NSData *toSave = [httpMonitor serializeForSending:&error];
-    if (error) {
-      PREDLogError(@"jsonize http monitor error: %@", error);
-      return;
-    }
-
-    _httpFileHandle = [self updateFileHandle:_httpFileHandle dir:_httpDir];
-    if (!_httpFileHandle) {
-      PREDLogError(@"no file handle drop http monitor data");
-      return;
-    }
-    [_httpFileHandle writeData:toSave];
-    [_httpFileHandle writeData:[@"\n" dataUsingEncoding:NSUTF8StringEncoding]];
-  });
-}
-
-- (void)persistNetDiagResult:(PREDNetDiagResult *)netDiagResult {
-  dispatch_async(_netQueue, ^{
-    NSError *error;
-    NSData *toSave = [netDiagResult serializeForSending:&error];
-    if (error) {
-      PREDLogError(@"jsonize net diag error: %@", error);
-      return;
-    }
-
-    _netFileHandle = [self updateFileHandle:_netFileHandle dir:_netDir];
-    if (!_netFileHandle) {
-      PREDLogError(@"no file handle drop http monitor data");
-      return;
-    }
-    [_netFileHandle writeData:toSave];
-    [_netFileHandle writeData:[@"\n" dataUsingEncoding:NSUTF8StringEncoding]];
   });
 }
 
@@ -211,24 +148,6 @@
   return path;
 }
 
-- (NSString *)nextArchivedHttpMonitorPath {
-  NSFileHandle *fileHanle = _httpFileHandle;
-  NSString *path = [self nextArchivedPathForDir:_httpDir
-                                     fileHandle:&fileHanle
-                                        inQueue:_httpQueue];
-  _httpFileHandle = fileHanle;
-  return path;
-}
-
-- (NSString *)nextArchivedNetDiagPath {
-  NSFileHandle *fileHanle = _netFileHandle;
-  NSString *path = [self nextArchivedPathForDir:_netDir
-                                     fileHandle:&fileHanle
-                                        inQueue:_netQueue];
-  _netFileHandle = fileHanle;
-  return path;
-}
-
 // do not use this method in _customEventQueue which will cause dead lock
 - (NSString *)nextArchivedCustomEventsPath {
   NSFileHandle *fileHanle = _customFileHandle;
@@ -248,42 +167,50 @@
   return path;
 }
 
+- (NSString *)nextArchivedPathForDirRun:(NSString *)dir
+                             fileHandle:
+                                 (NSFileHandle *__autoreleasing *)fileHandle {
+  NSString *archivedPath;
+  for (NSString *filePath in [_fileManager enumeratorAtPath:dir]) {
+    NSPredicate *predicate =
+        [NSPredicate predicateWithFormat:@"SELF MATCHES %@",
+                                         @"^[0-9]+\\.?[0-9]*\\.archive$"];
+    if ([predicate evaluateWithObject:filePath]) {
+      archivedPath = [NSString stringWithFormat:@"%@/%@", dir, filePath];
+    }
+  }
+  // if no archived file found
+  for (NSString *filePath in [_fileManager enumeratorAtPath:dir]) {
+    NSPredicate *predicate = [NSPredicate
+        predicateWithFormat:@"SELF MATCHES %@", @"^[0-9]+\\.?[0-9]*$"];
+    if ([predicate evaluateWithObject:filePath]) {
+      if (*fileHandle) {
+        [*fileHandle closeFile];
+        *fileHandle = nil;
+      }
+      NSError *error;
+      archivedPath =
+          [NSString stringWithFormat:@"%@/%@.archive", dir, filePath];
+      [_fileManager
+          moveItemAtPath:[NSString stringWithFormat:@"%@/%@", dir, filePath]
+                  toPath:archivedPath
+                   error:&error];
+      if (error) {
+        archivedPath = nil;
+        NSLog(@"archive file %@ fail", filePath);
+        continue;
+      }
+    }
+  }
+  return archivedPath;
+}
+
 - (NSString *)nextArchivedPathForDir:(NSString *)dir
                           fileHandle:(NSFileHandle *__autoreleasing *)fileHandle
                              inQueue:(dispatch_queue_t)queue {
   __block NSString *archivedPath;
   dispatch_sync(queue, ^{
-    for (NSString *filePath in [_fileManager enumeratorAtPath:dir]) {
-      NSPredicate *predicate =
-          [NSPredicate predicateWithFormat:@"SELF MATCHES %@",
-                                           @"^[0-9]+\\.?[0-9]*\\.archive$"];
-      if ([predicate evaluateWithObject:filePath]) {
-        archivedPath = [NSString stringWithFormat:@"%@/%@", dir, filePath];
-      }
-    }
-    // if no archived file found
-    for (NSString *filePath in [_fileManager enumeratorAtPath:dir]) {
-      NSPredicate *predicate = [NSPredicate
-          predicateWithFormat:@"SELF MATCHES %@", @"^[0-9]+\\.?[0-9]*$"];
-      if ([predicate evaluateWithObject:filePath]) {
-        if (*fileHandle) {
-          [*fileHandle closeFile];
-          *fileHandle = nil;
-        }
-        NSError *error;
-        archivedPath =
-            [NSString stringWithFormat:@"%@/%@.archive", dir, filePath];
-        [_fileManager
-            moveItemAtPath:[NSString stringWithFormat:@"%@/%@", dir, filePath]
-                    toPath:archivedPath
-                     error:&error];
-        if (error) {
-          archivedPath = nil;
-          NSLog(@"archive file %@ fail", filePath);
-          continue;
-        }
-      }
-    }
+    archivedPath = [self nextArchivedPathForDirRun:dir fileHandle:fileHandle];
   });
   return archivedPath;
 }
@@ -303,34 +230,6 @@
   for (NSString *fileName in [_fileManager enumeratorAtPath:_appInfoDir]) {
     NSString *filePath =
         [NSString stringWithFormat:@"%@/%@", _appInfoDir, fileName];
-    [_fileManager removeItemAtPath:filePath error:&error];
-    if (error) {
-      PREDLogError(@"purge file %@ error %@", filePath, error);
-    } else {
-      PREDLogVerbose(@"purge file %@ succeeded", filePath);
-    }
-  }
-}
-
-- (void)purgeAllHttpMonitor {
-  NSError *error;
-  for (NSString *fileName in [_fileManager enumeratorAtPath:_httpDir]) {
-    NSString *filePath =
-        [NSString stringWithFormat:@"%@/%@", _httpDir, fileName];
-    [_fileManager removeItemAtPath:filePath error:&error];
-    if (error) {
-      PREDLogError(@"purge file %@ error %@", filePath, error);
-    } else {
-      PREDLogVerbose(@"purge file %@ succeeded", filePath);
-    }
-  }
-}
-
-- (void)purgeAllNetDiag {
-  NSError *error;
-  for (NSString *fileName in [_fileManager enumeratorAtPath:_netDir]) {
-    NSString *filePath =
-        [NSString stringWithFormat:@"%@/%@", _netDir, fileName];
     [_fileManager removeItemAtPath:filePath error:&error];
     if (error) {
       PREDLogError(@"purge file %@ error %@", filePath, error);
@@ -370,9 +269,7 @@
 
 - (void)purgeAllPersistence {
   [self purgeAllAppInfo];
-  [self purgeAllHttpMonitor];
   [self purgeAllCustom];
-  [self purgeAllNetDiag];
   [self purgeAllTransactions];
 }
 

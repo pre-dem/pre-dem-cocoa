@@ -2,9 +2,7 @@ PODS:
   - PreDemCocoa (2.0.0):
     - PreDemCocoa/Core (= 2.0.0)
   - PreDemCocoa/Core (2.0.0):
-    - QNNetDiag
     - UICKeyChainStore
-  - QNNetDiag (0.0.7)
   - UICKeyChainStore (2.1.1)
 
 DEPENDENCIES:
@@ -15,10 +13,9 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  PreDemCocoa: 4776db90b576c2fd58d3740b5c4597dbfa3adda4
-  QNNetDiag: d115f58d294bdbeecb139e5f681bc5a8bc2a4181
+  PreDemCocoa: 81551dea38af64f54ee6e3c73662653ac2752bb5
   UICKeyChainStore: 239558492fa260531a0774cfc611ea83a6eaff3a
 
 PODFILE CHECKSUM: 4a95a6f68106e8e8bff2d114e5209668ffc939f7
 
-COCOAPODS: 1.3.1
+COCOAPODS: 1.4.0

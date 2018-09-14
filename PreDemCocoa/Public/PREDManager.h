@@ -28,14 +28,14 @@
 + (void)startWithAppKey:(NSString *_Nonnull)appKey
           serviceDomain:(NSString *_Nonnull)serviceDomain;
 
-/**
- *  获取当前网络环境下对指定服务器的网络诊断信息并上报
- *
- *  @param host 需要诊断的服务器地址
- *  @param complete 诊断结果返回
+/* 默认的transaction队列，传送transaction类型数据到服务端
+*/
+
++ (PREDTransactionQueue *)defaultTransactionQueue;
+
+/* 默认的自定义事件队列，传送事件类型数据到服务端
  */
-+ (void)diagnose:(NSString *_Nonnull)host
-        complete:(PREDNetDiagCompleteHandler _Nullable)complete;
++ (PREDEventQueue *)defaultCustomEventQueue;
 
 /**
  *  开始一个 transaction
@@ -74,5 +74,15 @@
  * 用户标签，用于标识唯一用户，例如您可以传入用户ID，我们将透传该字段，以便您可以在后台通过用户标签查找对应用户的数据
  */
 @property(class, nonnull, nonatomic, strong) NSString *tag;
+
+/**
+ * 配置更新频率，单位小时
+ */
+@property(class) NSUInteger updateInterval;
+
+/**
+ * 返回 该终端是否是重点关注对象，终端可以根据这个字段调整队列参数
+ */
++ (BOOL)isVip;
 
 @end

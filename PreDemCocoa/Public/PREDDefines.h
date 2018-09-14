@@ -6,8 +6,6 @@
 //  Copyright © 2017 pre-engineering. All rights reserved.
 //
 
-#import "PREDNetDiagResult.h"
-
 /**
  *  log 级别，用于过滤 log
  */
@@ -54,11 +52,6 @@ typedef void (^PREDLogHandler)(PREDLogMessageProvider _Nullable messageProvider,
                                PREDLogLevel logLevel,
                                const char *_Nullable file,
                                const char *_Nonnull function, uint line);
-
-/**
- *  网络诊断结果返回 block
- */
-typedef void (^PREDNetDiagCompleteHandler)(PREDNetDiagResult *_Nonnull result);
 
 /**
  *  sdk 启动结果返回 block

@@ -33,4 +33,13 @@
 
 @end
 
+@interface PREDEventQueue : NSObject
+
+@property NSUInteger sizeThreshhold;
+@property NSUInteger sendInterval;
+
+- (void)trackCustomEvent:(PREDCustomEvent *_Nonnull)event;
+
+@end
+
 #endif /* PREDEvent_h */

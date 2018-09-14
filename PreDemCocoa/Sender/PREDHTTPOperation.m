@@ -34,6 +34,18 @@
   [super cancel];
 }
 
+- (void)completeWithData:(NSData *_Nullable)data
+                response:(NSURLResponse *_Nullable)response
+                   error:(NSError *_Nullable)error {
+  _response = (NSHTTPURLResponse *)response;
+  if (error) {
+    _error = error;
+  } else {
+    _data = data;
+  }
+  [self finish];
+}
+
 - (void)start {
   if (self.isCancelled) {
     [self finish];
@@ -49,13 +61,7 @@
         completionHandler:^(NSData *_Nullable data,
                             NSURLResponse *_Nullable response,
                             NSError *_Nullable error) {
-          _response = (NSHTTPURLResponse *)response;
-          if (error) {
-            _error = error;
-          } else {
-            _data = data;
-          }
-          [self finish];
+          [self completeWithData:data response:response error:error];
         }];
   [_task resume];
 }

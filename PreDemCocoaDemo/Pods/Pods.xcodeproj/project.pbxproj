@@ -7,952 +7,711 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		01CE01141E8FAEA1601827D6 /* UICKeyChainStore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7517FF8444F7A6E911EDCAFB /* UICKeyChainStore.framework */; };
-		03AAF58C73CA9569EDE8C634 /* PREDPersistence.m in Sources */ = {isa = PBXBuildFile; fileRef = 81BE0DC1C056DD09C64C8E7F /* PREDPersistence.m */; };
-		04712833B850B6303959DE33 /* PREDHTTPMonitorModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EB2E1A0A1A3DC9C1AB0177D /* PREDHTTPMonitorModel.m */; };
-		08F9DEAFE2813837B1AB5727 /* PREDNetDiag.h in Headers */ = {isa = PBXBuildFile; fileRef = A306CF7C0E4E738B144C897F /* PREDNetDiag.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		0AE6CF5F52CC2EF70D2D4D1F /* PREDAppInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = DAC3F1A5E4A91F1B85D26318 /* PREDAppInfo.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		0FA23344F37EF82C8BAB459E /* PREDError.m in Sources */ = {isa = PBXBuildFile; fileRef = 01D171909D5F402124556454 /* PREDError.m */; };
-		0FB4043B28363FE82DE94FE8 /* QNNPing.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F4310EBE8F679C7EAE5725 /* QNNPing.m */; };
-		10A178F10EEA610CF1DA2740 /* PREDVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = D3AA70E31CBBC30C3FB8B593 /* PREDVersion.m */; };
-		177A31C9933DA1D4B22EA42A /* Pods-PreDemCocoaTests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 9B03D27100F5342FF0C41E92 /* Pods-PreDemCocoaTests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		192A142E8C7D5EF3A56504D2 /* Version.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7B2F434067AC168DB704E3A6 /* Version.plist */; };
-		19340C52C18AE9C1CF6C790A /* PREDResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0D4CAEC0AFF4280465632CD1 /* PREDResources.bundle */; };
-		1BDC71ADA7F97A4CF40F3772 /* QNNTcpPing.m in Sources */ = {isa = PBXBuildFile; fileRef = CBA9633DFFBB7F28982B7BB5 /* QNNTcpPing.m */; };
-		1FF45D3943E565C61FAC62D8 /* QNNProtocols.h in Headers */ = {isa = PBXBuildFile; fileRef = C4C5A677E630B8E0084E809C /* QNNProtocols.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		212C6AEBB0929647E97B46C6 /* QNNExternalIp.m in Sources */ = {isa = PBXBuildFile; fileRef = 24268197908C2C2B3E7C94B4 /* QNNExternalIp.m */; };
-		2DF00D991BAFFF7DB53A6EEE /* PREDSender.h in Headers */ = {isa = PBXBuildFile; fileRef = C3EB8A9286C943BBA3C516CD /* PREDSender.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		31625DCFC95EAE837BBEEA0D /* PREDURLSessionSwizzler.m in Sources */ = {isa = PBXBuildFile; fileRef = 747BD70BD123E1E7A5570DE6 /* PREDURLSessionSwizzler.m */; };
-		330F4E83A540D392701CE128 /* PREDCustomEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = FEA39C2F3ADEBA484E144B35 /* PREDCustomEvent.m */; };
-		35F8409C9912D8B347225659 /* PREDConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 34E0B4BF8F6D9596FC638A3B /* PREDConstants.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		3882159F09D4A6E2202D1C6D /* PREDTransactionPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 283DC5A4DF02BEC21956CE10 /* PREDTransactionPrivate.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		394D584CB6C115746878D102 /* PREDCredential.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FAA23A397495A31E9BE85D8 /* PREDCredential.m */; };
-		3DDA08168679131D409DB67C /* NSObject+Serialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D761AE51B5370C49364A72 /* NSObject+Serialization.m */; };
-		41F18ABA49C850A92F040679 /* QNNetDiag.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A89804347A4B4E6D73B9BE81 /* QNNetDiag.framework */; };
-		4213B4C316D8418A7348B1DE /* NSObject+Serialization.h in Headers */ = {isa = PBXBuildFile; fileRef = BEF4EF8CFAEDBB5CD16D9089 /* NSObject+Serialization.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		4928B502B215360CC301D9F2 /* PREDConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = E9848FF4D279FF8AAB76BF6B /* PREDConfig.m */; };
-		49B7B8B4A4AB0BA4BADC9E3E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5DB45CD9CD8734AE12C6B0C /* Foundation.framework */; };
-		4B5015848BF76D314BF686C9 /* Pods-PreDemSwiftDemo-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 10DF7CDC34E18F60091D8387 /* Pods-PreDemSwiftDemo-dummy.m */; };
-		4DCA87FBA6102FE0EF31744D /* PREDPersistence.h in Headers */ = {isa = PBXBuildFile; fileRef = 4B6B6A84C7EAC0CF192CF454 /* PREDPersistence.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		557881478DA79CC2A980EE5D /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EC6ABBB988C5835F7A241AD /* Security.framework */; };
-		5943DDC4A08DF8A57107DE33 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5DB45CD9CD8734AE12C6B0C /* Foundation.framework */; };
-		5A077234A1A540481E6955B6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5DB45CD9CD8734AE12C6B0C /* Foundation.framework */; };
-		5A2B5B977C19E778DE922F7F /* PREDHTTPOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 50FE46A60DFA69B657E2E2E7 /* PREDHTTPOperation.m */; };
-		5BDE42B0F5A1CB667BE5D6EC /* QNNUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DC2AE222946E400DDB12944 /* QNNUtil.m */; };
-		5CF9D586A11EE8BDBBE01DAB /* PREDManagerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = CB889505C2036EA1E79319ED /* PREDManagerPrivate.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		5EA361F7D100C4740FC76A4B /* PREDNetDiagResultPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 30846E40F81A98ED563F7FB5 /* PREDNetDiagResultPrivate.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		608C45BCCCD8AC56A5B235BF /* PREDHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E2B0C847DA55496E3FAC258 /* PREDHelper.m */; };
-		62F765CC034CD133875333AA /* PREDHTTPOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 52D343A251732BB295793B60 /* PREDHTTPOperation.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		644B22759AE4D8A0BDD5FA6D /* PREDURLSessionSwizzler.h in Headers */ = {isa = PBXBuildFile; fileRef = CAABF4A7BFC9353605B0CB65 /* PREDURLSessionSwizzler.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		665AE746317DF7EC8EB119A8 /* PREDLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = A8A1A88131B35435D35461AD /* PREDLogger.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		66D40D322572FD9C24E3C234 /* PREDURLProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = D73A350E0C9339767CE9F74B /* PREDURLProtocol.m */; };
-		6A1564BF63107CF6FD8D1FFD /* PREDSender.m in Sources */ = {isa = PBXBuildFile; fileRef = AFF87C9A4BA6E7E1C8CEF9BF /* PREDSender.m */; };
-		6B825C8CDD1E779312402558 /* PREDNetworkClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 17781A0DDEF9EA77DE58E1CA /* PREDNetworkClient.m */; };
-		6BBCC787237423B86442961F /* PREDCredential.h in Headers */ = {isa = PBXBuildFile; fileRef = 30A6A22F2DAFDCA1AD8B9F5C /* PREDCredential.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		725B0E895D619F5B12552B8D /* PREDNetworkClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 941FDA395C9DCB640F2C2C25 /* PREDNetworkClient.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		76757F20FB4D25933241CDF8 /* Pods-PreDemObjcDemo-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 90F65D318D3950AF3E7989A2 /* Pods-PreDemObjcDemo-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		7803A212932893E6ED9EB6E4 /* PREDNetDiagResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 99607266EB21C44457794C7B /* PREDNetDiagResult.m */; };
-		79CB8D43ACA0C4191D0805B8 /* PREDNetDiagResult.h in Headers */ = {isa = PBXBuildFile; fileRef = DED4B90F09A4B5CB5C317A70 /* PREDNetDiagResult.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		7A487FA6AA1C12B4EC34DA69 /* QNNUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = A62BD4552B13C9CCB9D997E9 /* QNNUtil.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		7F52FC6E2DE33A8FDB107369 /* UICKeyChainStore-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 56D2192D9893D962EDFE3705 /* UICKeyChainStore-dummy.m */; };
-		80D3E9041B2070C117DB5057 /* PreDemCocoa-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA2A059DCB0A7FACF89DD1A /* PreDemCocoa-dummy.m */; };
-		85CD87D9DE89A77AF8B861EA /* PREDSwizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AA033868C1BC803FF0AAB57 /* PREDSwizzle.m */; };
-		86B938CF5FA28818AE4F9030 /* PreDemCocoa-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = F5E80F288B276CB23B1C8952 /* PreDemCocoa-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		8843B2FE19DCF7BBFD168AAA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5DB45CD9CD8734AE12C6B0C /* Foundation.framework */; };
-		8ABF9725C498B6D62E12740C /* UICKeyChainStore.m in Sources */ = {isa = PBXBuildFile; fileRef = E5CDFA657FD5C19F315882A9 /* UICKeyChainStore.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
-		8B0CBC24E475A3A3D499ED37 /* QNNRtmp.h in Headers */ = {isa = PBXBuildFile; fileRef = DBF4373619E538B7DEAE68E7 /* QNNRtmp.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		8CE1D97D75D4E13007FFE2BD /* QNNTraceRoute.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EA145ED0657B888D2CA0F18 /* QNNTraceRoute.m */; };
-		936CB45EB262AA3B1EF8E85B /* QNNNslookup.h in Headers */ = {isa = PBXBuildFile; fileRef = 9791844A2EB1A4281466B069 /* QNNNslookup.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		974ACF8C1D05D232DFEE59AF /* QNNTcpPing.h in Headers */ = {isa = PBXBuildFile; fileRef = B015656BE1637225605C7813 /* QNNTcpPing.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		97BC333205A26336D4DB7153 /* PREDNetDiag.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BC77A466BBD079FAC2A9342 /* PREDNetDiag.m */; };
-		999B8C7F62A4B111CB576F42 /* PREDConfigManager.h in Headers */ = {isa = PBXBuildFile; fileRef = CCC5321585FC25A4E859A622 /* PREDConfigManager.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		9A6A4FC5880D296DF9B112A6 /* QNNNslookup.m in Sources */ = {isa = PBXBuildFile; fileRef = 78FCC7C26A5C7FB0045D57F3 /* QNNNslookup.m */; };
-		9C3B0B7F91B4DB9C8C75C297 /* PREDSwizzle.h in Headers */ = {isa = PBXBuildFile; fileRef = 181244F3DAFCCF739DC0D00D /* PREDSwizzle.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		9F97EB85FBE070C75C0A17DB /* PREDTransaction.m in Sources */ = {isa = PBXBuildFile; fileRef = 58660895EE5C673BA4D7234D /* PREDTransaction.m */; };
-		A041E2725A50B33DBE2A2694 /* PREDConfigManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C2C0FDE78AE1207204D64B52 /* PREDConfigManager.m */; };
-		A105E6508D76C9AE186949A5 /* UICKeyChainStore.h in Headers */ = {isa = PBXBuildFile; fileRef = B539C6934BE0EA543D7BBA4F /* UICKeyChainStore.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		A7E374205182993EAD7AC898 /* Pods-PreDemCocoaTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = BFB7FB6BA5F03CE6B35D000F /* Pods-PreDemCocoaTests-dummy.m */; };
-		AA44A839C7D8D9A8A09029EF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5DB45CD9CD8734AE12C6B0C /* Foundation.framework */; };
-		AAEC84A2A140FADA95003435 /* PREDBaseModel.h in Headers */ = {isa = PBXBuildFile; fileRef = C893CC59F7C8A91512F93F8E /* PREDBaseModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		AC804085AEAD46AA3FF5CD75 /* QNNRtmp.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B154DAD22BEEA742914967F /* QNNRtmp.m */; };
-		AF51A5843C5AEF7CF77D7F02 /* UICKeyChainStore-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 51712D28BB8B556BDF986F0B /* UICKeyChainStore-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		B0BBDBCEA7B33971FBCECB34 /* PREDURLProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = A2119FDD2A6FD14C6B7D95BF /* PREDURLProtocol.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		B44BF2CECFA80B38FFB95E6D /* QNNQue.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B9C8779AFDC35D8362FD846 /* QNNQue.m */; };
-		C0759AC2FD1EE126CBA88742 /* QNNTraceRoute.h in Headers */ = {isa = PBXBuildFile; fileRef = F965C4AE62960B27CF9AB63D /* QNNTraceRoute.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C2548DAFE3695CF95B1321F9 /* Pods-PreDemObjcDemo-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = C07384CE887CBAE0210ED8F6 /* Pods-PreDemObjcDemo-dummy.m */; };
-		C2F9684983661C241A566BB2 /* Pods-PreDemSwiftDemo-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = C515436AD1BA7A85A1E008BF /* Pods-PreDemSwiftDemo-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C44D0F245B9EA773EB1A2C21 /* PREDVersion.h in Headers */ = {isa = PBXBuildFile; fileRef = 293B685C7B1CE078B22E0F6E /* PREDVersion.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		C6B5B80E6DD4202E42217630 /* PREDLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B86E30751A0F4DB372C037F /* PREDLogger.m */; };
-		C79067D06976310635F1FAC5 /* QNNQue.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B86C99DD6EFDD63D37FF132 /* QNNQue.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		CC7585499D84A2F3A6721AE3 /* PREDBaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5FA57E49A7F4AC843AB430 /* PREDBaseModel.m */; };
-		CE573CA0B33A9F5C7D81BD58 /* PREDHTTPMonitorModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 5922FEEE6331BC3A3A6893D5 /* PREDHTTPMonitorModel.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		D2433CD1F66DF61CCE03B217 /* QNNHttp.h in Headers */ = {isa = PBXBuildFile; fileRef = D07F95445222DFD1ED5DAF51 /* QNNHttp.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D4AEF85C0745EA7E347BBFD5 /* QNNHttp.m in Sources */ = {isa = PBXBuildFile; fileRef = 07BF154A4E4A7435B1F2EA1F /* QNNHttp.m */; };
-		D96043654A8519E7FEC26F8C /* PREDManager.h in Headers */ = {isa = PBXBuildFile; fileRef = EB86D2C53907A760CD270285 /* PREDManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D97572093FBD6CFCD672021C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5DB45CD9CD8734AE12C6B0C /* Foundation.framework */; };
-		DB8E0E4D822A8B9390E8A6AD /* PREDTransaction.h in Headers */ = {isa = PBXBuildFile; fileRef = 1DC53CDD9412ABD85A2362D5 /* PREDTransaction.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		DC087B88B63270619BBCBB33 /* QNNetDiag.h in Headers */ = {isa = PBXBuildFile; fileRef = D3F91C80D0834861B27DD3E9 /* QNNetDiag.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		DD7ED81B0A42791AC30554BE /* QNNExternalIp.h in Headers */ = {isa = PBXBuildFile; fileRef = D9D34D23905703F371AEC3FC /* QNNExternalIp.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		DFDCFBC82F677C47B6AC07C9 /* PREDManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DA0E6812BF8FD5D5C3505BEB /* PREDManager.m */; };
-		E29C5BFFC4842E8F12F46DD9 /* QNNPing.h in Headers */ = {isa = PBXBuildFile; fileRef = BD1F8B728F4C9443818AACFD /* QNNPing.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		E50F419BB92B3D98CC21554B /* QNNetDiag-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = EE52C268A6C2FF302B80A3B5 /* QNNetDiag-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		E8A42EB34E3AE55BFB9A37E1 /* PreDemCocoa.h in Headers */ = {isa = PBXBuildFile; fileRef = 7E8982CA9E54956AA931DBBA /* PreDemCocoa.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		EECE4165FCDBEDF162651BDB /* PREDHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 070C11D789C2C21F6EF5BF49 /* PREDHelper.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		F1EFE3D1E6A3EB521193A1EC /* QNNetDiag-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = D38D6C8CE1CDD1E95228B514 /* QNNetDiag-dummy.m */; };
-		F549B14407FEF00984A20C23 /* PREDConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = E074D82DCC152C36EF1EFB03 /* PREDConfig.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		F7D28C14951C634C92CE849E /* PREDError.h in Headers */ = {isa = PBXBuildFile; fileRef = 155AB26A8FF5C0FEEC21C462 /* PREDError.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		FB1B650D0B93BCF10C754776 /* PREDDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = F126EEE20F03275FB7556478 /* PREDDefines.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		FF02E98EEC5FE67C760CA1ED /* PREDAppInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = D3B5959EB9AAECAB49F03F02 /* PREDAppInfo.m */; };
-		FF0810D239EF586B97A38B4A /* PREDCustomEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 190378B15C9730D39485DDFE /* PREDCustomEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0308061C7729B341319587E2 /* PREDLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B1C565EACB54C3D3051A3CC /* PREDLogger.m */; };
+		0583669B3B53F7069BEDCC32 /* PREDCredential.m in Sources */ = {isa = PBXBuildFile; fileRef = 64A05A3C68172059A0619115 /* PREDCredential.m */; };
+		05AEF761A16237D6F670B822 /* PREDConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = DAC0BE36F3046D37551332B7 /* PREDConfig.m */; };
+		0BEB60A7027B658BB2DDBA0A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3488D17D242E53593CE51F85 /* Foundation.framework */; };
+		10BEEA5A58F9561FF98EF4D5 /* UICKeyChainStore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F0F10A0BC3FAF2BD8595FE6 /* UICKeyChainStore.framework */; };
+		1F0BCA5083B0D3145B26B86D /* PREDConfigManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FB8CD76DA1503BE0EBA7D626 /* PREDConfigManager.m */; };
+		23A1497BC1007D65B9C887C0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3488D17D242E53593CE51F85 /* Foundation.framework */; };
+		23A367B88E142F185BC964D1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3488D17D242E53593CE51F85 /* Foundation.framework */; };
+		2C245F5D622E9E0A6BD39E15 /* PREDPersistence.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C6CE5F3E31A220FEA29F62B /* PREDPersistence.m */; };
+		2E4EBE84FFF8A7E6869CEC95 /* PREDHTTPOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = BD27CA96D5EFF74E40CE340F /* PREDHTTPOperation.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		3051758797D44E0AA6B6BD27 /* PREDSwizzle.h in Headers */ = {isa = PBXBuildFile; fileRef = BC32B9064B40BC23732D8BA7 /* PREDSwizzle.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		37584C0AA1C1B466AB1F74C9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3488D17D242E53593CE51F85 /* Foundation.framework */; };
+		403EA48922A085A294FE4A79 /* PREDHTTPOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 278B1E39D1888185CB964FEB /* PREDHTTPOperation.m */; };
+		42144B50B41607F66CCB3025 /* PREDNetworkClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 4B3F445C8C6B730F82B6487F /* PREDNetworkClient.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		4A8F4774F84993567B0FB124 /* PREDResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 443F0BC729796B4EBD0F9B97 /* PREDResources.bundle */; };
+		4B72E8E6AC8C00352A0585CD /* PREDPersistence.h in Headers */ = {isa = PBXBuildFile; fileRef = E583F9518D9CC6665EE3766D /* PREDPersistence.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		55FD2ECEB32A3DA046E09829 /* PREDBaseModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 6A0EFD392B8FE5FE57918F64 /* PREDBaseModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		58F8F0433919A6B8D46A4EDD /* PREDManager.h in Headers */ = {isa = PBXBuildFile; fileRef = CAD3604E9D18F7C3EDC9AF83 /* PREDManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5CC00442F91858FF44FCBE58 /* Pods-PreDemCocoaTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = B2823C08EAF8F8F6A07D7E1B /* Pods-PreDemCocoaTests-dummy.m */; };
+		6075C0683E15567314A82BC3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3488D17D242E53593CE51F85 /* Foundation.framework */; };
+		60E5950BFD626EA8672141CB /* PREDTransactionPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = C76DAB427D4336F0DA9F8DE0 /* PREDTransactionPrivate.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		6136030D7DF9DFC01DFC37C9 /* PREDVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = B0DB26B3B1E3A5554FA4678B /* PREDVersion.m */; };
+		641DCC897098D1D0E3FAAFB4 /* UICKeyChainStore-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = DF02F5DE2C66ADC034C91337 /* UICKeyChainStore-dummy.m */; };
+		6A14A7FE14C44A44E06EBB76 /* PREDHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 3F58932C87E0AE970A1AC912 /* PREDHelper.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		724BDA23423F3DCB51C50455 /* PREDCredential.h in Headers */ = {isa = PBXBuildFile; fileRef = B2ACCDBF604DE4EF9BBC306C /* PREDCredential.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		790A4AE259ACE461D6B7C478 /* PREDBaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B45007152FA568CE0C1532B0 /* PREDBaseModel.m */; };
+		7EA3290D1E4BB3AAFAE96055 /* PREDError.m in Sources */ = {isa = PBXBuildFile; fileRef = C23673E90B1A05539CA5C5BE /* PREDError.m */; };
+		7EF45A8E98D3559D114EF360 /* PREDSender.h in Headers */ = {isa = PBXBuildFile; fileRef = DDC250DDEECE395B065F2C69 /* PREDSender.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		803D7F0924540365CFDD74FD /* PreDemCocoa-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CD1A2C88D6A4930BADB2AA /* PreDemCocoa-dummy.m */; };
+		8502E1E84F704EE10EBE834C /* PREDCustomEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 84BCC38D70390BA16CB7E4EF /* PREDCustomEvent.m */; };
+		8542864D924D6118969C6671 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8321B67A443B02D3F4129714 /* Security.framework */; };
+		8B5F0A27153043B46602210D /* PREDAppInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 80EB70FEFE7B9DBF6106DCCB /* PREDAppInfo.m */; };
+		8DE736E0D90F2C7694F2AF84 /* Pods-PreDemSwiftDemo-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A2CDF67DD03EF3BAA35B7F3 /* Pods-PreDemSwiftDemo-dummy.m */; };
+		8FA2816CCDB32ADCFA474206 /* PREDSender.m in Sources */ = {isa = PBXBuildFile; fileRef = 260382522769B18B7F569315 /* PREDSender.m */; };
+		927716C22B1A9AFC6360786F /* NSObject+Serialization.h in Headers */ = {isa = PBXBuildFile; fileRef = 90651528563C567F7B1C5850 /* NSObject+Serialization.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		93BC0436483048536D96F097 /* NSObject+Serialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CB0C2CF3028023EA1A77CF5 /* NSObject+Serialization.m */; };
+		9B28B6584FA4454C92C7536B /* PREDLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D21518C1E4F791FFA000FC9 /* PREDLogger.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		9CD7C71526321C4D18B177C5 /* PREDError.h in Headers */ = {isa = PBXBuildFile; fileRef = 1F5A29BF58A4BEDF6DE0C540 /* PREDError.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		9E0D0FE2C8B80417715E70E3 /* UICKeyChainStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 03061145453A4DBEE2C3900E /* UICKeyChainStore.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
+		9FEDCE3D84B25A16D6042CBC /* PREDManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E2D85618F3BEC6DCDB0E7943 /* PREDManager.m */; };
+		A22929087A6469172715ED11 /* UICKeyChainStore-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = E7258C21F9F4D1846537C1AB /* UICKeyChainStore-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A302CF8193673E3A88CD2645 /* PREDConfigManager.h in Headers */ = {isa = PBXBuildFile; fileRef = C42CF2195379B4695D511AEC /* PREDConfigManager.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		B3120C137B5873DD4B8E73E7 /* PreDemCocoa-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 16A7ACF8F7508102D1D547B6 /* PreDemCocoa-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B829E073BD6B9D5623469E05 /* Pods-PreDemSwiftDemo-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 6449DC5DE46852835902557E /* Pods-PreDemSwiftDemo-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B9EDECB9D6335F1DEB5B517A /* PREDDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = 9C5F20638AA4364115625927 /* PREDDefines.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C061588FEB20CDF8448E3A67 /* PREDTransaction.h in Headers */ = {isa = PBXBuildFile; fileRef = 6DE79F71D491821596D9E65C /* PREDTransaction.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D0F17D201DAEFA2699953591 /* PREDAppInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AD50EC66F6B01FC00B975AF /* PREDAppInfo.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		D1ED3C2BDDC3D76572CE8054 /* Pods-PreDemObjcDemo-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 149C6DFE615CB246747A8905 /* Pods-PreDemObjcDemo-dummy.m */; };
+		D2729CA325393041DDFBAAD6 /* PREDTransaction.m in Sources */ = {isa = PBXBuildFile; fileRef = 31F50E8DB952AC730D540D10 /* PREDTransaction.m */; };
+		D406EB0527572DF052B5C80D /* PREDVersion.h in Headers */ = {isa = PBXBuildFile; fileRef = 0820670FB5F103559A935442 /* PREDVersion.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		D9DDA670469E170F6298C394 /* Version.plist in Resources */ = {isa = PBXBuildFile; fileRef = EC738C5C52AEBC133D799139 /* Version.plist */; };
+		DD36ACBA2A62F7CB2E33B6BF /* PREDConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 22B3C750667B828003925957 /* PREDConfig.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		E0A2D0D155DEEA5B8C5B3063 /* UICKeyChainStore.h in Headers */ = {isa = PBXBuildFile; fileRef = 91EAD97B70581EC8E15773E5 /* UICKeyChainStore.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E1E40EC0FF1314086B67B709 /* PREDConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 07B36F6510F51E2519DA4757 /* PREDConstants.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		E32E28E7D2D9EC25494838B8 /* PREDManagerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 8884B2B3B41CE50EA6DF01E2 /* PREDManagerPrivate.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		E4FDF80BAED5295B6ED6E864 /* PreDemCocoa.h in Headers */ = {isa = PBXBuildFile; fileRef = D2B42840515AC2F375C1B2CB /* PreDemCocoa.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E9E88E6860724F2544A27D67 /* PREDSwizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = CD27E93622E98338E8AA2917 /* PREDSwizzle.m */; };
+		EBDAF090BDEBF999F8707F95 /* PREDCustomEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = A65A0E616EFA8E4A63788BB9 /* PREDCustomEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EE5730FA6BC4DDC153B31763 /* Pods-PreDemCocoaTests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 18A9013E6843616D8C11C80D /* Pods-PreDemCocoaTests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F221E73EBF0CC4736BF0D9C5 /* PREDHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = BA88A82553DCC182F143025E /* PREDHelper.m */; };
+		F45D6B0D743C515ACC84B4CF /* Pods-PreDemObjcDemo-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = AB37284688E4751C17C07FC2 /* Pods-PreDemObjcDemo-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		FE445FAA419A9EC3F9916E34 /* PREDNetworkClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F22B75F45EDA58036EBC1C0 /* PREDNetworkClient.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		04428219938A0D0024122AB0 /* PBXContainerItemProxy */ = {
+		0B35FFF8D512DE242501720C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 4713B741753DB1BCAFEAB456 /* Project object */;
+			containerPortal = E068CFD1897B7CC1B12540EB /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 944F820C28A8D1B53D6596A9;
-			remoteInfo = UICKeyChainStore;
-		};
-		05E3C465BD464C42343F30FC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4713B741753DB1BCAFEAB456 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = D9595861D7710F5C6CFADFC7;
-			remoteInfo = QNNetDiag;
-		};
-		08C21D5B2E510395BA26D02F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4713B741753DB1BCAFEAB456 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 944F820C28A8D1B53D6596A9;
-			remoteInfo = UICKeyChainStore;
-		};
-		09A7BCEF4AC10BA85F2A8FFB /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4713B741753DB1BCAFEAB456 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 944F820C28A8D1B53D6596A9;
-			remoteInfo = UICKeyChainStore;
-		};
-		16B25B9862658F0BD7541F79 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4713B741753DB1BCAFEAB456 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 80CE941B0BF6CE0DA237A308;
+			remoteGlobalIDString = 8E37AEB94AA3540F81B3CABC;
 			remoteInfo = "PreDemCocoa-PREDResources";
 		};
-		27E168291E1A5F9CC2BC36A9 /* PBXContainerItemProxy */ = {
+		0D739BC6C123C0C898DE8326 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 4713B741753DB1BCAFEAB456 /* Project object */;
+			containerPortal = E068CFD1897B7CC1B12540EB /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = D9595861D7710F5C6CFADFC7;
-			remoteInfo = QNNetDiag;
-		};
-		2B5CA226534BE9B62449CF78 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4713B741753DB1BCAFEAB456 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = D9595861D7710F5C6CFADFC7;
-			remoteInfo = QNNetDiag;
-		};
-		4C670DE6512717F5A5AC2BC2 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4713B741753DB1BCAFEAB456 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 944F820C28A8D1B53D6596A9;
+			remoteGlobalIDString = 7913CFA825A7B250238DFA1B;
 			remoteInfo = UICKeyChainStore;
 		};
-		8A4809A4D9683B0DAD7A0279 /* PBXContainerItemProxy */ = {
+		0DA8624356494294C861B63A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 4713B741753DB1BCAFEAB456 /* Project object */;
+			containerPortal = E068CFD1897B7CC1B12540EB /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 42405BC2517E1CBF87DD4E25;
+			remoteGlobalIDString = 7913CFA825A7B250238DFA1B;
+			remoteInfo = UICKeyChainStore;
+		};
+		1F0FDB99F0E193B1088D4AF5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E068CFD1897B7CC1B12540EB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7913CFA825A7B250238DFA1B;
+			remoteInfo = UICKeyChainStore;
+		};
+		22EA2FD297E228425FCAC9F3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E068CFD1897B7CC1B12540EB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 22F51DC32EF9208547135676;
 			remoteInfo = PreDemCocoa;
 		};
-		9C9AF7EC5A3B00092A0C937D /* PBXContainerItemProxy */ = {
+		9F00065595BB147AC4C02835 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 4713B741753DB1BCAFEAB456 /* Project object */;
+			containerPortal = E068CFD1897B7CC1B12540EB /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = D9595861D7710F5C6CFADFC7;
-			remoteInfo = QNNetDiag;
-		};
-		B1BA0414EB4F61F8D00E1B93 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4713B741753DB1BCAFEAB456 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 42405BC2517E1CBF87DD4E25;
+			remoteGlobalIDString = 22F51DC32EF9208547135676;
 			remoteInfo = PreDemCocoa;
 		};
-		B9BF8E6A626ABE5237EF75AB /* PBXContainerItemProxy */ = {
+		B4A6C780F510704E83B4A55D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 4713B741753DB1BCAFEAB456 /* Project object */;
+			containerPortal = E068CFD1897B7CC1B12540EB /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 42405BC2517E1CBF87DD4E25;
+			remoteGlobalIDString = 7913CFA825A7B250238DFA1B;
+			remoteInfo = UICKeyChainStore;
+		};
+		FA392828F931C536D296D3E0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E068CFD1897B7CC1B12540EB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 22F51DC32EF9208547135676;
 			remoteInfo = PreDemCocoa;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		01D171909D5F402124556454 /* PREDError.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDError.m; sourceTree = "<group>"; };
-		05FFBF158FE9D63D68914062 /* Pods-PreDemObjcDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-PreDemObjcDemo.release.xcconfig"; sourceTree = "<group>"; };
-		070C11D789C2C21F6EF5BF49 /* PREDHelper.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDHelper.h; sourceTree = "<group>"; };
-		07BF154A4E4A7435B1F2EA1F /* QNNHttp.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = QNNHttp.m; path = NetDiag/QNNHttp.m; sourceTree = "<group>"; };
-		0B86C99DD6EFDD63D37FF132 /* QNNQue.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = QNNQue.h; path = NetDiag/QNNQue.h; sourceTree = "<group>"; };
-		0D4CAEC0AFF4280465632CD1 /* PREDResources.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = PREDResources.bundle; path = PREDResources.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
-		10DF7CDC34E18F60091D8387 /* Pods-PreDemSwiftDemo-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-PreDemSwiftDemo-dummy.m"; sourceTree = "<group>"; };
-		14281AC8DC36D1E599AF6199 /* Pods-PreDemCocoaTests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-PreDemCocoaTests-resources.sh"; sourceTree = "<group>"; };
-		155AB26A8FF5C0FEEC21C462 /* PREDError.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDError.h; sourceTree = "<group>"; };
-		17781A0DDEF9EA77DE58E1CA /* PREDNetworkClient.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDNetworkClient.m; sourceTree = "<group>"; };
-		181244F3DAFCCF739DC0D00D /* PREDSwizzle.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDSwizzle.h; sourceTree = "<group>"; };
-		190378B15C9730D39485DDFE /* PREDCustomEvent.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDCustomEvent.h; sourceTree = "<group>"; };
-		1A744F4760811EB65267DB4E /* Pods-PreDemSwiftDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-PreDemSwiftDemo.release.xcconfig"; sourceTree = "<group>"; };
-		1B154DAD22BEEA742914967F /* QNNRtmp.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = QNNRtmp.m; path = NetDiag/QNNRtmp.m; sourceTree = "<group>"; };
-		1BC77A466BBD079FAC2A9342 /* PREDNetDiag.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDNetDiag.m; sourceTree = "<group>"; };
-		1DC53CDD9412ABD85A2362D5 /* PREDTransaction.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDTransaction.h; sourceTree = "<group>"; };
-		1FAA23A397495A31E9BE85D8 /* PREDCredential.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDCredential.m; sourceTree = "<group>"; };
-		2112037D2C6BBDE4AC740BB0 /* UICKeyChainStore.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = UICKeyChainStore.xcconfig; sourceTree = "<group>"; };
-		24268197908C2C2B3E7C94B4 /* QNNExternalIp.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = QNNExternalIp.m; path = NetDiag/QNNExternalIp.m; sourceTree = "<group>"; };
-		283DC5A4DF02BEC21956CE10 /* PREDTransactionPrivate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDTransactionPrivate.h; sourceTree = "<group>"; };
-		293B685C7B1CE078B22E0F6E /* PREDVersion.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDVersion.h; sourceTree = "<group>"; };
-		30846E40F81A98ED563F7FB5 /* PREDNetDiagResultPrivate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDNetDiagResultPrivate.h; sourceTree = "<group>"; };
-		30A6A22F2DAFDCA1AD8B9F5C /* PREDCredential.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDCredential.h; sourceTree = "<group>"; };
-		3342B080108E246E03DE41E2 /* Pods-PreDemCocoaTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-PreDemCocoaTests.debug.xcconfig"; sourceTree = "<group>"; };
-		34E0B4BF8F6D9596FC638A3B /* PREDConstants.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDConstants.h; sourceTree = "<group>"; };
-		3B86E30751A0F4DB372C037F /* PREDLogger.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDLogger.m; sourceTree = "<group>"; };
-		3C5FA57E49A7F4AC843AB430 /* PREDBaseModel.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDBaseModel.m; sourceTree = "<group>"; };
-		3C75ED7BFD08C7CE0C68CCB5 /* Pods-PreDemObjcDemo-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-PreDemObjcDemo-acknowledgements.plist"; sourceTree = "<group>"; };
-		3DC2AE222946E400DDB12944 /* QNNUtil.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = QNNUtil.m; path = NetDiag/QNNUtil.m; sourceTree = "<group>"; };
-		3EC6ABBB988C5835F7A241AD /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
-		43E9B721FED5F4FB6C0B8A15 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		43ED7BDC5D9AF34D03586E12 /* Pods-PreDemSwiftDemo-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-PreDemSwiftDemo-acknowledgements.markdown"; sourceTree = "<group>"; };
-		4B6B6A84C7EAC0CF192CF454 /* PREDPersistence.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDPersistence.h; sourceTree = "<group>"; };
-		4F3F7151DF79AA7AAFE61ABE /* Pods_PreDemSwiftDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_PreDemSwiftDemo.framework; path = "Pods-PreDemSwiftDemo.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
-		4FC3778B07725AC4CBF13BDB /* Pods-PreDemCocoaTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-PreDemCocoaTests-acknowledgements.markdown"; sourceTree = "<group>"; };
-		50F4310EBE8F679C7EAE5725 /* QNNPing.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = QNNPing.m; path = NetDiag/QNNPing.m; sourceTree = "<group>"; };
-		50FE46A60DFA69B657E2E2E7 /* PREDHTTPOperation.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDHTTPOperation.m; sourceTree = "<group>"; };
-		51712D28BB8B556BDF986F0B /* UICKeyChainStore-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "UICKeyChainStore-umbrella.h"; sourceTree = "<group>"; };
-		52367B3B876DCB30DB51F3E0 /* QNNetDiag-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "QNNetDiag-prefix.pch"; sourceTree = "<group>"; };
-		52D343A251732BB295793B60 /* PREDHTTPOperation.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDHTTPOperation.h; sourceTree = "<group>"; };
-		556C7652C69BAF92BB374584 /* Pods-PreDemSwiftDemo-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-PreDemSwiftDemo-acknowledgements.plist"; sourceTree = "<group>"; };
-		55E5FB4CFB3D391AA90F62CD /* QNNetDiag.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = QNNetDiag.xcconfig; sourceTree = "<group>"; };
-		56D2192D9893D962EDFE3705 /* UICKeyChainStore-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "UICKeyChainStore-dummy.m"; sourceTree = "<group>"; };
-		58660895EE5C673BA4D7234D /* PREDTransaction.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDTransaction.m; sourceTree = "<group>"; };
-		5922FEEE6331BC3A3A6893D5 /* PREDHTTPMonitorModel.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDHTTPMonitorModel.h; sourceTree = "<group>"; };
-		5B9C8779AFDC35D8362FD846 /* QNNQue.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = QNNQue.m; path = NetDiag/QNNQue.m; sourceTree = "<group>"; };
-		5BDB76AFEA827B346AA1A714 /* Pods-PreDemCocoaTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-PreDemCocoaTests-acknowledgements.plist"; sourceTree = "<group>"; };
-		5C7040361811C1799EDF99C7 /* QNNetDiag.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = QNNetDiag.framework; path = QNNetDiag.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		5DA2A059DCB0A7FACF89DD1A /* PreDemCocoa-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "PreDemCocoa-dummy.m"; sourceTree = "<group>"; };
-		5E0A3E7F9A063F69F4D0438E /* Pods-PreDemSwiftDemo-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-PreDemSwiftDemo-frameworks.sh"; sourceTree = "<group>"; };
-		608E1CB0E31A22CDBF0E6221 /* Pods-PreDemObjcDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-PreDemObjcDemo.debug.xcconfig"; sourceTree = "<group>"; };
-		6BCBA751654C7346C509F037 /* ResourceBundle-PREDResources-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "ResourceBundle-PREDResources-Info.plist"; sourceTree = "<group>"; };
-		6C6F71FF7536B035287050A5 /* Pods-PreDemSwiftDemo-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-PreDemSwiftDemo-resources.sh"; sourceTree = "<group>"; };
-		6EA145ED0657B888D2CA0F18 /* QNNTraceRoute.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = QNNTraceRoute.m; path = NetDiag/QNNTraceRoute.m; sourceTree = "<group>"; };
-		72B39D6D240EE9D47373F3A4 /* PreDemCocoa.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = PreDemCocoa.framework; path = PreDemCocoa.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		747BD70BD123E1E7A5570DE6 /* PREDURLSessionSwizzler.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDURLSessionSwizzler.m; sourceTree = "<group>"; };
-		7517FF8444F7A6E911EDCAFB /* UICKeyChainStore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = UICKeyChainStore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		78FCC7C26A5C7FB0045D57F3 /* QNNNslookup.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = QNNNslookup.m; path = NetDiag/QNNNslookup.m; sourceTree = "<group>"; };
-		7B2F434067AC168DB704E3A6 /* Version.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; name = Version.plist; path = PreDemCocoa/Resources/Version.plist; sourceTree = "<group>"; };
-		7BA97C75A76F857EF71FB5DA /* Pods-PreDemCocoaTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-PreDemCocoaTests.release.xcconfig"; sourceTree = "<group>"; };
-		7E8982CA9E54956AA931DBBA /* PreDemCocoa.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PreDemCocoa.h; sourceTree = "<group>"; };
-		7EB2E1A0A1A3DC9C1AB0177D /* PREDHTTPMonitorModel.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDHTTPMonitorModel.m; sourceTree = "<group>"; };
-		811F04B3215F2E0BF62E0E89 /* UICKeyChainStore.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = UICKeyChainStore.modulemap; sourceTree = "<group>"; };
-		81BE0DC1C056DD09C64C8E7F /* PREDPersistence.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDPersistence.m; sourceTree = "<group>"; };
-		844DA89794ED55C45600A1AA /* Pods-PreDemObjcDemo.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-PreDemObjcDemo.modulemap"; sourceTree = "<group>"; };
-		8B070285272D839EB6E76985 /* PreDemCocoa.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = PreDemCocoa.xcconfig; sourceTree = "<group>"; };
-		8E11E36BE012E204FCBBEC40 /* Pods_PreDemObjcDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_PreDemObjcDemo.framework; path = "Pods-PreDemObjcDemo.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
-		90F65D318D3950AF3E7989A2 /* Pods-PreDemObjcDemo-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-PreDemObjcDemo-umbrella.h"; sourceTree = "<group>"; };
-		92A9F9294524DC5B9E2C8AEB /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		93D761AE51B5370C49364A72 /* NSObject+Serialization.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Serialization.m"; sourceTree = "<group>"; };
-		941FDA395C9DCB640F2C2C25 /* PREDNetworkClient.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDNetworkClient.h; sourceTree = "<group>"; };
-		963F681293313E7E39EFF22C /* Pods-PreDemObjcDemo-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-PreDemObjcDemo-acknowledgements.markdown"; sourceTree = "<group>"; };
-		9791844A2EB1A4281466B069 /* QNNNslookup.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = QNNNslookup.h; path = NetDiag/QNNNslookup.h; sourceTree = "<group>"; };
-		9914536997C5B1D4CFCEDE1E /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		99607266EB21C44457794C7B /* PREDNetDiagResult.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDNetDiagResult.m; sourceTree = "<group>"; };
-		9AA033868C1BC803FF0AAB57 /* PREDSwizzle.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDSwizzle.m; sourceTree = "<group>"; };
-		9B03D27100F5342FF0C41E92 /* Pods-PreDemCocoaTests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-PreDemCocoaTests-umbrella.h"; sourceTree = "<group>"; };
-		9E2B0C847DA55496E3FAC258 /* PREDHelper.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDHelper.m; sourceTree = "<group>"; };
-		A0732BE2CE9C9CB54F4370D5 /* QNNetDiag.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = QNNetDiag.modulemap; sourceTree = "<group>"; };
-		A2119FDD2A6FD14C6B7D95BF /* PREDURLProtocol.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDURLProtocol.h; sourceTree = "<group>"; };
-		A238533AE321F23B8A9F1028 /* Pods-PreDemCocoaTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-PreDemCocoaTests.modulemap"; sourceTree = "<group>"; };
-		A23A801459B6066B3EB1ABAD /* Pods-PreDemCocoaTests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-PreDemCocoaTests-frameworks.sh"; sourceTree = "<group>"; };
-		A306CF7C0E4E738B144C897F /* PREDNetDiag.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDNetDiag.h; sourceTree = "<group>"; };
-		A440900D16CE66D0675A9D91 /* PreDemCocoa-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "PreDemCocoa-prefix.pch"; sourceTree = "<group>"; };
-		A61D1295972FBFF489E5223D /* UICKeyChainStore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = UICKeyChainStore.framework; path = UICKeyChainStore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		A62BD4552B13C9CCB9D997E9 /* QNNUtil.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = QNNUtil.h; path = NetDiag/QNNUtil.h; sourceTree = "<group>"; };
-		A89804347A4B4E6D73B9BE81 /* QNNetDiag.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = QNNetDiag.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		A8A1A88131B35435D35461AD /* PREDLogger.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDLogger.h; sourceTree = "<group>"; };
-		AE52ACE5C08B76102BF7F333 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		AF1EBDD211A9F1D41FD664C0 /* UICKeyChainStore-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "UICKeyChainStore-prefix.pch"; sourceTree = "<group>"; };
-		AFF87C9A4BA6E7E1C8CEF9BF /* PREDSender.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDSender.m; sourceTree = "<group>"; };
-		B015656BE1637225605C7813 /* QNNTcpPing.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = QNNTcpPing.h; path = NetDiag/QNNTcpPing.h; sourceTree = "<group>"; };
-		B539C6934BE0EA543D7BBA4F /* UICKeyChainStore.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = UICKeyChainStore.h; path = Lib/UICKeyChainStore/UICKeyChainStore.h; sourceTree = "<group>"; };
-		BAE05087C1AA16236ECD5ABB /* PreDemCocoa.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = PreDemCocoa.modulemap; sourceTree = "<group>"; };
-		BD1F8B728F4C9443818AACFD /* QNNPing.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = QNNPing.h; path = NetDiag/QNNPing.h; sourceTree = "<group>"; };
-		BE53B0178D163B2F7BD40AB2 /* Pods-PreDemSwiftDemo.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-PreDemSwiftDemo.modulemap"; sourceTree = "<group>"; };
-		BEF4EF8CFAEDBB5CD16D9089 /* NSObject+Serialization.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "NSObject+Serialization.h"; sourceTree = "<group>"; };
-		BFB7FB6BA5F03CE6B35D000F /* Pods-PreDemCocoaTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-PreDemCocoaTests-dummy.m"; sourceTree = "<group>"; };
-		C07384CE887CBAE0210ED8F6 /* Pods-PreDemObjcDemo-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-PreDemObjcDemo-dummy.m"; sourceTree = "<group>"; };
-		C2C0FDE78AE1207204D64B52 /* PREDConfigManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDConfigManager.m; sourceTree = "<group>"; };
-		C3EB8A9286C943BBA3C516CD /* PREDSender.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDSender.h; sourceTree = "<group>"; };
-		C4C5A677E630B8E0084E809C /* QNNProtocols.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = QNNProtocols.h; path = NetDiag/QNNProtocols.h; sourceTree = "<group>"; };
-		C515436AD1BA7A85A1E008BF /* Pods-PreDemSwiftDemo-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-PreDemSwiftDemo-umbrella.h"; sourceTree = "<group>"; };
-		C731D15469C2A089F0D004B9 /* Pods_PreDemCocoaTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_PreDemCocoaTests.framework; path = "Pods-PreDemCocoaTests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
-		C893CC59F7C8A91512F93F8E /* PREDBaseModel.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDBaseModel.h; sourceTree = "<group>"; };
-		C98FE3CA8C08179ADC9F8995 /* Pods-PreDemObjcDemo-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-PreDemObjcDemo-frameworks.sh"; sourceTree = "<group>"; };
-		C9D8A089BA419305779869BD /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		CAABF4A7BFC9353605B0CB65 /* PREDURLSessionSwizzler.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDURLSessionSwizzler.h; sourceTree = "<group>"; };
-		CB889505C2036EA1E79319ED /* PREDManagerPrivate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDManagerPrivate.h; sourceTree = "<group>"; };
-		CBA9633DFFBB7F28982B7BB5 /* QNNTcpPing.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = QNNTcpPing.m; path = NetDiag/QNNTcpPing.m; sourceTree = "<group>"; };
-		CCC5321585FC25A4E859A622 /* PREDConfigManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDConfigManager.h; sourceTree = "<group>"; };
-		D07F95445222DFD1ED5DAF51 /* QNNHttp.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = QNNHttp.h; path = NetDiag/QNNHttp.h; sourceTree = "<group>"; };
-		D38D6C8CE1CDD1E95228B514 /* QNNetDiag-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "QNNetDiag-dummy.m"; sourceTree = "<group>"; };
-		D3AA70E31CBBC30C3FB8B593 /* PREDVersion.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDVersion.m; sourceTree = "<group>"; };
-		D3B5959EB9AAECAB49F03F02 /* PREDAppInfo.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDAppInfo.m; sourceTree = "<group>"; };
-		D3F91C80D0834861B27DD3E9 /* QNNetDiag.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = QNNetDiag.h; path = NetDiag/QNNetDiag.h; sourceTree = "<group>"; };
-		D5DB45CD9CD8734AE12C6B0C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		D73A350E0C9339767CE9F74B /* PREDURLProtocol.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDURLProtocol.m; sourceTree = "<group>"; };
-		D9D34D23905703F371AEC3FC /* QNNExternalIp.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = QNNExternalIp.h; path = NetDiag/QNNExternalIp.h; sourceTree = "<group>"; };
-		DA0E6812BF8FD5D5C3505BEB /* PREDManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDManager.m; sourceTree = "<group>"; };
-		DAC3F1A5E4A91F1B85D26318 /* PREDAppInfo.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDAppInfo.h; sourceTree = "<group>"; };
-		DB4F96BD164B81FD260CDCFB /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		DBF4373619E538B7DEAE68E7 /* QNNRtmp.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = QNNRtmp.h; path = NetDiag/QNNRtmp.h; sourceTree = "<group>"; };
-		DED4B90F09A4B5CB5C317A70 /* PREDNetDiagResult.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDNetDiagResult.h; sourceTree = "<group>"; };
-		E074D82DCC152C36EF1EFB03 /* PREDConfig.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDConfig.h; sourceTree = "<group>"; };
-		E503CD9C4730A9CF667271A1 /* Pods-PreDemSwiftDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-PreDemSwiftDemo.debug.xcconfig"; sourceTree = "<group>"; };
-		E5CDFA657FD5C19F315882A9 /* UICKeyChainStore.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = UICKeyChainStore.m; path = Lib/UICKeyChainStore/UICKeyChainStore.m; sourceTree = "<group>"; };
-		E9848FF4D279FF8AAB76BF6B /* PREDConfig.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDConfig.m; sourceTree = "<group>"; };
-		EB86D2C53907A760CD270285 /* PREDManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDManager.h; sourceTree = "<group>"; };
-		EE2E0E7DE9443C103C4FD3D3 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		EE52C268A6C2FF302B80A3B5 /* QNNetDiag-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "QNNetDiag-umbrella.h"; sourceTree = "<group>"; };
-		F126EEE20F03275FB7556478 /* PREDDefines.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDDefines.h; sourceTree = "<group>"; };
-		F5E80F288B276CB23B1C8952 /* PreDemCocoa-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "PreDemCocoa-umbrella.h"; sourceTree = "<group>"; };
-		F739B55A753994D551F60176 /* Pods-PreDemObjcDemo-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-PreDemObjcDemo-resources.sh"; sourceTree = "<group>"; };
-		F965C4AE62960B27CF9AB63D /* QNNTraceRoute.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = QNNTraceRoute.h; path = NetDiag/QNNTraceRoute.h; sourceTree = "<group>"; };
-		FEA39C2F3ADEBA484E144B35 /* PREDCustomEvent.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDCustomEvent.m; sourceTree = "<group>"; };
+		03061145453A4DBEE2C3900E /* UICKeyChainStore.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = UICKeyChainStore.m; path = Lib/UICKeyChainStore/UICKeyChainStore.m; sourceTree = "<group>"; };
+		05E914F3CA3860527CFA704D /* Pods-PreDemCocoaTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-PreDemCocoaTests.release.xcconfig"; sourceTree = "<group>"; };
+		072569E53A5CACA767F28FDD /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		07B36F6510F51E2519DA4757 /* PREDConstants.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDConstants.h; sourceTree = "<group>"; };
+		0820670FB5F103559A935442 /* PREDVersion.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDVersion.h; sourceTree = "<group>"; };
+		08CD1A2C88D6A4930BADB2AA /* PreDemCocoa-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "PreDemCocoa-dummy.m"; sourceTree = "<group>"; };
+		09F83A4BE682BDE0390415F5 /* Pods-PreDemObjcDemo-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-PreDemObjcDemo-resources.sh"; sourceTree = "<group>"; };
+		1020348FF42A4E4E94C3B13D /* Pods-PreDemObjcDemo-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-PreDemObjcDemo-acknowledgements.plist"; sourceTree = "<group>"; };
+		10E6FC077A1BFDCF9DE43895 /* DemoUserGuide.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = DemoUserGuide.md; path = docs/DemoUserGuide.md; sourceTree = "<group>"; };
+		1186A2D3876BE7E8A9D59A5F /* Pods_PreDemSwiftDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PreDemSwiftDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		149C6DFE615CB246747A8905 /* Pods-PreDemObjcDemo-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-PreDemObjcDemo-dummy.m"; sourceTree = "<group>"; };
+		14A2A1B6FBD6A78C2E4B96D4 /* Pods-PreDemObjcDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-PreDemObjcDemo.release.xcconfig"; sourceTree = "<group>"; };
+		16A7ACF8F7508102D1D547B6 /* PreDemCocoa-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "PreDemCocoa-umbrella.h"; sourceTree = "<group>"; };
+		18A9013E6843616D8C11C80D /* Pods-PreDemCocoaTests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-PreDemCocoaTests-umbrella.h"; sourceTree = "<group>"; };
+		1AD50EC66F6B01FC00B975AF /* PREDAppInfo.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDAppInfo.h; sourceTree = "<group>"; };
+		1CB0C2CF3028023EA1A77CF5 /* NSObject+Serialization.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Serialization.m"; sourceTree = "<group>"; };
+		1F5A29BF58A4BEDF6DE0C540 /* PREDError.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDError.h; sourceTree = "<group>"; };
+		2189C4879F1E20A4D4DA7FEB /* Pods-PreDemCocoaTests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-PreDemCocoaTests-frameworks.sh"; sourceTree = "<group>"; };
+		22B3C750667B828003925957 /* PREDConfig.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDConfig.h; sourceTree = "<group>"; };
+		25F12C398DE5AB222F0D3469 /* Pods-PreDemSwiftDemo-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-PreDemSwiftDemo-resources.sh"; sourceTree = "<group>"; };
+		260382522769B18B7F569315 /* PREDSender.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDSender.m; sourceTree = "<group>"; };
+		278B1E39D1888185CB964FEB /* PREDHTTPOperation.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDHTTPOperation.m; sourceTree = "<group>"; };
+		28101DFB886CE4648422320B /* UICKeyChainStore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = UICKeyChainStore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2A2CDF67DD03EF3BAA35B7F3 /* Pods-PreDemSwiftDemo-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-PreDemSwiftDemo-dummy.m"; sourceTree = "<group>"; };
+		31F50E8DB952AC730D540D10 /* PREDTransaction.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDTransaction.m; sourceTree = "<group>"; };
+		3488D17D242E53593CE51F85 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		3D21518C1E4F791FFA000FC9 /* PREDLogger.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDLogger.h; sourceTree = "<group>"; };
+		3D25BF6747B1D12E0AC7C172 /* Pods-PreDemSwiftDemo-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-PreDemSwiftDemo-acknowledgements.markdown"; sourceTree = "<group>"; };
+		3E2AF2A5CDCC295F2737A7AE /* UICKeyChainStore-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "UICKeyChainStore-prefix.pch"; sourceTree = "<group>"; };
+		3F58932C87E0AE970A1AC912 /* PREDHelper.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDHelper.h; sourceTree = "<group>"; };
+		40E4E24291A492A4CA26FCDB /* Pods-PreDemCocoaTests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-PreDemCocoaTests-resources.sh"; sourceTree = "<group>"; };
+		443F0BC729796B4EBD0F9B97 /* PREDResources.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PREDResources.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		44A9DF73FC56886789C25CEE /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		45F555A134912C10657AB34F /* PreDemCocoa.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; path = PreDemCocoa.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		4B3F445C8C6B730F82B6487F /* PREDNetworkClient.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDNetworkClient.h; sourceTree = "<group>"; };
+		500AE67D2EE1FDFB6F07442F /* NETPageUseGuide */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = NETPageUseGuide; path = docs/NETPageUseGuide; sourceTree = "<group>"; };
+		502BB33FA35A8D65A4F74A83 /* Pods-PreDemSwiftDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-PreDemSwiftDemo.debug.xcconfig"; sourceTree = "<group>"; };
+		57DCAB0125F9840E8630551A /* Pods-PreDemObjcDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-PreDemObjcDemo.debug.xcconfig"; sourceTree = "<group>"; };
+		5D2EA527B97B3AC42D2368B8 /* PreDemCocoa.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = PreDemCocoa.modulemap; sourceTree = "<group>"; };
+		5F0F10A0BC3FAF2BD8595FE6 /* UICKeyChainStore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = UICKeyChainStore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		61CAEE6C01A7D6BB07C41599 /* Pods-PreDemObjcDemo-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-PreDemObjcDemo-acknowledgements.markdown"; sourceTree = "<group>"; };
+		62B54DD58F1F59768C3E5398 /* cache.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = cache.md; path = docs/cache.md; sourceTree = "<group>"; };
+		6449DC5DE46852835902557E /* Pods-PreDemSwiftDemo-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-PreDemSwiftDemo-umbrella.h"; sourceTree = "<group>"; };
+		64A05A3C68172059A0619115 /* PREDCredential.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDCredential.m; sourceTree = "<group>"; };
+		6A0EFD392B8FE5FE57918F64 /* PREDBaseModel.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDBaseModel.h; sourceTree = "<group>"; };
+		6B1C565EACB54C3D3051A3CC /* PREDLogger.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDLogger.m; sourceTree = "<group>"; };
+		6DE79F71D491821596D9E65C /* PREDTransaction.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDTransaction.h; sourceTree = "<group>"; };
+		6F901331516764F3C79ED4BC /* CrashServiceAPI.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = CrashServiceAPI.md; path = docs/CrashServiceAPI.md; sourceTree = "<group>"; };
+		71EAD15A4E8CB55F2CCE7898 /* PreDemCocoa.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = PreDemCocoa.xcconfig; sourceTree = "<group>"; };
+		7538B50E3CCFF09A4684FA1B /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		78CA1426FA7F3FF2D5420A59 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		796A03F4BF52F3FA310BD019 /* PreDemCocoa.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PreDemCocoa.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7C6CE5F3E31A220FEA29F62B /* PREDPersistence.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDPersistence.m; sourceTree = "<group>"; };
+		7F22B75F45EDA58036EBC1C0 /* PREDNetworkClient.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDNetworkClient.m; sourceTree = "<group>"; };
+		80EB70FEFE7B9DBF6106DCCB /* PREDAppInfo.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDAppInfo.m; sourceTree = "<group>"; };
+		8321B67A443B02D3F4129714 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
+		84A7D408C7487E9D8AFE729C /* Pods-PreDemCocoaTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-PreDemCocoaTests-acknowledgements.plist"; sourceTree = "<group>"; };
+		84BCC38D70390BA16CB7E4EF /* PREDCustomEvent.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDCustomEvent.m; sourceTree = "<group>"; };
+		8884B2B3B41CE50EA6DF01E2 /* PREDManagerPrivate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDManagerPrivate.h; sourceTree = "<group>"; };
+		8913A1F0CAD84E35000A3901 /* Pods-PreDemSwiftDemo.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-PreDemSwiftDemo.modulemap"; sourceTree = "<group>"; };
+		8ABC6670A6E2F397C37D397C /* Pods-PreDemSwiftDemo-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-PreDemSwiftDemo-acknowledgements.plist"; sourceTree = "<group>"; };
+		8BE3D15A9E6143C7FA438317 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8E5C19A219256BE8BAB47D79 /* Pods-PreDemCocoaTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-PreDemCocoaTests.modulemap"; sourceTree = "<group>"; };
+		904C21CB146152B14AA2EC4C /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		90651528563C567F7B1C5850 /* NSObject+Serialization.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "NSObject+Serialization.h"; sourceTree = "<group>"; };
+		9091D953BDF7474C0A60C88E /* Pods_PreDemCocoaTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PreDemCocoaTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		912795200F97ED92B2BE91A6 /* HTTPMonitor.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = HTTPMonitor.md; path = docs/HTTPMonitor.md; sourceTree = "<group>"; };
+		91EAD97B70581EC8E15773E5 /* UICKeyChainStore.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = UICKeyChainStore.h; path = Lib/UICKeyChainStore/UICKeyChainStore.h; sourceTree = "<group>"; };
+		950C5FE27E82F52A6BA6F5D9 /* UICKeyChainStore.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = UICKeyChainStore.modulemap; sourceTree = "<group>"; };
+		950F61EB744340687779F1CD /* UICKeyChainStore.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = UICKeyChainStore.xcconfig; sourceTree = "<group>"; };
+		9C5F20638AA4364115625927 /* PREDDefines.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDDefines.h; sourceTree = "<group>"; };
+		9D2FF3D1C2456A398D883672 /* Pods_PreDemObjcDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PreDemObjcDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A65A0E616EFA8E4A63788BB9 /* PREDCustomEvent.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDCustomEvent.h; sourceTree = "<group>"; };
+		A7ED7B54D7F6BDAAFDD054E7 /* Pods-PreDemCocoaTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-PreDemCocoaTests-acknowledgements.markdown"; sourceTree = "<group>"; };
+		AB37284688E4751C17C07FC2 /* Pods-PreDemObjcDemo-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-PreDemObjcDemo-umbrella.h"; sourceTree = "<group>"; };
+		ABDB0C728E14D1AF98B304B0 /* PreDemCocoa-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "PreDemCocoa-prefix.pch"; sourceTree = "<group>"; };
+		B0DB26B3B1E3A5554FA4678B /* PREDVersion.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDVersion.m; sourceTree = "<group>"; };
+		B2823C08EAF8F8F6A07D7E1B /* Pods-PreDemCocoaTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-PreDemCocoaTests-dummy.m"; sourceTree = "<group>"; };
+		B2ACCDBF604DE4EF9BBC306C /* PREDCredential.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDCredential.h; sourceTree = "<group>"; };
+		B45007152FA568CE0C1532B0 /* PREDBaseModel.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDBaseModel.m; sourceTree = "<group>"; };
+		BA88A82553DCC182F143025E /* PREDHelper.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDHelper.m; sourceTree = "<group>"; };
+		BC32B9064B40BC23732D8BA7 /* PREDSwizzle.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDSwizzle.h; sourceTree = "<group>"; };
+		BD27CA96D5EFF74E40CE340F /* PREDHTTPOperation.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDHTTPOperation.h; sourceTree = "<group>"; };
+		C23673E90B1A05539CA5C5BE /* PREDError.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDError.m; sourceTree = "<group>"; };
+		C42CF2195379B4695D511AEC /* PREDConfigManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDConfigManager.h; sourceTree = "<group>"; };
+		C45CEBF85118D83FF17EF2A1 /* NetDiagnoseAPI.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = NetDiagnoseAPI.md; path = docs/NetDiagnoseAPI.md; sourceTree = "<group>"; };
+		C76DAB427D4336F0DA9F8DE0 /* PREDTransactionPrivate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDTransactionPrivate.h; sourceTree = "<group>"; };
+		CA5AE31F8C64272D24D65985 /* Pods-PreDemCocoaTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-PreDemCocoaTests.debug.xcconfig"; sourceTree = "<group>"; };
+		CAD3604E9D18F7C3EDC9AF83 /* PREDManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDManager.h; sourceTree = "<group>"; };
+		CD27E93622E98338E8AA2917 /* PREDSwizzle.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDSwizzle.m; sourceTree = "<group>"; };
+		D2B42840515AC2F375C1B2CB /* PreDemCocoa.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PreDemCocoa.h; sourceTree = "<group>"; };
+		DAC0BE36F3046D37551332B7 /* PREDConfig.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDConfig.m; sourceTree = "<group>"; };
+		DDC250DDEECE395B065F2C69 /* PREDSender.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDSender.h; sourceTree = "<group>"; };
+		DF02F5DE2C66ADC034C91337 /* UICKeyChainStore-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "UICKeyChainStore-dummy.m"; sourceTree = "<group>"; };
+		E1EC6E532844262483F91104 /* dau.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = dau.md; path = docs/dau.md; sourceTree = "<group>"; };
+		E2D85618F3BEC6DCDB0E7943 /* PREDManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDManager.m; sourceTree = "<group>"; };
+		E583F9518D9CC6665EE3766D /* PREDPersistence.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDPersistence.h; sourceTree = "<group>"; };
+		E67DB623B923144F169B87F6 /* APISpec.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = APISpec.md; path = docs/APISpec.md; sourceTree = "<group>"; };
+		E7258C21F9F4D1846537C1AB /* UICKeyChainStore-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "UICKeyChainStore-umbrella.h"; sourceTree = "<group>"; };
+		EA0FCE1897917507E2199422 /* Pods-PreDemSwiftDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-PreDemSwiftDemo.release.xcconfig"; sourceTree = "<group>"; };
+		EB1EBB7D1615F3600DCD8C26 /* Pods-PreDemSwiftDemo-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-PreDemSwiftDemo-frameworks.sh"; sourceTree = "<group>"; };
+		EC738C5C52AEBC133D799139 /* Version.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; name = Version.plist; path = PreDemCocoa/Resources/Version.plist; sourceTree = "<group>"; };
+		EEB09247B12828FD3450DFE9 /* Pods-PreDemObjcDemo.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-PreDemObjcDemo.modulemap"; sourceTree = "<group>"; };
+		F075721356FC5F304D376C20 /* ResourceBundle-PREDResources-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "ResourceBundle-PREDResources-Info.plist"; sourceTree = "<group>"; };
+		F441C3536D6EA7F14962E40E /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F5AB9CC4B3BD6FA11A189118 /* Pods-PreDemObjcDemo-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-PreDemObjcDemo-frameworks.sh"; sourceTree = "<group>"; };
+		FB8790BB7996C21014F5AEBE /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		FB8CD76DA1503BE0EBA7D626 /* PREDConfigManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDConfigManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		0DE7B84F604E1F7B4F9582A2 /* Frameworks */ = {
+		0D17032E4262D462F51A9A70 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AA44A839C7D8D9A8A09029EF /* Foundation.framework in Frameworks */,
-				41F18ABA49C850A92F040679 /* QNNetDiag.framework in Frameworks */,
-				01CE01141E8FAEA1601827D6 /* UICKeyChainStore.framework in Frameworks */,
+				6075C0683E15567314A82BC3 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		34C2A54F8399AFBFAF6F07B8 /* Frameworks */ = {
+		442F98FC175275C82599BC83 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				49B7B8B4A4AB0BA4BADC9E3E /* Foundation.framework in Frameworks */,
-				557881478DA79CC2A980EE5D /* Security.framework in Frameworks */,
+				37584C0AA1C1B466AB1F74C9 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		65006DA852452CD6C9584EB4 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				8843B2FE19DCF7BBFD168AAA /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		97A80408E853FED9F5DD5E17 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				5A077234A1A540481E6955B6 /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		99C30BEC3AAFB7EF4BAAE7EB /* Frameworks */ = {
+		5D004E626BEC2911C63ADDA3 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		B2C38A97ABD1F0E08D0F364B /* Frameworks */ = {
+		66CACB1FA1EA23565FDB74A4 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5943DDC4A08DF8A57107DE33 /* Foundation.framework in Frameworks */,
+				23A367B88E142F185BC964D1 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C271AC26A794520BE3DB1764 /* Frameworks */ = {
+		B13231B8B72C3D782B753A98 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D97572093FBD6CFCD672021C /* Foundation.framework in Frameworks */,
+				0BEB60A7027B658BB2DDBA0A /* Foundation.framework in Frameworks */,
+				8542864D924D6118969C6671 /* Security.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B6CE72DBBC09935F6974A69F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				23A1497BC1007D65B9C887C0 /* Foundation.framework in Frameworks */,
+				10BEEA5A58F9561FF98EF4D5 /* UICKeyChainStore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		010EC2CD1F1C40EE660C0099 /* Support Files */ = {
+		18C14FFF018887E9C4B3D157 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				C9D8A089BA419305779869BD /* Info.plist */,
-				BAE05087C1AA16236ECD5ABB /* PreDemCocoa.modulemap */,
-				8B070285272D839EB6E76985 /* PreDemCocoa.xcconfig */,
-				5DA2A059DCB0A7FACF89DD1A /* PreDemCocoa-dummy.m */,
-				A440900D16CE66D0675A9D91 /* PreDemCocoa-prefix.pch */,
-				F5E80F288B276CB23B1C8952 /* PreDemCocoa-umbrella.h */,
-				6BCBA751654C7346C509F037 /* ResourceBundle-PREDResources-Info.plist */,
+				908C739D0BA94D4C7F23B1C0 /* UICKeyChainStore */,
 			);
-			name = "Support Files";
-			path = "PreDemCocoaDemo/Pods/Target Support Files/PreDemCocoa";
+			name = Pods;
 			sourceTree = "<group>";
 		};
-		01B76DB5865B4912402D22F1 /* NetDiag */ = {
+		21992DEB12602BEC24425A5B /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				A306CF7C0E4E738B144C897F /* PREDNetDiag.h */,
-				1BC77A466BBD079FAC2A9342 /* PREDNetDiag.m */,
+				E36EBD4B18933996C7D78B43 /* Config */,
+				3C6899168484963B3C5256BC /* Core */,
+				77244332F1F527E6BEA34972 /* Helper */,
+				E48A6D83E66BC5BCD65B6F2D /* Public */,
+				790B9AC5EBC65FA3D3D25A16 /* Resources */,
+				FBE06D8BB23D2DEE73322C83 /* Sender */,
+				C4989DFDB7632275E88C3032 /* Transaction */,
 			);
-			name = NetDiag;
-			path = PreDemCocoa/NetDiag;
+			name = Core;
 			sourceTree = "<group>";
 		};
-		051C54D62521EBA9F33F1A50 /* iOS */ = {
+		27766D323B180A516D71C57A /* Pods-PreDemCocoaTests */ = {
 			isa = PBXGroup;
 			children = (
-				D5DB45CD9CD8734AE12C6B0C /* Foundation.framework */,
-				3EC6ABBB988C5835F7A241AD /* Security.framework */,
-			);
-			name = iOS;
-			sourceTree = "<group>";
-		};
-		09113016E251A37AB49E7789 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				C731D15469C2A089F0D004B9 /* Pods_PreDemCocoaTests.framework */,
-				8E11E36BE012E204FCBBEC40 /* Pods_PreDemObjcDemo.framework */,
-				4F3F7151DF79AA7AAFE61ABE /* Pods_PreDemSwiftDemo.framework */,
-				72B39D6D240EE9D47373F3A4 /* PreDemCocoa.framework */,
-				0D4CAEC0AFF4280465632CD1 /* PREDResources.bundle */,
-				5C7040361811C1799EDF99C7 /* QNNetDiag.framework */,
-				A61D1295972FBFF489E5223D /* UICKeyChainStore.framework */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		1D11ECA76824B9FD0C467914 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				7B2F434067AC168DB704E3A6 /* Version.plist */,
-			);
-			name = Resources;
-			sourceTree = "<group>";
-		};
-		1F565E8E06D789BE6E71A7D2 /* PreDemCocoa */ = {
-			isa = PBXGroup;
-			children = (
-				8E288B2AEC0EBDABEAC7B51A /* Core */,
-				010EC2CD1F1C40EE660C0099 /* Support Files */,
-			);
-			name = PreDemCocoa;
-			path = ../..;
-			sourceTree = "<group>";
-		};
-		3FD154CFC02FB4B728941FDF /* Pods-PreDemCocoaTests */ = {
-			isa = PBXGroup;
-			children = (
-				EE2E0E7DE9443C103C4FD3D3 /* Info.plist */,
-				A238533AE321F23B8A9F1028 /* Pods-PreDemCocoaTests.modulemap */,
-				4FC3778B07725AC4CBF13BDB /* Pods-PreDemCocoaTests-acknowledgements.markdown */,
-				5BDB76AFEA827B346AA1A714 /* Pods-PreDemCocoaTests-acknowledgements.plist */,
-				BFB7FB6BA5F03CE6B35D000F /* Pods-PreDemCocoaTests-dummy.m */,
-				A23A801459B6066B3EB1ABAD /* Pods-PreDemCocoaTests-frameworks.sh */,
-				14281AC8DC36D1E599AF6199 /* Pods-PreDemCocoaTests-resources.sh */,
-				9B03D27100F5342FF0C41E92 /* Pods-PreDemCocoaTests-umbrella.h */,
-				3342B080108E246E03DE41E2 /* Pods-PreDemCocoaTests.debug.xcconfig */,
-				7BA97C75A76F857EF71FB5DA /* Pods-PreDemCocoaTests.release.xcconfig */,
+				7538B50E3CCFF09A4684FA1B /* Info.plist */,
+				8E5C19A219256BE8BAB47D79 /* Pods-PreDemCocoaTests.modulemap */,
+				A7ED7B54D7F6BDAAFDD054E7 /* Pods-PreDemCocoaTests-acknowledgements.markdown */,
+				84A7D408C7487E9D8AFE729C /* Pods-PreDemCocoaTests-acknowledgements.plist */,
+				B2823C08EAF8F8F6A07D7E1B /* Pods-PreDemCocoaTests-dummy.m */,
+				2189C4879F1E20A4D4DA7FEB /* Pods-PreDemCocoaTests-frameworks.sh */,
+				40E4E24291A492A4CA26FCDB /* Pods-PreDemCocoaTests-resources.sh */,
+				18A9013E6843616D8C11C80D /* Pods-PreDemCocoaTests-umbrella.h */,
+				CA5AE31F8C64272D24D65985 /* Pods-PreDemCocoaTests.debug.xcconfig */,
+				05E914F3CA3860527CFA704D /* Pods-PreDemCocoaTests.release.xcconfig */,
 			);
 			name = "Pods-PreDemCocoaTests";
 			path = "Target Support Files/Pods-PreDemCocoaTests";
 			sourceTree = "<group>";
 		};
-		5059374EB27F6F312D2BF157 /* Core */ = {
+		30D16CA82E11505D61D79941 /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				3C5FA57E49A7F4AC843AB430 /* PREDBaseModel.m */,
-				34E0B4BF8F6D9596FC638A3B /* PREDConstants.h */,
-				FEA39C2F3ADEBA484E144B35 /* PREDCustomEvent.m */,
-				DA0E6812BF8FD5D5C3505BEB /* PREDManager.m */,
-				CB889505C2036EA1E79319ED /* PREDManagerPrivate.h */,
-				99607266EB21C44457794C7B /* PREDNetDiagResult.m */,
-				30846E40F81A98ED563F7FB5 /* PREDNetDiagResultPrivate.h */,
+				904C21CB146152B14AA2EC4C /* Info.plist */,
+				5D2EA527B97B3AC42D2368B8 /* PreDemCocoa.modulemap */,
+				71EAD15A4E8CB55F2CCE7898 /* PreDemCocoa.xcconfig */,
+				08CD1A2C88D6A4930BADB2AA /* PreDemCocoa-dummy.m */,
+				ABDB0C728E14D1AF98B304B0 /* PreDemCocoa-prefix.pch */,
+				16A7ACF8F7508102D1D547B6 /* PreDemCocoa-umbrella.h */,
+				F075721356FC5F304D376C20 /* ResourceBundle-PREDResources-Info.plist */,
+			);
+			name = "Support Files";
+			path = "PreDemCocoaDemo/Pods/Target Support Files/PreDemCocoa";
+			sourceTree = "<group>";
+		};
+		363CE0D80546E11F77C03D2C /* PreDemCocoa */ = {
+			isa = PBXGroup;
+			children = (
+				21992DEB12602BEC24425A5B /* Core */,
+				41DB10A9B3586C90BC8DFBA0 /* Pod */,
+				30D16CA82E11505D61D79941 /* Support Files */,
+			);
+			name = PreDemCocoa;
+			path = ../..;
+			sourceTree = "<group>";
+		};
+		3710B3D2A74FE71116A87DD8 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9091D953BDF7474C0A60C88E /* Pods_PreDemCocoaTests.framework */,
+				9D2FF3D1C2456A398D883672 /* Pods_PreDemObjcDemo.framework */,
+				1186A2D3876BE7E8A9D59A5F /* Pods_PreDemSwiftDemo.framework */,
+				796A03F4BF52F3FA310BD019 /* PreDemCocoa.framework */,
+				443F0BC729796B4EBD0F9B97 /* PREDResources.bundle */,
+				28101DFB886CE4648422320B /* UICKeyChainStore.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		3C6899168484963B3C5256BC /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				B45007152FA568CE0C1532B0 /* PREDBaseModel.m */,
+				07B36F6510F51E2519DA4757 /* PREDConstants.h */,
+				84BCC38D70390BA16CB7E4EF /* PREDCustomEvent.m */,
+				E2D85618F3BEC6DCDB0E7943 /* PREDManager.m */,
+				8884B2B3B41CE50EA6DF01E2 /* PREDManagerPrivate.h */,
 			);
 			name = Core;
 			path = PreDemCocoa/Core;
 			sourceTree = "<group>";
 		};
-		57B264A693E9312AB2C69187 /* Pods */ = {
+		41DB10A9B3586C90BC8DFBA0 /* Pod */ = {
 			isa = PBXGroup;
 			children = (
-				CF6EF556F8EA929D7F9AB173 /* QNNetDiag */,
-				634EED19AD28A52E14C3024C /* UICKeyChainStore */,
+				E67DB623B923144F169B87F6 /* APISpec.md */,
+				62B54DD58F1F59768C3E5398 /* cache.md */,
+				6F901331516764F3C79ED4BC /* CrashServiceAPI.md */,
+				E1EC6E532844262483F91104 /* dau.md */,
+				10E6FC077A1BFDCF9DE43895 /* DemoUserGuide.md */,
+				912795200F97ED92B2BE91A6 /* HTTPMonitor.md */,
+				78CA1426FA7F3FF2D5420A59 /* LICENSE */,
+				C45CEBF85118D83FF17EF2A1 /* NetDiagnoseAPI.md */,
+				500AE67D2EE1FDFB6F07442F /* NETPageUseGuide */,
+				45F555A134912C10657AB34F /* PreDemCocoa.podspec */,
+				44A9DF73FC56886789C25CEE /* README.md */,
 			);
-			name = Pods;
+			name = Pod;
 			sourceTree = "<group>";
 		};
-		5D312AE7385CE025DF84FA02 /* Targets Support Files */ = {
+		646A5591003165C0CA37C7D3 /* iOS */ = {
 			isa = PBXGroup;
 			children = (
-				3FD154CFC02FB4B728941FDF /* Pods-PreDemCocoaTests */,
-				D10ECEFE0A224FFBAB05CD8C /* Pods-PreDemObjcDemo */,
-				DD19B7BEAD39A32086C07C8A /* Pods-PreDemSwiftDemo */,
+				3488D17D242E53593CE51F85 /* Foundation.framework */,
+				8321B67A443B02D3F4129714 /* Security.framework */,
 			);
-			name = "Targets Support Files";
+			name = iOS;
 			sourceTree = "<group>";
 		};
-		6306C6D74A05CA7ADF483CC8 /* Support Files */ = {
+		76478EF3EF715F8853486193 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				9914536997C5B1D4CFCEDE1E /* Info.plist */,
-				811F04B3215F2E0BF62E0E89 /* UICKeyChainStore.modulemap */,
-				2112037D2C6BBDE4AC740BB0 /* UICKeyChainStore.xcconfig */,
-				56D2192D9893D962EDFE3705 /* UICKeyChainStore-dummy.m */,
-				AF1EBDD211A9F1D41FD664C0 /* UICKeyChainStore-prefix.pch */,
-				51712D28BB8B556BDF986F0B /* UICKeyChainStore-umbrella.h */,
-			);
-			name = "Support Files";
-			path = "../Target Support Files/UICKeyChainStore";
-			sourceTree = "<group>";
-		};
-		634EED19AD28A52E14C3024C /* UICKeyChainStore */ = {
-			isa = PBXGroup;
-			children = (
-				B539C6934BE0EA543D7BBA4F /* UICKeyChainStore.h */,
-				E5CDFA657FD5C19F315882A9 /* UICKeyChainStore.m */,
-				6306C6D74A05CA7ADF483CC8 /* Support Files */,
-			);
-			name = UICKeyChainStore;
-			path = UICKeyChainStore;
-			sourceTree = "<group>";
-		};
-		639C776B18340A8EE9D5F0B2 /* Sender */ = {
-			isa = PBXGroup;
-			children = (
-				52D343A251732BB295793B60 /* PREDHTTPOperation.h */,
-				50FE46A60DFA69B657E2E2E7 /* PREDHTTPOperation.m */,
-				941FDA395C9DCB640F2C2C25 /* PREDNetworkClient.h */,
-				17781A0DDEF9EA77DE58E1CA /* PREDNetworkClient.m */,
-				4B6B6A84C7EAC0CF192CF454 /* PREDPersistence.h */,
-				81BE0DC1C056DD09C64C8E7F /* PREDPersistence.m */,
-				C3EB8A9286C943BBA3C516CD /* PREDSender.h */,
-				AFF87C9A4BA6E7E1C8CEF9BF /* PREDSender.m */,
-			);
-			name = Sender;
-			path = PreDemCocoa/Sender;
-			sourceTree = "<group>";
-		};
-		6A16438986127076B55A31F1 /* Public */ = {
-			isa = PBXGroup;
-			children = (
-				C893CC59F7C8A91512F93F8E /* PREDBaseModel.h */,
-				190378B15C9730D39485DDFE /* PREDCustomEvent.h */,
-				F126EEE20F03275FB7556478 /* PREDDefines.h */,
-				7E8982CA9E54956AA931DBBA /* PreDemCocoa.h */,
-				EB86D2C53907A760CD270285 /* PREDManager.h */,
-				DED4B90F09A4B5CB5C317A70 /* PREDNetDiagResult.h */,
-				1DC53CDD9412ABD85A2362D5 /* PREDTransaction.h */,
-			);
-			name = Public;
-			path = PreDemCocoa/Public;
-			sourceTree = "<group>";
-		};
-		81276DC9342B374BE1848CE6 /* Config */ = {
-			isa = PBXGroup;
-			children = (
-				DAC3F1A5E4A91F1B85D26318 /* PREDAppInfo.h */,
-				D3B5959EB9AAECAB49F03F02 /* PREDAppInfo.m */,
-				E074D82DCC152C36EF1EFB03 /* PREDConfig.h */,
-				E9848FF4D279FF8AAB76BF6B /* PREDConfig.m */,
-				CCC5321585FC25A4E859A622 /* PREDConfigManager.h */,
-				C2C0FDE78AE1207204D64B52 /* PREDConfigManager.m */,
-			);
-			name = Config;
-			path = PreDemCocoa/Config;
-			sourceTree = "<group>";
-		};
-		8B8884A557BDA6873712A71E /* Development Pods */ = {
-			isa = PBXGroup;
-			children = (
-				1F565E8E06D789BE6E71A7D2 /* PreDemCocoa */,
-			);
-			name = "Development Pods";
-			sourceTree = "<group>";
-		};
-		8E288B2AEC0EBDABEAC7B51A /* Core */ = {
-			isa = PBXGroup;
-			children = (
-				81276DC9342B374BE1848CE6 /* Config */,
-				5059374EB27F6F312D2BF157 /* Core */,
-				F1C0AE9AA5D8F13130F02ED7 /* Helper */,
-				CC409DBA7C6F635D27514ABA /* HttpMonitor */,
-				01B76DB5865B4912402D22F1 /* NetDiag */,
-				6A16438986127076B55A31F1 /* Public */,
-				1D11ECA76824B9FD0C467914 /* Resources */,
-				639C776B18340A8EE9D5F0B2 /* Sender */,
-				944354EDF3717CF701967DF6 /* Transaction */,
-			);
-			name = Core;
-			sourceTree = "<group>";
-		};
-		8F0CCF99309BF419F7D0D193 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				A89804347A4B4E6D73B9BE81 /* QNNetDiag.framework */,
-				7517FF8444F7A6E911EDCAFB /* UICKeyChainStore.framework */,
-				051C54D62521EBA9F33F1A50 /* iOS */,
+				5F0F10A0BC3FAF2BD8595FE6 /* UICKeyChainStore.framework */,
+				646A5591003165C0CA37C7D3 /* iOS */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		944354EDF3717CF701967DF6 /* Transaction */ = {
+		77244332F1F527E6BEA34972 /* Helper */ = {
 			isa = PBXGroup;
 			children = (
-				58660895EE5C673BA4D7234D /* PREDTransaction.m */,
-				283DC5A4DF02BEC21956CE10 /* PREDTransactionPrivate.h */,
-			);
-			name = Transaction;
-			path = PreDemCocoa/Transaction;
-			sourceTree = "<group>";
-		};
-		BE2C64C2FAAAD1D36EF9FD4D = {
-			isa = PBXGroup;
-			children = (
-				DB4F96BD164B81FD260CDCFB /* Podfile */,
-				8B8884A557BDA6873712A71E /* Development Pods */,
-				8F0CCF99309BF419F7D0D193 /* Frameworks */,
-				57B264A693E9312AB2C69187 /* Pods */,
-				09113016E251A37AB49E7789 /* Products */,
-				5D312AE7385CE025DF84FA02 /* Targets Support Files */,
-			);
-			sourceTree = "<group>";
-		};
-		CB101ABD95BC3AA4B50CCB87 /* Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				AE52ACE5C08B76102BF7F333 /* Info.plist */,
-				A0732BE2CE9C9CB54F4370D5 /* QNNetDiag.modulemap */,
-				55E5FB4CFB3D391AA90F62CD /* QNNetDiag.xcconfig */,
-				D38D6C8CE1CDD1E95228B514 /* QNNetDiag-dummy.m */,
-				52367B3B876DCB30DB51F3E0 /* QNNetDiag-prefix.pch */,
-				EE52C268A6C2FF302B80A3B5 /* QNNetDiag-umbrella.h */,
-			);
-			name = "Support Files";
-			path = "../Target Support Files/QNNetDiag";
-			sourceTree = "<group>";
-		};
-		CC409DBA7C6F635D27514ABA /* HttpMonitor */ = {
-			isa = PBXGroup;
-			children = (
-				5922FEEE6331BC3A3A6893D5 /* PREDHTTPMonitorModel.h */,
-				7EB2E1A0A1A3DC9C1AB0177D /* PREDHTTPMonitorModel.m */,
-				A2119FDD2A6FD14C6B7D95BF /* PREDURLProtocol.h */,
-				D73A350E0C9339767CE9F74B /* PREDURLProtocol.m */,
-				CAABF4A7BFC9353605B0CB65 /* PREDURLSessionSwizzler.h */,
-				747BD70BD123E1E7A5570DE6 /* PREDURLSessionSwizzler.m */,
-			);
-			name = HttpMonitor;
-			path = PreDemCocoa/HttpMonitor;
-			sourceTree = "<group>";
-		};
-		CF6EF556F8EA929D7F9AB173 /* QNNetDiag */ = {
-			isa = PBXGroup;
-			children = (
-				D3F91C80D0834861B27DD3E9 /* QNNetDiag.h */,
-				D9D34D23905703F371AEC3FC /* QNNExternalIp.h */,
-				24268197908C2C2B3E7C94B4 /* QNNExternalIp.m */,
-				D07F95445222DFD1ED5DAF51 /* QNNHttp.h */,
-				07BF154A4E4A7435B1F2EA1F /* QNNHttp.m */,
-				9791844A2EB1A4281466B069 /* QNNNslookup.h */,
-				78FCC7C26A5C7FB0045D57F3 /* QNNNslookup.m */,
-				BD1F8B728F4C9443818AACFD /* QNNPing.h */,
-				50F4310EBE8F679C7EAE5725 /* QNNPing.m */,
-				C4C5A677E630B8E0084E809C /* QNNProtocols.h */,
-				0B86C99DD6EFDD63D37FF132 /* QNNQue.h */,
-				5B9C8779AFDC35D8362FD846 /* QNNQue.m */,
-				DBF4373619E538B7DEAE68E7 /* QNNRtmp.h */,
-				1B154DAD22BEEA742914967F /* QNNRtmp.m */,
-				B015656BE1637225605C7813 /* QNNTcpPing.h */,
-				CBA9633DFFBB7F28982B7BB5 /* QNNTcpPing.m */,
-				F965C4AE62960B27CF9AB63D /* QNNTraceRoute.h */,
-				6EA145ED0657B888D2CA0F18 /* QNNTraceRoute.m */,
-				A62BD4552B13C9CCB9D997E9 /* QNNUtil.h */,
-				3DC2AE222946E400DDB12944 /* QNNUtil.m */,
-				CB101ABD95BC3AA4B50CCB87 /* Support Files */,
-			);
-			name = QNNetDiag;
-			path = QNNetDiag;
-			sourceTree = "<group>";
-		};
-		D10ECEFE0A224FFBAB05CD8C /* Pods-PreDemObjcDemo */ = {
-			isa = PBXGroup;
-			children = (
-				43E9B721FED5F4FB6C0B8A15 /* Info.plist */,
-				844DA89794ED55C45600A1AA /* Pods-PreDemObjcDemo.modulemap */,
-				963F681293313E7E39EFF22C /* Pods-PreDemObjcDemo-acknowledgements.markdown */,
-				3C75ED7BFD08C7CE0C68CCB5 /* Pods-PreDemObjcDemo-acknowledgements.plist */,
-				C07384CE887CBAE0210ED8F6 /* Pods-PreDemObjcDemo-dummy.m */,
-				C98FE3CA8C08179ADC9F8995 /* Pods-PreDemObjcDemo-frameworks.sh */,
-				F739B55A753994D551F60176 /* Pods-PreDemObjcDemo-resources.sh */,
-				90F65D318D3950AF3E7989A2 /* Pods-PreDemObjcDemo-umbrella.h */,
-				608E1CB0E31A22CDBF0E6221 /* Pods-PreDemObjcDemo.debug.xcconfig */,
-				05FFBF158FE9D63D68914062 /* Pods-PreDemObjcDemo.release.xcconfig */,
-			);
-			name = "Pods-PreDemObjcDemo";
-			path = "Target Support Files/Pods-PreDemObjcDemo";
-			sourceTree = "<group>";
-		};
-		DD19B7BEAD39A32086C07C8A /* Pods-PreDemSwiftDemo */ = {
-			isa = PBXGroup;
-			children = (
-				92A9F9294524DC5B9E2C8AEB /* Info.plist */,
-				BE53B0178D163B2F7BD40AB2 /* Pods-PreDemSwiftDemo.modulemap */,
-				43ED7BDC5D9AF34D03586E12 /* Pods-PreDemSwiftDemo-acknowledgements.markdown */,
-				556C7652C69BAF92BB374584 /* Pods-PreDemSwiftDemo-acknowledgements.plist */,
-				10DF7CDC34E18F60091D8387 /* Pods-PreDemSwiftDemo-dummy.m */,
-				5E0A3E7F9A063F69F4D0438E /* Pods-PreDemSwiftDemo-frameworks.sh */,
-				6C6F71FF7536B035287050A5 /* Pods-PreDemSwiftDemo-resources.sh */,
-				C515436AD1BA7A85A1E008BF /* Pods-PreDemSwiftDemo-umbrella.h */,
-				E503CD9C4730A9CF667271A1 /* Pods-PreDemSwiftDemo.debug.xcconfig */,
-				1A744F4760811EB65267DB4E /* Pods-PreDemSwiftDemo.release.xcconfig */,
-			);
-			name = "Pods-PreDemSwiftDemo";
-			path = "Target Support Files/Pods-PreDemSwiftDemo";
-			sourceTree = "<group>";
-		};
-		F1C0AE9AA5D8F13130F02ED7 /* Helper */ = {
-			isa = PBXGroup;
-			children = (
-				BEF4EF8CFAEDBB5CD16D9089 /* NSObject+Serialization.h */,
-				93D761AE51B5370C49364A72 /* NSObject+Serialization.m */,
-				30A6A22F2DAFDCA1AD8B9F5C /* PREDCredential.h */,
-				1FAA23A397495A31E9BE85D8 /* PREDCredential.m */,
-				155AB26A8FF5C0FEEC21C462 /* PREDError.h */,
-				01D171909D5F402124556454 /* PREDError.m */,
-				070C11D789C2C21F6EF5BF49 /* PREDHelper.h */,
-				9E2B0C847DA55496E3FAC258 /* PREDHelper.m */,
-				A8A1A88131B35435D35461AD /* PREDLogger.h */,
-				3B86E30751A0F4DB372C037F /* PREDLogger.m */,
-				181244F3DAFCCF739DC0D00D /* PREDSwizzle.h */,
-				9AA033868C1BC803FF0AAB57 /* PREDSwizzle.m */,
-				293B685C7B1CE078B22E0F6E /* PREDVersion.h */,
-				D3AA70E31CBBC30C3FB8B593 /* PREDVersion.m */,
+				90651528563C567F7B1C5850 /* NSObject+Serialization.h */,
+				1CB0C2CF3028023EA1A77CF5 /* NSObject+Serialization.m */,
+				B2ACCDBF604DE4EF9BBC306C /* PREDCredential.h */,
+				64A05A3C68172059A0619115 /* PREDCredential.m */,
+				1F5A29BF58A4BEDF6DE0C540 /* PREDError.h */,
+				C23673E90B1A05539CA5C5BE /* PREDError.m */,
+				3F58932C87E0AE970A1AC912 /* PREDHelper.h */,
+				BA88A82553DCC182F143025E /* PREDHelper.m */,
+				3D21518C1E4F791FFA000FC9 /* PREDLogger.h */,
+				6B1C565EACB54C3D3051A3CC /* PREDLogger.m */,
+				BC32B9064B40BC23732D8BA7 /* PREDSwizzle.h */,
+				CD27E93622E98338E8AA2917 /* PREDSwizzle.m */,
+				0820670FB5F103559A935442 /* PREDVersion.h */,
+				B0DB26B3B1E3A5554FA4678B /* PREDVersion.m */,
 			);
 			name = Helper;
 			path = PreDemCocoa/Helper;
 			sourceTree = "<group>";
 		};
+		790B9AC5EBC65FA3D3D25A16 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				EC738C5C52AEBC133D799139 /* Version.plist */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		843CF5CBEFFC75C3EA02A346 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				8BE3D15A9E6143C7FA438317 /* Info.plist */,
+				950C5FE27E82F52A6BA6F5D9 /* UICKeyChainStore.modulemap */,
+				950F61EB744340687779F1CD /* UICKeyChainStore.xcconfig */,
+				DF02F5DE2C66ADC034C91337 /* UICKeyChainStore-dummy.m */,
+				3E2AF2A5CDCC295F2737A7AE /* UICKeyChainStore-prefix.pch */,
+				E7258C21F9F4D1846537C1AB /* UICKeyChainStore-umbrella.h */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/UICKeyChainStore";
+			sourceTree = "<group>";
+		};
+		85E5F1D936C1445B297492E8 /* Pods-PreDemObjcDemo */ = {
+			isa = PBXGroup;
+			children = (
+				072569E53A5CACA767F28FDD /* Info.plist */,
+				EEB09247B12828FD3450DFE9 /* Pods-PreDemObjcDemo.modulemap */,
+				61CAEE6C01A7D6BB07C41599 /* Pods-PreDemObjcDemo-acknowledgements.markdown */,
+				1020348FF42A4E4E94C3B13D /* Pods-PreDemObjcDemo-acknowledgements.plist */,
+				149C6DFE615CB246747A8905 /* Pods-PreDemObjcDemo-dummy.m */,
+				F5AB9CC4B3BD6FA11A189118 /* Pods-PreDemObjcDemo-frameworks.sh */,
+				09F83A4BE682BDE0390415F5 /* Pods-PreDemObjcDemo-resources.sh */,
+				AB37284688E4751C17C07FC2 /* Pods-PreDemObjcDemo-umbrella.h */,
+				57DCAB0125F9840E8630551A /* Pods-PreDemObjcDemo.debug.xcconfig */,
+				14A2A1B6FBD6A78C2E4B96D4 /* Pods-PreDemObjcDemo.release.xcconfig */,
+			);
+			name = "Pods-PreDemObjcDemo";
+			path = "Target Support Files/Pods-PreDemObjcDemo";
+			sourceTree = "<group>";
+		};
+		908C739D0BA94D4C7F23B1C0 /* UICKeyChainStore */ = {
+			isa = PBXGroup;
+			children = (
+				91EAD97B70581EC8E15773E5 /* UICKeyChainStore.h */,
+				03061145453A4DBEE2C3900E /* UICKeyChainStore.m */,
+				843CF5CBEFFC75C3EA02A346 /* Support Files */,
+			);
+			path = UICKeyChainStore;
+			sourceTree = "<group>";
+		};
+		B6A98EEF203CAF36ECBA9E8D /* Development Pods */ = {
+			isa = PBXGroup;
+			children = (
+				363CE0D80546E11F77C03D2C /* PreDemCocoa */,
+			);
+			name = "Development Pods";
+			sourceTree = "<group>";
+		};
+		C4989DFDB7632275E88C3032 /* Transaction */ = {
+			isa = PBXGroup;
+			children = (
+				31F50E8DB952AC730D540D10 /* PREDTransaction.m */,
+				C76DAB427D4336F0DA9F8DE0 /* PREDTransactionPrivate.h */,
+			);
+			name = Transaction;
+			path = PreDemCocoa/Transaction;
+			sourceTree = "<group>";
+		};
+		DBFD46663B361700553B914C = {
+			isa = PBXGroup;
+			children = (
+				FB8790BB7996C21014F5AEBE /* Podfile */,
+				B6A98EEF203CAF36ECBA9E8D /* Development Pods */,
+				76478EF3EF715F8853486193 /* Frameworks */,
+				18C14FFF018887E9C4B3D157 /* Pods */,
+				3710B3D2A74FE71116A87DD8 /* Products */,
+				FE88F87BDF99E56CA4FA717A /* Targets Support Files */,
+			);
+			sourceTree = "<group>";
+		};
+		E36EBD4B18933996C7D78B43 /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				1AD50EC66F6B01FC00B975AF /* PREDAppInfo.h */,
+				80EB70FEFE7B9DBF6106DCCB /* PREDAppInfo.m */,
+				22B3C750667B828003925957 /* PREDConfig.h */,
+				DAC0BE36F3046D37551332B7 /* PREDConfig.m */,
+				C42CF2195379B4695D511AEC /* PREDConfigManager.h */,
+				FB8CD76DA1503BE0EBA7D626 /* PREDConfigManager.m */,
+			);
+			name = Config;
+			path = PreDemCocoa/Config;
+			sourceTree = "<group>";
+		};
+		E48A6D83E66BC5BCD65B6F2D /* Public */ = {
+			isa = PBXGroup;
+			children = (
+				6A0EFD392B8FE5FE57918F64 /* PREDBaseModel.h */,
+				A65A0E616EFA8E4A63788BB9 /* PREDCustomEvent.h */,
+				9C5F20638AA4364115625927 /* PREDDefines.h */,
+				D2B42840515AC2F375C1B2CB /* PreDemCocoa.h */,
+				CAD3604E9D18F7C3EDC9AF83 /* PREDManager.h */,
+				6DE79F71D491821596D9E65C /* PREDTransaction.h */,
+			);
+			name = Public;
+			path = PreDemCocoa/Public;
+			sourceTree = "<group>";
+		};
+		EE7A96F7833498AC914FF7B0 /* Pods-PreDemSwiftDemo */ = {
+			isa = PBXGroup;
+			children = (
+				F441C3536D6EA7F14962E40E /* Info.plist */,
+				8913A1F0CAD84E35000A3901 /* Pods-PreDemSwiftDemo.modulemap */,
+				3D25BF6747B1D12E0AC7C172 /* Pods-PreDemSwiftDemo-acknowledgements.markdown */,
+				8ABC6670A6E2F397C37D397C /* Pods-PreDemSwiftDemo-acknowledgements.plist */,
+				2A2CDF67DD03EF3BAA35B7F3 /* Pods-PreDemSwiftDemo-dummy.m */,
+				EB1EBB7D1615F3600DCD8C26 /* Pods-PreDemSwiftDemo-frameworks.sh */,
+				25F12C398DE5AB222F0D3469 /* Pods-PreDemSwiftDemo-resources.sh */,
+				6449DC5DE46852835902557E /* Pods-PreDemSwiftDemo-umbrella.h */,
+				502BB33FA35A8D65A4F74A83 /* Pods-PreDemSwiftDemo.debug.xcconfig */,
+				EA0FCE1897917507E2199422 /* Pods-PreDemSwiftDemo.release.xcconfig */,
+			);
+			name = "Pods-PreDemSwiftDemo";
+			path = "Target Support Files/Pods-PreDemSwiftDemo";
+			sourceTree = "<group>";
+		};
+		FBE06D8BB23D2DEE73322C83 /* Sender */ = {
+			isa = PBXGroup;
+			children = (
+				BD27CA96D5EFF74E40CE340F /* PREDHTTPOperation.h */,
+				278B1E39D1888185CB964FEB /* PREDHTTPOperation.m */,
+				4B3F445C8C6B730F82B6487F /* PREDNetworkClient.h */,
+				7F22B75F45EDA58036EBC1C0 /* PREDNetworkClient.m */,
+				E583F9518D9CC6665EE3766D /* PREDPersistence.h */,
+				7C6CE5F3E31A220FEA29F62B /* PREDPersistence.m */,
+				DDC250DDEECE395B065F2C69 /* PREDSender.h */,
+				260382522769B18B7F569315 /* PREDSender.m */,
+			);
+			name = Sender;
+			path = PreDemCocoa/Sender;
+			sourceTree = "<group>";
+		};
+		FE88F87BDF99E56CA4FA717A /* Targets Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				27766D323B180A516D71C57A /* Pods-PreDemCocoaTests */,
+				85E5F1D936C1445B297492E8 /* Pods-PreDemObjcDemo */,
+				EE7A96F7833498AC914FF7B0 /* Pods-PreDemSwiftDemo */,
+			);
+			name = "Targets Support Files";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		021FE69208BABA1FAC2788F7 /* Headers */ = {
+		6A5223690321E56F7D05AFFC /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				177A31C9933DA1D4B22EA42A /* Pods-PreDemCocoaTests-umbrella.h in Headers */,
+				F45D6B0D743C515ACC84B4CF /* Pods-PreDemObjcDemo-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		02342925D5C79D2CB85B2CDF /* Headers */ = {
+		78C427FA9BD8F64C8614855A /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				76757F20FB4D25933241CDF8 /* Pods-PreDemObjcDemo-umbrella.h in Headers */,
+				B829E073BD6B9D5623469E05 /* Pods-PreDemSwiftDemo-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		0EEC8CA1B1D8F4AC2B12768B /* Headers */ = {
+		983C9FADE016A0DC4FD45DED /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4213B4C316D8418A7348B1DE /* NSObject+Serialization.h in Headers */,
-				0AE6CF5F52CC2EF70D2D4D1F /* PREDAppInfo.h in Headers */,
-				AAEC84A2A140FADA95003435 /* PREDBaseModel.h in Headers */,
-				F549B14407FEF00984A20C23 /* PREDConfig.h in Headers */,
-				999B8C7F62A4B111CB576F42 /* PREDConfigManager.h in Headers */,
-				35F8409C9912D8B347225659 /* PREDConstants.h in Headers */,
-				6BBCC787237423B86442961F /* PREDCredential.h in Headers */,
-				FF0810D239EF586B97A38B4A /* PREDCustomEvent.h in Headers */,
-				FB1B650D0B93BCF10C754776 /* PREDDefines.h in Headers */,
-				86B938CF5FA28818AE4F9030 /* PreDemCocoa-umbrella.h in Headers */,
-				E8A42EB34E3AE55BFB9A37E1 /* PreDemCocoa.h in Headers */,
-				F7D28C14951C634C92CE849E /* PREDError.h in Headers */,
-				EECE4165FCDBEDF162651BDB /* PREDHelper.h in Headers */,
-				CE573CA0B33A9F5C7D81BD58 /* PREDHTTPMonitorModel.h in Headers */,
-				62F765CC034CD133875333AA /* PREDHTTPOperation.h in Headers */,
-				665AE746317DF7EC8EB119A8 /* PREDLogger.h in Headers */,
-				D96043654A8519E7FEC26F8C /* PREDManager.h in Headers */,
-				5CF9D586A11EE8BDBBE01DAB /* PREDManagerPrivate.h in Headers */,
-				08F9DEAFE2813837B1AB5727 /* PREDNetDiag.h in Headers */,
-				79CB8D43ACA0C4191D0805B8 /* PREDNetDiagResult.h in Headers */,
-				5EA361F7D100C4740FC76A4B /* PREDNetDiagResultPrivate.h in Headers */,
-				725B0E895D619F5B12552B8D /* PREDNetworkClient.h in Headers */,
-				4DCA87FBA6102FE0EF31744D /* PREDPersistence.h in Headers */,
-				2DF00D991BAFFF7DB53A6EEE /* PREDSender.h in Headers */,
-				9C3B0B7F91B4DB9C8C75C297 /* PREDSwizzle.h in Headers */,
-				DB8E0E4D822A8B9390E8A6AD /* PREDTransaction.h in Headers */,
-				3882159F09D4A6E2202D1C6D /* PREDTransactionPrivate.h in Headers */,
-				B0BBDBCEA7B33971FBCECB34 /* PREDURLProtocol.h in Headers */,
-				644B22759AE4D8A0BDD5FA6D /* PREDURLSessionSwizzler.h in Headers */,
-				C44D0F245B9EA773EB1A2C21 /* PREDVersion.h in Headers */,
+				EE5730FA6BC4DDC153B31763 /* Pods-PreDemCocoaTests-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		2E546A2664CC70FB5F0E92BC /* Headers */ = {
+		A601D9A21CB7E5F270417859 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E50F419BB92B3D98CC21554B /* QNNetDiag-umbrella.h in Headers */,
-				DC087B88B63270619BBCBB33 /* QNNetDiag.h in Headers */,
-				DD7ED81B0A42791AC30554BE /* QNNExternalIp.h in Headers */,
-				D2433CD1F66DF61CCE03B217 /* QNNHttp.h in Headers */,
-				936CB45EB262AA3B1EF8E85B /* QNNNslookup.h in Headers */,
-				E29C5BFFC4842E8F12F46DD9 /* QNNPing.h in Headers */,
-				1FF45D3943E565C61FAC62D8 /* QNNProtocols.h in Headers */,
-				C79067D06976310635F1FAC5 /* QNNQue.h in Headers */,
-				8B0CBC24E475A3A3D499ED37 /* QNNRtmp.h in Headers */,
-				974ACF8C1D05D232DFEE59AF /* QNNTcpPing.h in Headers */,
-				C0759AC2FD1EE126CBA88742 /* QNNTraceRoute.h in Headers */,
-				7A487FA6AA1C12B4EC34DA69 /* QNNUtil.h in Headers */,
+				927716C22B1A9AFC6360786F /* NSObject+Serialization.h in Headers */,
+				D0F17D201DAEFA2699953591 /* PREDAppInfo.h in Headers */,
+				55FD2ECEB32A3DA046E09829 /* PREDBaseModel.h in Headers */,
+				DD36ACBA2A62F7CB2E33B6BF /* PREDConfig.h in Headers */,
+				A302CF8193673E3A88CD2645 /* PREDConfigManager.h in Headers */,
+				E1E40EC0FF1314086B67B709 /* PREDConstants.h in Headers */,
+				724BDA23423F3DCB51C50455 /* PREDCredential.h in Headers */,
+				EBDAF090BDEBF999F8707F95 /* PREDCustomEvent.h in Headers */,
+				B9EDECB9D6335F1DEB5B517A /* PREDDefines.h in Headers */,
+				B3120C137B5873DD4B8E73E7 /* PreDemCocoa-umbrella.h in Headers */,
+				E4FDF80BAED5295B6ED6E864 /* PreDemCocoa.h in Headers */,
+				9CD7C71526321C4D18B177C5 /* PREDError.h in Headers */,
+				6A14A7FE14C44A44E06EBB76 /* PREDHelper.h in Headers */,
+				2E4EBE84FFF8A7E6869CEC95 /* PREDHTTPOperation.h in Headers */,
+				9B28B6584FA4454C92C7536B /* PREDLogger.h in Headers */,
+				58F8F0433919A6B8D46A4EDD /* PREDManager.h in Headers */,
+				E32E28E7D2D9EC25494838B8 /* PREDManagerPrivate.h in Headers */,
+				42144B50B41607F66CCB3025 /* PREDNetworkClient.h in Headers */,
+				4B72E8E6AC8C00352A0585CD /* PREDPersistence.h in Headers */,
+				7EF45A8E98D3559D114EF360 /* PREDSender.h in Headers */,
+				3051758797D44E0AA6B6BD27 /* PREDSwizzle.h in Headers */,
+				C061588FEB20CDF8448E3A67 /* PREDTransaction.h in Headers */,
+				60E5950BFD626EA8672141CB /* PREDTransactionPrivate.h in Headers */,
+				D406EB0527572DF052B5C80D /* PREDVersion.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		BE7A22AD2490E1C6585997BC /* Headers */ = {
+		D42733EFD09CEAF8FE8E50DE /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AF51A5843C5AEF7CF77D7F02 /* UICKeyChainStore-umbrella.h in Headers */,
-				A105E6508D76C9AE186949A5 /* UICKeyChainStore.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		DD6002BFA092369DCED1120C /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C2F9684983661C241A566BB2 /* Pods-PreDemSwiftDemo-umbrella.h in Headers */,
+				A22929087A6469172715ED11 /* UICKeyChainStore-umbrella.h in Headers */,
+				E0A2D0D155DEEA5B8C5B3063 /* UICKeyChainStore.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		42405BC2517E1CBF87DD4E25 /* PreDemCocoa */ = {
+		22F51DC32EF9208547135676 /* PreDemCocoa */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 905C5A4C20EE5EBAAA954ADC /* Build configuration list for PBXNativeTarget "PreDemCocoa" */;
+			buildConfigurationList = 2B1E4236C1C530ECAE56A9A7 /* Build configuration list for PBXNativeTarget "PreDemCocoa" */;
 			buildPhases = (
-				AFDD250793F8CA69CC334BFB /* Sources */,
-				0DE7B84F604E1F7B4F9582A2 /* Frameworks */,
-				9260AC728AA793F77ADF3368 /* Resources */,
-				0EEC8CA1B1D8F4AC2B12768B /* Headers */,
+				F6BA0B9148B1C4AA70CDB410 /* Sources */,
+				B6CE72DBBC09935F6974A69F /* Frameworks */,
+				9D82D90AC88E7B58FBAEABB9 /* Resources */,
+				A601D9A21CB7E5F270417859 /* Headers */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				5C1FE754763C8C0A052DC82F /* PBXTargetDependency */,
-				D70D6F1621FA1999BE102E10 /* PBXTargetDependency */,
-				B33F8765F07998D6D8F110E8 /* PBXTargetDependency */,
+				2D1A9CAC5F4EBE41E0CC556E /* PBXTargetDependency */,
+				264EE333AF202AFE0C75146D /* PBXTargetDependency */,
 			);
 			name = PreDemCocoa;
 			productName = PreDemCocoa;
-			productReference = 72B39D6D240EE9D47373F3A4 /* PreDemCocoa.framework */;
+			productReference = 796A03F4BF52F3FA310BD019 /* PreDemCocoa.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		5246B06484A9074C359D1A36 /* Pods-PreDemCocoaTests */ = {
+		4048671F849B87005E409050 /* Pods-PreDemObjcDemo */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = EAD8E4122F04F210AD2E3CFD /* Build configuration list for PBXNativeTarget "Pods-PreDemCocoaTests" */;
+			buildConfigurationList = D00E47CE0DEB833C73CB9550 /* Build configuration list for PBXNativeTarget "Pods-PreDemObjcDemo" */;
 			buildPhases = (
-				CA7E879EC4334D285262BC84 /* Sources */,
-				97A80408E853FED9F5DD5E17 /* Frameworks */,
-				021FE69208BABA1FAC2788F7 /* Headers */,
+				A9CF62CD43FFC367EA0BA833 /* Sources */,
+				0D17032E4262D462F51A9A70 /* Frameworks */,
+				6A5223690321E56F7D05AFFC /* Headers */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				44EC1D78469197950D6EE004 /* PBXTargetDependency */,
-				D7D824153CFC23508C97D6F3 /* PBXTargetDependency */,
-				6369FB3903200ADB0F14EE62 /* PBXTargetDependency */,
-			);
-			name = "Pods-PreDemCocoaTests";
-			productName = "Pods-PreDemCocoaTests";
-			productReference = C731D15469C2A089F0D004B9 /* Pods_PreDemCocoaTests.framework */;
-			productType = "com.apple.product-type.framework";
-		};
-		74E9C30C390B7A0860EDEB1C /* Pods-PreDemSwiftDemo */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = E2F78452365D8020AAD63FE3 /* Build configuration list for PBXNativeTarget "Pods-PreDemSwiftDemo" */;
-			buildPhases = (
-				64AC8B7153074BCBF4AA099B /* Sources */,
-				B2C38A97ABD1F0E08D0F364B /* Frameworks */,
-				DD6002BFA092369DCED1120C /* Headers */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				DD7229C2C50BB1EEC759DCD6 /* PBXTargetDependency */,
-				96F888D01B163E47A1878E85 /* PBXTargetDependency */,
-				35EB995937E9EBCB6324F384 /* PBXTargetDependency */,
-			);
-			name = "Pods-PreDemSwiftDemo";
-			productName = "Pods-PreDemSwiftDemo";
-			productReference = 4F3F7151DF79AA7AAFE61ABE /* Pods_PreDemSwiftDemo.framework */;
-			productType = "com.apple.product-type.framework";
-		};
-		80CE941B0BF6CE0DA237A308 /* PreDemCocoa-PREDResources */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 6E35D48644B1ACB7B061891F /* Build configuration list for PBXNativeTarget "PreDemCocoa-PREDResources" */;
-			buildPhases = (
-				960161194CA5C161ABE1AAA5 /* Sources */,
-				99C30BEC3AAFB7EF4BAAE7EB /* Frameworks */,
-				28C8AD5684E3B0E58200E2CA /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "PreDemCocoa-PREDResources";
-			productName = "PreDemCocoa-PREDResources";
-			productReference = 0D4CAEC0AFF4280465632CD1 /* PREDResources.bundle */;
-			productType = "com.apple.product-type.bundle";
-		};
-		89F4F4AE311CB28B53B49361 /* Pods-PreDemObjcDemo */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = D9A20E04107E8C98DA8CF1CE /* Build configuration list for PBXNativeTarget "Pods-PreDemObjcDemo" */;
-			buildPhases = (
-				C826EE618B38421969653DA1 /* Sources */,
-				65006DA852452CD6C9584EB4 /* Frameworks */,
-				02342925D5C79D2CB85B2CDF /* Headers */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				97AB511F5738A7E5C5FFF0E7 /* PBXTargetDependency */,
-				E3E1B81AB273A542657D993A /* PBXTargetDependency */,
-				F22251F128979EC0547824EB /* PBXTargetDependency */,
+				A33BE9473CCB06C784956B3F /* PBXTargetDependency */,
+				E3AA638F7F35DE105E413EEC /* PBXTargetDependency */,
 			);
 			name = "Pods-PreDemObjcDemo";
 			productName = "Pods-PreDemObjcDemo";
-			productReference = 8E11E36BE012E204FCBBEC40 /* Pods_PreDemObjcDemo.framework */;
+			productReference = 9D2FF3D1C2456A398D883672 /* Pods_PreDemObjcDemo.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		944F820C28A8D1B53D6596A9 /* UICKeyChainStore */ = {
+		7913CFA825A7B250238DFA1B /* UICKeyChainStore */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D651C1DC698D58EC5907B920 /* Build configuration list for PBXNativeTarget "UICKeyChainStore" */;
+			buildConfigurationList = E7B538966D1B70CA646BF307 /* Build configuration list for PBXNativeTarget "UICKeyChainStore" */;
 			buildPhases = (
-				924F0D915685CD5A9EA2B19F /* Sources */,
-				34C2A54F8399AFBFAF6F07B8 /* Frameworks */,
-				BE7A22AD2490E1C6585997BC /* Headers */,
+				247044AF972F097D7109B3D1 /* Sources */,
+				B13231B8B72C3D782B753A98 /* Frameworks */,
+				D42733EFD09CEAF8FE8E50DE /* Headers */,
 			);
 			buildRules = (
 			);
@@ -960,247 +719,270 @@
 			);
 			name = UICKeyChainStore;
 			productName = UICKeyChainStore;
-			productReference = A61D1295972FBFF489E5223D /* UICKeyChainStore.framework */;
+			productReference = 28101DFB886CE4648422320B /* UICKeyChainStore.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		D9595861D7710F5C6CFADFC7 /* QNNetDiag */ = {
+		8E37AEB94AA3540F81B3CABC /* PreDemCocoa-PREDResources */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 9EC20A4A42B206596B409AE0 /* Build configuration list for PBXNativeTarget "QNNetDiag" */;
+			buildConfigurationList = EB6166F6F683E5A9CEF708D8 /* Build configuration list for PBXNativeTarget "PreDemCocoa-PREDResources" */;
 			buildPhases = (
-				E069BAA56697B5E53ABE38E0 /* Sources */,
-				C271AC26A794520BE3DB1764 /* Frameworks */,
-				2E546A2664CC70FB5F0E92BC /* Headers */,
+				DA16DCA23DFC1A5C9FF1596A /* Sources */,
+				5D004E626BEC2911C63ADDA3 /* Frameworks */,
+				429CDD97D5FF6C421F7F2CBA /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = QNNetDiag;
-			productName = QNNetDiag;
-			productReference = 5C7040361811C1799EDF99C7 /* QNNetDiag.framework */;
+			name = "PreDemCocoa-PREDResources";
+			productName = "PreDemCocoa-PREDResources";
+			productReference = 443F0BC729796B4EBD0F9B97 /* PREDResources.bundle */;
+			productType = "com.apple.product-type.bundle";
+		};
+		DEFFD3EF7F7B2B5E59DDD713 /* Pods-PreDemCocoaTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FCA8D7C4C84CED9233469999 /* Build configuration list for PBXNativeTarget "Pods-PreDemCocoaTests" */;
+			buildPhases = (
+				2D74F63FF7B09CC24B2B05A1 /* Sources */,
+				66CACB1FA1EA23565FDB74A4 /* Frameworks */,
+				983C9FADE016A0DC4FD45DED /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				0DA2BB5C1CF4111B233CE0F1 /* PBXTargetDependency */,
+				FBA5A33A26FF6033D04FE3D2 /* PBXTargetDependency */,
+			);
+			name = "Pods-PreDemCocoaTests";
+			productName = "Pods-PreDemCocoaTests";
+			productReference = 9091D953BDF7474C0A60C88E /* Pods_PreDemCocoaTests.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		EA2B0325F2FCA10F264526CF /* Pods-PreDemSwiftDemo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6C87EDB54F606272836FBD6A /* Build configuration list for PBXNativeTarget "Pods-PreDemSwiftDemo" */;
+			buildPhases = (
+				261EC30BE9DC2D59CDE85FF6 /* Sources */,
+				442F98FC175275C82599BC83 /* Frameworks */,
+				78C427FA9BD8F64C8614855A /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				BF5F0DF542E899B71E996A84 /* PBXTargetDependency */,
+				1B965C7CD1D94C66852B9F56 /* PBXTargetDependency */,
+			);
+			name = "Pods-PreDemSwiftDemo";
+			productName = "Pods-PreDemSwiftDemo";
+			productReference = 1186A2D3876BE7E8A9D59A5F /* Pods_PreDemSwiftDemo.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		4713B741753DB1BCAFEAB456 /* Project object */ = {
+		E068CFD1897B7CC1B12540EB /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0830;
-				LastUpgradeCheck = 0700;
+				LastSwiftUpdateCheck = 0930;
+				LastUpgradeCheck = 0930;
 			};
-			buildConfigurationList = C6EC73E0B74726714370FBD2 /* Build configuration list for PBXProject "Pods" */;
+			buildConfigurationList = 5A68EF71C1DD2B0E10CD9781 /* Build configuration list for PBXProject "Pods" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 			);
-			mainGroup = BE2C64C2FAAAD1D36EF9FD4D;
-			productRefGroup = 09113016E251A37AB49E7789 /* Products */;
+			mainGroup = DBFD46663B361700553B914C;
+			productRefGroup = 3710B3D2A74FE71116A87DD8 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				5246B06484A9074C359D1A36 /* Pods-PreDemCocoaTests */,
-				89F4F4AE311CB28B53B49361 /* Pods-PreDemObjcDemo */,
-				74E9C30C390B7A0860EDEB1C /* Pods-PreDemSwiftDemo */,
-				42405BC2517E1CBF87DD4E25 /* PreDemCocoa */,
-				80CE941B0BF6CE0DA237A308 /* PreDemCocoa-PREDResources */,
-				D9595861D7710F5C6CFADFC7 /* QNNetDiag */,
-				944F820C28A8D1B53D6596A9 /* UICKeyChainStore */,
+				DEFFD3EF7F7B2B5E59DDD713 /* Pods-PreDemCocoaTests */,
+				4048671F849B87005E409050 /* Pods-PreDemObjcDemo */,
+				EA2B0325F2FCA10F264526CF /* Pods-PreDemSwiftDemo */,
+				22F51DC32EF9208547135676 /* PreDemCocoa */,
+				8E37AEB94AA3540F81B3CABC /* PreDemCocoa-PREDResources */,
+				7913CFA825A7B250238DFA1B /* UICKeyChainStore */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		28C8AD5684E3B0E58200E2CA /* Resources */ = {
+		429CDD97D5FF6C421F7F2CBA /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				192A142E8C7D5EF3A56504D2 /* Version.plist in Resources */,
+				D9DDA670469E170F6298C394 /* Version.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		9260AC728AA793F77ADF3368 /* Resources */ = {
+		9D82D90AC88E7B58FBAEABB9 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				19340C52C18AE9C1CF6C790A /* PREDResources.bundle in Resources */,
+				4A8F4774F84993567B0FB124 /* PREDResources.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		64AC8B7153074BCBF4AA099B /* Sources */ = {
+		247044AF972F097D7109B3D1 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4B5015848BF76D314BF686C9 /* Pods-PreDemSwiftDemo-dummy.m in Sources */,
+				641DCC897098D1D0E3FAAFB4 /* UICKeyChainStore-dummy.m in Sources */,
+				9E0D0FE2C8B80417715E70E3 /* UICKeyChainStore.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		924F0D915685CD5A9EA2B19F /* Sources */ = {
+		261EC30BE9DC2D59CDE85FF6 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7F52FC6E2DE33A8FDB107369 /* UICKeyChainStore-dummy.m in Sources */,
-				8ABF9725C498B6D62E12740C /* UICKeyChainStore.m in Sources */,
+				8DE736E0D90F2C7694F2AF84 /* Pods-PreDemSwiftDemo-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		960161194CA5C161ABE1AAA5 /* Sources */ = {
+		2D74F63FF7B09CC24B2B05A1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5CC00442F91858FF44FCBE58 /* Pods-PreDemCocoaTests-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A9CF62CD43FFC367EA0BA833 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D1ED3C2BDDC3D76572CE8054 /* Pods-PreDemObjcDemo-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DA16DCA23DFC1A5C9FF1596A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		AFDD250793F8CA69CC334BFB /* Sources */ = {
+		F6BA0B9148B1C4AA70CDB410 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3DDA08168679131D409DB67C /* NSObject+Serialization.m in Sources */,
-				FF02E98EEC5FE67C760CA1ED /* PREDAppInfo.m in Sources */,
-				CC7585499D84A2F3A6721AE3 /* PREDBaseModel.m in Sources */,
-				4928B502B215360CC301D9F2 /* PREDConfig.m in Sources */,
-				A041E2725A50B33DBE2A2694 /* PREDConfigManager.m in Sources */,
-				394D584CB6C115746878D102 /* PREDCredential.m in Sources */,
-				330F4E83A540D392701CE128 /* PREDCustomEvent.m in Sources */,
-				80D3E9041B2070C117DB5057 /* PreDemCocoa-dummy.m in Sources */,
-				0FA23344F37EF82C8BAB459E /* PREDError.m in Sources */,
-				608C45BCCCD8AC56A5B235BF /* PREDHelper.m in Sources */,
-				04712833B850B6303959DE33 /* PREDHTTPMonitorModel.m in Sources */,
-				5A2B5B977C19E778DE922F7F /* PREDHTTPOperation.m in Sources */,
-				C6B5B80E6DD4202E42217630 /* PREDLogger.m in Sources */,
-				DFDCFBC82F677C47B6AC07C9 /* PREDManager.m in Sources */,
-				97BC333205A26336D4DB7153 /* PREDNetDiag.m in Sources */,
-				7803A212932893E6ED9EB6E4 /* PREDNetDiagResult.m in Sources */,
-				6B825C8CDD1E779312402558 /* PREDNetworkClient.m in Sources */,
-				03AAF58C73CA9569EDE8C634 /* PREDPersistence.m in Sources */,
-				6A1564BF63107CF6FD8D1FFD /* PREDSender.m in Sources */,
-				85CD87D9DE89A77AF8B861EA /* PREDSwizzle.m in Sources */,
-				9F97EB85FBE070C75C0A17DB /* PREDTransaction.m in Sources */,
-				66D40D322572FD9C24E3C234 /* PREDURLProtocol.m in Sources */,
-				31625DCFC95EAE837BBEEA0D /* PREDURLSessionSwizzler.m in Sources */,
-				10A178F10EEA610CF1DA2740 /* PREDVersion.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C826EE618B38421969653DA1 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C2548DAFE3695CF95B1321F9 /* Pods-PreDemObjcDemo-dummy.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		CA7E879EC4334D285262BC84 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				A7E374205182993EAD7AC898 /* Pods-PreDemCocoaTests-dummy.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E069BAA56697B5E53ABE38E0 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				F1EFE3D1E6A3EB521193A1EC /* QNNetDiag-dummy.m in Sources */,
-				212C6AEBB0929647E97B46C6 /* QNNExternalIp.m in Sources */,
-				D4AEF85C0745EA7E347BBFD5 /* QNNHttp.m in Sources */,
-				9A6A4FC5880D296DF9B112A6 /* QNNNslookup.m in Sources */,
-				0FB4043B28363FE82DE94FE8 /* QNNPing.m in Sources */,
-				B44BF2CECFA80B38FFB95E6D /* QNNQue.m in Sources */,
-				AC804085AEAD46AA3FF5CD75 /* QNNRtmp.m in Sources */,
-				1BDC71ADA7F97A4CF40F3772 /* QNNTcpPing.m in Sources */,
-				8CE1D97D75D4E13007FFE2BD /* QNNTraceRoute.m in Sources */,
-				5BDE42B0F5A1CB667BE5D6EC /* QNNUtil.m in Sources */,
+				93BC0436483048536D96F097 /* NSObject+Serialization.m in Sources */,
+				8B5F0A27153043B46602210D /* PREDAppInfo.m in Sources */,
+				790A4AE259ACE461D6B7C478 /* PREDBaseModel.m in Sources */,
+				05AEF761A16237D6F670B822 /* PREDConfig.m in Sources */,
+				1F0BCA5083B0D3145B26B86D /* PREDConfigManager.m in Sources */,
+				0583669B3B53F7069BEDCC32 /* PREDCredential.m in Sources */,
+				8502E1E84F704EE10EBE834C /* PREDCustomEvent.m in Sources */,
+				803D7F0924540365CFDD74FD /* PreDemCocoa-dummy.m in Sources */,
+				7EA3290D1E4BB3AAFAE96055 /* PREDError.m in Sources */,
+				F221E73EBF0CC4736BF0D9C5 /* PREDHelper.m in Sources */,
+				403EA48922A085A294FE4A79 /* PREDHTTPOperation.m in Sources */,
+				0308061C7729B341319587E2 /* PREDLogger.m in Sources */,
+				9FEDCE3D84B25A16D6042CBC /* PREDManager.m in Sources */,
+				FE445FAA419A9EC3F9916E34 /* PREDNetworkClient.m in Sources */,
+				2C245F5D622E9E0A6BD39E15 /* PREDPersistence.m in Sources */,
+				8FA2816CCDB32ADCFA474206 /* PREDSender.m in Sources */,
+				E9E88E6860724F2544A27D67 /* PREDSwizzle.m in Sources */,
+				D2729CA325393041DDFBAAD6 /* PREDTransaction.m in Sources */,
+				6136030D7DF9DFC01DFC37C9 /* PREDVersion.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		35EB995937E9EBCB6324F384 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = UICKeyChainStore;
-			target = 944F820C28A8D1B53D6596A9 /* UICKeyChainStore */;
-			targetProxy = 08C21D5B2E510395BA26D02F /* PBXContainerItemProxy */;
-		};
-		44EC1D78469197950D6EE004 /* PBXTargetDependency */ = {
+		0DA2BB5C1CF4111B233CE0F1 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = PreDemCocoa;
-			target = 42405BC2517E1CBF87DD4E25 /* PreDemCocoa */;
-			targetProxy = B1BA0414EB4F61F8D00E1B93 /* PBXContainerItemProxy */;
+			target = 22F51DC32EF9208547135676 /* PreDemCocoa */;
+			targetProxy = 22EA2FD297E228425FCAC9F3 /* PBXContainerItemProxy */;
 		};
-		5C1FE754763C8C0A052DC82F /* PBXTargetDependency */ = {
+		1B965C7CD1D94C66852B9F56 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = UICKeyChainStore;
+			target = 7913CFA825A7B250238DFA1B /* UICKeyChainStore */;
+			targetProxy = 0D739BC6C123C0C898DE8326 /* PBXContainerItemProxy */;
+		};
+		264EE333AF202AFE0C75146D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = UICKeyChainStore;
+			target = 7913CFA825A7B250238DFA1B /* UICKeyChainStore */;
+			targetProxy = B4A6C780F510704E83B4A55D /* PBXContainerItemProxy */;
+		};
+		2D1A9CAC5F4EBE41E0CC556E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "PreDemCocoa-PREDResources";
-			target = 80CE941B0BF6CE0DA237A308 /* PreDemCocoa-PREDResources */;
-			targetProxy = 16B25B9862658F0BD7541F79 /* PBXContainerItemProxy */;
+			target = 8E37AEB94AA3540F81B3CABC /* PreDemCocoa-PREDResources */;
+			targetProxy = 0B35FFF8D512DE242501720C /* PBXContainerItemProxy */;
 		};
-		6369FB3903200ADB0F14EE62 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = UICKeyChainStore;
-			target = 944F820C28A8D1B53D6596A9 /* UICKeyChainStore */;
-			targetProxy = 09A7BCEF4AC10BA85F2A8FFB /* PBXContainerItemProxy */;
-		};
-		96F888D01B163E47A1878E85 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = QNNetDiag;
-			target = D9595861D7710F5C6CFADFC7 /* QNNetDiag */;
-			targetProxy = 9C9AF7EC5A3B00092A0C937D /* PBXContainerItemProxy */;
-		};
-		97AB511F5738A7E5C5FFF0E7 /* PBXTargetDependency */ = {
+		A33BE9473CCB06C784956B3F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = PreDemCocoa;
-			target = 42405BC2517E1CBF87DD4E25 /* PreDemCocoa */;
-			targetProxy = 8A4809A4D9683B0DAD7A0279 /* PBXContainerItemProxy */;
+			target = 22F51DC32EF9208547135676 /* PreDemCocoa */;
+			targetProxy = 9F00065595BB147AC4C02835 /* PBXContainerItemProxy */;
 		};
-		B33F8765F07998D6D8F110E8 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = UICKeyChainStore;
-			target = 944F820C28A8D1B53D6596A9 /* UICKeyChainStore */;
-			targetProxy = 4C670DE6512717F5A5AC2BC2 /* PBXContainerItemProxy */;
-		};
-		D70D6F1621FA1999BE102E10 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = QNNetDiag;
-			target = D9595861D7710F5C6CFADFC7 /* QNNetDiag */;
-			targetProxy = 2B5CA226534BE9B62449CF78 /* PBXContainerItemProxy */;
-		};
-		D7D824153CFC23508C97D6F3 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = QNNetDiag;
-			target = D9595861D7710F5C6CFADFC7 /* QNNetDiag */;
-			targetProxy = 05E3C465BD464C42343F30FC /* PBXContainerItemProxy */;
-		};
-		DD7229C2C50BB1EEC759DCD6 /* PBXTargetDependency */ = {
+		BF5F0DF542E899B71E996A84 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = PreDemCocoa;
-			target = 42405BC2517E1CBF87DD4E25 /* PreDemCocoa */;
-			targetProxy = B9BF8E6A626ABE5237EF75AB /* PBXContainerItemProxy */;
+			target = 22F51DC32EF9208547135676 /* PreDemCocoa */;
+			targetProxy = FA392828F931C536D296D3E0 /* PBXContainerItemProxy */;
 		};
-		E3E1B81AB273A542657D993A /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = QNNetDiag;
-			target = D9595861D7710F5C6CFADFC7 /* QNNetDiag */;
-			targetProxy = 27E168291E1A5F9CC2BC36A9 /* PBXContainerItemProxy */;
-		};
-		F22251F128979EC0547824EB /* PBXTargetDependency */ = {
+		E3AA638F7F35DE105E413EEC /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = UICKeyChainStore;
-			target = 944F820C28A8D1B53D6596A9 /* UICKeyChainStore */;
-			targetProxy = 04428219938A0D0024122AB0 /* PBXContainerItemProxy */;
+			target = 7913CFA825A7B250238DFA1B /* UICKeyChainStore */;
+			targetProxy = 1F0FDB99F0E193B1088D4AF5 /* PBXContainerItemProxy */;
+		};
+		FBA5A33A26FF6033D04FE3D2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = UICKeyChainStore;
+			target = 7913CFA825A7B250238DFA1B /* UICKeyChainStore */;
+			targetProxy = 0DA8624356494294C861B63A /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		046C5608851683FF287E3436 /* Debug */ = {
+		029803F35E285B20D4F68B6B /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8B070285272D839EB6E76985 /* PreDemCocoa.xcconfig */;
+			baseConfigurationReference = 502BB33FA35A8D65A4F74A83 /* Pods-PreDemSwiftDemo.debug.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-PreDemSwiftDemo/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-PreDemSwiftDemo/Pods-PreDemSwiftDemo.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_PreDemSwiftDemo;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		1DA3F31BCD111A9BC3E1F0BE /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 71EAD15A4E8CB55F2CCE7898 /* PreDemCocoa.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/PreDemCocoa";
@@ -1212,9 +994,9 @@
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = bundle;
 			};
-			name = Debug;
+			name = Release;
 		};
-		2529FB8429D693408099DDB1 /* Debug */ = {
+		2DED12D3AA2928E1385E3987 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -1224,10 +1006,12 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -1235,6 +1019,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -1274,9 +1059,9 @@
 			};
 			name = Debug;
 		};
-		2874281C080C5F3DCDC2D0B2 /* Debug */ = {
+		341444664728D2BED57822C8 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3342B080108E246E03DE41E2 /* Pods-PreDemCocoaTests.debug.xcconfig */;
+			baseConfigurationReference = CA5AE31F8C64272D24D65985 /* Pods-PreDemCocoaTests.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -1306,9 +1091,9 @@
 			};
 			name = Debug;
 		};
-		31CEBF9F8CB661057F6EBF2B /* Debug */ = {
+		6F85E6A1818596C5F3168B70 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E503CD9C4730A9CF667271A1 /* Pods-PreDemSwiftDemo.debug.xcconfig */;
+			baseConfigurationReference = 05E914F3CA3860527CFA704D /* Pods-PreDemCocoaTests.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -1319,126 +1104,17 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "Target Support Files/Pods-PreDemSwiftDemo/Info.plist";
+				INFOPLIST_FILE = "Target Support Files/Pods-PreDemCocoaTests/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-PreDemSwiftDemo/Pods-PreDemSwiftDemo.modulemap";
+				MODULEMAP_FILE = "Target Support Files/Pods-PreDemCocoaTests/Pods-PreDemCocoaTests.modulemap";
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
 				PODS_ROOT = "$(SRCROOT)";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = Pods_PreDemSwiftDemo;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		558F054837F9B3092674D708 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2112037D2C6BBDE4AC740BB0 /* UICKeyChainStore.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/UICKeyChainStore/UICKeyChainStore-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/UICKeyChainStore/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/UICKeyChainStore/UICKeyChainStore.modulemap";
-				PRODUCT_NAME = UICKeyChainStore;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
-		72148DBCD19B48CF9103C487 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8B070285272D839EB6E76985 /* PreDemCocoa.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/PreDemCocoa/PreDemCocoa-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/PreDemCocoa/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/PreDemCocoa/PreDemCocoa.modulemap";
-				PRODUCT_NAME = PreDemCocoa;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		918CCF9AE9C33B9379D756F1 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8B070285272D839EB6E76985 /* PreDemCocoa.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/PreDemCocoa";
-				INFOPLIST_FILE = "Target Support Files/PreDemCocoa/ResourceBundle-PREDResources-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				PRODUCT_NAME = PREDResources;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				WRAPPER_EXTENSION = bundle;
-			};
-			name = Release;
-		};
-		91964D8252C2468BB8CE4857 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1A744F4760811EB65267DB4E /* Pods-PreDemSwiftDemo.release.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "Target Support Files/Pods-PreDemSwiftDemo/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-PreDemSwiftDemo/Pods-PreDemSwiftDemo.modulemap";
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = Pods_PreDemSwiftDemo;
+				PRODUCT_NAME = Pods_PreDemCocoaTests;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1448,71 +1124,7 @@
 			};
 			name = Release;
 		};
-		A860A75F4FCA53E47CF13E10 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8B070285272D839EB6E76985 /* PreDemCocoa.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/PreDemCocoa/PreDemCocoa-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/PreDemCocoa/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/PreDemCocoa/PreDemCocoa.modulemap";
-				PRODUCT_NAME = PreDemCocoa;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
-		C946807892BDA99035BBF8CE /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 05FFBF158FE9D63D68914062 /* Pods-PreDemObjcDemo.release.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "Target Support Files/Pods-PreDemObjcDemo/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-PreDemObjcDemo/Pods-PreDemObjcDemo.modulemap";
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = Pods_PreDemObjcDemo;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
-		CA2281776C8CA5547AA97ABC /* Release */ = {
+		7357FCBEC971DDD53221E1DF /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -1522,10 +1134,12 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -1533,6 +1147,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -1567,9 +1182,25 @@
 			};
 			name = Release;
 		};
-		D7A4F45E4A28207A621D40C3 /* Release */ = {
+		89A9875BBA9077BCE4CA14E0 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 55E5FB4CFB3D391AA90F62CD /* QNNetDiag.xcconfig */;
+			baseConfigurationReference = 71EAD15A4E8CB55F2CCE7898 /* PreDemCocoa.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/PreDemCocoa";
+				INFOPLIST_FILE = "Target Support Files/PreDemCocoa/ResourceBundle-PREDResources-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				PRODUCT_NAME = PREDResources;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Debug;
+		};
+		90AAA664273BF629786E968A /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 14A2A1B6FBD6A78C2E4B96D4 /* Pods-PreDemObjcDemo.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -1580,17 +1211,19 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/QNNetDiag/QNNetDiag-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/QNNetDiag/Info.plist";
+				INFOPLIST_FILE = "Target Support Files/Pods-PreDemObjcDemo/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/QNNetDiag/QNNetDiag.modulemap";
-				PRODUCT_NAME = QNNetDiag;
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-PreDemObjcDemo/Pods-PreDemObjcDemo.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_PreDemObjcDemo;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1598,9 +1231,9 @@
 			};
 			name = Release;
 		};
-		E741A8E1BE612E4233B23635 /* Debug */ = {
+		90CDC0A5DD6215E93F0B94EB /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 55E5FB4CFB3D391AA90F62CD /* QNNetDiag.xcconfig */;
+			baseConfigurationReference = EA0FCE1897917507E2199422 /* Pods-PreDemSwiftDemo.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -1611,13 +1244,46 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/QNNetDiag/QNNetDiag-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/QNNetDiag/Info.plist";
+				INFOPLIST_FILE = "Target Support Files/Pods-PreDemSwiftDemo/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/QNNetDiag/QNNetDiag.modulemap";
-				PRODUCT_NAME = QNNetDiag;
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-PreDemSwiftDemo/Pods-PreDemSwiftDemo.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_PreDemSwiftDemo;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		9379F8EF3AF8254676DB6173 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 71EAD15A4E8CB55F2CCE7898 /* PreDemCocoa.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/PreDemCocoa/PreDemCocoa-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/PreDemCocoa/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/PreDemCocoa/PreDemCocoa.modulemap";
+				PRODUCT_NAME = PreDemCocoa;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
@@ -1628,9 +1294,9 @@
 			};
 			name = Debug;
 		};
-		EFF7BFDD8923DC2A984F6EE9 /* Debug */ = {
+		9858B197505D1A683B3D266C /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2112037D2C6BBDE4AC740BB0 /* UICKeyChainStore.xcconfig */;
+			baseConfigurationReference = 950F61EB744340687779F1CD /* UICKeyChainStore.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -1658,9 +1324,71 @@
 			};
 			name = Debug;
 		};
-		F7AE375B37F0DAAF18436307 /* Debug */ = {
+		9A2EAF59DC68F1D8374627AC /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 608E1CB0E31A22CDBF0E6221 /* Pods-PreDemObjcDemo.debug.xcconfig */;
+			baseConfigurationReference = 71EAD15A4E8CB55F2CCE7898 /* PreDemCocoa.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/PreDemCocoa/PreDemCocoa-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/PreDemCocoa/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/PreDemCocoa/PreDemCocoa.modulemap";
+				PRODUCT_NAME = PreDemCocoa;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		BBD01FDE4722F6D8191B6E22 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 950F61EB744340687779F1CD /* UICKeyChainStore.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/UICKeyChainStore/UICKeyChainStore-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/UICKeyChainStore/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/UICKeyChainStore/UICKeyChainStore.modulemap";
+				PRODUCT_NAME = UICKeyChainStore;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		CBE2614D1B1EC9748BF97FBB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 57DCAB0125F9840E8630551A /* Pods-PreDemObjcDemo.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -1690,115 +1418,73 @@
 			};
 			name = Debug;
 		};
-		F8A649CD021015EDBCC191B9 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7BA97C75A76F857EF71FB5DA /* Pods-PreDemCocoaTests.release.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "Target Support Files/Pods-PreDemCocoaTests/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-PreDemCocoaTests/Pods-PreDemCocoaTests.modulemap";
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = Pods_PreDemCocoaTests;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		6E35D48644B1ACB7B061891F /* Build configuration list for PBXNativeTarget "PreDemCocoa-PREDResources" */ = {
+		2B1E4236C1C530ECAE56A9A7 /* Build configuration list for PBXNativeTarget "PreDemCocoa" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				046C5608851683FF287E3436 /* Debug */,
-				918CCF9AE9C33B9379D756F1 /* Release */,
+				9379F8EF3AF8254676DB6173 /* Debug */,
+				9A2EAF59DC68F1D8374627AC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		905C5A4C20EE5EBAAA954ADC /* Build configuration list for PBXNativeTarget "PreDemCocoa" */ = {
+		5A68EF71C1DD2B0E10CD9781 /* Build configuration list for PBXProject "Pods" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				72148DBCD19B48CF9103C487 /* Debug */,
-				A860A75F4FCA53E47CF13E10 /* Release */,
+				2DED12D3AA2928E1385E3987 /* Debug */,
+				7357FCBEC971DDD53221E1DF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		9EC20A4A42B206596B409AE0 /* Build configuration list for PBXNativeTarget "QNNetDiag" */ = {
+		6C87EDB54F606272836FBD6A /* Build configuration list for PBXNativeTarget "Pods-PreDemSwiftDemo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				E741A8E1BE612E4233B23635 /* Debug */,
-				D7A4F45E4A28207A621D40C3 /* Release */,
+				029803F35E285B20D4F68B6B /* Debug */,
+				90CDC0A5DD6215E93F0B94EB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C6EC73E0B74726714370FBD2 /* Build configuration list for PBXProject "Pods" */ = {
+		D00E47CE0DEB833C73CB9550 /* Build configuration list for PBXNativeTarget "Pods-PreDemObjcDemo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				2529FB8429D693408099DDB1 /* Debug */,
-				CA2281776C8CA5547AA97ABC /* Release */,
+				CBE2614D1B1EC9748BF97FBB /* Debug */,
+				90AAA664273BF629786E968A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D651C1DC698D58EC5907B920 /* Build configuration list for PBXNativeTarget "UICKeyChainStore" */ = {
+		E7B538966D1B70CA646BF307 /* Build configuration list for PBXNativeTarget "UICKeyChainStore" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				EFF7BFDD8923DC2A984F6EE9 /* Debug */,
-				558F054837F9B3092674D708 /* Release */,
+				9858B197505D1A683B3D266C /* Debug */,
+				BBD01FDE4722F6D8191B6E22 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D9A20E04107E8C98DA8CF1CE /* Build configuration list for PBXNativeTarget "Pods-PreDemObjcDemo" */ = {
+		EB6166F6F683E5A9CEF708D8 /* Build configuration list for PBXNativeTarget "PreDemCocoa-PREDResources" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				F7AE375B37F0DAAF18436307 /* Debug */,
-				C946807892BDA99035BBF8CE /* Release */,
+				89A9875BBA9077BCE4CA14E0 /* Debug */,
+				1DA3F31BCD111A9BC3E1F0BE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		E2F78452365D8020AAD63FE3 /* Build configuration list for PBXNativeTarget "Pods-PreDemSwiftDemo" */ = {
+		FCA8D7C4C84CED9233469999 /* Build configuration list for PBXNativeTarget "Pods-PreDemCocoaTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				31CEBF9F8CB661057F6EBF2B /* Debug */,
-				91964D8252C2468BB8CE4857 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		EAD8E4122F04F210AD2E3CFD /* Build configuration list for PBXNativeTarget "Pods-PreDemCocoaTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				2874281C080C5F3DCDC2D0B2 /* Debug */,
-				F8A649CD021015EDBCC191B9 /* Release */,
+				341444664728D2BED57822C8 /* Debug */,
+				6F85E6A1818596C5F3168B70 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 4713B741753DB1BCAFEAB456 /* Project object */;
+	rootObject = E068CFD1897B7CC1B12540EB /* Project object */;
 }

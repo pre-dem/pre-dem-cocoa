@@ -10,6 +10,8 @@
 #import "PREDConstants.h"
 #import "PREDLogger.h"
 
+#import "PREDManager.h"
+
 @implementation PREDCustomEvent
 
 + (instancetype)eventWithName:(NSString *)name
@@ -56,6 +58,27 @@
 
 - (NSData *)serializeForSending:(NSError **)error {
   return [self toJsonWithError:error];
+}
+
+@end
+
+@implementation PREDEventQueue
+- (void)setSizeThreshhold:(NSUInteger)size {
+}
+
+- (NSUInteger)sizeThreshhold {
+  return 10;
+}
+
+- (void)setSendInterval:(NSUInteger)interval {
+}
+
+- (NSUInteger)sendInterval {
+  return 30;
+}
+
+- (void)trackCustomEvent:(PREDCustomEvent *_Nonnull)event {
+  [PREDManager trackCustomEvent:event];
 }
 
 @end

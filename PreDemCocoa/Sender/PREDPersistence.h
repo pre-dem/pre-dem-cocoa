@@ -8,8 +8,6 @@
 
 #import "PREDAppInfo.h"
 #import "PREDCustomEvent.h"
-#import "PREDHTTPMonitorModel.h"
-#import "PREDNetDiagResult.h"
 #import <Foundation/Foundation.h>
 
 @class PREDTransaction;
@@ -19,20 +17,12 @@
 // 将收集到的相关数据序列化并持久化到本地
 - (void)persistAppInfo:(PREDAppInfo *)appInfo;
 
-- (void)persistHttpMonitor:(PREDHTTPMonitorModel *)httpMonitor;
-
-- (void)persistNetDiagResult:(PREDNetDiagResult *)netDiagResult;
-
 - (void)persistCustomEvent:(PREDCustomEvent *)event;
 
 - (void)persistTransaction:(PREDTransaction *)transaction;
 
 // 获取持久化在本地的各种数据文件地址
 - (NSString *)nextArchivedAppInfoPath;
-
-- (NSString *)nextArchivedHttpMonitorPath;
-
-- (NSString *)nextArchivedNetDiagPath;
 
 - (NSString *)nextArchivedCustomEventsPath;
 
@@ -44,10 +34,6 @@
 - (void)purgeFiles:(NSArray<NSString *> *)filePaths;
 
 - (void)purgeAllAppInfo;
-
-- (void)purgeAllHttpMonitor;
-
-- (void)purgeAllNetDiag;
 
 - (void)purgeAllCustom;
 

@@ -23,27 +23,11 @@ pod "PreDemCocoa"
 
 ``` objc
     NSError *error;
-    [PREDManager startWithAppKey:@"YOUR_APP_KEY"
-                   serviceDomain:@"YOUR_REPORT_DOMAIN"
-                        complete:^(BOOL succeess, NSError * _Nullable error) {
-                            if (error) {
-                                NSLog(@"initialize PREDManager error: %@", error);
-                            }
-                        }];
+    [PREDManager startWithAppKey:@"YOUR_APP_KEY" 
+      serviceDomain:@"YOUR_REPORT_DOMAIN"];
 ```
 
-初始化之后，SDK 便会自动采集包括 HTTP 请求等监控数据并上报到您指定的服务器
-
-- 网络诊断
-
-``` objc
-    [PREDManager  diagnose:@"YOUR_SERVER"
-                  complete:^(PREDNetDiagResult * _Nonnull result) {
-        NSLog(@"new diagnose completed with result:\n %@", result);
-    }];
-```
-
-网络诊断功能会使用包括 ping, traceroute 等一系列网络工具对您指定的服务器进行网络诊断并将诊断结果上传服务器。
+初始化之后，SDK 便会自动定期从服务器更新配置信息，终端可根据配置来调整队列发送间隔时间
 
 - 自定义事件
 
@@ -107,4 +91,4 @@ PREDTransaction *transaction = [PREDManager transactionStart:@"test"];
 
 ## 代码许可
 
-The MIT License (MIT). 详情见 [License 文件](https://github.com/qiniu/objc-sdk/blob/master/LICENSE).
+The MIT License (MIT). 详情见 [License 文件](https://github.com/qiniu/pre-dem-cocoa/blob/master/LICENSE).
