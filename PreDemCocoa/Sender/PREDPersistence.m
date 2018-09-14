@@ -17,17 +17,11 @@
 
 @implementation PREDPersistence {
   NSString *_appInfoDir;
-  NSString *_httpDir;
-  NSString *_netDir;
   NSString *_customDir;
   NSString *_transactionsDir;
   NSFileManager *_fileManager;
   NSFileHandle *_appInfoFileHandle;
   dispatch_queue_t _appInfoQueue;
-  NSFileHandle *_httpFileHandle;
-  dispatch_queue_t _httpQueue;
-  NSFileHandle *_netFileHandle;
-  dispatch_queue_t _netQueue;
   NSFileHandle *_customFileHandle;
   dispatch_queue_t _customEventQueue;
   NSFileHandle *_transactionsFileHandle;
@@ -40,10 +34,6 @@
 
     _appInfoDir = [NSString
         stringWithFormat:@"%@/%@", PREDHelper.cacheDirectory, @"appInfo"];
-    _httpDir = [NSString
-        stringWithFormat:@"%@/%@", PREDHelper.cacheDirectory, @"http"];
-    _netDir =
-        [NSString stringWithFormat:@"%@/%@", PREDHelper.cacheDirectory, @"net"];
     _customDir = [NSString
         stringWithFormat:@"%@/%@", PREDHelper.cacheDirectory, @"custom"];
     _transactionsDir = [NSString
@@ -51,8 +41,6 @@
 
     _appInfoQueue =
         dispatch_queue_create("predem_app_info", DISPATCH_QUEUE_SERIAL);
-    _httpQueue = dispatch_queue_create("predem_http", DISPATCH_QUEUE_SERIAL);
-    _netQueue = dispatch_queue_create("predem_net", DISPATCH_QUEUE_SERIAL);
     _customEventQueue =
         dispatch_queue_create("predem_custom_event", DISPATCH_QUEUE_SERIAL);
     _transactionsQueue =
@@ -66,20 +54,7 @@
     if (error) {
       PREDLogError(@"create dir %@ failed", _appInfoDir);
     }
-    [_fileManager createDirectoryAtPath:_httpDir
-            withIntermediateDirectories:YES
-                             attributes:nil
-                                  error:&error];
-    if (error) {
-      PREDLogError(@"create dir %@ failed", _httpDir);
-    }
-    [_fileManager createDirectoryAtPath:_netDir
-            withIntermediateDirectories:YES
-                             attributes:nil
-                                  error:&error];
-    if (error) {
-      PREDLogError(@"create dir %@ failed", _netDir);
-    }
+   
     [_fileManager createDirectoryAtPath:_customDir
             withIntermediateDirectories:YES
                              attributes:nil
@@ -170,24 +145,6 @@
                                      fileHandle:&fileHanle
                                         inQueue:_appInfoQueue];
   _appInfoFileHandle = fileHanle;
-  return path;
-}
-
-- (NSString *)nextArchivedHttpMonitorPath {
-  NSFileHandle *fileHanle = _httpFileHandle;
-  NSString *path = [self nextArchivedPathForDir:_httpDir
-                                     fileHandle:&fileHanle
-                                        inQueue:_httpQueue];
-  _httpFileHandle = fileHanle;
-  return path;
-}
-
-- (NSString *)nextArchivedNetDiagPath {
-  NSFileHandle *fileHanle = _netFileHandle;
-  NSString *path = [self nextArchivedPathForDir:_netDir
-                                     fileHandle:&fileHanle
-                                        inQueue:_netQueue];
-  _netFileHandle = fileHanle;
   return path;
 }
 
@@ -282,34 +239,6 @@
   }
 }
 
-- (void)purgeAllHttpMonitor {
-  NSError *error;
-  for (NSString *fileName in [_fileManager enumeratorAtPath:_httpDir]) {
-    NSString *filePath =
-        [NSString stringWithFormat:@"%@/%@", _httpDir, fileName];
-    [_fileManager removeItemAtPath:filePath error:&error];
-    if (error) {
-      PREDLogError(@"purge file %@ error %@", filePath, error);
-    } else {
-      PREDLogVerbose(@"purge file %@ succeeded", filePath);
-    }
-  }
-}
-
-- (void)purgeAllNetDiag {
-  NSError *error;
-  for (NSString *fileName in [_fileManager enumeratorAtPath:_netDir]) {
-    NSString *filePath =
-        [NSString stringWithFormat:@"%@/%@", _netDir, fileName];
-    [_fileManager removeItemAtPath:filePath error:&error];
-    if (error) {
-      PREDLogError(@"purge file %@ error %@", filePath, error);
-    } else {
-      PREDLogVerbose(@"purge file %@ succeeded", filePath);
-    }
-  }
-}
-
 - (void)purgeAllCustom {
   NSError *error;
   for (NSString *fileName in [_fileManager enumeratorAtPath:_customDir]) {
@@ -340,9 +269,7 @@
 
 - (void)purgeAllPersistence {
   [self purgeAllAppInfo];
-  [self purgeAllHttpMonitor];
   [self purgeAllCustom];
-  [self purgeAllNetDiag];
   [self purgeAllTransactions];
 }
 
