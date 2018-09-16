@@ -17,7 +17,6 @@
 		23A367B88E142F185BC964D1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3488D17D242E53593CE51F85 /* Foundation.framework */; };
 		2C245F5D622E9E0A6BD39E15 /* PREDPersistence.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C6CE5F3E31A220FEA29F62B /* PREDPersistence.m */; };
 		2E4EBE84FFF8A7E6869CEC95 /* PREDHTTPOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = BD27CA96D5EFF74E40CE340F /* PREDHTTPOperation.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		3051758797D44E0AA6B6BD27 /* PREDSwizzle.h in Headers */ = {isa = PBXBuildFile; fileRef = BC32B9064B40BC23732D8BA7 /* PREDSwizzle.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		37584C0AA1C1B466AB1F74C9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3488D17D242E53593CE51F85 /* Foundation.framework */; };
 		403EA48922A085A294FE4A79 /* PREDHTTPOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 278B1E39D1888185CB964FEB /* PREDHTTPOperation.m */; };
 		42144B50B41607F66CCB3025 /* PREDNetworkClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 4B3F445C8C6B730F82B6487F /* PREDNetworkClient.h */; settings = {ATTRIBUTES = (Project, ); }; };
@@ -63,7 +62,6 @@
 		E1E40EC0FF1314086B67B709 /* PREDConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 07B36F6510F51E2519DA4757 /* PREDConstants.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		E32E28E7D2D9EC25494838B8 /* PREDManagerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 8884B2B3B41CE50EA6DF01E2 /* PREDManagerPrivate.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		E4FDF80BAED5295B6ED6E864 /* PreDemCocoa.h in Headers */ = {isa = PBXBuildFile; fileRef = D2B42840515AC2F375C1B2CB /* PreDemCocoa.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		E9E88E6860724F2544A27D67 /* PREDSwizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = CD27E93622E98338E8AA2917 /* PREDSwizzle.m */; };
 		EBDAF090BDEBF999F8707F95 /* PREDCustomEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = A65A0E616EFA8E4A63788BB9 /* PREDCustomEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EE5730FA6BC4DDC153B31763 /* Pods-PreDemCocoaTests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 18A9013E6843616D8C11C80D /* Pods-PreDemCocoaTests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F221E73EBF0CC4736BF0D9C5 /* PREDHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = BA88A82553DCC182F143025E /* PREDHelper.m */; };
@@ -212,7 +210,6 @@
 		B2ACCDBF604DE4EF9BBC306C /* PREDCredential.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDCredential.h; sourceTree = "<group>"; };
 		B45007152FA568CE0C1532B0 /* PREDBaseModel.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDBaseModel.m; sourceTree = "<group>"; };
 		BA88A82553DCC182F143025E /* PREDHelper.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDHelper.m; sourceTree = "<group>"; };
-		BC32B9064B40BC23732D8BA7 /* PREDSwizzle.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDSwizzle.h; sourceTree = "<group>"; };
 		BD27CA96D5EFF74E40CE340F /* PREDHTTPOperation.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDHTTPOperation.h; sourceTree = "<group>"; };
 		C23673E90B1A05539CA5C5BE /* PREDError.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDError.m; sourceTree = "<group>"; };
 		C42CF2195379B4695D511AEC /* PREDConfigManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDConfigManager.h; sourceTree = "<group>"; };
@@ -220,7 +217,6 @@
 		C76DAB427D4336F0DA9F8DE0 /* PREDTransactionPrivate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDTransactionPrivate.h; sourceTree = "<group>"; };
 		CA5AE31F8C64272D24D65985 /* Pods-PreDemCocoaTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-PreDemCocoaTests.debug.xcconfig"; sourceTree = "<group>"; };
 		CAD3604E9D18F7C3EDC9AF83 /* PREDManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDManager.h; sourceTree = "<group>"; };
-		CD27E93622E98338E8AA2917 /* PREDSwizzle.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDSwizzle.m; sourceTree = "<group>"; };
 		D2B42840515AC2F375C1B2CB /* PreDemCocoa.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PreDemCocoa.h; sourceTree = "<group>"; };
 		DAC0BE36F3046D37551332B7 /* PREDConfig.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDConfig.m; sourceTree = "<group>"; };
 		DDC250DDEECE395B065F2C69 /* PREDSender.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDSender.h; sourceTree = "<group>"; };
@@ -435,8 +431,6 @@
 				BA88A82553DCC182F143025E /* PREDHelper.m */,
 				3D21518C1E4F791FFA000FC9 /* PREDLogger.h */,
 				6B1C565EACB54C3D3051A3CC /* PREDLogger.m */,
-				BC32B9064B40BC23732D8BA7 /* PREDSwizzle.h */,
-				CD27E93622E98338E8AA2917 /* PREDSwizzle.m */,
 				0820670FB5F103559A935442 /* PREDVersion.h */,
 				B0DB26B3B1E3A5554FA4678B /* PREDVersion.m */,
 			);
@@ -647,7 +641,6 @@
 				42144B50B41607F66CCB3025 /* PREDNetworkClient.h in Headers */,
 				4B72E8E6AC8C00352A0585CD /* PREDPersistence.h in Headers */,
 				7EF45A8E98D3559D114EF360 /* PREDSender.h in Headers */,
-				3051758797D44E0AA6B6BD27 /* PREDSwizzle.h in Headers */,
 				C061588FEB20CDF8448E3A67 /* PREDTransaction.h in Headers */,
 				60E5950BFD626EA8672141CB /* PREDTransactionPrivate.h in Headers */,
 				D406EB0527572DF052B5C80D /* PREDVersion.h in Headers */,
@@ -888,7 +881,6 @@
 				FE445FAA419A9EC3F9916E34 /* PREDNetworkClient.m in Sources */,
 				2C245F5D622E9E0A6BD39E15 /* PREDPersistence.m in Sources */,
 				8FA2816CCDB32ADCFA474206 /* PREDSender.m in Sources */,
-				E9E88E6860724F2544A27D67 /* PREDSwizzle.m in Sources */,
 				D2729CA325393041DDFBAAD6 /* PREDTransaction.m in Sources */,
 				6136030D7DF9DFC01DFC37C9 /* PREDVersion.m in Sources */,
 			);

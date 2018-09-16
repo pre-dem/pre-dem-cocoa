@@ -124,7 +124,7 @@
         __strong typeof(wSelf) strongSelf = wSelf;
         if (!error) {
           PREDLogDebug(@"Send custom events succeeded");
-          [strongSelf->_persistence purgeFile:filePath];
+          [strongSelf->_persistence purgeAllCustom];
           if (recursively) {
             [strongSelf sendCustomEvents:completion recursively:recursively];
           } else {
@@ -172,7 +172,7 @@
         __strong typeof(wSelf) strongSelf = wSelf;
         if (!error) {
           PREDLogDebug(@"Send transactions succeeded");
-          [strongSelf->_persistence purgeFile:filePath];
+          [strongSelf->_persistence purgeAllTransactions];
           if (recursively) {
             [strongSelf sendTransactions:completion recursively:recursively];
           } else {

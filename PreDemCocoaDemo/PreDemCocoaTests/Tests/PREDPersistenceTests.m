@@ -134,8 +134,7 @@
                                            BOOL *_Nonnull stop) {
     XCTAssertTrue([[event2 valueForKey:key] isEqual:obj]);
   }];
-
-  [_persistence purgeFile:path];
+  [_persistence purgeAllCustom];
 }
 
 - (void)testTransaction {
@@ -215,7 +214,7 @@
     XCTAssertTrue([[event2 valueForKey:key] isEqual:obj]);
   }];
 
-  [_persistence purgeFile:path];
+  [_persistence purgeAllTransactions];
 }
 
 @end
