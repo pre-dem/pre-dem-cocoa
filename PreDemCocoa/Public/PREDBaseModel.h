@@ -105,3 +105,12 @@
 - (NSData *)serializeForSending:(NSError **)error;
 
 @end
+
+@protocol PREDSerializeData
+
+/**
+ * 将事件序列化供发送
+ */
+- (NSData *)serializeForSending:(NSError **)error;
+
+@end

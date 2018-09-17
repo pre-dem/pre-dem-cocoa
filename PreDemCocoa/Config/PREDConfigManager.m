@@ -7,6 +7,7 @@
 //
 
 #import "PREDConfigManager.h"
+#import "PREDSender.h"
 
 #define PREDConfigUserDefaultsKey @"PREDConfigUserDefaultsKey"
 
@@ -21,12 +22,12 @@ NSString *kPREDConfigRefreshedNotificationConfigKey =
 @end
 
 @implementation PREDConfigManager {
-  PREDPersistence *_persistence;
+  PREDSender *_sender;
 }
 
-- (instancetype)initWithPersistence:(PREDPersistence *)persistence {
+- (instancetype)initWithSender:(PREDSender *)sender {
   if (self = [super init]) {
-    _persistence = persistence;
+    _sender = sender;
     [[NSNotificationCenter defaultCenter]
         addObserver:self
            selector:@selector(didBecomeActive:)
@@ -56,8 +57,8 @@ NSString *kPREDConfigRefreshedNotificationConfigKey =
     defaultConfig = PREDConfig.defaultConfig;
   }
 
-  PREDAppInfo *info = [[PREDAppInfo alloc] init];
-  [_persistence persistAppInfo:info];
+  [_sender sendAppInfo:nil];
+
   return defaultConfig;
 }
 

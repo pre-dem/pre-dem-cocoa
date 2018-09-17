@@ -15,119 +15,7 @@
 #define PREDMaxCacheFileSize 512 * 1024 // 512KB
 #define PREDMillisecondPerSecond 1000
 
-@interface PREDPersistenceInternal : NSObject
-
-- (void)run:(dispatch_block_t)block;
-// 将收集到的相关数据序列化并持久化到本地
-- (void)persist:(NSData *)data;
-
-// 获取持久化在本地的各种数据文件地址
-- (NSString *)nextArchivedPath;
-
-// 清除缓存文件相关方法
-- (void)purgeFile:(NSString *)filePath;
-
-- (void)purgeFiles:(NSArray<NSString *> *)filePaths;
-
-- (void)purgeAll;
-
-- (instancetype)initWithPath:(NSString *)path queue:(NSString *)queue;
-
-@end
-
 @implementation PREDPersistence {
-  PREDPersistenceInternal *_appInfo;
-  PREDPersistenceInternal *_customEvent;
-  PREDPersistenceInternal *_transaction;
-}
-
-- (instancetype)init {
-  if (self = [super init]) {
-    _appInfo =
-        [[PREDPersistenceInternal alloc] initWithPath:@"appInfo"
-                                                queue:@"predem_app_info"];
-    _customEvent =
-        [[PREDPersistenceInternal alloc] initWithPath:@"custom"
-                                                queue:@"predem_custom_event"];
-    _transaction =
-        [[PREDPersistenceInternal alloc] initWithPath:@"transactions"
-                                                queue:@"predem_transactions"];
-    PREDLogVerbose(@"cache directory:\n%@", PREDHelper.cacheDirectory);
-  }
-  return self;
-}
-
-- (void)persistAppInfo:(PREDAppInfo *)appInfo {
-  [_appInfo run:^{
-    NSError *error;
-    NSData *toSave = [appInfo serializeForSending:&error];
-    if (error) {
-      PREDLogError(@"jsonize app info error: %@", error);
-      return;
-    }
-
-    [_appInfo persist:toSave];
-  }];
-}
-
-- (void)persistCustomEvent:(PREDCustomEvent *)event {
-  [_customEvent run:^{
-    NSError *error;
-    NSData *toSave = [event serializeForSending:&error];
-    if (error) {
-      PREDLogError(@"jsonize custom events error: %@", error);
-      return;
-    }
-
-    [_customEvent persist:toSave];
-  }];
-}
-
-- (void)persistTransaction:(PREDTransaction *)transaction {
-  [_transaction run:^{
-    NSError *error;
-    NSData *toSave = [transaction serializeForSending:&error];
-    if (error) {
-      PREDLogError(@"jsonize transaction error: %@", error);
-      return;
-    }
-
-    [_transaction persist:toSave];
-  }];
-}
-
-- (void)purgeAllPersistence {
-  [_appInfo purgeAll];
-  [_customEvent purgeAll];
-  [_transaction purgeAll];
-}
-
-- (NSString *)nextArchivedAppInfoPath {
-  return [_appInfo nextArchivedPath];
-}
-
-- (NSString *)nextArchivedCustomEventsPath {
-  return [_customEvent nextArchivedPath];
-}
-
-- (NSString *)nextArchivedTransactionsPath {
-  return [_transaction nextArchivedPath];
-}
-
-- (void)purgeAllAppInfo {
-  [_appInfo purgeAll];
-}
-
-- (void)purgeAllCustom {
-  [_customEvent purgeAll];
-}
-
-- (void)purgeAllTransactions {
-  [_transaction purgeAll];
-}
-@end
-
-@implementation PREDPersistenceInternal {
   NSString *_dir;
   NSFileManager *_fileManager;
   NSFileHandle *_fileHandle;
@@ -157,14 +45,20 @@
   return self;
 }
 
-- (void)run:(dispatch_block_t)block {
+- (void)persist:(id<PREDSerializeData>)data {
   dispatch_async(_queue, ^{
-    block();
+    NSError *error;
+    NSData *toSave = [data serializeForSending:&error];
+    if (error) {
+      PREDLogError(@"jsonize transaction error: %@", error);
+      return;
+    }
+
+    [self persistSave:toSave];
   });
 }
 
-- (void)persist:(NSData *)data {
-
+- (void)persistSave:(NSData *)data {
   NSError *error;
   _fileHandle = [self updateFileHandle:_fileHandle dir:_dir];
   if (!_fileHandle) {
@@ -176,7 +70,6 @@
 }
 
 // no batch
-
 - (NSString *)nextArchivedPath {
   NSFileHandle *fileHandle = _fileHandle;
   NSString *path =

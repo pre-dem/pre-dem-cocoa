@@ -7,19 +7,19 @@
 
 #import "PREDTransactionPrivate.h"
 #import "PREDConstants.h"
-#import "PREDPersistence.h"
+#import "PREDSender.h"
 
 #import "PREDManager.h"
 
 @implementation PREDTransaction {
-  PREDPersistence *_persistence;
+  PREDSender *_sender;
 }
 
-+ (PREDTransaction *)transactionWithPersistence:(PREDPersistence *)persistence {
++ (PREDTransaction *)transactionWithSender:(PREDSender *)sender {
   PREDTransaction *object =
       [[PREDTransaction alloc] initWithName:TransactionEventName
                                        type:CustomEventType];
-  object->_persistence = persistence;
+  object->_sender = sender;
   return object;
 }
 
@@ -27,7 +27,7 @@
   uint64_t endTime = (uint64_t)([[NSDate date] timeIntervalSince1970] * 1000);
   self.end_time = endTime;
   self.transaction_type = PREDTransactionTypeCompleted;
-  [_persistence persistTransaction:self];
+  [_sender persistTransaction:self];
 }
 
 - (void)cancelWithReason:(NSString *)reason {
@@ -35,7 +35,7 @@
   self.end_time = endTime;
   self.transaction_type = PREDTransactionTypeCancelled;
   self.reason = reason;
-  [_persistence persistTransaction:self];
+  [_sender persistTransaction:self];
 }
 
 - (void)failWithReason:(NSString *)reason {
@@ -43,7 +43,7 @@
   self.end_time = endTime;
   self.transaction_type = PREDTransactionTypeFailed;
   self.reason = reason;
-  [_persistence persistTransaction:self];
+  [_sender persistTransaction:self];
 }
 
 @end

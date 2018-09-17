@@ -8,6 +8,7 @@
 
 #import "PREDConfig.h"
 #import "PREDPersistence.h"
+#import "PREDSender.h"
 #import <Foundation/Foundation.h>
 
 extern NSString *kPREDConfigRefreshedNotification;
@@ -15,7 +16,7 @@ extern NSString *kPREDConfigRefreshedNotificationConfigKey;
 
 @interface PREDConfigManager : NSObject
 
-- (instancetype)initWithPersistence:(PREDPersistence *)persistence;
+- (instancetype)initWithSender:(PREDSender *)sender;
 
 - (PREDConfig *)getConfig;
 

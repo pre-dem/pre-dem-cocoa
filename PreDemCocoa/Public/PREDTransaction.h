@@ -7,7 +7,7 @@
 
 #import "PREDBaseModel.h"
 
-@interface PREDTransaction : PREDBaseModel
+@interface PREDTransaction : PREDBaseModel <PREDSerializeData>
 
 /**
  * transaction 正常结束并上报数据

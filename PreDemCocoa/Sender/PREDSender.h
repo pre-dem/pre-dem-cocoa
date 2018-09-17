@@ -12,10 +12,11 @@
 
 @interface PREDSender : NSObject
 
-- (instancetype)initWithPersistence:(PREDPersistence *)persistence
-                            baseUrl:(NSURL *)baseUrl;
+- (instancetype)initWithBaseUrl:(NSURL *)baseUrl;
 
 - (void)sendAllSavedData;
+
+- (void)purgeAll;
 
 - (void)sendAppInfo:(PREDNetworkCompletionBlock)completion;
 
@@ -24,5 +25,11 @@
 
 - (void)sendTransactions:(PREDNetworkCompletionBlock)completion
              recursively:(BOOL)recursively;
+
+- (void)persistAppInfo:(PREDAppInfo *)appInfo;
+
+- (void)persistCustomEvent:(PREDCustomEvent *)event;
+
+- (void)persistTransaction:(PREDTransaction *)transaction;
 
 @end
