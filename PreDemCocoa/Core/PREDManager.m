@@ -25,11 +25,7 @@ static NSString *app_id(NSString *appKey) {
 
 @implementation PREDManager {
   BOOL started;
-
   PREDConfigManager *configManager;
-
-  PREDPersistence *persistence;
-
   PREDSender *sender;
 }
 
@@ -46,8 +42,8 @@ static NSString *app_id(NSString *appKey) {
 
 + (PREDTransaction *)transactionStart:(NSString *)transactionName {
   uint64_t startTime = (uint64_t)([[NSDate date] timeIntervalSince1970] * 1000);
-  PREDTransaction *transaction = [PREDTransaction
-      transactionWithPersistence:[self sharedPREDManager]->persistence];
+  PREDTransaction *transaction =
+      [PREDTransaction transactionWithSender:[self sharedPREDManager]->sender];
   transaction.transaction_name = transactionName;
   transaction.start_time = startTime;
   return transaction;
@@ -58,7 +54,11 @@ static NSString *app_id(NSString *appKey) {
     PREDLogError(@"event should not be nil");
     return;
   }
-  [[self sharedPREDManager]->persistence persistCustomEvent:event];
+  [[self sharedPREDManager] trackEvent:event];
+}
+
+- (void)trackEvent:(PREDCustomEvent *)event {
+  [sender persistCustomEvent:event];
 }
 
 + (BOOL)started {
@@ -99,13 +99,6 @@ static NSString *app_id(NSString *appKey) {
   });
 
   return sharedInstance;
-}
-
-- (instancetype)init {
-  if ((self = [super init])) {
-    persistence = [[PREDPersistence alloc] init];
-  }
-  return self;
 }
 
 - (void)startInternalWithAppKey:(NSString *)appKey
@@ -179,12 +172,12 @@ static NSString *app_id(NSString *appKey) {
     return NO;
   }
 
-  sender = [[PREDSender alloc] initWithPersistence:persistence baseUrl:url];
+  sender = [[PREDSender alloc] initWithBaseUrl:url];
   return YES;
 }
 
 - (void)initializeModules {
-  configManager = [[PREDConfigManager alloc] initWithPersistence:persistence];
+  configManager = [[PREDConfigManager alloc] initWithSender:sender];
 
   // this process will get default config and then use it to initialize all
   // module, besides it will also retrieve config from the server and config

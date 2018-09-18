@@ -14,7 +14,7 @@
 /**
  * 自定义事件数据对象
  */
-@interface PREDCustomEvent : PREDBaseModel
+@interface PREDCustomEvent : PREDBaseModel <PREDSerializeData>
 
 /**
  * 自定义事件的内容，仅支持键值对类型的内容

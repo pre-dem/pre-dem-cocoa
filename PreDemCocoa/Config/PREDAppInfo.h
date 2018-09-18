@@ -8,6 +8,6 @@
 
 #import "PREDBaseModel.h"
 
-@interface PREDAppInfo : PREDBaseModel
+@interface PREDAppInfo : PREDBaseModel <PREDSerializeData>
 
 @end

@@ -7,7 +7,7 @@
 
 #import "PREDTransaction.h"
 
-@class PREDPersistence;
+@class PREDSender;
 
 typedef NS_ENUM(NSInteger, PREDTransactionType) {
   PREDTransactionTypeCompleted,
@@ -24,6 +24,6 @@ typedef NS_ENUM(NSInteger, PREDTransactionType) {
 @property(nonatomic, assign) PREDTransactionType transaction_type;
 @property(nonatomic, assign) NSString *reason;
 
-+ (PREDTransaction *)transactionWithPersistence:(PREDPersistence *)persistence;
++ (PREDTransaction *)transactionWithSender:(PREDSender *)sender;
 
 @end

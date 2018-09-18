@@ -26,12 +26,10 @@
   // Put setup code here. This method is called before the invocation of each
   // test method in the class.
   self.continueAfterFailure = NO;
-  _persistence = [[PREDPersistence alloc] init];
   _sender = [[PREDSender alloc]
-      initWithPersistence:_persistence
-                  baseUrl:[NSURL URLWithString:@"http://"
-                                               @"bhk5aaghth5n.predem.qiniuapi."
-                                               @"com/v2/A_5p9l3Z/"]];
+      initWithBaseUrl:[NSURL URLWithString:@"http://"
+                                           @"bhk5aaghth5n.predem.qiniuapi."
+                                           @"com/v2/A_5p9l3Z/"]];
   [PREDManager sharedPREDManager].appKey = @"A_5p9l3Z";
 }
 
@@ -42,8 +40,8 @@
 }
 
 - (void)testAppSender {
-  [_persistence purgeAllAppInfo];
-  [_persistence persistAppInfo:[[PREDAppInfo alloc] init]];
+  [_sender purgeAll];
+  [_sender persistAppInfo:[[PREDAppInfo alloc] init]];
   __block NSData *originalData;
   __block NSError *originalError;
   XCTestExpectation *expectation = [self expectationWithDescription:@"sending"];
@@ -59,13 +57,13 @@
                                }];
   XCTAssertNotNil(originalData);
   XCTAssertNil(originalError);
-  [_persistence purgeAllAppInfo];
+  [_sender purgeAll];
 }
 
 - (void)testCustomSender {
-  [_persistence purgeAllCustom];
-  [_persistence persistCustomEvent:[PREDCustomEvent eventWithName:@"testName"
-                                                       contentDic:nil]];
+  [_sender purgeAll];
+  [_sender persistCustomEvent:[PREDCustomEvent eventWithName:@"testName"
+                                                  contentDic:nil]];
   __block NSData *originalData;
   __block NSError *originalError;
   XCTestExpectation *expectation = [self expectationWithDescription:@"sending"];
@@ -82,14 +80,12 @@
                                }];
   XCTAssertNotNil(originalData);
   XCTAssertNil(originalError);
-  [_persistence purgeAllCustom];
+  [_sender purgeAll];
 }
 
 - (void)testTransactionSender {
-  [_persistence purgeAllTransactions];
-  [_persistence
-      persistTransaction:[PREDTransaction
-                             transactionWithPersistence:_persistence]];
+  [_sender purgeAll];
+  [_sender persistTransaction:[PREDTransaction transactionWithSender:_sender]];
   __block NSData *originalData;
   __block NSError *originalError;
   XCTestExpectation *expectation = [self expectationWithDescription:@"sending"];
@@ -106,7 +102,7 @@
                                }];
   XCTAssertNotNil(originalData);
   XCTAssertNil(originalError);
-  [_persistence purgeAllTransactions];
+  [_sender purgeAll];
 }
 
 @end
