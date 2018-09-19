@@ -40,8 +40,6 @@
 }
 
 - (void)testAppSender {
-  [_sender purgeAll];
-  [_sender persistAppInfo:[[PREDAppInfo alloc] init]];
   __block NSData *originalData;
   __block NSError *originalError;
   XCTestExpectation *expectation = [self expectationWithDescription:@"sending"];
@@ -57,7 +55,6 @@
                                }];
   XCTAssertNotNil(originalData);
   XCTAssertNil(originalError);
-  [_sender purgeAll];
 }
 
 - (void)testCustomSender {

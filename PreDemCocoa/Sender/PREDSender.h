@@ -26,10 +26,10 @@
 - (void)sendTransactions:(PREDNetworkCompletionBlock)completion
              recursively:(BOOL)recursively;
 
-- (void)persistAppInfo:(PREDAppInfo *)appInfo;
-
 - (void)persistCustomEvent:(PREDCustomEvent *)event;
 
 - (void)persistTransaction:(PREDTransaction *)transaction;
+
+@property NSUInteger interval;
 
 @end

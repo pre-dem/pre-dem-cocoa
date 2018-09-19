@@ -28,20 +28,11 @@
 + (void)startWithAppKey:(NSString *_Nonnull)appKey
           serviceDomain:(NSString *_Nonnull)serviceDomain;
 
-/* 默认的transaction队列，传送transaction类型数据到服务端
-*/
-
-+ (PREDTransactionQueue *)defaultTransactionQueue;
-
-/* 默认的自定义事件队列，传送事件类型数据到服务端
- */
-+ (PREDEventQueue *)defaultCustomEventQueue;
-
 /**
  *  开始一个 transaction
  *
  *  @param transactionName 该 transaction 的名字
- *  @return 该 transaction 对应的 transactionID
+ *  @return 该 transaction 对应的 实例
  */
 + (PREDTransaction *_Nonnull)transactionStart:
     (NSString *_Nonnull)transactionName;
@@ -52,11 +43,6 @@
  *  @param event 需要上报的自定义事件对象
  */
 + (void)trackCustomEvent:(PREDCustomEvent *_Nonnull)event;
-
-/**
- * 返回 SDK 是否处于已启动的状态
- */
-+ (BOOL)started;
 
 /**
  * 返回 sdk 的版本号
@@ -76,7 +62,7 @@
 @property(class, nonnull, nonatomic, strong) NSString *tag;
 
 /**
- * 配置更新频率，单位小时
+ * 配置上报频率，单位秒，最小30秒，最大1800秒
  */
 @property(class) NSUInteger updateInterval;
 

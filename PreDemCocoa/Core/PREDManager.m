@@ -74,10 +74,11 @@ static NSString *app_id(NSString *appKey) {
 }
 
 + (NSUInteger)updateInterval {
-  return 24;
+  return [self sharedPREDManager]->sender.interval;
 }
 
 + (void)setUpdateInterval:(NSUInteger)interval {
+  [self sharedPREDManager]->sender.interval = interval;
 }
 
 + (NSString *)version {
@@ -130,6 +131,12 @@ static NSString *app_id(NSString *appKey) {
     [self startInternalWithAppKey:appKey serviceDomain:serviceDomain];
   });
   return;
+}
+
+- (instancetype)init {
+  if ((self = [super init])) {
+  }
+  return self;
 }
 
 - (BOOL)initSenderWithDomain:(NSString *)aServerURL

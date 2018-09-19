@@ -30,17 +30,14 @@
 @end
 
 @implementation PREDSender {
-  PREDPersistence *_appInfo;
   PREDNetworkClient *_appClient;
   PREDSenderInternal *_customSender;
   PREDSenderInternal *_transactionSender;
+  NSUInteger _interval;
 }
 
 - (instancetype)initWithBaseUrl:(NSURL *)baseUrl {
   if (self = [super init]) {
-
-    _appInfo = [[PREDPersistence alloc] initWithPath:@"appInfo"
-                                               queue:@"predem_app_info"];
     _appClient = [[PREDNetworkClient alloc] initWithBaseURL:baseUrl];
     PREDPersistence *customEvent =
         [[PREDPersistence alloc] initWithPath:@"custom"
@@ -57,12 +54,13 @@
         [[PREDSenderInternal alloc] initWithPersistence:transaction
                                                 baseUrl:baseUrl
                                                postpath:@"transactions"];
+
+    _interval = PREDSendInterval;
   }
   return self;
 }
 
 - (void)purgeAll {
-  [_appInfo purgeAll];
   [_customSender purgeAll];
   [_transactionSender purgeAll];
 }
@@ -74,34 +72,16 @@
   [_customSender send:nil recursively:YES];
 
   [_transactionSender send:nil recursively:YES];
-  dispatch_after(dispatch_time(DISPATCH_TIME_NOW,
-                               (int64_t)(PREDSendInterval * NSEC_PER_SEC)),
-                 dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),
-                 ^{
-                   [self sendAllSavedData];
-                 });
+  dispatch_after(
+      dispatch_time(DISPATCH_TIME_NOW, (int64_t)(_interval * NSEC_PER_SEC)),
+      dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [self sendAllSavedData];
+      });
 }
 
 - (void)sendAppInfo:(PREDNetworkCompletionBlock)completion {
-  NSString *filePath = [_appInfo nextArchivedPath];
-  if (!filePath) {
-    if (completion) {
-      completion(nil, nil, nil);
-    }
-    return;
-  }
-  NSData *data = [NSData dataWithContentsOfFile:filePath];
-  if (!data) {
-    PREDLogError(@"get stored data %@ error", filePath);
-    if (completion) {
-      completion(nil, nil,
-                 [PREDError
-                     GenerateNSError:kPREDErrorCodeUnknown
-                         description:@"get stored data %@ error", filePath]);
-    }
-    return;
-  }
   __weak typeof(self) wSelf = self;
+  NSData *data = [[PREDAppInfo new] serializeForSending:nil];
   [_appClient
         postPath:@"app-config"
             data:data
@@ -127,7 +107,6 @@
             PREDLogError(@"config received from server has a wrong type: %@",
                          dic);
           }
-          [strongSelf->_appInfo purgeAll];
         }
         if (completion) {
           completion(operation, data, error);
@@ -145,16 +124,25 @@
   [_transactionSender send:completion recursively:recursively];
 }
 
-- (void)persistAppInfo:(PREDAppInfo *)appInfo {
-  [_appInfo persist:appInfo];
-}
-
 - (void)persistCustomEvent:(PREDCustomEvent *)event {
   [_customSender persist:event];
 }
 
 - (void)persistTransaction:(PREDTransaction *)transaction {
   [_transactionSender persist:transaction];
+}
+
+- (NSUInteger)interval {
+  return _interval;
+}
+
+- (void)setInterval:(NSUInteger)interval {
+  if (interval < 30) {
+    interval = 30;
+  } else if (interval > 1800) {
+    interval = 1800;
+  }
+  _interval = interval;
 }
 
 @end
@@ -184,6 +172,29 @@
   [_persistence persist:data];
 }
 
+- (void)sendResponseWithData:(NSData *)data
+                       error:(NSError *)error
+                 recursively:(BOOL)recursively
+                   operation:(PREDHTTPOperation *)operation
+                  completion:(PREDNetworkCompletionBlock)completion {
+  if (!error) {
+    PREDLogDebug(@"Send succeeded %@", _path);
+    [_persistence purgeAll];
+    if (recursively) {
+      [self send:completion recursively:recursively];
+    } else {
+      if (completion) {
+        completion(operation, data, error);
+      }
+    }
+  } else {
+    PREDLogError(@"send %@ error: %@", _path, error);
+    if (completion) {
+      completion(operation, data, error);
+    }
+  }
+}
+
 - (void)send:(PREDNetworkCompletionBlock)completion
  recursively:(BOOL)recursively {
   NSString *filePath = [_persistence nextArchivedPath];
@@ -204,7 +215,6 @@
     }
     return;
   }
-  __weak typeof(self) wSelf = self;
   [_networkClient
         postPath:_path
             data:data
@@ -212,23 +222,11 @@
            @"Content-Type" : @"application/json"
          } mutableCopy]
       completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
-        __strong typeof(wSelf) strongSelf = wSelf;
-        if (!error) {
-          PREDLogDebug(@"Send succeeded %@", _path);
-          [strongSelf->_persistence purgeAll];
-          if (recursively) {
-            [strongSelf send:completion recursively:recursively];
-          } else {
-            if (completion) {
-              completion(operation, data, error);
-            }
-          }
-        } else {
-          PREDLogError(@"send %@ error: %@", _path, error);
-          if (completion) {
-            completion(operation, data, error);
-          }
-        }
+        [self sendResponseWithData:data
+                             error:error
+                       recursively:recursively
+                         operation:operation
+                        completion:completion];
       }];
 }
 
