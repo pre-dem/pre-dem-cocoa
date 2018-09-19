@@ -15,6 +15,7 @@
 @property(nonatomic, assign) BOOL crashReportEnabled;
 @property(nonatomic, assign) BOOL lagMonitorEnabled;
 @property(nonatomic, assign) BOOL webviewEnabled;
+@property(nonatomic, assign) BOOL isVip;
 
 + (instancetype)configWithDic:(NSDictionary *)dic;
 

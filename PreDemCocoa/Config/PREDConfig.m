@@ -16,6 +16,7 @@
   config.crashReportEnabled = YES;
   config.lagMonitorEnabled = YES;
   config.webviewEnabled = YES;
+  config.isVip = NO;
   return config;
 }
 
@@ -25,7 +26,7 @@
   config.crashReportEnabled = [dic[@"crash_report_enabled"] boolValue];
   config.lagMonitorEnabled = [dic[@"lag_monitor_enabled"] boolValue];
   config.webviewEnabled = [dic[@"webview_enabled"] boolValue];
-
+  config.isVip = [dic[@"vip"] boolValue];
   return config;
 }
 

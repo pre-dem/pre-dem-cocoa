@@ -66,7 +66,7 @@ NSString *kPREDConfigRefreshedNotificationConfigKey =
   // 每天只获取一次
   if (self.lastReportTime &&
       [[NSDate date] timeIntervalSinceDate:self.lastReportTime] >=
-          60 * 60 * 24) {
+          60 * 60 * 12) {
     [self getConfig];
   }
 }

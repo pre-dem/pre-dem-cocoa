@@ -27,6 +27,7 @@ static NSString *app_id(NSString *appKey) {
   BOOL started;
   PREDConfigManager *configManager;
   PREDSender *sender;
+  PREDConfig *config;
 }
 
 #pragma mark - Public Class Methods
@@ -74,10 +75,11 @@ static NSString *app_id(NSString *appKey) {
 }
 
 + (NSUInteger)updateInterval {
-  return 24;
+  return [self sharedPREDManager]->sender.interval;
 }
 
 + (void)setUpdateInterval:(NSUInteger)interval {
+  [self sharedPREDManager]->sender.interval = interval;
 }
 
 + (NSString *)version {
@@ -130,6 +132,13 @@ static NSString *app_id(NSString *appKey) {
     [self startInternalWithAppKey:appKey serviceDomain:serviceDomain];
   });
   return;
+}
+
+- (instancetype)init {
+  if ((self = [super init])) {
+    self.config = PREDConfig.defaultConfig;
+  }
+  return self;
 }
 
 - (BOOL)initSenderWithDomain:(NSString *)aServerURL
@@ -186,6 +195,7 @@ static NSString *app_id(NSString *appKey) {
 }
 
 - (void)setConfig:(PREDConfig *)config {
+  self.config = config;
 }
 
 - (void)registerObservers {
@@ -203,17 +213,7 @@ static NSString *app_id(NSString *appKey) {
 }
 
 + (BOOL)isVip {
-  return NO;
-}
-
-+ (PREDTransactionQueue *)defaultTransactionQueue {
-  return [PREDTransactionQueue new];
-}
-
-/* 默认的自定义事件队列，传送事件类型数据到服务端
- */
-+ (PREDEventQueue *)defaultCustomEventQueue {
-  return [PREDEventQueue new];
+  return [self sharedPREDManager]->config.isVip;
 }
 
 @end
