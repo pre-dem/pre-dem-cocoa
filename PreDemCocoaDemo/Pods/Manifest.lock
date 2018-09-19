@@ -1,7 +1,7 @@
 PODS:
-  - PreDemCocoa (2.0.0):
-    - PreDemCocoa/Core (= 2.0.0)
-  - PreDemCocoa/Core (2.0.0):
+  - PreDemCocoa (2.1.0):
+    - PreDemCocoa/Core (= 2.1.0)
+  - PreDemCocoa/Core (2.1.0):
     - UICKeyChainStore
   - UICKeyChainStore (2.1.1)
 
