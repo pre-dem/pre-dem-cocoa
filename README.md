@@ -7,7 +7,7 @@
 
 ## 简介
 
-pre-dem-cocoa 是由[七牛云](https://www.qiniu.com)发起和维护的针对 iOS (Mac OS, Tv OS, Watch OS WIP) 等平台集用户体验监控及报障于一体的开源 SDK，具有无埋点集成，轻量级，高性能等优点
+pre-dem-cocoa 是由[七牛云](https://www.qiniu.com)发起和维护的针对 iOS (Mac OS, Tv OS, Watch OS WIP) 等平台集用户体验监控及报障于一体的开源 SDK，用户可以将自定义数据上传到APM上进行分析
 
 ## 安装
 
@@ -18,6 +18,9 @@ pod "PreDemCocoa"
 ```
 
 ## 快速开始
+
+- 创建APP
+  首先到apm.qiniu.com 上登录并创建自己的APP，在配置信息中找到对应的APP KEY，以及消息上报的域名，填入到sdk中，
 
 - 初始化
 
@@ -64,7 +67,6 @@ PREDTransaction *transaction = [PREDManager transactionStart:@"test"];
 ```
 
 ## 示例代码
-* 完整的 demo 见 PreDemCocoaDemo 目录下的代码
 * 具体细节的一些配置 可参考 PreDemCocoaDemo/PreDemCocoaTests 下面的一些单元测试，以及源代码
 
 ## 常见问题
