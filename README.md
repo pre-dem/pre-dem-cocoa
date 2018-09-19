@@ -66,6 +66,10 @@ PREDTransaction *transaction = [PREDManager transactionStart:@"test"];
 [transaction failWithReason:@"test reason for failed transaction"];
 ```
 
+- 调整发送间隔
+ 默认30s的发送间隔，如果想调整，可以通过如下方式调整
+ PREDManager.updateInterval = 时间;
+
 ## 示例代码
 * 具体细节的一些配置 可参考 PreDemCocoaDemo/PreDemCocoaTests 下面的一些单元测试，以及源代码
 
