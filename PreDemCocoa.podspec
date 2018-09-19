@@ -4,7 +4,7 @@ Pod::Spec.new do |s|
   s.summary      = "A short description of PreDemCocoa."
   s.homepage     = "https://github.com/pre-dem/pre-dem-cocoa"
   s.license      = "MIT"
-  s.author       = { "cnwangsiyu" => "cn.wangsiyu@gmail.com" }
+  s.author       = { "qiniu" => "sdk@qiniu.com" }
   s.source       = { :git => "https://github.com/pre-dem/pre-dem-cocoa.git", :tag => "v#{s.version}" }
   s.ios.deployment_target = "8.0"
 
