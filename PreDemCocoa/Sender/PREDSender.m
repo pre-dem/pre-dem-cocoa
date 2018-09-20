@@ -80,7 +80,6 @@
 }
 
 - (void)sendAppInfo:(PREDNetworkCompletionBlock)completion {
-  __weak typeof(self) wSelf = self;
   NSData *data = [[PREDAppInfo new] serializeForSending:nil];
   [_appClient
         postPath:@"app-config"
@@ -89,7 +88,6 @@
            @"Content-Type" : @"application/json"
          } mutableCopy]
       completion:^(PREDHTTPOperation *operation, NSData *data, NSError *error) {
-        __strong typeof(wSelf) strongSelf = wSelf;
         if (error) {
           PREDLogError(@"get config failed: %@", error);
         } else {

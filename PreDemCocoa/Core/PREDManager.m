@@ -27,7 +27,7 @@ static NSString *app_id(NSString *appKey) {
   BOOL started;
   PREDConfigManager *configManager;
   PREDSender *sender;
-  PREDConfig *config;
+  PREDConfig *mConfig;
 }
 
 #pragma mark - Public Class Methods
@@ -195,7 +195,7 @@ static NSString *app_id(NSString *appKey) {
 }
 
 - (void)setConfig:(PREDConfig *)config {
-  self.config = config;
+  mConfig = config;
 }
 
 - (void)registerObservers {
@@ -213,7 +213,7 @@ static NSString *app_id(NSString *appKey) {
 }
 
 + (BOOL)isVip {
-  return [self sharedPREDManager]->config.isVip;
+  return [self sharedPREDManager]->mConfig.isVip;
 }
 
 @end
