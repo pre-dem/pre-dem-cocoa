@@ -13,10 +13,9 @@
 #import "PREDBaseModel.h"
 #import "PREDCustomEvent.h"
 #import "PREDDefines.h"
-#import "PreDemCocoa.h"
 #import "PREDManager.h"
 #import "PREDTransaction.h"
+#import "PreDemCocoa.h"
 
 FOUNDATION_EXPORT double PreDemCocoaVersionNumber;
 FOUNDATION_EXPORT const unsigned char PreDemCocoaVersionString[];
-

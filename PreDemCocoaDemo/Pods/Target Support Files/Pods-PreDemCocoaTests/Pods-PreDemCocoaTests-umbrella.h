@@ -10,7 +10,5 @@
 #endif
 #endif
 
-
 FOUNDATION_EXPORT double Pods_PreDemCocoaTestsVersionNumber;
 FOUNDATION_EXPORT const unsigned char Pods_PreDemCocoaTestsVersionString[];
-
