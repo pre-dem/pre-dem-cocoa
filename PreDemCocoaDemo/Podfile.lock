@@ -1,7 +1,7 @@
 PODS:
-  - PreDemCocoa (2.1.0):
-    - PreDemCocoa/Core (= 2.1.0)
-  - PreDemCocoa/Core (2.1.0):
+  - PreDemCocoa (2.1.1):
+    - PreDemCocoa/Core (= 2.1.1)
+  - PreDemCocoa/Core (2.1.1):
     - UICKeyChainStore
   - UICKeyChainStore (2.1.1)
 
@@ -13,7 +13,7 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  PreDemCocoa: 81551dea38af64f54ee6e3c73662653ac2752bb5
+  PreDemCocoa: 15d2fae2cb7a115ed6b6126fe4267247e4e874ab
   UICKeyChainStore: 239558492fa260531a0774cfc611ea83a6eaff3a
 
 PODFILE CHECKSUM: 4a95a6f68106e8e8bff2d114e5209668ffc939f7
