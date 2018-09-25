@@ -70,7 +70,7 @@
 		B6548F3A1ECB0C7E0031DD42 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B671D8D51FAB15E60040ECAC /* WebViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
 		B671D8D61FAB15E60040ECAC /* WebViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
-		B6727E2E1FCD0F9F00AEF01D /* PreDemCocoa.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; name = PreDemCocoa.podspec; path = ../PreDemCocoa.podspec; sourceTree = "<group>"; };
+		B6727E2E1FCD0F9F00AEF01D /* PreDemCocoa.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; name = PreDemCocoa.podspec; path = ../PreDemCocoa.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		B6727E321FCD337900AEF01D /* Pods_PreDemCocoaTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_PreDemCocoaTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B694F1501F3025AB00175FF1 /* AppIDViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppIDViewController.h; sourceTree = "<group>"; };
 		B694F1511F3025AB00175FF1 /* AppIDViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppIDViewController.m; sourceTree = "<group>"; };

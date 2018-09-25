@@ -154,7 +154,7 @@
 		31273C4F15DDB599EEB1A3E7 /* Pods-PreDemObjcDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-PreDemObjcDemo.release.xcconfig"; sourceTree = "<group>"; };
 		324D2AD33502A97B5B1C7AE4 /* Pods-PreDemSwiftDemo.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-PreDemSwiftDemo.modulemap"; sourceTree = "<group>"; };
 		349BA9CF4F35718C6C35CB4E /* Pods-PreDemSwiftDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-PreDemSwiftDemo.debug.xcconfig"; sourceTree = "<group>"; };
-		367A64A77E22F41C92E3DFEA /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		367A64A77E22F41C92E3DFEA /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		39DDC204DB1C569B58472357 /* Pods-PreDemCocoaTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-PreDemCocoaTests-acknowledgements.plist"; sourceTree = "<group>"; };
 		3C8CEA19DE0CCBA88DC8B391 /* Pods-PreDemSwiftDemo-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-PreDemSwiftDemo-dummy.m"; sourceTree = "<group>"; };
 		3D860702DC5EBBD24B68C019 /* Pods-PreDemObjcDemo-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-PreDemObjcDemo-acknowledgements.plist"; sourceTree = "<group>"; };
@@ -164,41 +164,37 @@
 		49B2B62C1860AA6767F7F8D2 /* Pods-PreDemCocoaTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-PreDemCocoaTests-dummy.m"; sourceTree = "<group>"; };
 		4E33FA10153674D6EF4BA8CB /* Pods-PreDemCocoaTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-PreDemCocoaTests.debug.xcconfig"; sourceTree = "<group>"; };
 		4E8D953040A9FDD3A2AE1282 /* PREDHelper.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDHelper.m; sourceTree = "<group>"; };
-		4FBD1BE4ED07E28E15BDA473 /* cache.md */ = {isa = PBXFileReference; includeInIndex = 1; name = cache.md; path = docs/cache.md; sourceTree = "<group>"; };
 		5050EE53CD1A66CB4D68AC57 /* PREDNetworkClient.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDNetworkClient.m; sourceTree = "<group>"; };
 		511B15BA1A9DCB2DCFB0B8ED /* PREDConfigManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDConfigManager.m; sourceTree = "<group>"; };
 		51B1DA3390D28D8F206906B4 /* UICKeyChainStore-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "UICKeyChainStore-dummy.m"; sourceTree = "<group>"; };
 		5568625F85359604655316FE /* UICKeyChainStore.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = UICKeyChainStore.modulemap; sourceTree = "<group>"; };
 		55CABACA4D4CC26602F5A88D /* PREDLogger.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDLogger.m; sourceTree = "<group>"; };
 		56DF8B2C9D8097089C804975 /* PREDHTTPOperation.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDHTTPOperation.m; sourceTree = "<group>"; };
-		57D80A1EA34B82CF1D49B6FB /* PreDemCocoa.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = PreDemCocoa.framework; path = PreDemCocoa.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		57D80A1EA34B82CF1D49B6FB /* PreDemCocoa.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PreDemCocoa.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		57E1C40E99F047DC3B296E60 /* Pods-PreDemCocoaTests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-PreDemCocoaTests-resources.sh"; sourceTree = "<group>"; };
 		5927BEB95B45619840C41749 /* UICKeyChainStore.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = UICKeyChainStore.m; path = Lib/UICKeyChainStore/UICKeyChainStore.m; sourceTree = "<group>"; };
-		5C6FDBFED0A7E29DE96BF493 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE; sourceTree = "<group>"; };
+		5C6FDBFED0A7E29DE96BF493 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		5D56FC535AC369FA807AC956 /* PREDNetworkClient.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDNetworkClient.h; sourceTree = "<group>"; };
 		5D6C2D4F15D762302BA7404D /* PreDemCocoa-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "PreDemCocoa-dummy.m"; sourceTree = "<group>"; };
 		5F5B21F4076A85CCF63F9648 /* PREDCustomEvent.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDCustomEvent.h; sourceTree = "<group>"; };
 		620FAD08D5090C6CF942ACDF /* UICKeyChainStore.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = UICKeyChainStore.h; path = Lib/UICKeyChainStore/UICKeyChainStore.h; sourceTree = "<group>"; };
 		65158884A621D688F03E425E /* PREDError.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDError.h; sourceTree = "<group>"; };
 		65B89C6E148E822CB7B2DF73 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		68A966ED097734F5CB8E7324 /* Pods_PreDemObjcDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_PreDemObjcDemo.framework; path = "Pods-PreDemObjcDemo.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		68A966ED097734F5CB8E7324 /* Pods_PreDemObjcDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PreDemObjcDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A523F9FC3D96E870CA29612 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6E36C2423650827A462BFE19 /* PREDTransaction.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDTransaction.m; sourceTree = "<group>"; };
-		7586C83285EEC73C51FB2297 /* HTTPMonitor.md */ = {isa = PBXFileReference; includeInIndex = 1; name = HTTPMonitor.md; path = docs/HTTPMonitor.md; sourceTree = "<group>"; };
 		771B388F3259827B7AA416B8 /* PREDAppInfo.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDAppInfo.h; sourceTree = "<group>"; };
 		7F4664F510DCBA020424E4ED /* PREDCredential.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDCredential.m; sourceTree = "<group>"; };
 		8061339F6B5A80F79A473B4D /* Pods-PreDemSwiftDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-PreDemSwiftDemo.release.xcconfig"; sourceTree = "<group>"; };
 		81C015509162EF984533BBEF /* Pods-PreDemSwiftDemo-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-PreDemSwiftDemo-acknowledgements.markdown"; sourceTree = "<group>"; };
 		8371088C3F5A5162F061BCB3 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		83DA9B542A032138B65A0844 /* DemoUserGuide.md */ = {isa = PBXFileReference; includeInIndex = 1; name = DemoUserGuide.md; path = docs/DemoUserGuide.md; sourceTree = "<group>"; };
 		847D8DC4502DF286B34B4079 /* Pods-PreDemSwiftDemo-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-PreDemSwiftDemo-frameworks.sh"; sourceTree = "<group>"; };
-		858D2285948623B47551AD8B /* dau.md */ = {isa = PBXFileReference; includeInIndex = 1; name = dau.md; path = docs/dau.md; sourceTree = "<group>"; };
-		85C7F355EA3DCA149C84749E /* UICKeyChainStore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = UICKeyChainStore.framework; path = UICKeyChainStore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		85C7F355EA3DCA149C84749E /* UICKeyChainStore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = UICKeyChainStore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		86237556BCB383943E1B045B /* Pods-PreDemCocoaTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-PreDemCocoaTests.modulemap"; sourceTree = "<group>"; };
 		889544AF6FC360F83F3668A8 /* UICKeyChainStore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = UICKeyChainStore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8CE2196A5DC192AED4F5AB19 /* Pods-PreDemSwiftDemo-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-PreDemSwiftDemo-resources.sh"; sourceTree = "<group>"; };
 		8EE569239E9B63A5F111F4A1 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		93E7E3CF74AA25954CEDA06A /* PREDResources.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = PREDResources.bundle; path = "PreDemCocoa-PREDResources.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		93E7E3CF74AA25954CEDA06A /* PREDResources.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PREDResources.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		94F2054082A107B88970E4ED /* PREDManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDManager.h; sourceTree = "<group>"; };
 		95733723B3DC704C04088442 /* PREDConfigManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDConfigManager.h; sourceTree = "<group>"; };
 		9B6EF7161975E346C01FAE3E /* PREDAppInfo.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDAppInfo.m; sourceTree = "<group>"; };
@@ -206,24 +202,20 @@
 		A4353D5479477D1CAEE638E9 /* PREDConstants.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDConstants.h; sourceTree = "<group>"; };
 		A5AD6D789A13FAB5CC89B208 /* PREDTransaction.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDTransaction.h; sourceTree = "<group>"; };
 		A8254A665E7A753193941632 /* PREDPersistence.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDPersistence.h; sourceTree = "<group>"; };
-		AA6C54C45AEF918777F1CCBB /* Pods_PreDemSwiftDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_PreDemSwiftDemo.framework; path = "Pods-PreDemSwiftDemo.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA6C54C45AEF918777F1CCBB /* Pods_PreDemSwiftDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PreDemSwiftDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AAEF5A43058BD5FBB7ABB185 /* PreDemCocoa-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "PreDemCocoa-umbrella.h"; sourceTree = "<group>"; };
 		AB1CD9236DF360A374221A6B /* PREDHTTPOperation.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDHTTPOperation.h; sourceTree = "<group>"; };
 		B53BC7F822C19E99F4991E32 /* Pods-PreDemObjcDemo-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-PreDemObjcDemo-frameworks.sh"; sourceTree = "<group>"; };
-		B7708003831339E271683F15 /* APISpec.md */ = {isa = PBXFileReference; includeInIndex = 1; name = APISpec.md; path = docs/APISpec.md; sourceTree = "<group>"; };
-		BCA2CD909914D81129F6610C /* PreDemCocoa.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; path = PreDemCocoa.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		BCA2CD909914D81129F6610C /* PreDemCocoa.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; path = PreDemCocoa.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		C0F262A15759A2762980E1E5 /* PREDManagerPrivate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDManagerPrivate.h; sourceTree = "<group>"; };
-		C1AE5D1071351EC2DFF7B944 /* CrashServiceAPI.md */ = {isa = PBXFileReference; includeInIndex = 1; name = CrashServiceAPI.md; path = docs/CrashServiceAPI.md; sourceTree = "<group>"; };
 		CBA2BB00EBD894B6B41B9CB7 /* Pods-PreDemObjcDemo-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-PreDemObjcDemo-resources.sh"; sourceTree = "<group>"; };
-		CDDEE84CB59E605E277A52BB /* NetDiagnoseAPI.md */ = {isa = PBXFileReference; includeInIndex = 1; name = NetDiagnoseAPI.md; path = docs/NetDiagnoseAPI.md; sourceTree = "<group>"; };
 		CF4C276C41FA421352129BDA /* Pods-PreDemCocoaTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-PreDemCocoaTests.release.xcconfig"; sourceTree = "<group>"; };
 		D028A66E50526A8222DFC6EC /* PREDSender.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDSender.m; sourceTree = "<group>"; };
 		D1CB153F58A0BD0DC2E671DD /* Pods-PreDemSwiftDemo-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-PreDemSwiftDemo-umbrella.h"; sourceTree = "<group>"; };
 		DADCAE96B3CB7790B6CC6F85 /* PREDConfig.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDConfig.h; sourceTree = "<group>"; };
 		DB3671092B6B19AE34075E43 /* Pods-PreDemObjcDemo-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-PreDemObjcDemo-dummy.m"; sourceTree = "<group>"; };
 		DCFD3F3C6547C423D98932E6 /* PREDHelper.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDHelper.h; sourceTree = "<group>"; };
-		DCFF08AC693209B4D9BB4A2A /* NETPageUseGuide */ = {isa = PBXFileReference; includeInIndex = 1; name = NETPageUseGuide; path = docs/NETPageUseGuide; sourceTree = "<group>"; };
-		DE6014FFBFC11E1096FBC256 /* Pods_PreDemCocoaTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_PreDemCocoaTests.framework; path = "Pods-PreDemCocoaTests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		DE6014FFBFC11E1096FBC256 /* Pods_PreDemCocoaTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PreDemCocoaTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1134D915CB6D1F97DEEB0B8 /* PreDemCocoa.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = PreDemCocoa.xcconfig; sourceTree = "<group>"; };
 		E19353C35B1BD9A4B06CDFF0 /* PREDCredential.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = PREDCredential.h; sourceTree = "<group>"; };
 		E1E22FB66DCAA714D7A26828 /* PREDManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = PREDManager.m; sourceTree = "<group>"; };
@@ -232,7 +224,7 @@
 		EEC0BF884D8FA54308DC6F30 /* Pods-PreDemCocoaTests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-PreDemCocoaTests-frameworks.sh"; sourceTree = "<group>"; };
 		F16DEDA447806436450173B2 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
 		F3D7A5459A1E6C8A0BEFC919 /* Pods-PreDemCocoaTests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-PreDemCocoaTests-umbrella.h"; sourceTree = "<group>"; };
-		F861D59DC33259E7A85D842B /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; path = README.md; sourceTree = "<group>"; };
+		F861D59DC33259E7A85D842B /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		FB7E8F874B6776327564CF25 /* ResourceBundle-PREDResources-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "ResourceBundle-PREDResources-Info.plist"; sourceTree = "<group>"; };
 		FDB32058A93FFD790FF07570 /* UICKeyChainStore-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "UICKeyChainStore-prefix.pch"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -475,15 +467,7 @@
 		86079C44EE870649168E1652 /* Pod */ = {
 			isa = PBXGroup;
 			children = (
-				B7708003831339E271683F15 /* APISpec.md */,
-				4FBD1BE4ED07E28E15BDA473 /* cache.md */,
-				C1AE5D1071351EC2DFF7B944 /* CrashServiceAPI.md */,
-				858D2285948623B47551AD8B /* dau.md */,
-				83DA9B542A032138B65A0844 /* DemoUserGuide.md */,
-				7586C83285EEC73C51FB2297 /* HTTPMonitor.md */,
 				5C6FDBFED0A7E29DE96BF493 /* LICENSE */,
-				CDDEE84CB59E605E277A52BB /* NetDiagnoseAPI.md */,
-				DCFF08AC693209B4D9BB4A2A /* NETPageUseGuide */,
 				BCA2CD909914D81129F6610C /* PreDemCocoa.podspec */,
 				F861D59DC33259E7A85D842B /* README.md */,
 			);
@@ -564,7 +548,6 @@
 				5927BEB95B45619840C41749 /* UICKeyChainStore.m */,
 				BAB95A89413F42201055221E /* Support Files */,
 			);
-			name = UICKeyChainStore;
 			path = UICKeyChainStore;
 			sourceTree = "<group>";
 		};
