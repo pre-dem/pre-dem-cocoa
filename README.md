@@ -89,8 +89,9 @@ PREDTransaction *transaction = [PREDManager transactionStart:@"test"];
 
 ### Todo  
 * 使用protobuf 进行序列化
-* 限制最大存储空间
+* 限制最大存储空间进行滚动存储
 * 支持只在WI-FI下发送
+* 支持默认不发送，只在需要时候进行发送
 
 ## 常见问题
 
