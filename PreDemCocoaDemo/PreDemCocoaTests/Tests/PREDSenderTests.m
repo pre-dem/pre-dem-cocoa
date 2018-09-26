@@ -31,6 +31,7 @@
                                            @"bhk5aaghth5n.predem.qiniuapi."
                                            @"com/v2/A_5p9l3Z/"]];
   [PREDManager sharedPREDManager].appKey = @"A_5p9l3Z";
+  PREDManager.tag = @"xcodetest";
 }
 
 - (void)tearDown {
