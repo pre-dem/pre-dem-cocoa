@@ -73,6 +73,26 @@ PREDTransaction *transaction = [PREDManager transactionStart:@"test"];
 ## 示例代码
 * 具体细节的一些配置 可参考 PreDemCocoaDemo/PreDemCocoaTests 下面的一些单元测试，以及源代码
 
+## SDK 发送机制介绍
+### 目的
+* 支持灵活的自定义事件上报
+* 提供可靠的缓存机制保障消息不丢失
+* 通过白名单以及其他用户需求，对发送的间隔进行控制
+* 发送组件作为核心，其他采集方式以插件组合方式进行使用
+
+### 机制介绍
+发送数据的主要流程主要分为三个阶段
+1. 数据序列化，将自定义事件加上系统的一些参数，序列化为待上传的json数据
+2. 数据缓存，通过缓存组件，将序列化过的数据缓存在文件中，保障数据不丢失，默认是512K大小换一个文件
+3. 数据发送，将已经缓存过的数据，按照时间间隔进行发送，发送时使用gzip进行压缩，系统启动时发送一次，之后按照updateInterval 指定的时间进行发送，默认是30秒，失败后不会尝试重传(由于网络等问题，失败时大概率重试也会失败)，等待到下一个周期继续
+4. 另外，在发送的时候从服务器获取到的一些状态变更由 Sender 通过 Notification 的方式进行广播，内部变更状态的模块通过监听 Notification 的方式进行相关状态的变更。
+
+### Todo  
+* 使用protobuf 进行序列化
+* 限制最大存储空间进行滚动存储
+* 支持只在WI-FI下发送
+* 支持默认不发送，只在需要时候进行发送
+
 ## 常见问题
 
 - iOS 9+ 强制使用https，需要在project build info 添加NSAppTransportSecurity类型Dictionary。在NSAppTransportSecurity下添加NSAllowsArbitraryLoads类型Boolean,值设为YES。 具体操作可参见 http://blog.csdn.net/guoer9973/article/details/48622823
